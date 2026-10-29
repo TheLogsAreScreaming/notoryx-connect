@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 import 'node_detail_page.dart';
 import 'services/bastion_geo.dart';
+import 'services/bastion_team.dart';
 import 'services/bastion_waypoints.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
@@ -28,6 +29,32 @@ class _MapPageState extends State<MapPage> {
   final MapController _map = MapController();
   bool _fitted = false;
   bool _showLinks = true;
+  bool _showTrails = true;
+
+  Set<int> get _team => widget.radio.trip.plan.members.toSet();
+
+  /// Movement trails: solid for trip contacts, dotted for this radio.
+  List<Polyline> _trailLines(Set<int> team, int? local) => [
+        for (final num in {...team, ?local})
+          if (widget.radio.trailOf(num) case final trail when trail.length >= 2)
+            Polyline(
+              points: [for (final p in trail) LatLng(p.latitude, p.longitude)],
+              strokeWidth: 3,
+              color: MapPage.accent.withValues(alpha: num == local ? 0.6 : 0.9),
+              pattern: num == local ? const StrokePattern.dotted() : const StrokePattern.solid(),
+            ),
+      ];
+
+  List<TeamMemberStatus> _teamStatus() {
+    final now = DateTime.now();
+    final byNum = {for (final n in widget.radio.nodes) n.num: n};
+    final me = byNum[widget.radio.localNodeNum];
+    return [
+      for (final num in widget.radio.trip.plan.members)
+        TeamMemberStatus.of(num, byNum[num], me: me, now: now,
+            battery: widget.radio.deviceTelemetry[num]?.batteryLevel),
+    ];
+  }
 
   /// One line per pair of placed nodes that a Neighbor Info report links.
   List<Polyline> _links(List<MeshtasticNode> placed) {
@@ -81,6 +108,8 @@ class _MapPageState extends State<MapPage> {
         builder: (context, _) {
           final placed = _placed;
           final local = widget.radio.localNodeNum;
+          final team = _team;
+          final trails = _trailLines(team, local);
           if (!_fitted && placed.isNotEmpty) {
             _fitted = true;
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -106,6 +135,7 @@ class _MapPageState extends State<MapPage> {
                     maxNativeZoom: 19,
                   ),
                   if (_showLinks) PolylineLayer(polylines: _links(placed)),
+                  if (_showTrails && trails.isNotEmpty) PolylineLayer(polylines: trails),
                   MarkerLayer(
                     markers: [
                       for (final waypoint in widget.radio.waypoints)
@@ -121,11 +151,14 @@ class _MapPageState extends State<MapPage> {
                       for (final node in placed)
                         Marker(
                           point: LatLng(node.latitude!, node.longitude!),
-                          width: 64,
-                          height: 64,
+                          width: 72,
+                          height: team.contains(node.num) ? 80 : 64,
                           child: _NodePin(
                             node: node,
                             isLocal: node.num == local,
+                            team: team.contains(node.num)
+                                ? TeamMemberStatus.of(node.num, node, now: DateTime.now())
+                                : null,
                             onTap: () => _showNode(context, node),
                           ),
                         ),
@@ -156,6 +189,21 @@ class _MapPageState extends State<MapPage> {
                                     '\nLong-press the map to drop a waypoint',
                           ),
                         ),
+                        IconButton(
+                          tooltip: 'Team',
+                          icon: Badge(
+                            isLabelVisible: team.isNotEmpty,
+                            label: Text('${team.length}'),
+                            child: const Icon(Icons.groups_outlined),
+                          ),
+                          onPressed: () => _showTeam(context),
+                        ),
+                        if (trails.isNotEmpty)
+                          IconButton(
+                            tooltip: _showTrails ? 'Hide trails' : 'Show trails',
+                            icon: Icon(_showTrails ? Icons.timeline : Icons.timeline_outlined),
+                            onPressed: () => setState(() => _showTrails = !_showTrails),
+                          ),
                         if (widget.radio.neighborReports.isNotEmpty)
                           IconButton(
                             tooltip: _showLinks ? 'Hide radio links' : 'Show radio links',
@@ -177,6 +225,62 @@ class _MapPageState extends State<MapPage> {
           );
         },
       );
+
+  void _showTeam(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetContext) => SafeArea(
+        child: AnimatedBuilder(
+          animation: widget.radio,
+          builder: (sheetContext, _) {
+            final members = _teamStatus();
+            return ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              children: [
+                ListTile(
+                  title: Text('Team', style: Theme.of(sheetContext).textTheme.titleLarge),
+                  subtitle: const Text('Your trip contacts. Tap one to find them on the map.'),
+                ),
+                if (members.isEmpty)
+                  const ListTile(
+                    leading: Icon(Icons.info_outline),
+                    title: Text('No trip contacts yet'),
+                    subtitle: Text('Add up to 6 people on HOME → Trip. They show here and stand out on the map.'),
+                  ),
+                for (final m in members)
+                  ListTile(
+                    leading: Icon(switch (m.freshness) {
+                      TeamFreshness.fresh => Icons.check_circle_outline,
+                      TeamFreshness.stale => Icons.schedule,
+                      TeamFreshness.lost => Icons.warning_amber_outlined,
+                      TeamFreshness.unknown => Icons.help_outline,
+                    }),
+                    title: Text(m.name),
+                    subtitle: Text(m.summary),
+                    trailing: Text(switch (m.freshness) {
+                      TeamFreshness.fresh => 'OK',
+                      TeamFreshness.stale => 'QUIET',
+                      TeamFreshness.lost => 'LOST',
+                      TeamFreshness.unknown => '—',
+                    }, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    enabled: m.hasPosition,
+                    onTap: !m.hasPosition
+                        ? null
+                        : () {
+                            final node = widget.radio.nodes.firstWhere((n) => n.num == m.num);
+                            Navigator.of(sheetContext).pop();
+                            _map.move(LatLng(node.latitude!, node.longitude!), 15);
+                          },
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
 
   Future<void> _createWaypoint(BuildContext context, LatLng point) async {
     final messenger = ScaffoldMessenger.of(context);
@@ -316,18 +420,22 @@ class _MapPageState extends State<MapPage> {
 }
 
 class _NodePin extends StatelessWidget {
-  const _NodePin({required this.node, required this.isLocal, required this.onTap});
+  const _NodePin({required this.node, required this.isLocal, required this.onTap, this.team});
 
   final MeshtasticNode node;
   final bool isLocal;
   final VoidCallback onTap;
+
+  /// Set for trip contacts: the pin shows how old their position is.
+  final TeamMemberStatus? team;
 
   @override
   Widget build(BuildContext context) {
     final label = node.shortName ?? node.displayName.characters.take(4).toString();
     return Semantics(
       button: true,
-      label: '${node.displayName}${isLocal ? ', this radio' : ''}',
+      label: '${node.displayName}${isLocal ? ', this radio' : ''}'
+          '${team == null ? '' : ', trip contact, ${team!.summary}'}',
       child: GestureDetector(
         onTap: onTap,
         child: Column(
@@ -349,7 +457,15 @@ class _NodePin extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(isLocal ? Icons.my_location : Icons.location_on,
+            if (team?.positionAgo case final age?)
+              Container(
+                margin: const EdgeInsets.only(top: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                color: Colors.black.withValues(alpha: 0.7),
+                child: Text(TeamMemberStatus.ageLabel(age),
+                    style: const TextStyle(color: Colors.white, fontSize: 10)),
+              ),
+            Icon(isLocal ? Icons.my_location : team != null ? Icons.person_pin_circle : Icons.location_on,
                 color: MapPage.accent, size: 26),
           ],
         ),
