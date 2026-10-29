@@ -17,7 +17,10 @@ void main() {
       );
       expect(button.onPressed, isNull, reason: label);
     }
+    await tester.scrollUntilVisible(find.text('No direct messages with this node yet.'), 200,
+        scrollable: find.byType(Scrollable).first);
     expect(find.text('No direct messages with this node yet.'), findsOneWidget);
+    expect(find.text('Ignore this node'), findsOneWidget);
   });
 
   test('node requests refuse to send without a ready radio', () async {
