@@ -11,6 +11,7 @@ import 'beacon_page.dart';
 import 'map_page.dart';
 import 'field_tools_page.dart';
 import 'home_page.dart';
+import 'services/bastion_units.dart';
 import 'services/bastion_field_log.dart';
 import 'services/bastion_background_service.dart';
 import 'services/bastion_bot_guard.dart';
@@ -1099,7 +1100,9 @@ class _SettingsPage extends StatelessWidget {
               trailing: DropdownButton<int>(
                 value: radio.locationPrecision,
                 items: [for (final e in BastionPhonePositionSharer.precisionChoices.entries)
-                  DropdownMenuItem(value: e.key, child: Text(e.value))],
+                  DropdownMenuItem(value: e.key, child: Text(e.value == 0
+                      ? 'Precise'
+                      : 'About ${BastionUnitFormat.distance(e.value.toDouble(), BastionPreferences.instance.units)}'))],
                 onChanged: (v) { if (v != null) radio.setLocationPrecision(v); },
               ),
             ),

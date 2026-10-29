@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'services/bastion_preferences.dart';
+import 'services/bastion_units.dart';
 import 'services/bastion_geo.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 
@@ -47,7 +49,7 @@ class _RangeTestTab extends StatelessWidget {
     for (final node in radio.nodes) {
       if (node.num == from && node.hasPosition) {
         final m = BastionGeo.distanceMeters(local.latitude!, local.longitude!, node.latitude!, node.longitude!);
-        return m < 1000 ? '${m.round()} m' : '${(m / 1000).toStringAsFixed(2)} km';
+        return BastionUnitFormat.distance(m, BastionPreferences.instance.units);
       }
     }
     return null;

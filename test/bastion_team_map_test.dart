@@ -2,6 +2,7 @@ import 'package:bastion/map_page.dart';
 import 'package:bastion/services/bastion_geo.dart';
 import 'package:bastion/services/bastion_team.dart';
 import 'package:bastion/services/bastion_trails.dart';
+import 'package:bastion/services/bastion_units.dart';
 import 'package:bastion/services/meshtastic_node_database.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:flutter/material.dart';
@@ -63,8 +64,8 @@ void main() {
     test('summary gives age, distance, bearing and battery in plain words', () {
       final s = TeamMemberStatus.of(2, at(2, 35.01, -83.0, heard: now.subtract(const Duration(minutes: 4)), battery: 80),
           me: me, battery: 63, now: now);
-      expect(s.summary, 'Heard 4 min ago • position 4 min old • 1.1 km N • battery 63%');
-      expect(TeamMemberStatus.of(3, const MeshtasticNode(num: 3, batteryLevel: 101), now: now).summary,
+      expect(s.summaryIn(BastionUnits.metric), 'Heard 4 min ago • position 4 min old • 1.1 km N • battery 63%');
+      expect(TeamMemberStatus.of(3, const MeshtasticNode(num: 3, batteryLevel: 101), now: now).summaryIn(BastionUnits.metric),
           'Not heard yet • no position', reason: 'external power (101) is not a battery level');
     });
 
@@ -73,6 +74,7 @@ void main() {
       expect(TeamMemberStatus.ageLabel(const Duration(hours: 3)), '3 h');
       expect(TeamMemberStatus.distanceLabel(850.4), '850 m');
       expect(TeamMemberStatus.distanceLabel(2440), '2.4 km');
+      expect(TeamMemberStatus.distanceLabel(2440, BastionUnits.imperial), '1.5 mi');
     });
   });
 
