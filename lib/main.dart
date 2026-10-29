@@ -590,6 +590,19 @@ class _ChatsPageState extends State<BastionChatsPage> {
                 ? 'Live Meshtastic messaging is ready.'
                 : 'Messages can be queued offline and send automatically when the radio is connected.',
           ),
+          if (widget.radio.filteredMessageCount > 0 || widget.radio.filters.showFiltered && widget.radio.filters.words.isNotEmpty)
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.filter_alt_outlined),
+                title: Text(widget.radio.filters.showFiltered
+                    ? 'Showing messages that match your word filters'
+                    : '${widget.radio.filteredMessageCount} message${widget.radio.filteredMessageCount == 1 ? '' : 's'} hidden by your word filters'),
+                trailing: TextButton(
+                  onPressed: () => widget.radio.filters.setShowFiltered(!widget.radio.filters.showFiltered),
+                  child: Text(widget.radio.filters.showFiltered ? 'Hide' : 'Show'),
+                ),
+              ),
+            ),
           if (widget.radio.messageStorageProblem case final problem?)
             Card(
               color: Theme.of(context).colorScheme.errorContainer,
@@ -1023,6 +1036,7 @@ class _SettingsPage extends StatelessWidget {
         detail: 'Field behavior, connection preferences and build information.'),
       const SizedBox(height: 14),
       const BastionAppearanceCard(),
+      AnimatedBuilder(animation: radio, builder: (context, _) => _FiltersCard(radio: radio)),
       const _MessagesCard(),
       AnimatedBuilder(
         animation: radio,
@@ -1499,6 +1513,96 @@ class _FieldAlertsCard extends StatelessWidget {
             onChanged: s.favoriteSilent ? (v) => _update(context, s.copyWith(silence: v)) : null,
           ),
         ),
+      ],
+    ));
+  }
+}
+
+class _FiltersCard extends StatefulWidget {
+  const _FiltersCard({required this.radio});
+  final MeshtasticRadioCoordinator radio;
+  @override
+  State<_FiltersCard> createState() => _FiltersCardState();
+}
+
+class _FiltersCardState extends State<_FiltersCard> {
+  final _word = TextEditingController();
+  String? _error;
+
+  @override
+  void dispose() {
+    _word.dispose();
+    super.dispose();
+  }
+
+  String _name(int num) {
+    for (final n in widget.radio.allNodes) {
+      if (n.num == num) return n.displayName;
+    }
+    return '!${num.toRadixString(16).padLeft(8, '0')}';
+  }
+
+  Future<void> _add() async {
+    final error = await widget.radio.filters.addWord(_word.text);
+    if (!mounted) return;
+    setState(() => _error = error);
+    if (error == null) _word.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final f = widget.radio.filters;
+    return Card(child: ExpansionTile(
+      leading: const Icon(Icons.filter_alt_outlined),
+      title: const Text('Filters'),
+      subtitle: Text('${f.ignored.length} ignored • ${f.muted.length} muted • ${f.words.length} filtered words'),
+      childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      children: [
+        Align(alignment: AlignmentDirectional.centerStart, child: Text('Filtered words',
+            style: Theme.of(context).textTheme.titleSmall)),
+        const Text('Incoming messages with these words are hidden, not deleted.'),
+        const SizedBox(height: 8),
+        Row(children: [
+          Expanded(child: TextField(
+            controller: _word,
+            decoration: InputDecoration(labelText: 'Word or phrase', errorText: _error),
+            onSubmitted: (_) => _add(),
+          )),
+          IconButton(tooltip: 'Add filtered word', icon: const Icon(Icons.add), onPressed: _add),
+        ]),
+        Wrap(spacing: 8, children: [
+          for (final w in f.words)
+            InputChip(label: Text(w), onDeleted: () => f.removeWord(w), deleteButtonTooltipMessage: 'Remove $w'),
+        ]),
+        SwitchListTile(
+          contentPadding: EdgeInsets.zero,
+          title: const Text('Show filtered messages'),
+          value: f.showFiltered,
+          onChanged: f.setShowFiltered,
+        ),
+        const Divider(),
+        Align(alignment: AlignmentDirectional.centerStart, child: Text('Ignored and muted nodes',
+            style: Theme.of(context).textTheme.titleSmall)),
+        if (f.ignored.isEmpty && f.muted.isEmpty)
+          const ListTile(contentPadding: EdgeInsets.zero,
+              title: Text('None. Open a node to ignore or mute it.')),
+        for (final n in f.ignored)
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.block),
+            title: Text(_name(n)),
+            subtitle: const Text('Ignored'),
+            trailing: TextButton(onPressed: () => f.setIgnored(n, false), child: const Text('Unignore')),
+          ),
+        for (final n in f.muted)
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.notifications_off_outlined),
+            title: Text(_name(n)),
+            subtitle: const Text('Muted'),
+            trailing: TextButton(onPressed: () => f.setMuted(n, false), child: const Text('Unmute')),
+          ),
+        if (f.problem != null) Text(f.problem!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
       ],
     ));
   }

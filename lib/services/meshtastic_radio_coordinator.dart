@@ -26,6 +26,7 @@ import 'bastion_message_alerts.dart';
 import 'bastion_phone_position.dart';
 import 'bastion_field_alerts.dart';
 import 'bastion_field_log.dart';
+import 'bastion_filters.dart';
 import 'bastion_settings_evidence.dart';
 import 'bastion_waypoints.dart';
 import 'bastion_beacons.dart';
@@ -76,6 +77,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     trip.addListener(notifyListeners);
     BastionPreferences.instance.addListener(_applyRetention);
     unawaited(trip.load());
+    filters.addListener(notifyListeners);
+    unawaited(filters.load());
     _lifecycle = AppLifecycleListener(
       onStateChange: (state) =>
           _inForeground = state == AppLifecycleState.resumed,
@@ -122,7 +125,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   bool _isFavorite(int num) => _nodeDex.records.any((r) => r.num == num && r.favorite);
 
   void _raise(BastionFieldAlert? alert) {
-    if (alert != null) unawaited(_alerts.showFieldAlert(alert));
+    if (alert != null && !filters.isSilenced(alert.nodeNum)) unawaited(_alerts.showFieldAlert(alert));
   }
 
   void _startFieldAlerts(int localNode) {
@@ -322,10 +325,35 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   final List<Uint8List> _channelSnapshots = [];
   final List<Uint8List> _moduleConfigSnapshots = [];
 
-  List<MeshtasticNode> get nodes => _nodes;
-  /// The connected radio's history; until it identifies itself, the last
-  /// radio's history plus anything received since connecting.
-  List<BastionChatMessage> get messages {
+  /// Ignored and muted nodes and word filters.
+  final BastionFilters filters = BastionFilters();
+
+  /// Nodes to show: every known node except ignored ones.
+  List<MeshtasticNode> get nodes =>
+      filters.ignored.isEmpty ? _nodes : [for (final n in _nodes) if (!filters.isIgnored(n.num)) n];
+
+  /// Every known node, including ignored ones (for unignoring and safety logic).
+  List<MeshtasticNode> get allNodes => _nodes;
+
+  /// The connected radio's history, without messages from ignored nodes and,
+  /// unless shown, incoming messages that contain a filtered word. Until the
+  /// radio identifies itself, the last radio's history plus anything new.
+  List<BastionChatMessage> get messages =>
+      [for (final m in _allMessages) if (!_hidden(m, includeWords: !filters.showFiltered)) m];
+
+  /// Incoming messages currently hidden only by word filters.
+  int get filteredMessageCount => filters.words.isEmpty
+      ? 0
+      : _allMessages.where((m) => !_hidden(m, includeWords: false) && _hidden(m, includeWords: true)).length;
+
+  bool _hidden(BastionChatMessage m, {required bool includeWords}) =>
+      m.direction == BastionMessageDirection.incoming &&
+      (filters.isIgnored(m.from) || (includeWords && filters.matchesWord(m.text)));
+
+  /// Every message, including hidden ones (for trip and SOS safety logic).
+  List<BastionChatMessage> get allMessages => _allMessages;
+
+  List<BastionChatMessage> get _allMessages {
     final messaging = _messaging;
     if (messaging == null) return _archivedMessages;
     if (messaging.archive != null) return messaging.messages;
@@ -613,7 +641,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       final messaging = MeshtasticMessagingService(
         session: session,
         connection: connection,
-      )..channelMessageMaxAge = _channelMaxAge;
+      )
+        ..channelMessageMaxAge = _channelMaxAge
+        ..isIgnoredSender = filters.isIgnored;
       _nodeDex.detach();
       final handshake = MeshtasticHandshake(
         session: session,
@@ -1250,6 +1280,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   /// Notifies about a message that arrives while the app is backgrounded.
   void _alertIncoming(MeshtasticTextMessage message) {
+    if (filters.isSilenced(message.from) || filters.matchesWord(message.text)) return;
     String sender = '!${message.from.toRadixString(16).padLeft(8, '0')}';
     for (final node in _nodes) {
       if (node.num == message.from) sender = node.displayName;
@@ -1472,11 +1503,12 @@ class _CoordinatorTripRadio implements TripRadio {
   }
 
   @override
-  List<BastionChatMessage> get messages => _radio.messages;
+  // Unfiltered: an ignored or word-filtered contact's SOS acknowledgment still counts.
+  List<BastionChatMessage> get messages => _radio.allMessages;
 
   @override
   DateTime? lastHeard(int node) {
-    for (final n in _radio.nodes) {
+    for (final n in _radio.allNodes) {
       if (n.num == node) return n.lastHeard;
     }
     return null;
