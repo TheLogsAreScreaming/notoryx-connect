@@ -49,6 +49,9 @@ class MeshtasticMessagingService {
   bool _flushing = false;
   bool _started = false;
   bool _botEnabled = false;
+
+  /// Senders the bot never replies to (ignored nodes).
+  bool Function(int node)? isIgnoredSender;
   String _botReply = defaultAwayReply;
   int? localNodeNum;
 
@@ -308,6 +311,7 @@ class MeshtasticMessagingService {
     final ownNode = localNodeNum;
     if (!_botEnabled || ownNode == null || !connection.isReady) return;
     if (message.from == ownNode) return;
+    if (isIgnoredSender?.call(message.from) ?? false) return;
 
     final text = message.text.trim();
     final lower = text.toLowerCase();

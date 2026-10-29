@@ -272,6 +272,25 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
             _NeighborCard(radio: _radio, nodeNum: widget.nodeNum),
             const SizedBox(height: 8),
             Card(
+              child: Column(children: [
+                SwitchListTile(
+                  secondary: const Icon(Icons.notifications_off_outlined),
+                  title: const Text('Mute notifications'),
+                  subtitle: const Text('Messages still show; no alerts or read-aloud'),
+                  value: _radio.filters.muted.contains(widget.nodeNum),
+                  onChanged: (v) => _radio.filters.setMuted(widget.nodeNum, v),
+                ),
+                SwitchListTile(
+                  secondary: const Icon(Icons.block),
+                  title: const Text('Ignore this node'),
+                  subtitle: const Text('Hidden from nodes, map and chats; never notifies or gets bot replies. Undo here or in Settings.'),
+                  isThreeLine: true,
+                  value: _radio.filters.isIgnored(widget.nodeNum),
+                  onChanged: (v) => _radio.filters.setIgnored(widget.nodeNum, v),
+                ),
+              ]),
+            ),
+            Card(
               child: ListTile(
                 leading: const Icon(Icons.sticky_note_2_outlined),
                 title: const Text('Field note'),
