@@ -29,6 +29,7 @@ import 'bastion_field_log.dart';
 import 'bastion_settings_evidence.dart';
 import 'bastion_waypoints.dart';
 import 'bastion_beacons.dart';
+import 'bastion_trails.dart';
 import 'bastion_trip.dart';
 import 'bastion_preferences.dart';
 import 'bastion_speech.dart';
@@ -532,10 +533,16 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   /// Shows the last connected radio's history until a radio connects.
+  final BastionTrails _trails = BastionTrails();
+
+  /// Recent movement of a trip contact or this radio, oldest first.
+  List<TrailPoint> trailOf(int num) => _trails.trailOf(num);
+
   Future<void> _loadArchive() async {
     final last = await _history.lastRadio();
     if (last != null) _setArchive(BastionMessageArchive(radio: last));
     await _nodeDex.useRadio(last);
+    if (last != null) await _trails.useRadio(last);
     final snapshot = await _archive.load();
     _archivedMessages = snapshot.messages;
     _archivedPending = snapshot.pending;
@@ -558,6 +565,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _setArchive(archive);
     await messaging.attachArchive(archive);
     await _nodeDex.useRadio(nodeNum);
+    await _trails.useRadio(nodeNum);
     if (_messaging == messaging) _syncMessageSnapshot(messaging);
     notifyListeners();
   }
@@ -743,6 +751,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       _syncMessageSnapshot(messaging);
       _nodeSubscription = nodeDatabase.changes.listen((nodes) {
         _nodes = nodes;
+        _trails.record(nodes, {...trip.plan.members, ?_localNodeNum});
         notifyListeners();
       });
       _nodeDexSubscription = nodeDatabase.nodeUpdates.listen((node) {
@@ -1384,6 +1393,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   Future<void> _shutdownSession({required bool resetConnection}) async {
     _stopFieldAlerts();
+    unawaited(_trails.flush());
     await _coverageLocation?.cancel();
     _coverageLocation = null;
     _coverageFix = null;
