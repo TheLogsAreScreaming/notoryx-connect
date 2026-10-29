@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'services/bastion_preferences.dart';
+import 'services/bastion_units.dart';
 import 'services/bastion_chat_message.dart';
 import 'services/bastion_geo.dart';
 import 'services/bastion_nodedex.dart';
@@ -210,15 +212,13 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                         '${node.latitude!.toStringAsFixed(5)}, ${node.longitude!.toStringAsFixed(5)}',
                       ),
                       if (node.altitudeMeters != null)
-                        _Row('Altitude', '${node.altitudeMeters} m'),
+                        _Row('Altitude', BastionUnitFormat.altitude(node.altitudeMeters!, BastionPreferences.instance.units)),
                       _Row('Position age', _ago(node.positionTime)),
                     ],
                     if (distance != null)
                       _Row(
                         'Distance',
-                        distance < 1000
-                            ? '${distance.round()} m'
-                            : '${(distance / 1000).toStringAsFixed(1)} km',
+                        BastionUnitFormat.distance(distance, BastionPreferences.instance.units),
                       ),
                     if (record != null)
                       _Row('Encounters', '${record.encounters}'),
