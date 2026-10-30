@@ -1499,7 +1499,8 @@ class _FieldAlertsCard extends StatelessWidget {
         ),
         SwitchListTile(
           title: const Text('Favorite goes quiet'),
-          subtitle: Text('A favorite is not heard for ${_duration(s.silence)} while connected'),
+          subtitle: Text('A favorite is not heard for ${_duration(s.silence)} while connected, '
+              'and again when it is back'),
           value: s.favoriteSilent,
           onChanged: (v) => _update(context, s.copyWith(favoriteSilent: v)),
         ),

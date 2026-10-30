@@ -67,13 +67,30 @@ void main() {
       expect(engine.checkSilence([f(longAgo)], on), isEmpty, reason: 'alerts once');
     });
 
-    test('rearms after the favorite is heard again', () {
+    test('rearms after the favorite is heard again, saying it is back', () {
       now = now.add(const Duration(hours: 2));
       expect(engine.checkSilence([f(null)], on), hasLength(1));
       final heard = now;
-      expect(engine.checkSilence([f(heard)], on), isEmpty);
+      final back = engine.checkSilence([f(heard)], on).single;
+      expect((back.kind, back.title), (BastionAlertKind.favoriteBack, 'Camp is back'));
+      expect(engine.checkSilence([f(heard)], on), isEmpty, reason: 'back alerts once');
       now = now.add(const Duration(hours: 1));
       expect(engine.checkSilence([f(heard)], on), hasLength(1));
+    });
+
+    test('a live update says a quiet favorite is back, once', () {
+      now = now.add(const Duration(hours: 2));
+      final quiet = engine.checkSilence([f(null)], on).single;
+      final back = engine.nodeHeard(fav, 'Camp', knownBefore: true, settings: on)!;
+      expect(back.body, 'Your radio heard Camp again.');
+      expect(back.notificationId, quiet.notificationId, reason: 'replaces the gone-quiet notification');
+      expect(engine.nodeHeard(fav, 'Camp', knownBefore: true, settings: on), isNull);
+      expect(engine.checkSilence([f(now)], on), isEmpty, reason: 'not announced twice');
+    });
+
+    test('a favorite that never went quiet is not announced', () {
+      expect(engine.nodeHeard(fav, 'Camp', knownBefore: true, settings: on), isNull);
+      expect(engine.checkSilence([f(now)], on), isEmpty);
     });
   });
 

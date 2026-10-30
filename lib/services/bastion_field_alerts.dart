@@ -27,7 +27,8 @@ class BastionAlertSettings {
   /// This radio hears a node it has never heard before.
   final bool newNode;
 
-  /// A favorite node is not heard for [silence] while connected.
+  /// A favorite node is not heard for [silence] while connected, and again
+  /// when it is heard after that.
   final bool favoriteSilent;
   final Duration silence;
 
@@ -87,7 +88,7 @@ class BastionAlertSettings {
   int get hashCode => jsonEncode(toJson()).hashCode;
 }
 
-enum BastionAlertKind { lowBattery, newNode, favoriteSilent, sosAcknowledged, checkInDue, contactOverdue }
+enum BastionAlertKind { lowBattery, newNode, favoriteSilent, sosAcknowledged, checkInDue, contactOverdue, favoriteBack }
 
 @immutable
 class BastionFieldAlert {
@@ -97,8 +98,12 @@ class BastionFieldAlert {
   final String title;
   final String body;
 
-  /// Stable per condition, so a repeat replaces rather than stacks.
-  int get notificationId => (kind.index << 28 ^ nodeNum) & 0x7fffffff;
+  /// Stable per condition, so a repeat replaces rather than stacks. A
+  /// favorite that is back replaces its own gone-quiet notification.
+  int get notificationId {
+    final slot = kind == BastionAlertKind.favoriteBack ? BastionAlertKind.favoriteSilent : kind;
+    return (slot.index << 28 ^ nodeNum) & 0x7fffffff;
+  }
 }
 
 /// Decides local field alerts from verified radio observations. Nothing is
@@ -149,10 +154,13 @@ class BastionFieldAlertEngine {
   }
 
   /// A node update heard live. [knownBefore] says whether this radio had
-  /// heard the node before this update.
+  /// heard the node before this update. A favorite that had gone quiet
+  /// alerts that it is back.
   BastionFieldAlert? nodeHeard(int nodeNum, String name,
       {required bool knownBefore, required BastionAlertSettings settings}) {
-    _active.remove('silent:$nodeNum');
+    if (_active.remove('silent:$nodeNum') && inSession && settings.favoriteSilent) {
+      return _back(nodeNum, name);
+    }
     if (!inSession || !settings.newNode || knownBefore || nodeNum == _localNode) return null;
     if (!_active.add('new:$nodeNum')) return null;
     return BastionFieldAlert(BastionAlertKind.newNode, nodeNum, 'New node: $name',
@@ -174,7 +182,7 @@ class BastionFieldAlertEngine {
       final since = heard != null && heard.isAfter(start) ? heard : start;
       final key = 'silent:${f.num}';
       if (now.difference(since) < settings.silence) {
-        _active.remove(key);
+        if (_active.remove(key)) alerts.add(_back(f.num, f.name));
       } else if (_active.add(key)) {
         alerts.add(BastionFieldAlert(BastionAlertKind.favoriteSilent, f.num,
             '${f.name} has gone quiet',
@@ -183,6 +191,9 @@ class BastionFieldAlertEngine {
     }
     return alerts;
   }
+
+  static BastionFieldAlert _back(int nodeNum, String name) => BastionFieldAlert(
+      BastionAlertKind.favoriteBack, nodeNum, '$name is back', 'Your radio heard $name again.');
 
   static String _describe(Duration d) =>
       d.inHours >= 1 ? '${d.inHours} h ${d.inMinutes % 60} min' : '${d.inMinutes} min';
