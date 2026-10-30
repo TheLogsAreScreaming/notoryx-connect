@@ -125,6 +125,11 @@ class MeshtasticAdminSession {
   Future<void> setChannel(Channel channel) =>
       _write(AdminMessage(setChannel: channel), 'channel ${channel.index}');
 
+  /// Sets the radio's clock to [time], to the second. Firmware keeps a better
+  /// source it already has, such as its own GPS fix.
+  Future<void> setTime(DateTime time) => _write(
+        AdminMessage(setTimeOnly: time.millisecondsSinceEpoch ~/ 1000), 'clock');
+
   /// Groups several writes so the radio saves and reboots once at the end.
   Future<void> editTransaction(Future<void> Function() edits) async {
     await _write(AdminMessage(beginEditSettings: true), 'begin edit');

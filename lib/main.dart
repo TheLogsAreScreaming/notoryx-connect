@@ -1164,6 +1164,26 @@ class _SettingsPage extends StatelessWidget {
           isThreeLine: true,
           value: radio.lowPowerMode,
           onChanged: (value) => radio.setLowPowerMode(value)))),
+      AnimatedBuilder(
+        animation: radio,
+        builder: (context, _) {
+          final synced = radio.clockSyncedAt;
+          final status = radio.clockSyncProblem ??
+              (!radio.syncRadioClock
+                  ? 'Off. The radio keeps its own time.'
+                  : synced == null
+                      ? 'On. Runs each time a radio connects.'
+                      : 'On. Set at ${synced.toLocal().toString().substring(11, 16)}.');
+          return Card(child: SwitchListTile(
+            secondary: const Icon(Icons.schedule),
+            title: const Text('Set radio clock from phone'),
+            subtitle: Text('$status\nKeeps message times, positions and logs right on radios '
+                'without GPS. A radio with a GPS fix keeps its own time.'),
+            isThreeLine: true,
+            value: radio.syncRadioClock,
+            onChanged: (value) => radio.setSyncRadioClock(value)));
+        },
+      ),
       const Card(child: ListTile(
         leading: Icon(Icons.bluetooth), title: Text('Preferred transport'),
         subtitle: Text('Bluetooth LE'), trailing: Text('BLE'))),

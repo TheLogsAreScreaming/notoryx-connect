@@ -190,6 +190,17 @@ void main() {
     await admin.dispose();
   });
 
+  test('sets the clock to whole seconds with the passkey', () async {
+    final radio = FakeAdminRadio();
+    final admin = sessionFor(radio);
+    await admin.setTime(DateTime.utc(2026, 10, 30, 12, 0, 0, 750));
+    final sent = radio.received.last;
+    expect(sent.whichPayloadVariant(), AdminMessage_PayloadVariant.setTimeOnly);
+    expect(sent.setTimeOnly, DateTime.utc(2026, 10, 30, 12).millisecondsSinceEpoch ~/ 1000);
+    expect(sent.sessionPasskey, [9, 9, 9, 9]);
+    await admin.dispose();
+  });
+
   test('negative acknowledgement fails the write and drops the passkey', () async {
     final radio = FakeAdminRadio()..acceptedPasskey = const [1, 2, 3, 4];
     final admin = sessionFor(radio);

@@ -195,6 +195,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   static const _precisionPreferenceKey = 'bastion.share_location_precision';
   int _locationPrecision = BastionPhonePositionSharer.precise;
   static const _lowPowerPreferenceKey = 'bastion.low_power_mode';
+  static const _syncClockPreferenceKey = 'bastion.sync_radio_clock';
+  bool _syncRadioClock = true;
+  DateTime? _clockSyncedAt;
+  String? _clockSyncProblem;
   bool _sharePhoneLocation = false;
   bool _lowPowerMode = false;
   BastionPhonePositionSharer? _sharer;
@@ -407,6 +411,42 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     await _startSharing();
   }
 
+  /// Whether the radio's clock is set from the phone each time it connects.
+  bool get syncRadioClock => _syncRadioClock;
+
+  /// When the connected radio's clock was last set; null if not this session.
+  DateTime? get clockSyncedAt => _clockSyncedAt;
+
+  /// Why the last clock sync failed; null when fine.
+  String? get clockSyncProblem => _clockSyncProblem;
+
+  Future<void> setSyncRadioClock(bool enabled) async {
+    if (enabled == _syncRadioClock) return;
+    _syncRadioClock = enabled;
+    notifyListeners();
+    try {
+      await SharedPreferencesAsync().setBool(_syncClockPreferenceKey, enabled);
+    } catch (_) {
+      // Preference storage is best effort.
+    }
+    if (enabled && _admin != null) await _syncClock(_admin!);
+  }
+
+  /// Sends the phone's time to the radio. Failures are shown, never thrown:
+  /// a radio without the right time still works.
+  Future<void> _syncClock(MeshtasticAdminSession admin) async {
+    try {
+      await admin.setTime(DateTime.now());
+      if (admin != _admin) return;
+      _clockSyncedAt = DateTime.now();
+      _clockSyncProblem = null;
+    } catch (error) {
+      if (admin != _admin) return;
+      _clockSyncProblem = 'Radio clock not set: $error';
+    }
+    notifyListeners();
+  }
+
   /// Position precision bits for shared phone location; see
   /// [BastionPhonePositionSharer.precisionChoices].
   int get locationPrecision => _locationPrecision;
@@ -448,6 +488,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           await preferences.getBool(_sharePreferenceKey) ?? false;
       final lowPower =
           await preferences.getBool(_lowPowerPreferenceKey) ?? false;
+      _syncRadioClock =
+          await preferences.getBool(_syncClockPreferenceKey) ?? true;
       final precision = await preferences.getInt(_precisionPreferenceKey);
       if (precision != null &&
           BastionPhonePositionSharer.precisionChoices.containsKey(precision) &&
@@ -817,6 +859,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         );
       }
       await messaging.flush();
+      final admin = _admin;
+      if (_syncRadioClock && admin != null) unawaited(_syncClock(admin));
       unawaited(_startSharing());
       if (nodeNum != null && nodeNum != 0) _startFieldAlerts(nodeNum);
 
@@ -1469,6 +1513,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _moduleConfigSnapshots.clear();
     _localNodeNum = null;
     _firmwareVersion = null;
+    _clockSyncedAt = null;
+    _clockSyncProblem = null;
     if (resetConnection) connection.disconnect();
   }
 
