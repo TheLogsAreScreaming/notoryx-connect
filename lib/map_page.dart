@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'node_detail_page.dart';
 import 'services/bastion_geo.dart';
+import 'services/bastion_gpx.dart';
 import 'services/bastion_team.dart';
 import 'services/bastion_waypoints.dart';
 import 'services/meshtastic_node_database.dart';
@@ -14,9 +19,20 @@ import 'services/meshtastic_radio_coordinator.dart';
 /// Tiles load from tile.openstreetmap.org and need internet access; node
 /// positions come only from the radio.
 class MapPage extends StatefulWidget {
-  const MapPage({super.key, required this.radio});
+  const MapPage({super.key, required this.radio, this.shareFile = _shareFile});
 
   final MeshtasticRadioCoordinator radio;
+
+  /// Hands an exported file to the system share sheet; replaced in tests.
+  final Future<void> Function(String fileName, String text) shareFile;
+
+  static Future<void> _shareFile(String fileName, String text) async {
+    await SharePlus.instance.share(ShareParams(
+      files: [XFile.fromData(Uint8List.fromList(utf8.encode(text)), mimeType: 'application/gpx+xml')],
+      fileNameOverrides: [fileName],
+      subject: 'NOTORYX Connect GPX export',
+    ));
+  }
 
   /// NOTORYX orange; markers sit on light map tiles in both themes.
   static const accent = Color(0xFFFC7202);
@@ -198,6 +214,12 @@ class _MapPageState extends State<MapPage> {
                           ),
                           onPressed: () => _showTeam(context),
                         ),
+                        if (trails.isNotEmpty || widget.radio.waypoints.isNotEmpty)
+                          IconButton(
+                            tooltip: 'Export GPX',
+                            icon: const Icon(Icons.ios_share),
+                            onPressed: () => _exportGpx(context, team, local),
+                          ),
                         if (trails.isNotEmpty)
                           IconButton(
                             tooltip: _showTrails ? 'Hide trails' : 'Show trails',
@@ -225,6 +247,27 @@ class _MapPageState extends State<MapPage> {
           );
         },
       );
+
+  /// Exports all waypoints and the trails of trip contacts and this radio.
+  Future<void> _exportGpx(BuildContext context, Set<int> team, int? local) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final names = {for (final n in widget.radio.nodes) n.num: n.displayName};
+    final tracks = [
+      for (final num in {?local, ...team})
+        if (widget.radio.trailOf(num) case final points when points.isNotEmpty)
+          (name: num == local ? 'This radio (${names[num] ?? 'me'})' : names[num] ?? '!${num.toRadixString(16)}',
+            points: points),
+    ];
+    final now = DateTime.now();
+    final gpx = BastionGpx.build(waypoints: widget.radio.waypoints, tracks: tracks, createdAt: now);
+    try {
+      await widget.shareFile('notoryx-${now.toIso8601String().substring(0, 10)}.gpx', gpx);
+      messenger.showSnackBar(SnackBar(content: Text(
+          'Exported ${widget.radio.waypoints.length} waypoints and ${tracks.length} trails as GPX.')));
+    } catch (error) {
+      messenger.showSnackBar(SnackBar(content: Text('Could not export GPX: $error')));
+    }
+  }
 
   void _showTeam(BuildContext context) {
     showModalBottomSheet<void>(
