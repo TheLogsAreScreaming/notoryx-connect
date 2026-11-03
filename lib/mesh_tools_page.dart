@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'local_mesh_discovery_page.dart';
 import 'services/bastion_geo.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 
@@ -17,6 +18,7 @@ class MeshToolsPage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Mesh tools'),
+            actions: [IconButton(tooltip: 'Local mesh discovery', icon: const Icon(Icons.radar), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const LocalMeshDiscoveryPage())))],
             bottom: const TabBar(tabs: [Tab(text: 'Range test'), Tab(text: 'Store & forward')]),
           ),
           body: SafeArea(top: false, child: AnimatedBuilder(
