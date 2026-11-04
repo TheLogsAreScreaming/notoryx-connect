@@ -1,0 +1,6 @@
+• Team view on the map: trip contacts' status, distance, direction, battery and trails
+• Units setting: miles and feet, or km and meters
+• Ignore or mute nodes, and hide messages by word
+• Export waypoints and trails as GPX
+• Local Mesh Discovery: see nodes your radio has heard (read-only)
+• Updated Bluetooth and notification libraries
