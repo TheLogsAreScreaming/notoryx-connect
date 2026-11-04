@@ -5,9 +5,9 @@ import 'services/meshtastic_radio_coordinator.dart';
 
 /// Read-only discovery planning. Does not connect, transmit or change radio settings.
 class LocalMeshDiscoveryPage extends StatefulWidget {
-  const LocalMeshDiscoveryPage({super.key, required this.radio});
+  const LocalMeshDiscoveryPage({super.key, this.radio});
 
-  final MeshtasticRadioCoordinator radio;
+  final MeshtasticRadioCoordinator? radio;
 
   @override
   State<LocalMeshDiscoveryPage> createState() => _LocalMeshDiscoveryPageState();
@@ -20,14 +20,15 @@ class _LocalMeshDiscoveryPageState extends State<LocalMeshDiscoveryPage> {
   @override
   Widget build(BuildContext context) {
     final plan = _selected.isEmpty ? null : LocalMeshDiscoveryPlan(presets: _selected, dwell: Duration(minutes: _minutes));
-    final observations = latestDiscoveryObservations([
-      for (final node in widget.radio.nodes)
-        if (node.lastHeard != null)
-          DiscoveryObservation(nodeNumber: node.num, lastHeard: node.lastHeard!, name: node.displayName, snr: node.snr),
-    ]);
     return Scaffold(
       appBar: AppBar(title: const Text('Local mesh discovery')),
-      body: AnimatedBuilder(animation: widget.radio, builder: (context, _) => ListView(padding: const EdgeInsets.all(16), children: [
+      body: AnimatedBuilder(animation: widget.radio ?? const AlwaysStoppedAnimation<double>(0), builder: (context, _) {
+        final observations = latestDiscoveryObservations([
+          for (final node in widget.radio?.nodes ?? [])
+            if (node.lastHeard != null)
+              DiscoveryObservation(nodeNumber: node.num, lastHeard: node.lastHeard!, name: node.displayName, snr: node.snr),
+        ]);
+        return ListView(padding: const EdgeInsets.all(16), children: [
         const Text('Plan only — scanning is not enabled. No radio settings are changed and no packets are transmitted.'),
         const SizedBox(height: 16),
         Text('LoRa presets', style: Theme.of(context).textTheme.titleMedium),
@@ -48,11 +49,12 @@ class _LocalMeshDiscoveryPageState extends State<LocalMeshDiscoveryPage> {
         Text('${observations.length} observed nodes — existing radio data only; no scan has started.'),
         for (final node in observations)
           ListTile(
-            title: Text(node.name ?? '!\${node.nodeNumber.toRadixString(16).padLeft(8, '0')}'),
-            subtitle: Text('Last heard: \${node.lastHeard.toLocal()}'),
-            trailing: node.snr == null ? null : Text('SNR \${node.snr!.toStringAsFixed(1)} dB'),
+            title: Text(node.name ?? node.nodeNumber.toRadixString(16).padLeft(8, '0')),
+            subtitle: Text('Last heard: ${node.lastHeard.toLocal()}'),
+            trailing: node.snr == null ? null : Text('SNR ${node.snr!.toStringAsFixed(1)} dB'),
           ),
-      ])),
+      ]);
+      }),
     );
   }
 }
