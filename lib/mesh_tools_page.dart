@@ -18,7 +18,7 @@ class MeshToolsPage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Mesh tools'),
-            actions: [IconButton(tooltip: 'Local mesh discovery', icon: const Icon(Icons.radar), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const LocalMeshDiscoveryPage())))],
+            actions: [IconButton(tooltip: 'Local mesh discovery', icon: const Icon(Icons.radar), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LocalMeshDiscoveryPage(radio: radio))))],
             bottom: const TabBar(tabs: [Tab(text: 'Range test'), Tab(text: 'Store & forward')]),
           ),
           body: SafeArea(top: false, child: AnimatedBuilder(
