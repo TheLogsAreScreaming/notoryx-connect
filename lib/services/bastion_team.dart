@@ -1,4 +1,5 @@
 import 'bastion_geo.dart';
+import 'bastion_units.dart';
 import 'meshtastic_node_database.dart';
 
 /// How recently a trip contact was heard.
@@ -78,15 +79,15 @@ class TeamMemberStatus {
               ? '${d.inHours} h'
               : '${d.inDays} d';
 
-  /// "850 m" or "2.4 km".
-  static String distanceLabel(double meters) =>
-      meters < 1000 ? '${meters.round()} m' : '${(meters / 1000).toStringAsFixed(1)} km';
+  /// "850 m" / "2.4 km", or feet and miles in [units].
+  static String distanceLabel(double meters, [BastionUnits units = BastionUnits.metric]) =>
+      BastionUnitFormat.distance(meters, units);
 
   /// One plain-language line for the team list and screen readers.
-  String get summary => [
+  String summaryIn(BastionUnits units) => [
         heardAgo == null ? 'Not heard yet' : 'Heard ${heardAgo!.inMinutes < 1 ? 'just now' : '${ageLabel(heardAgo!)} ago'}',
         if (!hasPosition) 'no position' else if (positionAgo != null) 'position ${ageLabel(positionAgo!)} old',
-        if (distanceMeters != null) '${distanceLabel(distanceMeters!)} ${BastionGeo.compassPoint(bearing!)}',
+        if (distanceMeters != null) '${distanceLabel(distanceMeters!, units)} ${BastionGeo.compassPoint(bearing!)}',
         if (battery != null) 'battery $battery%',
       ].join(' • ');
 }

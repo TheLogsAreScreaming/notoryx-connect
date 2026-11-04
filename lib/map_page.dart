@@ -9,6 +9,8 @@ import 'package:share_plus/share_plus.dart';
 import 'node_detail_page.dart';
 import 'services/bastion_geo.dart';
 import 'services/bastion_gpx.dart';
+import 'services/bastion_preferences.dart';
+import 'services/bastion_units.dart';
 import 'services/bastion_team.dart';
 import 'services/bastion_waypoints.dart';
 import 'services/meshtastic_node_database.dart';
@@ -301,7 +303,7 @@ class _MapPageState extends State<MapPage> {
                       TeamFreshness.unknown => Icons.help_outline,
                     }),
                     title: Text(m.name),
-                    subtitle: Text(m.summary),
+                    subtitle: Text(m.summaryIn(BastionPreferences.instance.units)),
                     trailing: Text(switch (m.freshness) {
                       TeamFreshness.fresh => 'OK',
                       TeamFreshness.stale => 'QUIET',
@@ -426,11 +428,9 @@ class _MapPageState extends State<MapPage> {
               if (node.shortName != null) Text(node.shortName!),
               const SizedBox(height: 12),
               Text('${node.latitude!.toStringAsFixed(5)}, ${node.longitude!.toStringAsFixed(5)}'
-                  '${node.altitudeMeters == null ? '' : ' • ${node.altitudeMeters} m'}'),
+                  '${node.altitudeMeters == null ? '' : ' • ${BastionUnitFormat.altitude(node.altitudeMeters!, BastionPreferences.instance.units)}'}'),
               if (distance != null)
-                Text(distance < 1000
-                    ? '${distance.round()} m from this radio'
-                    : '${(distance / 1000).toStringAsFixed(1)} km from this radio'),
+                Text('${BastionUnitFormat.distance(distance, BastionPreferences.instance.units)} from this radio'),
               Text('Position: ${ago(node.positionTime)} • Heard: ${ago(node.lastHeard)}'),
               if (node.snr != null || node.hopsAway != null)
                 Text([
@@ -478,7 +478,7 @@ class _NodePin extends StatelessWidget {
     return Semantics(
       button: true,
       label: '${node.displayName}${isLocal ? ', this radio' : ''}'
-          '${team == null ? '' : ', trip contact, ${team!.summary}'}',
+          '${team == null ? '' : ', trip contact, ${team!.summaryIn(BastionPreferences.instance.units)}'}',
       child: GestureDetector(
         onTap: onTap,
         child: Column(

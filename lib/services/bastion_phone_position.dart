@@ -100,9 +100,9 @@ class BastionPhonePositionSharer {
 
   static const precise = 32;
 
-  /// Choices offered to the user, with the approximate size of the area the
-  /// position is rounded to (Meshtastic's table).
-  static const precisionChoices = {32: 'Precise', 16: 'About 360 m', 14: 'About 1.5 km', 12: 'About 6 km'};
+  /// Choices offered to the user, with the approximate size in meters of the
+  /// area the position is rounded to (Meshtastic's table); 0 is precise.
+  static const precisionChoices = {32: 0, 16: 360, 14: 1500, 12: 6000};
   final Duration minInterval;
   final Duration movingInterval;
   final double minDistanceMeters;

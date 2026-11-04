@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'bastion_units.dart';
+
 /// Phone appearance preferences; radio configuration is never changed.
 class BastionPreferences extends ChangeNotifier {
   static final instance = BastionPreferences();
@@ -14,6 +16,9 @@ class BastionPreferences extends ChangeNotifier {
 
   /// Read incoming messages aloud while the app is open.
   bool readAloud = false;
+
+  /// Miles and feet, or kilometers and meters. Defaults from the phone's region.
+  BastionUnits units = BastionUnits.metric;
   String? error;
 
   static const retentionChoices = [0, 1, 7, 30];
@@ -28,18 +33,22 @@ class BastionPreferences extends ChangeNotifier {
       encounters = await p.getBool('bastion.dashboard.encounters') ?? true;
       channelRetentionDays = await p.getInt('bastion.messages.channel_retention_days') ?? 0;
       readAloud = await p.getBool('bastion.messages.read_aloud') ?? false;
+      final unitName = await p.getString('bastion.units');
+      units = BastionUnits.values.where((u) => u.name == unitName).firstOrNull ??
+          BastionUnitFormat.defaultFor(WidgetsBinding.instance.platformDispatcher.locale.countryCode);
     } catch (_) { error = 'Appearance preferences could not be loaded.'; }
     notifyListeners();
   }
 
   Future<void> update({ThemeMode? mode, bool? stats, bool? health, bool? saved,
-      int? retentionDays, bool? speak}) async {
+      int? retentionDays, bool? speak, BastionUnits? unitSystem}) async {
     theme = mode ?? theme;
     statistics = stats ?? statistics;
     meshHealth = health ?? meshHealth;
     encounters = saved ?? encounters;
     channelRetentionDays = retentionDays ?? channelRetentionDays;
     readAloud = speak ?? readAloud;
+    units = unitSystem ?? units;
     error = null;
     notifyListeners();
     try {
@@ -50,6 +59,7 @@ class BastionPreferences extends ChangeNotifier {
       await p.setBool('bastion.dashboard.encounters', encounters);
       await p.setInt('bastion.messages.channel_retention_days', channelRetentionDays);
       await p.setBool('bastion.messages.read_aloud', readAloud);
+      await p.setString('bastion.units', units.name);
     } catch (_) { error = 'Changes apply now, but could not be saved.'; notifyListeners(); }
   }
 }
@@ -69,6 +79,19 @@ class BastionAppearanceCard extends StatelessWidget {
             ListTile(title: Text('${mode.name[0].toUpperCase()}${mode.name.substring(1)} theme'),
               trailing: p.theme == mode ? const Icon(Icons.check) : null,
               onTap: () => p.update(mode: mode)),
+          ListTile(
+            title: const Text('Units'),
+            subtitle: const Text('Distances and altitudes'),
+            trailing: SegmentedButton<BastionUnits>(
+              segments: const [
+                ButtonSegment(value: BastionUnits.metric, label: Text('km, m')),
+                ButtonSegment(value: BastionUnits.imperial, label: Text('mi, ft')),
+              ],
+              selected: {p.units},
+              showSelectedIcon: false,
+              onSelectionChanged: (v) => p.update(unitSystem: v.single),
+            ),
+          ),
           SwitchListTile(title: const Text('Dashboard statistics'), value: p.statistics,
             onChanged: (v) => p.update(stats: v)),
           SwitchListTile(title: const Text('Mesh health & signal'), value: p.meshHealth,
