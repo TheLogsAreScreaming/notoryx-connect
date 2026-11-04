@@ -22,3 +22,19 @@ List<DiscoveryObservation> latestDiscoveryObservations(Iterable<DiscoveryObserva
     return time != 0 ? time : a.nodeNumber.compareTo(b.nodeNumber);
   }));
 }
+
+/// Filter observations to a non-negative recent time window.
+/// Future timestamps are excluded rather than shown as recently heard.
+List<DiscoveryObservation> recentDiscoveryObservations(
+  Iterable<DiscoveryObservation> observations, {
+  required DateTime now,
+  required Duration maxAge,
+}) {
+  if (maxAge.isNegative) {
+    throw ArgumentError.value(maxAge, 'maxAge', 'Must not be negative');
+  }
+  final earliest = now.subtract(maxAge);
+  return latestDiscoveryObservations(observations.where((observation) =>
+      !observation.lastHeard.isBefore(earliest) &&
+      !observation.lastHeard.isAfter(now)));
+}
