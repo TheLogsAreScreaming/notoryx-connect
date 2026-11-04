@@ -8,6 +8,7 @@ import 'dart:ui' as ui;
 
 import 'package:bastion/beacon_page.dart';
 import 'package:bastion/field_tools_page.dart';
+import 'package:bastion/local_mesh_discovery_page.dart';
 import 'package:bastion/main.dart';
 import 'package:bastion/phone_backup_page.dart';
 import 'package:bastion/privacy_page.dart';
@@ -72,6 +73,7 @@ void main() {
     'phone_backup': (radio) => PhoneBackupPage(radio: radio),
     'beacons': (radio) => BeaconPage(radio: radio),
     'trip': (radio) => TripPage(radio: radio),
+    'discovery': (radio) => LocalMeshDiscoveryPage(radio: radio),
   };
   for (final page in pages.entries) {
     testWidgets('page ${page.key}', (tester) async {

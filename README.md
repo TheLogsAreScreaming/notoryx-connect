@@ -13,16 +13,22 @@ NOTORYX Connect pairs your phone with a radio over Bluetooth so you can message,
 > **Independent project:** NOTORYX Connect (formerly Bastion) is not affiliated with, sponsored by, endorsed by, or an official application of Meshtastic LLC.
 
 <p align="center">
+  <img src="docs/screenshots/home.png" width="200" alt="Home tab: field console, trip plan, check-in and hold for SOS">
   <img src="docs/screenshots/nodes.png" width="200" alt="Nodes tab: scan for radios and connect">
   <img src="docs/screenshots/chats.png" width="200" alt="Chats tab: channel and direct messages with quick replies">
   <img src="docs/screenshots/tools.png" width="200" alt="Tools tab: field tools and deployment checklist">
-  <img src="docs/screenshots/settings_light.png" width="200" alt="Settings tab in the light theme">
+</p>
+<p align="center">
+  <img src="docs/screenshots/trip.png" width="200" alt="Plan your trip: contacts, overdue alert and check-in reminder">
+  <img src="docs/screenshots/beacons.png" width="200" alt="Mesh beacons heard, and sending one by hand">
+  <img src="docs/screenshots/discovery.png" width="200" alt="Local mesh discovery planner">
+  <img src="docs/screenshots/settings.png" width="200" alt="Settings: appearance, units, filters and messages">
 </p>
 <p align="center">
   <img src="docs/screenshots/field_records.png" width="200" alt="Field records: incident log, templates, coverage and bot safeguards">
   <img src="docs/screenshots/privacy.png" width="200" alt="Privacy and data: what's stored and what's sent">
   <img src="docs/screenshots/radio_backup.png" width="200" alt="Encrypted radio backup">
-  <img src="docs/screenshots/phone_backup.png" width="200" alt="Phone data backup">
+  <img src="docs/screenshots/home_light.png" width="200" alt="Home tab in the light theme">
 </p>
 
 > NOTORYX Connect is a beta. It has been checked on one radio (a Seeed T1000-E) and in automated tests, not yet on a wide range of phones, radios and firmware versions. Don't rely on it as your only way to call for help. Please [report issues](../../issues).
@@ -33,7 +39,8 @@ Get the latest beta from **[NOTORYX Connect releases](https://github.com/TheLogs
 
 | Platform | File | Notes |
 |---|---|---|
-| Android (ARM64 phones) | `…-arm64.apk` | Signed with the release key |
+| Android (ARM64 phones) | `NOTORYX-Connect-<version>-<build>.apk` | Signed with the release key |
+| Google Play | `NOTORYX-Connect-<version>-<build>.aab` | For the Play Console, not for installing directly |
 
 A universal macOS build (Intel and Apple silicon) can be built with the **NOTORYX macOS Build** workflow but isn't released yet.
 
@@ -43,16 +50,25 @@ A universal macOS build (Intel and Apple silicon) can be built with the **NOTORY
 2. Open the file. If Android asks, allow installs from your browser or file manager.
 3. Open NOTORYX Connect and allow **Bluetooth**, **location** and **notifications** when asked.
 
+Newer betas install over older ones and keep your data. Don't uninstall first.
+
 **Upgrading from v0.1.3-beta.1 or earlier:** the app ID changed from `org.backcountrysignal.bastion` to `com.bastionmesh.connect`, so the next release installs as a separate app instead of updating the old one. Before switching, make a backup in the old app (**Settings → Phone data backup / restore**, and **Encrypted radio backup / restore** if you want one), install the new app, restore the backup there, then uninstall the old app. You only do this once.
 
 ## Getting started
 
-1. **Connect your radio.** On **NODES**, tap **Scan for radios**, then **Connect** next to your radio. NOTORYX Connect checks the Meshtastic service, runs the PhoneAPI handshake and syncs the node list before it marks the session ready. It reconnects on its own if the link drops.
+1. **Connect your radio.** On **HOME**, tap **Connect radio**, or on **NODES**, tap **Scan for radios**, then **Connect** next to your radio. NOTORYX Connect checks the Meshtastic service, runs the PhoneAPI handshake and syncs the node list before it marks the session ready. It reconnects on its own if the link drops.
 2. **Send a message.** On **CHATS**, pick **Broadcast** or a node, choose a channel and send. Messages typed while you're offline are queued and sent when the radio is back.
 3. **Check your radio's settings.** **SETTINGS → Radio configuration** shows the node's identity, LoRa settings, channels and modules, and every change is read back from the radio to confirm it saved.
-4. **Prepare for the field.** **TOOLS** has the deployment checklist, battery runtime estimate, incident log and message templates.
+4. **Plan your trip.** On **HOME**, add up to 6 trip contacts. **Check in** sends them your status, position and battery, and **Hold for SOS** repeats a call for help until one of them answers.
+5. **Prepare for the field.** **TOOLS** has the deployment checklist, battery runtime estimate, incident log, message templates and mesh beacons.
 
 ## Features
+
+### Trip safety (HOME)
+- **Field console** with radio status, node count and battery.
+- **Plan your trip:** up to 6 trip contacts, an overdue alert and a check-in reminder.
+- **Check in** with one tap (I'm OK, At camp, Delayed, Heading back). It goes to every trip contact as a direct message with time, position and battery, shows who it reached, and resends to the rest.
+- **Hold for SOS** (2 seconds, or a confirmation with TalkBack). It sends to your trip contacts and optionally a channel, repeats every 5 minutes up to 12 times, stops when a contact answers, and **I'm safe** sends an all-clear.
 
 ### Messaging
 - Channel and direct messages with delivery states from routing acknowledgments, and a thread for each node.
@@ -60,11 +76,21 @@ A universal macOS build (Intel and Apple silicon) can be built with the **NOTORY
 - Search across all saved messages, including queued ones.
 - Quick replies (On my way, Need assistance, What is your position?) and check-in, assistance and all-clear templates that you review before sending.
 - Chat history, queue and node list are kept separately for each radio you use.
+- Emoji reactions, a draft kept for each conversation, and a **via MQTT** label on messages that came over the internet.
+- **Ignore** or **mute** a node, and hide messages containing words you choose (whole words, any language). An SOS reply from a trip contact is never missed, even if you ignored them.
+- Optional automatic deletion of old channel messages (direct messages are kept), and reading new messages aloud.
+- App-icon shortcuts: Check in / SOS, Chats, Nodes and Map.
 - Optional **Bot Mode** with an away reply, quiet hours, reply limits and loop protection.
 
 ### Nodes and maps
 - Node list with favorites, notes, telemetry, signal history, traceroute (with SNR for each hop) and neighbors.
 - Map of node positions and waypoints. OpenStreetMap areas you've viewed stay cached offline for a year.
+- **Team view:** each trip contact's freshness, distance, direction and battery, with position age on their pins.
+- **Trails** of where your trip contacts (and you) have been over the last 24 hours.
+- **Export GPX** of waypoints and trails for other mapping apps.
+- **Units:** miles and feet, or kilometers and meters (picked from your region by default).
+- **Mesh beacons:** see the beacons your radio hears, join a channel a beacon offers after reviewing it, or send one by hand.
+- **Local mesh discovery** (read-only for now): plan a listen across LoRa presets and see the nodes your radio has already heard.
 - Opt-in phone GPS sharing, with optional rounding of your shared position (about 360 m, 1.5 km or 6 km).
 
 ### Radio management
@@ -107,7 +133,7 @@ CI generates the Android project with the Dart project name `bastion` and organi
 
 Dependency versions are locked in the committed `pubspec.lock`, and CI runs `flutter pub get --enforce-lockfile`, so every build uses the same packages. To change a dependency, edit `pubspec.yaml`, run plain `flutter pub get`, and commit the updated `pubspec.lock`.
 
-The README screenshots (the four main tabs plus field records, privacy and both backup screens) are rendered by `test/preview/screens_preview_test.dart`:
+The README screenshots (the main tabs in dark and light, plus the trip, beacons, discovery, field records, privacy and backup screens) are rendered by `test/preview/screens_preview_test.dart`:
 
 ```sh
 PREVIEW_OUT=docs/screenshots flutter test test/preview
