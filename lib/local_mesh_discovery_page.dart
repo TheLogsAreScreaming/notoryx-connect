@@ -15,7 +15,7 @@ class _LocalMeshDiscoveryPageState extends State<LocalMeshDiscoveryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final plan = LocalMeshDiscoveryPlan(presets: _selected.isEmpty ? LocalMeshDiscoveryPlan.recommended : _selected, dwell: Duration(minutes: _minutes));
+    final plan = _selected.isEmpty ? null : LocalMeshDiscoveryPlan(presets: _selected, dwell: Duration(minutes: _minutes));
     return Scaffold(
       appBar: AppBar(title: const Text('Local mesh discovery')),
       body: ListView(padding: const EdgeInsets.all(16), children: [
@@ -31,7 +31,7 @@ class _LocalMeshDiscoveryPageState extends State<LocalMeshDiscoveryPage> {
         const SizedBox(height: 8),
         Text('Listen per preset: $_minutes minutes'),
         Slider(value: _minutes.toDouble(), min: 1, max: 30, divisions: 29, label: '$_minutes min', onChanged: (value) => setState(() => _minutes = value.round())),
-        Text(_selected.isEmpty ? 'Select at least one preset.' : 'Estimated listening time: ${plan.estimatedListeningTime.inMinutes} minutes'),
+        Text(_selected.isEmpty ? 'Select at least one preset.' : 'Estimated listening time: ${plan!.estimatedListeningTime.inMinutes} minutes'),
         const SizedBox(height: 16),
         const FilledButton(onPressed: null, child: Text('Start scan (not yet available)')),
       ]),
