@@ -6,6 +6,7 @@ void main() {
   testWidgets('discovery planner is explicitly non-operational', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: LocalMeshDiscoveryPage()));
     expect(find.text('Local mesh discovery'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Start scan (not yet available)'), 200);
     expect(find.text('Start scan (not yet available)'), findsOneWidget);
     final button = tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Start scan (not yet available)'));
     expect(button.onPressed, isNull);
@@ -18,6 +19,7 @@ void main() {
     await tester.pump();
     await tester.tap(find.text('Medium Range - Fast'));
     await tester.pump();
+    await tester.scrollUntilVisible(find.text('Select at least one preset.'), 200);
     expect(find.text('Select at least one preset.'), findsOneWidget);
     expect(tester.widget<FilledButton>(find.byType(FilledButton)).onPressed, isNull);
   });
