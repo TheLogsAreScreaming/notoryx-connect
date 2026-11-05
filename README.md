@@ -185,7 +185,7 @@ See [TRADEMARKS.md](TRADEMARKS.md) for NOTORYX Connect's trademark-use rules.
 
 Meshtastic software components are released under various licenses. NOTORYX Connect must preserve all applicable license notices, attribution, source-distribution obligations, and other requirements for any upstream component that is actually incorporated into the project.
 
-NOTORYX Connect includes generated protocol bindings from `meshtastic/protobufs` v2.8.1. Its GPL-3.0 license text is preserved in `licenses/meshtastic-protobufs-GPL-3.0.txt`. NOTORYX Connect is licensed under GPL-3.0; see [LICENSE](LICENSE). Keep the generated-code and third-party notices with distributed builds.
+NOTORYX Connect includes generated protocol bindings from `meshtastic/protobufs` v2.8.2. Its GPL-3.0 license text is preserved in `licenses/meshtastic-protobufs-GPL-3.0.txt`. NOTORYX Connect is licensed under GPL-3.0; see [LICENSE](LICENSE). Keep the generated-code and third-party notices with distributed builds.
 
 Third-party Flutter/Dart dependencies remain subject to their respective licenses.
 

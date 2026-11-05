@@ -70,7 +70,7 @@ No analytics or crash-reporting SDK is declared in the direct dependency list; t
 and merged-manifest checks must be completed on the exact candidate.
 
 ## License review
-Generated protocol code comes from meshtastic/protobufs v2.8.1. That source distributes
+Generated protocol code comes from meshtastic/protobufs v2.8.2. That source distributes
 GPL-3.0 license text, preserved under licenses/. The previous README claim that no
 upstream generated source is included was incorrect. Corresponding-source, attribution,
 application licensing and third-party notices need final review before a production
