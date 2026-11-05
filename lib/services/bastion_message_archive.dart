@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bastion_chat_message.dart';
+import 'bastion_history_limit.dart';
+import 'bastion_preferences.dart';
 
 class BastionArchiveSnapshot {
   const BastionArchiveSnapshot({
@@ -22,8 +24,16 @@ class BastionArchiveSnapshot {
 /// load: unreadable data is copied to [backupKey] first, and if storage can't
 /// be read at all, saving stays off for this session.
 class BastionMessageArchive extends ChangeNotifier {
-  BastionMessageArchive({SharedPreferencesAsync? preferences, this.radio})
-      : _preferences = preferences;
+  BastionMessageArchive({
+    SharedPreferencesAsync? preferences,
+    this.radio,
+    int Function()? historyLimit,
+  })  : _preferences = preferences,
+        _historyLimit = historyLimit ?? (() => BastionPreferences.instance.historyLimit);
+
+  /// Messages kept per conversation when saving; Settings → Messages by
+  /// default.
+  final int Function() _historyLimit;
 
   /// Unassigned history: saved before history was kept per radio, or queued
   /// before any radio connected. [BastionRadioHistory] moves it to radios.
@@ -137,7 +147,9 @@ class BastionMessageArchive extends ChangeNotifier {
     required List<PendingTextMessage> pending,
   }) {
     final encoded = jsonEncode({
-      'messages': messages.takeLast(500).map((m) => m.toJson()).toList(),
+      'messages': BastionHistoryLimit.trim(messages, _historyLimit())
+          .map((m) => m.toJson())
+          .toList(),
       'pending': pending.map((m) => m.toJson()).toList(),
     });
     final result = _saves.then((_) => _write(encoded));
@@ -161,13 +173,5 @@ class BastionMessageArchive extends ChangeNotifier {
       notifyListeners();
       return false;
     }
-  }
-}
-
-extension<T> on Iterable<T> {
-  Iterable<T> takeLast(int count) {
-    final list = toList();
-    if (list.length <= count) return list;
-    return list.skip(list.length - count);
   }
 }
