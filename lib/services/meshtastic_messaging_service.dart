@@ -179,6 +179,7 @@ class MeshtasticMessagingService {
     final pending = BastionRadioHistory.mergePending(snapshot.pending, _pending);
     _messages..clear()..addAll(messages);
     _pending..clear()..addAll(pending);
+    _trimHistory();
     _notify();
     if (connection.isReady) unawaited(flush());
   }

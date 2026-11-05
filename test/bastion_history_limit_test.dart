@@ -1,6 +1,7 @@
 import 'package:bastion/services/bastion_chat_message.dart';
 import 'package:bastion/services/bastion_history_limit.dart';
 import 'package:bastion/services/bastion_message_archive.dart';
+import 'package:bastion/services/bastion_radio_history.dart';
 import 'package:bastion/services/meshtastic_text_codec.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,6 +57,12 @@ void main() {
   test('nothing is dropped under the limit', () {
     final messages = [channel(0), dm(0x33), channel(2)];
     expect(BastionHistoryLimit.trim(messages, 500), messages);
+  });
+
+  test('merging histories (switching radios) keeps more than 500', () {
+    final older = [for (var i = 0; i < 400; i++) channel(0)];
+    final newer = [for (var i = 0; i < 400; i++) channel(0)];
+    expect(BastionRadioHistory.mergeMessages(older, newer), hasLength(800));
   });
 
   test('the archive saves up to the chosen limit per conversation', () async {

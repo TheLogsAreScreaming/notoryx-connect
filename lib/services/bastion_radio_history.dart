@@ -80,7 +80,8 @@ class BastionRadioHistory {
     }
   }
 
-  /// [older] then [newer] in time order, without duplicates, newest 500.
+  /// [older] then [newer] in time order, without duplicates. Callers trim
+  /// to the history limit (saving does too).
   static List<BastionChatMessage> mergeMessages(
       List<BastionChatMessage> older, List<BastionChatMessage> newer) {
     final seen = <String>{};
@@ -88,7 +89,7 @@ class BastionRadioHistory {
       for (final m in [...older, ...newer])
         if (seen.add('${m.direction.name}:${m.from}:${m.packetId}')) m,
     ]..sort((a, b) => a.timestamp.compareTo(b.timestamp));
-    return merged.length <= 500 ? merged : merged.sublist(merged.length - 500);
+    return merged;
   }
 
   static List<PendingTextMessage> mergePending(
