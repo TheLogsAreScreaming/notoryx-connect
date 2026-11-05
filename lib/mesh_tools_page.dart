@@ -25,9 +25,9 @@ class MeshToolsPage extends StatelessWidget {
           ),
           body: SafeArea(top: false, child: AnimatedBuilder(
             animation: radio,
-            builder: (context, _) => TabBarView(
+            builder: (context, _) => PrimaryScrollController.none(child: TabBarView(
               children: [_RangeTestTab(radio: radio), _StoreForwardTab(radio: radio)],
-            ),
+            )),
           )),
         ),
       );
