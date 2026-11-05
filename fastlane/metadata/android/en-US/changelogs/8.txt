@@ -1,0 +1,5 @@
+• Lost or replaced a radio? Settings > Radio data moves its messages, nodes and trails to the new radio. Nothing the new radio had is overwritten.
+• Message history: keep 500 to 5,000 messages in each conversation
+• Hold and drag the scroll bar to move through long lists
+• GPS pin settings are hidden on boards with built-in GPS, like the T-Beam and T1000-E
+• Meshtastic 2.8.2, with boards shown by name
