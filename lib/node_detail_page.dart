@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'services/bastion_hardware.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_units.dart';
 import 'services/bastion_chat_message.dart';
@@ -178,7 +179,7 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                     if (node?.shortName != null)
                       _Row('Short name', node!.shortName!),
                     if (node?.hardwareModel != null)
-                      _Row('Hardware', 'Model ${node!.hardwareModel}'),
+                      _Row('Hardware', BastionHardware.name(node!.hardwareModel!)),
                     if (isSelf) const _Row('This radio', 'Yes'),
                     _Row(
                       'Last heard',
