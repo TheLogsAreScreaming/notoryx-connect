@@ -30,6 +30,7 @@ import 'bastion_filters.dart';
 import 'bastion_settings_evidence.dart';
 import 'bastion_waypoints.dart';
 import 'bastion_beacons.dart';
+import 'bastion_radio_data.dart';
 import 'bastion_trails.dart';
 import 'bastion_trip.dart';
 import 'bastion_preferences.dart';
@@ -566,6 +567,49 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   /// Recent movement of a trip contact or this radio, oldest first.
   List<TrailPoint> trailOf(int num) => _trails.trailOf(num);
+
+  final BastionRadioData _radioData = BastionRadioData();
+
+  /// Radios with messages, NodeDex history or trails on this phone.
+  Future<List<StoredRadio>> storedRadios() => _radioData.list();
+
+  /// Hands [from]'s messages, offline queue, NodeDex history and trails to
+  /// the connected radio (after a radio is lost or replaced). The connected
+  /// radio's own data is kept, merged with it, and also copied aside first.
+  /// [from]'s copy is deleted only when everything was saved. Returns a
+  /// problem for the user, or null when done.
+  Future<String?> moveRadioData(int from) async {
+    final messaging = _messaging;
+    final to = _localNodeNum;
+    if (!isReady || messaging == null || to == null || messaging.archive?.radio != to) {
+      return 'Connect to the new radio first.';
+    }
+    if (from == to) return 'That is the connected radio.';
+    final old = BastionMessageArchive(radio: from);
+    final snapshot = await old.load();
+    if (!old.canSave || old.problem != null) {
+      return "The old radio's messages could not be fully read, so nothing was moved.";
+    }
+    try {
+      await _radioData.keepBeforeMove(to);
+    } catch (_) {
+      return "This radio's data could not be copied aside first, so nothing was moved.";
+    }
+    final messagesSaved = await messaging.importHistory(snapshot);
+    final nodesSaved = await _nodeDex.importRadio(from);
+    final trailsSaved = await _trails.importRadio(from);
+    _syncMessageSnapshot(messaging);
+    notifyListeners();
+    if (!messagesSaved || !nodesSaved || !trailsSaved) {
+      return "Some of it could not be saved, so the old radio's copy was kept.";
+    }
+    try {
+      await _radioData.remove(from);
+    } catch (_) {
+      return "Moved, but the old radio's copy could not be deleted.";
+    }
+    return null;
+  }
 
   Future<void> _loadArchive() async {
     final last = await _history.lastRadio();

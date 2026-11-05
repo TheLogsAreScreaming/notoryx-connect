@@ -40,6 +40,11 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.settings_outlined).last);
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('RADIO CONFIGURATION'),
+      250,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.text('RADIO CONFIGURATION'), findsOneWidget);
     await tester.scrollUntilVisible(
       find.text('Low-power field mode'),

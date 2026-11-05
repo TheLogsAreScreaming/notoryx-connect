@@ -64,22 +64,53 @@ class BastionTrails {
     try {
       final raw = await _store.getString(key(radio));
       if (raw == null) return;
-      final map = jsonDecode(raw) as Map<String, Object?>;
-      for (final e in map.entries) {
-        final num = int.tryParse(e.key);
-        if (num == null) continue;
-        try {
-          _trails[num] = [for (final p in e.value! as List) TrailPoint.fromJson(p)];
-        } catch (_) {
-          // Skip a damaged trail; the others still load.
-        }
-      }
+      _trails.addAll(_decode(raw));
       _prune(_clock());
     } on FormatException {
       // Damaged storage is replaced by the next save.
     } catch (_) {
       _loadFailed = true; // Storage unreadable: never overwrite it this session.
     }
+  }
+
+  static Map<int, List<TrailPoint>> _decode(String raw) {
+    final map = jsonDecode(raw) as Map<String, Object?>;
+    final trails = <int, List<TrailPoint>>{};
+    for (final e in map.entries) {
+      final num = int.tryParse(e.key);
+      if (num == null) continue;
+      try {
+        trails[num] = [for (final p in e.value! as List) TrailPoint.fromJson(p)];
+      } catch (_) {
+        // Skip a damaged trail; the others still load.
+      }
+    }
+    return trails;
+  }
+
+  /// Merges [from]'s trails into the current radio's and saves them.
+  /// Returns false when either could not be read or saved.
+  Future<bool> importRadio(int from) async {
+    if (_radio == null || _loadFailed) return false;
+    final Map<int, List<TrailPoint>> other;
+    try {
+      final raw = await _store.getString(key(from));
+      if (raw == null) return true;
+      other = _decode(raw);
+    } catch (_) {
+      return false;
+    }
+    for (final e in other.entries) {
+      final seen = <int>{};
+      _trails[e.key] = [
+        for (final p in [...?_trails[e.key], ...e.value]..sort((a, b) => a.time.compareTo(b.time)))
+          if (seen.add(p.time.millisecondsSinceEpoch)) p,
+      ];
+    }
+    _prune(_clock());
+    _dirty = true;
+    await flush();
+    return !_dirty;
   }
 
   /// Records new positions of [tracked] nodes; returns whether any trail grew.

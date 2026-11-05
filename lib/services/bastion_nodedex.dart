@@ -155,6 +155,18 @@ class BastionNodeDex {
     }
   }
 
+  /// Merges [from]'s encounters into the current radio's and saves them.
+  /// Returns false when either could not be read or saved.
+  Future<bool> importRadio(int from) async {
+    if (_radio == null || _recordsBlocked) return false;
+    final stored = await _read(radioKey(from));
+    if (stored == null) return false;
+    for (final r in stored.values) {
+      _records[r.num] = _merge(_records[r.num], r);
+    }
+    return _saveRecords();
+  }
+
   /// Keeps observing in memory without a radio (between connect and the
   /// radio identifying itself); [useRadio] then saves them to that radio.
   void detach() {
