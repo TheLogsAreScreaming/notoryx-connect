@@ -11,6 +11,7 @@ import '../generated/meshtastic/portnums.pbenum.dart';
 import '../generated/meshtastic/storeforward.pb.dart';
 import 'bastion_chat_message.dart';
 import 'bastion_bot_guard.dart';
+import 'bastion_history_limit.dart';
 import 'bastion_message_archive.dart';
 import 'bastion_radio_history.dart';
 import 'meshtastic_connection_controller.dart';
@@ -355,6 +356,9 @@ class MeshtasticMessagingService {
   /// them. Direct messages are never deleted this way.
   Duration? channelMessageMaxAge;
 
+  /// Messages kept in each conversation; older ones are deleted.
+  int historyLimit = BastionHistoryLimit.standard;
+
   /// Applies [channelMessageMaxAge] now, e.g. after it changes.
   void pruneChannelMessages() {
     final before = _messages.length;
@@ -368,8 +372,11 @@ class MeshtasticMessagingService {
       final cutoff = DateTime.now().subtract(maxAge);
       _messages.removeWhere((m) => m.isBroadcast && m.timestamp.isBefore(cutoff));
     }
-    if (_messages.length > 500) {
-      _messages.removeRange(0, _messages.length - 500);
+    final kept = BastionHistoryLimit.trim(_messages, historyLimit);
+    if (kept.length != _messages.length) {
+      _messages
+        ..clear()
+        ..addAll(kept);
     }
   }
 

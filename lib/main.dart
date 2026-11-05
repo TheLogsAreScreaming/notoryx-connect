@@ -15,6 +15,7 @@ import 'services/bastion_units.dart';
 import 'services/bastion_field_log.dart';
 import 'services/bastion_background_service.dart';
 import 'services/bastion_bot_guard.dart';
+import 'services/bastion_history_limit.dart';
 import 'services/bastion_preferences.dart';
 import 'phone_backup_page.dart';
 import 'privacy_page.dart';
@@ -1341,6 +1342,7 @@ class _MessagesCard extends StatelessWidget {
           p.channelRetentionDays == 0
               ? 'Channel messages kept'
               : 'Channel messages deleted after ${p.channelRetentionDays} day${p.channelRetentionDays == 1 ? '' : 's'}',
+          'newest ${p.historyLimit >= 1000 ? '${p.historyLimit ~/ 1000},000' : p.historyLimit} per conversation',
           if (p.readAloud) 'read aloud on',
         ].join(' • ')),
         childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
@@ -1355,6 +1357,17 @@ class _MessagesCard extends StatelessWidget {
             items: [for (final d in BastionPreferences.retentionChoices)
               DropdownMenuItem(value: d, child: Text(d == 0 ? 'Never' : 'After $d day${d == 1 ? '' : 's'}'))],
             onChanged: (d) => p.update(retentionDays: d),
+          ),
+          DropdownButtonFormField<int>(
+            initialValue: p.historyLimit,
+            decoration: const InputDecoration(
+              labelText: 'Message history',
+              helperText: 'Per channel or direct conversation. A lower limit deletes older messages.',
+              helperMaxLines: 2,
+            ),
+            items: [for (final n in BastionHistoryLimit.choices)
+              DropdownMenuItem(value: n, child: Text('Keep newest ${n >= 1000 ? '${n ~/ 1000},000' : n}'))],
+            onChanged: (n) => p.update(keepMessages: n),
           ),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,

@@ -36,6 +36,7 @@ import 'bastion_preferences.dart';
 import 'bastion_speech.dart';
 import 'bastion_owner_codec.dart';
 import 'bastion_owner_readback.dart';
+import 'bastion_history_limit.dart';
 import 'bastion_message_archive.dart';
 import 'bastion_radio_config_codec.dart';
 import 'bastion_radio_history.dart';
@@ -651,6 +652,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         connection: connection,
       )
         ..channelMessageMaxAge = _channelMaxAge
+        ..historyLimit = BastionPreferences.instance.historyLimit
         ..isIgnoredSender = filters.isIgnored;
       _nodeDex.detach();
       final handshake = MeshtasticHandshake(
@@ -1142,6 +1144,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     if (messaging == null) return;
     messaging
       ..channelMessageMaxAge = _channelMaxAge
+      ..historyLimit = BastionPreferences.instance.historyLimit
       ..pruneChannelMessages();
     _syncMessageSnapshot(messaging);
     notifyListeners();
@@ -1277,11 +1280,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         deliveryState: BastionDeliveryState.queued,
       ),
     ];
-    if (_archivedMessages.length > 500) {
-      _archivedMessages = _archivedMessages.sublist(
-        _archivedMessages.length - 500,
-      );
-    }
+    _archivedMessages = BastionHistoryLimit.trim(
+      _archivedMessages,
+      BastionPreferences.instance.historyLimit,
+    );
     await _archive.save(messages: _archivedMessages, pending: _archivedPending);
     notifyListeners();
     return packetId;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'bastion_history_limit.dart';
 import 'bastion_units.dart';
 
 /// Phone appearance preferences; radio configuration is never changed.
@@ -13,6 +14,9 @@ class BastionPreferences extends ChangeNotifier {
 
   /// Delete channel messages older than this many days; 0 keeps them.
   int channelRetentionDays = 0;
+
+  /// Messages kept in each conversation (a channel or a direct thread).
+  int historyLimit = BastionHistoryLimit.standard;
 
   /// Read incoming messages aloud while the app is open.
   bool readAloud = false;
@@ -33,6 +37,8 @@ class BastionPreferences extends ChangeNotifier {
       encounters = await p.getBool('bastion.dashboard.encounters') ?? true;
       channelRetentionDays = await p.getInt('bastion.messages.channel_retention_days') ?? 0;
       readAloud = await p.getBool('bastion.messages.read_aloud') ?? false;
+      final limit = await p.getInt('bastion.messages.history_limit');
+      historyLimit = BastionHistoryLimit.choices.contains(limit) ? limit! : BastionHistoryLimit.standard;
       final unitName = await p.getString('bastion.units');
       units = BastionUnits.values.where((u) => u.name == unitName).firstOrNull ??
           BastionUnitFormat.defaultFor(WidgetsBinding.instance.platformDispatcher.locale.countryCode);
@@ -41,13 +47,14 @@ class BastionPreferences extends ChangeNotifier {
   }
 
   Future<void> update({ThemeMode? mode, bool? stats, bool? health, bool? saved,
-      int? retentionDays, bool? speak, BastionUnits? unitSystem}) async {
+      int? retentionDays, bool? speak, BastionUnits? unitSystem, int? keepMessages}) async {
     theme = mode ?? theme;
     statistics = stats ?? statistics;
     meshHealth = health ?? meshHealth;
     encounters = saved ?? encounters;
     channelRetentionDays = retentionDays ?? channelRetentionDays;
     readAloud = speak ?? readAloud;
+    historyLimit = keepMessages ?? historyLimit;
     units = unitSystem ?? units;
     error = null;
     notifyListeners();
@@ -59,6 +66,7 @@ class BastionPreferences extends ChangeNotifier {
       await p.setBool('bastion.dashboard.encounters', encounters);
       await p.setInt('bastion.messages.channel_retention_days', channelRetentionDays);
       await p.setBool('bastion.messages.read_aloud', readAloud);
+      await p.setInt('bastion.messages.history_limit', historyLimit);
       await p.setString('bastion.units', units.name);
     } catch (_) { error = 'Changes apply now, but could not be saved.'; notifyListeners(); }
   }
