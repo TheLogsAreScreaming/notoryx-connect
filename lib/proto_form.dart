@@ -17,6 +17,8 @@ class ProtoFieldList extends StatelessWidget {
     required this.message,
     required this.writable,
     required this.changed,
+    this.hiddenFields = const {},
+    this.notice,
   });
 
   /// The values to display. May be a read-only default for an unset field.
@@ -26,6 +28,12 @@ class ProtoFieldList extends StatelessWidget {
   final GeneratedMessage Function() writable;
 
   final VoidCallback changed;
+
+  /// Field numbers of [message] not shown; their values are left as they are.
+  final Set<int> hiddenFields;
+
+  /// Shown above the fields, e.g. why some are hidden.
+  final String? notice;
 
   static int _base(int type) => PbFieldType.baseType(type);
 
@@ -85,7 +93,10 @@ class ProtoFieldList extends StatelessWidget {
           padding: EdgeInsets.all(12),
           child: Text(BastionRadioPolicy.compatibilityNotice),
         ),
-      for (final field in message.info_.sortedByTag) _field(context, field),
+      if (notice != null)
+        Padding(padding: const EdgeInsets.all(12), child: Text(notice!)),
+      for (final field in message.info_.sortedByTag)
+        if (!hiddenFields.contains(field.tagNumber)) _field(context, field),
     ],
   );
 
