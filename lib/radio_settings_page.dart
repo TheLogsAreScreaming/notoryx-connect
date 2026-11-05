@@ -11,6 +11,7 @@ import 'generated/meshtastic/mesh.pb.dart' show User;
 import 'generated/meshtastic/module_config.pb.dart';
 import 'proto_form.dart';
 import 'services/bastion_channel_validation.dart';
+import 'services/bastion_hardware.dart';
 import 'services/bastion_radio_policy.dart';
 import 'services/bastion_settings_verifier.dart';
 import 'services/bastion_node_identity_validation.dart';
@@ -1002,8 +1003,21 @@ class _OneofEditorState extends State<_OneofEditor> {
       return wrapped.getField(tag) as GeneratedMessage;
     },
     save: (draft) => widget.save(widget.empty()..setField(_tag!, draft)),
-    fields: (draft, changed) => [
-      ProtoFieldList(message: draft, writable: () => draft, changed: changed),
-    ],
+    fields: (draft, changed) {
+      final model = widget.radio.localNode?.hardwareModel;
+      final hideGpsPins =
+          draft is Config_PositionConfig && BastionHardware.hasFixedGps(model);
+      return [
+        ProtoFieldList(
+          message: draft,
+          writable: () => draft,
+          changed: changed,
+          hiddenFields: hideGpsPins ? BastionHardware.diyGpsFields : const {},
+          notice: hideGpsPins
+              ? 'GPS pins are hidden: ${BastionHardware.name(model!)} has its GPS wired by the maker, so they do nothing.'
+              : null,
+        ),
+      ];
+    },
   );
 }

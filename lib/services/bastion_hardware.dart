@@ -35,6 +35,22 @@ class BastionHardware {
     'UNSET': 'Unknown hardware',
   };
 
+  /// Boards whose maker wires the GPS, marked `oem_fixed_gps` in
+  /// meshtastic/protobufs 2.8.2. Their GPS pin settings do nothing.
+  static const fixedGps = {
+    4, 7, 12, 21, 29, 33, 48, 71, 89, 99, 100, 102, 103, 105, 113, 122, 124,
+    128,
+  };
+
+  /// Whether [model]'s GPS pins are set by the board maker; false when
+  /// the board is unknown, so DIY builds keep their pin settings.
+  static bool hasFixedGps(int? model) =>
+      model != null && fixedGps.contains(model);
+
+  /// Position settings for DIY GPS wiring (`diy_only` in config.proto):
+  /// rx_gpio, tx_gpio and gps_en_gpio.
+  static const diyGpsFields = {8, 9, 12};
+
   /// A readable name for [model], or "Model n" for a number newer than the
   /// app's definitions.
   static String name(int model) {
