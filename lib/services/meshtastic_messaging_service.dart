@@ -184,6 +184,22 @@ class MeshtasticMessagingService {
     if (connection.isReady) unawaited(flush());
   }
 
+  /// Adds another radio's stored history and queue (a lost or replaced
+  /// radio's) to this radio's, and saves the result. Returns whether it was
+  /// saved; false when no radio's archive is attached.
+  Future<bool> importHistory(BastionArchiveSnapshot snapshot) async {
+    await _attaching;
+    final archive = _archive;
+    if (archive == null) return false;
+    final messages = BastionRadioHistory.mergeMessages(snapshot.messages, _messages);
+    final pending = BastionRadioHistory.mergePending(_pending, snapshot.pending);
+    _messages..clear()..addAll(messages);
+    _pending..clear()..addAll(pending);
+    _trimHistory();
+    _notify();
+    return archive.save(messages: _messages, pending: _pending);
+  }
+
   Future<void> flush() async {
     await _attaching;
     if (_flushing || !connection.isReady) return;

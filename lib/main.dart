@@ -17,6 +17,7 @@ import 'services/bastion_background_service.dart';
 import 'services/bastion_bot_guard.dart';
 import 'services/bastion_history_limit.dart';
 import 'services/bastion_preferences.dart';
+import 'services/bastion_radio_data.dart';
 import 'phone_backup_page.dart';
 import 'privacy_page.dart';
 import 'radio_backup_page.dart';
@@ -1062,6 +1063,7 @@ class _SettingsPage extends StatelessWidget {
       const BastionAppearanceCard(),
       AnimatedBuilder(animation: radio, builder: (context, _) => _FiltersCard(radio: radio)),
       const _MessagesCard(),
+      AnimatedBuilder(animation: radio, builder: (context, _) => _RadioDataCard(radio: radio)),
       AnimatedBuilder(
         animation: radio,
         builder: (context, _) => Card(child: ExpansionTile(
@@ -1554,6 +1556,92 @@ class _FieldAlertsCard extends StatelessWidget {
       ],
     ));
   }
+}
+
+/// Lists the radios with data on this phone, and moves a lost or replaced
+/// radio's messages, nodes and history to the connected radio.
+class _RadioDataCard extends StatefulWidget {
+  const _RadioDataCard({required this.radio});
+  final MeshtasticRadioCoordinator radio;
+  @override
+  State<_RadioDataCard> createState() => _RadioDataCardState();
+}
+
+class _RadioDataCardState extends State<_RadioDataCard> {
+  Future<List<StoredRadio>>? _radios;
+  String? _result;
+  bool _moving = false;
+
+  bool get _canMove => widget.radio.isReady && widget.radio.localNodeNum != null && !_moving;
+
+  void _load() => setState(() => _radios = widget.radio.storedRadios());
+
+  Future<void> _move(StoredRadio from) async {
+    final to = widget.radio.localNode?.displayName ?? 'the connected radio';
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Move ${from.label}?'),
+        content: Text('Its messages, offline queue, NodeDex history and trails move to $to. '
+            'Whatever $to already has is kept, so nothing is overwritten. '
+            '${from.id} then no longer has an entry of its own.\n\n'
+            'To be safe, make a phone data backup first.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
+          FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Move')),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    setState(() { _moving = true; _result = null; });
+    final problem = await widget.radio.moveRadioData(from.radio);
+    if (!mounted) return;
+    setState(() {
+      _moving = false;
+      _result = problem ?? 'Moved ${from.label} to $to.';
+    });
+    _load();
+  }
+
+  @override
+  Widget build(BuildContext context) => Card(child: ExpansionTile(
+    leading: const Icon(Icons.sd_storage_outlined),
+    title: const Text('Radio data'),
+    subtitle: const Text('Lost or replaced a radio? Move its messages, nodes and history to the new one'),
+    childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+    onExpansionChanged: (open) { if (open) _load(); },
+    children: [
+      FutureBuilder<List<StoredRadio>>(
+        future: _radios,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) return const Text('Radio data could not be read.');
+          final radios = snapshot.data;
+          if (radios == null) return const LinearProgressIndicator();
+          if (radios.isEmpty) return const Text('No radio data on this phone yet.');
+          return Column(children: [
+            for (final r in radios)
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(r.label),
+                subtitle: Text('${r.messages} message${r.messages == 1 ? '' : 's'} • '
+                    '${r.nodes} node${r.nodes == 1 ? '' : 's'} • '
+                    '${r.trails} trail${r.trails == 1 ? '' : 's'}'),
+                trailing: r.radio == widget.radio.localNodeNum
+                    ? const Text('Connected')
+                    : TextButton(
+                        onPressed: _canMove ? () => _move(r) : null,
+                        child: const Text('Move to connected'),
+                      ),
+              ),
+          ]);
+        },
+      ),
+      if (!widget.radio.isReady)
+        const Text("Connect to the new radio to move an old radio's data to it."),
+      if (_moving) const LinearProgressIndicator(),
+      if (_result != null) Padding(padding: const EdgeInsets.only(top: 8), child: Text(_result!)),
+    ],
+  ));
 }
 
 class _FiltersCard extends StatefulWidget {
