@@ -85,6 +85,14 @@ class BastionApp extends StatelessWidget {
         color: dark ? panel : colors.surfaceContainerLow,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
+      // Wide enough to grab with a finger; wider still while dragged.
+      scrollbarTheme: ScrollbarThemeData(
+        thickness: WidgetStateProperty.resolveWith((states) => states.contains(WidgetState.dragged) ? 12 : 8),
+        radius: const Radius.circular(6),
+        minThumbLength: 48,
+        thumbColor: WidgetStateProperty.resolveWith((states) => states.contains(WidgetState.dragged)
+            ? colors.primary : colors.onSurfaceVariant.withValues(alpha: 0.6)),
+      ),
     );
   }
 
@@ -95,9 +103,22 @@ class BastionApp extends StatelessWidget {
       title: 'NOTORYX Connect', debugShowCheckedModeBanner: false,
       theme: appearance(Brightness.light), darkTheme: appearance(Brightness.dark),
       themeMode: BastionPreferences.instance.theme,
+      scrollBehavior: const BastionScrollBehavior(),
       home: const BastionShell(),
     ),
   );
+}
+
+/// Gives every vertical list a scroll bar that can be held and dragged to
+/// move through a long list in one go, on phones as well as desktops.
+class BastionScrollBehavior extends MaterialScrollBehavior {
+  const BastionScrollBehavior();
+
+  @override
+  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
+    if (axisDirectionToAxis(details.direction) != Axis.vertical) return child;
+    return Scrollbar(controller: details.controller, interactive: true, child: child);
+  }
 }
 
 class BastionShell extends StatefulWidget {
@@ -182,7 +203,8 @@ class _BastionShellState extends State<BastionShell> {
         ),
       ],
     ),
-    body: SafeArea(child: IndexedStack(index: index, children: [
+    // Each tab keeps its own scroll position, so each scroll bar follows one list.
+    body: SafeArea(child: PrimaryScrollController.none(child: IndexedStack(index: index, children: [
       HomePage(radio: radio, onConnect: () => setState(() => index = 1)),
       _NodesPage(discovery: ble, radio: radio, onOpenTools: () => setState(() => index = 4)),
       BastionChatsPage(
@@ -201,7 +223,7 @@ class _BastionShellState extends State<BastionShell> {
       MapPage(radio: radio),
       _ToolsPage(discovery: ble, radio: radio),
       _SettingsPage(radio: radio),
-    ])),
+    ]))),
     bottomNavigationBar: NavigationBar(
       selectedIndex: index,
       onDestinationSelected: (value) => setState(() => index = value),
