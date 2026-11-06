@@ -8,6 +8,7 @@ import 'package:share_plus/share_plus.dart';
 
 import 'node_detail_page.dart';
 import 'services/bastion_geo.dart';
+import 'services/bastion_geofences.dart';
 import 'services/bastion_gpx.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_units.dart';
@@ -152,6 +153,18 @@ class _MapPageState extends State<MapPage> {
                     userAgentPackageName: 'com.bastionmesh.connect',
                     maxNativeZoom: 19,
                   ),
+                  if (widget.radio.geofences.isNotEmpty)
+                    CircleLayer(circles: [
+                      for (final zone in widget.radio.geofences)
+                        CircleMarker(
+                          point: LatLng(zone.latitude, zone.longitude),
+                          radius: zone.radiusMeters,
+                          useRadiusInMeter: true,
+                          color: MapPage.accent.withValues(alpha: 0.1),
+                          borderColor: MapPage.accent,
+                          borderStrokeWidth: 2,
+                        ),
+                    ]),
                   if (_showLinks) PolylineLayer(polylines: _links(placed)),
                   if (_showTrails && trails.isNotEmpty) PolylineLayer(polylines: trails),
                   MarkerLayer(
@@ -216,6 +229,15 @@ class _MapPageState extends State<MapPage> {
                           ),
                           onPressed: () => _showTeam(context),
                         ),
+                        IconButton(
+                          tooltip: 'Zones',
+                          icon: Badge(
+                            isLabelVisible: widget.radio.geofences.isNotEmpty,
+                            label: Text('${widget.radio.geofences.length}'),
+                            child: const Icon(Icons.fence),
+                          ),
+                          onPressed: () => _showZones(context),
+                        ),
                         if (trails.isNotEmpty || widget.radio.waypoints.isNotEmpty)
                           IconButton(
                             tooltip: 'Export GPX',
@@ -269,6 +291,83 @@ class _MapPageState extends State<MapPage> {
     } catch (error) {
       messenger.showSnackBar(SnackBar(content: Text('Could not export GPX: $error')));
     }
+  }
+
+  static String _watchLabel(GeofenceWatch watch) => switch (watch) {
+        GeofenceWatch.tripContacts => 'Trip contacts',
+        GeofenceWatch.favorites => 'Favorites',
+        GeofenceWatch.allNodes => 'All nodes',
+      };
+
+  static String _alertLabel(GeofenceAlertOn on) => switch (on) {
+        GeofenceAlertOn.arrive => 'arrive',
+        GeofenceAlertOn.leave => 'leave',
+        GeofenceAlertOn.both => 'arrive or leave',
+      };
+
+  /// Zones that alert on the phone when watched nodes arrive or leave.
+  void _showZones(BuildContext context) {
+    final messenger = ScaffoldMessenger.of(context);
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetContext) => SafeArea(
+        child: AnimatedBuilder(
+          animation: widget.radio,
+          builder: (sheetContext, _) {
+            final zones = widget.radio.geofences;
+            final units = BastionPreferences.instance.units;
+            return ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(16),
+              children: [
+                Text('Zones', style: Theme.of(sheetContext).textTheme.titleLarge),
+                const Text('Get a phone alert when someone arrives at or leaves a place, '
+                    'like camp or the trailhead. Alerts need the radio connected; nothing is sent over the mesh.'),
+                const SizedBox(height: 8),
+                if (zones.isEmpty) const ListTile(contentPadding: EdgeInsets.zero, title: Text('No zones yet.')),
+                for (final zone in zones)
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.fence),
+                    title: Text(zone.name),
+                    subtitle: Text('${BastionUnitFormat.distance(zone.radiusMeters, units)} radius • '
+                        '${_watchLabel(zone.watch)} • alert when they ${_alertLabel(zone.alertOn)}'),
+                    onTap: () {
+                      Navigator.pop(sheetContext);
+                      _map.move(LatLng(zone.latitude, zone.longitude), 14);
+                    },
+                    trailing: IconButton(
+                      tooltip: 'Delete ${zone.name}',
+                      icon: const Icon(Icons.delete_outline),
+                      onPressed: () async {
+                        final problem = await widget.radio.removeGeofence(zone.id);
+                        if (problem != null) messenger.showSnackBar(SnackBar(content: Text(problem)));
+                      },
+                    ),
+                  ),
+                const SizedBox(height: 8),
+                FilledButton.icon(
+                  icon: const Icon(Icons.add_location_alt_outlined),
+                  label: const Text('Add zone at map center'),
+                  onPressed: zones.length >= BastionGeofenceStore.maxZones
+                      ? null
+                      : () async {
+                          final zone = await showDialog<BastionGeofence>(
+                            context: sheetContext,
+                            builder: (_) => _ZoneDialog(center: _map.camera.center),
+                          );
+                          if (zone == null) return;
+                          final problem = await widget.radio.saveGeofence(zone);
+                          if (problem != null) messenger.showSnackBar(SnackBar(content: Text(problem)));
+                        },
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
   }
 
   void _showTeam(BuildContext context) {
@@ -655,6 +754,101 @@ class _WaypointDialogState extends State<_WaypointDialog> {
                     ),
                   ),
           child: const Text('Share'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ZoneDialog extends StatefulWidget {
+  const _ZoneDialog({required this.center});
+
+  final LatLng center;
+
+  @override
+  State<_ZoneDialog> createState() => _ZoneDialogState();
+}
+
+class _ZoneDialogState extends State<_ZoneDialog> {
+  final _name = TextEditingController();
+  double _radius = 500;
+  GeofenceWatch _watch = GeofenceWatch.tripContacts;
+  GeofenceAlertOn _alertOn = GeofenceAlertOn.both;
+
+  @override
+  void dispose() {
+    _name.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final name = _name.text.trim();
+    final units = BastionPreferences.instance.units;
+    return AlertDialog(
+      title: const Text('New zone'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Centered on ${widget.center.latitude.toStringAsFixed(5)}, '
+                '${widget.center.longitude.toStringAsFixed(5)}'),
+            TextField(
+              controller: _name,
+              autofocus: true,
+              maxLength: 30,
+              decoration: const InputDecoration(labelText: 'Name, e.g. Camp'),
+              onChanged: (_) => setState(() {}),
+            ),
+            DropdownButtonFormField<double>(
+              initialValue: _radius,
+              decoration: const InputDecoration(labelText: 'Radius'),
+              items: [
+                for (final r in BastionGeofence.radiusChoices)
+                  DropdownMenuItem(value: r, child: Text(BastionUnitFormat.distance(r, units))),
+              ],
+              onChanged: (v) => setState(() => _radius = v ?? _radius),
+            ),
+            DropdownButtonFormField<GeofenceWatch>(
+              initialValue: _watch,
+              decoration: const InputDecoration(labelText: 'Watch'),
+              items: [
+                for (final w in GeofenceWatch.values)
+                  DropdownMenuItem(value: w, child: Text(_MapPageState._watchLabel(w))),
+              ],
+              onChanged: (v) => setState(() => _watch = v ?? _watch),
+            ),
+            DropdownButtonFormField<GeofenceAlertOn>(
+              initialValue: _alertOn,
+              decoration: const InputDecoration(labelText: 'Alert when they'),
+              items: [
+                for (final a in GeofenceAlertOn.values)
+                  DropdownMenuItem(value: a, child: Text(_MapPageState._alertLabel(a))),
+              ],
+              onChanged: (v) => setState(() => _alertOn = v ?? _alertOn),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        FilledButton(
+          onPressed: name.isEmpty
+              ? null
+              : () => Navigator.pop(
+                    context,
+                    BastionGeofence(
+                      id: DateTime.now().microsecondsSinceEpoch.toRadixString(36),
+                      name: name,
+                      latitude: widget.center.latitude,
+                      longitude: widget.center.longitude,
+                      radiusMeters: _radius,
+                      watch: _watch,
+                      alertOn: _alertOn,
+                    ),
+                  ),
+          child: const Text('Add'),
         ),
       ],
     );
