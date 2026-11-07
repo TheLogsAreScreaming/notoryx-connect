@@ -23,6 +23,7 @@ import 'privacy_page.dart';
 import 'radio_backup_page.dart';
 import 'services/bastion_chat_marks.dart';
 import 'services/bastion_message_search.dart';
+import 'mesh_health_page.dart';
 import 'mesh_tools_page.dart';
 import 'node_detail_page.dart';
 import 'radio_settings_page.dart';
@@ -413,7 +414,11 @@ class _NodesPage extends StatelessWidget {
           ])),
         ],
         if (radio.isReady && BastionPreferences.instance.meshHealth) ...[
-          const NxSectionLabel('Mesh health'),
+          NxSectionLabel('Mesh health', trailing: TextButton(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+              builder: (_) => MeshHealthPage(radio: radio))),
+            child: const Text('Details'),
+          )),
           NxStatRow(children: [
             NxStatTile(label: 'Known nodes', value: '${radio.nodes.length}'),
             NxStatTile(label: 'Messages', value: '${radio.messages.length}'),
@@ -1189,6 +1194,14 @@ class _ToolsPageState extends State<_ToolsPage> {
       )),
       const NxSectionLabel('Mesh tools'),
       NxGroupCard(children: [
+        ListTile(
+          leading: const Icon(Icons.monitor_heart_outlined),
+          title: const Text('Mesh health & airtime'),
+          subtitle: const Text('How busy the channel is and how much your radio transmits'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(MeshHealthPage(radio: radio)),
+        ),
+        const Divider(indent: 56),
         ListTile(
           leading: const Icon(Icons.network_check),
           title: const Text('Range test'),
