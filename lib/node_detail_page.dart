@@ -8,6 +8,7 @@ import 'services/bastion_geo.dart';
 import 'services/bastion_nodedex.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
+import 'telemetry_chart.dart';
 import 'traceroute_page.dart';
 
 /// Everything known about one mesh node, with actions to reach it.
@@ -207,6 +208,11 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                         'Channel use',
                         '${telemetry!.channelUtilization!.toStringAsFixed(1)}%',
                       ),
+                    for (final metric in _radio.telemetryMetricsOf(widget.nodeNum))
+                      if (metric.isEnvironment)
+                        _Row(metric.label, metric.format(
+                          _radio.telemetrySeries(widget.nodeNum, metric).last.value,
+                          BastionPreferences.instance.units)),
                     if (node != null && node.hasPosition) ...[
                       _Row(
                         'Position',
@@ -267,9 +273,24 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                           )
                         : null,
                   ),
+                  OutlinedButton.icon(
+                    icon: const Icon(Icons.thermostat),
+                    label: const Text('Request sensors'),
+                    onPressed: ready
+                        ? () => _run(
+                            () => _radio.requestEnvironmentTelemetry(widget.nodeNum),
+                            'Sensor readings requested. Nodes without sensors don\'t answer.',
+                          )
+                        : null,
+                  ),
                 ],
               ),
             ],
+            const SizedBox(height: 8),
+            TelemetryHistoryCard(
+              metrics: _radio.telemetryMetricsOf(widget.nodeNum),
+              series: (metric) => _radio.telemetrySeries(widget.nodeNum, metric),
+            ),
             _NeighborCard(radio: _radio, nodeNum: widget.nodeNum),
             const SizedBox(height: 8),
             Card(
