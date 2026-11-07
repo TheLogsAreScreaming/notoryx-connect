@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
+import 'services/bastion_route_map.dart';
 import 'services/meshtastic_traceroute.dart';
+import 'traceroute_map.dart';
 
 /// Picks a mesh node and shows the route to it and back with per-hop SNR.
 class TraceroutePage extends StatefulWidget {
@@ -39,6 +41,13 @@ class _TraceroutePageState extends State<TraceroutePage> {
     } finally {
       if (mounted) setState(() => _running = false);
     }
+  }
+
+  bool _hasPosition(int num) {
+    for (final node in widget.radio.nodes) {
+      if (node.num == num) return node.latitude != null && node.longitude != null;
+    }
+    return false;
   }
 
   String _name(int num) {
@@ -128,6 +137,17 @@ class _TraceroutePageState extends State<TraceroutePage> {
                         subtitle: Text('Not reported by this firmware'),
                       ),
                     ),
+                  if (local != null) ...[
+                    if (RouteMapPath.of(result, local: local, destination: _target!,
+                        hasPosition: _hasPosition) case final path when path.drawable)
+                      TracerouteMap(path: path, nodes: widget.radio.nodes, name: _name)
+                    else
+                      const Card(child: ListTile(
+                        leading: Icon(Icons.location_off_outlined),
+                        title: Text('Not enough positions to map'),
+                        subtitle: Text('At least two nodes on the route need a known position.'),
+                      )),
+                  ],
                 ],
               ],
             );
