@@ -12,8 +12,11 @@ import 'trip_page.dart';
 
 /// HOME: the Field Console, with the trip, check-ins and SOS up front.
 class HomePage extends StatelessWidget {
-  const HomePage({super.key, required this.radio, required this.onConnect});
+  const HomePage({super.key, required this.radio, required this.onConnect, this.onTryDemo});
   final MeshtasticRadioCoordinator radio;
+
+  /// Starts demo mode; null while it is already on.
+  final VoidCallback? onTryDemo;
 
   /// Opens the NODES tab to connect a radio.
   final VoidCallback onConnect;
@@ -27,7 +30,7 @@ class HomePage extends StatelessWidget {
           color: Theme.of(context).colorScheme.onSurfaceVariant);
       return ListView(padding: NxSpace.page, children: [
         if (trip.sos.active) ...[_SosBanner(trip: trip), const SizedBox(height: NxSpace.sm)],
-        _ConsoleCard(radio: radio, onConnect: onConnect),
+        _ConsoleCard(radio: radio, onConnect: onConnect, onTryDemo: onTryDemo),
         _TripCard(radio: radio),
         const NxSectionLabel('Check in'),
         _CheckInButtons(radio: radio),
@@ -53,9 +56,10 @@ class HomePage extends StatelessWidget {
 }
 
 class _ConsoleCard extends StatelessWidget {
-  const _ConsoleCard({required this.radio, required this.onConnect});
+  const _ConsoleCard({required this.radio, required this.onConnect, this.onTryDemo});
   final MeshtasticRadioCoordinator radio;
   final VoidCallback onConnect;
+  final VoidCallback? onTryDemo;
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +106,13 @@ class _ConsoleCard extends StatelessWidget {
             ),
           ])
         else
-          FilledButton.icon(onPressed: onConnect, icon: const Icon(Icons.bluetooth_searching),
-            label: const Text('Connect radio')),
+          Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
+            FilledButton.icon(onPressed: onConnect, icon: const Icon(Icons.bluetooth_searching),
+              label: const Text('Connect radio')),
+            if (onTryDemo != null)
+              TextButton.icon(onPressed: onTryDemo, icon: const Icon(Icons.play_circle_outline),
+                label: const Text('Try the demo')),
+          ]),
       ]),
     ));
   }

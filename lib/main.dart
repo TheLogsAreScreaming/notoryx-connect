@@ -24,6 +24,7 @@ import 'privacy_page.dart';
 import 'radio_backup_page.dart';
 import 'services/bastion_chat_marks.dart';
 import 'services/bastion_message_search.dart';
+import 'mesh_health_page.dart';
 import 'mesh_tools_page.dart';
 import 'node_detail_page.dart';
 import 'radio_settings_page.dart';
@@ -32,6 +33,7 @@ import 'traceroute_page.dart';
 import 'services/bastion_nodedex.dart';
 import 'services/meshtastic_ble_discovery.dart';
 import 'services/meshtastic_connection_controller.dart';
+import 'services/bastion_demo_radio.dart';
 import 'services/bastion_field_alerts.dart';
 import 'services/bastion_phone_position.dart';
 import 'services/meshtastic_messaging_service.dart';
@@ -104,7 +106,26 @@ class BastionShell extends StatefulWidget {
 class _BastionShellState extends State<BastionShell> {
   int index = 0;
   final ble = MeshtasticBleDiscovery();
-  final radio = MeshtasticRadioCoordinator();
+  final _realRadio = MeshtasticRadioCoordinator();
+  BastionDemoRadio? _demo;
+
+  /// The radio the screens show: the pretend one while demo mode is on.
+  MeshtasticRadioCoordinator get radio => _demo ?? _realRadio;
+
+  bool get _inDemo => _demo != null;
+
+  /// Swaps in a pretend radio and mesh. Nothing is sent or saved.
+  void _setDemo(bool on) {
+    if (on == _inDemo) return;
+    final old = _demo;
+    setState(() {
+      _demo = on ? BastionDemoRadio() : null;
+      index = 0;
+    });
+    // Let the screens stop listening before the old demo radio goes away.
+    if (old != null) WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
+    if (on) radio.configureBot(enabled: botMode, reply: awayReply);
+  }
   bool botMode = false;
   String awayReply = MeshtasticMessagingService.defaultAwayReply;
 
@@ -149,15 +170,17 @@ class _BastionShellState extends State<BastionShell> {
   @override
   void dispose() {
     ble.dispose();
-    radio.dispose();
+    _realRadio.dispose();
+    _demo?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final pages = PrimaryScrollController.none(child: IndexedStack(index: index, children: [
-      HomePage(radio: radio, onConnect: () => _go(1)),
-      _NodesPage(discovery: ble, radio: radio, onOpenTools: () => _go(4)),
+    final pages = PrimaryScrollController.none(child: IndexedStack(key: ValueKey(_inDemo), index: index, children: [
+      HomePage(radio: radio, onConnect: () => _go(1), onTryDemo: _inDemo ? null : () => _setDemo(true)),
+      _NodesPage(discovery: ble, radio: radio, onOpenTools: () => _go(4),
+        onTryDemo: _inDemo ? null : () => _setDemo(true)),
       BastionChatsPage(
         radio: radio,
         visible: index == 2,
@@ -174,7 +197,7 @@ class _BastionShellState extends State<BastionShell> {
       ),
       MapPage(radio: radio),
       _ToolsPage(discovery: ble, radio: radio),
-      _SettingsPage(radio: radio),
+      _SettingsPage(radio: radio, demo: _inDemo, onDemoChanged: _setDemo),
     ]));
     final wide = MediaQuery.sizeOf(context).width >= railBreakpoint;
     final scheme = Theme.of(context).colorScheme;
@@ -221,7 +244,9 @@ class _BastionShellState extends State<BastionShell> {
         ],
       ),
       // Each tab keeps its own scroll position, so each scroll bar follows one list.
-      body: SafeArea(child: wide
+      body: SafeArea(child: Column(children: [
+        if (_inDemo) _DemoBanner(onExit: () => _setDemo(false)),
+        Expanded(child: wide
           ? Row(children: [
               NavigationRail(
                 selectedIndex: index,
@@ -236,6 +261,7 @@ class _BastionShellState extends State<BastionShell> {
                 child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 840), child: pages))),
             ])
           : pages),
+      ])),
       bottomNavigationBar: wide ? null : NavigationBar(
         selectedIndex: index,
         onDestinationSelected: _go,
@@ -269,10 +295,14 @@ class _NodesPage extends StatelessWidget {
     required this.discovery,
     required this.radio,
     required this.onOpenTools,
+    this.onTryDemo,
   });
   final MeshtasticBleDiscovery discovery;
   final MeshtasticRadioCoordinator radio;
   final VoidCallback onOpenTools;
+
+  /// Starts demo mode; null while it is already on.
+  final VoidCallback? onTryDemo;
 
   Future<void> _connect(BuildContext context, MeshtasticBleDevice item) async {
     try {
@@ -363,9 +393,14 @@ class _NodesPage extends StatelessWidget {
           NxBanner(tone: NxTone.warning, message: discovery.error!),
         const SizedBox(height: NxSpace.xs),
         if (discovery.results.isEmpty && !discovery.scanning)
-          const NxEmptyState(icon: Icons.bluetooth_disabled,
+          NxEmptyState(icon: Icons.bluetooth_disabled,
             title: 'No radios found yet',
-            detail: 'Turn your radio on, keep it close, then tap Scan for radios.')
+            detail: 'Turn your radio on, keep it close, then tap Scan for radios.',
+            action: onTryDemo == null ? null : TextButton.icon(
+              onPressed: onTryDemo,
+              icon: const Icon(Icons.play_circle_outline),
+              label: const Text('No radio? Try the demo'),
+            ))
         else
           for (final item in discovery.results)
             Card(child: ListTile(
@@ -414,7 +449,11 @@ class _NodesPage extends StatelessWidget {
           ])),
         ],
         if (radio.isReady && BastionPreferences.instance.meshHealth) ...[
-          const NxSectionLabel('Mesh health'),
+          NxSectionLabel('Mesh health', trailing: TextButton(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+              builder: (_) => MeshHealthPage(radio: radio))),
+            child: const Text('Details'),
+          )),
           NxStatRow(children: [
             NxStatTile(label: 'Known nodes', value: '${radio.nodes.length}'),
             NxStatTile(label: 'Messages', value: '${radio.messages.length}'),
@@ -1191,6 +1230,14 @@ class _ToolsPageState extends State<_ToolsPage> {
       const NxSectionLabel('Mesh tools'),
       NxGroupCard(children: [
         ListTile(
+          leading: const Icon(Icons.monitor_heart_outlined),
+          title: const Text('Mesh health & airtime'),
+          subtitle: const Text('How busy the channel is and how much your radio transmits'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(MeshHealthPage(radio: radio)),
+        ),
+        const Divider(indent: 56),
+        ListTile(
           leading: const Icon(Icons.terrain),
           title: const Text('Link planner'),
           subtitle: const Text('Check line of sight between two nodes over the terrain'),
@@ -1303,8 +1350,12 @@ class _ToolsPageState extends State<_ToolsPage> {
 }
 
 class _SettingsPage extends StatelessWidget {
-  const _SettingsPage({required this.radio});
+  const _SettingsPage({required this.radio, required this.demo, required this.onDemoChanged});
   final MeshtasticRadioCoordinator radio;
+
+  /// Whether the pretend radio is showing.
+  final bool demo;
+  final ValueChanged<bool> onDemoChanged;
 
   void _open(BuildContext context, Widget page) =>
       Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
@@ -1441,6 +1492,15 @@ class _SettingsPage extends StatelessWidget {
           onTap: () => _open(context, PrivacyPage(radio: radio)),
         ),
       ]),
+      Card(child: SwitchListTile(
+        secondary: const Icon(Icons.play_circle_outline),
+        title: const Text('Demo mode'),
+        subtitle: const Text('Explore the app with a pretend radio and mesh. Nothing is sent, '
+            'and your own messages and settings are left alone.'),
+        isThreeLine: true,
+        value: demo,
+        onChanged: onDemoChanged,
+      )),
       const NxSectionLabel('About'),
       NxGroupCard(children: [
         const ListTile(
@@ -1960,6 +2020,40 @@ class _TimelineDivider extends StatelessWidget {
           ),
           Expanded(child: Divider(color: color, thickness: highlight ? 2 : 1)),
         ]),
+      ),
+    );
+  }
+}
+
+/// Shown on every screen while demo mode is on, so it is never mistaken for
+/// a real mesh.
+class _DemoBanner extends StatelessWidget {
+  const _DemoBanner({required this.onExit});
+  final VoidCallback onExit;
+
+  @override
+  Widget build(BuildContext context) {
+    final status = NxStatusColors.of(context);
+    final (bg, fg) = status.container(NxTone.info, Theme.of(context).colorScheme);
+    return Semantics(
+      container: true,
+      liveRegion: true,
+      child: Material(
+        color: bg,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(NxSpace.md, NxSpace.xxs, NxSpace.xs, NxSpace.xxs),
+          child: Row(children: [
+            Icon(Icons.play_circle_outline, color: fg, size: 20),
+            const SizedBox(width: NxSpace.xs),
+            Expanded(child: Text('Demo mode: pretend radio and messages. Nothing is sent.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: fg))),
+            TextButton(
+              onPressed: onExit,
+              style: TextButton.styleFrom(foregroundColor: fg),
+              child: const Text('Exit demo'),
+            ),
+          ]),
+        ),
       ),
     );
   }
