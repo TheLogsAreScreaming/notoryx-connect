@@ -1695,3 +1695,6 @@ class _CoordinatorTripRadio implements TripRadio {
   @override
   void alert(BastionFieldAlert alert) => _radio._raise(alert);
 }
+
+/// The trip's view of [radio], for a coordinator that keeps its own trip.
+TripRadio tripRadioFor(MeshtasticRadioCoordinator radio) => _CoordinatorTripRadio(radio);
