@@ -10,6 +10,7 @@ import 'bastion_telemetry_codec.dart';
 import 'bastion_telemetry_history.dart';
 import 'bastion_trip.dart';
 import 'bastion_waypoints.dart';
+import 'meshtastic_ble_discovery.dart';
 import 'meshtastic_connection_controller.dart';
 import 'meshtastic_node_database.dart';
 import 'meshtastic_radio_coordinator.dart';
@@ -251,6 +252,11 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
   /// Demo mode ends from the app, not by disconnecting the pretend radio.
   @override
   Future<void> disconnect() async {}
+
+  /// A real radio can't be connected while the pretend one is showing.
+  @override
+  Future<void> connect(MeshtasticBleDevice device) async =>
+      throw StateError('Exit demo mode to connect a radio.');
 
   @override
   Future<int> sendText({

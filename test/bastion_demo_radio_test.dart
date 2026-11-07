@@ -1,6 +1,7 @@
 import 'package:bastion/main.dart';
 import 'package:bastion/services/bastion_chat_message.dart';
 import 'package:bastion/services/bastion_demo_radio.dart';
+import 'package:bastion/services/meshtastic_ble_discovery.dart';
 import 'package:bastion/services/bastion_telemetry_history.dart';
 import 'package:bastion/services/bastion_trip.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,13 @@ void main() {
     const wx = 0xDE300006;
     expect(radio.telemetryMetricsOf(wx), contains(TelemetryMetric.temperature));
     expect(radio.telemetrySeries(wx, TelemetryMetric.temperature).length, greaterThan(50));
+  });
+
+  test('a real radio cannot be connected during the demo', () async {
+    final radio = BastionDemoRadio();
+    addTearDown(radio.dispose);
+    await expectLater(radio.connect(MeshtasticBleDevice.network('192.168.1.2')),
+        throwsA(isA<StateError>().having((e) => e.message, 'message', contains('Exit demo'))));
   });
 
   testWidgets('sent messages are delivered and answered, without touching storage', (tester) async {

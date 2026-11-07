@@ -16,6 +16,22 @@ class MeshtasticBleDevice {
   final int rssi;
   final List<String> advertisedServices;
 
+  /// A radio reached over the network (Wi-Fi or Ethernet) instead of
+  /// Bluetooth. Its [id] is "tcp:host:port".
+  factory MeshtasticBleDevice.network(String host, {int port = 4403}) =>
+      MeshtasticBleDevice(id: 'tcp:$host:$port', name: host, rssi: 0, advertisedServices: const []);
+
+  /// Whether this radio is reached over the network.
+  bool get isNetwork => id.startsWith('tcp:');
+
+  /// Host and port of a network radio.
+  ({String host, int port})? get networkAddress {
+    if (!isNetwork) return null;
+    final rest = id.substring(4);
+    final colon = rest.lastIndexOf(':');
+    return (host: rest.substring(0, colon), port: int.tryParse(rest.substring(colon + 1)) ?? 4403);
+  }
+
   bool get advertisesMeshtastic => advertisedServices
       .map((value) => value.toLowerCase())
       .contains('6ba1b218-15a8-461f-9fa8-5dcae273eafd');

@@ -316,6 +316,35 @@ class _NodesPage extends StatelessWidget {
     }
   }
 
+  static const _lastHostKey = 'bastion.network.last_host';
+
+  /// Asks for a radio's network address and connects to it over TCP.
+  Future<void> _connectNetwork(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    String? last;
+    try {
+      last = await SharedPreferencesAsync().getString(_lastHostKey);
+    } catch (_) {
+      // Remembering the address is a convenience.
+    }
+    if (!context.mounted) return;
+    final address = await showDialog<({String host, int port})>(
+      context: context,
+      builder: (_) => _NetworkRadioDialog(initialHost: last ?? ''),
+    );
+    if (address == null) return;
+    try {
+      await SharedPreferencesAsync().setString(_lastHostKey, address.host);
+    } catch (_) {
+      // Remembering the address is a convenience.
+    }
+    try {
+      await radio.connect(MeshtasticBleDevice.network(address.host, port: address.port));
+    } catch (error) {
+      messenger.showSnackBar(SnackBar(content: Text('Could not connect: $error')));
+    }
+  }
+
   Future<void> _editNote(BuildContext context, BastionNodeRecord record) async {
     final editor = TextEditingController(text: record.note);
     final note = await showDialog<String>(
@@ -388,6 +417,23 @@ class _NodesPage extends StatelessWidget {
             onPressed: discovery.scan,
             icon: const Icon(Icons.bluetooth_searching),
             label: const Text('Scan for radios'),
+          ),
+        const SizedBox(height: NxSpace.xs),
+        if (radio.usesNetworkLink && (radio.isReady || radio.isReconnecting || radio.busy))
+          Card(child: ListTile(
+            leading: const Icon(Icons.wifi),
+            title: Text(radio.networkHost ?? 'Network radio'),
+            subtitle: Text('Over Wi-Fi • ${_connectionLabel(radio.connection.state)}'),
+            trailing: OutlinedButton(
+              onPressed: radio.busy ? null : radio.disconnect,
+              child: const Text('Disconnect', maxLines: 1, softWrap: false),
+            ),
+          ))
+        else
+          OutlinedButton.icon(
+            onPressed: radio.busy ? null : () => _connectNetwork(context),
+            icon: const Icon(Icons.wifi),
+            label: const Text('Connect over Wi-Fi'),
           ),
         if (discovery.error != null)
           NxBanner(tone: NxTone.warning, message: discovery.error!),
@@ -2021,6 +2067,67 @@ class _TimelineDivider extends StatelessWidget {
           Expanded(child: Divider(color: color, thickness: highlight ? 2 : 1)),
         ]),
       ),
+    );
+  }
+}
+
+/// Asks for the address of a radio on Wi-Fi or Ethernet.
+class _NetworkRadioDialog extends StatefulWidget {
+  const _NetworkRadioDialog({required this.initialHost});
+  final String initialHost;
+
+  @override
+  State<_NetworkRadioDialog> createState() => _NetworkRadioDialogState();
+}
+
+class _NetworkRadioDialogState extends State<_NetworkRadioDialog> {
+  late final _host = TextEditingController(text: widget.initialHost);
+  final _port = TextEditingController(text: '4403');
+
+  @override
+  void dispose() {
+    _host.dispose();
+    _port.dispose();
+    super.dispose();
+  }
+
+  /// A host name or IPv4/IPv6 address, without spaces or a scheme.
+  static bool validHost(String host) =>
+      host.isNotEmpty && host.length <= 253 && !host.contains(RegExp(r'[\s/]')) && !host.contains('://');
+
+  @override
+  Widget build(BuildContext context) {
+    final host = _host.text.trim();
+    final port = int.tryParse(_port.text.trim());
+    final ok = validHost(host) && port != null && port > 0 && port < 65536;
+    return AlertDialog(
+      title: const Text('Connect over Wi-Fi'),
+      content: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        const Text('For radios with Wi-Fi or Ethernet turned on. Your phone must be on the same network.'),
+        const SizedBox(height: NxSpace.sm),
+        TextField(
+          controller: _host,
+          autofocus: true,
+          keyboardType: TextInputType.url,
+          autocorrect: false,
+          decoration: const InputDecoration(labelText: 'Radio address', hintText: 'e.g. 192.168.1.42 or meshtastic.local'),
+          onChanged: (_) => setState(() {}),
+        ),
+        const SizedBox(height: NxSpace.sm),
+        TextField(
+          controller: _port,
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(labelText: 'Port', helperText: 'Meshtastic uses 4403'),
+          onChanged: (_) => setState(() {}),
+        ),
+      ]),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        FilledButton(
+          onPressed: ok ? () => Navigator.pop(context, (host: host, port: port)) : null,
+          child: const Text('Connect'),
+        ),
+      ],
     );
   }
 }
