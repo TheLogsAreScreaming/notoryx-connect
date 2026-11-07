@@ -1421,6 +1421,38 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     );
   }
 
+  /// Why [nodeNum] can't be administered over the mesh, or null if it can.
+  String? remoteAdminProblem(int nodeNum) {
+    // canAdminister already rules out firmware older than 2.5 (no PKI admin).
+    if (!canAdminister || _session == null) return 'Connect to a radio first.';
+    if (nodeNum == _localNodeNum) return 'This is your own radio. Use Radio settings.';
+    final node = nodes.where((n) => n.num == nodeNum).firstOrNull;
+    if (node?.publicKey == null) {
+      return 'This node hasn\'t shared its security key yet. Wait for it to send its node info.';
+    }
+    if (_nodeKeys.hasChanged(nodeNum)) {
+      return 'This node\'s key changed. Check it with the owner and trust the new key first.';
+    }
+    return null;
+  }
+
+  /// Opens an admin session to [nodeNum] over the mesh. The caller disposes it.
+  MeshtasticAdminSession openRemoteAdmin(int nodeNum) {
+    final problem = remoteAdminProblem(nodeNum);
+    if (problem != null) throw StateError(problem);
+    final session = _session!;
+    return MeshtasticAdminSession(
+      incoming: session.incomingEnvelopes,
+      send: session.send,
+      localNodeNum: _localNodeNum!,
+      targetNodeNum: nodeNum,
+      targetPublicKey: nodes.firstWhere((n) => n.num == nodeNum).publicKey,
+    );
+  }
+
+  /// This radio's public key, which a remote node must add as an admin key.
+  Uint8List? get localPublicKey => localNode?.publicKey;
+
   /// Traces the mesh route to [nodeNum]. Only one trace runs at a time.
   Future<TracerouteResult> traceroute(int nodeNum) async {
     final traceroute = _traceroute;
