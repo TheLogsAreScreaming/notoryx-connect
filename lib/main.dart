@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'beacon_page.dart';
+import 'link_planner_page.dart';
 import 'map_page.dart';
 import 'field_tools_page.dart';
 import 'home_page.dart';
@@ -1189,6 +1190,14 @@ class _ToolsPageState extends State<_ToolsPage> {
       )),
       const NxSectionLabel('Mesh tools'),
       NxGroupCard(children: [
+        ListTile(
+          leading: const Icon(Icons.terrain),
+          title: const Text('Link planner'),
+          subtitle: const Text('Check line of sight between two nodes over the terrain'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(LinkPlannerPage(radio: radio)),
+        ),
+        const Divider(indent: 56),
         ListTile(
           leading: const Icon(Icons.network_check),
           title: const Text('Range test'),

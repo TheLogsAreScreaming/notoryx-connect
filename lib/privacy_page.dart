@@ -32,6 +32,8 @@ class _PrivacyPageState extends State<PrivacyPage> {
     'Your phone location, only while "Share phone location" is on, at the precision you choose',
     'Position, telemetry and traceroute requests that you start',
     'Map tile requests to OpenStreetMap servers when you view the map; they see your IP address',
+    'Topographic map tile requests to OpenTopoMap servers, only while the topo map is shown; they see your IP address',
+    'Points along a link to the Open-Meteo elevation service, only when you check a link in the Link planner',
   ];
 
   Future<void> _erase({required bool everything}) async {
