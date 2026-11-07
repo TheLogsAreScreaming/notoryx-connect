@@ -12,6 +12,7 @@ import 'services/bastion_node_keys.dart';
 import 'telemetry_chart.dart';
 import 'theme/notoryx_theme.dart';
 import 'theme/nx_components.dart';
+import 'remote_admin_page.dart';
 import 'traceroute_page.dart';
 
 /// Everything known about one mesh node, with actions to reach it.
@@ -273,6 +274,17 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                         ? () => _run(
                             () => _radio.requestTelemetry(widget.nodeNum),
                             'Telemetry requested. It updates when the node replies.',
+                          )
+                        : null,
+                  ),
+                  OutlinedButton.icon(
+                    icon: const Icon(Icons.admin_panel_settings_outlined),
+                    label: const Text('Remote admin'),
+                    onPressed: ready
+                        ? () => Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => RemoteAdminPage(radio: _radio, nodeNum: widget.nodeNum),
+                            ),
                           )
                         : null,
                   ),
