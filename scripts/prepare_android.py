@@ -36,7 +36,32 @@ if 'flutter_foreground_task.service.ForegroundService' not in s:
             android:exported="false" />
     </application>'''
     s=s.replace('    </application>', service, 1)
+# Home-screen status widget.
+if 'StatusWidgetProvider' not in s:
+    receiver = '''        <receiver
+            android:name="com.bastionmesh.bastion.StatusWidgetProvider"
+            android:label="NOTORYX status"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/status_widget_info" />
+        </receiver>
+    </application>'''
+    s=s.replace('    </application>', receiver, 1)
 p.write_text(s)
+
+# Native files the generated project doesn't have (the widget).
+import shutil
+overlay=Path('android_overlay')
+if overlay.is_dir():
+    for src in overlay.rglob('*'):
+        if src.is_file():
+            dest=Path('android')/src.relative_to(overlay)
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(src, dest)
 
 g=Path('android/app/build.gradle.kts')
 gradle=g.read_text()
