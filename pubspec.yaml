@@ -28,6 +28,9 @@ dependencies:
   flutter_tts: 4.2.5
   quick_actions: 1.1.1
   sqflite: 2.4.5
+  # Vendored: the published 0.5.2 doesn't build with current Gradle.
+  usb_serial:
+    path: third_party/usb_serial
 
 dev_dependencies:
   flutter_test:
