@@ -17,6 +17,11 @@ if 'android.permission.BLUETOOTH_SCAN' not in s:
 '''
     s=s.replace('<manifest xmlns:android="http://schemas.android.com/apk/res/android">',
                 '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n'+permissions)
+# USB radios are optional: phones without USB host support still install.
+if 'android.hardware.usb.host' not in s:
+    s=s.replace('<manifest xmlns:android="http://schemas.android.com/apk/res/android">',
+                '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n'
+                '    <uses-feature android:name="android.hardware.usb.host" android:required="false" />')
 s=s.replace('android:label="bastion"', 'android:label="NOTORYX Connect"')
 # Read aloud (flutter_tts) must see the phone's text-to-speech engines on
 # Android 11+.
