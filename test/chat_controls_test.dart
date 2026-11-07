@@ -14,9 +14,9 @@ void main() {
     await tester.pumpAndSettle();
     final composer = find.widgetWithText(TextField, 'Message Channel 0');
     await tester.enterText(composer, 'field check alpha');
-    await tester.ensureVisible(find.text('SEND'));
+    await tester.ensureVisible(find.text('Send'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('SEND'));
+    await tester.tap(find.text('Send'));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.widgetWithText(TextField, 'Search message history'), 200,
         scrollable: find.byType(Scrollable).first);

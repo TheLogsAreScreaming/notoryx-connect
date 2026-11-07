@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'main.dart' show BastionApp;
 import 'services/bastion_chat_message.dart';
 import 'services/bastion_trip.dart';
 import 'services/meshtastic_radio_coordinator.dart';
+import 'theme/notoryx_theme.dart';
+import 'theme/notoryx_tokens.dart';
+import 'theme/nx_components.dart';
 import 'trip_page.dart';
 
 /// HOME: the Field Console, with the trip, check-ins and SOS up front.
@@ -21,27 +23,30 @@ class HomePage extends StatelessWidget {
     animation: radio,
     builder: (context, _) {
       final trip = radio.trip;
-      return ListView(padding: const EdgeInsets.all(16), children: [
-        if (trip.sos.active) ...[_SosBanner(trip: trip), const SizedBox(height: 12)],
+      final muted = Theme.of(context).textTheme.bodyMedium?.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant);
+      return ListView(padding: NxSpace.page, children: [
+        if (trip.sos.active) ...[_SosBanner(trip: trip), const SizedBox(height: NxSpace.sm)],
         _ConsoleCard(radio: radio, onConnect: onConnect),
-        const SizedBox(height: 12),
         _TripCard(radio: radio),
-        const SizedBox(height: 16),
+        const NxSectionLabel('Check in'),
         _CheckInButtons(radio: radio),
-        const SizedBox(height: 16),
+        const NxSectionLabel('Emergency'),
         _SosButton(trip: trip),
-        const SizedBox(height: 6),
+        const SizedBox(height: NxSpace.xs),
         Text(trip.sosBlocked ??
-            'Hold 2 seconds. It goes to your trip contacts${trip.plan.sosChannel >= 0 ? ' and channel ${trip.plan.sosChannel}' : ''}, '
+            'Hold for 2 seconds. It goes to your trip contacts${trip.plan.sosChannel >= 0 ? ' and channel ${trip.plan.sosChannel}' : ''}, '
             'and repeats every 5 minutes until someone replies.',
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
-        if (trip.problem != null) ...[
-          const SizedBox(height: 12),
-          Text(trip.problem!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
-        ],
-        const SizedBox(height: 12),
-        Text('Sent or queued does not mean received. Confirm with a reply or a call.',
-          style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          style: muted),
+        if (trip.problem != null)
+          NxBanner(tone: NxTone.danger, message: trip.problem!),
+        const SizedBox(height: NxSpace.md),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Icon(Icons.info_outline, size: 16, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          const SizedBox(width: NxSpace.xs),
+          Expanded(child: Text('Sent or queued does not mean received. Confirm with a reply or a call.',
+            style: Theme.of(context).textTheme.bodySmall)),
+        ]),
       ]);
     },
   );
@@ -54,31 +59,51 @@ class _ConsoleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = BastionApp.accentOf(context);
+    final scheme = Theme.of(context).colorScheme;
+    final type = Theme.of(context).textTheme;
+    final status = NxStatusColors.of(context);
     final node = radio.localNode;
     final battery = node?.batteryLevel;
+    final ready = radio.isReady;
+    final tone = ready ? NxTone.success : NxTone.neutral;
     return Card(child: Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(NxSpace.md),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Icon(radio.isReady ? Icons.settings_input_antenna : Icons.portable_wifi_off, color: accent),
-          const SizedBox(width: 10),
-          Expanded(child: Text(radio.isReady ? 'FIELD CONSOLE ONLINE' : 'NO RADIO CONNECTED',
-            style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: .8, color: accent))),
+          Container(
+            width: 44, height: 44,
+            decoration: BoxDecoration(
+              color: ready ? status.successContainer : scheme.surfaceContainerHigh,
+              borderRadius: BorderRadius.circular(NxRadius.md),
+            ),
+            child: Icon(ready ? Icons.settings_input_antenna : Icons.portable_wifi_off,
+              color: status.strong(tone, scheme)),
+          ),
+          const SizedBox(width: NxSpace.sm),
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Semantics(header: true, child: Text(ready ? 'Radio connected' : 'No radio connected',
+              style: type.titleMedium)),
+            const SizedBox(height: 2),
+            Text(ready
+                ? (node == null ? 'Your radio' : node.longName ?? node.shortName ?? 'Your radio')
+                : 'Connect to check in, send an SOS and see the mesh.',
+              style: type.bodyMedium?.copyWith(color: scheme.onSurfaceVariant)),
+          ])),
         ]),
-        const SizedBox(height: 8),
-        if (radio.isReady)
-          Text([
-            node == null ? 'Your radio' : node.longName ?? node.shortName ?? 'Your radio',
-            '${radio.nodes.length} nodes',
-            if (battery != null) battery > 100 ? 'external power' : 'battery $battery%',
-          ].join(' • '))
-        else ...[
-          const Text('Connect your radio to check in, send an SOS and see the mesh.'),
-          const SizedBox(height: 8),
+        const SizedBox(height: NxSpace.sm),
+        if (ready)
+          NxStatRow(children: [
+            NxStatTile(label: 'Nodes', value: '${radio.nodes.length}', icon: Icons.hub_outlined),
+            NxStatTile(
+              label: 'Battery',
+              icon: battery != null && battery > 100 ? Icons.power : Icons.battery_std,
+              value: battery == null ? 'Unknown' : battery > 100 ? 'Plugged in' : '$battery%',
+              tone: battery != null && battery <= 20 ? NxTone.warning : NxTone.neutral,
+            ),
+          ])
+        else
           FilledButton.icon(onPressed: onConnect, icon: const Icon(Icons.bluetooth_searching),
             label: const Text('Connect radio')),
-        ],
       ]),
     ));
   }
@@ -97,10 +122,10 @@ class _TripCard extends StatelessWidget {
       plan.active ? 'Trip running' : 'Trip not started',
       '${plan.members.length} contact${plan.members.length == 1 ? '' : 's'}',
     ].join(' • ');
+    final scheme = Theme.of(context).colorScheme;
     return Card(child: ListTile(
-      leading: Icon(Icons.hiking, color: BastionApp.accentOf(context)),
-      title: Text('PLAN YOUR TRIP${plan.active ? ': ${plan.name.toUpperCase()}' : ''}',
-        style: const TextStyle(fontWeight: FontWeight.bold)),
+      leading: Icon(Icons.hiking, color: overdue.isEmpty ? scheme.primary : scheme.error),
+      title: Text(plan.active ? 'Trip: ${plan.name}' : 'Plan your trip'),
       subtitle: Text(overdue.isEmpty
           ? status
           : '$status\nOverdue: ${overdue.map(radio.nodeName).join(', ')}'),
@@ -145,20 +170,23 @@ class _CheckInButtonsState extends State<_CheckInButtons> {
     final last = trip.lastCheckIn;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       FilledButton.icon(
-        style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(64)),
+        style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(NxTouch.large)),
         onPressed: enabled ? () => _checkIn(checkInLabels.first) : null,
-        icon: const Icon(Icons.check_circle_outline),
-        label: Text('CHECK IN: ${checkInLabels.first.toUpperCase()}',
-          style: const TextStyle(fontWeight: FontWeight.w900, letterSpacing: .6)),
+        icon: _sending
+            ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2.5))
+            : const Icon(Icons.check_circle_outline),
+        label: Text("Check in: ${checkInLabels.first}",
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
       ),
-      const SizedBox(height: 8),
-      Wrap(spacing: 8, runSpacing: 8, children: [
+      const SizedBox(height: NxSpace.xs),
+      Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
         for (final label in checkInLabels.skip(1))
           OutlinedButton(onPressed: enabled ? () => _checkIn(label) : null, child: Text(label)),
       ]),
-      const SizedBox(height: 6),
+      const SizedBox(height: NxSpace.xs),
       if (blocked != null)
-        Text(blocked, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant))
+        Text(blocked, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant))
       else if (last != null)
         _Delivery(radio: widget.radio, record: last),
       if (_error != null)
@@ -255,9 +283,10 @@ class _SosButtonState extends State<_SosButton> with SingleTickerProviderStateMi
           child: AnimatedBuilder(
             animation: _hold,
             builder: (context, _) => Container(
-              height: 64,
+              height: NxTouch.large,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(32),
+                borderRadius: BorderRadius.circular(NxRadius.md),
+                border: enabled ? null : Border.all(color: scheme.outlineVariant),
                 color: enabled ? scheme.errorContainer : scheme.surfaceContainerHighest,
               ),
               clipBehavior: Clip.antiAlias,
@@ -267,7 +296,7 @@ class _SosButtonState extends State<_SosButton> with SingleTickerProviderStateMi
                 Center(child: Row(mainAxisSize: MainAxisSize.min, children: [
                   Icon(Icons.sos, color: enabled ? scheme.onErrorContainer : scheme.onSurfaceVariant),
                   const SizedBox(width: 10),
-                  Text('HOLD FOR SOS', style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: .8,
+                  Text('Hold for SOS', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800,
                     color: enabled ? scheme.onErrorContainer : scheme.onSurfaceVariant)),
                 ])),
               ]),
@@ -304,7 +333,7 @@ class _SosBanner extends StatelessWidget {
           Row(children: [
             Icon(Icons.sos, color: scheme.onErrorContainer),
             const SizedBox(width: 10),
-            Text('SOS ACTIVE', style: TextStyle(fontWeight: FontWeight.w900, color: scheme.onErrorContainer)),
+            Text('SOS active', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: scheme.onErrorContainer)),
           ]),
           const SizedBox(height: 6),
           Text(detail, style: TextStyle(color: scheme.onErrorContainer)),

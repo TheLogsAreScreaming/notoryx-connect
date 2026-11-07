@@ -195,7 +195,7 @@ class _MapPageState extends State<MapPage> {
                         ),
                     ],
                   ),
-                  const SimpleAttributionWidget(source: Text('OpenStreetMap contributors')),
+                  const _MapAttribution(),
                 ],
               ),
               Positioned(
@@ -852,5 +852,36 @@ class _ZoneDialogState extends State<_ZoneDialog> {
         ),
       ],
     );
+  }
+}
+
+/// The OpenStreetMap credit. Unlike the stock attribution bar it wraps
+/// onto a second line with large text instead of running off the screen.
+class _MapAttribution extends StatelessWidget {
+  const _MapAttribution();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final style = Theme.of(context).textTheme.bodySmall?.copyWith(color: scheme.onSurface);
+    return SafeArea(child: Align(
+      alignment: Alignment.bottomRight,
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: scheme.surface.withValues(alpha: .85),
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            child: Wrap(alignment: WrapAlignment.end, children: [
+              Text('© ', style: style),
+              Text('OpenStreetMap contributors', style: style),
+            ]),
+          ),
+        ),
+      ),
+    ));
   }
 }

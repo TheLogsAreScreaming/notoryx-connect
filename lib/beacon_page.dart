@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import 'theme/nx_components.dart';
+
 import 'channel_share_page.dart';
 import 'services/bastion_beacons.dart';
 import 'services/meshtastic_radio_coordinator.dart';
@@ -92,8 +94,7 @@ class _BeaconPageState extends State<BeaconPage> {
           Card(child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              Text('SEND A BEACON', style: Theme.of(context).textTheme.titleSmall
-                  ?.copyWith(fontWeight: FontWeight.bold)),
+              Text('Send a beacon', style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 12),
               TextField(
                 controller: _message,
@@ -129,10 +130,7 @@ class _BeaconPageState extends State<BeaconPage> {
                   padding: const EdgeInsets.only(top: 8), child: Text(_status!))),
             ]),
           )),
-          const SizedBox(height: 8),
-          Text('HEARD BEACONS', style: Theme.of(context).textTheme.titleSmall
-              ?.copyWith(fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
+          const NxSectionLabel('Heard beacons'),
           if (radio.beacons.isEmpty)
             const Card(child: ListTile(
               leading: Icon(Icons.wifi_tethering_off),
