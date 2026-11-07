@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'services/bastion_chat_message.dart';
+import 'services/bastion_firmware.dart';
 import 'services/bastion_trip.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'theme/notoryx_theme.dart';
@@ -31,6 +32,14 @@ class HomePage extends StatelessWidget {
       return ListView(padding: NxSpace.page, children: [
         if (trip.sos.active) ...[_SosBanner(trip: trip), const SizedBox(height: NxSpace.sm)],
         _ConsoleCard(radio: radio, onConnect: onConnect, onTryDemo: onTryDemo),
+        if (radio.isReady)
+          if (BastionFirmware.advice(radio.firmwareVersion) case final advice?)
+            NxBanner(
+              tone: radio.firmwareSupport == FirmwareSupport.unsupported ? NxTone.warning : NxTone.info,
+              icon: Icons.system_update_alt,
+              title: 'Radio firmware update suggested',
+              message: advice,
+            ),
         _TripCard(radio: radio),
         const NxSectionLabel('Check in'),
         _CheckInButtons(radio: radio),

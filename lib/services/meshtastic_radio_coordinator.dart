@@ -32,6 +32,7 @@ import 'bastion_waypoints.dart';
 import 'bastion_beacons.dart';
 import 'bastion_radio_data.dart';
 import 'bastion_chat_marks.dart';
+import 'bastion_firmware.dart';
 import 'bastion_geofences.dart';
 import 'bastion_telemetry_history.dart';
 import 'bastion_trails.dart';
@@ -461,7 +462,11 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   int? get localNodeNum => _localNodeNum;
 
   /// Whether radio settings can be read and written right now.
-  bool get canAdminister => !_busy && connection.isReady && _admin != null;
+  bool get canAdminister =>
+      !_busy && connection.isReady && _admin != null && firmwareSupport != FirmwareSupport.unsupported;
+
+  /// How well the radio's firmware suits the app; unknown until it reports.
+  FirmwareSupport get firmwareSupport => BastionFirmware.supportOf(_firmwareVersion);
 
   /// Whether the phone's location is sent to the radio for broadcasting.
   bool get sharePhoneLocation => _sharePhoneLocation;
