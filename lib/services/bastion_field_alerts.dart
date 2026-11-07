@@ -87,7 +87,7 @@ class BastionAlertSettings {
   int get hashCode => jsonEncode(toJson()).hashCode;
 }
 
-enum BastionAlertKind { lowBattery, newNode, favoriteSilent, sosAcknowledged, checkInDue, contactOverdue, geofenceArrive, geofenceLeave }
+enum BastionAlertKind { lowBattery, newNode, favoriteSilent, sosAcknowledged, checkInDue, contactOverdue, geofenceArrive, geofenceLeave, keyChanged }
 
 @immutable
 class BastionFieldAlert {

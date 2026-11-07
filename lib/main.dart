@@ -494,7 +494,10 @@ class _NodesPage extends StatelessWidget {
                   if (node.shortName?.isNotEmpty ?? false) node.shortName!,
                   node.id ?? '!${node.num.toRadixString(16).padLeft(8, '0')}',
                 ].join(' • ')),
-                trailing: const Icon(Icons.chevron_right),
+                trailing: radio.nodeKeys.hasChanged(node.num)
+                    ? Tooltip(message: 'Security key changed',
+                        child: Icon(Icons.gpp_maybe_outlined, color: scheme.error, semanticLabel: 'Security key changed'))
+                    : const Icon(Icons.chevron_right),
                 onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
                   builder: (_) => NodeDetailPage(radio: radio, nodeNum: node.num),
                 )),
@@ -1039,6 +1042,14 @@ class _ChatsPageState extends State<BastionChatsPage> {
             const SizedBox(height: NxSpace.xs),
           ],
           const NxSectionLabel('New message'),
+          if (destination != 0xffffffff && widget.radio.nodeKeys.hasChanged(destination))
+            NxBanner(
+              tone: NxTone.danger,
+              icon: Icons.gpp_maybe_outlined,
+              title: 'Security key changed',
+              message: '${_nodeName(destination)} now shows a different key. Check with its owner before '
+                  'sending anything private. Open the node to review or trust the new key.',
+            ),
           Card(child: Padding(
             padding: const EdgeInsets.all(NxSpace.md),
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

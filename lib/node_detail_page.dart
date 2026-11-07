@@ -8,7 +8,10 @@ import 'services/bastion_geo.dart';
 import 'services/bastion_nodedex.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
+import 'services/bastion_node_keys.dart';
 import 'telemetry_chart.dart';
+import 'theme/notoryx_theme.dart';
+import 'theme/nx_components.dart';
 import 'traceroute_page.dart';
 
 /// Everything known about one mesh node, with actions to reach it.
@@ -291,6 +294,7 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
               metrics: _radio.telemetryMetricsOf(widget.nodeNum),
               series: (metric) => _radio.telemetrySeries(widget.nodeNum, metric),
             ),
+            if (!isSelf) _KeyCard(radio: _radio, nodeNum: widget.nodeNum),
             _NeighborCard(radio: _radio, nodeNum: widget.nodeNum),
             const SizedBox(height: 8),
             Card(
@@ -457,5 +461,56 @@ class _NeighborCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// The node's security key as a short code, with a warning and a way to
+/// accept it when the key has changed.
+class _KeyCard extends StatelessWidget {
+  const _KeyCard({required this.radio, required this.nodeNum});
+  final MeshtasticRadioCoordinator radio;
+  final int nodeNum;
+
+  Future<void> _trust(BuildContext context, String name) async {
+    final ok = await showDialog<bool>(context: context, builder: (dialogContext) => AlertDialog(
+      title: const Text('Trust the new key?'),
+      content: Text('Only do this if you have checked with $name\'s owner that they reset or replaced their radio. '
+          'If not, someone else may be pretending to be this node.'),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(dialogContext, false), child: const Text('Cancel')),
+        FilledButton(onPressed: () => Navigator.pop(dialogContext, true), child: const Text('Trust new key')),
+      ],
+    ));
+    if (ok == true) await radio.trustNodeKey(nodeNum);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final keys = radio.nodeKeys;
+    final known = keys.knownKey(nodeNum);
+    final changed = keys.changedKey(nodeNum);
+    final name = radio.nodeName(nodeNum);
+    final type = Theme.of(context).textTheme;
+    if (changed != null) {
+      return NxBanner(
+        tone: NxTone.danger,
+        icon: Icons.gpp_maybe_outlined,
+        title: 'Security key changed',
+        message: 'This node now shows a different key (${BastionNodeKeys.safetyCode(changed)}) '
+            'from the one first seen (${known == null ? 'unknown' : BastionNodeKeys.safetyCode(known)}). '
+            'Its radio may have been reset or replaced, or someone may be impersonating it. '
+            'Check with its owner before sending private messages.',
+        action: OutlinedButton(onPressed: () => _trust(context, name), child: const Text('Trust new key')),
+      );
+    }
+    return Card(child: ListTile(
+      leading: const Icon(Icons.key_outlined),
+      title: const Text('Security key'),
+      subtitle: Text(known == null
+          ? 'Not shared yet. Nodes on firmware 2.5 or newer share a key for private direct messages.'
+          : 'Safety code ${BastionNodeKeys.safetyCode(known)}\nCompare this with the owner\'s radio to be sure it\'s them.',
+          style: type.bodyMedium),
+      isThreeLine: known != null,
+    ));
   }
 }
