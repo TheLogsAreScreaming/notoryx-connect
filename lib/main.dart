@@ -21,6 +21,7 @@ import 'services/bastion_radio_data.dart';
 import 'phone_backup_page.dart';
 import 'privacy_page.dart';
 import 'radio_backup_page.dart';
+import 'services/bastion_chat_marks.dart';
 import 'services/bastion_message_search.dart';
 import 'mesh_tools_page.dart';
 import 'node_detail_page.dart';
@@ -210,6 +211,7 @@ class _BastionShellState extends State<BastionShell> {
       _NodesPage(discovery: ble, radio: radio, onOpenTools: () => setState(() => index = 4)),
       BastionChatsPage(
         radio: radio,
+        visible: index == 2,
         botMode: botMode,
         awayReply: awayReply,
         onBotModeChanged: (value) {
@@ -230,7 +232,23 @@ class _BastionShellState extends State<BastionShell> {
       onDestinationSelected: (value) => setState(() => index = value),
       destinations: [
         for (var i = 0; i < labels.length; i++)
-          NavigationDestination(icon: Icon(icons[i]), label: labels[i]),
+          NavigationDestination(
+            icon: i == 2 ? AnimatedBuilder(
+              animation: radio,
+              builder: (context, _) {
+                final unread = index == 2 ? 0 : radio.unreadCount;
+                return Semantics(
+                  label: unread == 0 ? null : '$unread unread',
+                  child: Badge(
+                    isLabelVisible: unread > 0,
+                    label: Text(unread > 99 ? '99+' : '$unread'),
+                    child: Icon(icons[i]),
+                  ),
+                );
+              },
+            ) : Icon(icons[i]),
+            label: labels[i],
+          ),
       ],
     ),
   );
@@ -447,12 +465,16 @@ class _NodesPage extends StatelessWidget {
 class BastionChatsPage extends StatefulWidget {
   const BastionChatsPage({
     required this.radio,
+    this.visible = true,
     required this.botMode,
     required this.awayReply,
     required this.onBotModeChanged,
     required this.onAwayReplyChanged,
   });
   final MeshtasticRadioCoordinator radio;
+
+  /// Whether the Chats tab is on screen; seeing it marks messages read.
+  final bool visible;
   final bool botMode;
   final String awayReply;
   final ValueChanged<bool> onBotModeChanged;
@@ -474,10 +496,65 @@ class _ChatsPageState extends State<BastionChatsPage> {
   final Map<String, String> _drafts = {};
   String get _draftKey => destination == 0xffffffff ? 'ch$channel' : 'dm$destination';
 
+  /// Messages after this were new when you opened Chats. Kept while the tab
+  /// is open so the "new messages" divider doesn't vanish as you read.
+  DateTime? _unreadSince;
+
   @override
   void initState() {
     super.initState();
     unawaited(_loadDrafts());
+    if (widget.visible) _opened();
+  }
+
+  @override
+  void didUpdateWidget(BastionChatsPage old) {
+    super.didUpdateWidget(old);
+    if (widget.visible && !old.visible) _opened();
+    if (!widget.visible && old.visible) unawaited(widget.radio.markChatsRead());
+  }
+
+  void _opened() {
+    _unreadSince = widget.radio.chatMarks.lastRead;
+    unawaited(widget.radio.markChatsRead());
+  }
+
+  Future<void> _togglePin(BastionChatMessage message) async {
+    final problem = await widget.radio.togglePin(message);
+    if (problem != null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(problem)));
+    }
+  }
+
+  /// Inserts "@name " for a node you pick, at the cursor.
+  Future<void> _mention() async {
+    final nodes = [for (final n in widget.radio.nodes) if (n.num != widget.radio.localNodeNum) n];
+    final name = await showModalBottomSheet<String>(
+      context: context,
+      builder: (context) => SafeArea(child: nodes.isEmpty
+          ? const Padding(padding: EdgeInsets.all(24), child: Text('No nodes heard yet to mention.'))
+          : ListView(shrinkWrap: true, children: [
+              const ListTile(title: Text('Mention a node', style: TextStyle(fontWeight: FontWeight.bold))),
+              for (final n in nodes)
+                ListTile(
+                  leading: const Icon(Icons.alternate_email),
+                  title: Text(n.displayName),
+                  onTap: () => Navigator.pop(context, n.displayName),
+                ),
+            ])),
+    );
+    if (name == null || !mounted) return;
+    final text = composer.text;
+    final sel = composer.selection;
+    final at = sel.isValid ? sel.start : text.length;
+    final end = sel.isValid ? sel.end : text.length;
+    final before = text.substring(0, at);
+    final insert = '${before.isEmpty || before.endsWith(' ') ? '' : ' '}@$name ';
+    composer.value = TextEditingValue(
+      text: before + insert + text.substring(end),
+      selection: TextSelection.collapsed(offset: at + insert.length),
+    );
+    _saveDraft();
   }
 
   Future<void> _loadDrafts() async {
@@ -527,9 +604,12 @@ class _ChatsPageState extends State<BastionChatsPage> {
     super.dispose();
   }
 
+  static const _pinAction = '\u0000pin';
+  static const _copyAction = '\u0000copy';
   static const _reactionChoices = ['👍', '❤️', '😂', '😮', '😢', '✅', '🙏'];
 
   Future<void> _react(BastionChatMessage message) async {
+    final pinned = widget.radio.chatMarks.isPinned(message);
     final emoji = await showModalBottomSheet<String>(
       context: context,
       builder: (context) => SafeArea(child: Padding(
@@ -545,10 +625,29 @@ class _ChatsPageState extends State<BastionChatsPage> {
                 icon: Text(e, style: const TextStyle(fontSize: 28)),
               ),
           ]),
+          const Divider(),
+          ListTile(
+            leading: Icon(pinned ? Icons.push_pin_outlined : Icons.push_pin),
+            title: Text(pinned ? 'Unpin' : 'Pin'),
+            onTap: () => Navigator.pop(context, _pinAction),
+          ),
+          ListTile(
+            leading: const Icon(Icons.copy),
+            title: const Text('Copy text'),
+            onTap: () => Navigator.pop(context, _copyAction),
+          ),
         ]),
       )),
     );
     if (emoji == null || !mounted) return;
+    if (emoji == _pinAction) return _togglePin(message);
+    if (emoji == _copyAction) {
+      await Clipboard.setData(ClipboardData(text: message.text));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Message copied')));
+      }
+      return;
+    }
     try {
       await widget.radio.sendReaction(message, emoji);
     } catch (error) {
@@ -577,6 +676,96 @@ class _ChatsPageState extends State<BastionChatsPage> {
     }
   }
 
+  /// Newest-first rows: a date divider at each new day, and a divider
+  /// below the messages that arrived since you last looked.
+  List<_TimelineRow> _timelineRows(List<BastionChatMessage> newestFirst, DateTime now) {
+    final since = _unreadSince;
+    final rows = <_TimelineRow>[];
+    DateTime? day;
+    var sawUnread = false;
+    var placedNew = false;
+    for (final m in newestFirst) {
+      final unread = since != null && BastionChatMarks.isUnread(m, since);
+      if (sawUnread && !placedNew && !unread && !m.timestamp.isAfter(since!)) {
+        rows.add(const _NewRow());
+        placedNew = true;
+      }
+      if (unread) sawUnread = true;
+      final d = BastionChatDays.dayOf(m.timestamp);
+      if (d != day) {
+        rows.add(_DayRow(BastionChatDays.label(m.timestamp, now)));
+        day = d;
+      }
+      rows.add(_MessageRow(m));
+    }
+    return rows;
+  }
+
+  Widget _messageCard(BuildContext context, BastionChatMessage message, List<BastionChatMessage>? rs) {
+    final scheme = Theme.of(context).colorScheme;
+    final mentioned = message.direction == BastionMessageDirection.incoming &&
+        widget.radio.mentionsMe(message.text);
+    final pinned = widget.radio.chatMarks.isPinned(message);
+    return Card(
+      color: mentioned ? scheme.primaryContainer : null,
+      child: ListTile(
+                onLongPress: () => _react(message),
+                leading: CircleAvatar(
+                  child: Icon(message.direction == BastionMessageDirection.outgoing
+                      ? Icons.north_east : Icons.south_west),
+                ),
+                title: Text(message.text),
+                subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text([
+                    message.direction == BastionMessageDirection.outgoing
+                        ? (message.isBroadcast
+                            ? 'You → Channel ${message.channel}'
+                            : 'You → ${_nodeName(message.to)}')
+                        : (message.isBroadcast
+                            ? '${_nodeName(message.from)} → Channel ${message.channel}'
+                            : '${_nodeName(message.from)} → You'),
+                    // Heard over the internet, not over the air.
+                    if (message.viaMqtt) 'via MQTT',
+                  ].join(' • ')),
+                  if (mentioned)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Row(mainAxisSize: MainAxisSize.min, children: [
+                        Icon(Icons.alternate_email, size: 14, color: scheme.onPrimaryContainer),
+                        const SizedBox(width: 4),
+                        Text('Mentions you', style: TextStyle(
+                            fontWeight: FontWeight.bold, color: scheme.onPrimaryContainer)),
+                      ]),
+                    ),
+                  if (rs != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Semantics(
+                        label: 'Reactions: ${[for (final r in rs) '${r.text} from ${r.direction == BastionMessageDirection.outgoing ? 'you' : _nodeName(r.from)}'].join(', ')}',
+                        excludeSemantics: true,
+                        child: Wrap(spacing: 6, children: [
+                          for (final e in {for (final r in rs) r.text}.toList())
+                            Chip(
+                              visualDensity: VisualDensity.compact,
+                              label: Text('$e ${rs.where((r) => r.text == e).length}'),
+                            ),
+                        ]),
+                      ),
+                    ),
+                ]),
+                trailing: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (pinned) const Icon(Icons.push_pin, size: 14, semanticLabel: 'Pinned'),
+                    Icon(_deliveryIcon(message.deliveryState), size: 18),
+                    const SizedBox(height: 3),
+                    Text(_deliveryLabel(message.deliveryState),
+                      style: const TextStyle(fontSize: 9)),
+                  ],
+                ),
+              ));
+  }
+
   String _nodeName(int nodeNum) {
     for (final node in widget.radio.nodes) {
       if (node.num == nodeNum) return node.displayName;
@@ -597,6 +786,8 @@ class _ChatsPageState extends State<BastionChatsPage> {
       }
       final matches = BastionMessageSearch.filter(messages, search.text,
           (message) => message.text);
+      final now = DateTime.now();
+      final pins = widget.radio.chatMarks.pinnedIn(messages);
       final channels = widget.radio.channelMetadata.where((c) => c.role != 0).toList();
       if (channels.isNotEmpty && !channels.any((c) => c.index == channel)) {
         channel = channels.first.index;
@@ -714,6 +905,11 @@ class _ChatsPageState extends State<BastionChatsPage> {
                       ? 'Message Channel $channel'
                       : 'Message ${_nodeName(destination)}',
                   border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    tooltip: 'Mention a node',
+                    icon: const Icon(Icons.alternate_email),
+                    onPressed: _mention,
+                  ),
                 ),
                 onSubmitted: (_) => _send(),
                 onChanged: (_) => _saveDraft(),
@@ -761,52 +957,30 @@ class _ChatsPageState extends State<BastionChatsPage> {
               child: Text('MESSAGE TIMELINE',
                 style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: .8)),
             ),
-            for (final message in matches.reversed)
-              Card(child: ListTile(
-                onLongPress: () => _react(message),
-                leading: CircleAvatar(
-                  child: Icon(message.direction == BastionMessageDirection.outgoing
-                      ? Icons.north_east : Icons.south_west),
-                ),
-                title: Text(message.text),
-                subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text([
-                    message.direction == BastionMessageDirection.outgoing
-                        ? (message.isBroadcast
-                            ? 'You → Channel ${message.channel}'
-                            : 'You → ${_nodeName(message.to)}')
-                        : (message.isBroadcast
-                            ? '${_nodeName(message.from)} → Channel ${message.channel}'
-                            : '${_nodeName(message.from)} → You'),
-                    // Heard over the internet, not over the air.
-                    if (message.viaMqtt) 'via MQTT',
-                  ].join(' • ')),
-                  if (reactions[message.packetId] case final rs?)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Semantics(
-                        label: 'Reactions: ${[for (final r in rs) '${r.text} from ${r.direction == BastionMessageDirection.outgoing ? 'you' : _nodeName(r.from)}'].join(', ')}',
-                        excludeSemantics: true,
-                        child: Wrap(spacing: 6, children: [
-                          for (final e in {for (final r in rs) r.text}.toList())
-                            Chip(
-                              visualDensity: VisualDensity.compact,
-                              label: Text('$e ${rs.where((r) => r.text == e).length}'),
-                            ),
-                        ]),
-                      ),
-                    ),
-                ]),
-                trailing: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(_deliveryIcon(message.deliveryState), size: 18),
-                    const SizedBox(height: 3),
-                    Text(_deliveryLabel(message.deliveryState),
-                      style: const TextStyle(fontSize: 9)),
-                  ],
-                ),
-              )),
+            if (pins.isNotEmpty) ...[
+              const Padding(
+                padding: EdgeInsets.fromLTRB(4, 8, 4, 4),
+                child: Text('PINNED',
+                  style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: .8)),
+              ),
+              for (final message in pins)
+                Card(child: ListTile(
+                  leading: const Icon(Icons.push_pin),
+                  title: Text(message.text, maxLines: 3),
+                  subtitle: Text('${message.direction == BastionMessageDirection.outgoing ? 'You' : _nodeName(message.from)} • ${BastionChatDays.label(message.timestamp, now)}'),
+                  trailing: IconButton(
+                    tooltip: 'Unpin',
+                    icon: const Icon(Icons.close),
+                    onPressed: () => _togglePin(message),
+                  ),
+                )),
+            ],
+            for (final row in _timelineRows(matches.reversed.toList(), now))
+              switch (row) {
+                _DayRow(:final label) => _TimelineDivider(label: label),
+                _NewRow() => const _TimelineDivider(label: 'New messages above', highlight: true),
+                _MessageRow(:final message) => _messageCard(context, message, reactions[message.packetId]),
+              },
           ],
           const SizedBox(height: 10),
           Card(child: SwitchListTile(
@@ -1731,5 +1905,58 @@ class _FiltersCardState extends State<_FiltersCard> {
         if (f.problem != null) Text(f.problem!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
       ],
     ));
+  }
+}
+
+sealed class _TimelineRow {
+  const _TimelineRow();
+}
+
+final class _DayRow extends _TimelineRow {
+  const _DayRow(this.label);
+  final String label;
+}
+
+final class _NewRow extends _TimelineRow {
+  const _NewRow();
+}
+
+final class _MessageRow extends _TimelineRow {
+  const _MessageRow(this.message);
+  final BastionChatMessage message;
+}
+
+/// A labelled line across the timeline: a date, or where new messages end.
+class _TimelineDivider extends StatelessWidget {
+  const _TimelineDivider({required this.label, this.highlight = false});
+  final String label;
+  final bool highlight;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = highlight
+        ? Theme.of(context).colorScheme.primary
+        : Theme.of(context).colorScheme.onSurfaceVariant;
+    return Semantics(
+      header: true,
+      label: label,
+      excludeSemantics: true,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(children: [
+          Expanded(child: Divider(color: color, thickness: highlight ? 2 : 1)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              if (highlight) Icon(Icons.arrow_upward, size: 14, color: color),
+              if (highlight) const SizedBox(width: 4),
+              Flexible(child: Text(label, style: TextStyle(
+                  color: color, fontWeight: FontWeight.bold, fontSize: 12))),
+            ]),
+          ),
+          Expanded(child: Divider(color: color, thickness: highlight ? 2 : 1)),
+        ]),
+      ),
+    );
   }
 }

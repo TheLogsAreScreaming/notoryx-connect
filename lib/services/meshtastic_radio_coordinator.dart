@@ -31,6 +31,7 @@ import 'bastion_settings_evidence.dart';
 import 'bastion_waypoints.dart';
 import 'bastion_beacons.dart';
 import 'bastion_radio_data.dart';
+import 'bastion_chat_marks.dart';
 import 'bastion_geofences.dart';
 import 'bastion_telemetry_history.dart';
 import 'bastion_trails.dart';
@@ -99,6 +100,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       notifyListeners();
     }));
     unawaited(_geofenceStore.load().then((_) => notifyListeners()));
+    unawaited(_chatMarks.load().then((_) => notifyListeners()));
   }
 
   final BastionFieldAlertEngine _fieldAlerts = BastionFieldAlertEngine();
@@ -160,6 +162,38 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _fieldAlerts.endSession();
     _geofenceEngine.endSession();
   }
+
+  final BastionChatMarks _chatMarks = BastionChatMarks();
+
+  /// Pinned messages and when you last looked at Chats.
+  BastionChatMarks get chatMarks => _chatMarks;
+
+  /// Pins or unpins [message]. Returns a problem for the user, or null.
+  Future<String?> togglePin(BastionChatMessage message) async {
+    final problem = await _chatMarks.togglePin(message);
+    notifyListeners();
+    return problem;
+  }
+
+  /// Records that every message up to now has been seen.
+  Future<void> markChatsRead() async {
+    await _chatMarks.markRead(DateTime.now());
+    notifyListeners();
+  }
+
+  /// Incoming messages you haven't seen yet.
+  int get unreadCount => _chatMarks.unreadIn(messages);
+
+  /// Your own node's long and short names, used to spot @mentions.
+  List<String?> get ownNames {
+    for (final n in _nodes) {
+      if (n.num == _localNodeNum) return [n.longName, n.shortName];
+    }
+    return const [];
+  }
+
+  /// Whether [text] mentions your node as @name.
+  bool mentionsMe(String text) => BastionMentions.mentions(text, ownNames);
 
   final BastionGeofenceStore _geofenceStore = BastionGeofenceStore();
   final BastionGeofenceEngine _geofenceEngine = BastionGeofenceEngine();
@@ -1418,7 +1452,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         packetId: message.packetId,
         sender: sender,
         text: message.text,
-        isDirect: !message.isBroadcast,
+        // A mention gets the same urgent alert as a direct message.
+        isDirect: !message.isBroadcast || mentionsMe(message.text),
         channel: message.channel,
       ),
     );
