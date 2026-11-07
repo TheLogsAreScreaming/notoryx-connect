@@ -35,6 +35,7 @@ import 'services/meshtastic_ble_discovery.dart';
 import 'services/meshtastic_connection_controller.dart';
 import 'services/bastion_demo_radio.dart';
 import 'services/bastion_field_alerts.dart';
+import 'services/bastion_firmware.dart';
 import 'services/bastion_phone_position.dart';
 import 'services/meshtastic_messaging_service.dart';
 import 'services/meshtastic_radio_coordinator.dart';
@@ -404,6 +405,13 @@ class _NodesPage extends StatelessWidget {
           NxBanner(tone: NxTone.danger, title: 'Connection problem', message: radio.connection.error!),
         if (radio.backgroundProblem != null)
           NxBanner(tone: NxTone.warning, message: radio.backgroundProblem!),
+        if (radio.isReady)
+          if (BastionFirmware.advice(radio.firmwareVersion) case final advice?)
+            NxBanner(
+              tone: radio.firmwareSupport == FirmwareSupport.unsupported ? NxTone.warning : NxTone.info,
+              icon: Icons.system_update_alt,
+              message: advice,
+            ),
         const NxSectionLabel('Radios nearby'),
         if (discovery.scanning)
           Row(children: [
@@ -1432,7 +1440,10 @@ class _SettingsPage extends StatelessWidget {
         title: const Text('Radio configuration'),
         subtitle: Text(radio.canAdminister
           ? 'Connected • settings can be changed'
-          : 'Connect to a radio to view and change its settings'),
+          : radio.isReady && radio.firmwareSupport == FirmwareSupport.unsupported
+              ? 'Read-only: firmware ${radio.firmwareVersion} is older than '
+                '${BastionFirmware.minimum.$1}.${BastionFirmware.minimum.$2}. Update at ${BastionFirmware.flasher}.'
+              : 'Connect to a radio to view and change its settings'),
         children: [
           ListTile(
             leading: const Icon(Icons.person_outline),
