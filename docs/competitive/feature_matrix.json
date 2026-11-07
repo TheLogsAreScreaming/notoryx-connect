@@ -1,0 +1,815 @@
+{
+  "meta": {
+    "legend": [
+      "NX cells come from reading NOTORYX Connect source on `main`. A competitor cell is only I/S/F/M when a primary source (release notes, README, store listing, issue tracker) says so; otherwise it is U. U never means \"missing\".",
+      "S/F on NX means clearly better/worse than the best competitor we could verify, not better than all of them.",
+      "No competitor app was installed and tested hands-on for this report."
+    ],
+    "title": "NOTORYX Connect: master feature comparison matrix",
+    "researched": "2026-11-07 (NOTORYX Connect `main` b0d3643; open PRs #124–#129 marked O)",
+    "ours": "NX",
+    "codes": {
+      "I": "Implemented",
+      "P": "Partial",
+      "M": "Missing",
+      "S": "Superior",
+      "F": "Inferior",
+      "U": "Unverified",
+      "NA": "Not applicable",
+      "O": "In open PR"
+    },
+    "counts_for_ours": {
+      "Implemented": 29,
+      "Partial": 5,
+      "Missing": 10,
+      "Superior": 8,
+      "Inferior": 1,
+      "Unverified": 1,
+      "In open PR": 6
+    },
+    "rows": 60
+  },
+  "apps": [
+    {
+      "key": "NX",
+      "name": "NOTORYX Connect (main b0d3643)"
+    },
+    {
+      "key": "MA",
+      "name": "Meshtastic Android v2.8.3 (also desktop)"
+    },
+    {
+      "key": "MI",
+      "name": "Meshtastic Apple v2.7.27"
+    },
+    {
+      "key": "MW",
+      "name": "Meshtastic Web v2.7.2"
+    },
+    {
+      "key": "SM",
+      "name": "Socialmesh v1.77.0"
+    },
+    {
+      "key": "MV",
+      "name": "MeshWave 1.1.4 (iOS)"
+    }
+  ],
+  "areas": [
+    {
+      "area": "Messaging",
+      "features": [
+        {
+          "feature": "Channel and direct messages",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Implemented",
+            "MV": "Implemented"
+          },
+          "evidence": "`meshtastic_messaging_service.dart`"
+        },
+        {
+          "feature": "Delivery state from routing ACK",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Unverified",
+            "MV": "Implemented"
+          },
+          "evidence": "`want_ack` in `meshtastic_mesh_tools.dart`; MeshWave lists \"delivery confirmation\""
+        },
+        {
+          "feature": "Resend a failed message in place",
+          "status": {
+            "NX": "Partial",
+            "MA": "Implemented",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "NX: offline queue resends on reconnect; MA v2.8.3 \"failed messages resend in place\""
+        },
+        {
+          "feature": "Offline queue (send when radio returns)",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "README \"Offline queue\""
+        },
+        {
+          "feature": "Message search",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_message_search.dart`"
+        },
+        {
+          "feature": "Reactions, drafts per thread",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Unverified",
+            "SM": "Implemented",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_chat_message.dart`; MA v2.8.3 reaction notification channel"
+        },
+        {
+          "feature": "RF vs MQTT origin label",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`viaMqtt`; requested in MA #896 (14 👍) and MI #1546"
+        },
+        {
+          "feature": "Hop count shown on a message",
+          "status": {
+            "NX": "Missing",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "No hop field in `bastion_chat_message.dart`; MA #922 (19 👍) closed; MI #1611"
+        },
+        {
+          "feature": "Ignore / mute / word filters",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_filters.dart`; SOS from a trip contact bypasses ignore"
+        },
+        {
+          "feature": "Pins, @mentions, unread markers",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "PR #122 merged"
+        },
+        {
+          "feature": "Bot / away reply with loop protection",
+          "status": {
+            "NX": "Superior",
+            "MA": "Missing",
+            "MI": "Missing",
+            "MW": "Missing",
+            "SM": "Unverified",
+            "MV": "Missing"
+          },
+          "evidence": "`bastion_bot_guard.dart`, `bastion_bot_rules.dart`"
+        },
+        {
+          "feature": "Read new messages aloud",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Missing",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_speech.dart` (flutter_tts)"
+        },
+        {
+          "feature": "PKI key display / key-mismatch warning",
+          "status": {
+            "NX": "Missing",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "No public-key handling in `lib/` outside generated protobufs"
+        },
+        {
+          "feature": "Message storage engine",
+          "status": {
+            "NX": "Inferior",
+            "MA": "Superior",
+            "MI": "Superior",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "NX keeps chats as JSON in SharedPreferences (`bastion_message_archive.dart:76`); MA has an app database with backup/restore (v2.8.3)"
+        }
+      ]
+    },
+    {
+      "area": "Safety and field",
+      "features": [
+        {
+          "feature": "Trip plan, overdue alert, check-in",
+          "status": {
+            "NX": "Superior",
+            "MA": "Missing",
+            "MI": "Missing",
+            "MW": "Missing",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_trip.dart`, `bastion_field_checkin.dart`"
+        },
+        {
+          "feature": "SOS that repeats until answered",
+          "status": {
+            "NX": "Superior",
+            "MA": "Missing",
+            "MI": "Missing",
+            "MW": "Missing",
+            "SM": "Partial",
+            "MV": "Partial"
+          },
+          "evidence": "NX: 5 min × 12, stops on reply; SM \"one-tap SOS broadcast\"; MV lists emergency messages"
+        },
+        {
+          "feature": "Geofence alerts",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Missing",
+            "SM": "Implemented",
+            "MV": "Implemented"
+          },
+          "evidence": "`bastion_geofences.dart`; SM README; MV \"MeshFence\""
+        },
+        {
+          "feature": "Low-battery / node-quiet alerts",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Implemented",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_field_alerts.dart`"
+        },
+        {
+          "feature": "Incident log and coverage records (CSV)",
+          "status": {
+            "NX": "Superior",
+            "MA": "Missing",
+            "MI": "Missing",
+            "MW": "Missing",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_field_log.dart`"
+        },
+        {
+          "feature": "Deployment checklist, runtime estimate",
+          "status": {
+            "NX": "Superior",
+            "MA": "Missing",
+            "MI": "Missing",
+            "MW": "Missing",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`field_tools_page.dart`"
+        }
+      ]
+    },
+    {
+      "area": "Mesh networking and diagnostics",
+      "features": [
+        {
+          "feature": "Node list, favourites, notes",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Implemented",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_nodedex.dart`"
+        },
+        {
+          "feature": "Filter nodes/map by last heard",
+          "status": {
+            "NX": "Unverified",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "MA #1714, MI #1126"
+        },
+        {
+          "feature": "Traceroute with SNR per hop",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Implemented",
+            "MV": "Unverified"
+          },
+          "evidence": "`traceroute_page.dart`"
+        },
+        {
+          "feature": "Traceroute drawn on the map",
+          "status": {
+            "NX": "In open PR",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "PR #125"
+        },
+        {
+          "feature": "Neighbour info",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`node_detail_page.dart:425`"
+        },
+        {
+          "feature": "Telemetry history charts",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`telemetry_chart.dart` (PR #121)"
+        },
+        {
+          "feature": "Mesh health / airtime view",
+          "status": {
+            "NX": "In open PR",
+            "MA": "Partial",
+            "MI": "Partial",
+            "MW": "Unverified",
+            "SM": "Implemented",
+            "MV": "Unverified"
+          },
+          "evidence": "PR #126; SM README \"packets, hops and airtime\""
+        },
+        {
+          "feature": "Range test, store-and-forward tools",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`mesh_tools_page.dart`"
+        },
+        {
+          "feature": "Network monitor dashboard (desktop)",
+          "status": {
+            "NX": "Missing",
+            "MA": "Partial",
+            "MI": "Unverified",
+            "MW": "Partial",
+            "SM": "Unverified",
+            "MV": "Missing"
+          },
+          "evidence": "MeshSense v1.0.18 (desktop, last release 2025-01-22) and MeshMonitor v4.17.2 (server) are the specialists"
+        }
+      ]
+    },
+    {
+      "area": "Mapping and location",
+      "features": [
+        {
+          "feature": "Map with nodes and waypoints",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Implemented",
+            "MV": "Implemented"
+          },
+          "evidence": "`map_page.dart`"
+        },
+        {
+          "feature": "Offline map tiles",
+          "status": {
+            "NX": "Partial",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Implemented"
+          },
+          "evidence": "NX caches viewed OSM tiles for a year (`bastion_tile_cache.dart`); no area download"
+        },
+        {
+          "feature": "Team view (distance, bearing, freshness)",
+          "status": {
+            "NX": "Superior",
+            "MA": "Missing",
+            "MI": "Missing",
+            "MW": "Missing",
+            "SM": "Implemented",
+            "MV": "Unverified"
+          },
+          "evidence": "Trip contacts only; SM \"Team Coordination\""
+        },
+        {
+          "feature": "Trails and GPX export",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Implemented"
+          },
+          "evidence": "`bastion_trails.dart`, `bastion_gpx.dart`; MV \"route history\""
+        },
+        {
+          "feature": "Rally points and shared routes",
+          "status": {
+            "NX": "In open PR",
+            "MA": "Missing",
+            "MI": "Missing",
+            "MW": "Missing",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "PR #127"
+        },
+        {
+          "feature": "Terrain / link planner",
+          "status": {
+            "NX": "In open PR",
+            "MA": "Implemented",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Partial"
+          },
+          "evidence": "PR #128; MA v2.8.3 \"Site Planner coverage runs on the phone\"; MV rangefinder"
+        },
+        {
+          "feature": "Position rounding for privacy",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_phone_position.dart`"
+        }
+      ]
+    },
+    {
+      "area": "Device connectivity",
+      "features": [
+        {
+          "feature": "Bluetooth LE",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Implemented",
+            "MV": "Implemented"
+          },
+          "evidence": "`meshtastic_radio_transport.dart`"
+        },
+        {
+          "feature": "Wi-Fi / TCP",
+          "status": {
+            "NX": "In open PR",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Unverified",
+            "MV": "Missing"
+          },
+          "evidence": "PR #129; MI #296 (26 👍, closed)"
+        },
+        {
+          "feature": "USB serial",
+          "status": {
+            "NX": "Missing",
+            "MA": "Implemented",
+            "MI": "Unverified",
+            "MW": "Implemented",
+            "SM": "Implemented",
+            "MV": "Missing"
+          },
+          "evidence": "Transport interface is ready (\"future USB\", `meshtastic_radio_session.dart:10`)"
+        },
+        {
+          "feature": "Auto-reconnect with backoff",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Partial",
+            "MW": "Partial",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_reconnect_supervisor.dart`; MI #1533 \"stuck in connecting\"; MW #164"
+        },
+        {
+          "feature": "Background link (foreground service)",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Unverified",
+            "MW": "Not applicable",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_background_service.dart` + battery-optimisation card"
+        },
+        {
+          "feature": "Several radios, per-radio history",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "README \"kept separately for each radio\""
+        },
+        {
+          "feature": "Firmware update",
+          "status": {
+            "NX": "Missing",
+            "MA": "Implemented",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Missing"
+          },
+          "evidence": "MA v2.8.3 bootloader check + DFU reboot"
+        }
+      ]
+    },
+    {
+      "area": "Radio management",
+      "features": [
+        {
+          "feature": "Edit every config section and module",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Implemented",
+            "MV": "Unverified"
+          },
+          "evidence": "`proto_form.dart` generated forms"
+        },
+        {
+          "feature": "Read-back verification after each save",
+          "status": {
+            "NX": "Superior",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_settings_verifier.dart`"
+        },
+        {
+          "feature": "Remote admin of other nodes",
+          "status": {
+            "NX": "Missing",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "NX admin targets `localNodeNum` only (`meshtastic_admin_session.dart:168`); MI #2498"
+        },
+        {
+          "feature": "Channel links and QR import/export",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Implemented",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_channel_import.dart`"
+        },
+        {
+          "feature": "Encrypted radio-config backup",
+          "status": {
+            "NX": "Superior",
+            "MA": "Partial",
+            "MI": "Unverified",
+            "MW": "Missing",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "AES-256-GCM, PBKDF2 600k; MW #247 asks for config backup (12 👍, open)"
+        },
+        {
+          "feature": "Encrypted phone-data backup",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Unverified",
+            "MW": "Missing",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "MA v2.8.3 database backup/restore"
+        },
+        {
+          "feature": "MQTT client proxy (phone as uplink)",
+          "status": {
+            "NX": "Missing",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "Only the proto enum exists in NX (`meshtastic_phoneapi_codec.dart:7`); MI #2572"
+        }
+      ]
+    },
+    {
+      "area": "UI/UX, accessibility and platform",
+      "features": [
+        {
+          "feature": "Light / dark / system themes",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Superior",
+            "MV": "Unverified"
+          },
+          "evidence": "`lib/theme/notoryx_theme.dart`; SM sells theme packs"
+        },
+        {
+          "feature": "Large-text resilient layouts",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Inferior",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`bastion_accessibility_test.dart`; MW #666 mobile responsiveness (open)"
+        },
+        {
+          "feature": "Screen-reader labels",
+          "status": {
+            "NX": "Partial",
+            "MA": "Unverified",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "`Semantics(` in 8 files"
+        },
+        {
+          "feature": "Translations",
+          "status": {
+            "NX": "Missing",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "No l10n in NX; MI #2742 (Polish)"
+        },
+        {
+          "feature": "Demo mode without a radio",
+          "status": {
+            "NX": "In open PR",
+            "MA": "Implemented",
+            "MI": "Unverified",
+            "MW": "Unverified",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "PR #124; MA v2.8.3 showcase scenario"
+        },
+        {
+          "feature": "Home-screen widgets / shortcuts",
+          "status": {
+            "NX": "Partial",
+            "MA": "Implemented",
+            "MI": "Unverified",
+            "MW": "Not applicable",
+            "SM": "Implemented",
+            "MV": "Unverified"
+          },
+          "evidence": "NX has app-icon shortcuts only; MA #745 widgets"
+        },
+        {
+          "feature": "Car (Android Auto / CarPlay)",
+          "status": {
+            "NX": "Missing",
+            "MA": "Implemented",
+            "MI": "Missing",
+            "MW": "Not applicable",
+            "SM": "Unverified",
+            "MV": "Unverified"
+          },
+          "evidence": "MA v2.8.3 Android Auto messaging; MI #231"
+        },
+        {
+          "feature": "iOS build",
+          "status": {
+            "NX": "Missing",
+            "MA": "Not applicable",
+            "MI": "Implemented",
+            "MW": "Not applicable",
+            "SM": "Implemented",
+            "MV": "Implemented"
+          },
+          "evidence": "NX is Android-only today"
+        },
+        {
+          "feature": "Desktop build",
+          "status": {
+            "NX": "Partial",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Unverified",
+            "MV": "Missing"
+          },
+          "evidence": "NX macOS workflow exists, not released"
+        },
+        {
+          "feature": "Open source",
+          "status": {
+            "NX": "Implemented",
+            "MA": "Implemented",
+            "MI": "Implemented",
+            "MW": "Implemented",
+            "SM": "Implemented",
+            "MV": "Missing"
+          },
+          "evidence": "NX GPL-3.0"
+        }
+      ]
+    }
+  ]
+}
