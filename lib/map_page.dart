@@ -7,6 +7,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'link_planner_page.dart';
 import 'node_detail_page.dart';
 import 'services/bastion_geo.dart';
 import 'services/bastion_geofences.dart';
@@ -51,6 +52,9 @@ class _MapPageState extends State<MapPage> {
   bool _fitted = false;
   bool _showLinks = true;
   bool _showTrails = true;
+
+  /// Shows OpenTopoMap contour tiles instead of the street map.
+  bool _topo = false;
 
   /// Stops of a route being planned, or null when not planning.
   List<LatLng>? _planning;
@@ -160,9 +164,12 @@ class _MapPageState extends State<MapPage> {
                 ),
                 children: [
                   TileLayer(
-                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    key: ValueKey(_topo),
+                    urlTemplate: _topo
+                        ? 'https://tile.opentopomap.org/{z}/{x}/{y}.png'
+                        : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'com.bastionmesh.connect',
-                    maxNativeZoom: 19,
+                    maxNativeZoom: _topo ? 17 : 19,
                   ),
                   if (widget.radio.geofences.isNotEmpty)
                     CircleLayer(circles: [
@@ -233,7 +240,7 @@ class _MapPageState extends State<MapPage> {
                         ),
                     ],
                   ),
-                  const _MapAttribution(),
+                  _MapAttribution(topo: _topo),
                 ],
               ),
               Positioned(
@@ -260,6 +267,17 @@ class _MapPageState extends State<MapPage> {
                         ),
                       ]),
                       Wrap(alignment: WrapAlignment.end, children: [
+                        IconButton(
+                          tooltip: _topo ? 'Show street map' : 'Show topographic map',
+                          icon: Icon(_topo ? Icons.map_outlined : Icons.terrain),
+                          onPressed: () => setState(() => _topo = !_topo),
+                        ),
+                        IconButton(
+                          tooltip: 'Link planner',
+                          icon: const Icon(Icons.settings_input_antenna),
+                          onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                            builder: (_) => LinkPlannerPage(radio: widget.radio))),
+                        ),
                         IconButton(
                           tooltip: 'Rally points & routes',
                           icon: Badge(
@@ -1076,7 +1094,10 @@ class _ZoneDialogState extends State<_ZoneDialog> {
 /// The OpenStreetMap credit. Unlike the stock attribution bar it wraps
 /// onto a second line with large text instead of running off the screen.
 class _MapAttribution extends StatelessWidget {
-  const _MapAttribution();
+  const _MapAttribution({this.topo = false});
+
+  /// Adds the SRTM and OpenTopoMap credits the topo tiles require.
+  final bool topo;
 
   @override
   Widget build(BuildContext context) {
@@ -1096,6 +1117,7 @@ class _MapAttribution extends StatelessWidget {
             child: Wrap(alignment: WrapAlignment.end, children: [
               Text('© ', style: style),
               Text('OpenStreetMap contributors', style: style),
+              if (topo) Text(', SRTM | © OpenTopoMap (CC-BY-SA)', style: style),
             ]),
           ),
         ),
