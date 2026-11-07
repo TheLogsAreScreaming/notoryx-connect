@@ -28,6 +28,7 @@ dependencies:
   flutter_tts: 4.2.5
   quick_actions: 1.1.1
   sqflite: 2.4.5
+  usb_serial: 0.5.2
 
 dev_dependencies:
   flutter_test:

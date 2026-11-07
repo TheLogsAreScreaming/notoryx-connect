@@ -40,6 +40,7 @@ import 'services/bastion_firmware.dart';
 import 'services/bastion_phone_position.dart';
 import 'services/meshtastic_messaging_service.dart';
 import 'services/meshtastic_radio_coordinator.dart';
+import 'services/meshtastic_usb_transport.dart';
 import 'theme/notoryx_theme.dart';
 import 'theme/notoryx_tokens.dart';
 import 'theme/nx_components.dart';
@@ -322,6 +323,21 @@ class _NodesPage extends StatelessWidget {
 
   static const _lastHostKey = 'bastion.network.last_host';
 
+  /// Lists USB devices and connects to the one picked.
+  Future<void> _connectUsb(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final picked = await showModalBottomSheet<UsbRadioInfo>(
+      context: context,
+      builder: (_) => const _UsbRadioSheet(),
+    );
+    if (picked == null) return;
+    try {
+      await radio.connect(MeshtasticBleDevice.usb(picked.deviceId, picked.name));
+    } catch (error) {
+      messenger.showSnackBar(SnackBar(content: Text('Could not connect over USB: $error')));
+    }
+  }
+
   /// Asks for a radio's network address and connects to it over TCP.
   Future<void> _connectNetwork(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
@@ -430,22 +446,30 @@ class _NodesPage extends StatelessWidget {
             label: const Text('Scan for radios'),
           ),
         const SizedBox(height: NxSpace.xs),
-        if (radio.usesNetworkLink && (radio.isReady || radio.isReconnecting || radio.busy))
+        if ((radio.usesNetworkLink || radio.usesUsbLink) && (radio.isReady || radio.isReconnecting || radio.busy))
           Card(child: ListTile(
-            leading: const Icon(Icons.wifi),
-            title: Text(radio.networkHost ?? 'Network radio'),
-            subtitle: Text('Over Wi-Fi • ${_connectionLabel(radio.connection.state)}'),
+            leading: Icon(radio.usesUsbLink ? Icons.usb : Icons.wifi),
+            title: Text((radio.usesUsbLink ? radio.linkName : radio.networkHost) ?? 'Radio'),
+            subtitle: Text('${radio.usesUsbLink ? 'Over USB' : 'Over Wi-Fi'} • ${_connectionLabel(radio.connection.state)}'),
             trailing: OutlinedButton(
               onPressed: radio.busy ? null : radio.disconnect,
               child: const Text('Disconnect', maxLines: 1, softWrap: false),
             ),
           ))
         else
-          OutlinedButton.icon(
-            onPressed: radio.busy ? null : () => _connectNetwork(context),
-            icon: const Icon(Icons.wifi),
-            label: const Text('Connect over Wi-Fi'),
-          ),
+          Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
+            OutlinedButton.icon(
+              onPressed: radio.busy ? null : () => _connectNetwork(context),
+              icon: const Icon(Icons.wifi),
+              label: const Text('Connect over Wi-Fi'),
+            ),
+            if (BastionUsb.supported)
+              OutlinedButton.icon(
+                onPressed: radio.busy ? null : () => _connectUsb(context),
+                icon: const Icon(Icons.usb),
+                label: const Text('Connect over USB'),
+              ),
+          ]),
         if (discovery.error != null)
           NxBanner(tone: NxTone.warning, message: discovery.error!),
         const SizedBox(height: NxSpace.xs),
@@ -2228,3 +2252,54 @@ String? _hopsLabel(int? hops) => switch (hops) {
   1 => '1 hop',
   final n => '$n hops',
 };
+
+/// USB devices plugged into the phone, likely radios first.
+class _UsbRadioSheet extends StatefulWidget {
+  const _UsbRadioSheet();
+
+  @override
+  State<_UsbRadioSheet> createState() => _UsbRadioSheetState();
+}
+
+class _UsbRadioSheetState extends State<_UsbRadioSheet> {
+  late Future<List<UsbRadioInfo>> _devices = _load();
+
+  Future<List<UsbRadioInfo>> _load() async =>
+      [...await BastionUsb.gateway.list()]..sort((a, b) => (b.likelyRadio ? 1 : 0) - (a.likelyRadio ? 1 : 0));
+
+  @override
+  Widget build(BuildContext context) => SafeArea(child: Padding(
+    padding: const EdgeInsets.fromLTRB(NxSpace.md, 0, NxSpace.md, NxSpace.md),
+    child: FutureBuilder<List<UsbRadioInfo>>(
+      future: _devices,
+      builder: (context, snap) => Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Text('Connect over USB', style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: NxSpace.xxs),
+        const Text('Plug the radio into the phone with a USB data cable (an OTG adapter may be needed). '
+            'Android asks for permission the first time.'),
+        const SizedBox(height: NxSpace.sm),
+        if (snap.connectionState != ConnectionState.done)
+          const Center(child: Padding(padding: EdgeInsets.all(NxSpace.md), child: CircularProgressIndicator()))
+        else if (snap.hasError)
+          NxBanner(tone: NxTone.danger, message: 'Could not list USB devices: ${snap.error}')
+        else if (snap.data!.isEmpty)
+          const NxEmptyState(icon: Icons.usb_off, title: 'No USB devices found',
+            detail: 'Check the cable carries data, not just power, then refresh.')
+        else
+          for (final d in snap.data!)
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(d.likelyRadio ? Icons.settings_input_antenna : Icons.usb),
+              title: Text(d.name),
+              subtitle: Text(d.likelyRadio ? 'Likely a radio • ${d.chip}' : 'Other USB device'),
+              trailing: FilledButton(onPressed: () => Navigator.pop(context, d), child: const Text('Connect')),
+            ),
+        TextButton.icon(
+          onPressed: () => setState(() => _devices = _load()),
+          icon: const Icon(Icons.refresh),
+          label: const Text('Refresh'),
+        ),
+      ]),
+    ),
+  ));
+}

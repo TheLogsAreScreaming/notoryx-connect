@@ -24,6 +24,19 @@ class MeshtasticBleDevice {
   /// Whether this radio is reached over the network.
   bool get isNetwork => id.startsWith('tcp:');
 
+  /// A radio on a USB cable. Its [id] is "usb:<Android device id>".
+  factory MeshtasticBleDevice.usb(int deviceId, String name) =>
+      MeshtasticBleDevice(id: 'usb:$deviceId', name: name, rssi: 0, advertisedServices: const []);
+
+  /// Whether this radio is on a USB cable.
+  bool get isUsb => id.startsWith('usb:');
+
+  /// The Android USB device id of a USB radio.
+  int? get usbDeviceId => isUsb ? int.tryParse(id.substring(4)) : null;
+
+  /// Whether reaching this radio needs Bluetooth.
+  bool get usesBluetooth => !isNetwork && !isUsb;
+
   /// Host and port of a network radio.
   ({String host, int port})? get networkAddress {
     if (!isNetwork) return null;
