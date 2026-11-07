@@ -59,6 +59,7 @@ import 'meshtastic_node_database.dart';
 import 'meshtastic_phoneapi_codec.dart';
 import 'meshtastic_radio_session.dart';
 import 'meshtastic_radio_transport.dart';
+import 'meshtastic_stream_transport.dart';
 import 'meshtastic_text_codec.dart';
 import 'meshtastic_traceroute.dart';
 
@@ -286,7 +287,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         _lastDevice != null &&
         BastionReconnectPolicy.shouldReconnect(
           userDisconnected: _userDisconnected,
-          bluetoothEnabled: _bluetoothOn,
+          // Network radios don't need Bluetooth.
+          bluetoothEnabled: _bluetoothOn || (_lastDevice?.isNetwork ?? false),
         ),
   );
 
@@ -449,6 +451,12 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   bool get busy => _busy;
   bool get isReady => connection.isReady;
   bool get isReconnecting => _reconnect.isRunning || _waitingForBluetooth;
+
+  /// The last radio was reached over Wi-Fi or Ethernet rather than Bluetooth.
+  bool get usesNetworkLink => _lastDevice?.isNetwork ?? false;
+
+  /// Host of the network radio, when [usesNetworkLink].
+  String? get networkHost => _lastDevice?.networkAddress?.host;
   bool get bluetoothOn => _bluetoothOn;
   int? get localNodeNum => _localNodeNum;
 
@@ -772,7 +780,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       _channelSnapshots.clear();
       _moduleConfigSnapshots.clear();
 
-      final transport = MeshtasticUniversalBleTransport(deviceId: device.id);
+      final MeshtasticLinkTransport transport = switch (device.networkAddress) {
+        final address? => MeshtasticTcpTransport(host: address.host, port: address.port),
+        null => MeshtasticUniversalBleTransport(deviceId: device.id),
+      };
       final session = MeshtasticRadioSession(
         transport: transport,
         connection: connection,
@@ -1502,7 +1513,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     // state flip made while the app was suspended.
     _bluetoothOn = await _bluetooth.isOn();
     if (_userDisconnected) return;
-    if (!_bluetoothOn) {
+    if (!_bluetoothOn && !device.isNetwork) {
       _waitingForBluetooth = true;
       unawaited(
         _background.keepAlive(radioName: device.name, reconnecting: true),
@@ -1523,7 +1534,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     final recovery = _reconnect.recover();
     notifyListeners();
     final recovered = await recovery;
-    if (!recovered && !_bluetoothOn && !_userDisconnected) {
+    if (!recovered && !_bluetoothOn && !device.isNetwork && !_userDisconnected) {
       // Bluetooth went off mid-recovery; wait for it instead of giving up.
       await _recoverLink(device);
       return;

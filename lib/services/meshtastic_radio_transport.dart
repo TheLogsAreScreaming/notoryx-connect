@@ -15,6 +15,12 @@ abstract interface class MeshtasticRadioTransport {
   Future<void> disconnect();
 }
 
+/// A transport that can report the far end dropping the link.
+abstract interface class MeshtasticLinkTransport implements MeshtasticRadioTransport {
+  /// Emits when an established link drops without a local [disconnect].
+  Stream<void> get linkLost;
+}
+
 /// Stable Meshtastic BLE GATT identifiers used by the PhoneAPI.
 abstract final class MeshtasticBleGatt {
   static const service = '6ba1b218-15a8-461f-9fa8-5dcae273eafd';
@@ -30,7 +36,7 @@ abstract final class MeshtasticBleGatt {
 /// Meshtastic's FromNum notification is a wake-up signal. Every wake drains
 /// FromRadio until the mailbox returns an empty value. ToRadio uses
 /// acknowledged writes.
-class MeshtasticUniversalBleTransport implements MeshtasticRadioTransport {
+class MeshtasticUniversalBleTransport implements MeshtasticLinkTransport {
   MeshtasticUniversalBleTransport({required this.deviceId});
 
   final String deviceId;
@@ -52,6 +58,7 @@ class MeshtasticUniversalBleTransport implements MeshtasticRadioTransport {
 
   /// Emits when the peripheral drops an established link without a local
   /// [disconnect] call, e.g. out of range or radio reboot.
+  @override
   Stream<void> get linkLost => _linkLost.stream;
 
   @override
