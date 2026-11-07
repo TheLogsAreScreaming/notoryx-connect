@@ -1,0 +1,9 @@
+• New look: cleaner screens, light and dark themes, side tabs on tablets
+• Connect to radios over Wi-Fi
+• Demo mode: try the app without a radio
+• Sensor charts, @mentions, pinned messages, unread markers
+• Mesh health: channel use and airtime
+• Rally points and routes on the map
+• Topo map and a line-of-sight link planner
+• Traceroute shown on the map
+• Zone alerts when people arrive or leave
