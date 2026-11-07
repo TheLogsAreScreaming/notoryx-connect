@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -11,6 +12,7 @@ import 'services/bastion_geo.dart';
 import 'services/bastion_geofences.dart';
 import 'services/bastion_gpx.dart';
 import 'services/bastion_preferences.dart';
+import 'services/bastion_routes.dart';
 import 'services/bastion_units.dart';
 import 'services/bastion_team.dart';
 import 'services/bastion_waypoints.dart';
@@ -49,6 +51,10 @@ class _MapPageState extends State<MapPage> {
   bool _fitted = false;
   bool _showLinks = true;
   bool _showTrails = true;
+
+  /// Stops of a route being planned, or null when not planning.
+  List<LatLng>? _planning;
+  bool _sharingRoute = false;
 
   Set<int> get _team => widget.radio.trip.plan.members.toSet();
 
@@ -145,7 +151,12 @@ class _MapPageState extends State<MapPage> {
                   interactionOptions: const InteractionOptions(
                     flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
                   ),
-                  onLongPress: (_, point) => _createWaypoint(context, point),
+                  onLongPress: (_, point) => _planning == null ? _createWaypoint(context, point) : null,
+                  onTap: (_, point) {
+                    final plan = _planning;
+                    if (plan == null || plan.length >= BastionRoutes.maxStops) return;
+                    setState(() => plan.add(point));
+                  },
                 ),
                 children: [
                   TileLayer(
@@ -167,6 +178,33 @@ class _MapPageState extends State<MapPage> {
                     ]),
                   if (_showLinks) PolylineLayer(polylines: _links(placed)),
                   if (_showTrails && trails.isNotEmpty) PolylineLayer(polylines: trails),
+                  if (BastionRoutes.group(widget.radio.waypoints) case final routes when routes.isNotEmpty)
+                    PolylineLayer(polylines: [
+                      for (final r in routes)
+                        if (r.stops.length >= 2)
+                          Polyline(
+                            points: [for (final p in r.points) LatLng(p.latitude, p.longitude)],
+                            strokeWidth: 4,
+                            color: Theme.of(context).colorScheme.tertiary,
+                            pattern: StrokePattern.dashed(segments: const [12, 6]),
+                          ),
+                    ]),
+                  if (_planning case final plan? when plan.isNotEmpty) ...[
+                    PolylineLayer(polylines: [
+                      if (plan.length >= 2)
+                        Polyline(points: plan, strokeWidth: 4, color: MapPage.accent),
+                    ]),
+                    MarkerLayer(markers: [
+                      for (final (i, p) in plan.indexed)
+                        Marker(point: p, width: 28, height: 28, child: Container(
+                          decoration: BoxDecoration(color: MapPage.accent, shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 2)),
+                          alignment: Alignment.center,
+                          child: Text('${i + 1}', style: const TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.w700, fontSize: 12)),
+                        )),
+                    ]),
+                  ],
                   MarkerLayer(
                     markers: [
                       for (final waypoint in widget.radio.waypoints)
@@ -205,8 +243,8 @@ class _MapPageState extends State<MapPage> {
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    child: Row(
-                      children: [
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                      Row(children: [
                         const Icon(Icons.map_outlined, color: MapPage.accent),
                         const SizedBox(width: 10),
                         Expanded(
@@ -219,6 +257,17 @@ class _MapPageState extends State<MapPage> {
                                     '${widget.radio.waypoints.isEmpty ? '' : ' • ${widget.radio.waypoints.length} waypoints'}'
                                     '\nLong-press the map to drop a waypoint',
                           ),
+                        ),
+                      ]),
+                      Wrap(alignment: WrapAlignment.end, children: [
+                        IconButton(
+                          tooltip: 'Rally points & routes',
+                          icon: Badge(
+                            isLabelVisible: widget.radio.waypoints.any(BastionRoutes.isRally),
+                            label: Text('${widget.radio.waypoints.where(BastionRoutes.isRally).length}'),
+                            child: const Icon(Icons.flag_outlined),
+                          ),
+                          onPressed: () => _showRally(context),
                         ),
                         IconButton(
                           tooltip: 'Team',
@@ -262,15 +311,173 @@ class _MapPageState extends State<MapPage> {
                             icon: const Icon(Icons.fit_screen),
                             onPressed: () => _fit(placed),
                           ),
-                      ],
-                    ),
+                      ]),
+                    ]),
                   ),
                 ),
               ),
+              if (_planning case final plan?)
+                Positioned(
+                  left: 12,
+                  right: 12,
+                  bottom: 36,
+                  child: Card(child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                      Semantics(liveRegion: true, child: Text(
+                        plan.isEmpty
+                            ? 'Tap the map to add stops, in order. Up to ${BastionRoutes.maxStops}.'
+                            : '${plan.length} of ${BastionRoutes.maxStops} stops • '
+                              '${BastionUnitFormat.distance(BastionRoutes.lengthOf([for (final p in plan) (latitude: p.latitude, longitude: p.longitude)]), BastionPreferences.instance.units)}',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      )),
+                      const SizedBox(height: 8),
+                      Wrap(spacing: 8, runSpacing: 8, alignment: WrapAlignment.end, children: [
+                        TextButton(onPressed: _sharingRoute ? null : () => setState(() => _planning = null),
+                          child: const Text('Cancel')),
+                        OutlinedButton.icon(
+                          onPressed: plan.isEmpty || _sharingRoute ? null : () => setState(plan.removeLast),
+                          icon: const Icon(Icons.undo), label: const Text('Undo')),
+                        FilledButton.icon(
+                          onPressed: plan.length < 2 || _sharingRoute ? null : () => _shareRoute(context, plan),
+                          icon: _sharingRoute
+                              ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                              : const Icon(Icons.share_location),
+                          label: const Text('Share route')),
+                      ]),
+                    ]),
+                  )),
+                ),
             ],
           );
         },
       );
+
+  ({double distance, double bearing})? _fromMe(double lat, double lon) {
+    final me = widget.radio.localNode;
+    if (me == null || !me.hasPosition) return null;
+    return (
+      distance: BastionGeo.distanceMeters(me.latitude!, me.longitude!, lat, lon),
+      bearing: BastionGeo.bearingDegrees(me.latitude!, me.longitude!, lat, lon),
+    );
+  }
+
+  /// Rally points with distance and direction, shared routes, and route planning.
+  void _showRally(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetContext) => SafeArea(child: AnimatedBuilder(
+        animation: widget.radio,
+        builder: (sheetContext, _) {
+          final units = BastionPreferences.instance.units;
+          final rallies = widget.radio.waypoints.where(BastionRoutes.isRally).toList();
+          final routes = BastionRoutes.group(widget.radio.waypoints);
+          final type = Theme.of(sheetContext).textTheme;
+          return ListView(shrinkWrap: true, padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), children: [
+            Text('Rally points & routes', style: type.titleLarge),
+            const SizedBox(height: 4),
+            const Text('Rally points are where everyone should meet. Drop one with a long-press and '
+                'choose "Rally point". Routes are shared as numbered waypoints, so other Meshtastic apps see the stops too.'),
+            const SizedBox(height: 12),
+            Text('Rally points', style: type.titleSmall),
+            if (rallies.isEmpty)
+              const ListTile(contentPadding: EdgeInsets.zero, title: Text('None yet.')),
+            for (final w in rallies)
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Text('🚩', style: TextStyle(fontSize: 24)),
+                title: Text(w.name),
+                subtitle: Text(switch (_fromMe(w.latitude, w.longitude)) {
+                  final d? => '${BastionUnitFormat.distance(d.distance, units)} ${BastionGeo.compassPoint(d.bearing)} of you',
+                  null => 'Your radio has no position yet',
+                }),
+                trailing: IconButton(
+                  tooltip: 'Show on map',
+                  icon: const Icon(Icons.center_focus_strong),
+                  onPressed: () {
+                    Navigator.pop(sheetContext);
+                    _map.move(LatLng(w.latitude, w.longitude), 15);
+                  },
+                ),
+              ),
+            const SizedBox(height: 8),
+            Text('Routes', style: type.titleSmall),
+            if (routes.isEmpty)
+              const ListTile(contentPadding: EdgeInsets.zero, title: Text('None yet.')),
+            for (final r in routes)
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.route),
+                title: Text(r.name),
+                subtitle: Text([
+                  r.complete ? '${r.count} stops' : '${r.stops.length} of ${r.count} stops heard',
+                  if (r.stops.length >= 2) BastionUnitFormat.distance(r.lengthMeters, units),
+                  r.from == null ? 'from you' : 'from ${widget.radio.nodeName(r.from!)}',
+                ].join(' • ')),
+                trailing: IconButton(
+                  tooltip: 'Show on map',
+                  icon: const Icon(Icons.center_focus_strong),
+                  onPressed: () {
+                    Navigator.pop(sheetContext);
+                    final pts = [for (final p in r.points) LatLng(p.latitude, p.longitude)];
+                    if (pts.length == 1) {
+                      _map.move(pts.single, 15);
+                    } else {
+                      _map.fitCamera(CameraFit.coordinates(coordinates: pts, padding: const EdgeInsets.all(48)));
+                    }
+                  },
+                ),
+              ),
+            const SizedBox(height: 8),
+            FilledButton.icon(
+              onPressed: widget.radio.isReady
+                  ? () {
+                      Navigator.pop(sheetContext);
+                      setState(() => _planning = []);
+                    }
+                  : null,
+              icon: const Icon(Icons.add_road),
+              label: Text(widget.radio.isReady ? 'Plan a route' : 'Connect a radio to share routes'),
+            ),
+          ]);
+        },
+      )),
+    );
+  }
+
+  /// Asks for a name and shares [plan] as numbered waypoints, a few seconds
+  /// apart so the stops don't flood the channel.
+  Future<void> _shareRoute(BuildContext context, List<LatLng> plan) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final routeName = await showDialog<String>(
+      context: context,
+      builder: (_) => _RouteNameDialog(stops: plan.length),
+    );
+    if (routeName == null || !mounted) return;
+    final stops = BastionRoutes.build(
+      name: routeName,
+      points: [for (final p in plan) (latitude: p.latitude, longitude: p.longitude)],
+      newId: BastionWaypointStore.newId,
+      expires: DateTime.now().toUtc().add(const Duration(days: 1)),
+    );
+    setState(() => _sharingRoute = true);
+    var sent = 0;
+    try {
+      for (final stop in stops) {
+        if (sent > 0) await Future<void>.delayed(routeStopSpacing);
+        await widget.radio.sendWaypoint(stop);
+        sent++;
+      }
+      messenger.showSnackBar(SnackBar(content: Text('Route shared: ${stops.length} stops on channel 0.')));
+      if (mounted) setState(() => _planning = null);
+    } catch (error) {
+      messenger.showSnackBar(SnackBar(content: Text(
+          'Route stopped after $sent of ${stops.length} stops: $error')));
+    } finally {
+      if (mounted) setState(() => _sharingRoute = false);
+    }
+  }
 
   /// Exports all waypoints and the trails of trip contacts and this radio.
   Future<void> _exportGpx(BuildContext context, Set<int> team, int? local) async {
@@ -625,7 +832,7 @@ class _WaypointPin extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
         button: true,
-        label: 'Waypoint ${waypoint.name}',
+        label: '${BastionRoutes.isRally(waypoint) ? 'Rally point' : 'Waypoint'} ${waypoint.name}',
         child: GestureDetector(
           onTap: onTap,
           child: Column(
@@ -634,7 +841,7 @@ class _WaypointPin extends StatelessWidget {
               Text(waypoint.iconText, style: const TextStyle(fontSize: 26)),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
-                color: Colors.black54,
+                color: BastionRoutes.isRally(waypoint) ? MapPage.accent : Colors.black54,
                 child: Text(
                   waypoint.name,
                   maxLines: 1,
@@ -702,6 +909,17 @@ class _WaypointDialogState extends State<_WaypointDialog> {
               controller: _description,
               maxLength: BastionWaypointStore.maxDescriptionLength,
               decoration: const InputDecoration(labelText: 'Description (optional)'),
+            ),
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              secondary: const Text('🚩', style: TextStyle(fontSize: 22)),
+              title: const Text('Rally point'),
+              subtitle: const Text('Where everyone should meet'),
+              value: _icon == '🚩',
+              onChanged: (v) => setState(() {
+                _icon = v ? '🚩' : '📍';
+                if (v && _name.text.trim().isEmpty) _name.text = 'Rally point';
+              }),
             ),
             Wrap(
               spacing: 4,
@@ -884,4 +1102,41 @@ class _MapAttribution extends StatelessWidget {
       ),
     ));
   }
+}
+
+/// Gap between route stops, so sharing a route doesn't flood the channel.
+@visibleForTesting
+Duration routeStopSpacing = const Duration(seconds: 3);
+
+class _RouteNameDialog extends StatefulWidget {
+  const _RouteNameDialog({required this.stops});
+  final int stops;
+
+  @override
+  State<_RouteNameDialog> createState() => _RouteNameDialogState();
+}
+
+class _RouteNameDialogState extends State<_RouteNameDialog> {
+  final _name = TextEditingController(text: 'Route');
+
+  @override
+  void dispose() {
+    _name.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+        title: const Text('Share route'),
+        content: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          TextField(controller: _name, autofocus: true, maxLength: 22,
+            decoration: const InputDecoration(labelText: 'Route name')),
+          Text('Sends ${widget.stops} waypoints on channel 0, about 3 seconds apart. '
+              'They expire after a day.'),
+        ]),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          FilledButton(onPressed: () => Navigator.pop(context, _name.text), child: const Text('Share')),
+        ],
+      );
 }
