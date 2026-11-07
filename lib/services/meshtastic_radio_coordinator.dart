@@ -31,6 +31,7 @@ import 'bastion_settings_evidence.dart';
 import 'bastion_waypoints.dart';
 import 'bastion_beacons.dart';
 import 'bastion_radio_data.dart';
+import 'bastion_geofences.dart';
 import 'bastion_trails.dart';
 import 'bastion_trip.dart';
 import 'bastion_preferences.dart';
@@ -96,6 +97,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       _alertSettings = s;
       notifyListeners();
     }));
+    unawaited(_geofenceStore.load().then((_) => notifyListeners()));
   }
 
   final BastionFieldAlertEngine _fieldAlerts = BastionFieldAlertEngine();
@@ -133,6 +135,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   void _startFieldAlerts(int localNode) {
     _fieldAlerts.startSession(localNode);
+    _geofenceEngine.startSession();
     for (final t in _deviceTelemetry.values) {
       _raise(_fieldAlerts.battery(t.from, t.batteryLevel, _nodeName(t.from),
           favorite: _isFavorite(t.from), settings: _alertSettings));
@@ -154,6 +157,44 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _silenceTimer?.cancel();
     _silenceTimer = null;
     _fieldAlerts.endSession();
+    _geofenceEngine.endSession();
+  }
+
+  final BastionGeofenceStore _geofenceStore = BastionGeofenceStore();
+  final BastionGeofenceEngine _geofenceEngine = BastionGeofenceEngine();
+
+  /// Map zones that alert when watched nodes arrive or leave.
+  List<BastionGeofence> get geofences => _geofenceStore.zones;
+
+  /// Adds or replaces a zone. Returns a problem for the user, or null.
+  Future<String?> saveGeofence(BastionGeofence zone) async {
+    final problem = await _geofenceStore.put(zone);
+    notifyListeners();
+    return problem;
+  }
+
+  Future<String?> removeGeofence(String id) async {
+    final problem = await _geofenceStore.remove(id);
+    notifyListeners();
+    return problem;
+  }
+
+  /// Phone alerts for watched nodes crossing a zone's edge. This radio's
+  /// own position never alerts.
+  void _checkGeofences(List<MeshtasticNode> nodes) {
+    final zones = _geofenceStore.zones;
+    if (zones.isEmpty) return;
+    final favorites = {for (final r in _nodeDex.records) if (r.favorite) r.num};
+    final everyone = {for (final n in nodes) n.num};
+    _geofenceEngine.check(zones, [
+      for (final n in nodes)
+        if (n.hasPosition && n.num != _localNodeNum)
+          (num: n.num, name: n.displayName, latitude: n.latitude!, longitude: n.longitude!),
+    ], (watch) => switch (watch) {
+      GeofenceWatch.tripContacts => trip.plan.members.toSet(),
+      GeofenceWatch.favorites => favorites,
+      GeofenceWatch.allNodes => everyone,
+    }).forEach(_raise);
   }
 
   final MeshtasticConnectionController connection =
@@ -828,6 +869,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       _nodeSubscription = nodeDatabase.changes.listen((nodes) {
         _nodes = nodes;
         _trails.record(nodes, {...trip.plan.members, ?_localNodeNum});
+        _checkGeofences(nodes);
         notifyListeners();
       });
       _nodeDexSubscription = nodeDatabase.nodeUpdates.listen((node) {
