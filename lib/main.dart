@@ -33,6 +33,7 @@ import 'traceroute_page.dart';
 import 'services/bastion_nodedex.dart';
 import 'services/meshtastic_ble_discovery.dart';
 import 'services/meshtastic_connection_controller.dart';
+import 'services/bastion_chat_store.dart';
 import 'services/bastion_demo_radio.dart';
 import 'services/bastion_field_alerts.dart';
 import 'services/bastion_firmware.dart';
@@ -51,6 +52,8 @@ Future<void> main() async {
   });
   await BastionTileCache.initialize();
   await BastionPreferences.instance.load();
+  // Chat history lives in its own database; older saves move over once.
+  await BastionChatStorage.useSqlite();
   await BastionFieldLog.instance.load();
   await BastionBotGuard.instance.load();
   runApp(const BastionApp());

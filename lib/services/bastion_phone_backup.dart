@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app_version.dart';
+import 'bastion_chat_store.dart';
 import 'bastion_encrypted_backup.dart';
 
 /// What a phone backup contains, shown before restoring it.
@@ -45,6 +46,10 @@ class BastionPhoneBackup {
   SharedPreferencesAsync? _preferences;
   SharedPreferencesAsync get _store =>
       _preferences ??= SharedPreferencesAsync();
+
+  /// Chat archives live in the message database once it is open; backups
+  /// keep them under their usual keys, so the backup format is unchanged.
+  ChatArchiveStore get _chats => BastionChatStorage.of(_store);
 
   /// Everything stored under [prefix], as plain JSON (encrypt before saving).
   Future<String> export({DateTime? now}) async {
@@ -125,21 +130,35 @@ class BastionPhoneBackup {
   /// [everything] all data this app stores in preferences. Returns how many
   /// items were removed. Other apps' data is never touched.
   Future<int> erase({required bool everything}) async {
-    final keys = (await _store.getKeys())
+    final chatKeys = await _chats.keys();
+    final keys = {...await _store.getKeys(), ...chatKeys}
         .where((k) => k.startsWith(everything ? prefix : chatPrefix))
         .toList();
     for (final key in keys) {
-      await _store.remove(key);
+      if (chatKeys.contains(key)) {
+        await _chats.remove(key);
+      } else {
+        await _store.remove(key);
+      }
     }
     return keys.length;
   }
 
   Future<void> _replace(Map<String, Object> values, Iterable<String> otherKeys) async {
     for (final key in otherKeys) {
-      if (!values.containsKey(key)) await _store.remove(key);
+      if (values.containsKey(key)) continue;
+      if (BastionChatStorage.isChatKey(key)) {
+        await _chats.remove(key);
+      } else {
+        await _store.remove(key);
+      }
     }
     for (final e in values.entries) {
       final v = e.value;
+      if (BastionChatStorage.isChatKey(e.key) && v is String) {
+        await _chats.write(e.key, v);
+        continue;
+      }
       switch (v) {
         case String(): await _store.setString(e.key, v);
         case bool(): await _store.setBool(e.key, v);
@@ -154,7 +173,11 @@ class BastionPhoneBackup {
   Future<Map<String, Object>> _readAll() async {
     final keys = (await _store.getKeys()).where((k) => k.startsWith(prefix));
     final all = await _store.getAll(allowList: keys.toSet());
-    return {for (final e in all.entries) if (e.value != null) e.key: e.value!};
+    return {
+      for (final e in all.entries) if (e.value != null) e.key: e.value!,
+      for (final key in await _chats.keys())
+        if (await _chats.read(key) case final raw?) key: raw,
+    };
   }
 
   static Map<String, Object> _encode(Object value) => switch (value) {
