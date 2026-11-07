@@ -1582,7 +1582,7 @@ class _RadioDataCardState extends State<_RadioDataCard> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Move ${from.label}?'),
-        content: Text('Its messages, offline queue, NodeDex history and trails move to $to. '
+        content: Text('Its messages, offline queue, NodeDex history, trails and telemetry history move to $to. '
             'Whatever $to already has is kept, so nothing is overwritten. '
             '${from.id} then no longer has an entry of its own.\n\n'
             'To be safe, make a phone data backup first.'),

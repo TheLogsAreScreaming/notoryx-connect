@@ -32,6 +32,7 @@ import 'bastion_waypoints.dart';
 import 'bastion_beacons.dart';
 import 'bastion_radio_data.dart';
 import 'bastion_geofences.dart';
+import 'bastion_telemetry_history.dart';
 import 'bastion_trails.dart';
 import 'bastion_trip.dart';
 import 'bastion_preferences.dart';
@@ -609,12 +610,21 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   /// Recent movement of a trip contact or this radio, oldest first.
   List<TrailPoint> trailOf(int num) => _trails.trailOf(num);
 
+  final BastionTelemetryHistory _telemetryHistory = BastionTelemetryHistory();
+
+  /// Metrics with saved readings for [num], for charts.
+  List<TelemetryMetric> telemetryMetricsOf(int num) => _telemetryHistory.metricsOf(num);
+
+  /// Saved readings of [metric] from [num], oldest first.
+  List<TelemetryPoint> telemetrySeries(int num, TelemetryMetric metric) =>
+      _telemetryHistory.seriesOf(num, metric);
+
   final BastionRadioData _radioData = BastionRadioData();
 
   /// Radios with messages, NodeDex history or trails on this phone.
   Future<List<StoredRadio>> storedRadios() => _radioData.list();
 
-  /// Hands [from]'s messages, offline queue, NodeDex history and trails to
+  /// Hands [from]'s messages, offline queue, NodeDex history, trails and telemetry to
   /// the connected radio (after a radio is lost or replaced). The connected
   /// radio's own data is kept, merged with it, and also copied aside first.
   /// [from]'s copy is deleted only when everything was saved. Returns a
@@ -638,7 +648,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     }
     final messagesSaved = await messaging.importHistory(snapshot);
     final nodesSaved = await _nodeDex.importRadio(from);
-    final trailsSaved = await _trails.importRadio(from);
+    final trailsSaved = await _trails.importRadio(from) &&
+        await _telemetryHistory.importRadio(from);
     _syncMessageSnapshot(messaging);
     notifyListeners();
     if (!messagesSaved || !nodesSaved || !trailsSaved) {
@@ -657,6 +668,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     if (last != null) _setArchive(BastionMessageArchive(radio: last));
     await _nodeDex.useRadio(last);
     if (last != null) await _trails.useRadio(last);
+    if (last != null) await _telemetryHistory.useRadio(last);
     final snapshot = await _archive.load();
     _archivedMessages = snapshot.messages;
     _archivedPending = snapshot.pending;
@@ -680,6 +692,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     await messaging.attachArchive(archive);
     await _nodeDex.useRadio(nodeNum);
     await _trails.useRadio(nodeNum);
+    await _telemetryHistory.useRadio(nodeNum);
     if (_messaging == messaging) _syncMessageSnapshot(messaging);
     notifyListeners();
   }
@@ -823,6 +836,11 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
               _raise(_fieldAlerts.battery(telemetry.from, telemetry.batteryLevel,
                   _nodeName(telemetry.from), favorite: _isFavorite(telemetry.from),
                   settings: _alertSettings));
+              notifyListeners();
+            }
+            final reading = BastionTelemetryCodec.decodeReadings(envelope.payload!);
+            if (reading != null) {
+              _telemetryHistory.record(reading.from, reading.readings, sampleTime: reading.time);
               notifyListeners();
             }
             final packet = MeshtasticTextCodec.decodeMeshPacket(
@@ -1153,6 +1171,14 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     nodeNum,
     PortNum.TELEMETRY_APP,
     Telemetry(deviceMetrics: DeviceMetrics()).writeToBuffer(),
+  );
+
+  /// Asks [nodeNum] for environment sensor readings (temperature, humidity
+  /// and so on); nodes without sensors don't answer.
+  Future<void> requestEnvironmentTelemetry(int nodeNum) => _requestFrom(
+    nodeNum,
+    PortNum.TELEMETRY_APP,
+    Telemetry(environmentMetrics: EnvironmentMetrics()).writeToBuffer(),
   );
 
   Future<void> _requestFrom(
@@ -1513,6 +1539,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   Future<void> _shutdownSession({required bool resetConnection}) async {
     _stopFieldAlerts();
     unawaited(_trails.flush());
+    unawaited(_telemetryHistory.flush());
     await _coverageLocation?.cancel();
     _coverageLocation = null;
     _coverageFix = null;

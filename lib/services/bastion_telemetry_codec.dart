@@ -1,5 +1,10 @@
 import 'dart:typed_data';
 
+import 'package:protobuf/protobuf.dart';
+
+import '../generated/meshtastic/telemetry.pb.dart';
+import 'bastion_telemetry_history.dart';
+
 /// Minimal decoder for received Meshtastic device telemetry packets.
 ///
 /// MeshPacket.decoded is field 4, Data.portnum is field 1 and Data.payload
@@ -29,6 +34,29 @@ class BastionDeviceTelemetry {
 
 abstract final class BastionTelemetryCodec {
   static const telemetryPort = 67;
+
+  /// Every chartable reading in a received telemetry packet (device and
+  /// environment metrics), or null when the packet isn't telemetry.
+  static ({int from, int? time, Map<TelemetryMetric, double> readings})? decodeReadings(
+      Uint8List packet) {
+    final mesh = _Fields(packet);
+    final from = mesh.fixed32(1);
+    final decoded = mesh.bytes(4);
+    if (from == null || decoded == null) return null;
+    final data = _Fields(decoded);
+    if (data.varint(1) != telemetryPort) return null;
+    final payload = data.bytes(2);
+    if (payload == null) return null;
+    final Telemetry telemetry;
+    try {
+      telemetry = Telemetry.fromBuffer(payload);
+    } on InvalidProtocolBufferException {
+      return null;
+    }
+    final readings = TelemetryMetric.readingsOf(telemetry);
+    if (readings.isEmpty) return null;
+    return (from: from, time: telemetry.hasTime() ? telemetry.time : null, readings: readings);
+  }
 
   static BastionDeviceTelemetry? decodeMeshPacket(Uint8List packet) {
     final mesh = _Fields(packet);

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bastion_message_archive.dart';
 import 'bastion_nodedex.dart';
+import 'bastion_telemetry_history.dart';
 import 'bastion_trails.dart';
 
 /// What this phone keeps for one radio.
@@ -31,7 +32,7 @@ class StoredRadio {
   String get label => name == null ? id : '$name ($id)';
 }
 
-/// Messages, NodeDex history and trails are stored per radio. This lists
+/// Messages, NodeDex history, trails and telemetry are stored per radio. This lists
 /// them and helps hand a lost or replaced radio's data to the new one.
 class BastionRadioData {
   BastionRadioData({SharedPreferencesAsync? preferences})
@@ -41,13 +42,14 @@ class BastionRadioData {
   static const beforeMoveSuffix = '.before-move';
 
   static final _radioKey = RegExp(
-      r'^bastion\.(?:comms\.archive\.v2|nodedex\.v2|trails\.v1)\.radio\.([0-9a-f]{8})$');
+      r'^bastion\.(?:comms\.archive\.v2|nodedex\.v2|trails\.v1|telemetry\.v1)\.radio\.([0-9a-f]{8})$');
 
   /// Every key holding [radio]'s data.
   static List<String> keysOf(int radio) => [
         BastionMessageArchive.radioKey(radio),
         BastionNodeDex.radioKey(radio),
         BastionTrails.key(radio),
+        BastionTelemetryHistory.key(radio),
       ];
 
   SharedPreferencesAsync? _preferences;
