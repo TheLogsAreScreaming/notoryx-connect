@@ -8,21 +8,22 @@ void main() {
     expect(find.text('NOTORYX'), findsOneWidget);
     expect(find.text('CONNECT'), findsOneWidget);
     // HOME opens first, with the trip, check-ins and SOS.
-    expect(find.text('NO RADIO CONNECTED'), findsOneWidget);
-    expect(find.text('PLAN YOUR TRIP'), findsOneWidget);
-    expect(find.text("CHECK IN: I'M OK"), findsOneWidget);
-    expect(find.text('HOLD FOR SOS'), findsOneWidget);
+    expect(find.text('No radio connected'), findsOneWidget);
+    expect(find.text('Plan your trip'), findsOneWidget);
+    expect(find.text("Check in: I'm OK"), findsOneWidget);
+    expect(find.text('Hold for SOS'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.hub_outlined).last);
     await tester.pumpAndSettle();
-    expect(find.text('MESH COMMAND'), findsOneWidget);
+    expect(find.text('Nodes'), findsWidgets);
+    expect(find.text('Scan for radios'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
     await tester.pumpAndSettle();
-    expect(find.text('COMMS'), findsOneWidget);
+    expect(find.text('Comms'), findsOneWidget);
     expect(find.text('DESTINATION'), findsOneWidget);
     expect(find.text('Channel 0 • Broadcast'), findsOneWidget);
-    expect(find.text('QUEUED'), findsOneWidget);
+    expect(find.text('Queued'), findsOneWidget);
 
     await tester.scrollUntilVisible(
       find.text('BOT MODE'),
@@ -33,19 +34,21 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.build_outlined).last);
     await tester.pumpAndSettle();
-    expect(find.text('FIELD TOOLS'), findsWidgets);
-    expect(find.text('BATTERY RUNTIME'), findsOneWidget);
-    expect(find.text('RSSI FIELD REFERENCE'), findsOneWidget);
-    expect(find.text('DEPLOYMENT CHECKLIST'), findsOneWidget);
+    expect(find.text('Tools'), findsWidgets);
+    expect(find.text('Deployment checklist'), findsOneWidget);
+    expect(find.text('Battery runtime'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Bluetooth signal guide'), 250,
+        scrollable: find.byType(Scrollable).first);
+    expect(find.text('Bluetooth signal guide'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.settings_outlined).last);
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.text('RADIO CONFIGURATION'),
+      find.text('Radio configuration'),
       250,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('RADIO CONFIGURATION'), findsOneWidget);
+    expect(find.text('Radio configuration'), findsOneWidget);
     await tester.scrollUntilVisible(
       find.text('Low-power field mode'),
       250,

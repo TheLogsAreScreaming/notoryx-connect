@@ -78,8 +78,8 @@ void main() {
   for (final page in pages.entries) {
     testWidgets('page ${page.key}', (tester) async {
       SharedPreferences.setMockInitialValues({});
-      await tester.binding.setSurfaceSize(const Size(390, 844));
       tester.view.devicePixelRatio = 2;
+      tester.view.physicalSize = const Size(780, 1688);
       addTearDown(tester.view.reset);
       final radio = MeshtasticRadioCoordinator();
       addTearDown(radio.dispose);
@@ -105,8 +105,8 @@ void main() {
     testWidgets('main tabs ${mode.name}', (tester) async {
       SharedPreferences.setMockInitialValues({});
       BastionPreferences.instance.theme = mode;
-      await tester.binding.setSurfaceSize(const Size(390, 844));
       tester.view.devicePixelRatio = 2;
+      tester.view.physicalSize = const Size(780, 1688);
       addTearDown(tester.view.reset);
       final boundary = GlobalKey();
       await tester.pumpWidget(RepaintBoundary(key: boundary, child: const BastionApp()));

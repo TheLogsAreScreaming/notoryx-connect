@@ -61,7 +61,9 @@ void main() {
       await tester.tap(find.byIcon(Icons.settings_outlined).last); await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
       await tester.scrollUntilVisible(find.text('Appearance & dashboard'), 200, scrollable: find.byType(Scrollable).first);
+      await tester.ensureVisible(find.text('Appearance & dashboard')); await tester.pumpAndSettle();
       await tester.tap(find.text('Appearance & dashboard')); await tester.pumpAndSettle();
+      await tester.scrollUntilVisible(find.text('Dashboard statistics'), 200, scrollable: find.byType(Scrollable).first);
       expect(find.text('Dashboard statistics'), findsOneWidget);
       await screenshot(tester, capture, '${mode.name}-large-settings');
       expect(tester.takeException(), isNull);

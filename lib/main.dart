@@ -27,12 +27,16 @@ import 'node_detail_page.dart';
 import 'radio_settings_page.dart';
 import 'services/bastion_tile_cache.dart';
 import 'traceroute_page.dart';
+import 'services/bastion_nodedex.dart';
 import 'services/meshtastic_ble_discovery.dart';
 import 'services/meshtastic_connection_controller.dart';
 import 'services/bastion_field_alerts.dart';
 import 'services/bastion_phone_position.dart';
 import 'services/meshtastic_messaging_service.dart';
 import 'services/meshtastic_radio_coordinator.dart';
+import 'theme/notoryx_theme.dart';
+import 'theme/notoryx_tokens.dart';
+import 'theme/nx_components.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,52 +54,19 @@ Future<void> main() async {
 class BastionApp extends StatelessWidget {
   const BastionApp({super.key});
   /// NOTORYX orange from the app icon; the accent in the dark theme.
-  static const signal = Color(0xFFFC7202);
+  static const signal = NxPalette.signal;
 
   /// The same hue, darkened so text and icons keep 4.5:1 contrast on the
   /// light theme's surfaces (#FC7202 is only about 2.6:1 there).
-  static const signalOnLight = Color(0xFFAC4E01);
-  static const panel = Color(0xFF151713);
+  static const signalOnLight = NxPalette.signalDeep;
+  static const panel = NxPalette.ink1;
 
   /// The accent for the current theme.
   static Color accentOf(BuildContext context) =>
       Theme.of(context).brightness == Brightness.dark ? signal : signalOnLight;
 
-  static ThemeData appearance(Brightness brightness) {
-    final dark = brightness == Brightness.dark;
-    // Text on the accent: black on bright orange (7.6:1), white on the
-    // deeper light-theme orange (5.5:1).
-    final colors = ColorScheme.fromSeed(seedColor: signal, brightness: brightness).copyWith(
-      primary: dark ? signal : signalOnLight,
-      onPrimary: dark ? Colors.black : Colors.white,
-    );
-    return ThemeData(
-      useMaterial3: true,
-      brightness: brightness,
-      colorScheme: colors,
-      scaffoldBackgroundColor: dark ? const Color(0xFF0D0F0C) : colors.surface,
-      disabledColor: colors.onSurfaceVariant,
-      filledButtonTheme: FilledButtonThemeData(style: ButtonStyle(
-        foregroundColor: WidgetStateProperty.resolveWith((states) => states.contains(WidgetState.disabled) ? colors.onSurfaceVariant : null),
-      )),
-      listTileTheme: ListTileThemeData(
-        textColor: colors.onSurface, iconColor: colors.onSurfaceVariant,
-      ),
-      appBarTheme: AppBarTheme(backgroundColor: dark ? const Color(0xFF0D0F0C) : colors.surface),
-      cardTheme: CardThemeData(
-        color: dark ? panel : colors.surfaceContainerLow,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      ),
-      // Wide enough to grab with a finger; wider still while dragged.
-      scrollbarTheme: ScrollbarThemeData(
-        thickness: WidgetStateProperty.resolveWith((states) => states.contains(WidgetState.dragged) ? 12 : 8),
-        radius: const Radius.circular(6),
-        minThumbLength: 48,
-        thumbColor: WidgetStateProperty.resolveWith((states) => states.contains(WidgetState.dragged)
-            ? colors.primary : colors.onSurfaceVariant.withValues(alpha: 0.6)),
-      ),
-    );
-  }
+  /// The app theme, built from the NOTORYX design tokens.
+  static ThemeData appearance(Brightness brightness) => NotoryxTheme.build(brightness);
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
@@ -135,11 +106,16 @@ class _BastionShellState extends State<BastionShell> {
   bool botMode = false;
   String awayReply = MeshtasticMessagingService.defaultAwayReply;
 
-  static const labels = ['HOME', 'NODES', 'CHATS', 'MAP', 'TOOLS', 'SETTINGS'];
+  static const labels = ['Home', 'Nodes', 'Chats', 'Map', 'Tools', 'Settings'];
   static const icons = [
     Icons.shield_outlined, Icons.hub_outlined, Icons.chat_bubble_outline, Icons.map_outlined,
     Icons.build_outlined, Icons.settings_outlined,
   ];
+
+  /// Wider than this, the tabs move to a rail on the left.
+  static const railBreakpoint = 600.0;
+
+  void _go(int tab) => setState(() => index = tab);
 
   @override
   void initState() {
@@ -176,38 +152,10 @@ class _BastionShellState extends State<BastionShell> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      toolbarHeight: MediaQuery.textScalerOf(context).scale(38) + 18,
-      title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('NOTORYX', style: TextStyle(fontWeight: FontWeight.w900,
-          color: Theme.of(context).colorScheme.primary, letterSpacing: 2)),
-        const Text('CONNECT', style: TextStyle(fontSize: 10, letterSpacing: 1.4)),
-      ]),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: AnimatedBuilder(
-            animation: radio,
-            builder: (context, _) => MediaQuery.textScalerOf(context).scale(14) > 20
-                ? Tooltip(message: _connectionLabel(radio.connection.state), child: Icon(
-                    radio.isReady ? Icons.bluetooth_connected : Icons.bluetooth_disabled))
-                : Chip(
-              avatar: Icon(
-                radio.isReady ? Icons.bluetooth_connected : Icons.radio_button_checked,
-                size: 16,
-              ),
-              label: Text(_connectionLabel(radio.connection.state)),
-              side: BorderSide(color: Colors.white.withValues(alpha: .15)),
-            ),
-          ),
-        ),
-      ],
-    ),
-    // Each tab keeps its own scroll position, so each scroll bar follows one list.
-    body: SafeArea(child: PrimaryScrollController.none(child: IndexedStack(index: index, children: [
-      HomePage(radio: radio, onConnect: () => setState(() => index = 1)),
-      _NodesPage(discovery: ble, radio: radio, onOpenTools: () => setState(() => index = 4)),
+  Widget build(BuildContext context) {
+    final pages = PrimaryScrollController.none(child: IndexedStack(index: index, children: [
+      HomePage(radio: radio, onConnect: () => _go(1)),
+      _NodesPage(discovery: ble, radio: radio, onOpenTools: () => _go(4)),
       BastionChatsPage(
         radio: radio,
         botMode: botMode,
@@ -224,16 +172,77 @@ class _BastionShellState extends State<BastionShell> {
       MapPage(radio: radio),
       _ToolsPage(discovery: ble, radio: radio),
       _SettingsPage(radio: radio),
-    ]))),
-    bottomNavigationBar: NavigationBar(
-      selectedIndex: index,
-      onDestinationSelected: (value) => setState(() => index = value),
-      destinations: [
-        for (var i = 0; i < labels.length; i++)
-          NavigationDestination(icon: Icon(icons[i]), label: labels[i]),
-      ],
-    ),
-  );
+    ]));
+    final wide = MediaQuery.sizeOf(context).width >= railBreakpoint;
+    final scheme = Theme.of(context).colorScheme;
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: MediaQuery.textScalerOf(context).scale(36) + 20,
+        titleSpacing: NxSpace.md,
+        title: Semantics(
+          label: 'NOTORYX Connect',
+          excludeSemantics: true,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+            Text('NOTORYX', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20,
+              color: scheme.primary, letterSpacing: 2.4, height: 1.1)),
+            Text('CONNECT', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600,
+              letterSpacing: 3, color: scheme.onSurfaceVariant)),
+          ]),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: NxSpace.md),
+            child: AnimatedBuilder(
+              animation: radio,
+              builder: (context, _) {
+                final state = radio.connection.state;
+                // Tapping the status opens Nodes, where the radio is managed.
+                return Tooltip(
+                  message: 'Radio: ${_connectionLabel(state)}. Tap to manage.',
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(NxRadius.pill),
+                    onTap: () => _go(1),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(minHeight: NxTouch.min),
+                      child: Center(child: NxStatusPill(
+                        label: _connectionLabel(state),
+                        tone: _connectionTone(state),
+                        busy: _connectionBusy(state) || radio.isReconnecting,
+                      )),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      // Each tab keeps its own scroll position, so each scroll bar follows one list.
+      body: SafeArea(child: wide
+          ? Row(children: [
+              NavigationRail(
+                selectedIndex: index,
+                onDestinationSelected: _go,
+                destinations: [
+                  for (var i = 0; i < labels.length; i++)
+                    NavigationRailDestination(icon: Icon(icons[i]), label: Text(labels[i])),
+                ],
+              ),
+              const VerticalDivider(width: 1),
+              Expanded(child: Align(alignment: Alignment.topCenter,
+                child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 840), child: pages))),
+            ])
+          : pages),
+      bottomNavigationBar: wide ? null : NavigationBar(
+        selectedIndex: index,
+        onDestinationSelected: _go,
+        destinations: [
+          for (var i = 0; i < labels.length; i++)
+            NavigationDestination(icon: Icon(icons[i]), label: labels[i], tooltip: labels[i]),
+        ],
+      ),
+    );
+  }
 }
 
 class _NodesPage extends StatelessWidget {
@@ -246,202 +255,246 @@ class _NodesPage extends StatelessWidget {
   final MeshtasticRadioCoordinator radio;
   final VoidCallback onOpenTools;
 
+  Future<void> _connect(BuildContext context, MeshtasticBleDevice item) async {
+    try {
+      await radio.connect(item);
+    } catch (error) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not connect: $error')),
+        );
+      }
+    }
+  }
+
+  Future<void> _editNote(BuildContext context, BastionNodeRecord record) async {
+    final editor = TextEditingController(text: record.note);
+    final note = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text('Notes for ${record.displayName}'),
+        content: TextField(
+          controller: editor,
+          autofocus: true,
+          maxLines: 3,
+          maxLength: 300,
+          decoration: const InputDecoration(
+            hintText: 'Location, antenna, observations…',
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Cancel')),
+          FilledButton(onPressed: () => Navigator.pop(dialogContext, editor.text),
+            child: const Text('Save')),
+        ],
+      ),
+    );
+    editor.dispose();
+    if (note != null) await radio.setNodeNote(record.num, note);
+  }
+
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
     animation: Listenable.merge([discovery, radio, BastionPreferences.instance]),
-    builder: (context, _) => ListView(
-      padding: const EdgeInsets.all(16),
+    builder: (context, _) {
+      final scheme = Theme.of(context).colorScheme;
+      final local = radio.localNode;
+      final connectedName = radio.connection.deviceName;
+      return ListView(
+      padding: NxSpace.page,
       children: [
-        const _Header(icon: Icons.radar, title: 'MESH COMMAND',
-          detail: 'Find a nearby radio, inspect Bluetooth signal strength, and prepare for a verified Meshtastic session.'),
-        const SizedBox(height: 14),
-        if (BastionPreferences.instance.statistics)
-        Row(children: [
-          Expanded(child: _Stat(label: 'BLE DEVICES', value: '${discovery.results.length}')),
-          const SizedBox(width: 10),
-          Expanded(child: _Stat(label: 'MESH NODES', value: '${radio.nodes.length}')),
-          const SizedBox(width: 10),
-          Expanded(child: _Stat(
-            label: 'STATUS',
-            value: _connectionTileLabel(radio.connection.state),
-          )),
-        ]),
-        const SizedBox(height: 14),
-        FilledButton.icon(
-          onPressed: discovery.scanning ? null : discovery.scan,
-          icon: Icon(discovery.scanning ? Icons.hourglass_top : Icons.bluetooth_searching),
-          label: Text(discovery.scanning ? 'SCANNING…' : 'SCAN FOR RADIOS'),
+        NxPageHeader(
+          title: 'Nodes',
+          subtitle: radio.isReady
+              ? 'Connected to ${local?.displayName ?? connectedName ?? 'your radio'}.'
+              : 'Find your radio nearby and connect over Bluetooth.',
         ),
+        if (BastionPreferences.instance.statistics) ...[
+          NxStatRow(children: [
+            NxStatTile(label: 'Radios found', value: '${discovery.results.length}'),
+            NxStatTile(label: 'Mesh nodes', value: '${radio.nodes.length}'),
+            NxStatTile(
+              label: 'Status',
+              value: _connectionLabel(radio.connection.state),
+              tone: _connectionTone(radio.connection.state),
+            ),
+          ]),
+          const SizedBox(height: NxSpace.sm),
+        ],
+        if (radio.connection.error != null)
+          NxBanner(tone: NxTone.danger, title: 'Connection problem', message: radio.connection.error!),
+        if (radio.backgroundProblem != null)
+          NxBanner(tone: NxTone.warning, message: radio.backgroundProblem!),
+        const NxSectionLabel('Radios nearby'),
         if (discovery.scanning)
-          TextButton(onPressed: discovery.stop, child: const Text('STOP SCAN')),
+          Row(children: [
+            const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2.5)),
+            const SizedBox(width: NxSpace.sm),
+            Expanded(child: Text('Looking for radios…', style: Theme.of(context).textTheme.bodyLarge)),
+            TextButton(onPressed: discovery.stop, child: const Text('Stop scan')),
+          ])
+        else
+          FilledButton.icon(
+            onPressed: discovery.scan,
+            icon: const Icon(Icons.bluetooth_searching),
+            label: const Text('Scan for radios'),
+          ),
         if (discovery.error != null)
-          _Notice(text: discovery.error!, icon: Icons.warning_amber),
-        const SizedBox(height: 10),
-        if (discovery.results.isEmpty)
-          const _EmptyState(icon: Icons.bluetooth_disabled,
-            title: 'No radios discovered yet',
-            detail: 'Tap SCAN FOR RADIOS. Nearby BLE devices will appear here with live RSSI.')
+          NxBanner(tone: NxTone.warning, message: discovery.error!),
+        const SizedBox(height: NxSpace.xs),
+        if (discovery.results.isEmpty && !discovery.scanning)
+          const NxEmptyState(icon: Icons.bluetooth_disabled,
+            title: 'No radios found yet',
+            detail: 'Turn your radio on, keep it close, then tap Scan for radios.')
         else
           for (final item in discovery.results)
             Card(child: ListTile(
-              leading: const CircleAvatar(child: Icon(Icons.router)),
+              leading: CircleAvatar(
+                backgroundColor: scheme.surfaceContainerHigh,
+                child: Icon(_signalIcon(item.rssi), color: scheme.onSurfaceVariant)),
               title: Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis),
-              subtitle: Text(
-                '${item.id}\n${item.advertisesMeshtastic ? 'Meshtastic service advertised' : _rssiLabel(item.rssi)}',
-              ),
-              isThreeLine: true,
+              subtitle: Text([
+                item.advertisesMeshtastic ? 'Meshtastic radio' : 'Bluetooth device',
+                _rssiLabel(item.rssi),
+              ].join(' • ')),
               trailing: (radio.isReady || radio.isReconnecting) &&
                       radio.connection.deviceName == item.name
-                  ? IconButton(
-                      tooltip: 'Disconnect',
+                  ? OutlinedButton(
                       onPressed: radio.busy ? null : radio.disconnect,
-                      icon: const Icon(Icons.link_off),
+                      child: const Text('Disconnect', maxLines: 1, softWrap: false),
                     )
                   : FilledButton(
-                      onPressed: radio.busy
-                          ? null
-                          : () async {
-                              try {
-                                await radio.connect(item);
-                              } catch (error) {
-                                if (context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Connection failed: $error')),
-                                  );
-                                }
-                              }
-                            },
-                      child: const Text('CONNECT', maxLines: 1, softWrap: false),
+                      onPressed: radio.busy ? null : () => _connect(context, item),
+                      child: const Text('Connect', maxLines: 1, softWrap: false),
                     ),
             )),
-        if (radio.connection.error != null)
-          _Notice(text: radio.connection.error!, icon: Icons.error_outline),
-        if (radio.backgroundProblem != null)
-          _Notice(text: radio.backgroundProblem!, icon: Icons.warning_amber),
         if (radio.nodes.isNotEmpty) ...[
-          const SizedBox(height: 14),
-          const Text('LIVE MESH NODES',
-            style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: .8)),
-          const SizedBox(height: 6),
-          for (final node in radio.nodes)
-            Card(child: ListTile(
-              leading: const CircleAvatar(child: Icon(Icons.cell_tower)),
-              title: Text(node.displayName),
-              subtitle: Text([
-                if (node.shortName?.isNotEmpty ?? false) node.shortName!,
-                node.id ?? '!${node.num.toRadixString(16).padLeft(8, '0')}',
-              ].join(' • ')),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-                builder: (_) => NodeDetailPage(radio: radio, nodeNum: node.num),
-              )),
-            )),
+          NxSectionLabel('Mesh nodes (${radio.nodes.length})'),
+          Card(child: Column(children: [
+            for (final (i, node) in radio.nodes.indexed) ...[
+              if (i > 0) const Divider(indent: 72),
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: scheme.primaryContainer,
+                  foregroundColor: scheme.onPrimaryContainer,
+                  child: Text(_initials(node.shortName ?? node.displayName),
+                    style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
+                ),
+                title: Text(node.displayName, maxLines: 1, overflow: TextOverflow.ellipsis),
+                subtitle: Text([
+                  if (node.shortName?.isNotEmpty ?? false) node.shortName!,
+                  node.id ?? '!${node.num.toRadixString(16).padLeft(8, '0')}',
+                ].join(' • ')),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder: (_) => NodeDetailPage(radio: radio, nodeNum: node.num),
+                )),
+              ),
+            ],
+          ])),
         ],
         if (radio.isReady && BastionPreferences.instance.meshHealth) ...[
-          const SizedBox(height: 14),
-          const Text('MESH HEALTH • LIVE SESSION',
-            style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: .8)),
-          const SizedBox(height: 8),
-          Row(children: [
-            Expanded(child: _Stat(label: 'KNOWN NODES',
-              value: '${radio.nodes.length}')),
-            const SizedBox(width: 10),
-            Expanded(child: _Stat(label: 'MESSAGES',
-              value: '${radio.messages.length}')),
-            const SizedBox(width: 10),
-            Expanded(child: _Stat(label: 'PENDING',
-              value: '${radio.pendingMessageCount}')),
+          const NxSectionLabel('Mesh health'),
+          NxStatRow(children: [
+            NxStatTile(label: 'Known nodes', value: '${radio.nodes.length}'),
+            NxStatTile(label: 'Messages', value: '${radio.messages.length}'),
+            NxStatTile(label: 'Waiting to send', value: '${radio.pendingMessageCount}'),
           ]),
-          const SizedBox(height: 10),
+          const SizedBox(height: NxSpace.xs),
           Card(child: Padding(
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(NxSpace.md),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('RECEIVE SIGNAL • TEXT PACKETS',
-                style: TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              Text('Received: ${radio.receivedTextPackets} • Latest SNR: '
-                '${radio.latestSnr == null ? 'Waiting for packet' : '${radio.latestSnr!.toStringAsFixed(1)} dB'}'),
-              const SizedBox(height: 10),
+              Text('Signal quality', style: Theme.of(context).textTheme.titleSmall),
+              const SizedBox(height: NxSpace.xxs),
+              Text('${radio.receivedTextPackets} messages heard • latest signal-to-noise '
+                '${radio.latestSnr == null ? 'not yet measured' : '${radio.latestSnr!.toStringAsFixed(1)} dB'}',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant)),
+              const SizedBox(height: NxSpace.sm),
               if (radio.snrHistory.isNotEmpty)
-                Wrap(spacing: 4, runSpacing: 4, children: [
-                  for (final snr in radio.snrHistory.reversed.take(20).toList().reversed)
-                    Tooltip(message: '${snr.toStringAsFixed(1)} dB',
-                      child: Container(
-                        width: 10,
-                        height: 12 + (snr + 20).clamp(0, 40).toDouble(),
-                        decoration: BoxDecoration(
-                          color: BastionApp.accentOf(context),
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      )),
-                ])
+                Semantics(
+                  label: 'Signal history of the last ${radio.snrHistory.length.clamp(0, 20)} messages',
+                  child: Wrap(spacing: 4, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.end, children: [
+                    for (final snr in radio.snrHistory.reversed.take(20).toList().reversed)
+                      Tooltip(message: '${snr.toStringAsFixed(1)} dB',
+                        child: Container(
+                          width: 10,
+                          height: 12 + (snr + 20).clamp(0, 40).toDouble(),
+                          decoration: BoxDecoration(
+                            color: scheme.primary,
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        )),
+                  ]),
+                )
               else
-                const Text('Send a message from another node to start the SNR history.'),
+                const Text('Signal history starts when another node sends a message.'),
+              const SizedBox(height: NxSpace.xs),
+              Text('Measured from received text messages only.',
+                style: Theme.of(context).textTheme.bodySmall),
             ]),
           )),
-          const SizedBox(height: 6),
-          const _Notice(
-            text: 'SNR values come from received text packets only. '
-              'RSSI and delivery-rate monitoring are not available yet.',
-            icon: Icons.monitor_heart_outlined,
-          ),
         ],
         if (radio.nodeDex.isNotEmpty && BastionPreferences.instance.encounters) ...[
-          const SizedBox(height: 18),
-          const Text('NODEDEX • SAVED ENCOUNTERS',
-            style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: .8)),
-          const SizedBox(height: 6),
+          const NxSectionLabel('Saved encounters'),
           for (final record in radio.nodeDex)
             Card(child: ListTile(
               leading: Icon(record.favorite ? Icons.star : Icons.person_pin_circle_outlined,
-                color: record.favorite ? BastionApp.accentOf(context) : null),
+                color: record.favorite ? scheme.primary : null),
               title: Text(record.displayName),
-              subtitle: Text('Encounters: ${record.encounters} • Last seen: ${record.lastSeen.toLocal()}'
-                '\n${record.note.isEmpty ? 'Tap to add field notes' : record.note}'),
+              subtitle: Text('Seen ${record.encounters} time${record.encounters == 1 ? '' : 's'} • last ${_ago(record.lastSeen)}'
+                '\n${record.note.isEmpty ? 'Tap to add notes' : record.note}'),
               isThreeLine: true,
               trailing: IconButton(
-                tooltip: record.favorite ? 'Remove favorite' : 'Favorite node',
+                tooltip: record.favorite ? 'Remove favorite' : 'Add to favorites',
                 icon: Icon(record.favorite ? Icons.star : Icons.star_border),
                 onPressed: () => radio.setNodeFavorite(record.num, !record.favorite),
               ),
-              onTap: () async {
-                final editor = TextEditingController(text: record.note);
-                final note = await showDialog<String>(
-                  context: context,
-                  builder: (dialogContext) => AlertDialog(
-                    title: Text('Field notes • ${record.displayName}'),
-                    content: TextField(
-                      controller: editor,
-                      autofocus: true,
-                      maxLines: 3,
-                      maxLength: 300,
-                      decoration: const InputDecoration(
-                        hintText: 'Location, antenna, observations…',
-                      ),
-                    ),
-                    actions: [
-                      TextButton(onPressed: () => Navigator.pop(dialogContext),
-                        child: const Text('CANCEL')),
-                      FilledButton(onPressed: () => Navigator.pop(dialogContext, editor.text),
-                        child: const Text('SAVE')),
-                    ],
-                  ),
-                );
-                if (note != null) await radio.setNodeNote(record.num, note);
-              },
+              onTap: () => _editNote(context, record),
             )),
         ],
-        const SizedBox(height: 10),
-        OutlinedButton.icon(onPressed: onOpenTools,
-          icon: const Icon(Icons.construction), label: const Text('OPEN FIELD TOOLS')),
-        _Notice(
-          text: radio.isReady
-              ? 'Verified Meshtastic session ready. Live NodeDB updates will appear above.'
-              : 'Scan, then tap CONNECT on a radio. NOTORYX Connect verifies the Meshtastic service, performs the PhoneAPI handshake, and synchronizes NodeDB before marking the session ready.',
-          icon: radio.isReady ? Icons.verified_outlined : Icons.info_outline),
+        const NxSectionLabel('More'),
+        Card(child: ListTile(
+          leading: const Icon(Icons.construction),
+          title: const Text('Field tools'),
+          subtitle: const Text('Signal reference, checklists, backups and more'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: onOpenTools,
+        )),
+        NxBanner(
+          tone: radio.isReady ? NxTone.success : NxTone.neutral,
+          message: radio.isReady
+              ? 'Your radio is connected. Nodes update live as they are heard.'
+              : 'Tap Scan for radios, then Connect. The app checks it is a Meshtastic radio and downloads its node list before it is ready to use.',
+        ),
       ],
-    ),
+    );
+    },
   );
+}
+
+/// One or two letters for a node's avatar.
+String _initials(String name) {
+  final trimmed = name.trim();
+  if (trimmed.isEmpty) return '?';
+  return trimmed.characters.take(trimmed.length >= 2 ? 2 : 1).toString().toUpperCase();
+}
+
+IconData _signalIcon(int rssi) {
+  if (rssi >= -60) return Icons.signal_cellular_alt;
+  if (rssi >= -75) return Icons.signal_cellular_alt_2_bar;
+  return Icons.signal_cellular_alt_1_bar;
+}
+
+/// "just now", "5 min ago", "3 h ago", or a date, for last-seen times.
+String _ago(DateTime time) {
+  final d = DateTime.now().difference(time);
+  if (d.inMinutes < 1) return 'just now';
+  if (d.inHours < 1) return '${d.inMinutes} min ago';
+  if (d.inDays < 1) return '${d.inHours} h ago';
+  if (d.inDays < 7) return '${d.inDays} d ago';
+  final l = time.toLocal();
+  return '${l.year}-${l.month.toString().padLeft(2, '0')}-${l.day.toString().padLeft(2, '0')}';
 }
 
 class BastionChatsPage extends StatefulWidget {
@@ -887,165 +940,165 @@ class _ToolsPageState extends State<_ToolsPage> {
     setState(() => runtime = mah != null && ma != null && ma > 0 ? mah / ma : null);
   }
 
+  void _open(Widget page) =>
+      Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
+
   @override
-  Widget build(BuildContext context) => ListView(
-    padding: const EdgeInsets.all(16),
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: Listenable.merge([widget.radio, widget.discovery]),
+    builder: (context, _) {
+      final radio = widget.radio;
+      final readings = radio.deviceTelemetry.entries.toList()
+        ..sort((a, b) => a.key.compareTo(b.key));
+      return ListView(
+    padding: NxSpace.page,
     children: [
-      const _Header(icon: Icons.construction, title: 'FIELD TOOLS',
-        detail: 'Practical utilities you can use before and during a deployment.'),
-      const SizedBox(height: 14),
-      Card(child: ListTile(
-        leading: const Icon(Icons.assignment_outlined),
-        title: const Text('Incident log, emergency templates & coverage'),
-        subtitle: const Text('Saved field records and exports'),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-          builder: (_) => FieldToolsPage(radio: widget.radio))),
-      )),
-      Card(child: ExpansionTile(
-        leading: Icon(Icons.battery_charging_full, color: BastionApp.accentOf(context)),
-        title: const Text('BATTERY RUNTIME', style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: const Text('Estimate runtime from capacity and average current'),
-        childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        children: [
-          Row(children: [
-            Expanded(child: TextField(controller: battery,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Battery (mAh)'))),
-            const SizedBox(width: 12),
-            Expanded(child: TextField(controller: draw,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Avg draw (mA)'))),
-          ]),
-          const SizedBox(height: 12),
-          FilledButton(onPressed: calculate, child: const Text('CALCULATE')),
-          if (runtime != null)
-            Padding(padding: const EdgeInsets.only(top: 12),
-              child: Text('Estimated runtime: ${runtime!.toStringAsFixed(1)} hours',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
-                  color: BastionApp.accentOf(context)))),
-        ],
-      )),
-      Card(child: ExpansionTile(
-        leading: Icon(Icons.signal_cellular_alt, color: BastionApp.accentOf(context)),
-        title: Text('RSSI FIELD REFERENCE', style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('Quick Bluetooth signal-strength guide'),
-        childrenPadding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-        children: [
-          _ReferenceRow(value: '−50 dBm', label: 'Excellent / very close'),
-          _ReferenceRow(value: '−60 dBm', label: 'Strong'),
-          _ReferenceRow(value: '−70 dBm', label: 'Usable'),
-          _ReferenceRow(value: '−80 dBm', label: 'Weak'),
-          _ReferenceRow(value: '≤ −90', label: 'Very weak / unstable'),
-        ],
-      )),
+      const NxPageHeader(title: 'Tools',
+        subtitle: 'Utilities for planning, testing and running a deployment.'),
+      const NxSectionLabel('Before you go'),
       Card(child: ExpansionTile(
         initiallyExpanded: true,
-        leading: Icon(Icons.checklist, color: BastionApp.accentOf(context)),
-        title: const Text('DEPLOYMENT CHECKLIST', style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('${checked.length}/${checklist.length} ready'),
+        leading: const Icon(Icons.checklist),
+        title: const Text('Deployment checklist'),
+        subtitle: Text('${checked.length} of ${checklist.length} ready'),
         children: [
           for (final item in checklist)
             CheckboxListTile(
-              dense: true, title: Text(item), value: checked.contains(item),
+              title: Text(item), value: checked.contains(item),
               onChanged: (value) => setState(() {
                 value == true ? checked.add(item) : checked.remove(item);
               }),
             ),
         ],
       )),
-      Card(child: ListTile(
-        leading: Icon(Icons.bluetooth_searching, color: BastionApp.accentOf(context)),
-        title: const Text('RADIO SCANNER', style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('${widget.discovery.results.length} BLE devices currently discovered'),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: widget.discovery.scanning ? null : widget.discovery.scan,
+      Card(child: ExpansionTile(
+        leading: const Icon(Icons.battery_charging_full),
+        title: const Text('Battery runtime'),
+        subtitle: const Text('Estimate hours from capacity and average draw'),
+        childrenPadding: const EdgeInsets.fromLTRB(NxSpace.md, 0, NxSpace.md, NxSpace.md),
+        children: [
+          Row(children: [
+            Expanded(child: TextField(controller: battery,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Battery (mAh)'))),
+            const SizedBox(width: NxSpace.sm),
+            Expanded(child: TextField(controller: draw,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Average draw (mA)'))),
+          ]),
+          const SizedBox(height: NxSpace.sm),
+          SizedBox(width: double.infinity,
+            child: FilledButton(onPressed: calculate, child: const Text('Calculate'))),
+          if (runtime != null)
+            Padding(padding: const EdgeInsets.only(top: NxSpace.sm),
+              child: Semantics(liveRegion: true, child: Text('About ${runtime!.toStringAsFixed(1)} hours',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.primary)))),
+        ],
       )),
-      Card(child: ListTile(
-        leading: const Icon(Icons.network_check),
-        title: const Text('RANGE TEST', style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: const Text('Log packets from a range test sender with signal and distance'),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-          builder: (_) => MeshToolsPage(radio: widget.radio),
-        )),
-      )),
-      Card(child: ListTile(
-        leading: const Icon(Icons.inventory_2_outlined),
-        title: const Text('STORE & FORWARD', style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: const Text('Replay messages you missed from a router'),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-          builder: (_) => MeshToolsPage(radio: widget.radio, initialTab: 1),
-        )),
-      )),
-      AnimatedBuilder(
-        animation: widget.radio,
-        builder: (context, _) => Card(child: ListTile(
-          leading: const Icon(Icons.campaign_outlined),
-          title: const Text('MESH BEACONS', style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(widget.radio.beacons.isEmpty
-              ? 'Hear mesh invitations nearby and send your own'
-              : '${widget.radio.beacons.length} heard • send your own'),
+      const NxSectionLabel('Mesh tools'),
+      NxGroupCard(children: [
+        ListTile(
+          leading: const Icon(Icons.network_check),
+          title: const Text('Range test'),
+          subtitle: const Text('Log packets from a range test sender with signal and distance'),
           trailing: const Icon(Icons.chevron_right),
-          onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-            builder: (_) => BeaconPage(radio: widget.radio),
-          )),
-        )),
-      ),
-      AnimatedBuilder(
-        animation: widget.radio,
-        builder: (context, _) => Card(child: ListTile(
-          enabled: widget.radio.isReady,
+          onTap: () => _open(MeshToolsPage(radio: radio)),
+        ),
+        const Divider(indent: 56),
+        ListTile(
+          enabled: radio.isReady,
           leading: const Icon(Icons.route),
-          title: const Text('TRACEROUTE', style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(widget.radio.isReady
+          title: const Text('Traceroute'),
+          subtitle: Text(radio.isReady
             ? 'Show the relay path to a node and back'
             : 'Connect to a radio to trace routes'),
           trailing: const Icon(Icons.chevron_right),
-          onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-            builder: (_) => TraceroutePage(radio: widget.radio),
-          )),
-        )),
-      ),
-      AnimatedBuilder(
-        animation: widget.radio,
-        builder: (context, _) {
-          final readings = widget.radio.deviceTelemetry.entries.toList()
-            ..sort((a, b) => a.key.compareTo(b.key));
-          return Card(child: ExpansionTile(
-            leading: Icon(Icons.monitor_heart_outlined, color: BastionApp.accentOf(context)),
-            title: const Text('LIVE TELEMETRY',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(widget.radio.isReady
-              ? '${readings.length} nodes reporting device metrics'
-              : 'Connect to a radio to receive telemetry'),
-            childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            children: [
-              if (readings.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12),
-                  child: Text('No device telemetry received yet. Metrics appear when nodes transmit them.'),
-                ),
-              for (final entry in readings)
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text('Node !${entry.key.toRadixString(16).padLeft(8, '0')}'),
-                  subtitle: Text([
-                    if (entry.value.batteryLevel != null)
-                      'Battery ${entry.value.batteryLevel}%',
-                    if (entry.value.voltage != null)
-                      'Voltage ${entry.value.voltage!.toStringAsFixed(2)} V',
-                    if (entry.value.channelUtilization != null)
-                      'Channel ${entry.value.channelUtilization!.toStringAsFixed(1)}%',
-                    if (entry.value.airUtilTx != null)
-                      'TX airtime ${entry.value.airUtilTx!.toStringAsFixed(1)}%',
-                  ].join(' · ')),
-                ),
-            ],
-          ));
-        },
-      ),
+          onTap: () => _open(TraceroutePage(radio: radio)),
+        ),
+        const Divider(indent: 56),
+        ListTile(
+          leading: const Icon(Icons.inventory_2_outlined),
+          title: const Text('Store & forward'),
+          subtitle: const Text('Replay messages you missed from a router'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(MeshToolsPage(radio: radio, initialTab: 1)),
+        ),
+        const Divider(indent: 56),
+        ListTile(
+          leading: const Icon(Icons.campaign_outlined),
+          title: const Text('Mesh beacons'),
+          subtitle: Text(radio.beacons.isEmpty
+              ? 'Hear mesh invitations nearby and send your own'
+              : '${radio.beacons.length} heard • send your own'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(BeaconPage(radio: radio)),
+        ),
+      ]),
+      const NxSectionLabel('Records'),
+      Card(child: ListTile(
+        leading: const Icon(Icons.assignment_outlined),
+        title: const Text('Incident log, templates & coverage'),
+        subtitle: const Text('Saved field records and exports'),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(FieldToolsPage(radio: radio)),
+      )),
+      const NxSectionLabel('Signal'),
+      Card(child: ExpansionTile(
+        leading: const Icon(Icons.monitor_heart_outlined),
+        title: const Text('Live telemetry'),
+        subtitle: Text(radio.isReady
+          ? '${readings.length} node${readings.length == 1 ? '' : 's'} reporting device metrics'
+          : 'Connect to a radio to receive telemetry'),
+        childrenPadding: const EdgeInsets.fromLTRB(NxSpace.md, 0, NxSpace.md, NxSpace.md),
+        children: [
+          if (readings.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: NxSpace.sm),
+              child: Text('Nothing received yet. Metrics appear when nodes send them.'),
+            ),
+          for (final entry in readings)
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(radio.nodeName(entry.key)),
+              subtitle: Text([
+                if (entry.value.batteryLevel != null)
+                  'Battery ${entry.value.batteryLevel}%',
+                if (entry.value.voltage != null)
+                  '${entry.value.voltage!.toStringAsFixed(2)} V',
+                if (entry.value.channelUtilization != null)
+                  'Channel busy ${entry.value.channelUtilization!.toStringAsFixed(1)}%',
+                if (entry.value.airUtilTx != null)
+                  'Transmitting ${entry.value.airUtilTx!.toStringAsFixed(1)}%',
+              ].join(' • ')),
+            ),
+        ],
+      )),
+      Card(child: ExpansionTile(
+        leading: const Icon(Icons.signal_cellular_alt),
+        title: const Text('Bluetooth signal guide'),
+        subtitle: const Text('What the signal numbers (RSSI) mean'),
+        childrenPadding: const EdgeInsets.fromLTRB(NxSpace.md, 0, NxSpace.md, NxSpace.md),
+        children: const [
+          _ReferenceRow(value: '−50 dBm', label: 'Excellent, very close'),
+          _ReferenceRow(value: '−60 dBm', label: 'Strong'),
+          _ReferenceRow(value: '−70 dBm', label: 'Usable'),
+          _ReferenceRow(value: '−80 dBm', label: 'Weak'),
+          _ReferenceRow(value: '≤ −90', label: 'Very weak, may drop'),
+        ],
+      )),
+      Card(child: ListTile(
+        leading: const Icon(Icons.bluetooth_searching),
+        title: const Text('Scan for radios'),
+        subtitle: Text(widget.discovery.scanning
+            ? 'Scanning…'
+            : '${widget.discovery.results.length} Bluetooth device${widget.discovery.results.length == 1 ? '' : 's'} found'),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: widget.discovery.scanning ? null : widget.discovery.scan,
+      )),
     ],
+  );
+    },
   );
 }
 
@@ -1053,196 +1106,188 @@ class _SettingsPage extends StatelessWidget {
   const _SettingsPage({required this.radio});
   final MeshtasticRadioCoordinator radio;
 
+  void _open(BuildContext context, Widget page) =>
+      Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
+
   @override
-  Widget build(BuildContext context) => ListView(
-    padding: const EdgeInsets.all(16),
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: radio,
+    builder: (context, _) {
+      final local = radio.localNode;
+      final sent = radio.lastPhonePositionSent;
+      final locationStatus = radio.locationShareProblem ??
+          (!radio.sharePhoneLocation
+              ? 'Off. Your phone location is never sent.'
+              : !radio.isReady
+                  ? 'On. Starts when a radio is connected.'
+                  : sent == null
+                      ? 'On. Waiting for a GPS fix.'
+                      : 'On. Last sent ${sent.toLocal().toString().substring(11, 16)}.');
+      return ListView(
+    padding: NxSpace.page,
     children: [
-      const _Header(icon: Icons.tune, title: 'SETTINGS',
-        detail: 'Field behavior, connection preferences and build information.'),
-      const SizedBox(height: 14),
-      const BastionAppearanceCard(),
-      AnimatedBuilder(animation: radio, builder: (context, _) => _FiltersCard(radio: radio)),
-      const _MessagesCard(),
-      AnimatedBuilder(animation: radio, builder: (context, _) => _RadioDataCard(radio: radio)),
-      AnimatedBuilder(
-        animation: radio,
-        builder: (context, _) => Card(child: ExpansionTile(
-          initiallyExpanded: true,
-          leading: Icon(Icons.settings_input_antenna, color: BastionApp.accentOf(context)),
-          title: const Text('RADIO CONFIGURATION',
-            style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(radio.canAdminister
-            ? 'Radio connected • settings can be changed'
-            : 'Connect to a radio to view and change its settings'),
-          children: [
-            ListTile(
-              leading: const Icon(Icons.person_outline),
-              title: const Text('Node identity'),
-              subtitle: Text(radio.localNode == null
-                ? 'Waiting for this radio\'s node information'
-                : 'Long: ${radio.localNode!.longName ?? 'Not reported'}\n'
-                  'Short: ${radio.localNode!.shortName ?? 'Not reported'}\n'
-                  'ID: ${radio.localNode!.id ?? 'Not reported'}'),
-              isThreeLine: true,
-            ),
-            ListTile(
-              leading: const Icon(Icons.edit_outlined),
-              title: const Text('Change radio settings'),
-              subtitle: const Text('Owner, LoRa, channels, device role and position'),
-              enabled: radio.canAdminister,
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-                builder: (_) => RadioSettingsPage(radio: radio),
-              )),
-            ),
-            ListTile(title: const Text('Device & LoRa'),
-              subtitle: Text(radio.loraSettings.isEmpty
-                ? '${radio.radioConfigCount} configuration messages • LoRa values unavailable'
-                : radio.loraSettings.join('\n'))),
-            ListTile(
-              title: const Text('Channels'),
-              subtitle: Text(radio.channelSettings.isEmpty
-                ? '${radio.channelConfigCount} channel messages • details unavailable'
-                : radio.channelSettings.join('\n')),
-            ),
-            ListTile(title: const Text('Modules'),
-              subtitle: Text('${radio.moduleConfigCount} module messages received • edit through radio settings')),
-          ],
-        )),
-      ),
-      AnimatedBuilder(
-        animation: radio,
-        builder: (context, _) {
-          final sent = radio.lastPhonePositionSent;
-          final status = radio.locationShareProblem ??
-              (!radio.sharePhoneLocation
-                  ? 'Off. Your phone location is never sent.'
-                  : !radio.isReady
-                      ? 'On. Starts when a radio is connected.'
-                      : sent == null
-                          ? 'On. Waiting for a GPS fix.'
-                          : 'On. Last sent ${sent.toLocal().toString().substring(11, 16)}.');
-          return Card(child: Column(children: [
-            SwitchListTile(
-              secondary: const Icon(Icons.share_location),
-              title: const Text('Share phone location with mesh'),
-              subtitle: Text('$status\nThe radio broadcasts it when it has no GPS of its own. '
-                  'Updates every 5 min, or sooner when you move.'),
-              isThreeLine: true,
-              value: radio.sharePhoneLocation,
-              onChanged: (value) => radio.setSharePhoneLocation(value),
-            ),
-            ListTile(
-              leading: const Icon(Icons.blur_on),
-              title: const Text('Location precision'),
-              subtitle: const Text('Approximate positions are rounded on this phone before they are sent'),
-              trailing: DropdownButton<int>(
-                value: radio.locationPrecision,
-                items: [for (final e in BastionPhonePositionSharer.precisionChoices.entries)
-                  DropdownMenuItem(value: e.key, child: Text(e.value == 0
-                      ? 'Precise'
-                      : 'About ${BastionUnitFormat.distance(e.value.toDouble(), BastionPreferences.instance.units)}'))],
-                onChanged: (v) { if (v != null) radio.setLocationPrecision(v); },
-              ),
-            ),
-          ]));
-        },
-      ),
-      Card(child: ListTile(
-        leading: const Icon(Icons.enhanced_encryption_outlined),
-        title: const Text('Encrypted radio backup / restore'),
-        subtitle: const Text('Password-protected settings and channel keys'),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-            builder: (_) => RadioBackupPage(radio: radio))),
+      const NxPageHeader(title: 'Settings',
+        subtitle: 'Your radio, how the app behaves, and your data.'),
+      const NxSectionLabel('Radio'),
+      Card(child: ExpansionTile(
+        initiallyExpanded: true,
+        leading: const Icon(Icons.settings_input_antenna),
+        title: const Text('Radio configuration'),
+        subtitle: Text(radio.canAdminister
+          ? 'Connected • settings can be changed'
+          : 'Connect to a radio to view and change its settings'),
+        children: [
+          ListTile(
+            leading: const Icon(Icons.person_outline),
+            title: const Text('Node identity'),
+            subtitle: Text(local == null
+              ? 'Waiting for this radio\'s node information'
+              : '${local.longName ?? 'No long name'} • ${local.shortName ?? 'No short name'}\n'
+                '${local.id ?? 'ID not reported'}'),
+            isThreeLine: local != null,
+          ),
+          ListTile(
+            leading: const Icon(Icons.edit_outlined),
+            title: const Text('Change radio settings'),
+            subtitle: const Text('Owner, LoRa, channels, device role and position'),
+            enabled: radio.canAdminister,
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _open(context, RadioSettingsPage(radio: radio)),
+          ),
+          ListTile(
+            leading: const Icon(Icons.tune),
+            title: const Text('Device & LoRa'),
+            subtitle: Text(radio.loraSettings.isEmpty
+              ? 'Not received yet (${radio.radioConfigCount} configuration messages)'
+              : radio.loraSettings.join('\n'))),
+          ListTile(
+            leading: const Icon(Icons.podcasts),
+            title: const Text('Channels'),
+            subtitle: Text(radio.channelSettings.isEmpty
+              ? 'Not received yet (${radio.channelConfigCount} channel messages)'
+              : radio.channelSettings.join('\n')),
+          ),
+          ListTile(
+            leading: const Icon(Icons.extension_outlined),
+            title: const Text('Modules'),
+            subtitle: Text('${radio.moduleConfigCount} module messages received. Change them in radio settings.')),
+        ],
       )),
-      Card(child: ListTile(
-        leading: const Icon(Icons.phone_android_outlined),
-        title: const Text('Phone data backup / restore'),
-        subtitle: const Text('Chats, NodeDex, waypoints, field records and settings, for moving to a new phone'),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-            builder: (_) => PhoneBackupPage(radio: radio))),
-      )),
-      Card(child: ListTile(
-        leading: const Icon(Icons.privacy_tip_outlined),
-        title: const Text('Privacy & data'),
-        subtitle: const Text('What is stored and sent; delete chat history or all phone data'),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-            builder: (_) => PrivacyPage(radio: radio))),
-      )),
-      AnimatedBuilder(
-        animation: radio,
-        builder: (context, _) => _BackgroundCard(radio: radio),
-      ),
-      const _MapCacheCard(),
-      AnimatedBuilder(
-        animation: radio,
-        builder: (context, _) => _FieldAlertsCard(radio: radio),
-      ),
-      AnimatedBuilder(
-        animation: radio,
-        builder: (context, _) => Card(child: SwitchListTile(
-          secondary: const Icon(Icons.battery_saver_outlined),
-          title: const Text('Low-power field mode'),
-          subtitle: const Text('Shared phone location uses balanced GPS accuracy and '
-              'updates every 15 min, or after 200 m of movement. '
-              'Radio link and coverage recording are unchanged.'),
+      Card(child: Column(children: [
+        SwitchListTile(
+          secondary: const Icon(Icons.share_location),
+          title: const Text('Share phone location with mesh'),
+          subtitle: Text('$locationStatus\nUsed when the radio has no GPS of its own. '
+              'Updates every 5 min, or sooner when you move.'),
           isThreeLine: true,
-          value: radio.lowPowerMode,
-          onChanged: (value) => radio.setLowPowerMode(value)))),
-      const Card(child: ListTile(
-        leading: Icon(Icons.bluetooth), title: Text('Preferred transport'),
-        subtitle: Text('Bluetooth LE'), trailing: Text('BLE'))),
-      Card(child: ListTile(
-        leading: Icon(Icons.security_outlined), title: Text('Safety mode'),
-        subtitle: Text('No unverified device is treated as a mesh node'),
-        trailing: Icon(Icons.verified_user_outlined, color: BastionApp.accentOf(context)))),
-      Card(child: ListTile(
-        leading: const Icon(Icons.description_outlined), title: const Text('Third-party licenses'),
-        onTap: () => showLicensePage(context: context, applicationName: 'NOTORYX Connect'),
-      )),
-      const Card(child: ListTile(
-        leading: Icon(Icons.info_outline), title: Text('NOTORYX Connect'),
-        subtitle: Text('Development build • Independent mesh companion'))),
-      const Card(child: ListTile(
-        leading: Icon(Icons.gavel_outlined),
-        title: Text('Trademark & compatibility'),
-        subtitle: Text(
-          'Compatible with Meshtastic® firmware. Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses, see GitHub for details. No warranty is provided - use at your own risk.\n\nNOTORYX Connect is independently developed and is not affiliated with, sponsored by, or endorsed by Meshtastic LLC.',
+          value: radio.sharePhoneLocation,
+          onChanged: (value) => radio.setSharePhoneLocation(value),
         ),
-      )),
-      const _Notice(
-        text: 'NOTORYX Connect is an independent project compatible with Meshtastic® firmware. It is not affiliated with, sponsored by, or endorsed by Meshtastic LLC. Do not rely on this development build as a sole method of emergency communication.',
-        icon: Icons.shield_outlined),
+        const Divider(indent: 56),
+        ListTile(
+          leading: const Icon(Icons.blur_on),
+          title: const Text('Location precision'),
+          subtitle: const Text('Rounded on this phone before it is sent'),
+          trailing: DropdownButton<int>(
+            value: radio.locationPrecision,
+            underline: const SizedBox.shrink(),
+            items: [for (final e in BastionPhonePositionSharer.precisionChoices.entries)
+              DropdownMenuItem(value: e.key, child: Text(e.value == 0
+                  ? 'Precise'
+                  : 'About ${BastionUnitFormat.distance(e.value.toDouble(), BastionPreferences.instance.units)}'))],
+            onChanged: (v) { if (v != null) radio.setLocationPrecision(v); },
+          ),
+        ),
+      ])),
+      _BackgroundCard(radio: radio),
+      Card(child: SwitchListTile(
+        secondary: const Icon(Icons.battery_saver_outlined),
+        title: const Text('Low-power field mode'),
+        subtitle: const Text('Shared location uses balanced GPS and updates every 15 min, '
+            'or after 200 m of movement. The radio link and coverage recording are unchanged.'),
+        isThreeLine: true,
+        value: radio.lowPowerMode,
+        onChanged: (value) => radio.setLowPowerMode(value))),
+      const NxSectionLabel('App'),
+      const BastionAppearanceCard(),
+      _FieldAlertsCard(radio: radio),
+      const _MessagesCard(),
+      _FiltersCard(radio: radio),
+      const _MapCacheCard(),
+      const NxSectionLabel('Your data'),
+      _RadioDataCard(radio: radio),
+      NxGroupCard(children: [
+        ListTile(
+          leading: const Icon(Icons.enhanced_encryption_outlined),
+          title: const Text('Encrypted radio backup'),
+          subtitle: const Text('Save or restore settings and channel keys, protected by a password'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(context, RadioBackupPage(radio: radio)),
+        ),
+        const Divider(indent: 56),
+        ListTile(
+          leading: const Icon(Icons.phone_android_outlined),
+          title: const Text('Phone data backup'),
+          subtitle: const Text('Chats, nodes, waypoints, records and settings, for moving to a new phone'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(context, PhoneBackupPage(radio: radio)),
+        ),
+        const Divider(indent: 56),
+        ListTile(
+          leading: const Icon(Icons.privacy_tip_outlined),
+          title: const Text('Privacy & data'),
+          subtitle: const Text('What is stored and sent; delete chat history or all phone data'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(context, PrivacyPage(radio: radio)),
+        ),
+      ]),
+      const NxSectionLabel('About'),
+      NxGroupCard(children: [
+        const ListTile(
+          leading: Icon(Icons.info_outline), title: Text('NOTORYX Connect'),
+          subtitle: Text('Development build • Independent mesh companion')),
+        const Divider(indent: 56),
+        const ListTile(
+          leading: Icon(Icons.bluetooth), title: Text('Connection'),
+          subtitle: Text('Bluetooth LE • Safety mode on: no unverified device is treated as a mesh node')),
+        const Divider(indent: 56),
+        ListTile(
+          leading: const Icon(Icons.description_outlined), title: const Text('Third-party licenses'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => showLicensePage(context: context, applicationName: 'NOTORYX Connect'),
+        ),
+        const Divider(indent: 56),
+        const ListTile(
+          leading: Icon(Icons.gavel_outlined),
+          title: Text('Trademark & compatibility'),
+          subtitle: Text(
+            'Compatible with Meshtastic® firmware. Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses, see GitHub for details. No warranty is provided - use at your own risk.\n\nNOTORYX Connect is independently developed and is not affiliated with, sponsored by, or endorsed by Meshtastic LLC.',
+          ),
+        ),
+      ]),
+      const NxBanner(
+        tone: NxTone.warning,
+        icon: Icons.shield_outlined,
+        message: 'Do not rely on this development build as your only way to call for help.',
+      ),
     ],
+  );
+    },
   );
 }
 
 /// Safe channel editor preview. No channel write is attempted until authenticated
 /// admin responses and verified radio readback are implemented.
+/// The Chats tab's title block, drawn with the shared page header.
 class _Header extends StatelessWidget {
   const _Header({required this.icon, required this.title, required this.detail});
   final IconData icon;
   final String title;
   final String detail;
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(18),
-    decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerLow,
-      borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: BastionApp.accentOf(context).withValues(alpha: .4))),
-    child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Icon(icon, color: BastionApp.accentOf(context), size: 30),
-      const SizedBox(width: 14),
-      Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(title, style: TextStyle(fontSize: 19, fontWeight: FontWeight.w900,
-          color: Theme.of(context).colorScheme.primary, letterSpacing: .8)),
-        const SizedBox(height: 6),
-        Text(detail, style: TextStyle(height: 1.4, color: Theme.of(context).colorScheme.onSurfaceVariant)),
-      ])),
-    ]),
+  Widget build(BuildContext context) => NxPageHeader(
+    title: title.isEmpty ? title : title[0] + title.substring(1).toLowerCase(),
+    subtitle: detail,
   );
 }
 
@@ -1251,37 +1296,9 @@ class _Stat extends StatelessWidget {
   final String label;
   final String value;
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-    decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerLow,
-      borderRadius: BorderRadius.circular(12)),
-    child: Column(children: [
-      Text(value, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w900,
-        fontSize: 17, color: Theme.of(context).colorScheme.primary)),
-      const SizedBox(height: 4),
-      Text(label, textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant, letterSpacing: .6)),
-    ]),
-  );
-}
-
-class _Notice extends StatelessWidget {
-  const _Notice({required this.text, required this.icon});
-  final String text;
-  final IconData icon;
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 12),
-    child: Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(12)),
-      child: Row(children: [
-        Icon(icon, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant), const SizedBox(width: 10),
-        Expanded(child: Text(text,
-          style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant))),
-      ]),
-    ),
+  Widget build(BuildContext context) => NxStatTile(
+    label: label[0] + label.substring(1).toLowerCase(),
+    value: value[0] + value.substring(1).toLowerCase(),
   );
 }
 
@@ -1291,18 +1308,7 @@ class _EmptyState extends StatelessWidget {
   final String title;
   final String detail;
   @override
-  Widget build(BuildContext context) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(22),
-      child: Column(children: [
-        Icon(icon, size: 38, color: Theme.of(context).colorScheme.onSurfaceVariant), const SizedBox(height: 10),
-        Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 5),
-        Text(detail, textAlign: TextAlign.center,
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4)),
-      ]),
-    ),
-  );
+  Widget build(BuildContext context) => NxEmptyState(icon: icon, title: title, detail: detail);
 }
 
 class _ReferenceRow extends StatelessWidget {
@@ -1314,8 +1320,8 @@ class _ReferenceRow extends StatelessWidget {
     padding: const EdgeInsets.symmetric(vertical: 5),
     child: Row(children: [
       SizedBox(width: 80, child: Text(value,
-        style: TextStyle(fontWeight: FontWeight.bold,
-          color: BastionApp.accentOf(context)))),
+        style: TextStyle(fontWeight: FontWeight.w700,
+          color: Theme.of(context).colorScheme.primary))),
       Expanded(child: Text(label)),
     ]),
   );
@@ -1330,25 +1336,31 @@ String _rssiLabel(int rssi) {
 
 
 String _connectionLabel(MeshtasticConnectionState state) => switch (state) {
-  MeshtasticConnectionState.disconnected => 'OFFLINE',
-  MeshtasticConnectionState.discovering => 'SCANNING',
-  MeshtasticConnectionState.connecting => 'CONNECTING',
-  MeshtasticConnectionState.connected => 'CONNECTED',
-  MeshtasticConnectionState.synchronizing => 'SYNCING',
-  MeshtasticConnectionState.ready => 'CONNECTED',
-  MeshtasticConnectionState.error => 'ERROR',
+  MeshtasticConnectionState.disconnected => 'Offline',
+  MeshtasticConnectionState.discovering => 'Scanning',
+  MeshtasticConnectionState.connecting => 'Connecting',
+  MeshtasticConnectionState.connected => 'Syncing',
+  MeshtasticConnectionState.synchronizing => 'Syncing',
+  MeshtasticConnectionState.ready => 'Connected',
+  MeshtasticConnectionState.error => 'Error',
 };
 
-/// Short status words for the dashboard tiles, which are too narrow for
-/// CONNECTED or CONNECTING without breaking the word.
-String _connectionTileLabel(MeshtasticConnectionState state) => switch (state) {
-  MeshtasticConnectionState.disconnected => 'OFFLINE',
-  MeshtasticConnectionState.discovering => 'SCANNING',
-  MeshtasticConnectionState.connecting => 'LINKING',
-  MeshtasticConnectionState.connected => 'ONLINE',
-  MeshtasticConnectionState.synchronizing => 'SYNCING',
-  MeshtasticConnectionState.ready => 'ONLINE',
-  MeshtasticConnectionState.error => 'ERROR',
+NxTone _connectionTone(MeshtasticConnectionState state) => switch (state) {
+  MeshtasticConnectionState.disconnected => NxTone.neutral,
+  MeshtasticConnectionState.discovering ||
+  MeshtasticConnectionState.connecting ||
+  MeshtasticConnectionState.connected ||
+  MeshtasticConnectionState.synchronizing => NxTone.info,
+  MeshtasticConnectionState.ready => NxTone.success,
+  MeshtasticConnectionState.error => NxTone.danger,
+};
+
+bool _connectionBusy(MeshtasticConnectionState state) => switch (state) {
+  MeshtasticConnectionState.discovering ||
+  MeshtasticConnectionState.connecting ||
+  MeshtasticConnectionState.connected ||
+  MeshtasticConnectionState.synchronizing => true,
+  _ => false,
 };
 
 /// Message housekeeping and read-aloud.
