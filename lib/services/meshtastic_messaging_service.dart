@@ -313,6 +313,9 @@ class MeshtasticMessagingService {
         replyId: message.replyId,
         isReaction: message.isReaction,
         viaMqtt: message.viaMqtt,
+        hops: message.hops,
+        rxRssi: message.rxRssi,
+        relayNode: message.relayNode,
       ));
       _trimHistory();
       _incoming.add(message);

@@ -755,6 +755,25 @@ class _ChatsPageState extends State<BastionChatsPage> {
   static const _copyAction = '\u0000copy';
   static const _reactionChoices = ['👍', '❤️', '😂', '😮', '😢', '✅', '🙏'];
 
+  /// How an incoming message got here: over the internet, directly, or
+  /// through relays, naming the last relay when it can be worked out.
+  String _pathSummary(BastionChatMessage m) {
+    if (m.viaMqtt) return 'Arrived over MQTT (the internet), not over the air';
+    final hops = m.hops;
+    if (hops == null) return "Path not reported by the sender's firmware";
+    if (hops == 0) return 'Heard directly, no relays';
+    final relay = m.relayNode;
+    final candidates = relay == null
+        ? const <String>[]
+        : [for (final n in widget.radio.nodes) if ((n.num & 0xff) == relay && n.num != m.from) n.displayName];
+    final via = candidates.length == 1
+        ? ', last through ${candidates.single}'
+        : relay == null
+            ? ''
+            : ', last through a node ending in ${relay.toRadixString(16).padLeft(2, '0')}';
+    return 'Came through $hops relay${hops == 1 ? '' : 's'}$via';
+  }
+
   Future<void> _react(BastionChatMessage message) async {
     final pinned = widget.radio.chatMarks.isPinned(message);
     final emoji = await showModalBottomSheet<String>(
@@ -773,6 +792,16 @@ class _ChatsPageState extends State<BastionChatsPage> {
               ),
           ]),
           const Divider(),
+          if (message.direction == BastionMessageDirection.incoming)
+            ListTile(
+              leading: const Icon(Icons.alt_route),
+              title: Text(_pathSummary(message)),
+              subtitle: Text([
+                if (message.rxSnr != null) 'SNR ${message.rxSnr!.toStringAsFixed(1)} dB',
+                if (message.rxRssi != null) 'RSSI ${message.rxRssi} dBm',
+                if (message.rxSnr == null && message.rxRssi == null) 'No signal reading',
+              ].join(' • ')),
+            ),
           ListTile(
             leading: Icon(pinned ? Icons.push_pin_outlined : Icons.push_pin),
             title: Text(pinned ? 'Unpin' : 'Pin'),
@@ -891,7 +920,8 @@ class _ChatsPageState extends State<BastionChatsPage> {
                   [
                     '$sender → $route',
                     // Heard over the internet, not over the air.
-                    if (message.viaMqtt) 'via MQTT',
+                    if (message.viaMqtt) 'via MQTT'
+                    else if (_hopsLabel(message.hops) case final hops?) hops,
                   ].join(' • '),
                   style: type.labelMedium?.copyWith(color: mentioned ? scheme.onPrimaryContainer : scheme.onSurfaceVariant),
                 )),
@@ -2176,3 +2206,11 @@ class _DemoBanner extends StatelessWidget {
     );
   }
 }
+
+/// "Direct" or "2 hops", or null when the hop count is unknown.
+String? _hopsLabel(int? hops) => switch (hops) {
+  null => null,
+  0 => 'Direct',
+  1 => '1 hop',
+  final n => '$n hops',
+};

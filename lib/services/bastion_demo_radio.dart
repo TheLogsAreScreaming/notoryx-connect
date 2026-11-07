@@ -86,7 +86,8 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
           packetId: _nextPacket++, from: from, to: direct ? localNum : 0xffffffff,
           channel: channel, text: text, timestamp: now.subtract(ago),
           direction: BastionMessageDirection.incoming,
-          deliveryState: BastionDeliveryState.received, rxSnr: 6.5,
+          deliveryState: BastionDeliveryState.received, rxSnr: 6.5, rxRssi: -97,
+          hops: from == 0xDE300005 ? 2 : from == 0xDE300002 ? 0 : 1, relayNode: 0x02,
         );
     BastionChatMessage outgoing(int to, String text, Duration ago) => BastionChatMessage(
           packetId: _nextPacket++, from: localNum, to: to, channel: 0, text: text,

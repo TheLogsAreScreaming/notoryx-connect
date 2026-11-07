@@ -18,6 +18,8 @@ abstract final class MeshtasticTextCodec {
     int? rxTime;
     double? rxSnr;
     var viaMqtt = false;
+    var hopLimit = 0, hopStart = 0, relayNode = 0;
+    int? rxRssi;
     Uint8List? decoded;
 
     while (offset < bytes.length) {
@@ -54,6 +56,20 @@ abstract final class MeshtasticTextCodec {
         final v = _readVarint(bytes, offset);
         viaMqtt = v.value != 0;
         offset = v.next;
+      } else if ((field == 9 || field == 12 || field == 15 || field == 19) && wire == 0) {
+        final v = _readVarint(bytes, offset);
+        offset = v.next;
+        switch (field) {
+          case 9:
+            hopLimit = v.value;
+          case 12:
+            final rssi = v.value.toSigned(32);
+            rxRssi = rssi == 0 ? null : rssi;
+          case 15:
+            hopStart = v.value;
+          case 19:
+            relayNode = v.value;
+        }
       } else {
         offset = _skip(bytes, offset, wire);
       }
@@ -73,6 +89,10 @@ abstract final class MeshtasticTextCodec {
       replyId: data.replyId == 0 ? null : data.replyId,
       isReaction: data.emoji != 0,
       viaMqtt: viaMqtt,
+      // Firmware before 2.3 leaves hop_start at 0, so hops can't be known.
+      hops: hopStart > 0 && hopStart >= hopLimit ? hopStart - hopLimit : null,
+      rxRssi: rxRssi,
+      relayNode: relayNode == 0 ? null : relayNode & 0xff,
     );
   }
 
@@ -290,6 +310,9 @@ class MeshtasticTextMessage {
     this.replyId,
     this.isReaction = false,
     this.viaMqtt = false,
+    this.hops,
+    this.rxRssi,
+    this.relayNode,
   });
 
   final int packetId;
@@ -308,6 +331,16 @@ class MeshtasticTextMessage {
 
   /// Whether the packet reached the radio over MQTT rather than LoRa.
   final bool viaMqtt;
+
+  /// Relays the packet passed through: 0 means heard directly. Null when
+  /// the sender's firmware doesn't report it.
+  final int? hops;
+
+  /// Received signal strength in dBm, when the radio reports it.
+  final int? rxRssi;
+
+  /// Last byte of the node number of the radio that relayed it last.
+  final int? relayNode;
 
   bool get isBroadcast => to == MeshtasticTextCodec.broadcastNode;
 }
