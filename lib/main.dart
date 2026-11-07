@@ -36,6 +36,7 @@ import 'services/meshtastic_connection_controller.dart';
 import 'services/bastion_chat_store.dart';
 import 'services/bastion_demo_radio.dart';
 import 'services/bastion_field_alerts.dart';
+import 'services/bastion_home_widget.dart';
 import 'services/bastion_firmware.dart';
 import 'services/bastion_phone_position.dart';
 import 'services/meshtastic_messaging_service.dart';
@@ -145,10 +146,17 @@ class _BastionShellState extends State<BastionShell> {
 
   void _go(int tab) => setState(() => index = tab);
 
+  BastionHomeWidget? _homeWidget;
+
   @override
   void initState() {
     super.initState();
     _setUpShortcuts();
+    // The widget follows the real radio, never the demo.
+    if (BastionHomeWidget.supported) {
+      _homeWidget = BastionHomeWidget.instance = BastionHomeWidget(_realRadio);
+      unawaited(_homeWidget!.start());
+    }
   }
 
   /// Long-press shortcuts on the app icon, each opening a tab.
@@ -175,6 +183,7 @@ class _BastionShellState extends State<BastionShell> {
   @override
   void dispose() {
     ble.dispose();
+    _homeWidget?.dispose();
     _realRadio.dispose();
     _demo?.dispose();
     super.dispose();
@@ -1590,6 +1599,19 @@ class _SettingsPage extends StatelessWidget {
       const _MessagesCard(),
       _FiltersCard(radio: radio),
       const _MapCacheCard(),
+      if (BastionHomeWidget.instance case final widget?)
+        Card(child: StatefulBuilder(builder: (context, setLocal) => SwitchListTile(
+          secondary: const Icon(Icons.widgets_outlined),
+          title: const Text('Show messages on the home-screen widget'),
+          subtitle: const Text('Off: the widget shows only how many messages are unread. '
+              'On: it also shows the sender and text, which anyone holding the phone can see.'),
+          isThreeLine: true,
+          value: widget.showMessage,
+          onChanged: (v) async {
+            await widget.setShowMessage(v);
+            setLocal(() {});
+          },
+        ))),
       const NxSectionLabel('Your data'),
       _RadioDataCard(radio: radio),
       NxGroupCard(children: [
