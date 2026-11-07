@@ -756,67 +756,97 @@ class _ChatsPageState extends State<BastionChatsPage> {
 
   Widget _messageCard(BuildContext context, BastionChatMessage message, List<BastionChatMessage>? rs) {
     final scheme = Theme.of(context).colorScheme;
-    final mentioned = message.direction == BastionMessageDirection.incoming &&
-        widget.radio.mentionsMe(message.text);
+    final type = Theme.of(context).textTheme;
+    final outgoing = message.direction == BastionMessageDirection.outgoing;
+    final mentioned = !outgoing && widget.radio.mentionsMe(message.text);
     final pinned = widget.radio.chatMarks.isPinned(message);
+    final sender = outgoing ? 'You' : _nodeName(message.from);
+    final route = message.isBroadcast
+        ? 'Channel ${message.channel}'
+        : outgoing ? _nodeName(message.to) : 'you';
+    final failed = message.deliveryState == BastionDeliveryState.failed;
+    final statusColor = failed
+        ? scheme.error
+        : message.deliveryState == BastionDeliveryState.delivered
+            ? NxStatusColors.of(context).success
+            : scheme.onSurfaceVariant;
     return Card(
-      color: mentioned ? scheme.primaryContainer : null,
-      child: ListTile(
-                onLongPress: () => _react(message),
-                leading: CircleAvatar(
-                  child: Icon(message.direction == BastionMessageDirection.outgoing
-                      ? Icons.north_east : Icons.south_west),
-                ),
-                title: Text(message.text),
-                subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text([
-                    message.direction == BastionMessageDirection.outgoing
-                        ? (message.isBroadcast
-                            ? 'You → Channel ${message.channel}'
-                            : 'You → ${_nodeName(message.to)}')
-                        : (message.isBroadcast
-                            ? '${_nodeName(message.from)} → Channel ${message.channel}'
-                            : '${_nodeName(message.from)} → You'),
+      color: mentioned ? scheme.primaryContainer : outgoing ? scheme.surfaceContainer : null,
+      shape: mentioned
+          ? RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(NxRadius.lg),
+              side: BorderSide(color: scheme.primary, width: 1.5))
+          : null,
+      child: InkWell(
+        onLongPress: () => _react(message),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(NxSpace.md, NxSpace.sm, NxSpace.md, NxSpace.sm),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            CircleAvatar(
+              radius: 18,
+              backgroundColor: outgoing ? scheme.primary : scheme.secondaryContainer,
+              foregroundColor: outgoing ? scheme.onPrimary : scheme.onSecondaryContainer,
+              child: outgoing
+                  ? const Icon(Icons.north_east, size: 18)
+                  : Text(_initials(sender), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+            ),
+            const SizedBox(width: NxSpace.sm),
+            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(children: [
+                Expanded(child: Text(
+                  [
+                    '$sender → $route',
                     // Heard over the internet, not over the air.
                     if (message.viaMqtt) 'via MQTT',
-                  ].join(' • ')),
-                  if (mentioned)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Row(mainAxisSize: MainAxisSize.min, children: [
-                        Icon(Icons.alternate_email, size: 14, color: scheme.onPrimaryContainer),
-                        const SizedBox(width: 4),
-                        Text('Mentions you', style: TextStyle(
-                            fontWeight: FontWeight.bold, color: scheme.onPrimaryContainer)),
-                      ]),
-                    ),
-                  if (rs != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Semantics(
-                        label: 'Reactions: ${[for (final r in rs) '${r.text} from ${r.direction == BastionMessageDirection.outgoing ? 'you' : _nodeName(r.from)}'].join(', ')}',
-                        excludeSemantics: true,
-                        child: Wrap(spacing: 6, children: [
-                          for (final e in {for (final r in rs) r.text}.toList())
-                            Chip(
-                              visualDensity: VisualDensity.compact,
-                              label: Text('$e ${rs.where((r) => r.text == e).length}'),
-                            ),
-                        ]),
-                      ),
-                    ),
-                ]),
-                trailing: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (pinned) const Icon(Icons.push_pin, size: 14, semanticLabel: 'Pinned'),
-                    Icon(_deliveryIcon(message.deliveryState), size: 18),
-                    const SizedBox(height: 3),
-                    Text(_deliveryLabel(message.deliveryState),
-                      style: const TextStyle(fontSize: 9)),
-                  ],
+                  ].join(' • '),
+                  style: type.labelMedium?.copyWith(color: mentioned ? scheme.onPrimaryContainer : scheme.onSurfaceVariant),
+                )),
+                if (pinned) Icon(Icons.push_pin, size: 14, semanticLabel: 'Pinned', color: scheme.onSurfaceVariant),
+                const SizedBox(width: NxSpace.xxs),
+                Text(_clock(message.timestamp), style: type.labelMedium?.copyWith(
+                    color: mentioned ? scheme.onPrimaryContainer : scheme.onSurfaceVariant)),
+              ]),
+              const SizedBox(height: 2),
+              Text(message.text, style: type.bodyLarge?.copyWith(
+                  color: mentioned ? scheme.onPrimaryContainer : null)),
+              if (mentioned)
+                Padding(
+                  padding: const EdgeInsets.only(top: NxSpace.xxs),
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(Icons.alternate_email, size: 14, color: scheme.onPrimaryContainer),
+                    const SizedBox(width: 4),
+                    Text('Mentions you', style: type.labelMedium?.copyWith(color: scheme.onPrimaryContainer)),
+                  ]),
                 ),
-              ));
+              if (rs != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: NxSpace.xxs),
+                  child: Semantics(
+                    label: 'Reactions: ${[for (final r in rs) '${r.text} from ${r.direction == BastionMessageDirection.outgoing ? 'you' : _nodeName(r.from)}'].join(', ')}',
+                    excludeSemantics: true,
+                    child: Wrap(spacing: 6, runSpacing: 4, children: [
+                      for (final e in {for (final r in rs) r.text}.toList())
+                        Chip(
+                          visualDensity: VisualDensity.compact,
+                          label: Text('$e ${rs.where((r) => r.text == e).length}'),
+                        ),
+                    ]),
+                  ),
+                ),
+              if (outgoing || message.deliveryState != BastionDeliveryState.received)
+                Padding(
+                  padding: const EdgeInsets.only(top: NxSpace.xxs),
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(_deliveryIcon(message.deliveryState), size: 14, color: statusColor),
+                    const SizedBox(width: 4),
+                    Text(_deliveryLabel(message.deliveryState), style: type.labelMedium?.copyWith(color: statusColor)),
+                  ]),
+                ),
+            ])),
+          ]),
+        ),
+      ),
+    );
   }
 
   String _nodeName(int nodeNum) {
@@ -849,92 +879,74 @@ class _ChatsPageState extends State<BastionChatsPage> {
         destination = 0xffffffff;
       }
       final connected = widget.radio.isReady;
+      final scheme = Theme.of(context).colorScheme;
+      final filters = widget.radio.filters;
       return ListView(
-        padding: const EdgeInsets.all(16),
+        padding: NxSpace.page,
         children: [
-          _Header(
-            icon: Icons.forum_outlined,
-            title: 'COMMS',
-            detail: connected
-                ? 'Live Meshtastic messaging is ready.'
-                : 'Messages can be queued offline and send automatically when the radio is connected.',
+          NxPageHeader(
+            title: 'Chats',
+            subtitle: connected
+                ? 'Connected. Messages send right away.'
+                : 'Offline. Messages wait in a queue and send when your radio connects.',
           ),
-          if (widget.radio.filteredMessageCount > 0 || widget.radio.filters.showFiltered && widget.radio.filters.words.isNotEmpty)
-            Card(
-              child: ListTile(
-                leading: const Icon(Icons.filter_alt_outlined),
-                title: Text(widget.radio.filters.showFiltered
-                    ? 'Showing messages that match your word filters'
-                    : '${widget.radio.filteredMessageCount} message${widget.radio.filteredMessageCount == 1 ? '' : 's'} hidden by your word filters'),
-                trailing: TextButton(
-                  onPressed: () => widget.radio.filters.setShowFiltered(!widget.radio.filters.showFiltered),
-                  child: Text(widget.radio.filters.showFiltered ? 'Hide' : 'Show'),
-                ),
-              ),
-            ),
           if (widget.radio.messageStorageProblem case final problem?)
-            Card(
-              color: Theme.of(context).colorScheme.errorContainer,
-              child: ListTile(
-                leading: Icon(Icons.sd_card_alert_outlined,
-                  color: Theme.of(context).colorScheme.onErrorContainer),
-                title: Text('Message storage problem',
-                  style: TextStyle(color: Theme.of(context).colorScheme.onErrorContainer)),
-                subtitle: Text(problem,
-                  style: TextStyle(color: Theme.of(context).colorScheme.onErrorContainer)),
+            NxBanner(tone: NxTone.danger, icon: Icons.sd_card_alert_outlined,
+              title: 'Message storage problem', message: problem),
+          if (widget.radio.filteredMessageCount > 0 || filters.showFiltered && filters.words.isNotEmpty)
+            NxBanner(
+              icon: Icons.filter_alt_outlined,
+              message: filters.showFiltered
+                  ? 'Showing messages that match your word filters'
+                  : '${widget.radio.filteredMessageCount} message${widget.radio.filteredMessageCount == 1 ? '' : 's'} hidden by your word filters',
+              action: TextButton(
+                onPressed: () => filters.setShowFiltered(!filters.showFiltered),
+                child: Text(filters.showFiltered ? 'Hide' : 'Show'),
               ),
             ),
-          const SizedBox(height: 12),
-          Row(children: [
-            Expanded(child: _Stat(
-              label: 'LINK',
-              value: connected ? 'ONLINE' : 'OFFLINE',
-            )),
-            const SizedBox(width: 10),
-            Expanded(child: _Stat(
-              label: 'MESSAGES',
-              value: messages.length.toString(),
-            )),
-            const SizedBox(width: 10),
-            Expanded(child: _Stat(
-              label: 'QUEUED',
-              value: widget.radio.pendingMessageCount.toString(),
-            )),
-          ]),
-          const SizedBox(height: 12),
+          if (BastionPreferences.instance.statistics) ...[
+            NxStatRow(children: [
+              NxStatTile(label: 'Link', value: connected ? 'Online' : 'Offline',
+                tone: connected ? NxTone.success : NxTone.neutral),
+              NxStatTile(label: 'Messages', value: '${messages.length}'),
+              NxStatTile(label: 'Queued', value: '${widget.radio.pendingMessageCount}',
+                tone: widget.radio.pendingMessageCount > 0 ? NxTone.warning : NxTone.neutral),
+            ]),
+            const SizedBox(height: NxSpace.xs),
+          ],
+          const NxSectionLabel('New message'),
           Card(child: Padding(
-            padding: const EdgeInsets.all(14),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('DESTINATION',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-              const SizedBox(height: 8),
+            padding: const EdgeInsets.all(NxSpace.md),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               DropdownButtonFormField<int>(
                 key: ValueKey(destination),
                 initialValue: destination,
+                isExpanded: true,
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                  labelText: 'To',
                   prefixIcon: Icon(Icons.cell_tower),
                 ),
                 items: [
                   const DropdownMenuItem(
                     value: 0xffffffff,
-                    child: Text('Broadcast'),
+                    child: Text('Everyone on the channel'),
                   ),
                   for (final node in widget.radio.nodes)
                     DropdownMenuItem(
                       value: node.num,
-                      child: Text('DM • ${node.displayName}'),
+                      child: Text('Direct • ${node.displayName}', overflow: TextOverflow.ellipsis),
                     ),
                 ],
                 onChanged: (value) {
                   if (value != null) _switchTo(newDestination: value);
                 },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: NxSpace.sm),
               DropdownButtonFormField<int>(
                 key: ValueKey('channel-$channel'),
                 initialValue: channel,
-                decoration: const InputDecoration(labelText: 'Channel', border: OutlineInputBorder()),
+                isExpanded: true,
+                decoration: const InputDecoration(labelText: 'Channel', prefixIcon: Icon(Icons.podcasts)),
                 items: channels.isEmpty
                     ? [const DropdownMenuItem(value: 0, child: Text('Channel 0 • Broadcast')),
                        if (channel != 0) DropdownMenuItem(value: channel,
@@ -943,21 +955,17 @@ class _ChatsPageState extends State<BastionChatsPage> {
                         child: Text('Channel ${c.index} • ${c.name.isEmpty ? 'Default' : c.name}'))],
                 onChanged: (value) { if (value != null) _switchTo(newChannel: value); },
               ),
-            ]),
-          )),
-          Card(child: Padding(
-            padding: const EdgeInsets.all(14),
-            child: Column(children: [
+              const SizedBox(height: NxSpace.sm),
               TextField(
                 controller: composer,
                 maxLength: 228,
                 minLines: 1,
                 maxLines: 4,
+                textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   labelText: destination == 0xffffffff
                       ? 'Message Channel $channel'
                       : 'Message ${_nodeName(destination)}',
-                  border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                     tooltip: 'Mention a node',
                     icon: const Icon(Icons.alternate_email),
@@ -967,16 +975,15 @@ class _ChatsPageState extends State<BastionChatsPage> {
                 onSubmitted: (_) => _send(),
                 onChanged: (_) => _saveDraft(),
               ),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: _send,
-                  icon: const Icon(Icons.send),
-                  label: const Text('SEND'),
-                ),
+              FilledButton.icon(
+                onPressed: _send,
+                icon: const Icon(Icons.send),
+                label: const Text('Send'),
               ),
-              const SizedBox(height: 8),
-              Wrap(spacing: 7, runSpacing: 7, children: [
+              const SizedBox(height: NxSpace.sm),
+              Text('Quick replies', style: Theme.of(context).textTheme.labelMedium?.copyWith(color: scheme.onSurfaceVariant)),
+              const SizedBox(height: NxSpace.xs),
+              Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
                 for (final quick in const [
                   'Copy',
                   'On my way',
@@ -990,35 +997,13 @@ class _ChatsPageState extends State<BastionChatsPage> {
               ]),
             ]),
           )),
-          TextField(
-            controller: search,
-            decoration: const InputDecoration(labelText: 'Search message history',
-                prefixIcon: Icon(Icons.search), border: OutlineInputBorder()),
-            onChanged: (_) => setState(() {}),
-          ),
-          if (messages.isNotEmpty && matches.isEmpty)
-            const Padding(padding: EdgeInsets.all(16), child: Text('No messages match your search.')),
-          if (messages.isEmpty)
-            const _EmptyState(
-              icon: Icons.mark_chat_unread_outlined,
-              title: 'No mesh messages yet',
-              detail: 'Incoming channel and direct messages will appear here after a radio is connected.',
-            )
-          else ...[
-            const Padding(
-              padding: EdgeInsets.fromLTRB(4, 8, 4, 4),
-              child: Text('MESSAGE TIMELINE',
-                style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: .8)),
-            ),
-            if (pins.isNotEmpty) ...[
-              const Padding(
-                padding: EdgeInsets.fromLTRB(4, 8, 4, 4),
-                child: Text('PINNED',
-                  style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: .8)),
-              ),
-              for (final message in pins)
-                Card(child: ListTile(
-                  leading: const Icon(Icons.push_pin),
+          if (pins.isNotEmpty) ...[
+            const NxSectionLabel('Pinned'),
+            Card(child: Column(children: [
+              for (final (i, message) in pins.indexed) ...[
+                if (i > 0) const Divider(indent: 56),
+                ListTile(
+                  leading: Icon(Icons.push_pin, color: scheme.primary),
                   title: Text(message.text, maxLines: 3),
                   subtitle: Text('${message.direction == BastionMessageDirection.outgoing ? 'You' : _nodeName(message.from)} • ${BastionChatDays.label(message.timestamp, now)}'),
                   trailing: IconButton(
@@ -1026,49 +1011,81 @@ class _ChatsPageState extends State<BastionChatsPage> {
                     icon: const Icon(Icons.close),
                     onPressed: () => _togglePin(message),
                   ),
-                )),
-            ],
+                ),
+              ],
+            ])),
+          ],
+          NxSectionLabel('Messages', trailing: messages.isEmpty ? null : Text('Hold a message for more',
+            style: Theme.of(context).textTheme.bodySmall)),
+          if (messages.isNotEmpty)
+            TextField(
+              controller: search,
+              decoration: InputDecoration(
+                labelText: 'Search message history',
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: search.text.isEmpty ? null : IconButton(
+                  tooltip: 'Clear search',
+                  icon: const Icon(Icons.close),
+                  onPressed: () => setState(search.clear),
+                ),
+              ),
+              onChanged: (_) => setState(() {}),
+            ),
+          if (messages.isNotEmpty && matches.isEmpty)
+            const NxEmptyState(icon: Icons.search_off, title: 'No matches',
+              detail: 'No messages match your search.'),
+          if (messages.isEmpty)
+            const NxEmptyState(
+              icon: Icons.mark_chat_unread_outlined,
+              title: 'No mesh messages yet',
+              detail: 'Channel and direct messages appear here once your radio hears them.',
+            )
+          else
             for (final row in _timelineRows(matches.reversed.toList(), now))
               switch (row) {
                 _DayRow(:final label) => _TimelineDivider(label: label),
                 _NewRow() => const _TimelineDivider(label: 'New messages above', highlight: true),
                 _MessageRow(:final message) => _messageCard(context, message, reactions[message.packetId]),
               },
-          ],
-          const SizedBox(height: 10),
-          Card(child: SwitchListTile(
-            secondary: Icon(Icons.smart_toy_outlined,
-              color: BastionApp.accentOf(context)),
-            title: const Text('BOT MODE',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(widget.radio.botProblem ?? (widget.botMode
-                ? 'ACTIVE • DM auto-reply + !help / !status • quiet hours + airtime limits'
-                : 'Automatic replies are off')),
-            value: widget.botMode,
-            onChanged: widget.onBotModeChanged,
-          )),
-          Card(child: ExpansionTile(
-            leading: Icon(Icons.tune, color: BastionApp.accentOf(context)),
-            title: const Text('BOT RESPONSE',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-            childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            children: [
-              TextField(
-                controller: reply,
-                maxLines: 3,
-                maxLength: 160,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Message to send while Bot Mode is active',
+          const NxSectionLabel('Automatic replies'),
+          Card(child: Column(children: [
+            SwitchListTile(
+              secondary: const Icon(Icons.smart_toy_outlined),
+              title: const Text('Bot mode'),
+              subtitle: Text(widget.radio.botProblem ?? (widget.botMode
+                  ? 'On. Replies to direct messages and answers !help and !status, within quiet hours and airtime limits.'
+                  : 'Off. No automatic replies are sent.')),
+              value: widget.botMode,
+              onChanged: widget.onBotModeChanged,
+            ),
+            const Divider(indent: 56),
+            ExpansionTile(
+              leading: const Icon(Icons.edit_note),
+              title: const Text('Bot reply message'),
+              childrenPadding: const EdgeInsets.fromLTRB(NxSpace.md, 0, NxSpace.md, NxSpace.md),
+              children: [
+                TextField(
+                  controller: reply,
+                  maxLines: 3,
+                  maxLength: 160,
+                  decoration: const InputDecoration(
+                    hintText: 'Message to send while Bot mode is on',
+                  ),
+                  onChanged: widget.onAwayReplyChanged,
                 ),
-                onChanged: widget.onAwayReplyChanged,
-              ),
-            ],
-          )),
+              ],
+            ),
+          ])),
         ],
       );
     },
   );
+}
+
+/// The time of day as HH:mm, for message timestamps.
+String _clock(DateTime t) {
+  final l = t.toLocal();
+  return '${l.hour.toString().padLeft(2, '0')}:${l.minute.toString().padLeft(2, '0')}';
 }
 
 IconData _deliveryIcon(BastionDeliveryState state) => switch (state) {
@@ -1080,11 +1097,11 @@ IconData _deliveryIcon(BastionDeliveryState state) => switch (state) {
 };
 
 String _deliveryLabel(BastionDeliveryState state) => switch (state) {
-  BastionDeliveryState.received => 'RX',
-  BastionDeliveryState.queued => 'QUEUED',
-  BastionDeliveryState.sent => 'SENT',
-  BastionDeliveryState.delivered => 'DELIVERED',
-  BastionDeliveryState.failed => 'FAILED',
+  BastionDeliveryState.received => 'Received',
+  BastionDeliveryState.queued => 'Queued',
+  BastionDeliveryState.sent => 'Sent',
+  BastionDeliveryState.delivered => 'Delivered',
+  BastionDeliveryState.failed => 'Not delivered',
 };
 
 class _ToolsPage extends StatefulWidget {
@@ -1452,39 +1469,6 @@ class _SettingsPage extends StatelessWidget {
 
 /// Safe channel editor preview. No channel write is attempted until authenticated
 /// admin responses and verified radio readback are implemented.
-/// The Chats tab's title block, drawn with the shared page header.
-class _Header extends StatelessWidget {
-  const _Header({required this.icon, required this.title, required this.detail});
-  final IconData icon;
-  final String title;
-  final String detail;
-  @override
-  Widget build(BuildContext context) => NxPageHeader(
-    title: title.isEmpty ? title : title[0] + title.substring(1).toLowerCase(),
-    subtitle: detail,
-  );
-}
-
-class _Stat extends StatelessWidget {
-  const _Stat({required this.label, required this.value});
-  final String label;
-  final String value;
-  @override
-  Widget build(BuildContext context) => NxStatTile(
-    label: label[0] + label.substring(1).toLowerCase(),
-    value: value[0] + value.substring(1).toLowerCase(),
-  );
-}
-
-class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.icon, required this.title, required this.detail});
-  final IconData icon;
-  final String title;
-  final String detail;
-  @override
-  Widget build(BuildContext context) => NxEmptyState(icon: icon, title: title, detail: detail);
-}
-
 class _ReferenceRow extends StatelessWidget {
   const _ReferenceRow({required this.value, required this.label});
   final String value;
@@ -1962,8 +1946,7 @@ class _TimelineDivider extends StatelessWidget {
             child: Row(mainAxisSize: MainAxisSize.min, children: [
               if (highlight) Icon(Icons.arrow_upward, size: 14, color: color),
               if (highlight) const SizedBox(width: 4),
-              Flexible(child: Text(label, style: TextStyle(
-                  color: color, fontWeight: FontWeight.bold, fontSize: 12))),
+              Flexible(child: Text(label, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: color))),
             ]),
           ),
           Expanded(child: Divider(color: color, thickness: highlight ? 2 : 1)),

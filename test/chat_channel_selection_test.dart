@@ -26,9 +26,9 @@ void main() {
     await tester.tap(find.text('Channel 2 • Field').last);
     await tester.pumpAndSettle();
     await tester.enterText(find.widgetWithText(TextField, 'Message Channel 2'), 'secondary test');
-    await tester.ensureVisible(find.text('SEND'));
+    await tester.ensureVisible(find.text('Send'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('SEND'));
+    await tester.tap(find.text('Send'));
     await tester.pumpAndSettle();
     expect(radio.sentChannel, 2);
     radio.disconnected = true;

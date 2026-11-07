@@ -20,17 +20,17 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
     await tester.pumpAndSettle();
-    expect(find.text('Comms'), findsOneWidget);
-    expect(find.text('DESTINATION'), findsOneWidget);
+    expect(find.text('Chats'), findsWidgets);
+    expect(find.text('New message'.toUpperCase()), findsOneWidget);
     expect(find.text('Channel 0 • Broadcast'), findsOneWidget);
     expect(find.text('Queued'), findsOneWidget);
 
     await tester.scrollUntilVisible(
-      find.text('BOT MODE'),
+      find.text('Bot mode'),
       300,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('BOT MODE'), findsOneWidget);
+    expect(find.text('Bot mode'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.build_outlined).last);
     await tester.pumpAndSettle();
