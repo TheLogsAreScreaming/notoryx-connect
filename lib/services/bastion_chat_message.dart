@@ -17,6 +17,9 @@ class BastionChatMessage {
     this.replyId,
     this.isReaction = false,
     this.viaMqtt = false,
+    this.hops,
+    this.rxRssi,
+    this.relayNode,
   });
 
   final int packetId;
@@ -38,6 +41,15 @@ class BastionChatMessage {
   /// Reached the radio over MQTT (the internet), not over LoRa.
   final bool viaMqtt;
 
+  /// Relays an incoming message passed through; 0 means heard directly.
+  final int? hops;
+
+  /// Received signal strength in dBm.
+  final int? rxRssi;
+
+  /// Last byte of the node number of the final relay.
+  final int? relayNode;
+
   bool get isBroadcast => to == MeshtasticTextCodec.broadcastNode;
 
   BastionChatMessage copyWith({BastionDeliveryState? deliveryState}) =>
@@ -54,6 +66,9 @@ class BastionChatMessage {
         replyId: replyId,
         isReaction: isReaction,
         viaMqtt: viaMqtt,
+        hops: hops,
+        rxRssi: rxRssi,
+        relayNode: relayNode,
       );
 
   Map<String, Object?> toJson() => {
@@ -69,6 +84,9 @@ class BastionChatMessage {
     if (replyId != null) 'replyId': replyId,
     if (isReaction) 'reaction': true,
     if (viaMqtt) 'viaMqtt': true,
+    if (hops != null) 'hops': hops,
+    if (rxRssi != null) 'rxRssi': rxRssi,
+    if (relayNode != null) 'relay': relayNode,
   };
 
   static BastionChatMessage fromJson(Map<String, Object?> json) {
@@ -89,6 +107,9 @@ class BastionChatMessage {
       replyId: json['replyId'] as int?,
       isReaction: json['reaction'] as bool? ?? false,
       viaMqtt: json['viaMqtt'] as bool? ?? false,
+      hops: json['hops'] as int?,
+      rxRssi: json['rxRssi'] as int?,
+      relayNode: json['relay'] as int?,
     );
   }
 }
