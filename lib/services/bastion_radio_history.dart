@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bastion_chat_message.dart';
+import 'bastion_chat_store.dart';
 import 'bastion_message_archive.dart';
 import 'meshtastic_text_codec.dart';
 
@@ -72,9 +73,10 @@ class BastionRadioHistory {
       if (!saved) return;
     }
     try {
-      final raw = await _store.getString(BastionMessageArchive.key);
-      if (raw != null) await _store.setString(migratedKey, raw);
-      await _store.remove(BastionMessageArchive.key);
+      final chats = BastionChatStorage.of(_store);
+      final raw = await chats.read(BastionMessageArchive.key);
+      if (raw != null) await chats.write(migratedKey, raw);
+      await chats.remove(BastionMessageArchive.key);
     } catch (_) {
       // Copies are already in the radio archives; a later merge dedupes.
     }

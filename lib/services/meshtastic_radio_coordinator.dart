@@ -32,6 +32,7 @@ import 'bastion_waypoints.dart';
 import 'bastion_beacons.dart';
 import 'bastion_radio_data.dart';
 import 'bastion_chat_marks.dart';
+import 'bastion_chat_store.dart';
 import 'bastion_firmware.dart';
 import 'bastion_geofences.dart';
 import 'bastion_node_keys.dart';
@@ -272,7 +273,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   late final Future<void> _archiveLoaded;
 
   /// Why chat history or the offline queue may not be stored; null when fine.
-  String? get messageStorageProblem => _archive.problem;
+  String? get messageStorageProblem => _archive.problem ?? BastionChatStorage.migrationProblem;
 
   /// Why the background connection service is not running; null when fine.
   String? get backgroundProblem => switch (_background) {

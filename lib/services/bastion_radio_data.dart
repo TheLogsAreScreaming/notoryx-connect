@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'bastion_chat_store.dart';
 import 'bastion_message_archive.dart';
 import 'bastion_nodedex.dart';
 import 'bastion_telemetry_history.dart';
@@ -54,11 +55,19 @@ class BastionRadioData {
 
   SharedPreferencesAsync? _preferences;
   SharedPreferencesAsync get _store => _preferences ??= SharedPreferencesAsync();
+  ChatArchiveStore get _chats => BastionChatStorage.of(_store);
+
+  Future<String?> _get(String key) =>
+      BastionChatStorage.isChatKey(key) ? _chats.read(key) : _store.getString(key);
+  Future<void> _set(String key, String value) =>
+      BastionChatStorage.isChatKey(key) ? _chats.write(key, value) : _store.setString(key, value);
+  Future<void> _remove(String key) =>
+      BastionChatStorage.isChatKey(key) ? _chats.remove(key) : _store.remove(key);
 
   /// Radios with data on this phone, by node number.
   Future<List<StoredRadio>> list() async {
     final radios = <int>{
-      for (final key in await _store.getKeys())
+      for (final key in {...await _store.getKeys(), ...await _chats.keys()})
         if (_radioKey.firstMatch(key) case final match?)
           int.parse(match[1]!, radix: 16),
     };
@@ -89,21 +98,21 @@ class BastionRadioData {
   /// Copies [radio]'s data aside before another radio's is merged into it.
   Future<void> keepBeforeMove(int radio) async {
     for (final key in keysOf(radio)) {
-      final raw = await _store.getString(key);
-      if (raw != null) await _store.setString('$key$beforeMoveSuffix', raw);
+      final raw = await _get(key);
+      if (raw != null) await _set('$key$beforeMoveSuffix', raw);
     }
   }
 
   /// Deletes [radio]'s data once it has been moved.
   Future<void> remove(int radio) async {
     for (final key in keysOf(radio)) {
-      await _store.remove(key);
+      await _remove(key);
     }
   }
 
   Future<String?> _read(String key) async {
     try {
-      return await _store.getString(key);
+      return await _get(key);
     } catch (_) {
       return null;
     }

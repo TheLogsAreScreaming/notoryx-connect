@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bastion_chat_message.dart';
+import 'bastion_chat_store.dart';
 import 'bastion_history_limit.dart';
 import 'bastion_preferences.dart';
 
@@ -65,6 +66,9 @@ class BastionMessageArchive extends ChangeNotifier {
   SharedPreferencesAsync get _store =>
       _preferences ??= SharedPreferencesAsync();
 
+  /// Chat archives live in the message database once it is open.
+  ChatArchiveStore get _chats => BastionChatStorage.of(_store);
+
   /// What went wrong with message storage, for the user; null when fine.
   String? get problem => _saveProblem ?? _loadProblem;
 
@@ -73,7 +77,7 @@ class BastionMessageArchive extends ChangeNotifier {
   Future<BastionArchiveSnapshot> _load() async {
     final String? raw;
     try {
-      raw = await _store.getString(storageKey);
+      raw = await _chats.read(storageKey);
     } catch (error) {
       _saveBlocked = true;
       _setLoadProblem('Message history could not be read from phone storage ($error). '
@@ -126,7 +130,7 @@ class BastionMessageArchive extends ChangeNotifier {
   /// Copies [raw] aside before any save may replace it.
   Future<void> _keepUnreadable(String raw, String what) async {
     try {
-      await _store.setString('$storageKey.unreadable', raw);
+      await _chats.write('$storageKey.unreadable', raw);
       _setLoadProblem('$what A copy of the original data was kept on this phone.');
     } catch (_) {
       _saveBlocked = true;
@@ -161,7 +165,7 @@ class BastionMessageArchive extends ChangeNotifier {
     await _loading;
     if (_saveBlocked) return false;
     try {
-      await _store.setString(storageKey, encoded);
+      await _chats.write(storageKey, encoded);
       if (_saveProblem != null) {
         _saveProblem = null;
         notifyListeners();
