@@ -23,6 +23,7 @@ class MeshtasticNode {
     this.snr,
     this.hopsAway,
     this.batteryLevel,
+    this.publicKey,
   });
 
   final int num;
@@ -49,6 +50,10 @@ class MeshtasticNode {
   /// 0–100, or 101 when the node is powered externally.
   final int? batteryLevel;
 
+  /// The node's 32-byte public key for encrypted direct messages
+  /// (firmware 2.5+), or null when it hasn't shared one.
+  final Uint8List? publicKey;
+
   bool get hasPosition => latitude != null && longitude != null;
 
   MeshtasticNode _withoutBattery() => MeshtasticNode(
@@ -64,6 +69,7 @@ class MeshtasticNode {
     lastHeard: lastHeard,
     snr: snr,
     hopsAway: hopsAway,
+    publicKey: publicKey,
   );
 
   String get displayName => (longName?.isNotEmpty ?? false)
@@ -81,6 +87,7 @@ class MeshtasticNode {
     DateTime? positionTime,
     DateTime? lastHeard,
     double? snr,
+    Uint8List? publicKey,
   }) => MeshtasticNode(
     num: num,
     id: id ?? this.id,
@@ -95,6 +102,7 @@ class MeshtasticNode {
     snr: snr ?? this.snr,
     hopsAway: hopsAway,
     batteryLevel: batteryLevel,
+    publicKey: publicKey ?? this.publicKey,
   );
 }
 
@@ -283,6 +291,7 @@ abstract final class MeshtasticNodeInfoCodec {
         longName: user.longName.isEmpty ? null : user.longName,
         shortName: user.shortName.isEmpty ? null : user.shortName,
         hardwareModel: user.hasHwModel() ? user.hwModel.value : null,
+        publicKey: user.publicKey.length == 32 ? Uint8List.fromList(user.publicKey) : null,
       );
 
   /// Ignores positions without coordinates and the 0,0 "no fix" value.

@@ -33,6 +33,7 @@ import 'bastion_beacons.dart';
 import 'bastion_radio_data.dart';
 import 'bastion_chat_marks.dart';
 import 'bastion_geofences.dart';
+import 'bastion_node_keys.dart';
 import 'bastion_telemetry_history.dart';
 import 'bastion_trails.dart';
 import 'bastion_trip.dart';
@@ -102,6 +103,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     }));
     unawaited(_geofenceStore.load().then((_) => notifyListeners()));
     unawaited(_chatMarks.load().then((_) => notifyListeners()));
+    unawaited(_nodeKeys.load().then((_) => notifyListeners()));
   }
 
   final BastionFieldAlertEngine _fieldAlerts = BastionFieldAlertEngine();
@@ -162,6 +164,30 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _silenceTimer = null;
     _fieldAlerts.endSession();
     _geofenceEngine.endSession();
+  }
+
+  final BastionNodeKeys _nodeKeys = BastionNodeKeys();
+
+  /// Remembered public keys and nodes whose key has changed.
+  BastionNodeKeys get nodeKeys => _nodeKeys;
+
+  /// Accepts [num]'s new key, ending the warning.
+  Future<void> trustNodeKey(int num) async {
+    await _nodeKeys.trust(num);
+    notifyListeners();
+  }
+
+  /// Checks [node]'s key against the remembered one and alerts on a change.
+  Future<void> _checkNodeKey(MeshtasticNode node) async {
+    final key = node.publicKey;
+    if (key == null || node.num == _localNodeNum) return;
+    final wasChanged = _nodeKeys.hasChanged(node.num);
+    if (await _nodeKeys.check(node.num, key) == KeyCheck.changed && !wasChanged) {
+      _raise(BastionFieldAlert(BastionAlertKind.keyChanged, node.num,
+          'Security key changed: ${node.displayName}',
+          'This node now uses a different key. Check with its owner before trusting it with direct messages.'));
+    }
+    notifyListeners();
   }
 
   final BastionChatMarks _chatMarks = BastionChatMarks();
@@ -931,6 +957,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       _syncMessageSnapshot(messaging);
       _nodeSubscription = nodeDatabase.changes.listen((nodes) {
         _nodes = nodes;
+        for (final n in nodes) {
+          if (n.publicKey != null) unawaited(_checkNodeKey(n));
+        }
         _trails.record(nodes, {...trip.plan.members, ?_localNodeNum});
         _checkGeofences(nodes);
         notifyListeners();
