@@ -19,15 +19,40 @@ class MeshtasticSettingsUnavailable implements Exception {
 }
 
 class MeshtasticAdminException implements Exception {
-  MeshtasticAdminException(this.message);
+  MeshtasticAdminException(this.message, {this.routingError});
 
   final String message;
+
+  /// The mesh routing error behind this failure, when there was one.
+  final Routing_Error? routingError;
+
+  /// A plain-language reason for showing to people.
+  String get plainReason => switch (routingError) {
+        Routing_Error.NOT_AUTHORIZED || Routing_Error.ADMIN_PUBLIC_KEY_UNAUTHORIZED =>
+          'The node refused: it hasn\'t added your radio\'s admin key.',
+        Routing_Error.PKI_FAILED || Routing_Error.PKI_UNKNOWN_PUBKEY ||
+        Routing_Error.PKI_SEND_FAIL_PUBLIC_KEY =>
+          'Your radio couldn\'t encrypt for this node. Wait until it has heard the node\'s key, then try again.',
+        Routing_Error.ADMIN_BAD_SESSION_KEY =>
+          'The node\'s admin session expired. Try again.',
+        Routing_Error.MAX_RETRANSMIT || Routing_Error.TIMEOUT ||
+        Routing_Error.NO_RESPONSE || Routing_Error.NO_ROUTE || Routing_Error.GOT_NAK =>
+          'The node didn\'t answer. It may be out of range or asleep.',
+        Routing_Error.DUTY_CYCLE_LIMIT || Routing_Error.RATE_LIMIT_EXCEEDED =>
+          'The radio is over its airtime limit. Wait a minute and try again.',
+        _ => message,
+      };
 
   @override
   String toString() => 'MeshtasticAdminException: $message';
 }
 
-/// Request/response admin channel to the locally connected radio.
+/// Request/response admin channel to the locally connected radio, or to
+/// another node over the mesh when [targetNodeNum] is set.
+///
+/// Remote requests are sent encrypted to the target's public key (firmware
+/// 2.5+). The target answers only if this radio's public key is in its
+/// security admin keys; otherwise it replies NOT_AUTHORIZED.
 ///
 /// Reads return the radio's answer. Writes wait for the radio's routing ACK
 /// and fail on a negative acknowledgement or timeout. Firmware 2.5+ rejects
@@ -41,20 +66,44 @@ class MeshtasticAdminSession {
     required Stream<Uint8List> incoming,
     required Future<void> Function(Uint8List toRadio) send,
     required this.localNodeNum,
-    this.timeout = const Duration(seconds: 15),
+    this.targetNodeNum,
+    List<int>? targetPublicKey,
+    Duration? timeout,
     DateTime Function()? clock,
     Random? random,
   })  : _send = send,
+        targetPublicKey = targetPublicKey == null ? null : List.unmodifiable(targetPublicKey),
+        timeout = timeout ??
+            (targetNodeNum == null || targetNodeNum == localNodeNum
+                ? const Duration(seconds: 15)
+                : remoteTimeout),
         _clock = clock ?? DateTime.now,
         _random = random ?? Random.secure() {
+    if (isRemote && (this.targetPublicKey?.length ?? 0) != 32) {
+      throw ArgumentError.value(targetPublicKey, 'targetPublicKey',
+          'a remote node needs its 32-byte public key');
+    }
     _subscription = incoming.listen(_handleEnvelope);
   }
 
   /// Firmware expires the passkey after 300 s; renew early.
   static const passkeyLifetime = Duration(seconds: 240);
 
+  /// A mesh round trip can take several retries over multiple hops.
+  static const remoteTimeout = Duration(seconds: 60);
+
   final int localNodeNum;
+
+  /// The node being administered; null means the local radio.
+  final int? targetNodeNum;
+
+  /// The remote node's public key, required when [isRemote].
+  final List<int>? targetPublicKey;
   final Duration timeout;
+
+  int get target => targetNodeNum ?? localNodeNum;
+
+  bool get isRemote => target != localNodeNum;
   final Future<void> Function(Uint8List) _send;
   final DateTime Function() _clock;
   final Random _random;
@@ -67,6 +116,15 @@ class MeshtasticAdminSession {
   bool get hasFreshPasskey =>
       _passkey != null &&
       _clock().difference(_passkeyReceivedAt!) < passkeyLifetime;
+
+  Future<DeviceMetadata> getMetadata() async =>
+      (await _request(AdminMessage(getDeviceMetadataRequest: true), 'device info',
+          expected: AdminMessage_PayloadVariant.getDeviceMetadataResponse))
+          .getDeviceMetadataResponse;
+
+  /// Asks the node to restart after [seconds].
+  Future<void> reboot({int seconds = 5}) =>
+      _write(AdminMessage(rebootSeconds: seconds), 'reboot');
 
   Future<User> getOwner() async =>
       (await _request(AdminMessage(getOwnerRequest: true), 'owner',
@@ -165,9 +223,11 @@ class MeshtasticAdminSession {
     _pending[id] = pending;
     final envelope = ToRadio(
       packet: MeshPacket(
-        to: localNodeNum,
+        to: target,
         id: id,
         wantAck: true,
+        pkiEncrypted: isRemote ? true : null,
+        publicKey: isRemote ? targetPublicKey : null,
         decoded: Data(
           portnum: PortNum.ADMIN_APP,
           payload: message.writeToBuffer(),
@@ -180,7 +240,7 @@ class MeshtasticAdminSession {
       return await pending.completer.future.timeout(
         timeout,
         onTimeout: () => throw MeshtasticAdminException(
-          'Radio did not answer $what within ${timeout.inSeconds} s.',
+          '${isRemote ? 'The node' : 'Radio'} did not answer $what within ${timeout.inSeconds} s.',
         ),
       );
     } finally {
@@ -197,11 +257,15 @@ class MeshtasticAdminSession {
     }
     if (!envelope.hasPacket() || !envelope.packet.hasDecoded()) return;
     final packet = envelope.packet;
-    if (packet.from != localNodeNum) return;
+    final fromTarget = packet.from == target;
+    // The local radio reports its own send failures for remote requests.
+    final fromLocalRadio = isRemote && packet.from == localNodeNum;
+    if (!fromTarget && !fromLocalRadio) return;
     final data = packet.decoded;
     final pending = _pending[data.requestId];
 
     if (data.portnum == PortNum.ADMIN_APP) {
+      if (!fromTarget) return;
       final AdminMessage admin;
       try {
         admin = AdminMessage.fromBuffer(data.payload);
@@ -223,12 +287,15 @@ class MeshtasticAdminSession {
         return;
       }
       if (routing.whichVariant() != Routing_Variant.errorReason) return;
+      // Only the target itself can confirm delivery.
+      if (routing.errorReason == Routing_Error.NONE && !fromTarget) return;
       if (routing.errorReason != Routing_Error.NONE) {
         if (routing.errorReason == Routing_Error.ADMIN_BAD_SESSION_KEY) {
           _passkey = null;
         }
         pending.fail(MeshtasticAdminException(
           'Radio rejected the request: ${routing.errorReason.name}.',
+          routingError: routing.errorReason,
         ));
       } else if (!pending.expectsResponse) {
         pending.complete(null);
