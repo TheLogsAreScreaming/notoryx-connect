@@ -1,0 +1,18 @@
+{
+  "@@locale": "es",
+  "tabHome": "Inicio",
+  "tabNodes": "Nodos",
+  "tabChats": "Chats",
+  "tabMap": "Mapa",
+  "tabTools": "Herramientas",
+  "tabSettings": "Ajustes",
+  "connOffline": "Sin conexión",
+  "connScanning": "Buscando",
+  "connConnecting": "Conectando",
+  "connSyncing": "Sincronizando",
+  "connConnected": "Conectado",
+  "connError": "Error",
+  "radioStatus": "Radio: {status}",
+  "radioStatusTip": "Radio: {status}. Toca para gestionar.",
+  "radioStatusHint": "gestionar la radio"
+}

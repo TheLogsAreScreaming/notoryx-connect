@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'l10n/generated/app_localizations.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'beacon_page.dart';
@@ -125,6 +126,8 @@ class _BastionAppState extends State<BastionApp> with WidgetsBindingObserver {
         title: 'NOTORYX Connect', debugShowCheckedModeBanner: false,
         theme: theme, darkTheme: theme, themeMode: ThemeMode.light,
         scrollBehavior: const BastionScrollBehavior(),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: const BastionShell(),
       );
     },
@@ -175,7 +178,10 @@ class _BastionShellState extends State<BastionShell> {
   bool botMode = false;
   String awayReply = MeshtasticMessagingService.defaultAwayReply;
 
-  static const labels = ['Home', 'Nodes', 'Chats', 'Map', 'Tools', 'Settings'];
+  List<String> _labels(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return [l.tabHome, l.tabNodes, l.tabChats, l.tabMap, l.tabTools, l.tabSettings];
+  }
   static const icons = [
     Icons.shield_outlined, Icons.hub_outlined, Icons.chat_bubble_outline, Icons.map_outlined,
     Icons.build_outlined, Icons.settings_outlined,
@@ -282,19 +288,19 @@ class _BastionShellState extends State<BastionShell> {
                   button: true,
                   // Announces a lost or restored radio without moving focus.
                   liveRegion: true,
-                  label: 'Radio: ${_connectionLabel(state)}',
-                  onTapHint: 'manage the radio',
+                  label: AppLocalizations.of(context).radioStatus(_connectionLabel(context, state)),
+                  onTapHint: AppLocalizations.of(context).radioStatusHint,
                   onTap: () => _go(1),
                   excludeSemantics: true,
                   child: Tooltip(
-                    message: 'Radio: ${_connectionLabel(state)}. Tap to manage.',
+                    message: AppLocalizations.of(context).radioStatusTip(_connectionLabel(context, state)),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(NxRadius.pill),
                       onTap: () => _go(1),
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(minHeight: NxTouch.min),
                         child: Center(child: NxStatusPill(
-                          label: _connectionLabel(state),
+                          label: _connectionLabel(context, state),
                           tone: _connectionTone(state),
                           busy: _connectionBusy(state) || radio.isReconnecting,
                         )),
@@ -316,8 +322,8 @@ class _BastionShellState extends State<BastionShell> {
                 selectedIndex: index,
                 onDestinationSelected: _go,
                 destinations: [
-                  for (var i = 0; i < labels.length; i++)
-                    NavigationRailDestination(icon: _tabIcon(i), label: Text(labels[i])),
+                  for (final (i, label) in _labels(context).indexed)
+                    NavigationRailDestination(icon: _tabIcon(i), label: Text(label)),
                 ],
               ),
               const VerticalDivider(width: 1),
@@ -330,8 +336,8 @@ class _BastionShellState extends State<BastionShell> {
         selectedIndex: index,
         onDestinationSelected: _go,
         destinations: [
-          for (var i = 0; i < labels.length; i++)
-            NavigationDestination(icon: _tabIcon(i), label: labels[i], tooltip: labels[i]),
+          for (final (i, label) in _labels(context).indexed)
+            NavigationDestination(icon: _tabIcon(i), label: label, tooltip: label),
         ],
       ),
     );

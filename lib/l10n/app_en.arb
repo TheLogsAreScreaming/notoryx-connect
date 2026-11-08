@@ -1,0 +1,20 @@
+{
+  "@@locale": "en",
+  "tabHome": "Home",
+  "tabNodes": "Nodes",
+  "tabChats": "Chats",
+  "tabMap": "Map",
+  "tabTools": "Tools",
+  "tabSettings": "Settings",
+  "connOffline": "Offline",
+  "connScanning": "Scanning",
+  "connConnecting": "Connecting",
+  "connSyncing": "Syncing",
+  "connConnected": "Connected",
+  "connError": "Error",
+  "radioStatus": "Radio: {status}",
+  "@radioStatus": {"placeholders": {"status": {"type": "String"}}},
+  "radioStatusTip": "Radio: {status}. Tap to manage.",
+  "@radioStatusTip": {"placeholders": {"status": {"type": "String"}}},
+  "radioStatusHint": "manage the radio"
+}

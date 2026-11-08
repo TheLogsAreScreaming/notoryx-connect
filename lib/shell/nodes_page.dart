@@ -125,7 +125,7 @@ class _NodesPage extends StatelessWidget {
             NxStatTile(label: 'Mesh nodes', value: '${radio.nodes.length}'),
             NxStatTile(
               label: 'Status',
-              value: _connectionLabel(radio.connection.state),
+              value: _connectionLabel(context, radio.connection.state),
               tone: _connectionTone(radio.connection.state),
             ),
           ]),
@@ -167,7 +167,7 @@ class _NodesPage extends StatelessWidget {
           Card(child: ListTile(
             leading: Icon(radio.usesUsbLink ? Icons.usb : Icons.wifi),
             title: Text((radio.usesUsbLink ? radio.linkName : radio.networkHost) ?? 'Radio'),
-            subtitle: Text('${radio.usesUsbLink ? 'Over USB' : 'Over Wi-Fi'} • ${_connectionLabel(radio.connection.state)}'),
+            subtitle: Text('${radio.usesUsbLink ? 'Over USB' : 'Over Wi-Fi'} • ${_connectionLabel(context, radio.connection.state)}'),
             trailing: OutlinedButton(
               onPressed: radio.busy ? null : radio.disconnect,
               child: const Text('Disconnect', maxLines: 1, softWrap: false),
