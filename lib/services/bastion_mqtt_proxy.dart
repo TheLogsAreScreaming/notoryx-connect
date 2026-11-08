@@ -109,7 +109,7 @@ class BastionMqttProxy extends ChangeNotifier {
   StreamSubscription<MqttIncoming>? _subscription;
   MqttProxyState _state = MqttProxyState.off;
   String? _error;
-  int _up = 0, _down = 0;
+  int _up = 0, _down = 0, _bytes = 0;
   String? _host;
 
   MqttProxyState get state => _state;
@@ -121,6 +121,10 @@ class BastionMqttProxy extends ChangeNotifier {
 
   /// Messages sent from the broker to the radio since it started.
   int get downlinked => _down;
+
+  /// Message bytes carried over the phone's connection since it started,
+  /// not counting MQTT and TCP overhead.
+  int get bytesCarried => _bytes;
   bool get running => _link != null;
 
   Future<void> start(MqttProxyConfig config, {required String clientId}) async {
@@ -128,7 +132,7 @@ class BastionMqttProxy extends ChangeNotifier {
     final link = _newLink();
     _link = link;
     _host = config.host;
-    _up = _down = 0;
+    _up = _down = _bytes = 0;
     _error = null;
     _state = MqttProxyState.connecting;
     notifyListeners();
@@ -174,6 +178,7 @@ class BastionMqttProxy extends ChangeNotifier {
       final data = m.hasText() ? Uint8List.fromList(utf8.encode(m.text)) : Uint8List.fromList(m.data);
       link.publish(m.topic, data, retained: m.retained);
       _up++;
+      _bytes += data.length;
       notifyListeners();
     } catch (error) {
       _error = 'A message couldn\'t be sent to the broker: $error';
@@ -183,6 +188,7 @@ class BastionMqttProxy extends ChangeNotifier {
 
   void _fromBroker(MqttIncoming m) {
     _down++;
+    _bytes += m.data.length;
     notifyListeners();
     final envelope = pb.ToRadio(
       mqttClientProxyMessage: pb.MqttClientProxyMessage(topic: m.topic, data: m.data, retained: m.retained),
@@ -229,9 +235,9 @@ class ServerMqttLink implements MqttLink {
         final message = event.payload;
         if (message is MqttPublishMessage) {
           _incoming.add((
-            topic: event.topic ?? '',
+            topic: event.topic,
             data: Uint8List.fromList(message.payload.message.toList()),
-            retained: message.header?.retain ?? false,
+            retained: message.header?.retain == true,
           ));
         }
       }

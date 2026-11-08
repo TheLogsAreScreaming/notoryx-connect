@@ -92,6 +92,7 @@ void main() {
       expect(link.published.single.data, [1, 2]);
       expect(link.published.single.retained, isTrue);
       expect(proxy.uplinked, 1);
+      expect(proxy.bytesCarried, 2);
     });
 
     test('broker messages go to the radio', () async {

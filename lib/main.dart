@@ -1843,7 +1843,7 @@ class _MqttProxyCard extends StatelessWidget {
             : !hasConfig
                 ? 'Your radio isn\'t set to use this. Turn on MQTT and "Proxy to client" in its settings.'
                 : switch (proxy.state) {
-                    MqttProxyState.connected => 'Connected to ${proxy.host}. ${proxy.uplinked} sent, ${proxy.downlinked} received.',
+                    MqttProxyState.connected => 'Connected to ${proxy.host}. ${proxy.uplinked} sent, ${proxy.downlinked} received, about ${(proxy.bytesCarried / 1024).toStringAsFixed(1)} KB of data.',
                     MqttProxyState.connecting => 'Connecting to ${proxy.host}…',
                     MqttProxyState.error => proxy.error ?? 'Couldn\'t connect.',
                     MqttProxyState.off => 'Starting…',
