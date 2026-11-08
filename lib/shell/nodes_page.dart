@@ -82,7 +82,7 @@ class _NodesPage extends StatelessWidget {
           maxLines: 3,
           maxLength: 300,
           decoration: const InputDecoration(
-            hintText: 'Location, antenna, observations…',
+            labelText: 'Location, antenna, observations…',
           ),
         ),
         actions: [
@@ -205,7 +205,7 @@ class _NodesPage extends StatelessWidget {
               leading: CircleAvatar(
                 backgroundColor: scheme.surfaceContainerHigh,
                 child: Icon(_signalIcon(item.rssi), color: scheme.onSurfaceVariant)),
-              title: Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+              title: Text(item.name),
               subtitle: Text([
                 item.advertisesMeshtastic ? 'Meshtastic radio' : 'Bluetooth device',
                 _rssiLabel(item.rssi),
@@ -248,7 +248,7 @@ class _NodesPage extends StatelessWidget {
                   child: Text(_initials(node.shortName ?? node.displayName),
                     style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
                 ),
-                title: Text(node.displayName, maxLines: 1, overflow: TextOverflow.ellipsis),
+                title: Text(node.displayName),
                 subtitle: Text([
                   if (node.shortName?.isNotEmpty ?? false) node.shortName!,
                   node.id ?? '!${node.num.toRadixString(16).padLeft(8, '0')}',
@@ -288,6 +288,7 @@ class _NodesPage extends StatelessWidget {
               if (radio.snrHistory.isNotEmpty)
                 Semantics(
                   label: 'Signal history of the last ${radio.snrHistory.length.clamp(0, 20)} messages',
+                  excludeSemantics: true,
                   child: Wrap(spacing: 4, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.end, children: [
                     for (final snr in radio.snrHistory.reversed.take(20).toList().reversed)
                       Tooltip(message: '${snr.toStringAsFixed(1)} dB',

@@ -88,7 +88,7 @@ class CheckInDeliveryPage extends StatelessWidget {
                                 Marker(
                                   point: points[i],
                                   width: 120,
-                                  height: 56,
+                                  height: MediaQuery.textScalerOf(context).scale(56),
                                   child: _Pin(name: p.$2.shortName ?? p.$2.displayName, state: p.$3),
                                 ),
                             ]),
@@ -149,7 +149,8 @@ class _Pin extends StatelessWidget {
       NxTone.warning => const Color(0xFF835500),
       _ => const Color(0xFF3A3E36),
     };
-    return Column(mainAxisSize: MainAxisSize.min, children: [
+    return Semantics(container: true, label: '$name: ${look.word}', excludeSemantics: true,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
       DecoratedBox(
         decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, border: Border.all(color: color, width: 2)),
         child: Padding(padding: const EdgeInsets.all(2), child: Icon(look.icon, color: color, size: 22)),
@@ -158,8 +159,8 @@ class _Pin extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 4),
         decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.7), borderRadius: BorderRadius.circular(4)),
         child: Text(name,
-            maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white, fontSize: 11)),
+            maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white, fontSize: 12)),
       ),
-    ]);
+    ]));
   }
 }
