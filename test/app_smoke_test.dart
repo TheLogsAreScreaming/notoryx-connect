@@ -35,7 +35,10 @@ void main() {
     await tester.tap(find.byIcon(Icons.build_outlined).last);
     await tester.pumpAndSettle();
     expect(find.text('Tools'), findsWidgets);
+    expect(find.text('Connection doctor'), findsOneWidget);
     expect(find.text('Deployment checklist'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Battery runtime'), 250,
+        scrollable: find.byType(Scrollable).first);
     expect(find.text('Battery runtime'), findsOneWidget);
     await tester.scrollUntilVisible(find.text('Bluetooth signal guide'), 250,
         scrollable: find.byType(Scrollable).first);

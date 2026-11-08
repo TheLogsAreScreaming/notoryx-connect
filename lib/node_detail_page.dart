@@ -191,7 +191,9 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                       _ago(node?.lastHeard ?? record?.lastSeen),
                     ),
                     if (node?.snr != null)
-                      _Row('SNR', '${node!.snr!.toStringAsFixed(1)} dB'),
+                      _Row('SNR', '${node!.snr!.toStringAsFixed(1)} dB')
+                    else if (node?.noRfReason case final reason?)
+                      _Row('Signal', reason),
                     if (node?.hopsAway != null)
                       _Row(
                         'Hops away',

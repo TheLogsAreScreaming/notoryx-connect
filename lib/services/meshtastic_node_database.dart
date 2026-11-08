@@ -24,6 +24,7 @@ class MeshtasticNode {
     this.hopsAway,
     this.batteryLevel,
     this.publicKey,
+    this.viaMqtt = false,
   });
 
   final int num;
@@ -54,6 +55,20 @@ class MeshtasticNode {
   /// (firmware 2.5+), or null when it hasn't shared one.
   final Uint8List? publicKey;
 
+  /// Whether the node was last heard over MQTT rather than radio.
+  final bool viaMqtt;
+
+  /// Why there is no SNR to show, or null when there is one. Relayed and
+  /// MQTT packets carry no signal reading for the node itself, so the app
+  /// says so instead of showing 0 dB.
+  String? get noRfReason => snr != null
+      ? null
+      : viaMqtt
+          ? 'No RF data: heard over MQTT'
+          : (hopsAway ?? 0) > 0
+              ? 'No RF data: heard through relays'
+              : 'No RF data yet';
+
   bool get hasPosition => latitude != null && longitude != null;
 
   MeshtasticNode _withoutBattery() => MeshtasticNode(
@@ -70,6 +85,7 @@ class MeshtasticNode {
     snr: snr,
     hopsAway: hopsAway,
     publicKey: publicKey,
+    viaMqtt: viaMqtt,
   );
 
   String get displayName => (longName?.isNotEmpty ?? false)
@@ -88,6 +104,7 @@ class MeshtasticNode {
     DateTime? lastHeard,
     double? snr,
     Uint8List? publicKey,
+    bool? viaMqtt,
   }) => MeshtasticNode(
     num: num,
     id: id ?? this.id,
@@ -103,6 +120,7 @@ class MeshtasticNode {
     hopsAway: hopsAway,
     batteryLevel: batteryLevel,
     publicKey: publicKey ?? this.publicKey,
+    viaMqtt: viaMqtt ?? this.viaMqtt,
   );
 }
 
@@ -197,7 +215,10 @@ class MeshtasticNodeDatabase {
     if (from == 0) return;
     var node = (_nodes[from] ?? MeshtasticNode(num: from))._copy(
       lastHeard: _clock(),
-      snr: packet.rxSnr != 0 ? packet.rxSnr : null,
+      // Only a packet heard straight from the node says anything about its
+      // signal; relayed and MQTT copies keep the last direct reading.
+      snr: MeshtasticNodeInfoCodec.directSnr(packet),
+      viaMqtt: packet.viaMqtt,
     );
     var identity = false;
     final data = packet.decoded;
@@ -246,6 +267,14 @@ class MeshtasticNodeDatabase {
 }
 
 abstract final class MeshtasticNodeInfoCodec {
+  /// The SNR of [packet] when it was heard straight from its sender: not
+  /// over MQTT, not relayed, and with a real reading. Otherwise null.
+  static double? directSnr(pb.MeshPacket packet) {
+    if (packet.viaMqtt || packet.rxSnr == 0) return null;
+    final relayed = packet.hopStart > 0 && packet.hopStart != packet.hopLimit;
+    return relayed ? null : packet.rxSnr;
+  }
+
   static MeshtasticNode decode(Uint8List bytes) {
     final pb.NodeInfo info;
     try {
@@ -271,8 +300,12 @@ abstract final class MeshtasticNodeInfoCodec {
               info.lastHeard * 1000,
               isUtc: true,
             ),
-      snr: info.hasSnr() ? info.snr : null,
+      // The radio reports 0 dB for nodes it never heard directly.
+      snr: info.hasSnr() && info.snr != 0 && !info.viaMqtt && (!info.hasHopsAway() || info.hopsAway == 0)
+          ? info.snr
+          : null,
       hopsAway: info.hasHopsAway() ? info.hopsAway : null,
+      viaMqtt: info.viaMqtt,
       batteryLevel:
           includeCachedBattery &&
               info.hasDeviceMetrics() &&

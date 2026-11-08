@@ -13,6 +13,10 @@ const checkInLabels = ["I'm OK", 'At camp', 'Delayed', 'Heading back'];
 /// Time between SOS repeats; keeps an emergency from flooding the mesh.
 const sosRepeatInterval = Duration(minutes: 5);
 
+/// Channel utilization (percent) above which SOS repeats are spaced out.
+const sosBusyUtilization = 25.0;
+const sosVeryBusyUtilization = 40.0;
+
 /// SOS transmissions per activation (the first plus repeats): one hour.
 const sosMaxSends = 12;
 
@@ -132,9 +136,25 @@ class CheckInRecord {
 }
 
 /// The SOS for this app session; never resumed after a restart.
+/// How much to stretch SOS repeats for the channel's utilization (percent).
+/// A busy channel loses more packets to collisions, and more repeats make
+/// that worse for everyone, including this SOS. Never skips the first send.
+int sosIntervalScale(double? channelUtilization) {
+  final u = channelUtilization;
+  if (u == null || u < sosBusyUtilization) return 1;
+  return u < sosVeryBusyUtilization ? 2 : 3;
+}
+
 @immutable
 class SosState {
-  const SosState({this.active = false, this.startedAt, this.lastSentAt, this.sends = 0, this.acknowledgedBy});
+  const SosState({
+    this.active = false,
+    this.startedAt,
+    this.lastSentAt,
+    this.sends = 0,
+    this.acknowledgedBy,
+    this.intervalScale = 1,
+  });
 
   final bool active;
   final DateTime? startedAt;
@@ -144,6 +164,12 @@ class SosState {
   /// Name of the trip contact whose reply acknowledged the SOS.
   final String? acknowledgedBy;
 
+  /// 1 normally; 2 or 3 while the channel is busy.
+  final int intervalScale;
+
+  /// Time between repeats right now.
+  Duration get interval => sosRepeatInterval * intervalScale;
+
   static const idle = SosState();
 
   /// Whether another transmission is due at [now].
@@ -151,17 +177,23 @@ class SosState {
       active &&
       acknowledgedBy == null &&
       sends < sosMaxSends &&
-      (lastSentAt == null || now.difference(lastSentAt!) >= sosRepeatInterval);
+      (lastSentAt == null || now.difference(lastSentAt!) >= interval);
 
   /// When the next repeat goes out, or null when none will.
   DateTime? get nextSendAt =>
-      !active || acknowledgedBy != null || sends >= sosMaxSends ? null : lastSentAt?.add(sosRepeatInterval);
+      !active || acknowledgedBy != null || sends >= sosMaxSends ? null : lastSentAt?.add(interval);
 
   SosState sent(DateTime at) => SosState(
-    active: active, startedAt: startedAt, lastSentAt: at, sends: sends + 1, acknowledgedBy: acknowledgedBy);
+    active: active, startedAt: startedAt, lastSentAt: at, sends: sends + 1, acknowledgedBy: acknowledgedBy,
+    intervalScale: intervalScale);
 
   SosState acknowledged(String by) => SosState(
-    active: active, startedAt: startedAt, lastSentAt: lastSentAt, sends: sends, acknowledgedBy: by);
+    active: active, startedAt: startedAt, lastSentAt: lastSentAt, sends: sends, acknowledgedBy: by,
+    intervalScale: intervalScale);
+
+  SosState withIntervalScale(int scale) => SosState(
+    active: active, startedAt: startedAt, lastSentAt: lastSentAt, sends: sends, acknowledgedBy: acknowledgedBy,
+    intervalScale: scale);
 }
 
 String _stamp(DateTime at) => at.toUtc().toIso8601String().substring(0, 16).replaceFirst('T', ' ');
@@ -219,6 +251,9 @@ abstract interface class TripRadio {
   ({double? latitude, double? longitude, int? battery}) get localStatus;
   List<BastionChatMessage> get messages;
   DateTime? lastHeard(int node);
+
+  /// This radio's reading of how busy the channel is (percent), if known.
+  double? get channelUtilization;
   String nodeName(int node);
   Future<int> sendText({required String text, required int destination, required int channel});
   void alert(BastionFieldAlert alert);
@@ -449,6 +484,11 @@ class BastionTripController extends ChangeNotifier {
   Future<void> tick() async {
     final now = _clock().toUtc();
     if (_sos.active) {
+      final scale = sosIntervalScale(_radio.channelUtilization);
+      if (scale != _sos.intervalScale) {
+        _sos = _sos.withIntervalScale(scale);
+        notifyListeners();
+      }
       final by = _sosReply();
       if (by != null && _sos.acknowledgedBy == null) {
         _sos = _sos.acknowledged(by);

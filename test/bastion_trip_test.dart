@@ -26,6 +26,8 @@ class FakeRadio implements TripRadio {
   var _id = 1000;
 
   @override
+  double? channelUtilization;
+  @override
   DateTime? lastHeard(int node) => heard[node];
   @override
   String nodeName(int node) => switch (node) { alice => 'Alice', bob => 'Bob', _ => '!$node' };
@@ -218,5 +220,24 @@ void main() {
 
   test('a trip has at most six contacts', () {
     expect(() => trip.updatePlan(trip.plan.copyWith(members: [1, 2, 3, 4, 5, 6, 7])), throwsArgumentError);
+  });
+
+  group('airtime-aware SOS', () {
+    test('repeats stretch only on a busy channel', () {
+      expect(sosIntervalScale(null), 1);
+      expect(sosIntervalScale(10), 1);
+      expect(sosIntervalScale(25), 2);
+      expect(sosIntervalScale(45), 3);
+    });
+
+    test('the interval follows the scale and the repeat count is kept', () {
+      final at = DateTime.utc(2026, 11, 8, 12);
+      final state = SosState(active: true, startedAt: at).sent(at).withIntervalScale(2);
+      expect(state.dueAt(at.add(sosRepeatInterval)), isFalse);
+      expect(state.dueAt(at.add(sosRepeatInterval * 2)), isTrue);
+      expect(state.nextSendAt, at.add(sosRepeatInterval * 2));
+      expect(state.sent(at).intervalScale, 2);
+      expect(state.sent(at).sends, 2);
+    });
   });
 }

@@ -18,6 +18,7 @@ import 'services/bastion_background_service.dart';
 import 'services/bastion_bot_guard.dart';
 import 'services/bastion_history_limit.dart';
 import 'services/bastion_mqtt_proxy.dart';
+import 'services/bastion_heard_filter.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_radio_data.dart';
 import 'phone_backup_page.dart';
@@ -46,6 +47,7 @@ import 'services/meshtastic_usb_transport.dart';
 import 'theme/notoryx_theme.dart';
 import 'theme/notoryx_tokens.dart';
 import 'theme/nx_components.dart';
+import 'connection_doctor_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -439,6 +441,12 @@ class _NodesPage extends StatelessWidget {
       final scheme = Theme.of(context).colorScheme;
       final local = radio.localNode;
       final connectedName = radio.connection.deviceName;
+      final heard = BastionPreferences.instance.heardWithin;
+      final now = DateTime.now();
+      final shown = [
+        for (final n in radio.nodes)
+          if (heard.matches(n.lastHeard, now, always: n.num == local?.num)) n,
+      ];
       return ListView(
       padding: NxSpace.page,
       children: [
@@ -461,7 +469,13 @@ class _NodesPage extends StatelessWidget {
           const SizedBox(height: NxSpace.sm),
         ],
         if (radio.connection.error != null)
-          NxBanner(tone: NxTone.danger, title: 'Connection problem', message: radio.connection.error!),
+          NxBanner(tone: NxTone.danger, title: 'Connection problem', message: radio.connection.error!,
+            action: TextButton(
+              key: const ValueKey('open-doctor'),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                builder: (_) => ConnectionDoctorPage(radio: radio, discovery: discovery))),
+              child: const Text('Diagnose'),
+            )),
         if (radio.backgroundProblem != null)
           NxBanner(tone: NxTone.warning, message: radio.backgroundProblem!),
         if (radio.isReady)
@@ -545,9 +559,24 @@ class _NodesPage extends StatelessWidget {
                     ),
             )),
         if (radio.nodes.isNotEmpty) ...[
-          NxSectionLabel('Mesh nodes (${radio.nodes.length})'),
+          NxSectionLabel(heard.window == null
+              ? 'Mesh nodes (${radio.nodes.length})'
+              : 'Mesh nodes (${shown.length} of ${radio.nodes.length})'),
+          _HeardFilterChips(
+            value: heard,
+            onChanged: (v) => BastionPreferences.instance.update(heard: v),
+          ),
+          if (shown.isEmpty)
+            NxEmptyState(icon: Icons.filter_alt_off_outlined,
+              title: 'No nodes heard in the last ${heard.label}',
+              detail: 'Pick a longer time to see older nodes.',
+              action: TextButton(
+                onPressed: () => BastionPreferences.instance.update(heard: BastionHeardWithin.any),
+                child: const Text('Show all nodes'),
+              ))
+          else
           Card(child: Column(children: [
-            for (final (i, node) in radio.nodes.indexed) ...[
+            for (final (i, node) in shown.indexed) ...[
               if (i > 0) const Divider(indent: 72),
               ListTile(
                 leading: CircleAvatar(
@@ -652,6 +681,30 @@ class _NodesPage extends StatelessWidget {
       ],
     );
     },
+  );
+}
+
+/// Chips that limit the node list to nodes heard recently.
+class _HeardFilterChips extends StatelessWidget {
+  const _HeardFilterChips({required this.value, required this.onChanged});
+  final BastionHeardWithin value;
+  final ValueChanged<BastionHeardWithin> onChanged;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: NxSpace.xs),
+    child: Semantics(
+      label: 'Show nodes heard within',
+      child: Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
+        for (final v in BastionHeardWithin.values)
+          ChoiceChip(
+            key: ValueKey('heard-${v.name}'),
+            label: Text(v.label),
+            selected: v == value,
+            onSelected: (_) => onChanged(v),
+          ),
+      ]),
+    ),
   );
 }
 
@@ -1348,6 +1401,13 @@ class _ToolsPageState extends State<_ToolsPage> {
     children: [
       const NxPageHeader(title: 'Tools',
         subtitle: 'Utilities for planning, testing and running a deployment.'),
+      Card(child: ListTile(
+        leading: const Icon(Icons.medical_services_outlined),
+        title: const Text('Connection doctor'),
+        subtitle: const Text('Find out why a radio won\'t connect or keeps dropping'),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(ConnectionDoctorPage(radio: radio, discovery: widget.discovery)),
+      )),
       const NxSectionLabel('Before you go'),
       Card(child: ExpansionTile(
         initiallyExpanded: true,
