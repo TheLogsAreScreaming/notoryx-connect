@@ -3,7 +3,6 @@ import 'package:bastion/services/bastion_bot_guard.dart';
 import 'package:bastion/services/bastion_field_log.dart';
 import 'package:bastion/services/bastion_phone_position.dart';
 import 'package:bastion/services/bastion_preferences.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
@@ -97,11 +96,11 @@ void main() {
     expect(log.records, isEmpty); expect(log.recording, isFalse); expect(log.error, isNotNull);
   });
 
-  test('theme and dashboard choices persist while dark stays the initial default', () async {
-    final prefs = BastionPreferences(); expect(prefs.theme, ThemeMode.dark);
-    await prefs.update(mode: ThemeMode.system, stats: false, saved: false);
+  test('theme and dashboard choices persist while Blaze stays the initial default', () async {
+    final prefs = BastionPreferences(); expect(prefs.appTheme, 'blaze');
+    await prefs.update(theme: 'tactical', darkTheme: 'night_ops', stats: false, saved: false);
     final loaded = BastionPreferences(); await loaded.load();
-    expect(loaded.theme, ThemeMode.system);
+    expect(loaded.appTheme, 'tactical'); expect(loaded.darkModeTheme, 'night_ops');
     expect(loaded.statistics, isFalse); expect(loaded.encounters, isFalse); expect(loaded.meshHealth, isTrue);
   });
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'notoryx_tokens.dart';
+import 'nx_themes.dart';
 
 /// The tone of a status: what it means, shown with colour AND an icon or
 /// words, never colour alone.
@@ -52,6 +53,23 @@ class NxStatusColors extends ThemeExtension<NxStatusColors> {
         NxTone.danger => (scheme.errorContainer, scheme.onErrorContainer),
       };
 
+  /// Status colors from a theme [p]: its own good, warning and second hue,
+  /// on light tints of each with the theme's text color.
+  factory NxStatusColors.fromPalette(BastionPalette p) {
+    Color tint(Color c) => Color.alphaBlend(c.withAlpha(0x38), p.bg2);
+    return NxStatusColors(
+      success: p.signal,
+      successContainer: tint(p.signal),
+      onSuccessContainer: p.ink,
+      warning: p.warn,
+      warningContainer: tint(p.warn),
+      onWarningContainer: p.ink,
+      info: p.secondary,
+      infoContainer: tint(p.secondary),
+      onInfoContainer: p.ink,
+    );
+  }
+
   static const _dark = NxStatusColors(
     success: NxPalette.greenBright,
     successContainer: Color(0xFF14301F),
@@ -64,18 +82,6 @@ class NxStatusColors extends ThemeExtension<NxStatusColors> {
     onInfoContainer: Color(0xFFCFE2FF),
   );
 
-  static const _light = NxStatusColors(
-    success: NxPalette.greenDeep,
-    successContainer: Color(0xFFD7F3E1),
-    onSuccessContainer: Color(0xFF0B3A1F),
-    warning: NxPalette.amberDeep,
-    warningContainer: Color(0xFFFCEBC4),
-    onWarningContainer: Color(0xFF3D2700),
-    info: NxPalette.blueDeep,
-    infoContainer: Color(0xFFDCE9FD),
-    onInfoContainer: Color(0xFF0B2A52),
-  );
-
   @override
   NxStatusColors copyWith() => this;
 
@@ -83,75 +89,9 @@ class NxStatusColors extends ThemeExtension<NxStatusColors> {
   NxStatusColors lerp(NxStatusColors? other, double t) => t < .5 || other == null ? this : other;
 }
 
-/// Builds the NOTORYX light and dark themes from the tokens. Both colour
-/// schemes are written out by hand so every role is chosen, not guessed.
+/// Builds the app theme from one of the eight theme palettes; every colour
+/// role is taken from the palette, so screens follow the chosen theme.
 abstract final class NotoryxTheme {
-  static ColorScheme scheme(Brightness brightness) => brightness == Brightness.dark
-      ? const ColorScheme(
-          brightness: Brightness.dark,
-          primary: NxPalette.signal,
-          onPrimary: Colors.black,
-          primaryContainer: Color(0xFF4A2300),
-          onPrimaryContainer: Color(0xFFFFDBC7),
-          secondary: Color(0xFFE2BFA6),
-          onSecondary: Color(0xFF3F2B1A),
-          secondaryContainer: Color(0xFF3A2E24),
-          onSecondaryContainer: Color(0xFFFFDCC4),
-          tertiary: NxPalette.blueBright,
-          onTertiary: Color(0xFF0B2A52),
-          error: NxPalette.redBright,
-          onError: Color(0xFF55120B),
-          errorContainer: Color(0xFF5C1A13),
-          onErrorContainer: Color(0xFFFFDAD4),
-          surface: NxPalette.ink0,
-          onSurface: NxPalette.fog,
-          onSurfaceVariant: NxPalette.fogDim,
-          surfaceContainerLowest: Color(0xFF090A08),
-          surfaceContainerLow: NxPalette.ink1,
-          surfaceContainer: NxPalette.ink2,
-          surfaceContainerHigh: NxPalette.ink3,
-          surfaceContainerHighest: NxPalette.ink4,
-          outline: Color(0xFF6F7368),
-          outlineVariant: NxPalette.ink5,
-          inverseSurface: NxPalette.fog,
-          onInverseSurface: NxPalette.ink1,
-          inversePrimary: NxPalette.signalDeep,
-          shadow: Colors.black,
-          scrim: Colors.black,
-        )
-      : const ColorScheme(
-          brightness: Brightness.light,
-          primary: NxPalette.signalDeep,
-          onPrimary: Colors.white,
-          primaryContainer: Color(0xFFFFDBC7),
-          onPrimaryContainer: Color(0xFF3A1A00),
-          secondary: Color(0xFF6F5442),
-          onSecondary: Colors.white,
-          secondaryContainer: Color(0xFFF6E2D4),
-          onSecondaryContainer: Color(0xFF2A170A),
-          tertiary: NxPalette.blueDeep,
-          onTertiary: Colors.white,
-          error: NxPalette.redDeep,
-          onError: Colors.white,
-          errorContainer: Color(0xFFFFDAD6),
-          onErrorContainer: Color(0xFF410002),
-          surface: NxPalette.paper0,
-          onSurface: NxPalette.graphite,
-          onSurfaceVariant: NxPalette.graphiteDim,
-          surfaceContainerLowest: Colors.white,
-          surfaceContainerLow: NxPalette.paper1,
-          surfaceContainer: NxPalette.paper2,
-          surfaceContainerHigh: NxPalette.paper3,
-          surfaceContainerHighest: NxPalette.paper4,
-          outline: Color(0xFF7D7F75),
-          outlineVariant: NxPalette.paper5,
-          inverseSurface: NxPalette.ink2,
-          onInverseSurface: NxPalette.fog,
-          inversePrimary: NxPalette.signal,
-          shadow: Colors.black,
-          scrim: Colors.black,
-        );
-
   /// One type scale for the whole app: sentence case, weight for hierarchy.
   static TextTheme _type(ColorScheme c) {
     // Start from Material's full type geometry (sizes, baselines, spacing).
@@ -172,8 +112,72 @@ abstract final class NotoryxTheme {
     );
   }
 
-  static ThemeData build(Brightness brightness) {
-    final c = scheme(brightness);
+  /// The built-in look for [brightness]: Blaze when dark, Bare Beauty when
+  /// light. The app itself uses [fromPalette] with the chosen theme.
+  static ThemeData build(Brightness brightness) => fromPalette(
+      brightness == Brightness.dark ? BastionTheme.blaze.palette : BastionTheme.bareBeauty.palette);
+
+  /// The color scheme for theme [p]; every role is taken from the palette.
+  static ColorScheme schemeFor(BastionPalette p) {
+    final isDark = p.brightness == Brightness.dark;
+    return ColorScheme(
+      brightness: p.brightness,
+      primary: p.accent,
+      onPrimary: p.onAccent,
+      primaryContainer: p.primaryContainer,
+      onPrimaryContainer: p.ink,
+      secondary: p.secondary,
+      onSecondary: isDark ? p.bg : Colors.white,
+      secondaryContainer: p.secondaryContainer,
+      onSecondaryContainer: p.ink,
+      tertiary: p.tertiary,
+      onTertiary: isDark ? p.bg : Colors.white,
+      tertiaryContainer: p.tertiaryContainer,
+      onTertiaryContainer: p.ink,
+      error: p.alert,
+      onError: isDark ? p.bg : Colors.white,
+      errorContainer: Color.alphaBlend(p.alert.withAlpha(0x40), p.bg2),
+      onErrorContainer: p.ink,
+      surface: p.bg,
+      onSurface: p.ink,
+      surfaceContainerLowest: p.bg,
+      surfaceContainerLow: p.bg1,
+      surfaceContainer: p.bg2,
+      surfaceContainerHigh: p.bg3,
+      surfaceContainerHighest: p.bg4,
+      onSurfaceVariant: p.ink2,
+      // Field borders and switch outlines need 3:1 against the page.
+      outline: _atLeast(p.line3, p.bg, 3),
+      outlineVariant: p.line2,
+      inverseSurface: p.ink,
+      onInverseSurface: p.bg,
+      inversePrimary: p.accentDim,
+      shadow: Colors.black,
+      scrim: Colors.black,
+    );
+  }
+
+  /// [color] moved toward the page's text color just enough to reach
+  /// [ratio] contrast with [surface].
+  static Color _atLeast(Color color, Color surface, double ratio) {
+    double contrast(Color a) {
+      final la = a.computeLuminance(), lb = surface.computeLuminance();
+      return (la > lb ? la + .05 : lb + .05) / (la > lb ? lb + .05 : la + .05);
+    }
+    final target = surface.computeLuminance() > .18 ? Colors.black : Colors.white;
+    var c = color;
+    for (var i = 0; i < 20 && contrast(c) < ratio; i++) {
+      c = Color.lerp(c, target, .08)!;
+    }
+    return c;
+  }
+
+  /// The whole app theme for palette [p].
+  static ThemeData fromPalette(BastionPalette p) =>
+      _compose(schemeFor(p), NxStatusColors.fromPalette(p));
+
+  static ThemeData _compose(ColorScheme c, NxStatusColors status) {
+    final brightness = c.brightness;
     final dark = brightness == Brightness.dark;
     final type = _type(c);
     final rounded = RoundedRectangleBorder(borderRadius: BorderRadius.circular(NxRadius.md));
@@ -186,7 +190,7 @@ abstract final class NotoryxTheme {
       brightness: brightness,
       colorScheme: c,
       textTheme: type,
-      extensions: [dark ? NxStatusColors._dark : NxStatusColors._light],
+      extensions: [status],
       scaffoldBackgroundColor: c.surface,
       canvasColor: c.surface,
       disabledColor: c.onSurfaceVariant,
