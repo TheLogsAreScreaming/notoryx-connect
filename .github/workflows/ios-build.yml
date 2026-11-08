@@ -33,8 +33,10 @@ jobs:
           # flutter create replaces pubspec.lock with a template; restore the committed one.
           git checkout -- pubspec.lock
           rm -f test/widget_test.dart
-          python3 scripts/prepare_ios.py
           flutter pub get --enforce-lockfile
+          # The Podfile only exists once Flutter has configured the iOS build.
+          flutter build ios --config-only --no-codesign
+          python3 scripts/prepare_ios.py
       - name: Build without signing
         run: flutter build ios --release --no-codesign
       - name: Check the app bundle
