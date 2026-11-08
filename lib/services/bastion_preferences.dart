@@ -22,6 +22,8 @@ class BastionPreferences extends ChangeNotifier {
   /// Whether Seasonal switches to holiday colors on their dates.
   bool seasonalHolidays = true;
 
+  /// Let this phone carry MQTT for a radio set to "proxy to client".
+  bool mqttProxy = false;
   /// Hide nodes on Nodes and Map not heard within this window.
   BastionHeardWithin heardWithin = BastionHeardWithin.any;
 
@@ -68,6 +70,7 @@ class BastionPreferences extends ChangeNotifier {
       }
       seasonalOverride = await p.getString('bastion.seasonal_override') ?? 'auto';
       seasonalHolidays = await p.getBool('bastion.seasonal_holidays') ?? true;
+      mqttProxy = await p.getBool('bastion.mqtt_proxy') ?? false;
       heardWithin = BastionHeardWithin.fromName(await p.getString('bastion.nodes.heard_within'));
       statistics = await p.getBool('bastion.dashboard.statistics') ?? true;
       meshHealth = await p.getBool('bastion.dashboard.health') ?? true;
@@ -83,8 +86,9 @@ class BastionPreferences extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> update({BastionHeardWithin? heard, String? theme, String? darkTheme, String? season, bool? holidays, bool? stats, bool? health, bool? saved,
+  Future<void> update({bool? proxyMqtt, BastionHeardWithin? heard, String? theme, String? darkTheme, String? season, bool? holidays, bool? stats, bool? health, bool? saved,
       int? retentionDays, bool? speak, BastionUnits? unitSystem, int? keepMessages}) async {
+    mqttProxy = proxyMqtt ?? mqttProxy;
     heardWithin = heard ?? heardWithin;
     appTheme = theme ?? appTheme;
     darkModeTheme = darkTheme ?? darkModeTheme;
@@ -105,6 +109,7 @@ class BastionPreferences extends ChangeNotifier {
       await p.setString('bastion.dark_mode_theme', darkModeTheme);
       await p.setString('bastion.seasonal_override', seasonalOverride);
       await p.setBool('bastion.seasonal_holidays', seasonalHolidays);
+      await p.setBool('bastion.mqtt_proxy', mqttProxy);
       await p.setString('bastion.nodes.heard_within', heardWithin.name);
       await p.setBool('bastion.dashboard.statistics', statistics);
       await p.setBool('bastion.dashboard.health', meshHealth);

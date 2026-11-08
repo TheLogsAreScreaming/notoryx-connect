@@ -35,6 +35,7 @@ import 'bastion_chat_marks.dart';
 import 'bastion_chat_store.dart';
 import 'bastion_connection_log.dart';
 import 'bastion_firmware.dart';
+import 'bastion_mqtt_proxy.dart';
 import 'bastion_geofences.dart';
 import 'bastion_node_keys.dart';
 import 'bastion_telemetry_history.dart';
@@ -96,6 +97,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           _inForeground = state == AppLifecycleState.resumed,
     );
     connection.addListener(_relayConnectionChange);
+    connection.addListener(_syncMqttProxy);
+    BastionPreferences.instance.addListener(_syncMqttProxy);
+    mqttProxy.addListener(notifyListeners);
     connection.addListener(_logConnection);
     if (_background case BastionForegroundService(:final problem)) {
       problem.addListener(notifyListeners);
@@ -936,6 +940,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
             notifyListeners();
           }
         }
+        if (envelope.kind == FromRadioPayloadKind.mqttClientProxyMessage && envelope.payload != null) {
+          mqttProxy.fromRadio(envelope.payload!);
+        }
         if (envelope.kind == FromRadioPayloadKind.packet &&
             envelope.payload != null) {
           try {
@@ -1365,6 +1372,49 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   Duration? get _channelMaxAge {
     final days = BastionPreferences.instance.channelRetentionDays;
     return days > 0 ? Duration(days: days) : null;
+  }
+
+  /// Carries MQTT for a radio without Wi-Fi; see [BastionMqttProxy].
+  late final BastionMqttProxy mqttProxy = BastionMqttProxy(sendToRadio: (bytes) async {
+    final session = _session;
+    if (session != null) await session.send(bytes);
+  });
+
+  /// The radio's proxy settings, or null unless it asks for the proxy.
+  MqttProxyConfig? get mqttProxyConfig {
+    ModuleConfig_MQTTConfig? mqtt;
+    for (final bytes in _moduleConfigSnapshots) {
+      try {
+        final m = ModuleConfig.fromBuffer(bytes);
+        if (m.hasMqtt()) mqtt = m.mqtt;
+      } catch (_) {}
+    }
+    if (mqtt == null) return null;
+    var preset = Config_LoRaConfig_ModemPreset.LONG_FAST;
+    for (final bytes in _radioConfigSnapshots) {
+      try {
+        final c = Config.fromBuffer(bytes);
+        if (c.hasLora()) preset = c.lora.modemPreset;
+      } catch (_) {}
+    }
+    final channels = <int, ChannelSettings>{};
+    for (final bytes in _channelSnapshots) {
+      try {
+        final c = Channel.fromBuffer(bytes);
+        if (c.role != Channel_Role.DISABLED) channels[c.index] = c.settings;
+      } catch (_) {}
+    }
+    return MqttProxyConfig.from(mqtt,
+        channels: channels.values, presetName: MqttProxyConfig.presetChannelName(preset));
+  }
+
+  void _syncMqttProxy() {
+    final config = connection.isReady && BastionPreferences.instance.mqttProxy ? mqttProxyConfig : null;
+    if (config == null) {
+      if (mqttProxy.running) unawaited(mqttProxy.stop());
+    } else if (!mqttProxy.running && mqttProxy.state != MqttProxyState.error) {
+      unawaited(mqttProxy.start(config, clientId: 'notoryx-${(_localNodeNum ?? 0).toRadixString(16)}'));
+    }
   }
 
   void _applyRetention() {

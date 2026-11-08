@@ -32,6 +32,8 @@ dependencies:
   # Vendored: the published 0.5.2 doesn't build with current Gradle.
   usb_serial:
     path: third_party/usb_serial
+  mqtt_client: ^10.13.0
+  typed_data: ^1.4.0
 
 dev_dependencies:
   flutter_test:
