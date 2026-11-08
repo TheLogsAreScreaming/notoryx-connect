@@ -70,7 +70,9 @@ void main() {
     expect(find.text('Radio connected'), findsOneWidget);
     await tester.tap(find.byIcon(Icons.hub_outlined).last);
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.text('Ridge Relay'), 200, scrollable: find.byType(Scrollable).first);
     expect(find.text('Ridge Relay'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Exit demo'), -200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.text('Exit demo'));
     await tester.pumpAndSettle();
     expect(find.textContaining('Demo mode: pretend radio'), findsNothing);
