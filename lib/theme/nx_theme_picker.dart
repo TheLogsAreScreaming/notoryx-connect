@@ -6,26 +6,26 @@ import 'nx_themes.dart';
 
 /// The short description of [theme].
 String themeDescription(BastionTheme theme) => switch (theme) {
-      BastionTheme.blaze => 'Charcoal and slate with high-visibility orange',
-      BastionTheme.neonAnarchy => 'Toxic green and electric purple on black',
-      BastionTheme.tactical => 'Olive, gunmetal and earth tones',
-      BastionTheme.pinkOverload => 'Hot pink, bubblegum and lavender',
-      BastionTheme.bareBeauty => 'Warm nude, dusty rose, cocoa and sage',
-      BastionTheme.okabeIto => 'Color-blind safe, high clarity',
-      BastionTheme.nightOps => 'Dim reds on near-black for low light',
-      BastionTheme.seasonal => 'Changes with the seasons and holidays',
-    };
+  BastionTheme.blaze => 'Charcoal and slate with high-visibility orange',
+  BastionTheme.neonAnarchy => 'Toxic green and electric purple on black',
+  BastionTheme.tactical => 'Olive, gunmetal and earth tones',
+  BastionTheme.pinkOverload => 'Hot pink, bubblegum and lavender',
+  BastionTheme.bareBeauty => 'Warm nude, dusty rose, cocoa and sage',
+  BastionTheme.okabeIto => 'Color-blind safe, high clarity',
+  BastionTheme.nightOps => 'Dim reds on near-black for low light',
+  BastionTheme.seasonal => 'Changes with the seasons and holidays',
+};
 
 /// The name of [season].
 String seasonName(Season season) => switch (season) {
-      Season.spring => 'Spring',
-      Season.summer => 'Summer',
-      Season.autumn => 'Autumn',
-      Season.winter => 'Winter',
-      Season.halloween => 'Halloween',
-      Season.christmas => 'Christmas',
-      Season.valentine => "Valentine's Day",
-    };
+  Season.spring => 'Spring',
+  Season.summer => 'Summer',
+  Season.autumn => 'Autumn',
+  Season.winter => 'Winter',
+  Season.halloween => 'Halloween',
+  Season.christmas => 'Christmas',
+  Season.valentine => "Valentine's Day",
+};
 
 /// Black or white, whichever reads better on [fill].
 Color onColor(Color fill) {
@@ -43,20 +43,23 @@ class NxThemePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
-        listenable: prefs,
-        builder: (context, _) {
-          final selected = BastionTheme.fromId(prefs.appTheme);
-          final season = activeSeason(override: prefs.seasonalOverride, holidays: prefs.seasonalHolidays);
-          final seasonalInUse = selected == BastionTheme.seasonal ||
-              prefs.darkModeTheme == BastionTheme.seasonal.id;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              LayoutBuilder(builder: (context, constraints) {
-                final columns = constraints.maxWidth >= 300 ? 2 : 1;
-                const gap = NxSpace.sm;
-                final width = (constraints.maxWidth - gap * (columns - 1)) / columns;
-                return Wrap(spacing: gap, runSpacing: gap, children: [
+    listenable: prefs,
+    builder: (context, _) {
+      final selected = BastionTheme.fromId(prefs.appTheme);
+      final season = activeSeason(override: prefs.seasonalOverride, holidays: prefs.seasonalHolidays);
+      final seasonalInUse = selected == BastionTheme.seasonal || prefs.darkModeTheme == BastionTheme.seasonal.id;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final columns = constraints.maxWidth >= 300 ? 2 : 1;
+              const gap = NxSpace.sm;
+              final width = (constraints.maxWidth - gap * (columns - 1)) / columns;
+              return Wrap(
+                spacing: gap,
+                runSpacing: gap,
+                children: [
                   for (final t in BastionTheme.values)
                     SizedBox(
                       width: width,
@@ -67,18 +70,17 @@ class NxThemePicker extends StatelessWidget {
                         onTap: () => prefs.update(theme: t.id),
                       ),
                     ),
-                ]);
-              }),
-              if (seasonalInUse) ...[
-                const SizedBox(height: NxSpace.sm),
-                _SeasonalControls(prefs: prefs, active: season),
-              ],
-              const SizedBox(height: NxSpace.sm),
-              _DarkModeControls(prefs: prefs),
-            ],
-          );
-        },
+                ],
+              );
+            },
+          ),
+          if (seasonalInUse) ...[const SizedBox(height: NxSpace.sm), _SeasonalControls(prefs: prefs, active: season)],
+          const SizedBox(height: NxSpace.sm),
+          _DarkModeControls(prefs: prefs),
+        ],
       );
+    },
+  );
 }
 
 class _ThemeCard extends StatelessWidget {
@@ -123,19 +125,25 @@ class _ThemeCard extends StatelessWidget {
               children: [
                 _MiniApp(palette: p),
                 const SizedBox(height: NxSpace.xs),
-                Row(children: [
-                  Expanded(
-                    child: Text(theme.label,
-                        style: TextStyle(color: p.ink, fontWeight: FontWeight.w700, fontSize: 15)),
-                  ),
-                  if (selected) Icon(Icons.check_circle, size: 20, color: p.accent),
-                ]),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        theme.label,
+                        style: TextStyle(color: p.ink, fontWeight: FontWeight.w700, fontSize: 15),
+                      ),
+                    ),
+                    if (selected) Icon(Icons.check_circle, size: 20, color: p.accent),
+                  ],
+                ),
                 const SizedBox(height: 2),
                 Text(description, style: TextStyle(color: p.ink3, fontSize: 12, height: 1.25)),
                 if (selected) ...[
                   const SizedBox(height: 4),
-                  Text('Selected',
-                      style: TextStyle(color: p.accent, fontSize: 12, fontWeight: FontWeight.w700)),
+                  Text(
+                    'Selected',
+                    style: TextStyle(color: p.accent, fontSize: 12, fontWeight: FontWeight.w700),
+                  ),
                 ],
               ],
             ),
@@ -157,10 +165,10 @@ class _MiniApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = palette;
     Widget bar(double width, Color color, {double height = 5}) => Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(3)),
-        );
+      width: width,
+      height: height,
+      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(3)),
+    );
     return ClipRRect(
       borderRadius: BorderRadius.circular(NxRadius.sm),
       child: DecoratedBox(
@@ -179,13 +187,19 @@ class _MiniApp extends StatelessWidget {
             Container(
               color: p.bg2,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-              child: Row(children: [
-                Container(width: 8, height: 8, decoration: BoxDecoration(color: p.signal, shape: BoxShape.circle)),
-                const SizedBox(width: 6),
-                bar(36, p.ink),
-                const Spacer(),
-                bar(14, p.ink3),
-              ]),
+              child: Row(
+                children: [
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(color: p.signal, shape: BoxShape.circle),
+                  ),
+                  const SizedBox(width: 6),
+                  bar(36, p.ink),
+                  const Spacer(),
+                  bar(14, p.ink3),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 6),
@@ -197,11 +211,14 @@ class _MiniApp extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(color: p.bg3, borderRadius: BorderRadius.circular(8)),
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        bar(20, p.tertiary, height: 4),
-                        const SizedBox(height: 3),
-                        bar(44, p.ink2, height: 4),
-                      ]),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          bar(20, p.tertiary, height: 4),
+                          const SizedBox(height: 3),
+                          bar(44, p.ink2, height: 4),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -218,25 +235,32 @@ class _MiniApp extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 7),
-                  Row(children: [
-                    Expanded(
-                      child: Container(
-                        height: 16,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(color: p.accent, borderRadius: BorderRadius.circular(NxRadius.pill)),
-                        child: bar(22, p.onAccent, height: 4),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 16,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: p.accent,
+                            borderRadius: BorderRadius.circular(NxRadius.pill),
+                          ),
+                          child: bar(22, p.onAccent, height: 4),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    Container(
-                      height: 16,
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(color: p.alert, borderRadius: BorderRadius.circular(NxRadius.pill)),
-                      child: Text('SOS',
-                          style: TextStyle(color: onColor(p.alert), fontSize: 8, fontWeight: FontWeight.w900)),
-                    ),
-                  ]),
+                      const SizedBox(width: 5),
+                      Container(
+                        height: 16,
+                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(color: p.alert, borderRadius: BorderRadius.circular(NxRadius.pill)),
+                        child: Text(
+                          'SOS',
+                          style: TextStyle(color: onColor(p.alert), fontSize: 8, fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -268,12 +292,12 @@ class _Box extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(NxRadius.md),
-          border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
-        ),
-        child: Column(children: children),
-      );
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(NxRadius.md),
+      border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+    ),
+    child: Column(children: children),
+  );
 }
 
 class _SeasonalControls extends StatelessWidget {
@@ -286,36 +310,33 @@ class _SeasonalControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final auto = seasonFor(DateTime.now(), holidays: prefs.seasonalHolidays);
     final value = Season.fromId(prefs.seasonalOverride)?.id ?? 'auto';
-    return _Box(children: [
-      ListTile(
-        key: const ValueKey('seasonal-season'),
-        leading: const Icon(Icons.eco_outlined),
-        title: const Text('Season'),
-        subtitle: Text(value == 'auto'
-            ? "Follows your device's date, with northern-hemisphere seasons"
-            : seasonName(active)),
-        trailing: DropdownButton<String>(
-          value: value,
-          underline: const SizedBox.shrink(),
-          onChanged: (v) {
-            if (v != null) prefs.update(season: v);
-          },
-          items: [
-            DropdownMenuItem(value: 'auto', child: Text('Automatic (${seasonName(auto)} now)')),
-            for (final s in Season.values) DropdownMenuItem(value: s.id, child: Text(seasonName(s))),
-          ],
+    return _Box(
+      children: [
+        ListTile(
+          leading: const Icon(Icons.eco_outlined),
+          title: const Text('Season'),
+          subtitle: Text(
+            value == 'auto' ? "Follows your device's date, with northern-hemisphere seasons" : seasonName(active),
+          ),
         ),
-      ),
-      const Divider(height: 1),
-      SwitchListTile(
-        key: const ValueKey('seasonal-holidays'),
-        secondary: const Icon(Icons.celebration_outlined),
-        title: const Text('Holiday colors'),
-        subtitle: const Text("Halloween, Christmas and Valentine's Day on their dates"),
-        value: prefs.seasonalHolidays,
-        onChanged: (v) => prefs.update(holidays: v),
-      ),
-    ]);
+        // On its own line: long names and large text don't fit beside the title.
+        _Menu<String>(
+          key: const ValueKey('seasonal-season'),
+          value: value,
+          onChanged: (v) => prefs.update(season: v),
+          items: {'auto': 'Automatic (${seasonName(auto)} now)', for (final s in Season.values) s.id: seasonName(s)},
+        ),
+        const Divider(height: 1),
+        SwitchListTile(
+          key: const ValueKey('seasonal-holidays'),
+          secondary: const Icon(Icons.celebration_outlined),
+          title: const Text('Holiday colors'),
+          subtitle: const Text("Halloween, Christmas and Valentine's Day on their dates"),
+          value: prefs.seasonalHolidays,
+          onChanged: (v) => prefs.update(holidays: v),
+        ),
+      ],
+    );
   }
 }
 
@@ -329,40 +350,57 @@ class _DarkModeControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final on = prefs.darkModeTheme.isNotEmpty;
     final current = BastionTheme.fromId(prefs.darkModeTheme);
-    return _Box(children: [
-      SwitchListTile(
-        key: const ValueKey('dark-mode-switch'),
-        secondary: const Icon(Icons.dark_mode_outlined),
-        title: const Text('Different theme in dark mode'),
-        subtitle: const Text('Use another theme while your device is set to dark mode'),
-        value: on,
-        onChanged: (value) => prefs.update(
-          darkTheme: !value
-              ? ''
-              // Start with a dark theme other than the day one.
-              : prefs.appTheme == BastionTheme.nightOps.id
-                  ? BastionTheme.blaze.id
-                  : BastionTheme.nightOps.id,
-        ),
-      ),
-      if (on) ...[
-        const Divider(height: 1),
-        ListTile(
-          key: const ValueKey('dark-mode-theme'),
-          leading: const Icon(Icons.nights_stay_outlined),
-          title: const Text('Dark mode theme'),
-          trailing: DropdownButton<String>(
-            value: current.id,
-            underline: const SizedBox.shrink(),
-            onChanged: (v) {
-              if (v != null) prefs.update(darkTheme: v);
-            },
-            items: [
-              for (final t in BastionTheme.values) DropdownMenuItem(value: t.id, child: Text(t.label)),
-            ],
+    return _Box(
+      children: [
+        SwitchListTile(
+          key: const ValueKey('dark-mode-switch'),
+          secondary: const Icon(Icons.dark_mode_outlined),
+          title: const Text('Different theme in dark mode'),
+          subtitle: const Text('Use another theme while your device is set to dark mode'),
+          value: on,
+          onChanged: (value) => prefs.update(
+            darkTheme: !value
+                ? ''
+                // Start with a dark theme other than the day one.
+                : prefs.appTheme == BastionTheme.nightOps.id
+                ? BastionTheme.blaze.id
+                : BastionTheme.nightOps.id,
           ),
         ),
+        if (on) ...[
+          const Divider(height: 1),
+          const ListTile(leading: Icon(Icons.nights_stay_outlined), title: Text('Dark mode theme')),
+          _Menu<String>(
+            key: const ValueKey('dark-mode-theme'),
+            value: current.id,
+            onChanged: (v) => prefs.update(darkTheme: v),
+            items: {for (final t in BastionTheme.values) t.id: t.label},
+          ),
+        ],
       ],
-    ]);
+    );
   }
+}
+
+/// A full-width menu under a settings row, indented to line up with the
+/// row's title.
+class _Menu<T> extends StatelessWidget {
+  const _Menu({super.key, required this.value, required this.items, required this.onChanged});
+
+  final T value;
+  final Map<T, String> items;
+  final ValueChanged<T> onChanged;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsetsDirectional.fromSTEB(72, 0, NxSpace.md, NxSpace.xs),
+    child: DropdownButton<T>(
+      value: value,
+      isExpanded: true,
+      onChanged: (v) {
+        if (v != null) onChanged(v);
+      },
+      items: [for (final e in items.entries) DropdownMenuItem(value: e.key, child: Text(e.value))],
+    ),
+  );
 }

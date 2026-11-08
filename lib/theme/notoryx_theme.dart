@@ -146,7 +146,8 @@ abstract final class NotoryxTheme {
       surfaceContainerHigh: p.bg3,
       surfaceContainerHighest: p.bg4,
       onSurfaceVariant: p.ink2,
-      outline: p.line3,
+      // Field borders and switch outlines need 3:1 against the page.
+      outline: _atLeast(p.line3, p.bg, 3),
       outlineVariant: p.line2,
       inverseSurface: p.ink,
       onInverseSurface: p.bg,
@@ -154,6 +155,21 @@ abstract final class NotoryxTheme {
       shadow: Colors.black,
       scrim: Colors.black,
     );
+  }
+
+  /// [color] moved toward the page's text color just enough to reach
+  /// [ratio] contrast with [surface].
+  static Color _atLeast(Color color, Color surface, double ratio) {
+    double contrast(Color a) {
+      final la = a.computeLuminance(), lb = surface.computeLuminance();
+      return (la > lb ? la + .05 : lb + .05) / (la > lb ? lb + .05 : la + .05);
+    }
+    final target = surface.computeLuminance() > .18 ? Colors.black : Colors.white;
+    var c = color;
+    for (var i = 0; i < 20 && contrast(c) < ratio; i++) {
+      c = Color.lerp(c, target, .08)!;
+    }
+    return c;
   }
 
   /// The whole app theme for palette [p].

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 /// The Okabe-Ito categorical palette (Okabe & Ito, 2002), whose colors stay
 /// distinct under the common forms of color blindness. The Okabe-Ito theme
 /// is built from it.
@@ -194,11 +193,7 @@ enum BastionTheme {
   /// Connect's earlier light/dark choices and the theme each now opens as.
   /// 'system' becomes Bare Beauty with Blaze in dark mode; see
   /// BastionPreferences.load.
-  static const Map<String, BastionTheme> legacyIds = {
-    'dark': blaze,
-    'light': bareBeauty,
-    'system': bareBeauty,
-  };
+  static const Map<String, BastionTheme> legacyIds = {'dark': blaze, 'light': bareBeauty, 'system': bareBeauty};
 
   static BastionTheme fromId(String? id) {
     final legacy = legacyIds[id];
@@ -267,13 +262,8 @@ Season seasonFor(DateTime date, {bool holidays = true}) {
 
 /// The season the Seasonal theme shows: [override] when it names one,
 /// otherwise the one for [now].
-Season activeSeason({
-  String override = 'auto',
-  bool holidays = true,
-  DateTime? now,
-}) =>
-    Season.fromId(override) ??
-    seasonFor(now ?? DateTime.now(), holidays: holidays);
+Season activeSeason({String override = 'auto', bool holidays = true, DateTime? now}) =>
+    Season.fromId(override) ?? seasonFor(now ?? DateTime.now(), holidays: holidays);
 
 /// The theme id to show: [darkModeTheme] while the device is in dark mode
 /// and one is set, otherwise [appTheme].
@@ -281,9 +271,7 @@ String activeThemeId({
   required String appTheme,
   required String darkModeTheme,
   required Brightness platformBrightness,
-}) => darkModeTheme.isNotEmpty && platformBrightness == Brightness.dark
-    ? darkModeTheme
-    : appTheme;
+}) => darkModeTheme.isNotEmpty && platformBrightness == Brightness.dark ? darkModeTheme : appTheme;
 
 /// The palette for the saved theme [themeId]. Only the Seasonal theme looks
 /// at the date or the season override; every other theme ignores them.
@@ -295,11 +283,7 @@ BastionPalette resolveThemePalette(
 }) {
   final theme = BastionTheme.fromId(themeId);
   if (theme != BastionTheme.seasonal) return theme.palette;
-  return activeSeason(
-    override: seasonalOverride,
-    holidays: seasonalHolidays,
-    now: now,
-  ).palette;
+  return activeSeason(override: seasonalOverride, holidays: seasonalHolidays, now: now).palette;
 }
 
 const _dark = Brightness.dark;
