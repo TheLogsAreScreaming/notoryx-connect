@@ -33,6 +33,7 @@ import 'bastion_beacons.dart';
 import 'bastion_radio_data.dart';
 import 'bastion_chat_marks.dart';
 import 'bastion_chat_store.dart';
+import 'bastion_connection_log.dart';
 import 'bastion_firmware.dart';
 import 'bastion_geofences.dart';
 import 'bastion_node_keys.dart';
@@ -95,6 +96,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           _inForeground = state == AppLifecycleState.resumed,
     );
     connection.addListener(_relayConnectionChange);
+    connection.addListener(_logConnection);
     if (_background case BastionForegroundService(:final problem)) {
       problem.addListener(notifyListeners);
     }
@@ -264,6 +266,32 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   final MeshtasticConnectionController connection =
       MeshtasticConnectionController();
+
+  /// Recent connection events for the connection doctor's report.
+  final BastionConnectionLog connectionLog = BastionConnectionLog();
+  MeshtasticConnectionState? _loggedState;
+  String? _loggedError;
+
+  void _logConnection() {
+    final state = connection.state, error = connection.error;
+    if (state == _loggedState && error == _loggedError) return;
+    _loggedState = state;
+    _loggedError = error;
+    final via = _lastDevice == null
+        ? ''
+        : ' (${_lastDevice!.isUsb ? 'USB' : _lastDevice!.isNetwork ? 'Wi-Fi' : 'Bluetooth'})';
+    connectionLog.add('${state.name}$via${error == null ? '' : ': $error'}');
+  }
+
+  /// Whether there is a radio to try again with.
+  bool get hasLastRadio => _lastDevice != null;
+
+  /// Connects again to the last radio, for the connection doctor.
+  Future<void> retryLastRadio() async {
+    final device = _lastDevice;
+    if (device == null || _busy) return;
+    await connect(device);
+  }
   final BastionRadioHistory _history = BastionRadioHistory();
 
   /// History of the connected radio, or of the last one while disconnected.
@@ -1751,6 +1779,9 @@ class _CoordinatorTripRadio implements TripRadio {
   @override
   // Unfiltered: an ignored or word-filtered contact's SOS acknowledgment still counts.
   List<BastionChatMessage> get messages => _radio.allMessages;
+
+  @override
+  double? get channelUtilization => _radio.deviceTelemetry[_radio.localNodeNum]?.channelUtilization;
 
   @override
   DateTime? lastHeard(int node) {
