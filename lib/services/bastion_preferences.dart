@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../theme/nx_theme_picker.dart';
+import '../theme/nx_themes.dart';
 import 'bastion_history_limit.dart';
 import 'bastion_units.dart';
 
 /// Phone appearance preferences; radio configuration is never changed.
 class BastionPreferences extends ChangeNotifier {
   static final instance = BastionPreferences();
-  ThemeMode theme = ThemeMode.dark;
+  /// The chosen theme's id (see [BastionTheme]); Blaze by default.
+  String appTheme = BastionTheme.blaze.id;
+
+  /// The theme used while the device is in dark mode, or '' for none.
+  String darkModeTheme = '';
+
+  /// The Seasonal theme's season: 'auto' (by date) or a [Season] id.
+  String seasonalOverride = 'auto';
+
+  /// Whether Seasonal switches to holiday colors on their dates.
+  bool seasonalHolidays = true;
+
+  /// The theme id to show for the device's light/dark [platform] setting.
+  String activeTheme(Brightness platform) => activeThemeId(
+      appTheme: appTheme, darkModeTheme: darkModeTheme, platformBrightness: platform);
+
+  /// The palette to show right now for the device's [platform] setting.
+  BastionPalette palette(Brightness platform, {DateTime? now}) => resolveThemePalette(
+      activeTheme(platform),
+      seasonalOverride: seasonalOverride, seasonalHolidays: seasonalHolidays, now: now);
   bool statistics = true;
   bool meshHealth = true;
   bool encounters = true;
@@ -30,8 +51,19 @@ class BastionPreferences extends ChangeNotifier {
   Future<void> load() async {
     try {
       final p = SharedPreferencesAsync();
-      final name = await p.getString('bastion.theme');
-      theme = ThemeMode.values.where((v) => v.name == name).firstOrNull ?? ThemeMode.dark;
+      final saved = await p.getString('bastion.app_theme');
+      if (saved != null) {
+        appTheme = BastionTheme.fromId(saved).id;
+        final dark = await p.getString('bastion.dark_mode_theme') ?? '';
+        darkModeTheme = dark.isEmpty ? '' : BastionTheme.fromId(dark).id;
+      } else {
+        // Before the eight themes there was only light, dark or system.
+        final mode = await p.getString('bastion.theme');
+        appTheme = BastionTheme.fromId(mode ?? 'dark').id;
+        darkModeTheme = mode == 'system' ? BastionTheme.blaze.id : '';
+      }
+      seasonalOverride = await p.getString('bastion.seasonal_override') ?? 'auto';
+      seasonalHolidays = await p.getBool('bastion.seasonal_holidays') ?? true;
       statistics = await p.getBool('bastion.dashboard.statistics') ?? true;
       meshHealth = await p.getBool('bastion.dashboard.health') ?? true;
       encounters = await p.getBool('bastion.dashboard.encounters') ?? true;
@@ -46,9 +78,12 @@ class BastionPreferences extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> update({ThemeMode? mode, bool? stats, bool? health, bool? saved,
+  Future<void> update({String? theme, String? darkTheme, String? season, bool? holidays, bool? stats, bool? health, bool? saved,
       int? retentionDays, bool? speak, BastionUnits? unitSystem, int? keepMessages}) async {
-    theme = mode ?? theme;
+    appTheme = theme ?? appTheme;
+    darkModeTheme = darkTheme ?? darkModeTheme;
+    seasonalOverride = season ?? seasonalOverride;
+    seasonalHolidays = holidays ?? seasonalHolidays;
     statistics = stats ?? statistics;
     meshHealth = health ?? meshHealth;
     encounters = saved ?? encounters;
@@ -60,7 +95,10 @@ class BastionPreferences extends ChangeNotifier {
     notifyListeners();
     try {
       final p = SharedPreferencesAsync();
-      await p.setString('bastion.theme', theme.name);
+      await p.setString('bastion.app_theme', appTheme);
+      await p.setString('bastion.dark_mode_theme', darkModeTheme);
+      await p.setString('bastion.seasonal_override', seasonalOverride);
+      await p.setBool('bastion.seasonal_holidays', seasonalHolidays);
       await p.setBool('bastion.dashboard.statistics', statistics);
       await p.setBool('bastion.dashboard.health', meshHealth);
       await p.setBool('bastion.dashboard.encounters', encounters);
@@ -83,10 +121,10 @@ class BastionAppearanceCard extends StatelessWidget {
         title: const Text('Appearance & dashboard'),
         leading: const Icon(Icons.palette_outlined),
         children: [
-          for (final mode in ThemeMode.values)
-            ListTile(title: Text('${mode.name[0].toUpperCase()}${mode.name.substring(1)} theme'),
-              trailing: p.theme == mode ? const Icon(Icons.check) : null,
-              onTap: () => p.update(mode: mode)),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+            child: NxThemePicker(prefs: p),
+          ),
           ListTile(
             title: const Text('Units'),
             subtitle: const Text('Distances and altitudes'),

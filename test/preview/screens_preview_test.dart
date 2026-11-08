@@ -101,10 +101,13 @@ void main() {
     }, skip: out == null);
   }
 
-  for (final mode in [ThemeMode.dark, ThemeMode.light]) {
-    testWidgets('main tabs ${mode.name}', (tester) async {
+  // PREVIEW_THEME=pink_overload renders one theme; otherwise Blaze and
+  // Bare Beauty (the old dark and light looks).
+  final themes = Platform.environment['PREVIEW_THEME']?.split(',') ?? ['blaze', 'bare_beauty'];
+  for (final theme in themes) {
+    testWidgets('main tabs $theme', (tester) async {
       SharedPreferences.setMockInitialValues({});
-      BastionPreferences.instance.theme = mode;
+      BastionPreferences.instance.appTheme = theme;
       tester.view.devicePixelRatio = 2;
       tester.view.physicalSize = const Size(780, 1688);
       addTearDown(tester.view.reset);
@@ -118,7 +121,7 @@ void main() {
           final ro = boundary.currentContext!.findRenderObject()! as RenderRepaintBoundary;
           final image = await ro.toImage(pixelRatio: 2);
           final png = await image.toByteData(format: ui.ImageByteFormat.png);
-          final suffix = mode == ThemeMode.dark ? '' : '_light';
+          final suffix = theme == 'blaze' ? '' : '_$theme';
           File('$out/${tab.value}$suffix.png')
             ..createSync(recursive: true)
             ..writeAsBytesSync(png!.buffer.asUint8List());

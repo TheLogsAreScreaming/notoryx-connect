@@ -48,13 +48,13 @@ void main() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
       const MethodChannel('plugins.flutter.io/path_provider'), (_) async => cache.path);
   });
-  for (final mode in [ThemeMode.light, ThemeMode.dark]) {
-    testWidgets('shell fits narrow screen with large text in ${mode.name} theme', (tester) async {
+  for (final theme in ['bare_beauty', 'blaze', 'pink_overload']) {
+    testWidgets('shell fits narrow screen with large text in $theme theme', (tester) async {
       tester.view.physicalSize = const Size(390, 844); tester.view.devicePixelRatio = 1;
       tester.platformDispatcher.textScaleFactorTestValue = 2;
       addTearDown(tester.view.resetPhysicalSize); addTearDown(tester.view.resetDevicePixelRatio);
       addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-      await BastionPreferences.instance.update(mode: mode);
+      await BastionPreferences.instance.update(theme: theme);
       final capture = GlobalKey();
       await tester.pumpWidget(RepaintBoundary(key: capture, child: const BastionApp())); await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
@@ -65,7 +65,7 @@ void main() {
       await tester.tap(find.text('Appearance & dashboard')); await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text('Dashboard statistics'), 200, scrollable: find.byType(Scrollable).first);
       expect(find.text('Dashboard statistics'), findsOneWidget);
-      await screenshot(tester, capture, '${mode.name}-large-settings');
+      await screenshot(tester, capture, '$theme-large-settings');
       expect(tester.takeException(), isNull);
     });
   }

@@ -61,33 +61,63 @@ Future<void> main() async {
   runApp(const BastionApp());
 }
 
-class BastionApp extends StatelessWidget {
+class BastionApp extends StatefulWidget {
   const BastionApp({super.key});
-  /// NOTORYX orange from the app icon; the accent in the dark theme.
+  /// NOTORYX orange from the app icon.
   static const signal = NxPalette.signal;
 
-  /// The same hue, darkened so text and icons keep 4.5:1 contrast on the
-  /// light theme's surfaces (#FC7202 is only about 2.6:1 there).
+  /// The same hue, darkened for 4.5:1 contrast on light surfaces.
   static const signalOnLight = NxPalette.signalDeep;
   static const panel = NxPalette.ink1;
 
   /// The accent for the current theme.
-  static Color accentOf(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.dark ? signal : signalOnLight;
+  static Color accentOf(BuildContext context) => Theme.of(context).colorScheme.primary;
 
-  /// The app theme, built from the NOTORYX design tokens.
+  /// The built-in look for [brightness] (Blaze dark, Bare Beauty light).
   static ThemeData appearance(Brightness brightness) => NotoryxTheme.build(brightness);
+
+  @override
+  State<BastionApp> createState() => _BastionAppState();
+}
+
+class _BastionAppState extends State<BastionApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  // A dark-mode theme follows the device's light/dark setting.
+  @override
+  void didChangePlatformBrightness() {
+    if (BastionPreferences.instance.darkModeTheme.isNotEmpty) setState(() {});
+  }
+
+  // Seasonal follows the date, so check it again when the app comes back.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
     animation: BastionPreferences.instance,
-    builder: (context, _) => MaterialApp(
-      title: 'NOTORYX Connect', debugShowCheckedModeBanner: false,
-      theme: appearance(Brightness.light), darkTheme: appearance(Brightness.dark),
-      themeMode: BastionPreferences.instance.theme,
-      scrollBehavior: const BastionScrollBehavior(),
-      home: const BastionShell(),
-    ),
+    builder: (context, _) {
+      final platform = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+      final theme = NotoryxTheme.fromPalette(BastionPreferences.instance.palette(platform));
+      return MaterialApp(
+        title: 'NOTORYX Connect', debugShowCheckedModeBanner: false,
+        theme: theme, darkTheme: theme, themeMode: ThemeMode.light,
+        scrollBehavior: const BastionScrollBehavior(),
+        home: const BastionShell(),
+      );
+    },
   );
 }
 
