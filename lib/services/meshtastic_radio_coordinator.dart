@@ -1781,6 +1781,9 @@ class _CoordinatorTripRadio implements TripRadio {
   List<BastionChatMessage> get messages => _radio.allMessages;
 
   @override
+  double? get channelUtilization => _radio.deviceTelemetry[_radio.localNodeNum]?.channelUtilization;
+
+  @override
   DateTime? lastHeard(int node) {
     for (final n in _radio.allNodes) {
       if (n.num == node) return n.lastHeard;
