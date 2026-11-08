@@ -12,11 +12,7 @@ class _ToolsPageState extends State<_ToolsPage> {
   final battery = TextEditingController(text: '3000');
   final draw = TextEditingController(text: '100');
   double? runtime;
-  final checked = <String>{};
-  static const checklist = [
-    'Radio charged', 'Antenna attached', 'Region configured',
-    'Primary channel verified', 'GPS / position policy checked',
-  ];
+  final checked = <int>{};
 
   @override
   void dispose() { battery.dispose(); draw.dispose(); super.dispose(); }
@@ -34,84 +30,86 @@ class _ToolsPageState extends State<_ToolsPage> {
   Widget build(BuildContext context) => AnimatedBuilder(
     animation: Listenable.merge([widget.radio, widget.discovery]),
     builder: (context, _) {
+      final l = AppLocalizations.of(context);
+      final checklist = [l.toolsCheck0, l.toolsCheck1, l.toolsCheck2, l.toolsCheck3, l.toolsCheck4];
       final radio = widget.radio;
       final readings = radio.deviceTelemetry.entries.toList()
         ..sort((a, b) => a.key.compareTo(b.key));
       return ListView(
     padding: NxSpace.page,
     children: [
-      const NxPageHeader(title: 'Tools',
-        subtitle: 'Utilities for planning, testing and running a deployment.'),
+      NxPageHeader(title: l.toolsTitle,
+        subtitle: l.toolsSubtitle),
       Card(child: ListTile(
         leading: const Icon(Icons.medical_services_outlined),
-        title: const Text('Connection doctor'),
-        subtitle: const Text('Find out why a radio won\'t connect or keeps dropping'),
+        title: Text(l.toolsDoctor),
+        subtitle: Text(l.toolsDoctorSub),
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(ConnectionDoctorPage(radio: radio, discovery: widget.discovery)),
       )),
-      const NxSectionLabel('Before you go'),
+      NxSectionLabel(l.toolsBeforeYouGo),
       Card(child: ExpansionTile(
         initiallyExpanded: true,
         leading: const Icon(Icons.checklist),
-        title: const Text('Deployment checklist'),
-        subtitle: Text('${checked.length} of ${checklist.length} ready'),
+        title: Text(l.toolsChecklist),
+        subtitle: Text(l.toolsReady(checked.length, checklist.length)),
         children: [
-          for (final item in checklist)
+          for (final (i, item) in checklist.indexed)
             CheckboxListTile(
-              title: Text(item), value: checked.contains(item),
+              title: Text(item), value: checked.contains(i),
               onChanged: (value) => setState(() {
-                value == true ? checked.add(item) : checked.remove(item);
+                value == true ? checked.add(i) : checked.remove(i);
               }),
             ),
         ],
       )),
       Card(child: ExpansionTile(
         leading: const Icon(Icons.battery_charging_full),
-        title: const Text('Battery runtime'),
-        subtitle: const Text('Estimate hours from capacity and average draw'),
+        title: Text(l.toolsBattery),
+        subtitle: Text(l.toolsBatterySub),
         childrenPadding: const EdgeInsets.fromLTRB(NxSpace.md, 0, NxSpace.md, NxSpace.md),
         children: [
           Row(children: [
             Expanded(child: TextField(controller: battery,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Battery (mAh)'))),
+              decoration: InputDecoration(labelText: l.toolsBatteryField))),
             const SizedBox(width: NxSpace.sm),
             Expanded(child: TextField(controller: draw,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Average draw (mA)'))),
+              decoration: InputDecoration(labelText: l.toolsDrawField))),
           ]),
           const SizedBox(height: NxSpace.sm),
           SizedBox(width: double.infinity,
-            child: FilledButton(onPressed: calculate, child: const Text('Calculate'))),
+            child: FilledButton(onPressed: calculate, child: Text(l.toolsCalculate))),
           if (runtime != null)
             Padding(padding: const EdgeInsets.only(top: NxSpace.sm),
-              child: Semantics(liveRegion: true, child: Text('About ${runtime!.toStringAsFixed(1)} hours',
+              child: Semantics(liveRegion: true, child: Text(l.toolsAboutHours(runtime!.toStringAsFixed(1)),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Theme.of(context).colorScheme.primary)))),
         ],
       )),
-      const NxSectionLabel('Mesh tools'),
+      NxSectionLabel(l.toolsMeshTools),
       NxGroupCard(children: [
         ListTile(
           leading: const Icon(Icons.monitor_heart_outlined),
-          title: const Text('Mesh health & airtime'),
-          subtitle: const Text('How busy the channel is and how much your radio transmits'),
+          title: Text(l.toolsHealth),
+          subtitle: Text(l.toolsHealthSub),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _open(MeshHealthPage(radio: radio)),
         ),
         const Divider(indent: 56),
         ListTile(
           leading: const Icon(Icons.terrain),
-          title: const Text('Link planner'),
-          subtitle: const Text('Check line of sight between two nodes over the terrain'),
+          title: Text(l.toolsLink),
+          subtitle: Text(l.toolsLinkSub),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _open(LinkPlannerPage(radio: radio)),
         ),
         const Divider(indent: 56),
         ListTile(
           leading: const Icon(Icons.network_check),
-          title: const Text('Range test'),
-          subtitle: const Text('Log packets from a range test sender with signal and distance'),
+          title: Text(l.toolsRange),
+          subtitle: Text(l.toolsRangeSub),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _open(MeshToolsPage(radio: radio)),
         ),
@@ -119,53 +117,53 @@ class _ToolsPageState extends State<_ToolsPage> {
         ListTile(
           enabled: radio.isReady,
           leading: const Icon(Icons.route),
-          title: const Text('Traceroute'),
+          title: Text(l.toolsTraceroute),
           subtitle: Text(radio.isReady
-            ? 'Show the relay path to a node and back'
-            : 'Connect to a radio to trace routes'),
+            ? l.toolsTraceReady
+            : l.toolsTraceOff),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _open(TraceroutePage(radio: radio)),
         ),
         const Divider(indent: 56),
         ListTile(
           leading: const Icon(Icons.inventory_2_outlined),
-          title: const Text('Store & forward'),
-          subtitle: const Text('Replay messages you missed from a router'),
+          title: Text(l.toolsStore),
+          subtitle: Text(l.toolsStoreSub),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _open(MeshToolsPage(radio: radio, initialTab: 1)),
         ),
         const Divider(indent: 56),
         ListTile(
           leading: const Icon(Icons.campaign_outlined),
-          title: const Text('Mesh beacons'),
+          title: Text(l.toolsBeacons),
           subtitle: Text(radio.beacons.isEmpty
-              ? 'Hear mesh invitations nearby and send your own'
-              : '${radio.beacons.length} heard • send your own'),
+              ? l.toolsBeaconsSub
+              : l.toolsBeaconsHeard(radio.beacons.length)),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _open(BeaconPage(radio: radio)),
         ),
       ]),
-      const NxSectionLabel('Records'),
+      NxSectionLabel(l.toolsRecords),
       Card(child: ListTile(
         leading: const Icon(Icons.assignment_outlined),
-        title: const Text('Incident log, templates & coverage'),
-        subtitle: const Text('Saved field records and exports'),
+        title: Text(l.toolsIncident),
+        subtitle: Text(l.toolsIncidentSub),
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(FieldToolsPage(radio: radio)),
       )),
-      const NxSectionLabel('Signal'),
+      NxSectionLabel(l.toolsSignal),
       Card(child: ExpansionTile(
         leading: const Icon(Icons.monitor_heart_outlined),
-        title: const Text('Live telemetry'),
+        title: Text(l.toolsTelemetry),
         subtitle: Text(radio.isReady
-          ? '${readings.length} node${readings.length == 1 ? '' : 's'} reporting device metrics'
-          : 'Connect to a radio to receive telemetry'),
+          ? l.toolsReporting(readings.length)
+          : l.toolsTelemetryOff),
         childrenPadding: const EdgeInsets.fromLTRB(NxSpace.md, 0, NxSpace.md, NxSpace.md),
         children: [
           if (readings.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: NxSpace.sm),
-              child: Text('Nothing received yet. Metrics appear when nodes send them.'),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: NxSpace.sm),
+              child: Text(l.toolsNothingYet),
             ),
           for (final entry in readings)
             ListTile(
@@ -173,36 +171,36 @@ class _ToolsPageState extends State<_ToolsPage> {
               title: Text(radio.nodeName(entry.key)),
               subtitle: Text([
                 if (entry.value.batteryLevel != null)
-                  'Battery ${entry.value.batteryLevel}%',
+                  l.toolsBatteryPct(entry.value.batteryLevel!),
                 if (entry.value.voltage != null)
                   '${entry.value.voltage!.toStringAsFixed(2)} V',
                 if (entry.value.channelUtilization != null)
-                  'Channel busy ${entry.value.channelUtilization!.toStringAsFixed(1)}%',
+                  l.toolsChannelBusy(entry.value.channelUtilization!.toStringAsFixed(1)),
                 if (entry.value.airUtilTx != null)
-                  'Transmitting ${entry.value.airUtilTx!.toStringAsFixed(1)}%',
+                  l.toolsTransmitting(entry.value.airUtilTx!.toStringAsFixed(1)),
               ].join(' • ')),
             ),
         ],
       )),
       Card(child: ExpansionTile(
         leading: const Icon(Icons.signal_cellular_alt),
-        title: const Text('Bluetooth signal guide'),
-        subtitle: const Text('What the signal numbers (RSSI) mean'),
+        title: Text(l.toolsGuide),
+        subtitle: Text(l.toolsGuideSub),
         childrenPadding: const EdgeInsets.fromLTRB(NxSpace.md, 0, NxSpace.md, NxSpace.md),
-        children: const [
-          _ReferenceRow(value: '−50 dBm', label: 'Excellent, very close'),
-          _ReferenceRow(value: '−60 dBm', label: 'Strong'),
-          _ReferenceRow(value: '−70 dBm', label: 'Usable'),
-          _ReferenceRow(value: '−80 dBm', label: 'Weak'),
-          _ReferenceRow(value: '≤ −90', label: 'Very weak, may drop'),
+        children: [
+          _ReferenceRow(value: '−50 dBm', label: l.toolsSigExcellent),
+          _ReferenceRow(value: '−60 dBm', label: l.toolsSigStrong),
+          _ReferenceRow(value: '−70 dBm', label: l.toolsSigUsable),
+          _ReferenceRow(value: '−80 dBm', label: l.toolsSigWeak),
+          _ReferenceRow(value: '≤ −90', label: l.toolsSigVeryWeak),
         ],
       )),
       Card(child: ListTile(
         leading: const Icon(Icons.bluetooth_searching),
-        title: const Text('Scan for radios'),
+        title: Text(l.toolsScan),
         subtitle: Text(widget.discovery.scanning
-            ? 'Scanning…'
-            : '${widget.discovery.results.length} Bluetooth device${widget.discovery.results.length == 1 ? '' : 's'} found'),
+            ? l.toolsScanning
+            : l.toolsFound(widget.discovery.results.length)),
         trailing: const Icon(Icons.chevron_right),
         onTap: widget.discovery.scanning ? null : widget.discovery.scan,
       )),

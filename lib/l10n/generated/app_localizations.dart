@@ -187,6 +187,330 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'manage the radio'**
   String get radioStatusHint;
+
+  /// No description provided for @toolsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get toolsTitle;
+
+  /// No description provided for @toolsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Utilities for planning, testing and running a deployment.'**
+  String get toolsSubtitle;
+
+  /// No description provided for @toolsDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection doctor'**
+  String get toolsDoctor;
+
+  /// No description provided for @toolsDoctorSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Find out why a radio won\'t connect or keeps dropping'**
+  String get toolsDoctorSub;
+
+  /// No description provided for @toolsBeforeYouGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you go'**
+  String get toolsBeforeYouGo;
+
+  /// No description provided for @toolsChecklist.
+  ///
+  /// In en, this message translates to:
+  /// **'Deployment checklist'**
+  String get toolsChecklist;
+
+  /// No description provided for @toolsBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery runtime'**
+  String get toolsBattery;
+
+  /// No description provided for @toolsBatterySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimate hours from capacity and average draw'**
+  String get toolsBatterySub;
+
+  /// No description provided for @toolsCalculate.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate'**
+  String get toolsCalculate;
+
+  /// No description provided for @toolsMeshTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh tools'**
+  String get toolsMeshTools;
+
+  /// No description provided for @toolsHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh health & airtime'**
+  String get toolsHealth;
+
+  /// No description provided for @toolsHealthSub.
+  ///
+  /// In en, this message translates to:
+  /// **'How busy the channel is and how much your radio transmits'**
+  String get toolsHealthSub;
+
+  /// No description provided for @toolsLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Link planner'**
+  String get toolsLink;
+
+  /// No description provided for @toolsLinkSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Check line of sight between two nodes over the terrain'**
+  String get toolsLinkSub;
+
+  /// No description provided for @toolsRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Range test'**
+  String get toolsRange;
+
+  /// No description provided for @toolsRangeSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Log packets from a range test sender with signal and distance'**
+  String get toolsRangeSub;
+
+  /// No description provided for @toolsTraceroute.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute'**
+  String get toolsTraceroute;
+
+  /// No description provided for @toolsStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Store & forward'**
+  String get toolsStore;
+
+  /// No description provided for @toolsStoreSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay messages you missed from a router'**
+  String get toolsStoreSub;
+
+  /// No description provided for @toolsBeacons.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh beacons'**
+  String get toolsBeacons;
+
+  /// No description provided for @toolsRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'Records'**
+  String get toolsRecords;
+
+  /// No description provided for @toolsIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident log, templates & coverage'**
+  String get toolsIncident;
+
+  /// No description provided for @toolsIncidentSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved field records and exports'**
+  String get toolsIncidentSub;
+
+  /// No description provided for @toolsSignal.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal'**
+  String get toolsSignal;
+
+  /// No description provided for @toolsTelemetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Live telemetry'**
+  String get toolsTelemetry;
+
+  /// No description provided for @toolsNothingYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing received yet. Metrics appear when nodes send them.'**
+  String get toolsNothingYet;
+
+  /// No description provided for @toolsGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth signal guide'**
+  String get toolsGuide;
+
+  /// No description provided for @toolsGuideSub.
+  ///
+  /// In en, this message translates to:
+  /// **'What the signal numbers (RSSI) mean'**
+  String get toolsGuideSub;
+
+  /// No description provided for @toolsScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan for radios'**
+  String get toolsScan;
+
+  /// No description provided for @toolsCheck0.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio charged'**
+  String get toolsCheck0;
+
+  /// No description provided for @toolsCheck1.
+  ///
+  /// In en, this message translates to:
+  /// **'Antenna attached'**
+  String get toolsCheck1;
+
+  /// No description provided for @toolsCheck2.
+  ///
+  /// In en, this message translates to:
+  /// **'Region configured'**
+  String get toolsCheck2;
+
+  /// No description provided for @toolsCheck3.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary channel verified'**
+  String get toolsCheck3;
+
+  /// No description provided for @toolsCheck4.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS / position policy checked'**
+  String get toolsCheck4;
+
+  /// No description provided for @toolsReady.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} ready'**
+  String toolsReady(int done, int total);
+
+  /// No description provided for @toolsBatteryField.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery (mAh)'**
+  String get toolsBatteryField;
+
+  /// No description provided for @toolsDrawField.
+  ///
+  /// In en, this message translates to:
+  /// **'Average draw (mA)'**
+  String get toolsDrawField;
+
+  /// No description provided for @toolsAboutHours.
+  ///
+  /// In en, this message translates to:
+  /// **'About {hours} hours'**
+  String toolsAboutHours(String hours);
+
+  /// No description provided for @toolsTraceReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the relay path to a node and back'**
+  String get toolsTraceReady;
+
+  /// No description provided for @toolsTraceOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio to trace routes'**
+  String get toolsTraceOff;
+
+  /// No description provided for @toolsBeaconsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Hear mesh invitations nearby and send your own'**
+  String get toolsBeaconsSub;
+
+  /// No description provided for @toolsBeaconsHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} heard • send your own'**
+  String toolsBeaconsHeard(int count);
+
+  /// No description provided for @toolsReporting.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} node reporting device metrics} other{{count} nodes reporting device metrics}}'**
+  String toolsReporting(int count);
+
+  /// No description provided for @toolsTelemetryOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio to receive telemetry'**
+  String get toolsTelemetryOff;
+
+  /// No description provided for @toolsBatteryPct.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery {pct}%'**
+  String toolsBatteryPct(int pct);
+
+  /// No description provided for @toolsChannelBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel busy {pct}%'**
+  String toolsChannelBusy(String pct);
+
+  /// No description provided for @toolsTransmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Transmitting {pct}%'**
+  String toolsTransmitting(String pct);
+
+  /// No description provided for @toolsSigExcellent.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent, very close'**
+  String get toolsSigExcellent;
+
+  /// No description provided for @toolsSigStrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong'**
+  String get toolsSigStrong;
+
+  /// No description provided for @toolsSigUsable.
+  ///
+  /// In en, this message translates to:
+  /// **'Usable'**
+  String get toolsSigUsable;
+
+  /// No description provided for @toolsSigWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak'**
+  String get toolsSigWeak;
+
+  /// No description provided for @toolsSigVeryWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Very weak, may drop'**
+  String get toolsSigVeryWeak;
+
+  /// No description provided for @toolsScanning.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning…'**
+  String get toolsScanning;
+
+  /// No description provided for @toolsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} Bluetooth device found} other{{count} Bluetooth devices found}}'**
+  String toolsFound(int count);
 }
 
 class _AppLocalizationsDelegate

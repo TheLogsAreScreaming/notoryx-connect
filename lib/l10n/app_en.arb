@@ -13,8 +13,133 @@
   "connConnected": "Connected",
   "connError": "Error",
   "radioStatus": "Radio: {status}",
-  "@radioStatus": {"placeholders": {"status": {"type": "String"}}},
+  "@radioStatus": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
   "radioStatusTip": "Radio: {status}. Tap to manage.",
-  "@radioStatusTip": {"placeholders": {"status": {"type": "String"}}},
-  "radioStatusHint": "manage the radio"
+  "@radioStatusTip": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "radioStatusHint": "manage the radio",
+  "toolsTitle": "Tools",
+  "toolsSubtitle": "Utilities for planning, testing and running a deployment.",
+  "toolsDoctor": "Connection doctor",
+  "toolsDoctorSub": "Find out why a radio won't connect or keeps dropping",
+  "toolsBeforeYouGo": "Before you go",
+  "toolsChecklist": "Deployment checklist",
+  "toolsBattery": "Battery runtime",
+  "toolsBatterySub": "Estimate hours from capacity and average draw",
+  "toolsCalculate": "Calculate",
+  "toolsMeshTools": "Mesh tools",
+  "toolsHealth": "Mesh health & airtime",
+  "toolsHealthSub": "How busy the channel is and how much your radio transmits",
+  "toolsLink": "Link planner",
+  "toolsLinkSub": "Check line of sight between two nodes over the terrain",
+  "toolsRange": "Range test",
+  "toolsRangeSub": "Log packets from a range test sender with signal and distance",
+  "toolsTraceroute": "Traceroute",
+  "toolsStore": "Store & forward",
+  "toolsStoreSub": "Replay messages you missed from a router",
+  "toolsBeacons": "Mesh beacons",
+  "toolsRecords": "Records",
+  "toolsIncident": "Incident log, templates & coverage",
+  "toolsIncidentSub": "Saved field records and exports",
+  "toolsSignal": "Signal",
+  "toolsTelemetry": "Live telemetry",
+  "toolsNothingYet": "Nothing received yet. Metrics appear when nodes send them.",
+  "toolsGuide": "Bluetooth signal guide",
+  "toolsGuideSub": "What the signal numbers (RSSI) mean",
+  "toolsScan": "Scan for radios",
+  "toolsCheck0": "Radio charged",
+  "toolsCheck1": "Antenna attached",
+  "toolsCheck2": "Region configured",
+  "toolsCheck3": "Primary channel verified",
+  "toolsCheck4": "GPS / position policy checked",
+  "toolsReady": "{done} of {total} ready",
+  "@toolsReady": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "toolsBatteryField": "Battery (mAh)",
+  "toolsDrawField": "Average draw (mA)",
+  "toolsAboutHours": "About {hours} hours",
+  "@toolsAboutHours": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "toolsTraceReady": "Show the relay path to a node and back",
+  "toolsTraceOff": "Connect to a radio to trace routes",
+  "toolsBeaconsSub": "Hear mesh invitations nearby and send your own",
+  "toolsBeaconsHeard": "{count} heard • send your own",
+  "@toolsBeaconsHeard": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "toolsReporting": "{count, plural, one{{count} node reporting device metrics} other{{count} nodes reporting device metrics}}",
+  "@toolsReporting": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "toolsTelemetryOff": "Connect to a radio to receive telemetry",
+  "toolsBatteryPct": "Battery {pct}%",
+  "@toolsBatteryPct": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "toolsChannelBusy": "Channel busy {pct}%",
+  "@toolsChannelBusy": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "toolsTransmitting": "Transmitting {pct}%",
+  "@toolsTransmitting": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "toolsSigExcellent": "Excellent, very close",
+  "toolsSigStrong": "Strong",
+  "toolsSigUsable": "Usable",
+  "toolsSigWeak": "Weak",
+  "toolsSigVeryWeak": "Very weak, may drop",
+  "toolsScanning": "Scanning…",
+  "toolsFound": "{count, plural, one{{count} Bluetooth device found} other{{count} Bluetooth devices found}}",
+  "@toolsFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
