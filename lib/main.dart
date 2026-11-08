@@ -17,6 +17,7 @@ import 'services/bastion_field_log.dart';
 import 'services/bastion_background_service.dart';
 import 'services/bastion_bot_guard.dart';
 import 'services/bastion_history_limit.dart';
+import 'services/bastion_mqtt_proxy.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_radio_data.dart';
 import 'phone_backup_page.dart';
@@ -1615,6 +1616,7 @@ class _SettingsPage extends StatelessWidget {
         ),
       ])),
       _BackgroundCard(radio: radio),
+      _MqttProxyCard(radio: radio),
       Card(child: SwitchListTile(
         secondary: const Icon(Icons.battery_saver_outlined),
         title: const Text('Low-power field mode'),
@@ -1824,6 +1826,39 @@ class _MessagesCard extends StatelessWidget {
 
 /// Shows whether Android lets the app keep the radio link open in the
 /// background, with a shortcut to the battery optimization setting.
+/// Opt-in: this phone carries MQTT for a radio without Wi-Fi.
+class _MqttProxyCard extends StatelessWidget {
+  const _MqttProxyCard({required this.radio});
+  final MeshtasticRadioCoordinator radio;
+
+  @override
+  Widget build(BuildContext context) {
+    final prefs = BastionPreferences.instance;
+    final proxy = radio.mqttProxy;
+    final hasConfig = radio.mqttProxyConfig != null;
+    final status = !prefs.mqttProxy
+        ? 'Off. Uses your phone\'s data when on.'
+        : !radio.isReady
+            ? 'On. Waits for your radio.'
+            : !hasConfig
+                ? 'Your radio isn\'t set to use this. Turn on MQTT and "Proxy to client" in its settings.'
+                : switch (proxy.state) {
+                    MqttProxyState.connected => 'Connected to ${proxy.host}. ${proxy.uplinked} sent, ${proxy.downlinked} received.',
+                    MqttProxyState.connecting => 'Connecting to ${proxy.host}…',
+                    MqttProxyState.error => proxy.error ?? 'Couldn\'t connect.',
+                    MqttProxyState.off => 'Starting…',
+                  };
+    return Card(child: SwitchListTile(
+      key: const ValueKey('mqtt-proxy-switch'),
+      secondary: const Icon(Icons.cloud_sync_outlined),
+      title: const Text('Carry MQTT through this phone'),
+      subtitle: Text(status),
+      value: prefs.mqttProxy,
+      onChanged: (v) => prefs.update(proxyMqtt: v),
+    ));
+  }
+}
+
 class _BackgroundCard extends StatefulWidget {
   const _BackgroundCard({required this.radio});
   final MeshtasticRadioCoordinator radio;
