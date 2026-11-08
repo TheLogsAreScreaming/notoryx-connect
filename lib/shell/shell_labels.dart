@@ -53,15 +53,18 @@ String _rssiLabel(int rssi) {
   return 'Very weak Bluetooth signal';
 }
 
-String _connectionLabel(MeshtasticConnectionState state) => switch (state) {
-  MeshtasticConnectionState.disconnected => 'Offline',
-  MeshtasticConnectionState.discovering => 'Scanning',
-  MeshtasticConnectionState.connecting => 'Connecting',
-  MeshtasticConnectionState.connected => 'Syncing',
-  MeshtasticConnectionState.synchronizing => 'Syncing',
-  MeshtasticConnectionState.ready => 'Connected',
-  MeshtasticConnectionState.error => 'Error',
-};
+String _connectionLabel(BuildContext context, MeshtasticConnectionState state) {
+  final l = AppLocalizations.of(context);
+  return switch (state) {
+    MeshtasticConnectionState.disconnected => l.connOffline,
+    MeshtasticConnectionState.discovering => l.connScanning,
+    MeshtasticConnectionState.connecting => l.connConnecting,
+    MeshtasticConnectionState.connected => l.connSyncing,
+    MeshtasticConnectionState.synchronizing => l.connSyncing,
+    MeshtasticConnectionState.ready => l.connConnected,
+    MeshtasticConnectionState.error => l.connError,
+  };
+}
 
 NxTone _connectionTone(MeshtasticConnectionState state) => switch (state) {
   MeshtasticConnectionState.disconnected => NxTone.neutral,
