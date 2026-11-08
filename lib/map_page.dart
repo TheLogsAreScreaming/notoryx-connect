@@ -225,7 +225,7 @@ class _MapPageState extends State<MapPage> {
                         Marker(
                           point: LatLng(waypoint.latitude, waypoint.longitude),
                           width: 120,
-                          height: 56,
+                          height: MediaQuery.textScalerOf(context).scale(56),
                           child: _WaypointPin(
                             waypoint: waypoint,
                             onTap: () => _showWaypoint(context, waypoint),
@@ -235,7 +235,7 @@ class _MapPageState extends State<MapPage> {
                         Marker(
                           point: LatLng(node.latitude!, node.longitude!),
                           width: 72,
-                          height: team.contains(node.num) ? 80 : 64,
+                          height: MediaQuery.textScalerOf(context).scale(team.contains(node.num) ? 80 : 64),
                           child: _NodePin(
                             node: node,
                             isLocal: node.num == local,
@@ -833,6 +833,7 @@ class _NodePin extends StatelessWidget {
       label: '${node.displayName}${isLocal ? ', this radio' : ''}'
           '${team == null ? '' : ', trip contact, ${team!.summaryIn(BastionPreferences.instance.units)}'}',
       child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: onTap,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -859,7 +860,7 @@ class _NodePin extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 color: Colors.black.withValues(alpha: 0.7),
                 child: Text(TeamMemberStatus.ageLabel(age),
-                    style: const TextStyle(color: Colors.white, fontSize: 10)),
+                    style: const TextStyle(color: Colors.white, fontSize: 12)),
               ),
             Icon(isLocal ? Icons.my_location : team != null ? Icons.person_pin_circle : Icons.location_on,
                 color: MapPage.accent, size: 26),
@@ -881,6 +882,7 @@ class _WaypointPin extends StatelessWidget {
         button: true,
         label: '${BastionRoutes.isRally(waypoint) ? 'Rally point' : 'Waypoint'} ${waypoint.name}',
         child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: onTap,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -893,7 +895,7 @@ class _WaypointPin extends StatelessWidget {
                   waypoint.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white, fontSize: 11),
+                  style: TextStyle(color: BastionRoutes.isRally(waypoint) ? Colors.black : Colors.white, fontSize: 12),
                 ),
               ),
             ],

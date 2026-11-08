@@ -89,6 +89,7 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
           controller: controller,
           maxLines: 4,
           autofocus: true,
+          decoration: const InputDecoration(labelText: 'Field note'),
         ),
         actions: [
           TextButton(
@@ -375,7 +376,7 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                       enabled: _radio.isReady,
                       maxLength: 200,
                       decoration: const InputDecoration(
-                        hintText: 'Direct message',
+                        labelText: 'Direct message',
                       ),
                       onSubmitted: (_) => _sendDirect(),
                     ),

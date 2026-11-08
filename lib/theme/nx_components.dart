@@ -129,7 +129,11 @@ class NxBanner extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final type = Theme.of(context).textTheme;
     final (bg, fg) = NxStatusColors.of(context).container(tone, scheme);
-    return Container(
+    return Semantics(
+      container: true,
+      // Problems are spoken when they appear, without moving focus.
+      liveRegion: tone == NxTone.warning || tone == NxTone.danger,
+      child: Container(
       margin: const EdgeInsets.symmetric(vertical: NxSpace.xxs + 2),
       padding: const EdgeInsets.all(NxSpace.sm + 2),
       decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(NxRadius.md)),
@@ -145,6 +149,7 @@ class NxBanner extends StatelessWidget {
           if (action != null) ...[const SizedBox(height: NxSpace.xs), action!],
         ])),
       ]),
+    ),
     );
   }
 }

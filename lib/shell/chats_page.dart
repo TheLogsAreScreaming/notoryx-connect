@@ -291,7 +291,9 @@ class _ChatsPageState extends State<BastionChatsPage> {
               borderRadius: BorderRadius.circular(NxRadius.lg),
               side: BorderSide(color: scheme.primary, width: 1.5))
           : null,
-      child: InkWell(
+      child: Semantics(
+        onLongPressHint: 'react to this message',
+        child: InkWell(
         onLongPress: () => _react(message),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(NxSpace.md, NxSpace.sm, NxSpace.md, NxSpace.sm),
@@ -360,6 +362,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
             ])),
           ]),
         ),
+      ),
       ),
     );
   }
@@ -592,7 +595,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
                   maxLines: 3,
                   maxLength: 160,
                   decoration: const InputDecoration(
-                    hintText: 'Message to send while Bot mode is on',
+                    labelText: 'Message to send while Bot mode is on',
                   ),
                   onChanged: widget.onAwayReplyChanged,
                 ),

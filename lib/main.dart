@@ -277,18 +277,28 @@ class _BastionShellState extends State<BastionShell> {
               builder: (context, _) {
                 final state = radio.connection.state;
                 // Tapping the status opens Nodes, where the radio is managed.
-                return Tooltip(
-                  message: 'Radio: ${_connectionLabel(state)}. Tap to manage.',
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(NxRadius.pill),
-                    onTap: () => _go(1),
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(minHeight: NxTouch.min),
-                      child: Center(child: NxStatusPill(
-                        label: _connectionLabel(state),
-                        tone: _connectionTone(state),
-                        busy: _connectionBusy(state) || radio.isReconnecting,
-                      )),
+                return Semantics(
+                  container: true,
+                  button: true,
+                  // Announces a lost or restored radio without moving focus.
+                  liveRegion: true,
+                  label: 'Radio: ${_connectionLabel(state)}',
+                  onTapHint: 'manage the radio',
+                  onTap: () => _go(1),
+                  excludeSemantics: true,
+                  child: Tooltip(
+                    message: 'Radio: ${_connectionLabel(state)}. Tap to manage.',
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(NxRadius.pill),
+                      onTap: () => _go(1),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(minHeight: NxTouch.min),
+                        child: Center(child: NxStatusPill(
+                          label: _connectionLabel(state),
+                          tone: _connectionTone(state),
+                          busy: _connectionBusy(state) || radio.isReconnecting,
+                        )),
+                      ),
                     ),
                   ),
                 );
