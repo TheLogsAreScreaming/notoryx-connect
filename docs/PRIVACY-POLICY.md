@@ -7,7 +7,7 @@ NOTORYX Connect ("the app") is an independent Android app for talking to LoRa me
 ## The short version
 - There is **no account**, **no analytics**, **no advertising**, and **no server** run by us. We do not receive, collect or sell any of your data.
 - What the app keeps stays in its private storage on your phone.
-- The app only sends data off your phone when you use a feature that needs to: messaging through your radio, sharing your location if you turn that on, and loading map images.
+- The app only sends data off your phone when you use a feature that needs to: messaging through your radio, sharing your location if you turn that on, loading map images, looking up terrain heights in the link planner, and carrying MQTT for your radio if you turn that on.
 
 ## What is stored on your phone
 Stored in the app's private storage, which other apps cannot read. Uninstalling the app deletes it.
@@ -30,7 +30,7 @@ Stored in the app's private storage, which other apps cannot read. Uninstalling 
 - **Location:** only for sharing your phone's location with the mesh and recording coverage, both off unless you turn them on.
 - **Camera:** only to scan channel QR codes when you choose to.
 - **Notifications and foreground service:** to keep the radio connection open in the background and to show message and field alerts.
-- **Internet:** only to download map images.
+- **Internet:** to download map images, to look up terrain heights when you use the link planner (the points you plan between go to Open-Meteo), and, only if you turn on "Carry MQTT through this phone", to pass your radio's MQTT traffic to the broker set on your radio.
 
 ## Your choices
 - Turn location sharing off at any time, or choose an approximate precision (Settings).

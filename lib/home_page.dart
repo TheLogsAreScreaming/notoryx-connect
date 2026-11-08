@@ -1,3 +1,4 @@
+import 'checkin_delivery_page.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -231,6 +232,12 @@ class _Delivery extends StatelessWidget {
     ];
     return Row(children: [
       Expanded(child: Text(parts.join(' • '))),
+      TextButton(
+        key: const ValueKey('checkin-details'),
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+          builder: (_) => CheckInDeliveryPage(radio: radio, record: record))),
+        child: const Text('Details'),
+      ),
       if (failed.isNotEmpty)
         TextButton(onPressed: radio.trip.resendFailed, child: const Text('Resend')),
     ]);
@@ -342,6 +349,7 @@ class _SosBanner extends StatelessWidget {
         ? '${sos.acknowledgedBy} replied. Repeats stopped.'
         : next != null
             ? 'Sent ${sos.sends} of $sosMaxSends. Next at ${_time(next)}.'
+                '${sos.intervalScale > 1 ? ' The channel is busy, so repeats are spaced out to get through.' : ''}'
             : 'Sent $sosMaxSends times. Repeats finished; the SOS stays shown until you stop it.';
     return Semantics(liveRegion: true, child: Card(
       color: scheme.errorContainer,
