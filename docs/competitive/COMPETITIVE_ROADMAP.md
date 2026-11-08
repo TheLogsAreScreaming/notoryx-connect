@@ -4,6 +4,24 @@ Researched 2026-11-07 against `main` b0d3643. Evidence and competitor profiles a
 
 Everything here is a proposal. Nothing in this PR changes app code.
 
+> **Status, 2026-11-08.** PR numbers refer to this repository.
+>
+> | Item | State |
+> |---|---|
+> | P0-1 SQLite, P0-2 beta.5, P1-1 path, P1-2 firmware, P1-4 USB, P1-5 keys, P2-7 widget | Merged and released |
+> | P2-2 remote admin; eight themes | Merged, not released |
+> | Last-heard filter, "No RF data" | PR 141 |
+> | P1-3 connection doctor, copy log | PR 142 |
+> | P1-7 trip readiness | PR 143 |
+> | P2-5 airtime-aware SOS, P2-4 check-in map | PR 144 |
+> | P2-3 MQTT proxy, data usage for MQTT | PR 145 |
+> | Network change alerts, store-and-forward catch-up | PR 146 |
+> | P2-1 iOS | PR 147: unsigned CI build only; needs an Apple account to install |
+> | Firmware update | Research only: `docs/FIRMWARE-UPDATE-RESEARCH.md` |
+> | P2-6 split `main.dart`, semantics pass, P1-6 translations | Not started; wait for the open PRs, since they touch the same files |
+> | Offline map area download | **Dropped for OpenStreetMap tiles:** its [tile policy](https://operations.osmfoundation.org/policies/tiles/) prohibits "download for offline" features. Would need a tile source that allows it. |
+> | P0-3 real-radio record | Needs hardware testing |
+
 ## 1. Competitive advantage opportunities
 
 | Opportunity | Why it is open | Connect's head start |
