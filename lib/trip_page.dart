@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'services/bastion_trip.dart';
 import 'services/meshtastic_radio_coordinator.dart';
+import 'trip_readiness_page.dart';
 
 /// Plan your trip: who gets check-ins and SOS, and when to warn.
 class TripPage extends StatefulWidget {
@@ -130,6 +131,14 @@ class _TripPageState extends State<TripPage> {
             onChanged: (i) => _update(plan.copyWith(sosChannel: i)),
           ),
           const SizedBox(height: 20),
+          OutlinedButton.icon(
+            key: const ValueKey('open-readiness'),
+            icon: const Icon(Icons.fact_check_outlined),
+            label: const Text('Readiness check'),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+              builder: (_) => TripReadinessPage(radio: widget.radio))),
+          ),
+          const SizedBox(height: 8),
           if (plan.active)
             OutlinedButton.icon(
               icon: const Icon(Icons.stop_circle_outlined),
