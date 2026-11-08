@@ -1959,6 +1959,13 @@ class _FieldAlertsCard extends StatelessWidget {
           value: s.favoriteSilent,
           onChanged: (v) => _update(context, s.copyWith(favoriteSilent: v)),
         ),
+        SwitchListTile(
+          key: const ValueKey('mesh-drop-switch'),
+          title: const Text('Mesh goes quiet'),
+          subtitle: const Text('Half or more of the nodes you were hearing stop being heard'),
+          value: s.meshDrop,
+          onChanged: (v) => _update(context, s.copyWith(meshDrop: v)),
+        ),
         ListTile(
           title: const Text('Quiet after'),
           enabled: s.favoriteSilent,

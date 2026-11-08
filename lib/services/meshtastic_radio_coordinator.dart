@@ -159,10 +159,55 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
               lastHeard: _nodes.where((n) => n.num == r.num).firstOrNull?.lastHeard),
       ];
       _fieldAlerts.checkSilence(favorites, _alertSettings).forEach(_raise);
+      _raise(_fieldAlerts.checkMeshDrop(
+          _nodes.where((n) => n.num != _localNodeNum).map((n) => n.lastHeard), _alertSettings));
+      if (++_onlineTicks % 5 == 0) unawaited(_saveLastOnline());
     });
+    _catchUpAsked = false;
+    _lastOnline = null;
+    unawaited(_loadLastOnline());
+  }
+
+  static const _lastOnlineKey = 'bastion.store_forward.last_online';
+  int _onlineTicks = 0;
+  DateTime? _lastOnline;
+  bool _catchUpAsked = false;
+
+  Future<void> _loadLastOnline() async {
+    try {
+      final ms = await SharedPreferencesAsync().getInt(_lastOnlineKey);
+      _lastOnline = ms == null ? null : DateTime.fromMillisecondsSinceEpoch(ms);
+    } catch (_) {
+      // Without it, catch-up just doesn't run this session.
+    }
+    _maybeCatchUp();
+  }
+
+  Future<void> _saveLastOnline() async {
+    try {
+      await SharedPreferencesAsync().setInt(_lastOnlineKey, DateTime.now().millisecondsSinceEpoch);
+    } catch (_) {
+      // Best effort.
+    }
+  }
+
+  /// Once per session, asks the most recently heard router for what was
+  /// missed. Runs only with the setting on and a known offline gap.
+  void _maybeCatchUp() {
+    if (_catchUpAsked || !BastionPreferences.instance.storeForwardCatchUp || !isReady) return;
+    final routers = _meshTools.routers;
+    if (routers.isEmpty) return;
+    final window = BastionStoreForwardCatchUp.windowFor(_lastOnline, DateTime.now());
+    if (window == null) return;
+    _catchUpAsked = true;
+    final router = routers.reduce((a, b) => a.lastHeard.isAfter(b.lastHeard) ? a : b);
+    unawaited(requestStoredMessages(router.nodeNum, window).catchError((Object _) {
+      _catchUpAsked = false;
+    }));
   }
 
   void _stopFieldAlerts() {
+    if (_silenceTimer != null) unawaited(_saveLastOnline());
     _silenceTimer?.cancel();
     _silenceTimer = null;
     _fieldAlerts.endSession();
@@ -860,7 +905,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
             }
           } on InvalidProtocolBufferException { /* Ignore malformed frames. */ }
         }
-        if (_meshTools.handleEnvelope(bytes)) notifyListeners();
+        if (_meshTools.handleEnvelope(bytes)) {
+          _maybeCatchUp();
+          notifyListeners();
+        }
       });
       _waypointSubscription = session.incomingEnvelopes.listen((bytes) async {
         try {

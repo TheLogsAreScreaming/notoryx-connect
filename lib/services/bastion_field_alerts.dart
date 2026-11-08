@@ -12,6 +12,7 @@ class BastionAlertSettings {
     this.newNode = false,
     this.favoriteSilent = false,
     this.silence = const Duration(hours: 2),
+    this.meshDrop = false,
   });
 
   static const key = 'bastion.alerts.v1';
@@ -31,18 +32,23 @@ class BastionAlertSettings {
   final bool favoriteSilent;
   final Duration silence;
 
+  /// Far fewer nodes are being heard than earlier in this session.
+  final bool meshDrop;
+
   BastionAlertSettings copyWith({bool? lowBattery, int? batteryThreshold, bool? newNode,
-      bool? favoriteSilent, Duration? silence}) => BastionAlertSettings(
+      bool? favoriteSilent, Duration? silence, bool? meshDrop}) => BastionAlertSettings(
     lowBattery: lowBattery ?? this.lowBattery,
     batteryThreshold: batteryThreshold ?? this.batteryThreshold,
     newNode: newNode ?? this.newNode,
     favoriteSilent: favoriteSilent ?? this.favoriteSilent,
     silence: silence ?? this.silence,
+    meshDrop: meshDrop ?? this.meshDrop,
   );
 
   Map<String, Object> toJson() => {
     'lowBattery': lowBattery, 'batteryThreshold': batteryThreshold,
     'newNode': newNode, 'favoriteSilent': favoriteSilent, 'silenceMinutes': silence.inMinutes,
+    'meshDrop': meshDrop,
   };
 
   /// Unknown or out-of-range values fall back to the defaults.
@@ -57,6 +63,7 @@ class BastionAlertSettings {
       newNode: json['newNode'] is bool ? json['newNode'] as bool : d.newNode,
       favoriteSilent: json['favoriteSilent'] is bool ? json['favoriteSilent'] as bool : d.favoriteSilent,
       silence: silenceChoices.firstWhere((c) => c.inMinutes == minutes, orElse: () => d.silence),
+      meshDrop: json['meshDrop'] is bool ? json['meshDrop'] as bool : d.meshDrop,
     );
   }
 
@@ -87,7 +94,7 @@ class BastionAlertSettings {
   int get hashCode => jsonEncode(toJson()).hashCode;
 }
 
-enum BastionAlertKind { lowBattery, newNode, favoriteSilent, sosAcknowledged, checkInDue, contactOverdue, geofenceArrive, geofenceLeave, keyChanged }
+enum BastionAlertKind { lowBattery, newNode, favoriteSilent, sosAcknowledged, checkInDue, contactOverdue, geofenceArrive, geofenceLeave, keyChanged, meshDrop }
 
 @immutable
 class BastionFieldAlert {
@@ -120,6 +127,7 @@ class BastionFieldAlertEngine {
   /// Call when the radio is ready (after its node list has synchronized).
   void startSession(int localNode) {
     _active.clear();
+    _meshPeak = 0;
     _localNode = localNode;
     _sessionStart = _clock();
   }
@@ -157,6 +165,32 @@ class BastionFieldAlertEngine {
     if (!_active.add('new:$nodeNum')) return null;
     return BastionFieldAlert(BastionAlertKind.newNode, nodeNum, 'New node: $name',
         'Your radio heard $name for the first time.');
+  }
+
+  /// Below this many nodes, normal comings and goings look like an outage.
+  static const meshDropMinimum = 6;
+  static const meshActiveWindow = Duration(hours: 1);
+  int _meshPeak = 0;
+
+  /// Alerts once when the nodes heard in the last hour fall to half of this
+  /// session's peak or less, and rearms when most are back. Waits an hour
+  /// into the session, so a fresh connection doesn't look like a drop.
+  BastionFieldAlert? checkMeshDrop(Iterable<DateTime?> lastHeard, BastionAlertSettings settings) {
+    final start = _sessionStart;
+    if (start == null || !settings.meshDrop) return null;
+    final now = _clock();
+    final active = lastHeard.where((t) => t != null && now.difference(t) <= meshActiveWindow).length;
+    if (active > _meshPeak) _meshPeak = active;
+    const key = 'meshDrop';
+    if (_active.contains(key) && active * 4 >= _meshPeak * 3) {
+      _active.remove(key);
+      _meshPeak = active;
+      return null;
+    }
+    if (_meshPeak < meshDropMinimum || active * 2 > _meshPeak) return null;
+    if (now.difference(start) < meshActiveWindow || !_active.add(key)) return null;
+    return BastionFieldAlert(BastionAlertKind.meshDrop, 0, 'The mesh has gone quieter',
+        'Heard $active nodes in the last hour, down from $_meshPeak. A repeater may be down, or you may have moved out of range.');
   }
 
   /// Favorites not heard for [BastionAlertSettings.silence] during this

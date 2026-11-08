@@ -126,6 +126,17 @@ class _StoreForwardTabState extends State<_StoreForwardTab> {
           'you missed while out of range. Replayed messages appear in Chats.',
           style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
+        ListenableBuilder(
+          listenable: BastionPreferences.instance,
+          builder: (context, _) => SwitchListTile(
+            key: const ValueKey('sf-catch-up'),
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Catch up automatically'),
+            subtitle: const Text('After 15 minutes or more offline, ask a router once per connection for what you missed'),
+            value: BastionPreferences.instance.storeForwardCatchUp,
+            onChanged: (v) => BastionPreferences.instance.update(catchUp: v),
+          ),
+        ),
         const SizedBox(height: 12),
         DropdownButtonFormField<Duration>(
           initialValue: _window,
