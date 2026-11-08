@@ -17,6 +17,7 @@ import 'services/bastion_field_log.dart';
 import 'services/bastion_background_service.dart';
 import 'services/bastion_bot_guard.dart';
 import 'services/bastion_history_limit.dart';
+import 'services/bastion_heard_filter.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_radio_data.dart';
 import 'phone_backup_page.dart';
@@ -438,6 +439,12 @@ class _NodesPage extends StatelessWidget {
       final scheme = Theme.of(context).colorScheme;
       final local = radio.localNode;
       final connectedName = radio.connection.deviceName;
+      final heard = BastionPreferences.instance.heardWithin;
+      final now = DateTime.now();
+      final shown = [
+        for (final n in radio.nodes)
+          if (heard.matches(n.lastHeard, now, always: n.num == local?.num)) n,
+      ];
       return ListView(
       padding: NxSpace.page,
       children: [
@@ -544,9 +551,24 @@ class _NodesPage extends StatelessWidget {
                     ),
             )),
         if (radio.nodes.isNotEmpty) ...[
-          NxSectionLabel('Mesh nodes (${radio.nodes.length})'),
+          NxSectionLabel(heard.window == null
+              ? 'Mesh nodes (${radio.nodes.length})'
+              : 'Mesh nodes (${shown.length} of ${radio.nodes.length})'),
+          _HeardFilterChips(
+            value: heard,
+            onChanged: (v) => BastionPreferences.instance.update(heard: v),
+          ),
+          if (shown.isEmpty)
+            NxEmptyState(icon: Icons.filter_alt_off_outlined,
+              title: 'No nodes heard in the last ${heard.label}',
+              detail: 'Pick a longer time to see older nodes.',
+              action: TextButton(
+                onPressed: () => BastionPreferences.instance.update(heard: BastionHeardWithin.any),
+                child: const Text('Show all nodes'),
+              ))
+          else
           Card(child: Column(children: [
-            for (final (i, node) in radio.nodes.indexed) ...[
+            for (final (i, node) in shown.indexed) ...[
               if (i > 0) const Divider(indent: 72),
               ListTile(
                 leading: CircleAvatar(
@@ -651,6 +673,30 @@ class _NodesPage extends StatelessWidget {
       ],
     );
     },
+  );
+}
+
+/// Chips that limit the node list to nodes heard recently.
+class _HeardFilterChips extends StatelessWidget {
+  const _HeardFilterChips({required this.value, required this.onChanged});
+  final BastionHeardWithin value;
+  final ValueChanged<BastionHeardWithin> onChanged;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: NxSpace.xs),
+    child: Semantics(
+      label: 'Show nodes heard within',
+      child: Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
+        for (final v in BastionHeardWithin.values)
+          ChoiceChip(
+            key: ValueKey('heard-${v.name}'),
+            label: Text(v.label),
+            selected: v == value,
+            onSelected: (_) => onChanged(v),
+          ),
+      ]),
+    ),
   );
 }
 

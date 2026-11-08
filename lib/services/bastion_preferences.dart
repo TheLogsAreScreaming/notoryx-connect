@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../theme/nx_theme_picker.dart';
 import '../theme/nx_themes.dart';
+import 'bastion_heard_filter.dart';
 import 'bastion_history_limit.dart';
 import 'bastion_units.dart';
 
@@ -20,6 +21,9 @@ class BastionPreferences extends ChangeNotifier {
 
   /// Whether Seasonal switches to holiday colors on their dates.
   bool seasonalHolidays = true;
+
+  /// Hide nodes on Nodes and Map not heard within this window.
+  BastionHeardWithin heardWithin = BastionHeardWithin.any;
 
   /// The theme id to show for the device's light/dark [platform] setting.
   String activeTheme(Brightness platform) => activeThemeId(
@@ -64,6 +68,7 @@ class BastionPreferences extends ChangeNotifier {
       }
       seasonalOverride = await p.getString('bastion.seasonal_override') ?? 'auto';
       seasonalHolidays = await p.getBool('bastion.seasonal_holidays') ?? true;
+      heardWithin = BastionHeardWithin.fromName(await p.getString('bastion.nodes.heard_within'));
       statistics = await p.getBool('bastion.dashboard.statistics') ?? true;
       meshHealth = await p.getBool('bastion.dashboard.health') ?? true;
       encounters = await p.getBool('bastion.dashboard.encounters') ?? true;
@@ -78,8 +83,9 @@ class BastionPreferences extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> update({String? theme, String? darkTheme, String? season, bool? holidays, bool? stats, bool? health, bool? saved,
+  Future<void> update({BastionHeardWithin? heard, String? theme, String? darkTheme, String? season, bool? holidays, bool? stats, bool? health, bool? saved,
       int? retentionDays, bool? speak, BastionUnits? unitSystem, int? keepMessages}) async {
+    heardWithin = heard ?? heardWithin;
     appTheme = theme ?? appTheme;
     darkModeTheme = darkTheme ?? darkModeTheme;
     seasonalOverride = season ?? seasonalOverride;
@@ -99,6 +105,7 @@ class BastionPreferences extends ChangeNotifier {
       await p.setString('bastion.dark_mode_theme', darkModeTheme);
       await p.setString('bastion.seasonal_override', seasonalOverride);
       await p.setBool('bastion.seasonal_holidays', seasonalHolidays);
+      await p.setString('bastion.nodes.heard_within', heardWithin.name);
       await p.setBool('bastion.dashboard.statistics', statistics);
       await p.setBool('bastion.dashboard.health', meshHealth);
       await p.setBool('bastion.dashboard.encounters', encounters);

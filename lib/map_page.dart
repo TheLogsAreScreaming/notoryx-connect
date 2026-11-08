@@ -12,6 +12,7 @@ import 'node_detail_page.dart';
 import 'services/bastion_geo.dart';
 import 'services/bastion_geofences.dart';
 import 'services/bastion_gpx.dart';
+import 'services/bastion_heard_filter.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_routes.dart';
 import 'services/bastion_units.dart';
@@ -114,8 +115,14 @@ class _MapPageState extends State<MapPage> {
     super.dispose();
   }
 
-  List<MeshtasticNode> get _placed =>
-      widget.radio.nodes.where((n) => n.hasPosition).toList();
+  List<MeshtasticNode> get _placed {
+    final heard = BastionPreferences.instance.heardWithin;
+    final now = DateTime.now();
+    final local = widget.radio.localNode?.num;
+    return widget.radio.nodes
+        .where((n) => n.hasPosition && heard.matches(n.lastHeard, now, always: n.num == local))
+        .toList();
+  }
 
   void _fit(List<MeshtasticNode> nodes) {
     if (nodes.isEmpty) return;
@@ -267,6 +274,28 @@ class _MapPageState extends State<MapPage> {
                         ),
                       ]),
                       Wrap(alignment: WrapAlignment.end, children: [
+                        PopupMenuButton<BastionHeardWithin>(
+                          key: const ValueKey('map-heard-filter'),
+                          tooltip: 'Show nodes heard within',
+                          icon: Badge(
+                            isLabelVisible: BastionPreferences.instance.heardWithin != BastionHeardWithin.any,
+                            smallSize: 8,
+                            child: const Icon(Icons.filter_alt_outlined),
+                          ),
+                          initialValue: BastionPreferences.instance.heardWithin,
+                          onSelected: (v) async {
+                            await BastionPreferences.instance.update(heard: v);
+                            if (mounted) setState(() {});
+                          },
+                          itemBuilder: (_) => [
+                            for (final v in BastionHeardWithin.values)
+                              CheckedPopupMenuItem(
+                                value: v,
+                                checked: v == BastionPreferences.instance.heardWithin,
+                                child: Text(v == BastionHeardWithin.any ? 'Heard any time' : 'Heard in last ${v.label}'),
+                              ),
+                          ],
+                        ),
                         IconButton(
                           tooltip: _topo ? 'Show street map' : 'Show topographic map',
                           icon: Icon(_topo ? Icons.map_outlined : Icons.terrain),
@@ -756,9 +785,9 @@ class _MapPageState extends State<MapPage> {
               if (distance != null)
                 Text('${BastionUnitFormat.distance(distance, BastionPreferences.instance.units)} from this radio'),
               Text('Position: ${ago(node.positionTime)} • Heard: ${ago(node.lastHeard)}'),
-              if (node.snr != null || node.hopsAway != null)
+              if (node.snr != null || node.hopsAway != null || node.noRfReason != null)
                 Text([
-                  if (node.snr != null) 'SNR ${node.snr!.toStringAsFixed(1)} dB',
+                  if (node.snr != null) 'SNR ${node.snr!.toStringAsFixed(1)} dB' else node.noRfReason!,
                   if (node.hopsAway != null)
                     node.hopsAway == 0 ? 'direct' : '${node.hopsAway} hops',
                 ].join(' • ')),
