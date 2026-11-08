@@ -46,6 +46,7 @@ import 'services/meshtastic_usb_transport.dart';
 import 'theme/notoryx_theme.dart';
 import 'theme/notoryx_tokens.dart';
 import 'theme/nx_components.dart';
+import 'connection_doctor_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -467,7 +468,13 @@ class _NodesPage extends StatelessWidget {
           const SizedBox(height: NxSpace.sm),
         ],
         if (radio.connection.error != null)
-          NxBanner(tone: NxTone.danger, title: 'Connection problem', message: radio.connection.error!),
+          NxBanner(tone: NxTone.danger, title: 'Connection problem', message: radio.connection.error!,
+            action: TextButton(
+              key: const ValueKey('open-doctor'),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                builder: (_) => ConnectionDoctorPage(radio: radio, discovery: discovery))),
+              child: const Text('Diagnose'),
+            )),
         if (radio.backgroundProblem != null)
           NxBanner(tone: NxTone.warning, message: radio.backgroundProblem!),
         if (radio.isReady)
@@ -1393,6 +1400,13 @@ class _ToolsPageState extends State<_ToolsPage> {
     children: [
       const NxPageHeader(title: 'Tools',
         subtitle: 'Utilities for planning, testing and running a deployment.'),
+      Card(child: ListTile(
+        leading: const Icon(Icons.medical_services_outlined),
+        title: const Text('Connection doctor'),
+        subtitle: const Text('Find out why a radio won\'t connect or keeps dropping'),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(ConnectionDoctorPage(radio: radio, discovery: widget.discovery)),
+      )),
       const NxSectionLabel('Before you go'),
       Card(child: ExpansionTile(
         initiallyExpanded: true,
