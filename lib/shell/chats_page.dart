@@ -292,8 +292,11 @@ class _ChatsPageState extends State<BastionChatsPage> {
               side: BorderSide(color: scheme.primary, width: 1.5))
           : null,
       child: Semantics(
+        onTapHint: 'react to this message',
         onLongPressHint: 'react to this message',
         child: InkWell(
+        // A plain tap works too, for anyone who can't long-press.
+        onTap: () => _react(message),
         onLongPress: () => _react(message),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(NxSpace.md, NxSpace.sm, NxSpace.md, NxSpace.sm),
