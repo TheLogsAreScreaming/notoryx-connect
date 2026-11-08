@@ -27,6 +27,21 @@ class RangeTestEntry {
   final int? rssi;
 }
 
+/// When to ask a router for messages missed while offline.
+abstract final class BastionStoreForwardCatchUp {
+  static const minimumGap = Duration(minutes: 15);
+  static const longestWindow = Duration(hours: 24);
+
+  /// The window to request after being offline since [lastOnline], or null
+  /// when the gap is too short to be worth the airtime or is unknown.
+  static Duration? windowFor(DateTime? lastOnline, DateTime now) {
+    if (lastOnline == null) return null;
+    final gap = now.difference(lastOnline);
+    if (gap < minimumGap) return null;
+    return gap > longestWindow ? longestWindow : gap;
+  }
+}
+
 /// A node running Store & Forward as a server, known from its heartbeat.
 class StoreForwardRouter {
   const StoreForwardRouter({required this.nodeNum, required this.lastHeard, this.heartbeatSecs});
