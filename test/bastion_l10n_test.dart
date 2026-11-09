@@ -48,6 +48,24 @@ void main() {
     expect(find.text('Propietario'), findsOneWidget);
   });
 
+  testWidgets('Home is translated, but check-in words stay as sent on air', (tester) async {
+    const locale = Locale('es');
+    tester.platformDispatcher.localeTestValue = locale;
+    tester.platformDispatcher.localesTestValue = [locale];
+    addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+    tester.view.physicalSize = const Size(390, 2000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(const BastionApp());
+    await tester.pumpAndSettle();
+    expect(find.text('Ninguna radio conectada'), findsOneWidget);
+    expect(find.text('Mantén para SOS'), findsOneWidget);
+    expect(find.text('Conectar radio'), findsOneWidget);
+    expect(find.textContaining('Reportarse: '), findsOneWidget);
+  });
+
   testWidgets('the Tools page is translated', (tester) async {
     const locale = Locale('es');
     tester.platformDispatcher.localeTestValue = locale;

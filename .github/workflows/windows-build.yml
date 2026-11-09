@@ -1,0 +1,73 @@
+name: NOTORYX Windows Build
+
+# Builds NOTORYX Connect for 64-bit Windows as a zip. It is not code signed,
+# so Windows SmartScreen warns on first launch.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Optional release tag to attach the zip to. Leave empty for an artifact only.
+        required: false
+        default: ''
+  pull_request:
+    paths:
+      - 'scripts/prepare_windows.py'
+      - '.github/workflows/windows-build.yml'
+      - 'lib/services/bastion_chat_store.dart'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notoryx-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    permissions:
+      contents: write  # only used to attach the zip to a release tag
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.7'
+          channel: stable
+      - name: Generate and prepare the Windows project
+        run: |
+          flutter create --no-pub --platforms=windows --org com.bastionmesh --project-name bastion .
+          # flutter create replaces pubspec.lock with a template; restore the committed one.
+          git checkout -- pubspec.lock
+          rm -f test/widget_test.dart
+          python scripts/prepare_windows.py
+          flutter pub get --enforce-lockfile
+      - name: Build
+        run: flutter build windows --release
+      - name: Package
+        shell: pwsh
+        run: |
+          $Line = Select-String -Path pubspec.yaml -Pattern '^version: *(.+)\+(.+)$'
+          $Version = $Line.Matches[0].Groups[1].Value + '-' + $Line.Matches[0].Groups[2].Value
+          $Release = 'build/windows/x64/runner/Release'
+          if (-not (Test-Path "$Release/bastion.exe")) { throw 'bastion.exe was not built' }
+          if (-not (Get-ChildItem "$Release" -Recurse -Filter '*sqlite3*.dll')) { throw 'The SQLite library is missing' }
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Compress-Archive -Path "$Release/*" -DestinationPath "dist/NOTORYX-Connect-$Version-Windows-x64.zip"
+          Get-FileHash dist/*.zip -Algorithm SHA256 | ForEach-Object { "$($_.Hash.ToLower())  $(Split-Path $_.Path -Leaf)" } | Set-Content dist/SHA256SUMS-Windows.txt
+          "Version: $Version`nCommit: $env:GITHUB_SHA`nRun: $env:GITHUB_RUN_ID" | Set-Content dist/BUILD-INFO-Windows.txt
+      - uses: actions/upload-artifact@v7
+        with:
+          name: NOTORYX-Connect-Windows-${{ github.run_number }}
+          path: dist/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Attach to release
+        if: github.event_name == 'workflow_dispatch' && inputs.tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: gh release upload "$TAG" dist/* --clobber

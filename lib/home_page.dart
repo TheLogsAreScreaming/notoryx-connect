@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'l10n/generated/app_localizations.dart';
+
 import 'services/bastion_chat_message.dart';
 import 'services/bastion_firmware.dart';
 import 'services/bastion_trip.dart';
@@ -27,6 +29,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) => AnimatedBuilder(
     animation: radio,
     builder: (context, _) {
+      final l = AppLocalizations.of(context);
       final trip = radio.trip;
       final muted = Theme.of(context).textTheme.bodyMedium?.copyWith(
           color: Theme.of(context).colorScheme.onSurfaceVariant);
@@ -38,18 +41,17 @@ class HomePage extends StatelessWidget {
             NxBanner(
               tone: radio.firmwareSupport == FirmwareSupport.unsupported ? NxTone.warning : NxTone.info,
               icon: Icons.system_update_alt,
-              title: 'Radio firmware update suggested',
+              title: l.homeFirmwareTitle,
               message: advice,
             ),
         _TripCard(radio: radio),
-        const NxSectionLabel('Check in'),
+        NxSectionLabel(l.homeCheckIn),
         _CheckInButtons(radio: radio),
-        const NxSectionLabel('Emergency'),
+        NxSectionLabel(l.homeEmergency),
         _SosButton(trip: trip),
         const SizedBox(height: NxSpace.xs),
         Text(trip.sosBlocked ??
-            'Hold for 2 seconds. It goes to your trip contacts${trip.plan.sosChannel >= 0 ? ' and channel ${trip.plan.sosChannel}' : ''}, '
-            'and repeats every 5 minutes until someone replies.',
+            (trip.plan.sosChannel >= 0 ? l.homeSosHintChannel(trip.plan.sosChannel) : l.homeSosHint),
           style: muted),
         if (trip.problem != null)
           NxBanner(tone: NxTone.danger, message: trip.problem!),
@@ -57,7 +59,7 @@ class HomePage extends StatelessWidget {
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Icon(Icons.info_outline, size: 16, color: Theme.of(context).colorScheme.onSurfaceVariant),
           const SizedBox(width: NxSpace.xs),
-          Expanded(child: Text('Sent or queued does not mean received. Confirm with a reply or a call.',
+          Expanded(child: Text(l.homeNotReceived,
             style: Theme.of(context).textTheme.bodySmall)),
         ]),
       ]);
@@ -73,6 +75,7 @@ class _ConsoleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final type = Theme.of(context).textTheme;
     final status = NxStatusColors.of(context);
@@ -95,33 +98,33 @@ class _ConsoleCard extends StatelessWidget {
           ),
           const SizedBox(width: NxSpace.sm),
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Semantics(header: true, child: Text(ready ? 'Radio connected' : 'No radio connected',
+            Semantics(header: true, child: Text(ready ? l.homeConnected : l.homeNotConnected,
               style: type.titleMedium)),
             const SizedBox(height: 2),
             Text(ready
-                ? (node == null ? 'Your radio' : node.longName ?? node.shortName ?? 'Your radio')
-                : 'Connect to check in, send an SOS and see the mesh.',
+                ? (node == null ? l.homeYourRadio : node.longName ?? node.shortName ?? l.homeYourRadio)
+                : l.homeConnectHint,
               style: type.bodyMedium?.copyWith(color: scheme.onSurfaceVariant)),
           ])),
         ]),
         const SizedBox(height: NxSpace.sm),
         if (ready)
           NxStatRow(children: [
-            NxStatTile(label: 'Nodes', value: '${radio.nodes.length}', icon: Icons.hub_outlined),
+            NxStatTile(label: l.homeNodes, value: '${radio.nodes.length}', icon: Icons.hub_outlined),
             NxStatTile(
-              label: 'Battery',
+              label: l.homeBattery,
               icon: battery != null && battery > 100 ? Icons.power : Icons.battery_std,
-              value: battery == null ? 'Unknown' : battery > 100 ? 'Plugged in' : '$battery%',
+              value: battery == null ? l.homeUnknown : battery > 100 ? l.homePluggedIn : '$battery%',
               tone: battery != null && battery <= 20 ? NxTone.warning : NxTone.neutral,
             ),
           ])
         else
           Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
             FilledButton.icon(onPressed: onConnect, icon: const Icon(Icons.bluetooth_searching),
-              label: const Text('Connect radio')),
+              label: Text(l.homeConnectRadio)),
             if (onTryDemo != null)
               TextButton.icon(onPressed: onTryDemo, icon: const Icon(Icons.play_circle_outline),
-                label: const Text('Try the demo')),
+                label: Text(l.homeTryDemo)),
           ]),
       ]),
     ));
@@ -134,20 +137,21 @@ class _TripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final trip = radio.trip;
     final plan = trip.plan;
     final overdue = trip.overdue;
     final status = [
-      plan.active ? 'Trip running' : 'Trip not started',
-      '${plan.members.length} contact${plan.members.length == 1 ? '' : 's'}',
+      plan.active ? l.homeTripRunning : l.homeTripNotStarted,
+      l.homeContacts(plan.members.length),
     ].join(' • ');
     final scheme = Theme.of(context).colorScheme;
     return Card(child: ListTile(
       leading: Icon(Icons.hiking, color: overdue.isEmpty ? scheme.primary : scheme.error),
-      title: Text(plan.active ? 'Trip: ${plan.name}' : 'Plan your trip'),
+      title: Text(plan.active ? l.homeTripNamed(plan.name) : l.homePlanTrip),
       subtitle: Text(overdue.isEmpty
           ? status
-          : '$status\nOverdue: ${overdue.map(radio.nodeName).join(', ')}'),
+          : '$status\n${l.homeOverdue(overdue.map(radio.nodeName).join(', '))}'),
       isThreeLine: overdue.isNotEmpty,
       trailing: const Icon(Icons.chevron_right),
       onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
@@ -183,6 +187,7 @@ class _CheckInButtonsState extends State<_CheckInButtons> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final trip = widget.radio.trip;
     final blocked = trip.checkInBlocked;
     final enabled = blocked == null && !_sending;
@@ -194,7 +199,7 @@ class _CheckInButtonsState extends State<_CheckInButtons> {
         icon: _sending
             ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2.5))
             : const Icon(Icons.check_circle_outline),
-        label: Text("Check in: ${checkInLabels.first}",
+        label: Text(l.homeCheckInLabel(checkInLabels.first),
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
       ),
       const SizedBox(height: NxSpace.xs),
@@ -221,14 +226,15 @@ class _Delivery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final delivery = radio.trip.delivery(record);
     final delivered = delivery.values.where((s) => s == BastionDeliveryState.delivered).length;
     final failed = [for (final e in delivery.entries) if (e.value == BastionDeliveryState.failed) e.key];
     final waiting = delivery.length - delivered - failed.length;
     final parts = [
-      '${record.label} at ${_time(record.at)}: delivered to $delivered of ${delivery.length}',
-      if (failed.isNotEmpty) 'not delivered to ${failed.map(radio.nodeName).join(', ')}',
-      if (waiting > 0) '$waiting waiting',
+      l.homeDelivered(record.label, _time(record.at), delivered, delivery.length),
+      if (failed.isNotEmpty) l.homeNotDelivered(failed.map(radio.nodeName).join(', ')),
+      if (waiting > 0) l.homeWaiting(waiting),
     ];
     return Row(children: [
       Expanded(child: Text(parts.join(' • '))),
@@ -236,10 +242,10 @@ class _Delivery extends StatelessWidget {
         key: const ValueKey('checkin-details'),
         onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
           builder: (_) => CheckInDeliveryPage(radio: radio, record: record))),
-        child: const Text('Details'),
+        child: Text(l.homeDetails),
       ),
       if (failed.isNotEmpty)
-        TextButton(onPressed: radio.trip.resendFailed, child: const Text('Resend')),
+        TextButton(onPressed: radio.trip.resendFailed, child: Text(l.homeResend)),
     ]);
   }
 }
@@ -279,12 +285,13 @@ class _SosButtonState extends State<_SosButton> with SingleTickerProviderStateMi
 
   /// Screen readers can't hold, so they confirm in a dialog instead.
   Future<void> _confirm() async {
+    final l = AppLocalizations.of(context);
     final ok = await showDialog<bool>(context: context, builder: (context) => AlertDialog(
-      title: const Text('Send SOS?'),
-      content: const Text('Your SOS repeats every 5 minutes until someone replies or you stop it.'),
+      title: Text(l.homeSendSosQ),
+      content: Text(l.homeSosRepeats),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-        FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Send SOS')),
+        TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.commonCancel)),
+        FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l.homeSendSos)),
       ],
     ));
     if (ok == true) await _start();
@@ -292,13 +299,14 @@ class _SosButtonState extends State<_SosButton> with SingleTickerProviderStateMi
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final enabled = widget.trip.sosBlocked == null && !widget.trip.sos.active;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Semantics(
         button: true,
         enabled: enabled,
-        label: 'Hold for SOS',
+        label: l.homeHoldSos,
         onTap: enabled ? _confirm : null,
         excludeSemantics: true,
         child: GestureDetector(
@@ -321,7 +329,7 @@ class _SosButtonState extends State<_SosButton> with SingleTickerProviderStateMi
                 Center(child: Row(mainAxisSize: MainAxisSize.min, children: [
                   Icon(Icons.sos, color: enabled ? scheme.onErrorContainer : scheme.onSurfaceVariant),
                   const SizedBox(width: 10),
-                  Text('Hold for SOS', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800,
+                  Text(l.homeHoldSos, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800,
                     color: enabled ? scheme.onErrorContainer : scheme.onSurfaceVariant)),
                 ])),
               ]),
@@ -342,15 +350,15 @@ class _SosBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final sos = trip.sos;
     final next = sos.nextSendAt;
     final detail = sos.acknowledgedBy != null
-        ? '${sos.acknowledgedBy} replied. Repeats stopped.'
+        ? l.homeSosReplied(sos.acknowledgedBy!)
         : next != null
-            ? 'Sent ${sos.sends} of $sosMaxSends. Next at ${_time(next)}.'
-                '${sos.intervalScale > 1 ? ' The channel is busy, so repeats are spaced out to get through.' : ''}'
-            : 'Sent $sosMaxSends times. Repeats finished; the SOS stays shown until you stop it.';
+            ? l.homeSosNext(sos.sends, sosMaxSends, _time(next)) + (sos.intervalScale > 1 ? l.homeSosBusy : '')
+            : l.homeSosDone(sosMaxSends);
     return Semantics(liveRegion: true, child: Card(
       color: scheme.errorContainer,
       child: Padding(
@@ -359,14 +367,14 @@ class _SosBanner extends StatelessWidget {
           Row(children: [
             Icon(Icons.sos, color: scheme.onErrorContainer),
             const SizedBox(width: 10),
-            Text('SOS active', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: scheme.onErrorContainer)),
+            Text(l.homeSosActive, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: scheme.onErrorContainer)),
           ]),
           const SizedBox(height: 6),
           Text(detail, style: TextStyle(color: scheme.onErrorContainer)),
           const SizedBox(height: 10),
           Wrap(spacing: 8, runSpacing: 8, children: [
-            FilledButton(onPressed: () => trip.stopSos(allClear: true), child: const Text("I'm safe")),
-            OutlinedButton(onPressed: trip.stopSos, child: const Text('Stop without message')),
+            FilledButton(onPressed: () => trip.stopSos(allClear: true), child: Text(l.homeImSafe)),
+            OutlinedButton(onPressed: trip.stopSos, child: Text(l.homeStopNoMessage)),
           ]),
         ]),
       ),
