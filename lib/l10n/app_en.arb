@@ -842,5 +842,48 @@
     }
   },
   "setIgnoredMuted": "Ignored and muted nodes",
-  "setNoneIgnored": "None. Open a node to ignore or mute it."
+  "setNoneIgnored": "None. Open a node to ignore or mute it.",
+  "chatsForward": "Forward",
+  "chatsForwardTo": "Forward to",
+  "chatsForwardReview": "Check the message, then tap Send.",
+  "chatsChannelNumbered": "Channel {index}: {name}",
+  "@chatsChannelNumbered": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsSchedule": "Send later",
+  "chatsSchedule15": "In 15 minutes",
+  "chatsSchedule60": "In 1 hour",
+  "chatsSchedule240": "In 4 hours",
+  "chatsScheduleTomorrow": "Tomorrow at 8:00",
+  "chatsSchedulePick": "Pick a date and time",
+  "chatsScheduleNote": "Goes out only while the app is running and the radio is connected.",
+  "chatsScheduleFull": "You can schedule up to {max} messages.",
+  "@chatsScheduleFull": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "chatsScheduled": "Scheduled",
+  "chatsScheduledFor": "{day} at {time}",
+  "@chatsScheduledFor": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsScheduleMissed": "Not sent: the radio was not connected in time",
+  "chatsScheduleCancel": "Cancel scheduled message"
 }

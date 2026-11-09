@@ -1261,4 +1261,60 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get setNoneIgnored =>
       'Ninguno. Abre un nodo para ignorarlo o silenciarlo.';
+
+  @override
+  String get chatsForward => 'Reenviar';
+
+  @override
+  String get chatsForwardTo => 'Reenviar a';
+
+  @override
+  String get chatsForwardReview => 'Revisa el mensaje y toca Enviar.';
+
+  @override
+  String chatsChannelNumbered(int index, String name) {
+    return 'Canal $index: $name';
+  }
+
+  @override
+  String get chatsSchedule => 'Enviar más tarde';
+
+  @override
+  String get chatsSchedule15 => 'En 15 minutos';
+
+  @override
+  String get chatsSchedule60 => 'En 1 hora';
+
+  @override
+  String get chatsSchedule240 => 'En 4 horas';
+
+  @override
+  String get chatsScheduleTomorrow => 'Mañana a las 8:00';
+
+  @override
+  String get chatsSchedulePick => 'Elegir fecha y hora';
+
+  @override
+  String get chatsScheduleNote =>
+      'Solo se envía mientras la aplicación está abierta y la radio conectada.';
+
+  @override
+  String chatsScheduleFull(int max) {
+    return 'Puedes programar hasta $max mensajes.';
+  }
+
+  @override
+  String get chatsScheduled => 'Programados';
+
+  @override
+  String chatsScheduledFor(String day, String time) {
+    return '$day a las $time';
+  }
+
+  @override
+  String get chatsScheduleMissed =>
+      'No enviado: la radio no estaba conectada a tiempo';
+
+  @override
+  String get chatsScheduleCancel => 'Cancelar mensaje programado';
 }

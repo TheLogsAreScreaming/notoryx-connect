@@ -2143,6 +2143,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'None. Open a node to ignore or mute it.'**
   String get setNoneIgnored;
+
+  /// No description provided for @chatsForward.
+  ///
+  /// In en, this message translates to:
+  /// **'Forward'**
+  String get chatsForward;
+
+  /// No description provided for @chatsForwardTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Forward to'**
+  String get chatsForwardTo;
+
+  /// No description provided for @chatsForwardReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the message, then tap Send.'**
+  String get chatsForwardReview;
+
+  /// No description provided for @chatsChannelNumbered.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}: {name}'**
+  String chatsChannelNumbered(int index, String name);
+
+  /// No description provided for @chatsSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Send later'**
+  String get chatsSchedule;
+
+  /// No description provided for @chatsSchedule15.
+  ///
+  /// In en, this message translates to:
+  /// **'In 15 minutes'**
+  String get chatsSchedule15;
+
+  /// No description provided for @chatsSchedule60.
+  ///
+  /// In en, this message translates to:
+  /// **'In 1 hour'**
+  String get chatsSchedule60;
+
+  /// No description provided for @chatsSchedule240.
+  ///
+  /// In en, this message translates to:
+  /// **'In 4 hours'**
+  String get chatsSchedule240;
+
+  /// No description provided for @chatsScheduleTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow at 8:00'**
+  String get chatsScheduleTomorrow;
+
+  /// No description provided for @chatsSchedulePick.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a date and time'**
+  String get chatsSchedulePick;
+
+  /// No description provided for @chatsScheduleNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Goes out only while the app is running and the radio is connected.'**
+  String get chatsScheduleNote;
+
+  /// No description provided for @chatsScheduleFull.
+  ///
+  /// In en, this message translates to:
+  /// **'You can schedule up to {max} messages.'**
+  String chatsScheduleFull(int max);
+
+  /// No description provided for @chatsScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get chatsScheduled;
+
+  /// No description provided for @chatsScheduledFor.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} at {time}'**
+  String chatsScheduledFor(String day, String time);
+
+  /// No description provided for @chatsScheduleMissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sent: the radio was not connected in time'**
+  String get chatsScheduleMissed;
+
+  /// No description provided for @chatsScheduleCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel scheduled message'**
+  String get chatsScheduleCancel;
 }
 
 class _AppLocalizationsDelegate

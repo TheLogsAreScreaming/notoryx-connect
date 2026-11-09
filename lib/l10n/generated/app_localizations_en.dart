@@ -1248,4 +1248,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setNoneIgnored => 'None. Open a node to ignore or mute it.';
+
+  @override
+  String get chatsForward => 'Forward';
+
+  @override
+  String get chatsForwardTo => 'Forward to';
+
+  @override
+  String get chatsForwardReview => 'Check the message, then tap Send.';
+
+  @override
+  String chatsChannelNumbered(int index, String name) {
+    return 'Channel $index: $name';
+  }
+
+  @override
+  String get chatsSchedule => 'Send later';
+
+  @override
+  String get chatsSchedule15 => 'In 15 minutes';
+
+  @override
+  String get chatsSchedule60 => 'In 1 hour';
+
+  @override
+  String get chatsSchedule240 => 'In 4 hours';
+
+  @override
+  String get chatsScheduleTomorrow => 'Tomorrow at 8:00';
+
+  @override
+  String get chatsSchedulePick => 'Pick a date and time';
+
+  @override
+  String get chatsScheduleNote =>
+      'Goes out only while the app is running and the radio is connected.';
+
+  @override
+  String chatsScheduleFull(int max) {
+    return 'You can schedule up to $max messages.';
+  }
+
+  @override
+  String get chatsScheduled => 'Scheduled';
+
+  @override
+  String chatsScheduledFor(String day, String time) {
+    return '$day at $time';
+  }
+
+  @override
+  String get chatsScheduleMissed =>
+      'Not sent: the radio was not connected in time';
+
+  @override
+  String get chatsScheduleCancel => 'Cancel scheduled message';
 }
