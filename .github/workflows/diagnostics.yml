@@ -27,7 +27,7 @@ jobs:
       - name: Capture analysis results
         run: flutter analyze > diagnostics/analyze.log 2>&1
       - name: Capture test results
-        run: flutter test --reporter expanded > diagnostics/tests.log 2>&1
+        run: bash scripts/warm_native_assets.sh && flutter test --reporter expanded > diagnostics/tests.log 2>&1
       - name: Upload diagnostics even on failure
         if: always()
         uses: actions/upload-artifact@v7
