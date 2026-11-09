@@ -151,7 +151,8 @@ class _ToolsPageState extends State<_ToolsPage> {
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(FieldToolsPage(radio: radio)),
       )),
-      Card(child: ListTile(
+      if (!kIsWeb && Platform.isAndroid) // ATAK is an Android app.
+        Card(child: ListTile(
         leading: const Icon(Icons.share_location),
         title: Text(l.takTitle),
         subtitle: Text(l.toolsTakSub),
