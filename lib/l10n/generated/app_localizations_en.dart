@@ -532,4 +532,286 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatsBotReplyField => 'Message to send while Bot mode is on';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get commonSave => 'Save';
+
+  @override
+  String get commonConnect => 'Connect';
+
+  @override
+  String get commonDisconnect => 'Disconnect';
+
+  @override
+  String get agoNow => 'just now';
+
+  @override
+  String agoMin(int n) {
+    return '$n min ago';
+  }
+
+  @override
+  String agoHours(int n) {
+    return '$n h ago';
+  }
+
+  @override
+  String agoDays(int n) {
+    return '$n d ago';
+  }
+
+  @override
+  String get rssiStrong => 'Strong Bluetooth signal';
+
+  @override
+  String get rssiUsable => 'Usable Bluetooth signal';
+
+  @override
+  String get rssiWeak => 'Weak Bluetooth signal';
+
+  @override
+  String get rssiVeryWeak => 'Very weak Bluetooth signal';
+
+  @override
+  String get heardAny => 'Any time';
+
+  @override
+  String get heardHour => '1 hour';
+
+  @override
+  String get heardDay => '24 hours';
+
+  @override
+  String get heardWeek => '7 days';
+
+  @override
+  String nodesConnectFailed(String error) {
+    return 'Could not connect: $error';
+  }
+
+  @override
+  String nodesUsbFailed(String error) {
+    return 'Could not connect over USB: $error';
+  }
+
+  @override
+  String nodesNotesFor(String name) {
+    return 'Notes for $name';
+  }
+
+  @override
+  String get nodesNotesHint => 'Location, antenna, observations…';
+
+  @override
+  String nodesConnectedTo(String name) {
+    return 'Connected to $name.';
+  }
+
+  @override
+  String get nodesYourRadio => 'your radio';
+
+  @override
+  String get nodesFindRadio =>
+      'Find your radio nearby and connect over Bluetooth.';
+
+  @override
+  String get nodesRadiosFound => 'Radios found';
+
+  @override
+  String get nodesMeshNodes => 'Mesh nodes';
+
+  @override
+  String get nodesStatus => 'Status';
+
+  @override
+  String get nodesConnProblem => 'Connection problem';
+
+  @override
+  String get nodesDiagnose => 'Diagnose';
+
+  @override
+  String get nodesNearby => 'Radios nearby';
+
+  @override
+  String get nodesLooking => 'Looking for radios…';
+
+  @override
+  String get nodesStopScan => 'Stop scan';
+
+  @override
+  String get nodesRadio => 'Radio';
+
+  @override
+  String get nodesOverUsb => 'Over USB';
+
+  @override
+  String get nodesOverWifi => 'Over Wi-Fi';
+
+  @override
+  String get nodesConnectWifi => 'Connect over Wi-Fi';
+
+  @override
+  String get nodesConnectUsb => 'Connect over USB';
+
+  @override
+  String get nodesNoRadios => 'No radios found yet';
+
+  @override
+  String get nodesNoRadiosBody =>
+      'Turn your radio on, keep it close, then tap Scan for radios.';
+
+  @override
+  String get nodesTryDemo => 'No radio? Try the demo';
+
+  @override
+  String get nodesMeshtasticRadio => 'Meshtastic radio';
+
+  @override
+  String get nodesBluetoothDevice => 'Bluetooth device';
+
+  @override
+  String nodesCount(int count) {
+    return 'Mesh nodes ($count)';
+  }
+
+  @override
+  String nodesCountOf(int shown, int total) {
+    return 'Mesh nodes ($shown of $total)';
+  }
+
+  @override
+  String nodesNoneHeard(String window) {
+    return 'No nodes heard in the last $window';
+  }
+
+  @override
+  String get nodesPickLonger => 'Pick a longer time to see older nodes.';
+
+  @override
+  String get nodesShowAll => 'Show all nodes';
+
+  @override
+  String get nodesHealth => 'Mesh health';
+
+  @override
+  String get nodesDetails => 'Details';
+
+  @override
+  String get nodesKnown => 'Known nodes';
+
+  @override
+  String get nodesWaiting => 'Waiting to send';
+
+  @override
+  String get nodesSignalQuality => 'Signal quality';
+
+  @override
+  String nodesSignalSummary(int count, String snr) {
+    return '$count messages heard • latest signal-to-noise $snr';
+  }
+
+  @override
+  String get nodesNotMeasured => 'not yet measured';
+
+  @override
+  String nodesSignalHistory(int count) {
+    return 'Signal history of the last $count messages';
+  }
+
+  @override
+  String get nodesSignalStarts =>
+      'Signal history starts when another node sends a message.';
+
+  @override
+  String get nodesMeasuredFrom => 'Measured from received text messages only.';
+
+  @override
+  String get nodesEncounters => 'Saved encounters';
+
+  @override
+  String nodesSeen(int count, String when) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Seen $count times • last $when',
+      one: 'Seen $count time • last $when',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nodesTapNotes => 'Tap to add notes';
+
+  @override
+  String get nodesRemoveFav => 'Remove favorite';
+
+  @override
+  String get nodesAddFav => 'Add to favorites';
+
+  @override
+  String get nodesMore => 'More';
+
+  @override
+  String get nodesFieldTools => 'Field tools';
+
+  @override
+  String get nodesFieldToolsSub =>
+      'Signal reference, checklists, backups and more';
+
+  @override
+  String get nodesReadyBanner =>
+      'Your radio is connected. Nodes update live as they are heard.';
+
+  @override
+  String get nodesHelpBanner =>
+      'Tap Scan for radios, then Connect. The app checks it is a Meshtastic radio and downloads its node list before it is ready to use.';
+
+  @override
+  String get nodesHeardWithin => 'Show nodes heard within';
+
+  @override
+  String get nodesWifiHelp =>
+      'For radios with Wi-Fi or Ethernet turned on. Your phone must be on the same network.';
+
+  @override
+  String get nodesAddress => 'Radio address';
+
+  @override
+  String get nodesAddressHint => 'e.g. 192.168.1.42 or meshtastic.local';
+
+  @override
+  String get nodesPort => 'Port';
+
+  @override
+  String get nodesPortHelp => 'Meshtastic uses 4403';
+
+  @override
+  String get nodesUsbHelp =>
+      'Plug the radio into the phone with a USB data cable (an OTG adapter may be needed). Android asks for permission the first time.';
+
+  @override
+  String nodesUsbListFailed(String error) {
+    return 'Could not list USB devices: $error';
+  }
+
+  @override
+  String get nodesNoUsb => 'No USB devices found';
+
+  @override
+  String get nodesNoUsbBody =>
+      'Check the cable carries data, not just power, then refresh.';
+
+  @override
+  String nodesLikelyRadio(String chip) {
+    return 'Likely a radio • $chip';
+  }
+
+  @override
+  String get nodesOtherUsb => 'Other USB device';
+
+  @override
+  String get nodesRefresh => 'Refresh';
 }

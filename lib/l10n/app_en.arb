@@ -343,5 +343,198 @@
   "chatsBotOn": "On. Replies to direct messages and answers !help and !status, within quiet hours and airtime limits.",
   "chatsBotOff": "Off. No automatic replies are sent.",
   "chatsBotReply": "Bot reply message",
-  "chatsBotReplyField": "Message to send while Bot mode is on"
+  "chatsBotReplyField": "Message to send while Bot mode is on",
+  "commonCancel": "Cancel",
+  "commonSave": "Save",
+  "commonConnect": "Connect",
+  "commonDisconnect": "Disconnect",
+  "agoNow": "just now",
+  "agoMin": "{n} min ago",
+  "@agoMin": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "agoHours": "{n} h ago",
+  "@agoHours": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "agoDays": "{n} d ago",
+  "@agoDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "rssiStrong": "Strong Bluetooth signal",
+  "rssiUsable": "Usable Bluetooth signal",
+  "rssiWeak": "Weak Bluetooth signal",
+  "rssiVeryWeak": "Very weak Bluetooth signal",
+  "heardAny": "Any time",
+  "heardHour": "1 hour",
+  "heardDay": "24 hours",
+  "heardWeek": "7 days",
+  "nodesConnectFailed": "Could not connect: {error}",
+  "@nodesConnectFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nodesUsbFailed": "Could not connect over USB: {error}",
+  "@nodesUsbFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nodesNotesFor": "Notes for {name}",
+  "@nodesNotesFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nodesNotesHint": "Location, antenna, observations…",
+  "nodesConnectedTo": "Connected to {name}.",
+  "@nodesConnectedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nodesYourRadio": "your radio",
+  "nodesFindRadio": "Find your radio nearby and connect over Bluetooth.",
+  "nodesRadiosFound": "Radios found",
+  "nodesMeshNodes": "Mesh nodes",
+  "nodesStatus": "Status",
+  "nodesConnProblem": "Connection problem",
+  "nodesDiagnose": "Diagnose",
+  "nodesNearby": "Radios nearby",
+  "nodesLooking": "Looking for radios…",
+  "nodesStopScan": "Stop scan",
+  "nodesRadio": "Radio",
+  "nodesOverUsb": "Over USB",
+  "nodesOverWifi": "Over Wi-Fi",
+  "nodesConnectWifi": "Connect over Wi-Fi",
+  "nodesConnectUsb": "Connect over USB",
+  "nodesNoRadios": "No radios found yet",
+  "nodesNoRadiosBody": "Turn your radio on, keep it close, then tap Scan for radios.",
+  "nodesTryDemo": "No radio? Try the demo",
+  "nodesMeshtasticRadio": "Meshtastic radio",
+  "nodesBluetoothDevice": "Bluetooth device",
+  "nodesCount": "Mesh nodes ({count})",
+  "@nodesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nodesCountOf": "Mesh nodes ({shown} of {total})",
+  "@nodesCountOf": {
+    "placeholders": {
+      "shown": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "nodesNoneHeard": "No nodes heard in the last {window}",
+  "@nodesNoneHeard": {
+    "placeholders": {
+      "window": {
+        "type": "String"
+      }
+    }
+  },
+  "nodesPickLonger": "Pick a longer time to see older nodes.",
+  "nodesShowAll": "Show all nodes",
+  "nodesHealth": "Mesh health",
+  "nodesDetails": "Details",
+  "nodesKnown": "Known nodes",
+  "nodesWaiting": "Waiting to send",
+  "nodesSignalQuality": "Signal quality",
+  "nodesSignalSummary": "{count} messages heard • latest signal-to-noise {snr}",
+  "@nodesSignalSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "snr": {
+        "type": "String"
+      }
+    }
+  },
+  "nodesNotMeasured": "not yet measured",
+  "nodesSignalHistory": "Signal history of the last {count} messages",
+  "@nodesSignalHistory": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nodesSignalStarts": "Signal history starts when another node sends a message.",
+  "nodesMeasuredFrom": "Measured from received text messages only.",
+  "nodesEncounters": "Saved encounters",
+  "nodesSeen": "{count, plural, one{Seen {count} time • last {when}} other{Seen {count} times • last {when}}}",
+  "@nodesSeen": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "nodesTapNotes": "Tap to add notes",
+  "nodesRemoveFav": "Remove favorite",
+  "nodesAddFav": "Add to favorites",
+  "nodesMore": "More",
+  "nodesFieldTools": "Field tools",
+  "nodesFieldToolsSub": "Signal reference, checklists, backups and more",
+  "nodesReadyBanner": "Your radio is connected. Nodes update live as they are heard.",
+  "nodesHelpBanner": "Tap Scan for radios, then Connect. The app checks it is a Meshtastic radio and downloads its node list before it is ready to use.",
+  "nodesHeardWithin": "Show nodes heard within",
+  "nodesWifiHelp": "For radios with Wi-Fi or Ethernet turned on. Your phone must be on the same network.",
+  "nodesAddress": "Radio address",
+  "nodesAddressHint": "e.g. 192.168.1.42 or meshtastic.local",
+  "nodesPort": "Port",
+  "nodesPortHelp": "Meshtastic uses 4403",
+  "nodesUsbHelp": "Plug the radio into the phone with a USB data cable (an OTG adapter may be needed). Android asks for permission the first time.",
+  "nodesUsbListFailed": "Could not list USB devices: {error}",
+  "@nodesUsbListFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nodesNoUsb": "No USB devices found",
+  "nodesNoUsbBody": "Check the cable carries data, not just power, then refresh.",
+  "nodesLikelyRadio": "Likely a radio • {chip}",
+  "@nodesLikelyRadio": {
+    "placeholders": {
+      "chip": {
+        "type": "String"
+      }
+    }
+  },
+  "nodesOtherUsb": "Other USB device",
+  "nodesRefresh": "Refresh"
 }

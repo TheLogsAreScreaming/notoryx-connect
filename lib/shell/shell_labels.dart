@@ -14,12 +14,13 @@ IconData _signalIcon(int rssi) {
 }
 
 /// "just now", "5 min ago", "3 h ago", or a date, for last-seen times.
-String _ago(DateTime time) {
+String _ago(BuildContext context, DateTime time) {
+  final s = AppLocalizations.of(context);
   final d = DateTime.now().difference(time);
-  if (d.inMinutes < 1) return 'just now';
-  if (d.inHours < 1) return '${d.inMinutes} min ago';
-  if (d.inDays < 1) return '${d.inHours} h ago';
-  if (d.inDays < 7) return '${d.inDays} d ago';
+  if (d.inMinutes < 1) return s.agoNow;
+  if (d.inHours < 1) return s.agoMin(d.inMinutes);
+  if (d.inDays < 1) return s.agoHours(d.inHours);
+  if (d.inDays < 7) return s.agoDays(d.inDays);
   final l = time.toLocal();
   return '${l.year}-${l.month.toString().padLeft(2, '0')}-${l.day.toString().padLeft(2, '0')}';
 }
@@ -49,11 +50,22 @@ String _deliveryLabel(BuildContext context, BastionDeliveryState state) {
   };
 }
 
-String _rssiLabel(int rssi) {
-  if (rssi >= -60) return 'Strong Bluetooth signal';
-  if (rssi >= -75) return 'Usable Bluetooth signal';
-  if (rssi >= -90) return 'Weak Bluetooth signal';
-  return 'Very weak Bluetooth signal';
+String _rssiLabel(BuildContext context, int rssi) {
+  final l = AppLocalizations.of(context);
+  if (rssi >= -60) return l.rssiStrong;
+  if (rssi >= -75) return l.rssiUsable;
+  if (rssi >= -90) return l.rssiWeak;
+  return l.rssiVeryWeak;
+}
+
+String _heardLabel(BuildContext context, BastionHeardWithin value) {
+  final l = AppLocalizations.of(context);
+  return switch (value) {
+    BastionHeardWithin.any => l.heardAny,
+    BastionHeardWithin.hour => l.heardHour,
+    BastionHeardWithin.day => l.heardDay,
+    BastionHeardWithin.week => l.heardWeek,
+  };
 }
 
 String _connectionLabel(BuildContext context, MeshtasticConnectionState state) {
