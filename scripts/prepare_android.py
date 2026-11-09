@@ -106,24 +106,36 @@ if not activity.exists():
 activity.write_text("""package com.bastionmesh.bastion
 
 import android.content.Context
+import android.os.Bundle
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 
+// FragmentActivity because the system fingerprint prompt needs it.
 class MainActivity : FlutterFragmentActivity() {
-    // FragmentActivity because the system fingerprint prompt needs it.
-    // A new activity reattaches to the running engine, so the radio link and
-    // app state survive the activity being destroyed.
-    override fun provideFlutterEngine(context: Context): FlutterEngine {
-        val cache = FlutterEngineCache.getInstance()
-        return cache.get(ENGINE_ID) ?: FlutterEngine(context.applicationContext).also {
-            it.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
-            cache.put(ENGINE_ID, it)
-        }
+    // The engine must be in the cache before the fragment is created. A new
+    // activity reattaches to it, so the radio link and app state survive the
+    // activity being destroyed.
+    override fun onCreate(savedInstanceState: Bundle?) {
+        ensureEngine(this)
+        super.onCreate(savedInstanceState)
     }
 
+    // FlutterFragmentActivity honors shouldDestroyEngineWithHost only for an
+    // engine named here. Provided any other way, the engine is destroyed with
+    // the activity but stays cached, and the next activity crashes on it.
+    override fun getCachedEngineId(): String = ENGINE_ID
+
     override fun shouldDestroyEngineWithHost(): Boolean = false
+
+    private fun ensureEngine(context: Context) {
+        val cache = FlutterEngineCache.getInstance()
+        if (cache.get(ENGINE_ID) != null) return
+        val engine = FlutterEngine(context.applicationContext)
+        engine.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
+        cache.put(ENGINE_ID, engine)
+    }
 
     private companion object {
         const val ENGINE_ID = "notoryx"
