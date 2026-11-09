@@ -6,6 +6,7 @@ import 'theme/nx_components.dart';
 
 import 'channel_share_page.dart';
 import 'services/bastion_beacons.dart';
+import 'services/bastion_plus_code.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 
 /// Mesh Beacons: invitations heard on the mesh, and sending one by hand.
@@ -21,6 +22,13 @@ class _BeaconPageState extends State<BeaconPage> {
   bool _offerChannel = false;
   bool _sending = false;
   String? _status;
+
+  /// This radio's position as a Plus Code; null until it has a position.
+  String? get _plusCode {
+    final radio = widget.radio;
+    final me = radio.nodes.where((n) => n.num == radio.localNodeNum && n.hasPosition).firstOrNull;
+    return me == null ? null : BastionPlusCode.encode(me.latitude!, me.longitude!);
+  }
 
   @override
   void dispose() {
@@ -105,6 +113,18 @@ class _BeaconPageState extends State<BeaconPage> {
                   helperMaxLines: 2,
                   counterText: '$_bytes/${BastionBeaconLog.maxMessageBytes} bytes',
                   errorText: _bytes > BastionBeaconLog.maxMessageBytes ? 'Too long' : null,
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: TextButton.icon(
+                  key: const ValueKey('beacon-plus-code'),
+                  onPressed: _plusCode == null ? null : () => setState(() {
+                    final text = _message.text.trimRight();
+                    _message.text = text.isEmpty ? _plusCode! : '$text $_plusCode';
+                  }),
+                  icon: const Icon(Icons.add_location_alt_outlined),
+                  label: Text(_plusCode == null ? 'Add my location (no position yet)' : 'Add my location as a Plus Code'),
                 ),
               ),
               SwitchListTile(

@@ -78,7 +78,8 @@ class FakeMesh {
       ).writeToBuffer());
 }
 
-MeshtasticAdminSession remoteSession(FakeMesh mesh, {Duration? timeout}) => MeshtasticAdminSession(
+MeshtasticAdminSession remoteSession(FakeMesh mesh, {Duration? timeout, Future<void> Function(Duration)? delay}) => MeshtasticAdminSession(
+      delay: delay,
       incoming: mesh.incoming.stream,
       send: mesh.send,
       localNodeNum: local,
@@ -144,6 +145,40 @@ void main() {
             localNodeNum: local,
             targetNodeNum: remote,
           ), throwsArgumentError);
+    });
+  });
+
+  group('airtime', () {
+    test('writes in a batch are spaced out', () async {
+      final mesh = FakeMesh();
+      final waits = <Duration>[];
+      final session = remoteSession(mesh, delay: (d) async => waits.add(d));
+      await session.setOwner(User(longName: 'One'));
+      await session.setOwner(User(longName: 'Two'));
+      expect(waits, hasLength(1));
+      expect(waits.single, greaterThan(const Duration(seconds: 4)));
+    });
+
+    test('an airtime refusal waits and retries once', () async {
+      final mesh = FakeMesh();
+      final waits = <Duration>[];
+      final session = remoteSession(mesh, delay: (d) async {
+        waits.add(d);
+        if (d == MeshtasticAdminSession.airtimeBackoff) mesh.localFailure = null;
+      });
+      await session.getOwner();
+      mesh.localFailure = Routing_Error.DUTY_CYCLE_LIMIT;
+      await session.setOwner(User(longName: 'Later'));
+      expect(waits, contains(MeshtasticAdminSession.airtimeBackoff));
+      expect(mesh.owner.longName, 'Later');
+    });
+
+    test('a second airtime refusal is reported', () async {
+      final mesh = FakeMesh();
+      final session = remoteSession(mesh, delay: (_) async {});
+      await session.getOwner();
+      mesh.localFailure = Routing_Error.RATE_LIMIT_EXCEEDED;
+      await expectLater(session.setOwner(User(longName: 'No')), throwsA(isA<MeshtasticAdminException>()));
     });
   });
 

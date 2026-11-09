@@ -27,7 +27,7 @@ jobs:
       - name: Static analysis
         run: flutter analyze
       - name: Unit and widget tests
-        run: flutter test --reporter expanded
+        run: bash scripts/warm_native_assets.sh && flutter test --reporter expanded
       - name: Upload field screen QA
         if: always()
         uses: actions/upload-artifact@v7
