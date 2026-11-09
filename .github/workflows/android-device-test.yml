@@ -64,5 +64,7 @@ jobs:
             emulator-log.txt
             emulator-process-log.txt
             emulator-launch.txt
+            emulator-relaunch.txt
+            emulator-relaunch-log.txt
             emulator-screen.png
           if-no-files-found: warn
