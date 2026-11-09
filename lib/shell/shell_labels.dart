@@ -38,13 +38,16 @@ IconData _deliveryIcon(BastionDeliveryState state) => switch (state) {
   BastionDeliveryState.failed => Icons.error_outline,
 };
 
-String _deliveryLabel(BastionDeliveryState state) => switch (state) {
-  BastionDeliveryState.received => 'Received',
-  BastionDeliveryState.queued => 'Queued',
-  BastionDeliveryState.sent => 'Sent',
-  BastionDeliveryState.delivered => 'Delivered',
-  BastionDeliveryState.failed => 'Not delivered',
-};
+String _deliveryLabel(BuildContext context, BastionDeliveryState state) {
+  final l = AppLocalizations.of(context);
+  return switch (state) {
+    BastionDeliveryState.received => l.deliveryReceived,
+    BastionDeliveryState.queued => l.deliveryQueued,
+    BastionDeliveryState.sent => l.deliverySent,
+    BastionDeliveryState.delivered => l.deliveryDelivered,
+    BastionDeliveryState.failed => l.deliveryFailed,
+  };
+}
 
 String _rssiLabel(int rssi) {
   if (rssi >= -60) return 'Strong Bluetooth signal';
@@ -85,9 +88,8 @@ bool _connectionBusy(MeshtasticConnectionState state) => switch (state) {
 };
 
 /// "Direct" or "2 hops", or null when the hop count is unknown.
-String? _hopsLabel(int? hops) => switch (hops) {
+String? _hopsLabel(BuildContext context, int? hops) => switch (hops) {
   null => null,
-  0 => 'Direct',
-  1 => '1 hop',
-  final n => '$n hops',
+  0 => AppLocalizations.of(context).hopsDirect,
+  final n => AppLocalizations.of(context).hopsCount(n),
 };

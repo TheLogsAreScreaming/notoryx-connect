@@ -30,6 +30,8 @@ class _ChatsPageState extends State<BastionChatsPage> {
   int channel = 0;
   final search = TextEditingController();
 
+  AppLocalizations get l => AppLocalizations.of(context);
+
   /// Unsent text per conversation, so switching chats doesn't lose it.
   final Map<String, String> _drafts = {};
   String get _draftKey => destination == 0xffffffff ? 'ch$channel' : 'dm$destination';
@@ -70,9 +72,9 @@ class _ChatsPageState extends State<BastionChatsPage> {
     final name = await showModalBottomSheet<String>(
       context: context,
       builder: (context) => SafeArea(child: nodes.isEmpty
-          ? const Padding(padding: EdgeInsets.all(24), child: Text('No nodes heard yet to mention.'))
+          ? Padding(padding: const EdgeInsets.all(24), child: Text(l.chatsNoMention))
           : ListView(shrinkWrap: true, children: [
-              const ListTile(title: Text('Mention a node', style: TextStyle(fontWeight: FontWeight.bold))),
+              ListTile(title: Text(l.chatsMentionNode, style: const TextStyle(fontWeight: FontWeight.bold))),
               for (final n in nodes)
                 ListTile(
                   leading: const Icon(Icons.alternate_email),
@@ -149,20 +151,20 @@ class _ChatsPageState extends State<BastionChatsPage> {
   /// How an incoming message got here: over the internet, directly, or
   /// through relays, naming the last relay when it can be worked out.
   String _pathSummary(BastionChatMessage m) {
-    if (m.viaMqtt) return 'Arrived over MQTT (the internet), not over the air';
+    if (m.viaMqtt) return l.chatsViaMqttFull;
     final hops = m.hops;
-    if (hops == null) return "Path not reported by the sender's firmware";
-    if (hops == 0) return 'Heard directly, no relays';
+    if (hops == null) return l.chatsPathUnknown;
+    if (hops == 0) return l.chatsHeardDirect;
     final relay = m.relayNode;
     final candidates = relay == null
         ? const <String>[]
         : [for (final n in widget.radio.nodes) if ((n.num & 0xff) == relay && n.num != m.from) n.displayName];
     final via = candidates.length == 1
-        ? ', last through ${candidates.single}'
+        ? l.chatsLastThrough(candidates.single)
         : relay == null
             ? ''
-            : ', last through a node ending in ${relay.toRadixString(16).padLeft(2, '0')}';
-    return 'Came through $hops relay${hops == 1 ? '' : 's'}$via';
+            : l.chatsLastThroughEnding(relay.toRadixString(16).padLeft(2, '0'));
+    return l.chatsCameThrough(hops, via);
   }
 
   Future<void> _react(BastionChatMessage message) async {
@@ -172,12 +174,12 @@ class _ChatsPageState extends State<BastionChatsPage> {
       builder: (context) => SafeArea(child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Text('React', style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(l.chatsReact, style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           Wrap(spacing: 4, children: [
             for (final e in _reactionChoices)
               IconButton(
-                tooltip: 'React $e',
+                tooltip: l.chatsReactEmoji(e),
                 onPressed: () => Navigator.pop(context, e),
                 icon: Text(e, style: const TextStyle(fontSize: 28)),
               ),
@@ -190,17 +192,17 @@ class _ChatsPageState extends State<BastionChatsPage> {
               subtitle: Text([
                 if (message.rxSnr != null) 'SNR ${message.rxSnr!.toStringAsFixed(1)} dB',
                 if (message.rxRssi != null) 'RSSI ${message.rxRssi} dBm',
-                if (message.rxSnr == null && message.rxRssi == null) 'No signal reading',
+                if (message.rxSnr == null && message.rxRssi == null) l.chatsNoSignal,
               ].join(' • ')),
             ),
           ListTile(
             leading: Icon(pinned ? Icons.push_pin_outlined : Icons.push_pin),
-            title: Text(pinned ? 'Unpin' : 'Pin'),
+            title: Text(pinned ? l.chatsUnpin : l.chatsPin),
             onTap: () => Navigator.pop(context, _pinAction),
           ),
           ListTile(
             leading: const Icon(Icons.copy),
-            title: const Text('Copy text'),
+            title: Text(l.chatsCopyText),
             onTap: () => Navigator.pop(context, _copyAction),
           ),
         ]),
@@ -211,7 +213,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
     if (emoji == _copyAction) {
       await Clipboard.setData(ClipboardData(text: message.text));
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Message copied')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.chatsCopied)));
       }
       return;
     }
@@ -220,7 +222,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
     } catch (error) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(error is StateError ? error.message : 'Reaction not sent: $error')));
+          content: Text(error is StateError ? error.message : l.chatsReactionFailed('$error'))));
       }
     }
   }
@@ -237,7 +239,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
     } catch (error) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Message not sent: $error')),
+          SnackBar(content: Text(l.chatsSendFailed('$error'))),
         );
       }
     }
@@ -274,10 +276,10 @@ class _ChatsPageState extends State<BastionChatsPage> {
     final outgoing = message.direction == BastionMessageDirection.outgoing;
     final mentioned = !outgoing && widget.radio.mentionsMe(message.text);
     final pinned = widget.radio.chatMarks.isPinned(message);
-    final sender = outgoing ? 'You' : _nodeName(message.from);
+    final sender = outgoing ? l.chatsYou : _nodeName(message.from);
     final route = message.isBroadcast
-        ? 'Channel ${message.channel}'
-        : outgoing ? _nodeName(message.to) : 'you';
+        ? l.chatsChannelN(message.channel)
+        : outgoing ? _nodeName(message.to) : l.chatsYouLower;
     final failed = message.deliveryState == BastionDeliveryState.failed;
     final statusColor = failed
         ? scheme.error
@@ -292,8 +294,8 @@ class _ChatsPageState extends State<BastionChatsPage> {
               side: BorderSide(color: scheme.primary, width: 1.5))
           : null,
       child: Semantics(
-        onTapHint: 'react to this message',
-        onLongPressHint: 'react to this message',
+        onTapHint: l.chatsReactHint,
+        onLongPressHint: l.chatsReactHint,
         child: InkWell(
         // A plain tap works too, for anyone who can't long-press.
         onTap: () => _react(message),
@@ -316,12 +318,12 @@ class _ChatsPageState extends State<BastionChatsPage> {
                   [
                     '$sender → $route',
                     // Heard over the internet, not over the air.
-                    if (message.viaMqtt) 'via MQTT'
-                    else if (_hopsLabel(message.hops) case final hops?) hops,
+                    if (message.viaMqtt) l.chatsViaMqtt
+                    else if (_hopsLabel(context, message.hops) case final hops?) hops,
                   ].join(' • '),
                   style: type.labelMedium?.copyWith(color: mentioned ? scheme.onPrimaryContainer : scheme.onSurfaceVariant),
                 )),
-                if (pinned) Icon(Icons.push_pin, size: 14, semanticLabel: 'Pinned', color: scheme.onSurfaceVariant),
+                if (pinned) Icon(Icons.push_pin, size: 14, semanticLabel: l.chatsPinned, color: scheme.onSurfaceVariant),
                 const SizedBox(width: NxSpace.xxs),
                 Text(_clock(message.timestamp), style: type.labelMedium?.copyWith(
                     color: mentioned ? scheme.onPrimaryContainer : scheme.onSurfaceVariant)),
@@ -335,14 +337,14 @@ class _ChatsPageState extends State<BastionChatsPage> {
                   child: Row(mainAxisSize: MainAxisSize.min, children: [
                     Icon(Icons.alternate_email, size: 14, color: scheme.onPrimaryContainer),
                     const SizedBox(width: 4),
-                    Text('Mentions you', style: type.labelMedium?.copyWith(color: scheme.onPrimaryContainer)),
+                    Text(l.chatsMentionsYou, style: type.labelMedium?.copyWith(color: scheme.onPrimaryContainer)),
                   ]),
                 ),
               if (rs != null)
                 Padding(
                   padding: const EdgeInsets.only(top: NxSpace.xxs),
                   child: Semantics(
-                    label: 'Reactions: ${[for (final r in rs) '${r.text} from ${r.direction == BastionMessageDirection.outgoing ? 'you' : _nodeName(r.from)}'].join(', ')}',
+                    label: l.chatsReactions([for (final r in rs) l.chatsReactionFrom(r.text, r.direction == BastionMessageDirection.outgoing ? l.chatsYouLower : _nodeName(r.from))].join(', ')),
                     excludeSemantics: true,
                     child: Wrap(spacing: 6, runSpacing: 4, children: [
                       for (final e in {for (final r in rs) r.text}.toList())
@@ -359,7 +361,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
                   child: Row(mainAxisSize: MainAxisSize.min, children: [
                     Icon(_deliveryIcon(message.deliveryState), size: 14, color: statusColor),
                     const SizedBox(width: 4),
-                    Text(_deliveryLabel(message.deliveryState), style: type.labelMedium?.copyWith(color: statusColor)),
+                    Text(_deliveryLabel(context, message.deliveryState), style: type.labelMedium?.copyWith(color: statusColor)),
                   ]),
                 ),
             ])),
@@ -406,43 +408,42 @@ class _ChatsPageState extends State<BastionChatsPage> {
         padding: NxSpace.page,
         children: [
           NxPageHeader(
-            title: 'Chats',
+            title: l.tabChats,
             subtitle: connected
-                ? 'Connected. Messages send right away.'
-                : 'Offline. Messages wait in a queue and send when your radio connects.',
+                ? l.chatsConnectedSub
+                : l.chatsOfflineSub,
           ),
           if (widget.radio.messageStorageProblem case final problem?)
             NxBanner(tone: NxTone.danger, icon: Icons.sd_card_alert_outlined,
-              title: 'Message storage problem', message: problem),
+              title: l.chatsStorageProblem, message: problem),
           if (widget.radio.filteredMessageCount > 0 || filters.showFiltered && filters.words.isNotEmpty)
             NxBanner(
               icon: Icons.filter_alt_outlined,
               message: filters.showFiltered
-                  ? 'Showing messages that match your word filters'
-                  : '${widget.radio.filteredMessageCount} message${widget.radio.filteredMessageCount == 1 ? '' : 's'} hidden by your word filters',
+                  ? l.chatsFilterShowing
+                  : l.chatsFilterHidden(widget.radio.filteredMessageCount),
               action: TextButton(
                 onPressed: () => filters.setShowFiltered(!filters.showFiltered),
-                child: Text(filters.showFiltered ? 'Hide' : 'Show'),
+                child: Text(filters.showFiltered ? l.chatsHide : l.chatsShow),
               ),
             ),
           if (BastionPreferences.instance.statistics) ...[
             NxStatRow(children: [
-              NxStatTile(label: 'Link', value: connected ? 'Online' : 'Offline',
+              NxStatTile(label: l.chatsStatLink, value: connected ? l.chatsOnline : l.connOffline,
                 tone: connected ? NxTone.success : NxTone.neutral),
-              NxStatTile(label: 'Messages', value: '${messages.length}'),
-              NxStatTile(label: 'Queued', value: '${widget.radio.pendingMessageCount}',
+              NxStatTile(label: l.chatsStatMessages, value: '${messages.length}'),
+              NxStatTile(label: l.chatsStatQueued, value: '${widget.radio.pendingMessageCount}',
                 tone: widget.radio.pendingMessageCount > 0 ? NxTone.warning : NxTone.neutral),
             ]),
             const SizedBox(height: NxSpace.xs),
           ],
-          const NxSectionLabel('New message'),
+          NxSectionLabel(l.chatsNewMessage),
           if (destination != 0xffffffff && widget.radio.nodeKeys.hasChanged(destination))
             NxBanner(
               tone: NxTone.danger,
               icon: Icons.gpp_maybe_outlined,
-              title: 'Security key changed',
-              message: '${_nodeName(destination)} now shows a different key. Check with its owner before '
-                  'sending anything private. Open the node to review or trust the new key.',
+              title: l.chatsKeyChanged,
+              message: l.chatsKeyChangedBody(_nodeName(destination)),
             ),
           Card(child: Padding(
             padding: const EdgeInsets.all(NxSpace.md),
@@ -451,19 +452,19 @@ class _ChatsPageState extends State<BastionChatsPage> {
                 key: ValueKey(destination),
                 initialValue: destination,
                 isExpanded: true,
-                decoration: const InputDecoration(
-                  labelText: 'To',
-                  prefixIcon: Icon(Icons.cell_tower),
+                decoration: InputDecoration(
+                  labelText: l.chatsTo,
+                  prefixIcon: const Icon(Icons.cell_tower),
                 ),
                 items: [
-                  const DropdownMenuItem(
+                  DropdownMenuItem(
                     value: 0xffffffff,
-                    child: Text('Everyone on the channel'),
+                    child: Text(l.chatsEveryone),
                   ),
                   for (final node in widget.radio.nodes)
                     DropdownMenuItem(
                       value: node.num,
-                      child: Text('Direct • ${node.displayName}', overflow: TextOverflow.ellipsis),
+                      child: Text(l.chatsDirect(node.displayName), overflow: TextOverflow.ellipsis),
                     ),
                 ],
                 onChanged: (value) {
@@ -475,13 +476,13 @@ class _ChatsPageState extends State<BastionChatsPage> {
                 key: ValueKey('channel-$channel'),
                 initialValue: channel,
                 isExpanded: true,
-                decoration: const InputDecoration(labelText: 'Channel', prefixIcon: Icon(Icons.podcasts)),
+                decoration: InputDecoration(labelText: l.chatsChannelLabel, prefixIcon: const Icon(Icons.podcasts)),
                 items: channels.isEmpty
-                    ? [const DropdownMenuItem(value: 0, child: Text('Channel 0 • Broadcast')),
+                    ? [DropdownMenuItem(value: 0, child: Text(l.chatsChannelBroadcast)),
                        if (channel != 0) DropdownMenuItem(value: channel,
-                           child: Text('Channel $channel • Offline'))]
+                           child: Text(l.chatsChannelOffline(channel)))]
                     : [for (final c in channels) DropdownMenuItem(value: c.index,
-                        child: Text('Channel ${c.index} • ${c.name.isEmpty ? 'Default' : c.name}'))],
+                        child: Text(l.chatsChannelNamed(c.index, c.name.isEmpty ? l.chatsDefault : c.name)))],
                 onChanged: (value) { if (value != null) _switchTo(newChannel: value); },
               ),
               const SizedBox(height: NxSpace.sm),
@@ -493,10 +494,10 @@ class _ChatsPageState extends State<BastionChatsPage> {
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   labelText: destination == 0xffffffff
-                      ? 'Message Channel $channel'
-                      : 'Message ${_nodeName(destination)}',
+                      ? l.chatsMessageChannel(channel)
+                      : l.chatsMessageNode(_nodeName(destination)),
                   suffixIcon: IconButton(
-                    tooltip: 'Mention a node',
+                    tooltip: l.chatsMentionNode,
                     icon: const Icon(Icons.alternate_email),
                     onPressed: _mention,
                   ),
@@ -507,12 +508,13 @@ class _ChatsPageState extends State<BastionChatsPage> {
               FilledButton.icon(
                 onPressed: _send,
                 icon: const Icon(Icons.send),
-                label: const Text('Send'),
+                label: Text(l.chatsSend),
               ),
               const SizedBox(height: NxSpace.sm),
-              Text('Quick replies', style: Theme.of(context).textTheme.labelMedium?.copyWith(color: scheme.onSurfaceVariant)),
+              Text(l.chatsQuickReplies, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: scheme.onSurfaceVariant)),
               const SizedBox(height: NxSpace.xs),
               Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
+                // Sent over the air exactly as written, so these stay English.
                 for (final quick in const [
                   'Copy',
                   'On my way',
@@ -527,16 +529,16 @@ class _ChatsPageState extends State<BastionChatsPage> {
             ]),
           )),
           if (pins.isNotEmpty) ...[
-            const NxSectionLabel('Pinned'),
+            NxSectionLabel(l.chatsPinned),
             Card(child: Column(children: [
               for (final (i, message) in pins.indexed) ...[
                 if (i > 0) const Divider(indent: 56),
                 ListTile(
                   leading: Icon(Icons.push_pin, color: scheme.primary),
                   title: Text(message.text, maxLines: 3),
-                  subtitle: Text('${message.direction == BastionMessageDirection.outgoing ? 'You' : _nodeName(message.from)} • ${BastionChatDays.label(message.timestamp, now)}'),
+                  subtitle: Text('${message.direction == BastionMessageDirection.outgoing ? l.chatsYou : _nodeName(message.from)} • ${BastionChatDays.label(message.timestamp, now)}'),
                   trailing: IconButton(
-                    tooltip: 'Unpin',
+                    tooltip: l.chatsUnpin,
                     icon: const Icon(Icons.close),
                     onPressed: () => _togglePin(message),
                   ),
@@ -544,16 +546,16 @@ class _ChatsPageState extends State<BastionChatsPage> {
               ],
             ])),
           ],
-          NxSectionLabel('Messages', trailing: messages.isEmpty ? null : Text('Hold a message for more',
+          NxSectionLabel(l.chatsMessages, trailing: messages.isEmpty ? null : Text(l.chatsHoldHint,
             style: Theme.of(context).textTheme.bodySmall)),
           if (messages.isNotEmpty)
             TextField(
               controller: search,
               decoration: InputDecoration(
-                labelText: 'Search message history',
+                labelText: l.chatsSearch,
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: search.text.isEmpty ? null : IconButton(
-                  tooltip: 'Clear search',
+                  tooltip: l.chatsClearSearch,
                   icon: const Icon(Icons.close),
                   onPressed: () => setState(search.clear),
                 ),
@@ -561,44 +563,44 @@ class _ChatsPageState extends State<BastionChatsPage> {
               onChanged: (_) => setState(() {}),
             ),
           if (messages.isNotEmpty && matches.isEmpty)
-            const NxEmptyState(icon: Icons.search_off, title: 'No matches',
-              detail: 'No messages match your search.'),
+            NxEmptyState(icon: Icons.search_off, title: l.chatsNoMatches,
+              detail: l.chatsNoMatchesBody),
           if (messages.isEmpty)
-            const NxEmptyState(
+            NxEmptyState(
               icon: Icons.mark_chat_unread_outlined,
-              title: 'No mesh messages yet',
-              detail: 'Channel and direct messages appear here once your radio hears them.',
+              title: l.chatsEmpty,
+              detail: l.chatsEmptyBody,
             )
           else
             for (final row in _timelineRows(matches.reversed.toList(), now))
               switch (row) {
                 _DayRow(:final label) => _TimelineDivider(label: label),
-                _NewRow() => const _TimelineDivider(label: 'New messages above', highlight: true),
+                _NewRow() => _TimelineDivider(label: l.chatsNewAbove, highlight: true),
                 _MessageRow(:final message) => _messageCard(context, message, reactions[message.packetId]),
               },
-          const NxSectionLabel('Automatic replies'),
+          NxSectionLabel(l.chatsAutoReplies),
           Card(child: Column(children: [
             SwitchListTile(
               secondary: const Icon(Icons.smart_toy_outlined),
-              title: const Text('Bot mode'),
+              title: Text(l.chatsBot),
               subtitle: Text(widget.radio.botProblem ?? (widget.botMode
-                  ? 'On. Replies to direct messages and answers !help and !status, within quiet hours and airtime limits.'
-                  : 'Off. No automatic replies are sent.')),
+                  ? l.chatsBotOn
+                  : l.chatsBotOff)),
               value: widget.botMode,
               onChanged: widget.onBotModeChanged,
             ),
             const Divider(indent: 56),
             ExpansionTile(
               leading: const Icon(Icons.edit_note),
-              title: const Text('Bot reply message'),
+              title: Text(l.chatsBotReply),
               childrenPadding: const EdgeInsets.fromLTRB(NxSpace.md, 0, NxSpace.md, NxSpace.md),
               children: [
                 TextField(
                   controller: reply,
                   maxLines: 3,
                   maxLength: 160,
-                  decoration: const InputDecoration(
-                    labelText: 'Message to send while Bot mode is on',
+                  decoration: InputDecoration(
+                    labelText: l.chatsBotReplyField,
                   ),
                   onChanged: widget.onAwayReplyChanged,
                 ),

@@ -45,6 +45,25 @@ void main() {
     expect(find.text('Connection doctor'), findsNothing);
   });
 
+  testWidgets('Chats is translated, but quick replies stay as sent on air', (tester) async {
+    const locale = Locale('es');
+    tester.platformDispatcher.localeTestValue = locale;
+    tester.platformDispatcher.localesTestValue = [locale];
+    addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+    tester.view.physicalSize = const Size(390, 2000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(const BastionApp());
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Chats')));
+    await tester.pumpAndSettle();
+    expect(find.text('Enviar'), findsOneWidget);
+    expect(find.text('Send'), findsNothing);
+    expect(find.text('On my way'), findsOneWidget);
+  });
+
   for (final (locale, settings, offline) in [
     (const Locale('en'), 'Settings', 'Radio: Offline'),
     (const Locale('es'), 'Ajustes', 'Radio: Sin conexión'),

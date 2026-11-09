@@ -1,6 +1,7 @@
 import 'package:bastion/main.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:flutter/material.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class ChannelRadio extends MeshtasticRadioCoordinator {
@@ -18,7 +19,10 @@ void main() {
   testWidgets('selected secondary channel is used for a broadcast', (tester) async {
     final radio = ChannelRadio();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: BastionChatsPage(
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(body: BastionChatsPage(
       radio: radio, botMode: false, awayReply: '', onBotModeChanged: (_) {}, onAwayReplyChanged: (_) {}))));
     await tester.tap(find.text('Channel 0 • Main'));
     await tester.pumpAndSettle();

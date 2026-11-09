@@ -255,4 +255,285 @@ class AppLocalizationsEs extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get deliveryReceived => 'Recibido';
+
+  @override
+  String get deliveryQueued => 'En cola';
+
+  @override
+  String get deliverySent => 'Enviado';
+
+  @override
+  String get deliveryDelivered => 'Entregado';
+
+  @override
+  String get deliveryFailed => 'No entregado';
+
+  @override
+  String get hopsDirect => 'Directo';
+
+  @override
+  String hopsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count saltos',
+      one: '$count salto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatsNoMention =>
+      'Aún no se ha escuchado ningún nodo para mencionar.';
+
+  @override
+  String get chatsMentionNode => 'Mencionar un nodo';
+
+  @override
+  String get chatsViaMqttFull => 'Llegó por MQTT (internet), no por radio';
+
+  @override
+  String get chatsPathUnknown => 'El firmware del remitente no indicó la ruta';
+
+  @override
+  String get chatsHeardDirect => 'Escuchado directamente, sin repetidores';
+
+  @override
+  String chatsLastThrough(String name) {
+    return ', por último a través de $name';
+  }
+
+  @override
+  String chatsLastThroughEnding(String hex) {
+    return ', por último a través de un nodo que termina en $hex';
+  }
+
+  @override
+  String chatsCameThrough(int hops, String via) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hops,
+      locale: localeName,
+      other: 'Llegó a través de $hops repetidores$via',
+      one: 'Llegó a través de $hops repetidor$via',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatsReact => 'Reaccionar';
+
+  @override
+  String chatsReactEmoji(String emoji) {
+    return 'Reaccionar $emoji';
+  }
+
+  @override
+  String get chatsNoSignal => 'Sin lectura de señal';
+
+  @override
+  String get chatsUnpin => 'Desfijar';
+
+  @override
+  String get chatsPin => 'Fijar';
+
+  @override
+  String get chatsCopyText => 'Copiar texto';
+
+  @override
+  String get chatsCopied => 'Mensaje copiado';
+
+  @override
+  String chatsReactionFailed(String error) {
+    return 'Reacción no enviada: $error';
+  }
+
+  @override
+  String chatsSendFailed(String error) {
+    return 'Mensaje no enviado: $error';
+  }
+
+  @override
+  String get chatsYou => 'Tú';
+
+  @override
+  String get chatsYouLower => 'ti';
+
+  @override
+  String chatsChannelN(int n) {
+    return 'Canal $n';
+  }
+
+  @override
+  String get chatsReactHint => 'reaccionar a este mensaje';
+
+  @override
+  String get chatsViaMqtt => 'vía MQTT';
+
+  @override
+  String get chatsPinned => 'Fijados';
+
+  @override
+  String get chatsMentionsYou => 'Te menciona';
+
+  @override
+  String chatsReactions(String list) {
+    return 'Reacciones: $list';
+  }
+
+  @override
+  String chatsReactionFrom(String emoji, String name) {
+    return '$emoji de $name';
+  }
+
+  @override
+  String get chatsConnectedSub =>
+      'Conectado. Los mensajes se envían al momento.';
+
+  @override
+  String get chatsOfflineSub =>
+      'Sin conexión. Los mensajes esperan en cola y se envían cuando la radio se conecte.';
+
+  @override
+  String get chatsStorageProblem => 'Problema al guardar mensajes';
+
+  @override
+  String get chatsFilterShowing =>
+      'Mostrando los mensajes que coinciden con tus filtros de palabras';
+
+  @override
+  String chatsFilterHidden(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mensajes ocultos por tus filtros de palabras',
+      one: '$count mensaje oculto por tus filtros de palabras',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatsHide => 'Ocultar';
+
+  @override
+  String get chatsShow => 'Mostrar';
+
+  @override
+  String get chatsStatLink => 'Enlace';
+
+  @override
+  String get chatsOnline => 'En línea';
+
+  @override
+  String get chatsStatMessages => 'Mensajes';
+
+  @override
+  String get chatsStatQueued => 'En cola';
+
+  @override
+  String get chatsNewMessage => 'Mensaje nuevo';
+
+  @override
+  String get chatsKeyChanged => 'La clave de seguridad cambió';
+
+  @override
+  String chatsKeyChangedBody(String name) {
+    return '$name muestra ahora una clave distinta. Confírmalo con su propietario antes de enviar algo privado. Abre el nodo para revisar o aceptar la clave nueva.';
+  }
+
+  @override
+  String get chatsTo => 'Para';
+
+  @override
+  String get chatsEveryone => 'Todos en el canal';
+
+  @override
+  String chatsDirect(String name) {
+    return 'Directo • $name';
+  }
+
+  @override
+  String get chatsChannelLabel => 'Canal';
+
+  @override
+  String get chatsChannelBroadcast => 'Canal 0 • Difusión';
+
+  @override
+  String chatsChannelOffline(int n) {
+    return 'Canal $n • Sin conexión';
+  }
+
+  @override
+  String chatsChannelNamed(int n, String name) {
+    return 'Canal $n • $name';
+  }
+
+  @override
+  String get chatsDefault => 'Predeterminado';
+
+  @override
+  String chatsMessageChannel(int n) {
+    return 'Mensaje al canal $n';
+  }
+
+  @override
+  String chatsMessageNode(String name) {
+    return 'Mensaje para $name';
+  }
+
+  @override
+  String get chatsSend => 'Enviar';
+
+  @override
+  String get chatsQuickReplies => 'Respuestas rápidas';
+
+  @override
+  String get chatsMessages => 'Mensajes';
+
+  @override
+  String get chatsHoldHint => 'Mantén pulsado un mensaje para ver más';
+
+  @override
+  String get chatsSearch => 'Buscar en el historial';
+
+  @override
+  String get chatsClearSearch => 'Borrar búsqueda';
+
+  @override
+  String get chatsNoMatches => 'Sin resultados';
+
+  @override
+  String get chatsNoMatchesBody => 'Ningún mensaje coincide con tu búsqueda.';
+
+  @override
+  String get chatsEmpty => 'Aún no hay mensajes de la malla';
+
+  @override
+  String get chatsEmptyBody =>
+      'Los mensajes de canal y directos aparecen aquí cuando tu radio los escucha.';
+
+  @override
+  String get chatsNewAbove => 'Mensajes nuevos arriba';
+
+  @override
+  String get chatsAutoReplies => 'Respuestas automáticas';
+
+  @override
+  String get chatsBot => 'Modo bot';
+
+  @override
+  String get chatsBotOn =>
+      'Activado. Responde a mensajes directos y a !help y !status, respetando las horas de silencio y los límites de tiempo en el aire.';
+
+  @override
+  String get chatsBotOff => 'Desactivado. No se envían respuestas automáticas.';
+
+  @override
+  String get chatsBotReply => 'Mensaje de respuesta del bot';
+
+  @override
+  String get chatsBotReplyField =>
+      'Mensaje que se envía con el modo bot activado';
 }
