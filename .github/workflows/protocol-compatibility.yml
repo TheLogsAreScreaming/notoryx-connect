@@ -24,6 +24,7 @@ jobs:
       - run: flutter pub get --enforce-lockfile
       - name: Protocol and admin codec tests
         run: |
+          bash scripts/warm_native_assets.sh
           find test -type f \( -iname '*codec*test.dart' -o -iname '*owner*test.dart' -o -iname '*phoneapi*test.dart' -o -iname '*packet*test.dart' \) -print > /tmp/bastion-protocol-tests
           if test -s /tmp/bastion-protocol-tests; then
             xargs -r flutter test --reporter expanded < /tmp/bastion-protocol-tests

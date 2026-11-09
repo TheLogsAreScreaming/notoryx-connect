@@ -47,6 +47,7 @@ jobs:
           # flutter_launcher_icons-*.yaml makes the tool skip the main config).
           test -f android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
           flutter analyze
+          bash scripts/warm_native_assets.sh
           flutter test
       - name: Build APK
         run: flutter build apk --release --target-platform android-arm64 ${{ inputs.sms_relay && '--dart-define=NOTORYX_SMS=true' || '' }}

@@ -25,7 +25,7 @@ jobs:
         env:
           ACTIONLINT_VERSION: '1.7.7'
         run: |
-          curl -fsSLo actionlint.tar.gz "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl --retry 5 --retry-delay 20 --retry-all-errors -fsSLo actionlint.tar.gz "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
           tar xzf actionlint.tar.gz actionlint
           sudo install actionlint /usr/local/bin/actionlint
       - name: Validate GitHub Actions YAML
