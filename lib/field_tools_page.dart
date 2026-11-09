@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'services/bastion_bot_guard.dart';
 import 'services/bastion_field_log.dart';
+import 'services/bastion_report_templates.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 
 /// Local incident records, deliberate template sends and receiver coverage history.
@@ -33,6 +34,19 @@ class _FieldToolsPageState extends State<FieldToolsPage> {
     try { await operation(); if (mounted) setState(() => status = success); }
     catch (error) { if (mounted) setState(() => status = '$error'); }
     finally { if (mounted) setState(() => busy = false); }
+  }
+
+  /// Fills the message box from a guided form; sending still goes through review.
+  Future<void> fillReport(BastionReportTemplate template) async {
+    final radio = widget.radio;
+    final me = radio.nodes.where((n) => n.num == radio.localNodeNum && n.hasPosition).firstOrNull;
+    final now = TimeOfDay.now();
+    final text = await showDialog<String>(context: context, builder: (_) => _ReportDialog(
+      template: template,
+      position: me == null ? null : '${me.latitude!.toStringAsFixed(5)}, ${me.longitude!.toStringAsFixed(5)}',
+      time: '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}',
+    ));
+    if (mounted && text != null) setState(() => message.text = text);
   }
 
   Future<void> send() async {
@@ -94,7 +108,9 @@ class _FieldToolsPageState extends State<FieldToolsPage> {
             subtitle: const Text('Edit details, choose a channel, then review before sending'),
             childrenPadding: const EdgeInsets.all(16), children: [
               Wrap(spacing: 8, children: [for (final t in templates.entries)
-                OutlinedButton(onPressed: () => setState(() => message.text = t.value), child: Text(t.key))]),
+                OutlinedButton(onPressed: () => setState(() => message.text = t.value), child: Text(t.key)),
+                for (final r in BastionReportTemplate.all)
+                  OutlinedButton(key: ValueKey('report-${r.tag}'), onPressed: () => fillReport(r), child: Text(r.title))]),
               TextField(controller: message, minLines: 3, maxLines: 6,
                 decoration: const InputDecoration(labelText: 'Message — replace the blank details')),
               DropdownButtonFormField<int>(initialValue: channels.any((c) => c.index == channel) ? channel : null,
@@ -144,4 +160,57 @@ class _FieldToolsPageState extends State<FieldToolsPage> {
       },
     )),
   );
+}
+
+/// Guided form for one report, showing how much of the message is used.
+class _ReportDialog extends StatefulWidget {
+  const _ReportDialog({required this.template, this.position, required this.time});
+  final BastionReportTemplate template;
+  final String? position;
+  final String time;
+  @override
+  State<_ReportDialog> createState() => _ReportDialogState();
+}
+
+class _ReportDialogState extends State<_ReportDialog> {
+  late final Map<String, TextEditingController> fields = {
+    for (final f in widget.template.fields) f.code: TextEditingController(text: _prefill(f)),
+  };
+
+  String _prefill(BastionReportField f) => switch ((widget.template.tag, f.code)) {
+        ('SALUTE', 'L') || ('9LINE', '1') => widget.position ?? '',
+        ('SALUTE', 'T') => widget.time,
+        _ => '',
+      };
+
+  @override
+  void dispose() {
+    for (final c in fields.values) { c.dispose(); }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final text = widget.template.compose({for (final e in fields.entries) e.key: e.value.text});
+    final bytes = BastionReportTemplate.bytesOf(text);
+    final over = bytes > BastionReportTemplate.maxBytes;
+    final scheme = Theme.of(context).colorScheme;
+    return AlertDialog(
+      title: Text(widget.template.title),
+      content: SingleChildScrollView(child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+        for (final f in widget.template.fields)
+          TextField(key: ValueKey('report-field-${f.code}'), controller: fields[f.code],
+            decoration: InputDecoration(labelText: '${f.code}. ${f.label}', hintText: f.hint),
+            onChanged: (_) => setState(() {})),
+        const SizedBox(height: 12),
+        Text(over ? '$bytes of ${BastionReportTemplate.maxBytes} bytes. Too long to send: shorten a field.'
+                  : '$bytes of ${BastionReportTemplate.maxBytes} bytes. Blank lines are left out.',
+          style: TextStyle(color: over ? scheme.error : scheme.onSurfaceVariant)),
+      ])),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        FilledButton(onPressed: text.isEmpty || over ? null : () => Navigator.pop(context, text), child: const Text('Use report')),
+      ],
+    );
+  }
 }
