@@ -214,6 +214,7 @@ class _BastionShellState extends State<BastionShell> {
   @override
   void initState() {
     super.initState();
+    unawaited(_realRadio.prepareAlerts());
     // The real radio only: demo nodes must never reach ATAK.
     BastionTakBridge.instance.attach(() => _realRadio.nodes);
     _setUpShortcuts();

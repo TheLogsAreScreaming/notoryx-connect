@@ -19,14 +19,16 @@ abstract interface class BastionMessageAlerts {
   Future<void> showFieldAlert(BastionFieldAlert alert);
 }
 
-/// Android notifications for messages that arrive while Bastion is not in
+/// Android and iOS notifications for messages that arrive while Bastion is not in
 /// the foreground. Direct messages and channel messages use separate
 /// channels so people can mute one without the other in Android settings.
 class BastionLocalMessageAlerts implements BastionMessageAlerts {
   final FlutterLocalNotificationsPlugin _plugin = FlutterLocalNotificationsPlugin();
   Future<bool>? _ready;
 
-  static bool get _supported => !kIsWeb && Platform.isAndroid;
+  static bool get _supported => !kIsWeb && (Platform.isAndroid || Platform.isIOS);
+
+  static const _ios = DarwinNotificationDetails(presentAlert: true, presentSound: true);
 
   static const _direct = AndroidNotificationDetails(
     'bastion_direct_messages',
@@ -63,11 +65,17 @@ class BastionLocalMessageAlerts implements BastionMessageAlerts {
         id: alert.notificationId,
         title: alert.title,
         body: alert.body,
-        notificationDetails: const NotificationDetails(android: _field),
+        notificationDetails: const NotificationDetails(android: _field, iOS: _ios),
       );
     } catch (error) {
       debugPrint('Field alert failed: $error');
     }
+  }
+
+  /// Asks for notification permission while the app is on screen. iOS can't
+  /// show that prompt from the background, when the first alert would arrive.
+  Future<void> prepare() async {
+    if (!kIsWeb && Platform.isIOS) await (_ready ??= _initialize());
   }
 
   Future<bool> _initialize() async {
@@ -75,6 +83,8 @@ class BastionLocalMessageAlerts implements BastionMessageAlerts {
       final ok = await _plugin.initialize(
         settings: const InitializationSettings(
           android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+          // iOS shows its permission prompt here, so this runs at launch there.
+          iOS: DarwinInitializationSettings(),
         ),
       );
       return ok ?? false;
@@ -99,7 +109,7 @@ class BastionLocalMessageAlerts implements BastionMessageAlerts {
         id: packetId & 0x7fffffff,
         title: isDirect ? sender : '$sender • channel $channel',
         body: text,
-        notificationDetails: NotificationDetails(android: isDirect ? _direct : _channel),
+        notificationDetails: NotificationDetails(android: isDirect ? _direct : _channel, iOS: _ios),
       );
     } catch (error) {
       debugPrint('Bastion message alert failed: $error');

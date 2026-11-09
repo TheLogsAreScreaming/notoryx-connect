@@ -1650,6 +1650,12 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   /// Notifies about a message that arrives while the app is backgrounded.
+  /// Asks for notification permission while the app is on screen (iOS).
+  Future<void> prepareAlerts() async {
+    final alerts = _alerts;
+    if (alerts is BastionLocalMessageAlerts) await alerts.prepare();
+  }
+
   Future<void> _relaySms(MeshtasticTextMessage message) async {
     final reply = await BastionSmsRelay.instance.handle(
         from: message.from, text: message.text, isBroadcast: message.isBroadcast, packetId: message.packetId);
