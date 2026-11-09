@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bastion/main.dart';
+import 'package:bastion/radio_settings_page.dart';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
-import 'package:bastion/radio_settings_page.dart';
+import 'package:bastion/node_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -29,7 +30,7 @@ void main() {
     }
   });
 
-  testWidgets('Radio settings is translated', (tester) async {
+  testWidgets('Node detail is translated', (tester) async {
     tester.view.physicalSize = const Size(390, 3000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -40,12 +41,12 @@ void main() {
       locale: const Locale('es'),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: RadioSettingsPage(radio: radio),
+      home: NodeDetailPage(radio: radio, nodeNum: 0x1234),
     ));
     await tester.pump();
-    expect(find.text('Ajustes de la radio'), findsOneWidget);
-    expect(find.text('Radio no preparada'), findsOneWidget);
-    expect(find.text('Propietario'), findsOneWidget);
+    expect(find.text('Silenciar notificaciones'), findsOneWidget);
+    expect(find.text('Clave de seguridad'), findsOneWidget);
+    expect(find.text('MENSAJES DIRECTOS'), findsOneWidget);
   });
 
   testWidgets('Home is translated, but check-in words stay as sent on air', (tester) async {
@@ -64,6 +65,25 @@ void main() {
     expect(find.text('Mantén para SOS'), findsOneWidget);
     expect(find.text('Conectar radio'), findsOneWidget);
     expect(find.textContaining('Reportarse: '), findsOneWidget);
+  });
+
+  testWidgets('Radio settings is translated', (tester) async {
+    tester.view.physicalSize = const Size(390, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: RadioSettingsPage(radio: radio),
+    ));
+    await tester.pump();
+    expect(find.text('Ajustes de la radio'), findsOneWidget);
+    expect(find.text('Radio no preparada'), findsOneWidget);
+    expect(find.text('Propietario'), findsOneWidget);
   });
 
   testWidgets('the Tools page is translated', (tester) async {

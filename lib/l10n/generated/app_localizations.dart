@@ -3685,6 +3685,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stop without message'**
   String get homeStopNoMessage;
+
+  /// No description provided for @ndFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed: {error}'**
+  String ndFailed(String error);
+
+  /// No description provided for @ndSendFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Send failed: {error}'**
+  String ndSendFailed(String error);
+
+  /// No description provided for @ndFieldNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Field note'**
+  String get ndFieldNote;
+
+  /// No description provided for @ndRemoveFavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove favorite'**
+  String get ndRemoveFavorite;
+
+  /// No description provided for @ndAddFavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Add favorite'**
+  String get ndAddFavorite;
+
+  /// No description provided for @ndShortName.
+  ///
+  /// In en, this message translates to:
+  /// **'Short name'**
+  String get ndShortName;
+
+  /// No description provided for @ndHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get ndHardware;
+
+  /// No description provided for @ndThisRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'This radio'**
+  String get ndThisRadio;
+
+  /// No description provided for @ndYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get ndYes;
+
+  /// No description provided for @ndLastHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Last heard'**
+  String get ndLastHeard;
+
+  /// No description provided for @ndSignal.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal'**
+  String get ndSignal;
+
+  /// No description provided for @ndHopsAway.
+  ///
+  /// In en, this message translates to:
+  /// **'Hops away'**
+  String get ndHopsAway;
+
+  /// No description provided for @ndDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct'**
+  String get ndDirect;
+
+  /// No description provided for @ndBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get ndBattery;
+
+  /// No description provided for @ndExternalPower.
+  ///
+  /// In en, this message translates to:
+  /// **'External power'**
+  String get ndExternalPower;
+
+  /// No description provided for @ndVoltage.
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get ndVoltage;
+
+  /// No description provided for @ndChannelUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel use'**
+  String get ndChannelUse;
+
+  /// No description provided for @ndPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get ndPosition;
+
+  /// No description provided for @ndAltitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get ndAltitude;
+
+  /// No description provided for @ndPositionAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Position age'**
+  String get ndPositionAge;
+
+  /// No description provided for @ndDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get ndDistance;
+
+  /// No description provided for @ndEncounters.
+  ///
+  /// In en, this message translates to:
+  /// **'Encounters'**
+  String get ndEncounters;
+
+  /// No description provided for @ndTraceroute.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute'**
+  String get ndTraceroute;
+
+  /// No description provided for @ndRequestPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Request position'**
+  String get ndRequestPosition;
+
+  /// No description provided for @ndPositionRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'Position requested. It updates when the node replies.'**
+  String get ndPositionRequested;
+
+  /// No description provided for @ndRequestTelemetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Request telemetry'**
+  String get ndRequestTelemetry;
+
+  /// No description provided for @ndTelemetryRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'Telemetry requested. It updates when the node replies.'**
+  String get ndTelemetryRequested;
+
+  /// No description provided for @ndRemoteAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote admin'**
+  String get ndRemoteAdmin;
+
+  /// No description provided for @ndRequestSensors.
+  ///
+  /// In en, this message translates to:
+  /// **'Request sensors'**
+  String get ndRequestSensors;
+
+  /// No description provided for @ndSensorsRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'Sensor readings requested. Nodes without sensors don\'t answer.'**
+  String get ndSensorsRequested;
+
+  /// No description provided for @ndMute.
+  ///
+  /// In en, this message translates to:
+  /// **'Mute notifications'**
+  String get ndMute;
+
+  /// No description provided for @ndMuteSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages still show; no alerts or read-aloud'**
+  String get ndMuteSub;
+
+  /// No description provided for @ndIgnore.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignore this node'**
+  String get ndIgnore;
+
+  /// No description provided for @ndIgnoreSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden from nodes, map and chats; never notifies or gets bot replies. Undo here or in Settings.'**
+  String get ndIgnoreSub;
+
+  /// No description provided for @ndAddNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to add a note'**
+  String get ndAddNote;
+
+  /// No description provided for @ndDirectMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'DIRECT MESSAGES'**
+  String get ndDirectMessages;
+
+  /// No description provided for @ndNoDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'No direct messages with this node yet.'**
+  String get ndNoDirect;
+
+  /// No description provided for @ndDirectMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct message'**
+  String get ndDirectMessage;
+
+  /// No description provided for @ndSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get ndSend;
+
+  /// No description provided for @ndRadioLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'DIRECT RADIO LINKS'**
+  String get ndRadioLinks;
+
+  /// No description provided for @ndNoNeighbors.
+  ///
+  /// In en, this message translates to:
+  /// **'No neighbor reports yet. Nodes share these when the Neighbor Info module is enabled (Settings → Change radio settings → Neighborinfo).'**
+  String get ndNoNeighbors;
+
+  /// No description provided for @ndHears.
+  ///
+  /// In en, this message translates to:
+  /// **'Hears directly ({count}):'**
+  String ndHears(int count);
+
+  /// No description provided for @ndNoneReported.
+  ///
+  /// In en, this message translates to:
+  /// **'  No neighbors reported'**
+  String get ndNoneReported;
+
+  /// No description provided for @ndHeardBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard directly by ({count}):'**
+  String ndHeardBy(int count);
+
+  /// No description provided for @ndTrustQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Trust the new key?'**
+  String get ndTrustQ;
+
+  /// No description provided for @ndTrustBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Only do this if you have checked with {name}\'s owner that they reset or replaced their radio. If not, someone else may be pretending to be this node.'**
+  String ndTrustBody(String name);
+
+  /// No description provided for @ndTrust.
+  ///
+  /// In en, this message translates to:
+  /// **'Trust new key'**
+  String get ndTrust;
+
+  /// No description provided for @ndKeyChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Security key changed'**
+  String get ndKeyChanged;
+
+  /// No description provided for @ndKeyChangedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This node now shows a different key ({newCode}) from the one first seen ({oldCode}). Its radio may have been reset or replaced, or someone may be impersonating it. Check with its owner before sending private messages.'**
+  String ndKeyChangedBody(String newCode, String oldCode);
+
+  /// No description provided for @ndSecurityKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Security key'**
+  String get ndSecurityKey;
+
+  /// No description provided for @ndKeyNotShared.
+  ///
+  /// In en, this message translates to:
+  /// **'Not shared yet. Nodes on firmware 2.5 or newer share a key for private direct messages.'**
+  String get ndKeyNotShared;
+
+  /// No description provided for @ndSafetyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety code {code}\nCompare this with the owner\'s radio to be sure it\'s them.'**
+  String ndSafetyCode(String code);
 }
 
 class _AppLocalizationsDelegate

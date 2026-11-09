@@ -2178,4 +2178,180 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeStopNoMessage => 'Stop without message';
+
+  @override
+  String ndFailed(String error) {
+    return 'Failed: $error';
+  }
+
+  @override
+  String ndSendFailed(String error) {
+    return 'Send failed: $error';
+  }
+
+  @override
+  String get ndFieldNote => 'Field note';
+
+  @override
+  String get ndRemoveFavorite => 'Remove favorite';
+
+  @override
+  String get ndAddFavorite => 'Add favorite';
+
+  @override
+  String get ndShortName => 'Short name';
+
+  @override
+  String get ndHardware => 'Hardware';
+
+  @override
+  String get ndThisRadio => 'This radio';
+
+  @override
+  String get ndYes => 'Yes';
+
+  @override
+  String get ndLastHeard => 'Last heard';
+
+  @override
+  String get ndSignal => 'Signal';
+
+  @override
+  String get ndHopsAway => 'Hops away';
+
+  @override
+  String get ndDirect => 'Direct';
+
+  @override
+  String get ndBattery => 'Battery';
+
+  @override
+  String get ndExternalPower => 'External power';
+
+  @override
+  String get ndVoltage => 'Voltage';
+
+  @override
+  String get ndChannelUse => 'Channel use';
+
+  @override
+  String get ndPosition => 'Position';
+
+  @override
+  String get ndAltitude => 'Altitude';
+
+  @override
+  String get ndPositionAge => 'Position age';
+
+  @override
+  String get ndDistance => 'Distance';
+
+  @override
+  String get ndEncounters => 'Encounters';
+
+  @override
+  String get ndTraceroute => 'Traceroute';
+
+  @override
+  String get ndRequestPosition => 'Request position';
+
+  @override
+  String get ndPositionRequested =>
+      'Position requested. It updates when the node replies.';
+
+  @override
+  String get ndRequestTelemetry => 'Request telemetry';
+
+  @override
+  String get ndTelemetryRequested =>
+      'Telemetry requested. It updates when the node replies.';
+
+  @override
+  String get ndRemoteAdmin => 'Remote admin';
+
+  @override
+  String get ndRequestSensors => 'Request sensors';
+
+  @override
+  String get ndSensorsRequested =>
+      'Sensor readings requested. Nodes without sensors don\'t answer.';
+
+  @override
+  String get ndMute => 'Mute notifications';
+
+  @override
+  String get ndMuteSub => 'Messages still show; no alerts or read-aloud';
+
+  @override
+  String get ndIgnore => 'Ignore this node';
+
+  @override
+  String get ndIgnoreSub =>
+      'Hidden from nodes, map and chats; never notifies or gets bot replies. Undo here or in Settings.';
+
+  @override
+  String get ndAddNote => 'Tap to add a note';
+
+  @override
+  String get ndDirectMessages => 'DIRECT MESSAGES';
+
+  @override
+  String get ndNoDirect => 'No direct messages with this node yet.';
+
+  @override
+  String get ndDirectMessage => 'Direct message';
+
+  @override
+  String get ndSend => 'Send';
+
+  @override
+  String get ndRadioLinks => 'DIRECT RADIO LINKS';
+
+  @override
+  String get ndNoNeighbors =>
+      'No neighbor reports yet. Nodes share these when the Neighbor Info module is enabled (Settings → Change radio settings → Neighborinfo).';
+
+  @override
+  String ndHears(int count) {
+    return 'Hears directly ($count):';
+  }
+
+  @override
+  String get ndNoneReported => '  No neighbors reported';
+
+  @override
+  String ndHeardBy(int count) {
+    return 'Heard directly by ($count):';
+  }
+
+  @override
+  String get ndTrustQ => 'Trust the new key?';
+
+  @override
+  String ndTrustBody(String name) {
+    return 'Only do this if you have checked with $name\'s owner that they reset or replaced their radio. If not, someone else may be pretending to be this node.';
+  }
+
+  @override
+  String get ndTrust => 'Trust new key';
+
+  @override
+  String get ndKeyChanged => 'Security key changed';
+
+  @override
+  String ndKeyChangedBody(String newCode, String oldCode) {
+    return 'This node now shows a different key ($newCode) from the one first seen ($oldCode). Its radio may have been reset or replaced, or someone may be impersonating it. Check with its owner before sending private messages.';
+  }
+
+  @override
+  String get ndSecurityKey => 'Security key';
+
+  @override
+  String get ndKeyNotShared =>
+      'Not shared yet. Nodes on firmware 2.5 or newer share a key for private direct messages.';
+
+  @override
+  String ndSafetyCode(String code) {
+    return 'Safety code $code\nCompare this with the owner\'s radio to be sure it\'s them.';
+  }
 }

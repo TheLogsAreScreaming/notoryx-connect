@@ -1,5 +1,6 @@
 import 'package:bastion/node_detail_page.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,7 +8,7 @@ void main() {
   testWidgets('unknown node shows its id with actions disabled offline', (tester) async {
     final radio = MeshtasticRadioCoordinator();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(home: NodeDetailPage(radio: radio, nodeNum: 0xabcdef01)));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: NodeDetailPage(radio: radio, nodeNum: 0xabcdef01)));
     await tester.pump();
 
     expect(find.text('!abcdef01'), findsWidgets);
