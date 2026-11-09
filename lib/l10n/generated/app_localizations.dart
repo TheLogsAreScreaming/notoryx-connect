@@ -2755,6 +2755,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sends {count} waypoints on channel 0, about 3 seconds apart. They expire after a day.'**
   String mapRouteSends(int count);
+
+  /// No description provided for @lockTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTORYX Connect is locked'**
+  String get lockTitle;
+
+  /// No description provided for @lockBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio stays connected while the app is locked.'**
+  String get lockBody;
+
+  /// No description provided for @lockUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock'**
+  String get lockUnlock;
+
+  /// No description provided for @lockReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock NOTORYX Connect'**
+  String get lockReason;
 }
 
 class _AppLocalizationsDelegate

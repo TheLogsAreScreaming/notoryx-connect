@@ -37,6 +37,7 @@ dependencies:
     path: third_party/usb_serial
   mqtt_client: ^10.13.0
   typed_data: ^1.4.0
+  local_auth: 3.0.2
 
 dev_dependencies:
   flutter_test:

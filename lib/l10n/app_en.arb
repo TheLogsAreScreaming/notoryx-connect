@@ -1162,5 +1162,9 @@
         "type": "int"
       }
     }
-  }
+  },
+  "lockTitle": "NOTORYX Connect is locked",
+  "lockBody": "Your radio stays connected while the app is locked.",
+  "lockUnlock": "Unlock",
+  "lockReason": "Unlock NOTORYX Connect"
 }

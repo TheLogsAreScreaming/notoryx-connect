@@ -442,5 +442,9 @@
   "mapAlertWhen": "Avisar cuando",
   "mapAdd": "Añadir",
   "mapRouteName": "Nombre de la ruta",
-  "mapRouteSends": "Envía {count} puntos de ruta en el canal 0, con unos 3 segundos de separación. Caducan al cabo de un día."
+  "mapRouteSends": "Envía {count} puntos de ruta en el canal 0, con unos 3 segundos de separación. Caducan al cabo de un día.",
+  "lockTitle": "NOTORYX Connect está bloqueado",
+  "lockBody": "Tu radio sigue conectada mientras la aplicación está bloqueada.",
+  "lockUnlock": "Desbloquear",
+  "lockReason": "Desbloquear NOTORYX Connect"
 }

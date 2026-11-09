@@ -1616,4 +1616,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String mapRouteSends(int count) {
     return 'Sends $count waypoints on channel 0, about 3 seconds apart. They expire after a day.';
   }
+
+  @override
+  String get lockTitle => 'NOTORYX Connect is locked';
+
+  @override
+  String get lockBody => 'Your radio stays connected while the app is locked.';
+
+  @override
+  String get lockUnlock => 'Unlock';
+
+  @override
+  String get lockReason => 'Unlock NOTORYX Connect';
 }
