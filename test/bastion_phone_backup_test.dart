@@ -134,6 +134,7 @@ void main() {
     addTearDown(radio.dispose);
     radio.connection.beginConnect('Field Radio');
     await tester.pumpWidget(MaterialApp(home: PrivacyPage(radio: radio)));
+    await tester.scrollUntilVisible(find.text('Sent off this phone'), 200, scrollable: find.byType(Scrollable).first);
     expect(find.text('Sent off this phone'), findsOneWidget);
     await tester.scrollUntilVisible(find.text('Delete all phone data'), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.text('Delete all phone data'));
