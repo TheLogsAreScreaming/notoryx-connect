@@ -1875,5 +1875,94 @@
       }
     }
   },
-  "bcJoin": "Review and join channel"
+  "bcJoin": "Review and join channel",
+  "csShareTitle": "Share channels",
+  "csReadFailed": "Could not read channels: {error}",
+  "@csReadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "csRetry": "Retry",
+  "csPrimary": "Primary: {name}",
+  "@csPrimary": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "csSecondary": "Secondary: {name}",
+  "@csSecondary": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "csDefaultName": "(default name)",
+  "csCopyLink": "Copy link",
+  "csCopied": "Channel link copied.",
+  "csKeysWarning": "This code contains your channel encryption keys. Anyone who scans it can read and send on these channels.",
+  "csReplaceQ": "Replace all channels?",
+  "csAddQ": "Add channels?",
+  "csReplaceBody": "All 8 channel slots will be overwritten. You will lose access to current channels unless you have their link. The radio will reboot.",
+  "csReplaceLoraBody": "All 8 channel slots and the LoRa settings will be overwritten. You will lose access to current channels unless you have their link. The radio will reboot.",
+  "csAddBody": "New channels from the link go into free slots. Existing channels and LoRa settings stay the same.",
+  "csApply": "Apply",
+  "csAlreadyThere": "All channels from the link are already on the radio.",
+  "csWritten": "{count, plural, one{{count} channel written and verified from radio.} other{{count} channels written and verified from radio.}}",
+  "@csWritten": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "csNotVerified": "Import not verified: {error}\nNothing will be resent automatically.",
+  "@csNotVerified": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "csRefused": "Import refused: {error}",
+  "@csRefused": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "csFailed": "Import failed: {error}",
+  "@csFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "csImportTitle": "Import channels",
+  "csScan": "Scan channel QR code",
+  "csScanTitle": "Scan channel QR",
+  "csLinkLabel": "Meshtastic channel link",
+  "csPaste": "Paste",
+  "csLora": "LoRa: {region}, {modem}",
+  "@csLora": {
+    "placeholders": {
+      "region": {
+        "type": "String"
+      },
+      "modem": {
+        "type": "String"
+      }
+    }
+  },
+  "csCustomModem": "custom modem",
+  "csAdd": "Add to radio",
+  "csReplaceAll": "Replace all",
+  "csApplyRadio": "Apply to radio"
 }

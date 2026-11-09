@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bastion/main.dart';
 import 'package:bastion/radio_settings_page.dart';
+import 'package:bastion/channel_share_page.dart';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/field_tools_page.dart';
@@ -77,6 +78,10 @@ void main() {
 
   testWidgets('Beacons is translated', (tester) async {
     tester.view.physicalSize = const Size(390, 3000);
+  });
+
+  testWidgets('Channel import is translated', (tester) async {
+    tester.view.physicalSize = const Size(390, 2000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
@@ -108,6 +113,11 @@ void main() {
     expect(find.text('Balizas de la malla'), findsOneWidget);
     expect(find.text('Aún no se han oído balizas'), findsOneWidget);
     expect(find.text('Conéctate a una radio para enviar una baliza.'), findsOneWidget);
+      home: ChannelImportPage(radio: radio),
+    ));
+    await tester.pump();
+    expect(find.text('Importar canales'), findsOneWidget);
+    expect(find.text('Enlace de canal de Meshtastic'), findsOneWidget);
   });
 
   testWidgets('the Tools page is translated', (tester) async {
