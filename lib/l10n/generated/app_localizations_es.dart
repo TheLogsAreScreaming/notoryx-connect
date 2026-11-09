@@ -1690,6 +1690,54 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get mapShowHeatmap => 'Mostrar mapa de cobertura';
+
+  @override
+  String get mapHideHeatmap => 'Ocultar mapa de cobertura';
+
+  @override
+  String get mapHeatmapEmpty =>
+      'Aún no hay lecturas de cobertura. Activa Registrar cobertura en Registros de campo.';
+
+  @override
+  String mapHeatmapSummary(int readings) {
+    return 'Cobertura: $readings lecturas. Los números son la SNR media en dB.';
+  }
+
+  @override
+  String get mapHeatStrong => 'Fuerte';
+
+  @override
+  String get mapHeatFair => 'Regular';
+
+  @override
+  String get mapHeatWeak => 'Débil';
+
+  @override
+  String get mapShowRemembered => 'Mostrar nodos recordados';
+
+  @override
+  String get mapHideRemembered => 'Ocultar nodos recordados';
+
+  @override
+  String get mapRememberedNone =>
+      'No hay nodos recordados con posición guardada.';
+
+  @override
+  String mapRememberedPin(String name, String when) {
+    return '$name, recordado, visto por última vez $when';
+  }
+
+  @override
+  String get mapRememberedNote =>
+      'Tu radio ya no muestra este nodo. Aquí fue donde informó por última vez.';
+
+  @override
+  String mapLastSeen(String when) {
+    return 'Visto por última vez $when';
+  }
+
+  @override
   String get lockTitle => 'NOTORYX Connect está bloqueado';
 
   @override
