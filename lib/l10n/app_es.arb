@@ -475,5 +475,14 @@
   "lockTitle": "NOTORYX Connect está bloqueado",
   "lockBody": "Tu radio sigue conectada mientras la aplicación está bloqueada.",
   "lockUnlock": "Desbloquear",
-  "lockReason": "Desbloquear NOTORYX Connect"
+  "lockReason": "Desbloquear NOTORYX Connect",
+  "takTitle": "Envío a ATAK",
+  "toolsTakSub": "Mostrar nodos de la malla en ATAK en este teléfono",
+  "takIntro": "Envía la posición de cada nodo de la malla a ATAK en este teléfono, cada 30 segundos. Nada sale del teléfono y no se envía nada por la malla.",
+  "takSwitch": "Enviar posiciones de la malla a ATAK",
+  "takPort": "Puerto UDP",
+  "takBadPort": "Usa un número del 1024 al 65535.",
+  "takStatus": "{count, plural, one{Enviando {count} nodo} other{Enviando {count} nodos}}",
+  "takProblem": "No se pudo enviar: {error}",
+  "takHowTo": "En ATAK, abre Ajustes, luego Preferencias de red, luego Administrar entradas, y añade una entrada UDP en este puerto. Se omiten los nodos sin posición en la última hora."
 }
