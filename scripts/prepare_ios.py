@@ -25,6 +25,8 @@ plist.update({
     'CFBundleName': 'NOTORYX Connect',
     'NSBluetoothAlwaysUsageDescription':
         'NOTORYX Connect uses Bluetooth to connect to your LoRa mesh radio.',
+    'NSFaceIDUsageDescription':
+        'NOTORYX Connect uses Face ID for the optional app lock.',
     'NSCameraUsageDescription':
         'NOTORYX Connect uses the camera only to scan channel QR codes you choose to scan.',
     'NSLocationWhenInUseUsageDescription':

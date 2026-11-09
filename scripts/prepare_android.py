@@ -104,12 +104,13 @@ if not activity.exists():
 activity.write_text("""package com.bastionmesh.bastion
 
 import android.content.Context
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 
-class MainActivity : FlutterActivity() {
+class MainActivity : FlutterFragmentActivity() {
+    // FragmentActivity because the system fingerprint prompt needs it.
     // A new activity reattaches to the running engine, so the radio link and
     // app state survive the activity being destroyed.
     override fun provideFlutterEngine(context: Context): FlutterEngine {

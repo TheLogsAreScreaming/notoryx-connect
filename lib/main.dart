@@ -15,6 +15,8 @@ import 'field_tools_page.dart';
 import 'home_page.dart';
 import 'services/bastion_units.dart';
 import 'services/bastion_field_log.dart';
+import 'app_lock_gate.dart';
+import 'services/bastion_app_lock.dart';
 import 'services/bastion_background_service.dart';
 import 'services/bastion_bot_guard.dart';
 import 'services/bastion_history_limit.dart';
@@ -70,6 +72,7 @@ Future<void> main() async {
   await BastionChatStorage.useSqlite();
   await BastionFieldLog.instance.load();
   await BastionBotGuard.instance.load();
+  await BastionAppLock.instance.load();
   await BastionScheduledMessages.instance.load();
   runApp(const BastionApp());
 }
@@ -115,7 +118,11 @@ class _BastionAppState extends State<BastionApp> with WidgetsBindingObserver {
   // Seasonal follows the date, so check it again when the app comes back.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) setState(() {});
+    if (state == AppLifecycleState.paused) BastionAppLock.instance.onBackground();
+    if (state == AppLifecycleState.resumed) {
+      BastionAppLock.instance.onForeground();
+      setState(() {});
+    }
   }
 
   @override
@@ -130,6 +137,7 @@ class _BastionAppState extends State<BastionApp> with WidgetsBindingObserver {
         scrollBehavior: const BastionScrollBehavior(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
+        builder: (context, child) => BastionAppLockGate(lock: BastionAppLock.instance, child: child!),
         home: const BastionShell(),
       );
     },

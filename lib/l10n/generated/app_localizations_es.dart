@@ -1688,4 +1688,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String mapRouteSends(int count) {
     return 'Envía $count puntos de ruta en el canal 0, con unos 3 segundos de separación. Caducan al cabo de un día.';
   }
+
+  @override
+  String get lockTitle => 'NOTORYX Connect está bloqueado';
+
+  @override
+  String get lockBody =>
+      'Tu radio sigue conectada mientras la aplicación está bloqueada.';
+
+  @override
+  String get lockUnlock => 'Desbloquear';
+
+  @override
+  String get lockReason => 'Desbloquear NOTORYX Connect';
 }
