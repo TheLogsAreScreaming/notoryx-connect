@@ -2953,6 +2953,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unlock NOTORYX Connect'**
   String get lockReason;
+
+  /// No description provided for @takTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ATAK feed'**
+  String get takTitle;
+
+  /// No description provided for @toolsTakSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Show mesh nodes in ATAK on this phone'**
+  String get toolsTakSub;
+
+  /// No description provided for @takIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends the position of each mesh node to ATAK on this phone, once every 30 seconds. Nothing leaves the phone, and nothing goes out over the mesh.'**
+  String get takIntro;
+
+  /// No description provided for @takSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Send mesh positions to ATAK'**
+  String get takSwitch;
+
+  /// No description provided for @takPort.
+  ///
+  /// In en, this message translates to:
+  /// **'UDP port'**
+  String get takPort;
+
+  /// No description provided for @takBadPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a number from 1024 to 65535.'**
+  String get takBadPort;
+
+  /// No description provided for @takStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Sending {count} node} other{Sending {count} nodes}}'**
+  String takStatus(int count);
+
+  /// No description provided for @takProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not send: {error}'**
+  String takProblem(String error);
+
+  /// No description provided for @takHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out.'**
+  String get takHowTo;
 }
 
 class _AppLocalizationsDelegate

@@ -1731,4 +1731,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lockReason => 'Unlock NOTORYX Connect';
+
+  @override
+  String get takTitle => 'ATAK feed';
+
+  @override
+  String get toolsTakSub => 'Show mesh nodes in ATAK on this phone';
+
+  @override
+  String get takIntro =>
+      'Sends the position of each mesh node to ATAK on this phone, once every 30 seconds. Nothing leaves the phone, and nothing goes out over the mesh.';
+
+  @override
+  String get takSwitch => 'Send mesh positions to ATAK';
+
+  @override
+  String get takPort => 'UDP port';
+
+  @override
+  String get takBadPort => 'Use a number from 1024 to 65535.';
+
+  @override
+  String takStatus(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Sending $count nodes',
+      one: 'Sending $count node',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String takProblem(String error) {
+    return 'Could not send: $error';
+  }
+
+  @override
+  String get takHowTo =>
+      'In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out.';
 }
