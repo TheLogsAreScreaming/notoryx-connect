@@ -1920,4 +1920,186 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeStopNoMessage => 'Stop without message';
+
+  @override
+  String get frTitle => 'Field records';
+
+  @override
+  String get frTplAssistance => 'Assistance';
+
+  @override
+  String get frTplCheckIn => 'Check-in';
+
+  @override
+  String get frTplAllClear => 'All clear';
+
+  @override
+  String get frTooLong => 'Enter a message of 1–220 UTF-8 bytes.';
+
+  @override
+  String frBroadcastQ(int channel) {
+    return 'Broadcast to channel $channel?';
+  }
+
+  @override
+  String get frNoProof =>
+      'Sending does not prove reception. Confirm with a reply or voice contact.';
+
+  @override
+  String get frSendMessage => 'Send message';
+
+  @override
+  String get frChanged =>
+      'Radio or channel changed. Reconnect and review the message.';
+
+  @override
+  String get frSubmitted =>
+      'Submitted to the radio. Check Chats for transmission status and replies.';
+
+  @override
+  String get frIncidentLog => 'Incident log';
+
+  @override
+  String get frIncidentLogSub => 'Private notes saved on this phone';
+
+  @override
+  String get frIncidentField => 'Incident or observation';
+
+  @override
+  String get frIncidentSaved => 'Incident saved.';
+
+  @override
+  String get frSaveIncident => 'Save incident';
+
+  @override
+  String get frIncidentCopied =>
+      'Incident CSV copied. Paste into a file or spreadsheet.';
+
+  @override
+  String get frCopyIncident => 'Copy incident CSV';
+
+  @override
+  String frRadioOf(String time, String radio) {
+    return '$time • Radio $radio';
+  }
+
+  @override
+  String get frUnassigned => 'unassigned';
+
+  @override
+  String get frRemoveIncident => 'Remove incident';
+
+  @override
+  String get frRemoveIncidentQ => 'Remove this incident?';
+
+  @override
+  String get frKeep => 'Keep';
+
+  @override
+  String get frRemove => 'Remove';
+
+  @override
+  String get frIncidentRemoved => 'Incident removed.';
+
+  @override
+  String get frTemplates => 'Emergency & check-in templates';
+
+  @override
+  String get frTemplatesSub =>
+      'Edit details, choose a channel, then review before sending';
+
+  @override
+  String get frMessageField => 'Message — replace the blank details';
+
+  @override
+  String get frBroadcastChannel => 'Broadcast channel';
+
+  @override
+  String frChannelItem(int index, String name) {
+    return 'Channel $index • $name';
+  }
+
+  @override
+  String get frReview => 'Review message';
+
+  @override
+  String get frNotEmergency =>
+      'A template is ordinary mesh text. It does not contact emergency services.';
+
+  @override
+  String get frCoverage => 'Coverage history';
+
+  @override
+  String get frCoverageSub =>
+      'Receiver location with received RF signal • local recording only';
+
+  @override
+  String get frRecord => 'Record coverage';
+
+  @override
+  String get frRecordSub =>
+      'Requests phone GPS. Stops on disconnect. Does not send your location.';
+
+  @override
+  String get frRecordOn =>
+      'Coverage recorder enabled; waiting for a fresh accurate GPS fix and RF packets.';
+
+  @override
+  String get frRecordOff => 'Coverage recorder stopped.';
+
+  @override
+  String frReadings(int count) {
+    return '$count readings • maximum 2000 coverage readings • coverage expires after 30 days';
+  }
+
+  @override
+  String get frCoverageCopied =>
+      'Coverage CSV copied. Paste into a file or spreadsheet.';
+
+  @override
+  String get frCopyCoverage => 'Copy coverage CSV';
+
+  @override
+  String get frBot => 'Bot safeguards & quiet hours';
+
+  @override
+  String get frBotSub =>
+      '6 replies/hour • 30-second spacing • 5-minute per-node cooldown';
+
+  @override
+  String get frBotEnable => 'Enable Bot Mode in Chats for this session.';
+
+  @override
+  String get frBotRules =>
+      'Only fresh messages on the selected channel qualify. Replays and bot replies (NOTORYX: or Bastion:) are ignored. Quiet hours use this phone’s local time.';
+
+  @override
+  String get frQuiet => 'Quiet hours';
+
+  @override
+  String get frQuietStart => 'Quiet hours start';
+
+  @override
+  String get frQuietEnd => 'Quiet hours end';
+
+  @override
+  String get frBotChannel => 'Bot channel slot';
+
+  @override
+  String frChannelN(int index) {
+    return 'Channel $index';
+  }
+
+  @override
+  String frBytes(int bytes, int max) {
+    return '$bytes of $max bytes. Blank lines are left out.';
+  }
+
+  @override
+  String frBytesOver(int bytes, int max) {
+    return '$bytes of $max bytes. Too long to send: shorten a field.';
+  }
+
+  @override
+  String get frUseReport => 'Use report';
 }

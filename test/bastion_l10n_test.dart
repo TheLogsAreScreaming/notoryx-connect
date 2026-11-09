@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bastion/main.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
+import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/field_tools_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -42,6 +45,29 @@ void main() {
     expect(find.text('Mantén para SOS'), findsOneWidget);
     expect(find.text('Conectar radio'), findsOneWidget);
     expect(find.textContaining('Reportarse: '), findsOneWidget);
+  });
+
+  testWidgets('Field records is translated, but templates stay as sent on air', (tester) async {
+    tester.view.physicalSize = const Size(390, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: FieldToolsPage(radio: radio),
+    ));
+    await tester.pump();
+    expect(find.text('Registros de campo'), findsOneWidget);
+    expect(find.text('Registro de incidentes'), findsOneWidget);
+    await tester.tap(find.text('Plantillas de emergencia y reporte'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Todo en orden'));
+    await tester.pump();
+    expect(find.textContaining('ALL CLEAR | Name:'), findsOneWidget);
   });
 
   testWidgets('the Tools page is translated', (tester) async {

@@ -1400,5 +1400,118 @@
   },
   "homeSosActive": "SOS active",
   "homeImSafe": "I'm safe",
-  "homeStopNoMessage": "Stop without message"
+  "homeStopNoMessage": "Stop without message",
+  "frTitle": "Field records",
+  "frTplAssistance": "Assistance",
+  "frTplCheckIn": "Check-in",
+  "frTplAllClear": "All clear",
+  "frTooLong": "Enter a message of 1–220 UTF-8 bytes.",
+  "frBroadcastQ": "Broadcast to channel {channel}?",
+  "@frBroadcastQ": {
+    "placeholders": {
+      "channel": {
+        "type": "int"
+      }
+    }
+  },
+  "frNoProof": "Sending does not prove reception. Confirm with a reply or voice contact.",
+  "frSendMessage": "Send message",
+  "frChanged": "Radio or channel changed. Reconnect and review the message.",
+  "frSubmitted": "Submitted to the radio. Check Chats for transmission status and replies.",
+  "frIncidentLog": "Incident log",
+  "frIncidentLogSub": "Private notes saved on this phone",
+  "frIncidentField": "Incident or observation",
+  "frIncidentSaved": "Incident saved.",
+  "frSaveIncident": "Save incident",
+  "frIncidentCopied": "Incident CSV copied. Paste into a file or spreadsheet.",
+  "frCopyIncident": "Copy incident CSV",
+  "frRadioOf": "{time} • Radio {radio}",
+  "@frRadioOf": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "radio": {
+        "type": "String"
+      }
+    }
+  },
+  "frUnassigned": "unassigned",
+  "frRemoveIncident": "Remove incident",
+  "frRemoveIncidentQ": "Remove this incident?",
+  "frKeep": "Keep",
+  "frRemove": "Remove",
+  "frIncidentRemoved": "Incident removed.",
+  "frTemplates": "Emergency & check-in templates",
+  "frTemplatesSub": "Edit details, choose a channel, then review before sending",
+  "frMessageField": "Message — replace the blank details",
+  "frBroadcastChannel": "Broadcast channel",
+  "frChannelItem": "Channel {index} • {name}",
+  "@frChannelItem": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "frReview": "Review message",
+  "frNotEmergency": "A template is ordinary mesh text. It does not contact emergency services.",
+  "frCoverage": "Coverage history",
+  "frCoverageSub": "Receiver location with received RF signal • local recording only",
+  "frRecord": "Record coverage",
+  "frRecordSub": "Requests phone GPS. Stops on disconnect. Does not send your location.",
+  "frRecordOn": "Coverage recorder enabled; waiting for a fresh accurate GPS fix and RF packets.",
+  "frRecordOff": "Coverage recorder stopped.",
+  "frReadings": "{count} readings • maximum 2000 coverage readings • coverage expires after 30 days",
+  "@frReadings": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "frCoverageCopied": "Coverage CSV copied. Paste into a file or spreadsheet.",
+  "frCopyCoverage": "Copy coverage CSV",
+  "frBot": "Bot safeguards & quiet hours",
+  "frBotSub": "6 replies/hour • 30-second spacing • 5-minute per-node cooldown",
+  "frBotEnable": "Enable Bot Mode in Chats for this session.",
+  "frBotRules": "Only fresh messages on the selected channel qualify. Replays and bot replies (NOTORYX: or Bastion:) are ignored. Quiet hours use this phone’s local time.",
+  "frQuiet": "Quiet hours",
+  "frQuietStart": "Quiet hours start",
+  "frQuietEnd": "Quiet hours end",
+  "frBotChannel": "Bot channel slot",
+  "frChannelN": "Channel {index}",
+  "@frChannelN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "frBytes": "{bytes} of {max} bytes. Blank lines are left out.",
+  "@frBytes": {
+    "placeholders": {
+      "bytes": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "frBytesOver": "{bytes} of {max} bytes. Too long to send: shorten a field.",
+  "@frBytesOver": {
+    "placeholders": {
+      "bytes": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "frUseReport": "Use report"
 }

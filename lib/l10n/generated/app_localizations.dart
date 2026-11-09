@@ -3241,6 +3241,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stop without message'**
   String get homeStopNoMessage;
+
+  /// No description provided for @frTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Field records'**
+  String get frTitle;
+
+  /// No description provided for @frTplAssistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Assistance'**
+  String get frTplAssistance;
+
+  /// No description provided for @frTplCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in'**
+  String get frTplCheckIn;
+
+  /// No description provided for @frTplAllClear.
+  ///
+  /// In en, this message translates to:
+  /// **'All clear'**
+  String get frTplAllClear;
+
+  /// No description provided for @frTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a message of 1–220 UTF-8 bytes.'**
+  String get frTooLong;
+
+  /// No description provided for @frBroadcastQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast to channel {channel}?'**
+  String frBroadcastQ(int channel);
+
+  /// No description provided for @frNoProof.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending does not prove reception. Confirm with a reply or voice contact.'**
+  String get frNoProof;
+
+  /// No description provided for @frSendMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Send message'**
+  String get frSendMessage;
+
+  /// No description provided for @frChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio or channel changed. Reconnect and review the message.'**
+  String get frChanged;
+
+  /// No description provided for @frSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted to the radio. Check Chats for transmission status and replies.'**
+  String get frSubmitted;
+
+  /// No description provided for @frIncidentLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident log'**
+  String get frIncidentLog;
+
+  /// No description provided for @frIncidentLogSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Private notes saved on this phone'**
+  String get frIncidentLogSub;
+
+  /// No description provided for @frIncidentField.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident or observation'**
+  String get frIncidentField;
+
+  /// No description provided for @frIncidentSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident saved.'**
+  String get frIncidentSaved;
+
+  /// No description provided for @frSaveIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Save incident'**
+  String get frSaveIncident;
+
+  /// No description provided for @frIncidentCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident CSV copied. Paste into a file or spreadsheet.'**
+  String get frIncidentCopied;
+
+  /// No description provided for @frCopyIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy incident CSV'**
+  String get frCopyIncident;
+
+  /// No description provided for @frRadioOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} • Radio {radio}'**
+  String frRadioOf(String time, String radio);
+
+  /// No description provided for @frUnassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'unassigned'**
+  String get frUnassigned;
+
+  /// No description provided for @frRemoveIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove incident'**
+  String get frRemoveIncident;
+
+  /// No description provided for @frRemoveIncidentQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this incident?'**
+  String get frRemoveIncidentQ;
+
+  /// No description provided for @frKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep'**
+  String get frKeep;
+
+  /// No description provided for @frRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get frRemove;
+
+  /// No description provided for @frIncidentRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident removed.'**
+  String get frIncidentRemoved;
+
+  /// No description provided for @frTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency & check-in templates'**
+  String get frTemplates;
+
+  /// No description provided for @frTemplatesSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit details, choose a channel, then review before sending'**
+  String get frTemplatesSub;
+
+  /// No description provided for @frMessageField.
+  ///
+  /// In en, this message translates to:
+  /// **'Message — replace the blank details'**
+  String get frMessageField;
+
+  /// No description provided for @frBroadcastChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast channel'**
+  String get frBroadcastChannel;
+
+  /// No description provided for @frChannelItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index} • {name}'**
+  String frChannelItem(int index, String name);
+
+  /// No description provided for @frReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review message'**
+  String get frReview;
+
+  /// No description provided for @frNotEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'A template is ordinary mesh text. It does not contact emergency services.'**
+  String get frNotEmergency;
+
+  /// No description provided for @frCoverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Coverage history'**
+  String get frCoverage;
+
+  /// No description provided for @frCoverageSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Receiver location with received RF signal • local recording only'**
+  String get frCoverageSub;
+
+  /// No description provided for @frRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Record coverage'**
+  String get frRecord;
+
+  /// No description provided for @frRecordSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests phone GPS. Stops on disconnect. Does not send your location.'**
+  String get frRecordSub;
+
+  /// No description provided for @frRecordOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Coverage recorder enabled; waiting for a fresh accurate GPS fix and RF packets.'**
+  String get frRecordOn;
+
+  /// No description provided for @frRecordOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Coverage recorder stopped.'**
+  String get frRecordOff;
+
+  /// No description provided for @frReadings.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} readings • maximum 2000 coverage readings • coverage expires after 30 days'**
+  String frReadings(int count);
+
+  /// No description provided for @frCoverageCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Coverage CSV copied. Paste into a file or spreadsheet.'**
+  String get frCoverageCopied;
+
+  /// No description provided for @frCopyCoverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy coverage CSV'**
+  String get frCopyCoverage;
+
+  /// No description provided for @frBot.
+  ///
+  /// In en, this message translates to:
+  /// **'Bot safeguards & quiet hours'**
+  String get frBot;
+
+  /// No description provided for @frBotSub.
+  ///
+  /// In en, this message translates to:
+  /// **'6 replies/hour • 30-second spacing • 5-minute per-node cooldown'**
+  String get frBotSub;
+
+  /// No description provided for @frBotEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Bot Mode in Chats for this session.'**
+  String get frBotEnable;
+
+  /// No description provided for @frBotRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Only fresh messages on the selected channel qualify. Replays and bot replies (NOTORYX: or Bastion:) are ignored. Quiet hours use this phone’s local time.'**
+  String get frBotRules;
+
+  /// No description provided for @frQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet hours'**
+  String get frQuiet;
+
+  /// No description provided for @frQuietStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet hours start'**
+  String get frQuietStart;
+
+  /// No description provided for @frQuietEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet hours end'**
+  String get frQuietEnd;
+
+  /// No description provided for @frBotChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bot channel slot'**
+  String get frBotChannel;
+
+  /// No description provided for @frChannelN.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}'**
+  String frChannelN(int index);
+
+  /// No description provided for @frBytes.
+  ///
+  /// In en, this message translates to:
+  /// **'{bytes} of {max} bytes. Blank lines are left out.'**
+  String frBytes(int bytes, int max);
+
+  /// No description provided for @frBytesOver.
+  ///
+  /// In en, this message translates to:
+  /// **'{bytes} of {max} bytes. Too long to send: shorten a field.'**
+  String frBytesOver(int bytes, int max);
+
+  /// No description provided for @frUseReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Use report'**
+  String get frUseReport;
 }
 
 class _AppLocalizationsDelegate
