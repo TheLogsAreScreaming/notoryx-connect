@@ -45,3 +45,21 @@ if grep -q 'FATAL EXCEPTION' emulator-process-log.txt; then
   echo 'NOTORYX Connect crashed during startup.' >&2
   exit 1
 fi
+
+# Destroying the activity must leave the process and its Flutter engine usable:
+# the engine holds the radio link. Android does this on Back, under memory
+# pressure, and when system overlays change.
+"$adb_bin" shell settings put global always_finish_activities 1
+"$adb_bin" logcat -c
+"$adb_bin" shell input keyevent KEYCODE_HOME
+sleep 5
+"$adb_bin" shell am start -W -n "$activity" > emulator-relaunch.txt || true
+sleep 10
+"$adb_bin" logcat -d > emulator-relaunch-log.txt
+"$adb_bin" shell settings put global always_finish_activities 0
+relaunch_pid=$("$adb_bin" shell pidof "$package" | tr -d '\r')
+if [[ "$relaunch_pid" != "$app_pid" ]] || grep -q 'FATAL EXCEPTION' emulator-relaunch-log.txt; then
+  echo 'NOTORYX Connect did not survive its activity being recreated.' >&2
+  grep -A12 'FATAL EXCEPTION' emulator-relaunch-log.txt >&2 || true
+  exit 1
+fi
