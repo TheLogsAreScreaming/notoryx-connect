@@ -91,6 +91,7 @@ class _TripPageState extends State<TripPage> {
             ),
           const SizedBox(height: 16),
           DropdownButtonFormField<int>(
+            isExpanded: true,
             initialValue: overdueChoices.contains(plan.overdueMinutes) ? plan.overdueMinutes : 60,
             decoration: const InputDecoration(
               labelText: 'Overdue alert',
@@ -103,6 +104,7 @@ class _TripPageState extends State<TripPage> {
           ),
           const SizedBox(height: 12),
           DropdownButtonFormField<int>(
+            isExpanded: true,
             initialValue: reminderChoices.contains(plan.reminderMinutes) ? plan.reminderMinutes : 0,
             decoration: const InputDecoration(
               labelText: 'Check-in reminder',
@@ -115,6 +117,7 @@ class _TripPageState extends State<TripPage> {
           ),
           const SizedBox(height: 12),
           DropdownButtonFormField<int>(
+            isExpanded: true,
             initialValue: plan.sosChannel >= 0 && channels.any((c) => c.index == plan.sosChannel)
                 ? plan.sosChannel : -1,
             decoration: const InputDecoration(
