@@ -70,6 +70,7 @@ Future<void> main() async {
   await BastionPreferences.instance.load();
   // Chat history lives in its own database; older saves move over once.
   await BastionChatStorage.useSqlite();
+  await BastionChatStorage.applySavedEncryption();
   await BastionFieldLog.instance.load();
   await BastionBotGuard.instance.load();
   await BastionAppLock.instance.load();

@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:cryptography/cryptography.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'bastion_chat_encryption.dart';
 
 /// Where chat archives (message history and offline queues) are kept.
 ///
@@ -33,6 +36,93 @@ abstract final class BastionChatStorage {
       _active ?? PrefsChatArchiveStore(preferences);
 
   static bool isChatKey(String key) => key.startsWith(prefix);
+
+  static const _encryptedPref = 'bastion.chat_encrypted';
+
+  /// Whether chat history is currently being encrypted.
+  static bool get encrypted => _active is EncryptedChatArchiveStore;
+
+  /// At startup, turns encryption back on if it was on, and finishes any
+  /// change that was interrupted. Returns a problem to show, or null.
+  static Future<String?> applySavedEncryption({BastionKeyVault? vault}) async {
+    try {
+      if (await SharedPreferencesAsync().getBool(_encryptedPref) != true) return null;
+    } catch (_) {
+      return null;
+    }
+    final base = _active;
+    if (base == null) return null;
+    List<int>? key;
+    try {
+      key = await (vault ?? BastionSecureKeyVault()).read();
+    } catch (_) {
+      key = null;
+    }
+    if (key == null) {
+      _active = const UnavailableChatArchiveStore();
+      return migrationProblem = 'The key for your encrypted chat history could not be read. '
+          'Your history is still on this phone and has not been changed.';
+    }
+    final store = EncryptedChatArchiveStore(base, key);
+    _active = store;
+    return migrationProblem = await _encryptAll(store);
+  }
+
+  /// Turns encryption on or off for all history. Returns a problem, or null.
+  static Future<String?> setEncrypted(bool on, {BastionKeyVault? vault}) async {
+    final safe = vault ?? BastionSecureKeyVault();
+    final active = _active;
+    try {
+      if (on) {
+        if (active is! SqliteChatArchiveStore) return 'The message database is not available on this phone.';
+        final key = await (await AesGcm.with256bits().newSecretKey()).extractBytes();
+        await safe.write(key);
+        final saved = await safe.read();
+        if (saved == null || base64Encode(saved) != base64Encode(key)) return 'This phone could not store the key safely.';
+        await SharedPreferencesAsync().setBool(_encryptedPref, true);
+        final store = EncryptedChatArchiveStore(active, key);
+        _active = store;
+        return await _encryptAll(store);
+      }
+      if (active is! EncryptedChatArchiveStore) return null;
+      // Keep the key until every archive is confirmed readable without it.
+      for (final name in await active.keys()) {
+        final plain = await active.read(name);
+        if (plain != null) await active.inner.write(name, plain);
+      }
+      await SharedPreferencesAsync().setBool(_encryptedPref, false);
+      _active = active.inner;
+      await safe.delete();
+      return null;
+    } catch (error) {
+      return 'Chat history encryption could not be changed ($error). Your messages were kept.';
+    }
+  }
+
+  /// Encrypts what isn't yet, confirming each archive before moving on, then
+  /// clears the old plain text out of the database file.
+  static Future<String?> _encryptAll(EncryptedChatArchiveStore store) async {
+    var failed = 0, changed = 0;
+    for (final name in await store.keys()) {
+      final stored = await store.inner.read(name);
+      if (stored == null || EncryptedChatArchiveStore.isEncrypted(stored)) continue;
+      try {
+        await store.write(name, stored);
+        if (await store.read(name) == stored) {
+          changed++;
+        } else {
+          failed++;
+          await store.inner.write(name, stored);
+        }
+      } catch (_) {
+        failed++;
+        await store.inner.write(name, stored);
+      }
+    }
+    final inner = store.inner;
+    if (changed > 0 && inner is SqliteChatArchiveStore) await inner.compact();
+    return failed == 0 ? null : '$failed chat archive${failed == 1 ? '' : 's'} could not be encrypted and stayed as ${failed == 1 ? 'it was' : 'they were'}.';
+  }
 
   @visibleForTesting
   static set active(ChatArchiveStore? store) => _active = store;
@@ -98,6 +188,9 @@ class SqliteChatArchiveStore implements ChatArchiveStore {
   }
 
   Future<void> close() => _db.close();
+
+  /// Rebuilds the file so deleted rows no longer sit in free pages.
+  Future<void> compact() => _db.execute('VACUUM');
 
   @override
   Future<Set<String>> keys() async =>
