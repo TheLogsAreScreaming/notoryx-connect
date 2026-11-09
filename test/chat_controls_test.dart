@@ -29,6 +29,25 @@ void main() {
     expect(find.text('No messages match your search.'), findsOneWidget);
   });
 
+  testWidgets('a message scheduled from Chats is listed and can be cancelled', (tester) async {
+    await tester.pumpWidget(const BastionApp());
+    await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
+    await tester.pumpAndSettle();
+    await tester.enterText(find.widgetWithText(TextField, 'Message Channel 0'), 'leaving camp');
+    await tester.ensureVisible(find.byKey(const ValueKey('chat-schedule')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('chat-schedule')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('In 1 hour'));
+    await tester.pumpAndSettle();
+    expect(find.text('leaving camp'), findsOneWidget);
+    await tester.ensureVisible(find.byTooltip('Cancel scheduled message'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Cancel scheduled message'));
+    await tester.pumpAndSettle();
+    expect(find.text('leaving camp'), findsNothing);
+  });
+
   testWidgets('Chats warns when message history cannot be read', (tester) async {
     SharedPreferencesAsyncPlatform.instance = _UnreadableStore();
     await tester.pumpWidget(const BastionApp());
