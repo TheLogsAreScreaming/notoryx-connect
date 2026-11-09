@@ -4309,6 +4309,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'GPS pins are hidden: {model} has its GPS wired by the maker, so they do nothing.'**
   String rsGpsHidden(String model);
+
+  /// No description provided for @bcShareQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your primary channel?'**
+  String get bcShareQ;
+
+  /// No description provided for @bcShareBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The beacon will include your primary channel\'s name and key. Anyone in range can then join it and read its messages.'**
+  String get bcShareBody;
+
+  /// No description provided for @bcShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get bcShare;
+
+  /// No description provided for @bcSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Beacon sent.'**
+  String get bcSent;
+
+  /// No description provided for @bcNotSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Beacon not sent: {error}'**
+  String bcNotSent(String error);
+
+  /// No description provided for @bcTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh beacons'**
+  String get bcTitle;
+
+  /// No description provided for @bcClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear heard beacons'**
+  String get bcClear;
+
+  /// No description provided for @bcIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'A beacon is a short broadcast that tells nearby radios a mesh is here, and can invite them to a channel. Radios on the newer Meshtastic firmware show it; NOTORYX Connect shows beacons it hears with any firmware.'**
+  String get bcIntro;
+
+  /// No description provided for @bcSendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a beacon'**
+  String get bcSendTitle;
+
+  /// No description provided for @bcMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Beacon message'**
+  String get bcMessage;
+
+  /// No description provided for @bcMessageHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent on your primary channel. At most one beacon an hour.'**
+  String get bcMessageHelp;
+
+  /// No description provided for @bcBytes.
+  ///
+  /// In en, this message translates to:
+  /// **'{used}/{max} bytes'**
+  String bcBytes(int used, int max);
+
+  /// No description provided for @bcTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Too long'**
+  String get bcTooLong;
+
+  /// No description provided for @bcAddLocationNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Add my location (no position yet)'**
+  String get bcAddLocationNone;
+
+  /// No description provided for @bcAddLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Add my location as a Plus Code'**
+  String get bcAddLocation;
+
+  /// No description provided for @bcInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite to my primary channel'**
+  String get bcInvite;
+
+  /// No description provided for @bcInviteSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Includes the channel name and key, and your region and preset'**
+  String get bcInviteSub;
+
+  /// No description provided for @bcSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending…'**
+  String get bcSending;
+
+  /// No description provided for @bcSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send beacon'**
+  String get bcSend;
+
+  /// No description provided for @bcConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio to send a beacon.'**
+  String get bcConnect;
+
+  /// No description provided for @bcNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next beacon can be sent at {time}.'**
+  String bcNext(String time);
+
+  /// No description provided for @bcHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard beacons'**
+  String get bcHeard;
+
+  /// No description provided for @bcNoneHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'No beacons heard yet'**
+  String get bcNoneHeard;
+
+  /// No description provided for @bcNoneHeardSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Beacons from radios in range on your channels appear here.'**
+  String get bcNoneHeardSub;
+
+  /// No description provided for @bcFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From {name}'**
+  String bcFrom(String name);
+
+  /// No description provided for @bcHeardAt.
+  ///
+  /// In en, this message translates to:
+  /// **'heard {time}'**
+  String bcHeardAt(String time);
+
+  /// No description provided for @bcChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel \"{name}\"'**
+  String bcChannel(String name);
+
+  /// No description provided for @bcDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get bcDefault;
+
+  /// No description provided for @bcRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'region {name}'**
+  String bcRegion(String name);
+
+  /// No description provided for @bcPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'preset {name}'**
+  String bcPreset(String name);
+
+  /// No description provided for @bcSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'slot {slot}'**
+  String bcSlot(int slot);
+
+  /// No description provided for @bcNoMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'(no message)'**
+  String get bcNoMessage;
+
+  /// No description provided for @bcInvitesTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Invites to: {offer}'**
+  String bcInvitesTo(String offer);
+
+  /// No description provided for @bcJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Review and join channel'**
+  String get bcJoin;
 }
 
 class _AppLocalizationsDelegate

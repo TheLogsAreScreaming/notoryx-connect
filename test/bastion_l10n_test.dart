@@ -6,6 +6,7 @@ import 'package:bastion/radio_settings_page.dart';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/field_tools_page.dart';
+import 'package:bastion/beacon_page.dart';
 import 'package:bastion/node_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -72,6 +73,9 @@ void main() {
   });
 
   testWidgets('Radio settings is translated', (tester) async {
+  });
+
+  testWidgets('Beacons is translated', (tester) async {
     tester.view.physicalSize = const Size(390, 3000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -98,6 +102,12 @@ void main() {
     expect(find.text('Ajustes de la radio'), findsOneWidget);
     expect(find.text('Radio no preparada'), findsOneWidget);
     expect(find.text('Propietario'), findsOneWidget);
+      home: BeaconPage(radio: radio),
+    ));
+    await tester.pump();
+    expect(find.text('Balizas de la malla'), findsOneWidget);
+    expect(find.text('Aún no se han oído balizas'), findsOneWidget);
+    expect(find.text('Conéctate a una radio para enviar una baliza.'), findsOneWidget);
   });
 
   testWidgets('the Tools page is translated', (tester) async {
