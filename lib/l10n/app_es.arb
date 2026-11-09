@@ -471,5 +471,9 @@
   "mapRememberedNone": "No hay nodos recordados con posición guardada.",
   "mapRememberedPin": "{name}, recordado, visto por última vez {when}",
   "mapRememberedNote": "Tu radio ya no muestra este nodo. Aquí fue donde informó por última vez.",
-  "mapLastSeen": "Visto por última vez {when}"
+  "mapLastSeen": "Visto por última vez {when}",
+  "lockTitle": "NOTORYX Connect está bloqueado",
+  "lockBody": "Tu radio sigue conectada mientras la aplicación está bloqueada.",
+  "lockUnlock": "Desbloquear",
+  "lockReason": "Desbloquear NOTORYX Connect"
 }

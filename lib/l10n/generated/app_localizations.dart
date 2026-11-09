@@ -2929,6 +2929,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last seen {when}'**
   String mapLastSeen(String when);
+
+  /// No description provided for @lockTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTORYX Connect is locked'**
+  String get lockTitle;
+
+  /// No description provided for @lockBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio stays connected while the app is locked.'**
+  String get lockBody;
+
+  /// No description provided for @lockUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock'**
+  String get lockUnlock;
+
+  /// No description provided for @lockReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock NOTORYX Connect'**
+  String get lockReason;
 }
 
 class _AppLocalizationsDelegate

@@ -1736,4 +1736,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String mapLastSeen(String when) {
     return 'Visto por última vez $when';
   }
+
+  @override
+  String get lockTitle => 'NOTORYX Connect está bloqueado';
+
+  @override
+  String get lockBody =>
+      'Tu radio sigue conectada mientras la aplicación está bloqueada.';
+
+  @override
+  String get lockUnlock => 'Desbloquear';
+
+  @override
+  String get lockReason => 'Desbloquear NOTORYX Connect';
 }

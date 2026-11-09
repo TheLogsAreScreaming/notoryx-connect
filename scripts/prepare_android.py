@@ -1,5 +1,7 @@
 # Run after flutter create to add BLE permissions and app label.
+# Pass --sms only for sideload builds: Google Play restricts SMS permissions.
 import re
+import sys
 from pathlib import Path
 p=Path('android/app/src/main/AndroidManifest.xml')
 s=p.read_text()
@@ -104,12 +106,13 @@ if not activity.exists():
 activity.write_text("""package com.bastionmesh.bastion
 
 import android.content.Context
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 
-class MainActivity : FlutterActivity() {
+class MainActivity : FlutterFragmentActivity() {
+    // FragmentActivity because the system fingerprint prompt needs it.
     // A new activity reattaches to the running engine, so the radio link and
     // app state survive the activity being destroyed.
     override fun provideFlutterEngine(context: Context): FlutterEngine {
@@ -128,3 +131,25 @@ class MainActivity : FlutterActivity() {
 }
 """)
 print('Kept one Flutter engine across activities')
+
+# Optional SMS relay. Off unless asked for, so no Play build can carry it.
+if '--sms' in sys.argv[1:]:
+    source=activity.read_text()
+    anchor='    override fun shouldDestroyEngineWithHost(): Boolean = false\n'
+    if anchor not in source:
+        raise SystemExit('Could not add the SMS relay to MainActivity')
+    activity.write_text(source.replace(anchor, '''    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        SmsRelayChannel.attach(this, flutterEngine)
+    }
+
+''' + anchor, 1))
+    for src in Path('android_sms_overlay').rglob('*'):
+        if src.is_file():
+            dest=Path('android')/src.relative_to('android_sms_overlay')
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(src, dest)
+    manifest=p.read_text()
+    p.write_text(manifest.replace('<manifest xmlns:android="http://schemas.android.com/apk/res/android">',
+        '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n    <uses-permission android:name="android.permission.SEND_SMS" />', 1))
+    print('Added the sideload SMS relay')
