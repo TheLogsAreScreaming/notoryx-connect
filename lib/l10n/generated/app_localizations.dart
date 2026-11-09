@@ -3865,6 +3865,450 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use report'**
   String get frUseReport;
+
+  /// No description provided for @rsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio settings'**
+  String get rsTitle;
+
+  /// No description provided for @rsNotReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio not ready'**
+  String get rsNotReady;
+
+  /// No description provided for @rsNotReadySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio and wait for READY to change settings.'**
+  String get rsNotReadySub;
+
+  /// No description provided for @rsAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings availability'**
+  String get rsAvailability;
+
+  /// No description provided for @rsAvailabilitySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Check reads before editing. Missing startup settings do not prove a module is unsupported. Results reset on reconnect.'**
+  String get rsAvailabilitySub;
+
+  /// No description provided for @rsStopChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop checking'**
+  String get rsStopChecking;
+
+  /// No description provided for @rsOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get rsOwner;
+
+  /// No description provided for @rsOwnerSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Long and short node names'**
+  String get rsOwnerSub;
+
+  /// No description provided for @rsLoraSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Region, modem preset, hop limit, transmit'**
+  String get rsLoraSub;
+
+  /// No description provided for @rsChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get rsChannels;
+
+  /// No description provided for @rsChannelsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Names, roles and encryption keys'**
+  String get rsChannelsSub;
+
+  /// No description provided for @rsDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get rsDevice;
+
+  /// No description provided for @rsDeviceSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Device role and rebroadcast mode'**
+  String get rsDeviceSub;
+
+  /// No description provided for @rsPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get rsPosition;
+
+  /// No description provided for @rsPositionSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast interval, GPS mode, smart position'**
+  String get rsPositionSub;
+
+  /// No description provided for @rsAllSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'ALL RADIO SETTINGS'**
+  String get rsAllSettings;
+
+  /// No description provided for @rsModules.
+  ///
+  /// In en, this message translates to:
+  /// **'MODULES'**
+  String get rsModules;
+
+  /// No description provided for @rsRadioChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected radio changed while loading. Retry the read.'**
+  String get rsRadioChanged;
+
+  /// No description provided for @rsSaveQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Save {section}?'**
+  String rsSaveQ(String section);
+
+  /// No description provided for @rsSaveWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This writes the change to the connected radio. The radio may reboot and reconnect.'**
+  String get rsSaveWarning;
+
+  /// No description provided for @rsIdentityChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio identity changed or is unavailable. Reload before saving.'**
+  String get rsIdentityChanged;
+
+  /// No description provided for @rsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'{section} saved and verified from radio.'**
+  String rsSaved(String section);
+
+  /// No description provided for @rsNotVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Save not verified: {error}\nThe radio may have applied the change. Reload to inspect its current value; nothing will be resent automatically.'**
+  String rsNotVerified(String error);
+
+  /// No description provided for @rsSaveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE'**
+  String get rsSaveButton;
+
+  /// No description provided for @rsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'{section} settings are unavailable through this radio’s firmware API.'**
+  String rsUnavailable(String section);
+
+  /// No description provided for @rsReadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read from the radio: {error}'**
+  String rsReadFailed(String error);
+
+  /// No description provided for @rsRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get rsRetry;
+
+  /// No description provided for @rsWaitingReconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for reconnect and a fresh settings read…'**
+  String get rsWaitingReconnect;
+
+  /// No description provided for @rsReload.
+  ///
+  /// In en, this message translates to:
+  /// **'Reload from radio'**
+  String get rsReload;
+
+  /// No description provided for @rsLongName.
+  ///
+  /// In en, this message translates to:
+  /// **'Long name'**
+  String get rsLongName;
+
+  /// No description provided for @rsShortName.
+  ///
+  /// In en, this message translates to:
+  /// **'Short name'**
+  String get rsShortName;
+
+  /// No description provided for @rsChooseRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a region before saving; the radio will not transmit without one.'**
+  String get rsChooseRegion;
+
+  /// No description provided for @rsCustomInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom settings require a positive bandwidth, spreading factor 5–12 and coding rate denominator 5–8. Check your radio’s supported values.'**
+  String get rsCustomInvalid;
+
+  /// No description provided for @rsRegionWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing region or modem preset disconnects this radio from nodes that keep the old settings.'**
+  String get rsRegionWarning;
+
+  /// No description provided for @rsRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get rsRegion;
+
+  /// No description provided for @rsUsePreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Use modem preset'**
+  String get rsUsePreset;
+
+  /// No description provided for @rsModemPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Modem preset'**
+  String get rsModemPreset;
+
+  /// No description provided for @rsBandwidth.
+  ///
+  /// In en, this message translates to:
+  /// **'Bandwidth (kHz)'**
+  String get rsBandwidth;
+
+  /// No description provided for @rsSpreadFactor.
+  ///
+  /// In en, this message translates to:
+  /// **'Spreading factor'**
+  String get rsSpreadFactor;
+
+  /// No description provided for @rsCodingRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Coding rate denominator (5–8)'**
+  String get rsCodingRate;
+
+  /// No description provided for @rsRxBoost.
+  ///
+  /// In en, this message translates to:
+  /// **'RX boosted gain'**
+  String get rsRxBoost;
+
+  /// No description provided for @rsRxBoostSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal SX126x receiver gain; separate from external LNA'**
+  String get rsRxBoostSub;
+
+  /// No description provided for @rsLna.
+  ///
+  /// In en, this message translates to:
+  /// **'External LNA'**
+  String get rsLna;
+
+  /// No description provided for @rsLnaReported.
+  ///
+  /// In en, this message translates to:
+  /// **'External receive amplifier reported by this radio'**
+  String get rsLnaReported;
+
+  /// No description provided for @rsLnaNone.
+  ///
+  /// In en, this message translates to:
+  /// **'This radio has not reported a controllable external LNA'**
+  String get rsLnaNone;
+
+  /// No description provided for @rsHopLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Hop limit: {hops}'**
+  String rsHopLimit(int hops);
+
+  /// No description provided for @rsTransmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Transmit enabled'**
+  String get rsTransmit;
+
+  /// No description provided for @rsTransmitSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Off makes the radio receive-only'**
+  String get rsTransmitSub;
+
+  /// No description provided for @rsInfraWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'{role} is for fixed infrastructure with good coverage. On a handheld it wastes airtime and battery.'**
+  String rsInfraWarning(String role);
+
+  /// No description provided for @rsRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get rsRole;
+
+  /// No description provided for @rsRebroadcast.
+  ///
+  /// In en, this message translates to:
+  /// **'Rebroadcast mode'**
+  String get rsRebroadcast;
+
+  /// No description provided for @rsIntervalInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast interval must be 0 (firmware default) or at least 30 seconds.'**
+  String get rsIntervalInvalid;
+
+  /// No description provided for @rsGpsMode.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS mode'**
+  String get rsGpsMode;
+
+  /// No description provided for @rsInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast interval (seconds, 0 = default)'**
+  String get rsInterval;
+
+  /// No description provided for @rsSmart.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart position broadcast'**
+  String get rsSmart;
+
+  /// No description provided for @rsSmartSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Send extra updates when the node moves'**
+  String get rsSmartSub;
+
+  /// No description provided for @rsFixed.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed position'**
+  String get rsFixed;
+
+  /// No description provided for @rsFixedSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Report the last known position instead of GPS'**
+  String get rsFixedSub;
+
+  /// No description provided for @rsShareQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Share as QR code'**
+  String get rsShareQr;
+
+  /// No description provided for @rsImportLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Import channel link'**
+  String get rsImportLink;
+
+  /// No description provided for @rsDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get rsDisabled;
+
+  /// No description provided for @rsDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'(default name)'**
+  String get rsDefaultName;
+
+  /// No description provided for @rsChannelsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read channels: {error}'**
+  String rsChannelsFailed(String error);
+
+  /// No description provided for @rsNoEncryption.
+  ///
+  /// In en, this message translates to:
+  /// **'No encryption'**
+  String get rsNoEncryption;
+
+  /// No description provided for @rsDefaultKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Default key'**
+  String get rsDefaultKey;
+
+  /// No description provided for @rsAes128.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-128 key'**
+  String get rsAes128;
+
+  /// No description provided for @rsAes256.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-256 key'**
+  String get rsAes256;
+
+  /// No description provided for @rsUnknownKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Unrecognized key'**
+  String get rsUnknownKey;
+
+  /// No description provided for @rsChannelN.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}'**
+  String rsChannelN(int index);
+
+  /// No description provided for @rsKeyWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The encryption key changes. Nodes without the new key can no longer read this channel. Share it from the channel QR code.'**
+  String get rsKeyWarning;
+
+  /// No description provided for @rsChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name (blank uses the preset name)'**
+  String get rsChannelName;
+
+  /// No description provided for @rsEncryption.
+  ///
+  /// In en, this message translates to:
+  /// **'Encryption: {key}'**
+  String rsEncryption(String key);
+
+  /// No description provided for @rsNewAes256.
+  ///
+  /// In en, this message translates to:
+  /// **'New random AES-256'**
+  String get rsNewAes256;
+
+  /// No description provided for @rsGpsHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS pins are hidden: {model} has its GPS wired by the maker, so they do nothing.'**
+  String rsGpsHidden(String model);
 }
 
 class _AppLocalizationsDelegate

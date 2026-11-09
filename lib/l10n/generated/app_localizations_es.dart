@@ -2299,4 +2299,267 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get frUseReport => 'Usar informe';
+
+  @override
+  String get rsTitle => 'Ajustes de la radio';
+
+  @override
+  String get rsNotReady => 'Radio no preparada';
+
+  @override
+  String get rsNotReadySub =>
+      'Conéctate a una radio y espera a READY para cambiar los ajustes.';
+
+  @override
+  String get rsAvailability => 'Disponibilidad de ajustes';
+
+  @override
+  String get rsAvailabilitySub =>
+      'Comprueba las lecturas antes de editar. Que falten ajustes al inicio no demuestra que un módulo no sea compatible. Los resultados se reinician al reconectar.';
+
+  @override
+  String get rsStopChecking => 'Dejar de comprobar';
+
+  @override
+  String get rsOwner => 'Propietario';
+
+  @override
+  String get rsOwnerSub => 'Nombres largo y corto del nodo';
+
+  @override
+  String get rsLoraSub =>
+      'Región, preajuste de módem, límite de saltos, transmisión';
+
+  @override
+  String get rsChannels => 'Canales';
+
+  @override
+  String get rsChannelsSub => 'Nombres, funciones y claves de cifrado';
+
+  @override
+  String get rsDevice => 'Dispositivo';
+
+  @override
+  String get rsDeviceSub => 'Función del dispositivo y modo de retransmisión';
+
+  @override
+  String get rsPosition => 'Posición';
+
+  @override
+  String get rsPositionSub =>
+      'Intervalo de emisión, modo GPS, posición inteligente';
+
+  @override
+  String get rsAllSettings => 'TODOS LOS AJUSTES DE LA RADIO';
+
+  @override
+  String get rsModules => 'MÓDULOS';
+
+  @override
+  String get rsRadioChanged =>
+      'La radio conectada cambió durante la carga. Vuelve a intentar la lectura.';
+
+  @override
+  String rsSaveQ(String section) {
+    return '¿Guardar $section?';
+  }
+
+  @override
+  String get rsSaveWarning =>
+      'Esto escribe el cambio en la radio conectada. La radio puede reiniciarse y volver a conectarse.';
+
+  @override
+  String get rsIdentityChanged =>
+      'La identidad de la radio cambió o no está disponible. Recarga antes de guardar.';
+
+  @override
+  String rsSaved(String section) {
+    return '$section guardado y verificado desde la radio.';
+  }
+
+  @override
+  String rsNotVerified(String error) {
+    return 'Guardado sin verificar: $error\nEs posible que la radio haya aplicado el cambio. Recarga para ver su valor actual; no se reenviará nada automáticamente.';
+  }
+
+  @override
+  String get rsSaveButton => 'GUARDAR';
+
+  @override
+  String rsUnavailable(String section) {
+    return 'Los ajustes de $section no están disponibles en la API del firmware de esta radio.';
+  }
+
+  @override
+  String rsReadFailed(String error) {
+    return 'No se pudo leer de la radio: $error';
+  }
+
+  @override
+  String get rsRetry => 'Reintentar';
+
+  @override
+  String get rsWaitingReconnect =>
+      'Esperando la reconexión y una nueva lectura de ajustes…';
+
+  @override
+  String get rsReload => 'Recargar desde la radio';
+
+  @override
+  String get rsLongName => 'Nombre largo';
+
+  @override
+  String get rsShortName => 'Nombre corto';
+
+  @override
+  String get rsChooseRegion =>
+      'Elige una región antes de guardar; la radio no transmitirá sin una.';
+
+  @override
+  String get rsCustomInvalid =>
+      'Los ajustes personalizados requieren un ancho de banda positivo, factor de dispersión 5–12 y denominador de tasa de codificación 5–8. Comprueba los valores que admite tu radio.';
+
+  @override
+  String get rsRegionWarning =>
+      'Cambiar la región o el preajuste de módem desconecta esta radio de los nodos que mantengan los ajustes anteriores.';
+
+  @override
+  String get rsRegion => 'Región';
+
+  @override
+  String get rsUsePreset => 'Usar preajuste de módem';
+
+  @override
+  String get rsModemPreset => 'Preajuste de módem';
+
+  @override
+  String get rsBandwidth => 'Ancho de banda (kHz)';
+
+  @override
+  String get rsSpreadFactor => 'Factor de dispersión';
+
+  @override
+  String get rsCodingRate => 'Denominador de tasa de codificación (5–8)';
+
+  @override
+  String get rsRxBoost => 'Ganancia de recepción ampliada';
+
+  @override
+  String get rsRxBoostSub =>
+      'Ganancia interna del receptor SX126x; distinta del LNA externo';
+
+  @override
+  String get rsLna => 'LNA externo';
+
+  @override
+  String get rsLnaReported =>
+      'Amplificador de recepción externo informado por esta radio';
+
+  @override
+  String get rsLnaNone =>
+      'Esta radio no ha informado de un LNA externo controlable';
+
+  @override
+  String rsHopLimit(int hops) {
+    return 'Límite de saltos: $hops';
+  }
+
+  @override
+  String get rsTransmit => 'Transmisión activada';
+
+  @override
+  String get rsTransmitSub => 'Desactivada, la radio solo recibe';
+
+  @override
+  String rsInfraWarning(String role) {
+    return '$role es para infraestructura fija con buena cobertura. En un equipo portátil desperdicia tiempo de aire y batería.';
+  }
+
+  @override
+  String get rsRole => 'Función';
+
+  @override
+  String get rsRebroadcast => 'Modo de retransmisión';
+
+  @override
+  String get rsIntervalInvalid =>
+      'El intervalo de emisión debe ser 0 (valor del firmware) o al menos 30 segundos.';
+
+  @override
+  String get rsGpsMode => 'Modo GPS';
+
+  @override
+  String get rsInterval =>
+      'Intervalo de emisión (segundos, 0 = predeterminado)';
+
+  @override
+  String get rsSmart => 'Emisión inteligente de posición';
+
+  @override
+  String get rsSmartSub =>
+      'Envía actualizaciones extra cuando el nodo se mueve';
+
+  @override
+  String get rsFixed => 'Posición fija';
+
+  @override
+  String get rsFixedSub =>
+      'Informa la última posición conocida en lugar del GPS';
+
+  @override
+  String get rsShareQr => 'Compartir como código QR';
+
+  @override
+  String get rsImportLink => 'Importar enlace de canal';
+
+  @override
+  String get rsDisabled => 'Desactivado';
+
+  @override
+  String get rsDefaultName => '(nombre predeterminado)';
+
+  @override
+  String rsChannelsFailed(String error) {
+    return 'No se pudieron leer los canales: $error';
+  }
+
+  @override
+  String get rsNoEncryption => 'Sin cifrado';
+
+  @override
+  String get rsDefaultKey => 'Clave predeterminada';
+
+  @override
+  String get rsAes128 => 'Clave AES-128';
+
+  @override
+  String get rsAes256 => 'Clave AES-256';
+
+  @override
+  String get rsUnknownKey => 'Clave no reconocida';
+
+  @override
+  String rsChannelN(int index) {
+    return 'Canal $index';
+  }
+
+  @override
+  String get rsKeyWarning =>
+      'La clave de cifrado cambia. Los nodos sin la nueva clave ya no podrán leer este canal. Compártela desde el código QR del canal.';
+
+  @override
+  String get rsChannelName => 'Nombre (en blanco usa el nombre del preajuste)';
+
+  @override
+  String rsEncryption(String key) {
+    return 'Cifrado: $key';
+  }
+
+  @override
+  String get rsNewAes256 => 'Nueva AES-256 aleatoria';
+
+  @override
+  String rsGpsHidden(String model) {
+    return 'Los pines GPS están ocultos: $model tiene el GPS conectado de fábrica, así que no hacen nada.';
+  }
 }

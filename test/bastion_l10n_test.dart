@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bastion/main.dart';
+import 'package:bastion/radio_settings_page.dart';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/field_tools_page.dart';
@@ -68,6 +69,9 @@ void main() {
   });
 
   testWidgets('Field records is translated, but templates stay as sent on air', (tester) async {
+  });
+
+  testWidgets('Radio settings is translated', (tester) async {
     tester.view.physicalSize = const Size(390, 3000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -88,6 +92,12 @@ void main() {
     await tester.tap(find.text('Todo en orden'));
     await tester.pump();
     expect(find.textContaining('ALL CLEAR | Name:'), findsOneWidget);
+      home: RadioSettingsPage(radio: radio),
+    ));
+    await tester.pump();
+    expect(find.text('Ajustes de la radio'), findsOneWidget);
+    expect(find.text('Radio no preparada'), findsOneWidget);
+    expect(find.text('Propietario'), findsOneWidget);
   });
 
   testWidgets('the Tools page is translated', (tester) async {

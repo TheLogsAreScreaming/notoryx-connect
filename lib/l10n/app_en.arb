@@ -1617,5 +1617,156 @@
       }
     }
   },
-  "frUseReport": "Use report"
+  "frUseReport": "Use report",
+  "rsTitle": "Radio settings",
+  "rsNotReady": "Radio not ready",
+  "rsNotReadySub": "Connect to a radio and wait for READY to change settings.",
+  "rsAvailability": "Settings availability",
+  "rsAvailabilitySub": "Check reads before editing. Missing startup settings do not prove a module is unsupported. Results reset on reconnect.",
+  "rsStopChecking": "Stop checking",
+  "rsOwner": "Owner",
+  "rsOwnerSub": "Long and short node names",
+  "rsLoraSub": "Region, modem preset, hop limit, transmit",
+  "rsChannels": "Channels",
+  "rsChannelsSub": "Names, roles and encryption keys",
+  "rsDevice": "Device",
+  "rsDeviceSub": "Device role and rebroadcast mode",
+  "rsPosition": "Position",
+  "rsPositionSub": "Broadcast interval, GPS mode, smart position",
+  "rsAllSettings": "ALL RADIO SETTINGS",
+  "rsModules": "MODULES",
+  "rsRadioChanged": "Connected radio changed while loading. Retry the read.",
+  "rsSaveQ": "Save {section}?",
+  "@rsSaveQ": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "rsSaveWarning": "This writes the change to the connected radio. The radio may reboot and reconnect.",
+  "rsIdentityChanged": "Radio identity changed or is unavailable. Reload before saving.",
+  "rsSaved": "{section} saved and verified from radio.",
+  "@rsSaved": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "rsNotVerified": "Save not verified: {error}\nThe radio may have applied the change. Reload to inspect its current value; nothing will be resent automatically.",
+  "@rsNotVerified": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "rsSaveButton": "SAVE",
+  "rsUnavailable": "{section} settings are unavailable through this radio’s firmware API.",
+  "@rsUnavailable": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "rsReadFailed": "Could not read from the radio: {error}",
+  "@rsReadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "rsRetry": "Retry",
+  "rsWaitingReconnect": "Waiting for reconnect and a fresh settings read…",
+  "rsReload": "Reload from radio",
+  "rsLongName": "Long name",
+  "rsShortName": "Short name",
+  "rsChooseRegion": "Choose a region before saving; the radio will not transmit without one.",
+  "rsCustomInvalid": "Custom settings require a positive bandwidth, spreading factor 5–12 and coding rate denominator 5–8. Check your radio’s supported values.",
+  "rsRegionWarning": "Changing region or modem preset disconnects this radio from nodes that keep the old settings.",
+  "rsRegion": "Region",
+  "rsUsePreset": "Use modem preset",
+  "rsModemPreset": "Modem preset",
+  "rsBandwidth": "Bandwidth (kHz)",
+  "rsSpreadFactor": "Spreading factor",
+  "rsCodingRate": "Coding rate denominator (5–8)",
+  "rsRxBoost": "RX boosted gain",
+  "rsRxBoostSub": "Internal SX126x receiver gain; separate from external LNA",
+  "rsLna": "External LNA",
+  "rsLnaReported": "External receive amplifier reported by this radio",
+  "rsLnaNone": "This radio has not reported a controllable external LNA",
+  "rsHopLimit": "Hop limit: {hops}",
+  "@rsHopLimit": {
+    "placeholders": {
+      "hops": {
+        "type": "int"
+      }
+    }
+  },
+  "rsTransmit": "Transmit enabled",
+  "rsTransmitSub": "Off makes the radio receive-only",
+  "rsInfraWarning": "{role} is for fixed infrastructure with good coverage. On a handheld it wastes airtime and battery.",
+  "@rsInfraWarning": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "rsRole": "Role",
+  "rsRebroadcast": "Rebroadcast mode",
+  "rsIntervalInvalid": "Broadcast interval must be 0 (firmware default) or at least 30 seconds.",
+  "rsGpsMode": "GPS mode",
+  "rsInterval": "Broadcast interval (seconds, 0 = default)",
+  "rsSmart": "Smart position broadcast",
+  "rsSmartSub": "Send extra updates when the node moves",
+  "rsFixed": "Fixed position",
+  "rsFixedSub": "Report the last known position instead of GPS",
+  "rsShareQr": "Share as QR code",
+  "rsImportLink": "Import channel link",
+  "rsDisabled": "Disabled",
+  "rsDefaultName": "(default name)",
+  "rsChannelsFailed": "Could not read channels: {error}",
+  "@rsChannelsFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "rsNoEncryption": "No encryption",
+  "rsDefaultKey": "Default key",
+  "rsAes128": "AES-128 key",
+  "rsAes256": "AES-256 key",
+  "rsUnknownKey": "Unrecognized key",
+  "rsChannelN": "Channel {index}",
+  "@rsChannelN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "rsKeyWarning": "The encryption key changes. Nodes without the new key can no longer read this channel. Share it from the channel QR code.",
+  "rsChannelName": "Name (blank uses the preset name)",
+  "rsEncryption": "Encryption: {key}",
+  "@rsEncryption": {
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "rsNewAes256": "New random AES-256",
+  "rsGpsHidden": "GPS pins are hidden: {model} has its GPS wired by the maker, so they do nothing.",
+  "@rsGpsHidden": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  }
 }
