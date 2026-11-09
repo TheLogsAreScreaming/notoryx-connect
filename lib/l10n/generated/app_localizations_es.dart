@@ -536,4 +536,288 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get chatsBotReplyField =>
       'Mensaje que se envía con el modo bot activado';
+
+  @override
+  String get commonCancel => 'Cancelar';
+
+  @override
+  String get commonSave => 'Guardar';
+
+  @override
+  String get commonConnect => 'Conectar';
+
+  @override
+  String get commonDisconnect => 'Desconectar';
+
+  @override
+  String get agoNow => 'ahora mismo';
+
+  @override
+  String agoMin(int n) {
+    return 'hace $n min';
+  }
+
+  @override
+  String agoHours(int n) {
+    return 'hace $n h';
+  }
+
+  @override
+  String agoDays(int n) {
+    return 'hace $n d';
+  }
+
+  @override
+  String get rssiStrong => 'Señal Bluetooth fuerte';
+
+  @override
+  String get rssiUsable => 'Señal Bluetooth utilizable';
+
+  @override
+  String get rssiWeak => 'Señal Bluetooth débil';
+
+  @override
+  String get rssiVeryWeak => 'Señal Bluetooth muy débil';
+
+  @override
+  String get heardAny => 'Cualquier momento';
+
+  @override
+  String get heardHour => '1 hora';
+
+  @override
+  String get heardDay => '24 horas';
+
+  @override
+  String get heardWeek => '7 días';
+
+  @override
+  String nodesConnectFailed(String error) {
+    return 'No se pudo conectar: $error';
+  }
+
+  @override
+  String nodesUsbFailed(String error) {
+    return 'No se pudo conectar por USB: $error';
+  }
+
+  @override
+  String nodesNotesFor(String name) {
+    return 'Notas de $name';
+  }
+
+  @override
+  String get nodesNotesHint => 'Ubicación, antena, observaciones…';
+
+  @override
+  String nodesConnectedTo(String name) {
+    return 'Conectado a $name.';
+  }
+
+  @override
+  String get nodesYourRadio => 'tu radio';
+
+  @override
+  String get nodesFindRadio =>
+      'Busca tu radio cerca y conéctate por Bluetooth.';
+
+  @override
+  String get nodesRadiosFound => 'Radios encontradas';
+
+  @override
+  String get nodesMeshNodes => 'Nodos de la malla';
+
+  @override
+  String get nodesStatus => 'Estado';
+
+  @override
+  String get nodesConnProblem => 'Problema de conexión';
+
+  @override
+  String get nodesDiagnose => 'Diagnosticar';
+
+  @override
+  String get nodesNearby => 'Radios cercanas';
+
+  @override
+  String get nodesLooking => 'Buscando radios…';
+
+  @override
+  String get nodesStopScan => 'Detener búsqueda';
+
+  @override
+  String get nodesRadio => 'Radio';
+
+  @override
+  String get nodesOverUsb => 'Por USB';
+
+  @override
+  String get nodesOverWifi => 'Por Wi-Fi';
+
+  @override
+  String get nodesConnectWifi => 'Conectar por Wi-Fi';
+
+  @override
+  String get nodesConnectUsb => 'Conectar por USB';
+
+  @override
+  String get nodesNoRadios => 'Aún no se han encontrado radios';
+
+  @override
+  String get nodesNoRadiosBody =>
+      'Enciende la radio, mantenla cerca y toca Buscar radios.';
+
+  @override
+  String get nodesTryDemo => '¿Sin radio? Prueba la demostración';
+
+  @override
+  String get nodesMeshtasticRadio => 'Radio Meshtastic';
+
+  @override
+  String get nodesBluetoothDevice => 'Dispositivo Bluetooth';
+
+  @override
+  String nodesCount(int count) {
+    return 'Nodos de la malla ($count)';
+  }
+
+  @override
+  String nodesCountOf(int shown, int total) {
+    return 'Nodos de la malla ($shown de $total)';
+  }
+
+  @override
+  String nodesNoneHeard(String window) {
+    return 'Ningún nodo escuchado en: $window';
+  }
+
+  @override
+  String get nodesPickLonger =>
+      'Elige un periodo más largo para ver nodos anteriores.';
+
+  @override
+  String get nodesShowAll => 'Mostrar todos los nodos';
+
+  @override
+  String get nodesHealth => 'Estado de la malla';
+
+  @override
+  String get nodesDetails => 'Detalles';
+
+  @override
+  String get nodesKnown => 'Nodos conocidos';
+
+  @override
+  String get nodesWaiting => 'Pendientes de envío';
+
+  @override
+  String get nodesSignalQuality => 'Calidad de la señal';
+
+  @override
+  String nodesSignalSummary(int count, String snr) {
+    return '$count mensajes escuchados • última relación señal/ruido: $snr';
+  }
+
+  @override
+  String get nodesNotMeasured => 'aún sin medir';
+
+  @override
+  String nodesSignalHistory(int count) {
+    return 'Historial de señal de los últimos $count mensajes';
+  }
+
+  @override
+  String get nodesSignalStarts =>
+      'El historial de señal empieza cuando otro nodo envía un mensaje.';
+
+  @override
+  String get nodesMeasuredFrom =>
+      'Medido solo con los mensajes de texto recibidos.';
+
+  @override
+  String get nodesEncounters => 'Encuentros guardados';
+
+  @override
+  String nodesSeen(int count, String when) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Visto $count veces • última: $when',
+      one: 'Visto $count vez • última: $when',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nodesTapNotes => 'Toca para añadir notas';
+
+  @override
+  String get nodesRemoveFav => 'Quitar de favoritos';
+
+  @override
+  String get nodesAddFav => 'Añadir a favoritos';
+
+  @override
+  String get nodesMore => 'Más';
+
+  @override
+  String get nodesFieldTools => 'Herramientas de campo';
+
+  @override
+  String get nodesFieldToolsSub =>
+      'Referencia de señal, listas, copias de seguridad y más';
+
+  @override
+  String get nodesReadyBanner =>
+      'Tu radio está conectada. Los nodos se actualizan en directo al escucharlos.';
+
+  @override
+  String get nodesHelpBanner =>
+      'Toca Buscar radios y luego Conectar. La aplicación comprueba que sea una radio Meshtastic y descarga su lista de nodos antes de estar lista.';
+
+  @override
+  String get nodesHeardWithin => 'Mostrar nodos escuchados en';
+
+  @override
+  String get nodesWifiHelp =>
+      'Para radios con Wi-Fi o Ethernet activado. El teléfono debe estar en la misma red.';
+
+  @override
+  String get nodesAddress => 'Dirección de la radio';
+
+  @override
+  String get nodesAddressHint => 'p. ej., 192.168.1.42 o meshtastic.local';
+
+  @override
+  String get nodesPort => 'Puerto';
+
+  @override
+  String get nodesPortHelp => 'Meshtastic usa el 4403';
+
+  @override
+  String get nodesUsbHelp =>
+      'Conecta la radio al teléfono con un cable USB de datos (puede hacer falta un adaptador OTG). Android pedirá permiso la primera vez.';
+
+  @override
+  String nodesUsbListFailed(String error) {
+    return 'No se pudieron listar los dispositivos USB: $error';
+  }
+
+  @override
+  String get nodesNoUsb => 'No se encontraron dispositivos USB';
+
+  @override
+  String get nodesNoUsbBody =>
+      'Comprueba que el cable transmita datos y no solo carga, y actualiza.';
+
+  @override
+  String nodesLikelyRadio(String chip) {
+    return 'Probablemente una radio • $chip';
+  }
+
+  @override
+  String get nodesOtherUsb => 'Otro dispositivo USB';
+
+  @override
+  String get nodesRefresh => 'Actualizar';
 }

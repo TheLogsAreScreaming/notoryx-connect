@@ -955,6 +955,480 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Message to send while Bot mode is on'**
   String get chatsBotReplyField;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
+
+  /// No description provided for @commonSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get commonSave;
+
+  /// No description provided for @commonConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get commonConnect;
+
+  /// No description provided for @commonDisconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get commonDisconnect;
+
+  /// No description provided for @agoNow.
+  ///
+  /// In en, this message translates to:
+  /// **'just now'**
+  String get agoNow;
+
+  /// No description provided for @agoMin.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min ago'**
+  String agoMin(int n);
+
+  /// No description provided for @agoHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} h ago'**
+  String agoHours(int n);
+
+  /// No description provided for @agoDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} d ago'**
+  String agoDays(int n);
+
+  /// No description provided for @rssiStrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong Bluetooth signal'**
+  String get rssiStrong;
+
+  /// No description provided for @rssiUsable.
+  ///
+  /// In en, this message translates to:
+  /// **'Usable Bluetooth signal'**
+  String get rssiUsable;
+
+  /// No description provided for @rssiWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak Bluetooth signal'**
+  String get rssiWeak;
+
+  /// No description provided for @rssiVeryWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Very weak Bluetooth signal'**
+  String get rssiVeryWeak;
+
+  /// No description provided for @heardAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Any time'**
+  String get heardAny;
+
+  /// No description provided for @heardHour.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get heardHour;
+
+  /// No description provided for @heardDay.
+  ///
+  /// In en, this message translates to:
+  /// **'24 hours'**
+  String get heardDay;
+
+  /// No description provided for @heardWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'7 days'**
+  String get heardWeek;
+
+  /// No description provided for @nodesConnectFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not connect: {error}'**
+  String nodesConnectFailed(String error);
+
+  /// No description provided for @nodesUsbFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not connect over USB: {error}'**
+  String nodesUsbFailed(String error);
+
+  /// No description provided for @nodesNotesFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes for {name}'**
+  String nodesNotesFor(String name);
+
+  /// No description provided for @nodesNotesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Location, antenna, observations…'**
+  String get nodesNotesHint;
+
+  /// No description provided for @nodesConnectedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {name}.'**
+  String nodesConnectedTo(String name);
+
+  /// No description provided for @nodesYourRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'your radio'**
+  String get nodesYourRadio;
+
+  /// No description provided for @nodesFindRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Find your radio nearby and connect over Bluetooth.'**
+  String get nodesFindRadio;
+
+  /// No description provided for @nodesRadiosFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Radios found'**
+  String get nodesRadiosFound;
+
+  /// No description provided for @nodesMeshNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh nodes'**
+  String get nodesMeshNodes;
+
+  /// No description provided for @nodesStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get nodesStatus;
+
+  /// No description provided for @nodesConnProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection problem'**
+  String get nodesConnProblem;
+
+  /// No description provided for @nodesDiagnose.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnose'**
+  String get nodesDiagnose;
+
+  /// No description provided for @nodesNearby.
+  ///
+  /// In en, this message translates to:
+  /// **'Radios nearby'**
+  String get nodesNearby;
+
+  /// No description provided for @nodesLooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking for radios…'**
+  String get nodesLooking;
+
+  /// No description provided for @nodesStopScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop scan'**
+  String get nodesStopScan;
+
+  /// No description provided for @nodesRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio'**
+  String get nodesRadio;
+
+  /// No description provided for @nodesOverUsb.
+  ///
+  /// In en, this message translates to:
+  /// **'Over USB'**
+  String get nodesOverUsb;
+
+  /// No description provided for @nodesOverWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'Over Wi-Fi'**
+  String get nodesOverWifi;
+
+  /// No description provided for @nodesConnectWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect over Wi-Fi'**
+  String get nodesConnectWifi;
+
+  /// No description provided for @nodesConnectUsb.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect over USB'**
+  String get nodesConnectUsb;
+
+  /// No description provided for @nodesNoRadios.
+  ///
+  /// In en, this message translates to:
+  /// **'No radios found yet'**
+  String get nodesNoRadios;
+
+  /// No description provided for @nodesNoRadiosBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn your radio on, keep it close, then tap Scan for radios.'**
+  String get nodesNoRadiosBody;
+
+  /// No description provided for @nodesTryDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'No radio? Try the demo'**
+  String get nodesTryDemo;
+
+  /// No description provided for @nodesMeshtasticRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Meshtastic radio'**
+  String get nodesMeshtasticRadio;
+
+  /// No description provided for @nodesBluetoothDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth device'**
+  String get nodesBluetoothDevice;
+
+  /// No description provided for @nodesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh nodes ({count})'**
+  String nodesCount(int count);
+
+  /// No description provided for @nodesCountOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh nodes ({shown} of {total})'**
+  String nodesCountOf(int shown, int total);
+
+  /// No description provided for @nodesNoneHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes heard in the last {window}'**
+  String nodesNoneHeard(String window);
+
+  /// No description provided for @nodesPickLonger.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a longer time to see older nodes.'**
+  String get nodesPickLonger;
+
+  /// No description provided for @nodesShowAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all nodes'**
+  String get nodesShowAll;
+
+  /// No description provided for @nodesHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh health'**
+  String get nodesHealth;
+
+  /// No description provided for @nodesDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get nodesDetails;
+
+  /// No description provided for @nodesKnown.
+  ///
+  /// In en, this message translates to:
+  /// **'Known nodes'**
+  String get nodesKnown;
+
+  /// No description provided for @nodesWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting to send'**
+  String get nodesWaiting;
+
+  /// No description provided for @nodesSignalQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal quality'**
+  String get nodesSignalQuality;
+
+  /// No description provided for @nodesSignalSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} messages heard • latest signal-to-noise {snr}'**
+  String nodesSignalSummary(int count, String snr);
+
+  /// No description provided for @nodesNotMeasured.
+  ///
+  /// In en, this message translates to:
+  /// **'not yet measured'**
+  String get nodesNotMeasured;
+
+  /// No description provided for @nodesSignalHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal history of the last {count} messages'**
+  String nodesSignalHistory(int count);
+
+  /// No description provided for @nodesSignalStarts.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal history starts when another node sends a message.'**
+  String get nodesSignalStarts;
+
+  /// No description provided for @nodesMeasuredFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Measured from received text messages only.'**
+  String get nodesMeasuredFrom;
+
+  /// No description provided for @nodesEncounters.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved encounters'**
+  String get nodesEncounters;
+
+  /// No description provided for @nodesSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Seen {count} time • last {when}} other{Seen {count} times • last {when}}}'**
+  String nodesSeen(int count, String when);
+
+  /// No description provided for @nodesTapNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to add notes'**
+  String get nodesTapNotes;
+
+  /// No description provided for @nodesRemoveFav.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove favorite'**
+  String get nodesRemoveFav;
+
+  /// No description provided for @nodesAddFav.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get nodesAddFav;
+
+  /// No description provided for @nodesMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get nodesMore;
+
+  /// No description provided for @nodesFieldTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Field tools'**
+  String get nodesFieldTools;
+
+  /// No description provided for @nodesFieldToolsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal reference, checklists, backups and more'**
+  String get nodesFieldToolsSub;
+
+  /// No description provided for @nodesReadyBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio is connected. Nodes update live as they are heard.'**
+  String get nodesReadyBanner;
+
+  /// No description provided for @nodesHelpBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Scan for radios, then Connect. The app checks it is a Meshtastic radio and downloads its node list before it is ready to use.'**
+  String get nodesHelpBanner;
+
+  /// No description provided for @nodesHeardWithin.
+  ///
+  /// In en, this message translates to:
+  /// **'Show nodes heard within'**
+  String get nodesHeardWithin;
+
+  /// No description provided for @nodesWifiHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'For radios with Wi-Fi or Ethernet turned on. Your phone must be on the same network.'**
+  String get nodesWifiHelp;
+
+  /// No description provided for @nodesAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio address'**
+  String get nodesAddress;
+
+  /// No description provided for @nodesAddressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 192.168.1.42 or meshtastic.local'**
+  String get nodesAddressHint;
+
+  /// No description provided for @nodesPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Port'**
+  String get nodesPort;
+
+  /// No description provided for @nodesPortHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Meshtastic uses 4403'**
+  String get nodesPortHelp;
+
+  /// No description provided for @nodesUsbHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Plug the radio into the phone with a USB data cable (an OTG adapter may be needed). Android asks for permission the first time.'**
+  String get nodesUsbHelp;
+
+  /// No description provided for @nodesUsbListFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not list USB devices: {error}'**
+  String nodesUsbListFailed(String error);
+
+  /// No description provided for @nodesNoUsb.
+  ///
+  /// In en, this message translates to:
+  /// **'No USB devices found'**
+  String get nodesNoUsb;
+
+  /// No description provided for @nodesNoUsbBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the cable carries data, not just power, then refresh.'**
+  String get nodesNoUsbBody;
+
+  /// No description provided for @nodesLikelyRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Likely a radio • {chip}'**
+  String nodesLikelyRadio(String chip);
+
+  /// No description provided for @nodesOtherUsb.
+  ///
+  /// In en, this message translates to:
+  /// **'Other USB device'**
+  String get nodesOtherUsb;
+
+  /// No description provided for @nodesRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get nodesRefresh;
 }
 
 class _AppLocalizationsDelegate

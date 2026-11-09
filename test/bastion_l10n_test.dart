@@ -64,6 +64,25 @@ void main() {
     expect(find.text('On my way'), findsOneWidget);
   });
 
+  testWidgets('the Nodes page is translated', (tester) async {
+    const locale = Locale('es');
+    tester.platformDispatcher.localeTestValue = locale;
+    tester.platformDispatcher.localesTestValue = [locale];
+    addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+    tester.view.physicalSize = const Size(390, 2000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(const BastionApp());
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Nodos')));
+    await tester.pumpAndSettle();
+    expect(find.text('RADIOS CERCANAS'), findsOneWidget);
+    expect(find.text('Conectar por Wi-Fi'), findsOneWidget);
+    expect(find.text('RADIOS NEARBY'), findsNothing);
+  });
+
   for (final (locale, settings, offline) in [
     (const Locale('en'), 'Settings', 'Radio: Offline'),
     (const Locale('es'), 'Ajustes', 'Radio: Sin conexión'),
