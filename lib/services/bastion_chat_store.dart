@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:cryptography/cryptography.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart' show databaseFactoryFfi, sqfliteFfiInit;
 
 import 'bastion_chat_encryption.dart';
 
@@ -132,7 +134,8 @@ abstract final class BastionChatStorage {
   /// Returns a problem to show the person, or null.
   static Future<String?> useSqlite({DatabaseFactory? factory, String? path}) async {
     try {
-      final db = factory ?? databaseFactory;
+      if (!kIsWeb && Platform.isWindows) sqfliteFfiInit();
+      final db = factory ?? (!kIsWeb && Platform.isWindows ? databaseFactoryFfi : databaseFactory);
       final file = path ?? '${await db.getDatabasesPath()}/notoryx_chats.db';
       final store = await SqliteChatArchiveStore.open(db, file);
       final problem = await store.migrateFrom(SharedPreferencesAsync());

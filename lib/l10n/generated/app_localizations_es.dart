@@ -1966,4 +1966,155 @@ class AppLocalizationsEs extends AppLocalizations {
   String ndSafetyCode(String code) {
     return 'Código de seguridad $code\nCompáralo con la radio del dueño para asegurarte de que es esa persona.';
   }
+
+  @override
+  String get homeFirmwareTitle =>
+      'Se recomienda actualizar el firmware de la radio';
+
+  @override
+  String get homeCheckIn => 'Reportarse';
+
+  @override
+  String get homeEmergency => 'Emergencia';
+
+  @override
+  String get homeSosHint =>
+      'Mantén pulsado 2 segundos. Se envía a tus contactos del viaje y se repite cada 5 minutos hasta que alguien responda.';
+
+  @override
+  String homeSosHintChannel(int channel) {
+    return 'Mantén pulsado 2 segundos. Se envía a tus contactos del viaje y al canal $channel, y se repite cada 5 minutos hasta que alguien responda.';
+  }
+
+  @override
+  String get homeNotReceived =>
+      'Enviado o en cola no significa recibido. Confírmalo con una respuesta o una llamada.';
+
+  @override
+  String get homeConnected => 'Radio conectada';
+
+  @override
+  String get homeNotConnected => 'Ninguna radio conectada';
+
+  @override
+  String get homeYourRadio => 'Tu radio';
+
+  @override
+  String get homeConnectHint =>
+      'Conéctate para reportarte, enviar un SOS y ver la malla.';
+
+  @override
+  String get homeNodes => 'Nodos';
+
+  @override
+  String get homeBattery => 'Batería';
+
+  @override
+  String get homeUnknown => 'Desconocida';
+
+  @override
+  String get homePluggedIn => 'Enchufada';
+
+  @override
+  String get homeConnectRadio => 'Conectar radio';
+
+  @override
+  String get homeTryDemo => 'Probar la demostración';
+
+  @override
+  String get homeTripRunning => 'Viaje en curso';
+
+  @override
+  String get homeTripNotStarted => 'Viaje sin empezar';
+
+  @override
+  String homeContacts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count contactos',
+      one: '$count contacto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String homeTripNamed(String name) {
+    return 'Viaje: $name';
+  }
+
+  @override
+  String get homePlanTrip => 'Planifica tu viaje';
+
+  @override
+  String homeOverdue(String names) {
+    return 'Con retraso: $names';
+  }
+
+  @override
+  String homeCheckInLabel(String label) {
+    return 'Reportarse: $label';
+  }
+
+  @override
+  String homeDelivered(String label, String time, int delivered, int total) {
+    return '$label a las $time: entregado a $delivered de $total';
+  }
+
+  @override
+  String homeNotDelivered(String names) {
+    return 'no entregado a $names';
+  }
+
+  @override
+  String homeWaiting(int count) {
+    return '$count en espera';
+  }
+
+  @override
+  String get homeDetails => 'Detalles';
+
+  @override
+  String get homeResend => 'Reenviar';
+
+  @override
+  String get homeSendSosQ => '¿Enviar SOS?';
+
+  @override
+  String get homeSosRepeats =>
+      'Tu SOS se repite cada 5 minutos hasta que alguien responda o lo detengas.';
+
+  @override
+  String get homeSendSos => 'Enviar SOS';
+
+  @override
+  String get homeHoldSos => 'Mantén para SOS';
+
+  @override
+  String homeSosReplied(String name) {
+    return '$name respondió. Se detuvieron las repeticiones.';
+  }
+
+  @override
+  String homeSosNext(int sends, int max, String time) {
+    return 'Enviado $sends de $max. Próximo a las $time.';
+  }
+
+  @override
+  String get homeSosBusy =>
+      ' El canal está ocupado, así que las repeticiones se espacian para que lleguen.';
+
+  @override
+  String homeSosDone(int max) {
+    return 'Enviado $max veces. Terminaron las repeticiones; el SOS sigue visible hasta que lo detengas.';
+  }
+
+  @override
+  String get homeSosActive => 'SOS activo';
+
+  @override
+  String get homeImSafe => 'Estoy a salvo';
+
+  @override
+  String get homeStopNoMessage => 'Detener sin mensaje';
 }

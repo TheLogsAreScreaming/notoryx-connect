@@ -1373,5 +1373,136 @@
         "type": "String"
       }
     }
-  }
+  },
+  "homeFirmwareTitle": "Radio firmware update suggested",
+  "homeCheckIn": "Check in",
+  "homeEmergency": "Emergency",
+  "homeSosHint": "Hold for 2 seconds. It goes to your trip contacts, and repeats every 5 minutes until someone replies.",
+  "homeSosHintChannel": "Hold for 2 seconds. It goes to your trip contacts and channel {channel}, and repeats every 5 minutes until someone replies.",
+  "@homeSosHintChannel": {
+    "placeholders": {
+      "channel": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNotReceived": "Sent or queued does not mean received. Confirm with a reply or a call.",
+  "homeConnected": "Radio connected",
+  "homeNotConnected": "No radio connected",
+  "homeYourRadio": "Your radio",
+  "homeConnectHint": "Connect to check in, send an SOS and see the mesh.",
+  "homeNodes": "Nodes",
+  "homeBattery": "Battery",
+  "homeUnknown": "Unknown",
+  "homePluggedIn": "Plugged in",
+  "homeConnectRadio": "Connect radio",
+  "homeTryDemo": "Try the demo",
+  "homeTripRunning": "Trip running",
+  "homeTripNotStarted": "Trip not started",
+  "homeContacts": "{count, plural, one{{count} contact} other{{count} contacts}}",
+  "@homeContacts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeTripNamed": "Trip: {name}",
+  "@homeTripNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homePlanTrip": "Plan your trip",
+  "homeOverdue": "Overdue: {names}",
+  "@homeOverdue": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "homeCheckInLabel": "Check in: {label}",
+  "@homeCheckInLabel": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDelivered": "{label} at {time}: delivered to {delivered} of {total}",
+  "@homeDelivered": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      },
+      "delivered": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNotDelivered": "not delivered to {names}",
+  "@homeNotDelivered": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "homeWaiting": "{count} waiting",
+  "@homeWaiting": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeDetails": "Details",
+  "homeResend": "Resend",
+  "homeSendSosQ": "Send SOS?",
+  "homeSosRepeats": "Your SOS repeats every 5 minutes until someone replies or you stop it.",
+  "homeSendSos": "Send SOS",
+  "homeHoldSos": "Hold for SOS",
+  "homeSosReplied": "{name} replied. Repeats stopped.",
+  "@homeSosReplied": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeSosNext": "Sent {sends} of {max}. Next at {time}.",
+  "@homeSosNext": {
+    "placeholders": {
+      "sends": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeSosBusy": " The channel is busy, so repeats are spaced out to get through.",
+  "homeSosDone": "Sent {max} times. Repeats finished; the SOS stays shown until you stop it.",
+  "@homeSosDone": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "homeSosActive": "SOS active",
+  "homeImSafe": "I'm safe",
+  "homeStopNoMessage": "Stop without message"
 }

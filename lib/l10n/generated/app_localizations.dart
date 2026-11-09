@@ -3319,6 +3319,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Safety code {code}\nCompare this with the owner\'s radio to be sure it\'s them.'**
   String ndSafetyCode(String code);
+
+  /// No description provided for @homeFirmwareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio firmware update suggested'**
+  String get homeFirmwareTitle;
+
+  /// No description provided for @homeCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Check in'**
+  String get homeCheckIn;
+
+  /// No description provided for @homeEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get homeEmergency;
+
+  /// No description provided for @homeSosHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold for 2 seconds. It goes to your trip contacts, and repeats every 5 minutes until someone replies.'**
+  String get homeSosHint;
+
+  /// No description provided for @homeSosHintChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold for 2 seconds. It goes to your trip contacts and channel {channel}, and repeats every 5 minutes until someone replies.'**
+  String homeSosHintChannel(int channel);
+
+  /// No description provided for @homeNotReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent or queued does not mean received. Confirm with a reply or a call.'**
+  String get homeNotReceived;
+
+  /// No description provided for @homeConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio connected'**
+  String get homeConnected;
+
+  /// No description provided for @homeNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'No radio connected'**
+  String get homeNotConnected;
+
+  /// No description provided for @homeYourRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio'**
+  String get homeYourRadio;
+
+  /// No description provided for @homeConnectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to check in, send an SOS and see the mesh.'**
+  String get homeConnectHint;
+
+  /// No description provided for @homeNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get homeNodes;
+
+  /// No description provided for @homeBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get homeBattery;
+
+  /// No description provided for @homeUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get homeUnknown;
+
+  /// No description provided for @homePluggedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Plugged in'**
+  String get homePluggedIn;
+
+  /// No description provided for @homeConnectRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect radio'**
+  String get homeConnectRadio;
+
+  /// No description provided for @homeTryDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Try the demo'**
+  String get homeTryDemo;
+
+  /// No description provided for @homeTripRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip running'**
+  String get homeTripRunning;
+
+  /// No description provided for @homeTripNotStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip not started'**
+  String get homeTripNotStarted;
+
+  /// No description provided for @homeContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} contact} other{{count} contacts}}'**
+  String homeContacts(int count);
+
+  /// No description provided for @homeTripNamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip: {name}'**
+  String homeTripNamed(String name);
+
+  /// No description provided for @homePlanTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan your trip'**
+  String get homePlanTrip;
+
+  /// No description provided for @homeOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue: {names}'**
+  String homeOverdue(String names);
+
+  /// No description provided for @homeCheckInLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Check in: {label}'**
+  String homeCheckInLabel(String label);
+
+  /// No description provided for @homeDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} at {time}: delivered to {delivered} of {total}'**
+  String homeDelivered(String label, String time, int delivered, int total);
+
+  /// No description provided for @homeNotDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'not delivered to {names}'**
+  String homeNotDelivered(String names);
+
+  /// No description provided for @homeWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} waiting'**
+  String homeWaiting(int count);
+
+  /// No description provided for @homeDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get homeDetails;
+
+  /// No description provided for @homeResend.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend'**
+  String get homeResend;
+
+  /// No description provided for @homeSendSosQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Send SOS?'**
+  String get homeSendSosQ;
+
+  /// No description provided for @homeSosRepeats.
+  ///
+  /// In en, this message translates to:
+  /// **'Your SOS repeats every 5 minutes until someone replies or you stop it.'**
+  String get homeSosRepeats;
+
+  /// No description provided for @homeSendSos.
+  ///
+  /// In en, this message translates to:
+  /// **'Send SOS'**
+  String get homeSendSos;
+
+  /// No description provided for @homeHoldSos.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold for SOS'**
+  String get homeHoldSos;
+
+  /// No description provided for @homeSosReplied.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} replied. Repeats stopped.'**
+  String homeSosReplied(String name);
+
+  /// No description provided for @homeSosNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent {sends} of {max}. Next at {time}.'**
+  String homeSosNext(int sends, int max, String time);
+
+  /// No description provided for @homeSosBusy.
+  ///
+  /// In en, this message translates to:
+  /// **' The channel is busy, so repeats are spaced out to get through.'**
+  String get homeSosBusy;
+
+  /// No description provided for @homeSosDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent {max} times. Repeats finished; the SOS stays shown until you stop it.'**
+  String homeSosDone(int max);
+
+  /// No description provided for @homeSosActive.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS active'**
+  String get homeSosActive;
+
+  /// No description provided for @homeImSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m safe'**
+  String get homeImSafe;
+
+  /// No description provided for @homeStopNoMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop without message'**
+  String get homeStopNoMessage;
 }
 
 class _AppLocalizationsDelegate

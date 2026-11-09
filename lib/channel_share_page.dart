@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -194,6 +196,8 @@ class _ChannelImportPageState extends State<ChannelImportPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // The scanner plugin has no Windows version; paste the link instead.
+          if (!Platform.isWindows)
           FilledButton.tonalIcon(
             icon: const Icon(Icons.qr_code_scanner),
             label: const Text('Scan channel QR code'),
