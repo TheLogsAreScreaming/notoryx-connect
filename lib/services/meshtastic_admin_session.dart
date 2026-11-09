@@ -71,7 +71,9 @@ class MeshtasticAdminSession {
     Duration? timeout,
     DateTime Function()? clock,
     Random? random,
+    Future<void> Function(Duration)? delay,
   })  : _send = send,
+        _delay = delay ?? Future<void>.delayed,
         targetPublicKey = targetPublicKey == null ? null : List.unmodifiable(targetPublicKey),
         timeout = timeout ??
             (targetNodeNum == null || targetNodeNum == localNodeNum
@@ -92,6 +94,12 @@ class MeshtasticAdminSession {
   /// A mesh round trip can take several retries over multiple hops.
   static const remoteTimeout = Duration(seconds: 60);
 
+  /// Gap between writes sent over the air, so a batch doesn't flood the mesh.
+  static const remoteWriteSpacing = Duration(seconds: 5);
+
+  /// Wait before the one retry after the radio reports its airtime limit.
+  static const airtimeBackoff = Duration(seconds: 60);
+
   final int localNodeNum;
 
   /// The node being administered; null means the local radio.
@@ -107,6 +115,8 @@ class MeshtasticAdminSession {
   final Future<void> Function(Uint8List) _send;
   final DateTime Function() _clock;
   final Random _random;
+  final Future<void> Function(Duration) _delay;
+  DateTime? _lastRemoteWrite;
   final Map<int, _PendingRequest> _pending = {};
   late final StreamSubscription<Uint8List> _subscription;
 
@@ -198,6 +208,33 @@ class MeshtasticAdminSession {
 
   Future<void> _write(AdminMessage message, String what) async {
     await ensureAuthorized();
+    await _paceRemoteWrite();
+    try {
+      await _sendWrite(message, what);
+    } on MeshtasticAdminException catch (error) {
+      // Only writes to another node use airtime, and this write was refused
+      // before it went out, so sending it again is safe.
+      if (!isRemote || !_isAirtimeLimit(error.routingError)) rethrow;
+      await _delay(airtimeBackoff);
+      await ensureAuthorized();
+      await _sendWrite(message, what);
+    }
+  }
+
+  static bool _isAirtimeLimit(Routing_Error? error) =>
+      error == Routing_Error.DUTY_CYCLE_LIMIT || error == Routing_Error.RATE_LIMIT_EXCEEDED;
+
+  Future<void> _paceRemoteWrite() async {
+    if (!isRemote) return;
+    final last = _lastRemoteWrite;
+    if (last != null) {
+      final wait = remoteWriteSpacing - _clock().difference(last);
+      if (wait > Duration.zero) await _delay(wait);
+    }
+    _lastRemoteWrite = _clock();
+  }
+
+  Future<void> _sendWrite(AdminMessage message, String what) async {
     final passkey = _passkey;
     if (passkey != null) message.sessionPasskey = passkey;
     await _exchange(message, what, expectsResponse: false);
