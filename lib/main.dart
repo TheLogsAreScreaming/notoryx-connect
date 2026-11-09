@@ -30,6 +30,8 @@ import 'radio_backup_page.dart';
 import 'services/bastion_chat_marks.dart';
 import 'services/bastion_message_search.dart';
 import 'services/bastion_scheduled_messages.dart';
+import 'services/bastion_sms_relay.dart';
+import 'sms_relay_page.dart';
 import 'mesh_health_page.dart';
 import 'mesh_tools_page.dart';
 import 'node_detail_page.dart';
@@ -75,6 +77,7 @@ Future<void> main() async {
   await BastionBotGuard.instance.load();
   await BastionAppLock.instance.load();
   await BastionScheduledMessages.instance.load();
+  if (BastionSmsRelay.available) await BastionSmsRelay.instance.load();
   runApp(const BastionApp());
 }
 

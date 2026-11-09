@@ -151,6 +151,14 @@ class _ToolsPageState extends State<_ToolsPage> {
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(FieldToolsPage(radio: radio)),
       )),
+      if (BastionSmsRelay.available)
+        Card(child: ListTile(
+          leading: const Icon(Icons.sms_outlined),
+          title: const Text('SMS relay'),
+          subtitle: const Text('Let chosen nodes text through this phone'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(SmsRelayPage(radio: radio, relay: BastionSmsRelay.instance)),
+        )),
       NxSectionLabel(l.toolsSignal),
       Card(child: ExpansionTile(
         leading: const Icon(Icons.monitor_heart_outlined),
