@@ -1,0 +1,1 @@
+Connection doctor and trip readiness checks. SOS that respects airtime, with a check-in delivery map. MQTT client proxy. Alerts when the mesh changes, and store-and-forward catch-up. Eight themes, remote admin, and an accessibility pass with larger text and screen reader fixes. Tap a message to react. Tabs and radio status now follow the phone language (English or Spanish).
