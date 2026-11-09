@@ -141,5 +141,207 @@
         "type": "int"
       }
     }
-  }
+  },
+  "deliveryReceived": "Received",
+  "deliveryQueued": "Queued",
+  "deliverySent": "Sent",
+  "deliveryDelivered": "Delivered",
+  "deliveryFailed": "Not delivered",
+  "hopsDirect": "Direct",
+  "hopsCount": "{count, plural, one{{count} hop} other{{count} hops}}",
+  "@hopsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatsNoMention": "No nodes heard yet to mention.",
+  "chatsMentionNode": "Mention a node",
+  "chatsViaMqttFull": "Arrived over MQTT (the internet), not over the air",
+  "chatsPathUnknown": "Path not reported by the sender's firmware",
+  "chatsHeardDirect": "Heard directly, no relays",
+  "chatsLastThrough": ", last through {name}",
+  "@chatsLastThrough": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsLastThroughEnding": ", last through a node ending in {hex}",
+  "@chatsLastThroughEnding": {
+    "placeholders": {
+      "hex": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsCameThrough": "{hops, plural, one{Came through {hops} relay{via}} other{Came through {hops} relays{via}}}",
+  "@chatsCameThrough": {
+    "placeholders": {
+      "hops": {
+        "type": "int"
+      },
+      "via": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsReact": "React",
+  "chatsReactEmoji": "React {emoji}",
+  "@chatsReactEmoji": {
+    "placeholders": {
+      "emoji": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsNoSignal": "No signal reading",
+  "chatsUnpin": "Unpin",
+  "chatsPin": "Pin",
+  "chatsCopyText": "Copy text",
+  "chatsCopied": "Message copied",
+  "chatsReactionFailed": "Reaction not sent: {error}",
+  "@chatsReactionFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsSendFailed": "Message not sent: {error}",
+  "@chatsSendFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsYou": "You",
+  "chatsYouLower": "you",
+  "chatsChannelN": "Channel {n}",
+  "@chatsChannelN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "chatsReactHint": "react to this message",
+  "chatsViaMqtt": "via MQTT",
+  "chatsPinned": "Pinned",
+  "chatsMentionsYou": "Mentions you",
+  "chatsReactions": "Reactions: {list}",
+  "@chatsReactions": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsReactionFrom": "{emoji} from {name}",
+  "@chatsReactionFrom": {
+    "placeholders": {
+      "emoji": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsConnectedSub": "Connected. Messages send right away.",
+  "chatsOfflineSub": "Offline. Messages wait in a queue and send when your radio connects.",
+  "chatsStorageProblem": "Message storage problem",
+  "chatsFilterShowing": "Showing messages that match your word filters",
+  "chatsFilterHidden": "{count, plural, one{{count} message hidden by your word filters} other{{count} messages hidden by your word filters}}",
+  "@chatsFilterHidden": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatsHide": "Hide",
+  "chatsShow": "Show",
+  "chatsStatLink": "Link",
+  "chatsOnline": "Online",
+  "chatsStatMessages": "Messages",
+  "chatsStatQueued": "Queued",
+  "chatsNewMessage": "New message",
+  "chatsKeyChanged": "Security key changed",
+  "chatsKeyChangedBody": "{name} now shows a different key. Check with its owner before sending anything private. Open the node to review or trust the new key.",
+  "@chatsKeyChangedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsTo": "To",
+  "chatsEveryone": "Everyone on the channel",
+  "chatsDirect": "Direct • {name}",
+  "@chatsDirect": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsChannelLabel": "Channel",
+  "chatsChannelBroadcast": "Channel 0 • Broadcast",
+  "chatsChannelOffline": "Channel {n} • Offline",
+  "@chatsChannelOffline": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "chatsChannelNamed": "Channel {n} • {name}",
+  "@chatsChannelNamed": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsDefault": "Default",
+  "chatsMessageChannel": "Message Channel {n}",
+  "@chatsMessageChannel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "chatsMessageNode": "Message {name}",
+  "@chatsMessageNode": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsSend": "Send",
+  "chatsQuickReplies": "Quick replies",
+  "chatsMessages": "Messages",
+  "chatsHoldHint": "Hold a message for more",
+  "chatsSearch": "Search message history",
+  "chatsClearSearch": "Clear search",
+  "chatsNoMatches": "No matches",
+  "chatsNoMatchesBody": "No messages match your search.",
+  "chatsEmpty": "No mesh messages yet",
+  "chatsEmptyBody": "Channel and direct messages appear here once your radio hears them.",
+  "chatsNewAbove": "New messages above",
+  "chatsAutoReplies": "Automatic replies",
+  "chatsBot": "Bot mode",
+  "chatsBotOn": "On. Replies to direct messages and answers !help and !status, within quiet hours and airtime limits.",
+  "chatsBotOff": "Off. No automatic replies are sent.",
+  "chatsBotReply": "Bot reply message",
+  "chatsBotReplyField": "Message to send while Bot mode is on"
 }

@@ -511,6 +511,450 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one{{count} Bluetooth device found} other{{count} Bluetooth devices found}}'**
   String toolsFound(int count);
+
+  /// No description provided for @deliveryReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get deliveryReceived;
+
+  /// No description provided for @deliveryQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get deliveryQueued;
+
+  /// No description provided for @deliverySent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get deliverySent;
+
+  /// No description provided for @deliveryDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get deliveryDelivered;
+
+  /// No description provided for @deliveryFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not delivered'**
+  String get deliveryFailed;
+
+  /// No description provided for @hopsDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct'**
+  String get hopsDirect;
+
+  /// No description provided for @hopsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} hop} other{{count} hops}}'**
+  String hopsCount(int count);
+
+  /// No description provided for @chatsNoMention.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes heard yet to mention.'**
+  String get chatsNoMention;
+
+  /// No description provided for @chatsMentionNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Mention a node'**
+  String get chatsMentionNode;
+
+  /// No description provided for @chatsViaMqttFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrived over MQTT (the internet), not over the air'**
+  String get chatsViaMqttFull;
+
+  /// No description provided for @chatsPathUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Path not reported by the sender\'s firmware'**
+  String get chatsPathUnknown;
+
+  /// No description provided for @chatsHeardDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard directly, no relays'**
+  String get chatsHeardDirect;
+
+  /// No description provided for @chatsLastThrough.
+  ///
+  /// In en, this message translates to:
+  /// **', last through {name}'**
+  String chatsLastThrough(String name);
+
+  /// No description provided for @chatsLastThroughEnding.
+  ///
+  /// In en, this message translates to:
+  /// **', last through a node ending in {hex}'**
+  String chatsLastThroughEnding(String hex);
+
+  /// No description provided for @chatsCameThrough.
+  ///
+  /// In en, this message translates to:
+  /// **'{hops, plural, one{Came through {hops} relay{via}} other{Came through {hops} relays{via}}}'**
+  String chatsCameThrough(int hops, String via);
+
+  /// No description provided for @chatsReact.
+  ///
+  /// In en, this message translates to:
+  /// **'React'**
+  String get chatsReact;
+
+  /// No description provided for @chatsReactEmoji.
+  ///
+  /// In en, this message translates to:
+  /// **'React {emoji}'**
+  String chatsReactEmoji(String emoji);
+
+  /// No description provided for @chatsNoSignal.
+  ///
+  /// In en, this message translates to:
+  /// **'No signal reading'**
+  String get chatsNoSignal;
+
+  /// No description provided for @chatsUnpin.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpin'**
+  String get chatsUnpin;
+
+  /// No description provided for @chatsPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin'**
+  String get chatsPin;
+
+  /// No description provided for @chatsCopyText.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy text'**
+  String get chatsCopyText;
+
+  /// No description provided for @chatsCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Message copied'**
+  String get chatsCopied;
+
+  /// No description provided for @chatsReactionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reaction not sent: {error}'**
+  String chatsReactionFailed(String error);
+
+  /// No description provided for @chatsSendFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Message not sent: {error}'**
+  String chatsSendFailed(String error);
+
+  /// No description provided for @chatsYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get chatsYou;
+
+  /// No description provided for @chatsYouLower.
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get chatsYouLower;
+
+  /// No description provided for @chatsChannelN.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {n}'**
+  String chatsChannelN(int n);
+
+  /// No description provided for @chatsReactHint.
+  ///
+  /// In en, this message translates to:
+  /// **'react to this message'**
+  String get chatsReactHint;
+
+  /// No description provided for @chatsViaMqtt.
+  ///
+  /// In en, this message translates to:
+  /// **'via MQTT'**
+  String get chatsViaMqtt;
+
+  /// No description provided for @chatsPinned.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get chatsPinned;
+
+  /// No description provided for @chatsMentionsYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Mentions you'**
+  String get chatsMentionsYou;
+
+  /// No description provided for @chatsReactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Reactions: {list}'**
+  String chatsReactions(String list);
+
+  /// No description provided for @chatsReactionFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'{emoji} from {name}'**
+  String chatsReactionFrom(String emoji, String name);
+
+  /// No description provided for @chatsConnectedSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected. Messages send right away.'**
+  String get chatsConnectedSub;
+
+  /// No description provided for @chatsOfflineSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline. Messages wait in a queue and send when your radio connects.'**
+  String get chatsOfflineSub;
+
+  /// No description provided for @chatsStorageProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Message storage problem'**
+  String get chatsStorageProblem;
+
+  /// No description provided for @chatsFilterShowing.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing messages that match your word filters'**
+  String get chatsFilterShowing;
+
+  /// No description provided for @chatsFilterHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} message hidden by your word filters} other{{count} messages hidden by your word filters}}'**
+  String chatsFilterHidden(int count);
+
+  /// No description provided for @chatsHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide'**
+  String get chatsHide;
+
+  /// No description provided for @chatsShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get chatsShow;
+
+  /// No description provided for @chatsStatLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get chatsStatLink;
+
+  /// No description provided for @chatsOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get chatsOnline;
+
+  /// No description provided for @chatsStatMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get chatsStatMessages;
+
+  /// No description provided for @chatsStatQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get chatsStatQueued;
+
+  /// No description provided for @chatsNewMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'New message'**
+  String get chatsNewMessage;
+
+  /// No description provided for @chatsKeyChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Security key changed'**
+  String get chatsKeyChanged;
+
+  /// No description provided for @chatsKeyChangedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} now shows a different key. Check with its owner before sending anything private. Open the node to review or trust the new key.'**
+  String chatsKeyChangedBody(String name);
+
+  /// No description provided for @chatsTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get chatsTo;
+
+  /// No description provided for @chatsEveryone.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone on the channel'**
+  String get chatsEveryone;
+
+  /// No description provided for @chatsDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct • {name}'**
+  String chatsDirect(String name);
+
+  /// No description provided for @chatsChannelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get chatsChannelLabel;
+
+  /// No description provided for @chatsChannelBroadcast.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel 0 • Broadcast'**
+  String get chatsChannelBroadcast;
+
+  /// No description provided for @chatsChannelOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {n} • Offline'**
+  String chatsChannelOffline(int n);
+
+  /// No description provided for @chatsChannelNamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {n} • {name}'**
+  String chatsChannelNamed(int n, String name);
+
+  /// No description provided for @chatsDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get chatsDefault;
+
+  /// No description provided for @chatsMessageChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Message Channel {n}'**
+  String chatsMessageChannel(int n);
+
+  /// No description provided for @chatsMessageNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Message {name}'**
+  String chatsMessageNode(String name);
+
+  /// No description provided for @chatsSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get chatsSend;
+
+  /// No description provided for @chatsQuickReplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick replies'**
+  String get chatsQuickReplies;
+
+  /// No description provided for @chatsMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get chatsMessages;
+
+  /// No description provided for @chatsHoldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold a message for more'**
+  String get chatsHoldHint;
+
+  /// No description provided for @chatsSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search message history'**
+  String get chatsSearch;
+
+  /// No description provided for @chatsClearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get chatsClearSearch;
+
+  /// No description provided for @chatsNoMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'No matches'**
+  String get chatsNoMatches;
+
+  /// No description provided for @chatsNoMatchesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages match your search.'**
+  String get chatsNoMatchesBody;
+
+  /// No description provided for @chatsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No mesh messages yet'**
+  String get chatsEmpty;
+
+  /// No description provided for @chatsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel and direct messages appear here once your radio hears them.'**
+  String get chatsEmptyBody;
+
+  /// No description provided for @chatsNewAbove.
+  ///
+  /// In en, this message translates to:
+  /// **'New messages above'**
+  String get chatsNewAbove;
+
+  /// No description provided for @chatsAutoReplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic replies'**
+  String get chatsAutoReplies;
+
+  /// No description provided for @chatsBot.
+  ///
+  /// In en, this message translates to:
+  /// **'Bot mode'**
+  String get chatsBot;
+
+  /// No description provided for @chatsBotOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On. Replies to direct messages and answers !help and !status, within quiet hours and airtime limits.'**
+  String get chatsBotOn;
+
+  /// No description provided for @chatsBotOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off. No automatic replies are sent.'**
+  String get chatsBotOff;
+
+  /// No description provided for @chatsBotReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Bot reply message'**
+  String get chatsBotReply;
+
+  /// No description provided for @chatsBotReplyField.
+  ///
+  /// In en, this message translates to:
+  /// **'Message to send while Bot mode is on'**
+  String get chatsBotReplyField;
 }
 
 class _AppLocalizationsDelegate
