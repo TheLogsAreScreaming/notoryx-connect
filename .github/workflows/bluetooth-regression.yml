@@ -25,6 +25,7 @@ jobs:
       - run: flutter pub get --enforce-lockfile
       - name: Run BLE and session regression tests
         run: |
+          bash scripts/warm_native_assets.sh
           set -e
           find test -type f \( -iname '*ble*test.dart' -o -iname '*connection*test.dart' -o -iname '*session*test.dart' -o -iname '*transport*test.dart' \) -print > /tmp/bastion-ble-tests
           if test -s /tmp/bastion-ble-tests; then

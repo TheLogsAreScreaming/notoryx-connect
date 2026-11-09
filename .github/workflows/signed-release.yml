@@ -43,6 +43,7 @@ jobs:
         run: |
           python3 test/release_package_test.py
           flutter analyze
+          bash scripts/warm_native_assets.sh
           flutter test
       - name: Build signed candidate and archive symbols
         run: |
