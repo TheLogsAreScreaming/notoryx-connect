@@ -1770,4 +1770,154 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get takHowTo =>
       'In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out.';
+
+  @override
+  String get homeFirmwareTitle => 'Radio firmware update suggested';
+
+  @override
+  String get homeCheckIn => 'Check in';
+
+  @override
+  String get homeEmergency => 'Emergency';
+
+  @override
+  String get homeSosHint =>
+      'Hold for 2 seconds. It goes to your trip contacts, and repeats every 5 minutes until someone replies.';
+
+  @override
+  String homeSosHintChannel(int channel) {
+    return 'Hold for 2 seconds. It goes to your trip contacts and channel $channel, and repeats every 5 minutes until someone replies.';
+  }
+
+  @override
+  String get homeNotReceived =>
+      'Sent or queued does not mean received. Confirm with a reply or a call.';
+
+  @override
+  String get homeConnected => 'Radio connected';
+
+  @override
+  String get homeNotConnected => 'No radio connected';
+
+  @override
+  String get homeYourRadio => 'Your radio';
+
+  @override
+  String get homeConnectHint =>
+      'Connect to check in, send an SOS and see the mesh.';
+
+  @override
+  String get homeNodes => 'Nodes';
+
+  @override
+  String get homeBattery => 'Battery';
+
+  @override
+  String get homeUnknown => 'Unknown';
+
+  @override
+  String get homePluggedIn => 'Plugged in';
+
+  @override
+  String get homeConnectRadio => 'Connect radio';
+
+  @override
+  String get homeTryDemo => 'Try the demo';
+
+  @override
+  String get homeTripRunning => 'Trip running';
+
+  @override
+  String get homeTripNotStarted => 'Trip not started';
+
+  @override
+  String homeContacts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count contacts',
+      one: '$count contact',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String homeTripNamed(String name) {
+    return 'Trip: $name';
+  }
+
+  @override
+  String get homePlanTrip => 'Plan your trip';
+
+  @override
+  String homeOverdue(String names) {
+    return 'Overdue: $names';
+  }
+
+  @override
+  String homeCheckInLabel(String label) {
+    return 'Check in: $label';
+  }
+
+  @override
+  String homeDelivered(String label, String time, int delivered, int total) {
+    return '$label at $time: delivered to $delivered of $total';
+  }
+
+  @override
+  String homeNotDelivered(String names) {
+    return 'not delivered to $names';
+  }
+
+  @override
+  String homeWaiting(int count) {
+    return '$count waiting';
+  }
+
+  @override
+  String get homeDetails => 'Details';
+
+  @override
+  String get homeResend => 'Resend';
+
+  @override
+  String get homeSendSosQ => 'Send SOS?';
+
+  @override
+  String get homeSosRepeats =>
+      'Your SOS repeats every 5 minutes until someone replies or you stop it.';
+
+  @override
+  String get homeSendSos => 'Send SOS';
+
+  @override
+  String get homeHoldSos => 'Hold for SOS';
+
+  @override
+  String homeSosReplied(String name) {
+    return '$name replied. Repeats stopped.';
+  }
+
+  @override
+  String homeSosNext(int sends, int max, String time) {
+    return 'Sent $sends of $max. Next at $time.';
+  }
+
+  @override
+  String get homeSosBusy =>
+      ' The channel is busy, so repeats are spaced out to get through.';
+
+  @override
+  String homeSosDone(int max) {
+    return 'Sent $max times. Repeats finished; the SOS stays shown until you stop it.';
+  }
+
+  @override
+  String get homeSosActive => 'SOS active';
+
+  @override
+  String get homeImSafe => 'I\'m safe';
+
+  @override
+  String get homeStopNoMessage => 'Stop without message';
 }
