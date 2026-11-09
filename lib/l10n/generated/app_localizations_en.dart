@@ -1304,4 +1304,372 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatsScheduleCancel => 'Cancel scheduled message';
+
+  @override
+  String get mapNoPositions => 'No node has reported a position yet';
+
+  @override
+  String get mapConnectForPositions => 'Connect a radio to show node positions';
+
+  @override
+  String mapPlaced(int placed, int total) {
+    return '$placed of $total nodes placed';
+  }
+
+  @override
+  String mapWaypointCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count waypoints',
+      one: '$count waypoint',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mapLongPressHint => 'Long-press the map to drop a waypoint';
+
+  @override
+  String get mapHeardWithin => 'Show nodes heard within';
+
+  @override
+  String get mapHeardAny => 'Heard any time';
+
+  @override
+  String get mapHeardHour => 'Heard in last hour';
+
+  @override
+  String get mapHeardDay => 'Heard in last 24 hours';
+
+  @override
+  String get mapHeardWeek => 'Heard in last 7 days';
+
+  @override
+  String get mapShowStreet => 'Show street map';
+
+  @override
+  String get mapShowTopo => 'Show topographic map';
+
+  @override
+  String get mapLinkPlanner => 'Link planner';
+
+  @override
+  String get mapRallyRoutes => 'Rally points & routes';
+
+  @override
+  String get mapTeam => 'Team';
+
+  @override
+  String get mapZones => 'Zones';
+
+  @override
+  String get mapExportGpx => 'Export GPX';
+
+  @override
+  String get mapHideTrails => 'Hide trails';
+
+  @override
+  String get mapShowTrails => 'Show trails';
+
+  @override
+  String get mapHideLinks => 'Hide radio links';
+
+  @override
+  String get mapShowLinks => 'Show radio links';
+
+  @override
+  String get mapShowAll => 'Show all nodes';
+
+  @override
+  String mapPlanHint(int max) {
+    return 'Tap the map to add stops, in order. Up to $max.';
+  }
+
+  @override
+  String mapPlanProgress(int count, int max, String distance) {
+    return '$count of $max stops • $distance';
+  }
+
+  @override
+  String get mapUndo => 'Undo';
+
+  @override
+  String get mapShareRoute => 'Share route';
+
+  @override
+  String get mapRallyIntro =>
+      'Rally points are where everyone should meet. Drop one with a long-press and choose \"Rally point\". Routes are shared as numbered waypoints, so other Meshtastic apps see the stops too.';
+
+  @override
+  String get mapRallyPoints => 'Rally points';
+
+  @override
+  String get mapNoneYet => 'None yet.';
+
+  @override
+  String mapDistanceOfYou(String distance, String direction) {
+    return '$distance $direction of you';
+  }
+
+  @override
+  String get mapNoOwnPosition => 'Your radio has no position yet';
+
+  @override
+  String get mapShowOnMap => 'Show on map';
+
+  @override
+  String get mapRoutes => 'Routes';
+
+  @override
+  String mapStops(int count) {
+    return '$count stops';
+  }
+
+  @override
+  String mapStopsHeard(int heard, int count) {
+    return '$heard of $count stops heard';
+  }
+
+  @override
+  String get mapFromYou => 'from you';
+
+  @override
+  String mapFromNode(String name) {
+    return 'from $name';
+  }
+
+  @override
+  String get mapPlanRoute => 'Plan a route';
+
+  @override
+  String get mapConnectForRoutes => 'Connect a radio to share routes';
+
+  @override
+  String mapRouteShared(int count) {
+    return 'Route shared: $count stops on channel 0.';
+  }
+
+  @override
+  String mapRouteStopped(int sent, int count, String error) {
+    return 'Route stopped after $sent of $count stops: $error';
+  }
+
+  @override
+  String mapGpxExported(int waypoints, int trails) {
+    return 'Exported $waypoints waypoints and $trails trails as GPX.';
+  }
+
+  @override
+  String mapGpxFailed(String error) {
+    return 'Could not export GPX: $error';
+  }
+
+  @override
+  String get mapWatchTrip => 'Trip contacts';
+
+  @override
+  String get mapWatchFavorites => 'Favorites';
+
+  @override
+  String get mapWatchAll => 'All nodes';
+
+  @override
+  String get mapAlertArrive => 'arrive';
+
+  @override
+  String get mapAlertLeave => 'leave';
+
+  @override
+  String get mapAlertBoth => 'arrive or leave';
+
+  @override
+  String get mapZonesIntro =>
+      'Get a phone alert when someone arrives at or leaves a place, like camp or the trailhead. Alerts need the radio connected; nothing is sent over the mesh.';
+
+  @override
+  String get mapNoZones => 'No zones yet.';
+
+  @override
+  String mapZoneSummary(String radius, String watch, String alert) {
+    return '$radius radius • $watch • alert when they $alert';
+  }
+
+  @override
+  String mapDeleteZone(String name) {
+    return 'Delete $name';
+  }
+
+  @override
+  String get mapAddZone => 'Add zone at map center';
+
+  @override
+  String get mapTeamIntro =>
+      'Your trip contacts. Tap one to find them on the map.';
+
+  @override
+  String get mapNoTeam => 'No trip contacts yet';
+
+  @override
+  String get mapNoTeamHint =>
+      'Add up to 6 people on HOME → Trip. They show here and stand out on the map.';
+
+  @override
+  String get mapFreshOk => 'OK';
+
+  @override
+  String get mapFreshQuiet => 'QUIET';
+
+  @override
+  String get mapFreshLost => 'LOST';
+
+  @override
+  String get mapConnectForWaypoints => 'Connect a radio to share waypoints.';
+
+  @override
+  String mapWaypointShared(String name) {
+    return 'Waypoint \"$name\" shared on channel 0.';
+  }
+
+  @override
+  String mapWaypointFailed(String error) {
+    return 'Could not share waypoint: $error';
+  }
+
+  @override
+  String get mapNeverExpires => 'Never expires';
+
+  @override
+  String mapExpires(String time) {
+    return 'Expires $time';
+  }
+
+  @override
+  String mapSharedBy(String name) {
+    return 'Shared by $name';
+  }
+
+  @override
+  String get mapLocked => 'Locked to its creator';
+
+  @override
+  String get mapDeleteEveryone => 'Delete for everyone';
+
+  @override
+  String mapDeleted(String name) {
+    return 'Deleted \"$name\".';
+  }
+
+  @override
+  String mapDeleteFailed(String error) {
+    return 'Could not delete: $error';
+  }
+
+  @override
+  String get mapUnknown => 'unknown';
+
+  @override
+  String mapFromThisRadio(String distance) {
+    return '$distance from this radio';
+  }
+
+  @override
+  String mapPositionHeard(String position, String heard) {
+    return 'Position: $position • Heard: $heard';
+  }
+
+  @override
+  String get mapDirect => 'direct';
+
+  @override
+  String get mapBatteryExternal => 'Battery: external power';
+
+  @override
+  String mapBattery(int level) {
+    return 'Battery: $level%';
+  }
+
+  @override
+  String get mapOpenDetails => 'Open details';
+
+  @override
+  String get mapThisRadioSuffix => ', this radio';
+
+  @override
+  String mapTripContactSuffix(String summary) {
+    return ', trip contact, $summary';
+  }
+
+  @override
+  String get mapRallyPoint => 'Rally point';
+
+  @override
+  String get mapWaypoint => 'Waypoint';
+
+  @override
+  String get mapExpireHour => '1 hour';
+
+  @override
+  String get mapExpireDay => '1 day';
+
+  @override
+  String get mapExpireWeek => '1 week';
+
+  @override
+  String get mapExpireNever => 'Never';
+
+  @override
+  String get mapNewWaypoint => 'New waypoint';
+
+  @override
+  String get mapName => 'Name';
+
+  @override
+  String get mapDescription => 'Description (optional)';
+
+  @override
+  String get mapRallySub => 'Where everyone should meet';
+
+  @override
+  String get mapExpiresAfter => 'Expires after';
+
+  @override
+  String get mapOnlyMe => 'Only I can edit or delete';
+
+  @override
+  String get mapSharedChannel0 => 'Shared with everyone on channel 0.';
+
+  @override
+  String get mapShare => 'Share';
+
+  @override
+  String get mapNewZone => 'New zone';
+
+  @override
+  String mapCenteredOn(String lat, String lon) {
+    return 'Centered on $lat, $lon';
+  }
+
+  @override
+  String get mapZoneName => 'Name, e.g. Camp';
+
+  @override
+  String get mapRadius => 'Radius';
+
+  @override
+  String get mapWatch => 'Watch';
+
+  @override
+  String get mapAlertWhen => 'Alert when they';
+
+  @override
+  String get mapAdd => 'Add';
+
+  @override
+  String get mapRouteName => 'Route name';
+
+  @override
+  String mapRouteSends(int count) {
+    return 'Sends $count waypoints on channel 0, about 3 seconds apart. They expire after a day.';
+  }
 }

@@ -7,6 +7,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'l10n/generated/app_localizations.dart';
 import 'link_planner_page.dart';
 import 'node_detail_page.dart';
 import 'services/bastion_geo.dart';
@@ -49,6 +50,8 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  AppLocalizations get l => AppLocalizations.of(context);
+
   final MapController _map = MapController();
   bool _fitted = false;
   bool _showLinks = true;
@@ -265,18 +268,18 @@ class _MapPageState extends State<MapPage> {
                           child: Text(
                             placed.isEmpty
                                 ? (widget.radio.isReady
-                                    ? 'No node has reported a position yet'
-                                    : 'Connect a radio to show node positions')
-                                : '${placed.length} of ${widget.radio.nodes.length} nodes placed'
-                                    '${widget.radio.waypoints.isEmpty ? '' : ' • ${widget.radio.waypoints.length} waypoints'}'
-                                    '\nLong-press the map to drop a waypoint',
+                                    ? l.mapNoPositions
+                                    : l.mapConnectForPositions)
+                                : '${l.mapPlaced(placed.length, widget.radio.nodes.length)}'
+                                    '${widget.radio.waypoints.isEmpty ? '' : ' • ${l.mapWaypointCount(widget.radio.waypoints.length)}'}'
+                                    '\n${l.mapLongPressHint}',
                           ),
                         ),
                       ]),
                       Wrap(alignment: WrapAlignment.end, children: [
                         PopupMenuButton<BastionHeardWithin>(
                           key: const ValueKey('map-heard-filter'),
-                          tooltip: 'Show nodes heard within',
+                          tooltip: l.mapHeardWithin,
                           icon: Badge(
                             isLabelVisible: BastionPreferences.instance.heardWithin != BastionHeardWithin.any,
                             smallSize: 8,
@@ -292,23 +295,28 @@ class _MapPageState extends State<MapPage> {
                               CheckedPopupMenuItem(
                                 value: v,
                                 checked: v == BastionPreferences.instance.heardWithin,
-                                child: Text(v == BastionHeardWithin.any ? 'Heard any time' : 'Heard in last ${v.label}'),
+                                child: Text(switch (v) {
+                                  BastionHeardWithin.any => l.mapHeardAny,
+                                  BastionHeardWithin.hour => l.mapHeardHour,
+                                  BastionHeardWithin.day => l.mapHeardDay,
+                                  BastionHeardWithin.week => l.mapHeardWeek,
+                                }),
                               ),
                           ],
                         ),
                         IconButton(
-                          tooltip: _topo ? 'Show street map' : 'Show topographic map',
+                          tooltip: _topo ? l.mapShowStreet : l.mapShowTopo,
                           icon: Icon(_topo ? Icons.map_outlined : Icons.terrain),
                           onPressed: () => setState(() => _topo = !_topo),
                         ),
                         IconButton(
-                          tooltip: 'Link planner',
+                          tooltip: l.mapLinkPlanner,
                           icon: const Icon(Icons.settings_input_antenna),
                           onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
                             builder: (_) => LinkPlannerPage(radio: widget.radio))),
                         ),
                         IconButton(
-                          tooltip: 'Rally points & routes',
+                          tooltip: l.mapRallyRoutes,
                           icon: Badge(
                             isLabelVisible: widget.radio.waypoints.any(BastionRoutes.isRally),
                             label: Text('${widget.radio.waypoints.where(BastionRoutes.isRally).length}'),
@@ -317,7 +325,7 @@ class _MapPageState extends State<MapPage> {
                           onPressed: () => _showRally(context),
                         ),
                         IconButton(
-                          tooltip: 'Team',
+                          tooltip: l.mapTeam,
                           icon: Badge(
                             isLabelVisible: team.isNotEmpty,
                             label: Text('${team.length}'),
@@ -326,7 +334,7 @@ class _MapPageState extends State<MapPage> {
                           onPressed: () => _showTeam(context),
                         ),
                         IconButton(
-                          tooltip: 'Zones',
+                          tooltip: l.mapZones,
                           icon: Badge(
                             isLabelVisible: widget.radio.geofences.isNotEmpty,
                             label: Text('${widget.radio.geofences.length}'),
@@ -336,25 +344,25 @@ class _MapPageState extends State<MapPage> {
                         ),
                         if (trails.isNotEmpty || widget.radio.waypoints.isNotEmpty)
                           IconButton(
-                            tooltip: 'Export GPX',
+                            tooltip: l.mapExportGpx,
                             icon: const Icon(Icons.ios_share),
                             onPressed: () => _exportGpx(context, team, local),
                           ),
                         if (trails.isNotEmpty)
                           IconButton(
-                            tooltip: _showTrails ? 'Hide trails' : 'Show trails',
+                            tooltip: _showTrails ? l.mapHideTrails : l.mapShowTrails,
                             icon: Icon(_showTrails ? Icons.timeline : Icons.timeline_outlined),
                             onPressed: () => setState(() => _showTrails = !_showTrails),
                           ),
                         if (widget.radio.neighborReports.isNotEmpty)
                           IconButton(
-                            tooltip: _showLinks ? 'Hide radio links' : 'Show radio links',
+                            tooltip: _showLinks ? l.mapHideLinks : l.mapShowLinks,
                             icon: Icon(_showLinks ? Icons.hub : Icons.hub_outlined),
                             onPressed: () => setState(() => _showLinks = !_showLinks),
                           ),
                         if (placed.isNotEmpty)
                           IconButton(
-                            tooltip: 'Show all nodes',
+                            tooltip: l.mapShowAll,
                             icon: const Icon(Icons.fit_screen),
                             onPressed: () => _fit(placed),
                           ),
@@ -373,24 +381,24 @@ class _MapPageState extends State<MapPage> {
                     child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                       Semantics(liveRegion: true, child: Text(
                         plan.isEmpty
-                            ? 'Tap the map to add stops, in order. Up to ${BastionRoutes.maxStops}.'
-                            : '${plan.length} of ${BastionRoutes.maxStops} stops • '
-                              '${BastionUnitFormat.distance(BastionRoutes.lengthOf([for (final p in plan) (latitude: p.latitude, longitude: p.longitude)]), BastionPreferences.instance.units)}',
+                            ? l.mapPlanHint(BastionRoutes.maxStops)
+                            : l.mapPlanProgress(plan.length, BastionRoutes.maxStops,
+                                BastionUnitFormat.distance(BastionRoutes.lengthOf([for (final p in plan) (latitude: p.latitude, longitude: p.longitude)]), BastionPreferences.instance.units)),
                         style: Theme.of(context).textTheme.titleSmall,
                       )),
                       const SizedBox(height: 8),
                       Wrap(spacing: 8, runSpacing: 8, alignment: WrapAlignment.end, children: [
                         TextButton(onPressed: _sharingRoute ? null : () => setState(() => _planning = null),
-                          child: const Text('Cancel')),
+                          child: Text(AppLocalizations.of(context).commonCancel)),
                         OutlinedButton.icon(
                           onPressed: plan.isEmpty || _sharingRoute ? null : () => setState(plan.removeLast),
-                          icon: const Icon(Icons.undo), label: const Text('Undo')),
+                          icon: const Icon(Icons.undo), label: Text(l.mapUndo)),
                         FilledButton.icon(
                           onPressed: plan.length < 2 || _sharingRoute ? null : () => _shareRoute(context, plan),
                           icon: _sharingRoute
                               ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
                               : const Icon(Icons.share_location),
-                          label: const Text('Share route')),
+                          label: Text(l.mapShareRoute)),
                       ]),
                     ]),
                   )),
@@ -422,25 +430,24 @@ class _MapPageState extends State<MapPage> {
           final routes = BastionRoutes.group(widget.radio.waypoints);
           final type = Theme.of(sheetContext).textTheme;
           return ListView(shrinkWrap: true, padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), children: [
-            Text('Rally points & routes', style: type.titleLarge),
+            Text(l.mapRallyRoutes, style: type.titleLarge),
             const SizedBox(height: 4),
-            const Text('Rally points are where everyone should meet. Drop one with a long-press and '
-                'choose "Rally point". Routes are shared as numbered waypoints, so other Meshtastic apps see the stops too.'),
+            Text(l.mapRallyIntro),
             const SizedBox(height: 12),
-            Text('Rally points', style: type.titleSmall),
+            Text(l.mapRallyPoints, style: type.titleSmall),
             if (rallies.isEmpty)
-              const ListTile(contentPadding: EdgeInsets.zero, title: Text('None yet.')),
+              ListTile(contentPadding: EdgeInsets.zero, title: Text(l.mapNoneYet)),
             for (final w in rallies)
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Text('🚩', style: TextStyle(fontSize: 24)),
                 title: Text(w.name),
                 subtitle: Text(switch (_fromMe(w.latitude, w.longitude)) {
-                  final d? => '${BastionUnitFormat.distance(d.distance, units)} ${BastionGeo.compassPoint(d.bearing)} of you',
-                  null => 'Your radio has no position yet',
+                  final d? => l.mapDistanceOfYou(BastionUnitFormat.distance(d.distance, units), BastionGeo.compassPoint(d.bearing)),
+                  null => l.mapNoOwnPosition,
                 }),
                 trailing: IconButton(
-                  tooltip: 'Show on map',
+                  tooltip: l.mapShowOnMap,
                   icon: const Icon(Icons.center_focus_strong),
                   onPressed: () {
                     Navigator.pop(sheetContext);
@@ -449,21 +456,21 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
             const SizedBox(height: 8),
-            Text('Routes', style: type.titleSmall),
+            Text(l.mapRoutes, style: type.titleSmall),
             if (routes.isEmpty)
-              const ListTile(contentPadding: EdgeInsets.zero, title: Text('None yet.')),
+              ListTile(contentPadding: EdgeInsets.zero, title: Text(l.mapNoneYet)),
             for (final r in routes)
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.route),
                 title: Text(r.name),
                 subtitle: Text([
-                  r.complete ? '${r.count} stops' : '${r.stops.length} of ${r.count} stops heard',
+                  r.complete ? l.mapStops(r.count) : l.mapStopsHeard(r.stops.length, r.count),
                   if (r.stops.length >= 2) BastionUnitFormat.distance(r.lengthMeters, units),
-                  r.from == null ? 'from you' : 'from ${widget.radio.nodeName(r.from!)}',
+                  r.from == null ? l.mapFromYou : l.mapFromNode(widget.radio.nodeName(r.from!)),
                 ].join(' • ')),
                 trailing: IconButton(
-                  tooltip: 'Show on map',
+                  tooltip: l.mapShowOnMap,
                   icon: const Icon(Icons.center_focus_strong),
                   onPressed: () {
                     Navigator.pop(sheetContext);
@@ -485,7 +492,7 @@ class _MapPageState extends State<MapPage> {
                     }
                   : null,
               icon: const Icon(Icons.add_road),
-              label: Text(widget.radio.isReady ? 'Plan a route' : 'Connect a radio to share routes'),
+              label: Text(widget.radio.isReady ? l.mapPlanRoute : l.mapConnectForRoutes),
             ),
           ]);
         },
@@ -496,6 +503,7 @@ class _MapPageState extends State<MapPage> {
   /// Asks for a name and shares [plan] as numbered waypoints, a few seconds
   /// apart so the stops don't flood the channel.
   Future<void> _shareRoute(BuildContext context, List<LatLng> plan) async {
+    final l = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final routeName = await showDialog<String>(
       context: context,
@@ -516,11 +524,11 @@ class _MapPageState extends State<MapPage> {
         await widget.radio.sendWaypoint(stop);
         sent++;
       }
-      messenger.showSnackBar(SnackBar(content: Text('Route shared: ${stops.length} stops on channel 0.')));
+      messenger.showSnackBar(SnackBar(content: Text(l.mapRouteShared(stops.length))));
       if (mounted) setState(() => _planning = null);
     } catch (error) {
       messenger.showSnackBar(SnackBar(content: Text(
-          'Route stopped after $sent of ${stops.length} stops: $error')));
+          l.mapRouteStopped(sent, stops.length, '$error'))));
     } finally {
       if (mounted) setState(() => _sharingRoute = false);
     }
@@ -528,6 +536,7 @@ class _MapPageState extends State<MapPage> {
 
   /// Exports all waypoints and the trails of trip contacts and this radio.
   Future<void> _exportGpx(BuildContext context, Set<int> team, int? local) async {
+    final l = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final names = {for (final n in widget.radio.nodes) n.num: n.displayName};
     final tracks = [
@@ -541,22 +550,22 @@ class _MapPageState extends State<MapPage> {
     try {
       await widget.shareFile('notoryx-${now.toIso8601String().substring(0, 10)}.gpx', gpx);
       messenger.showSnackBar(SnackBar(content: Text(
-          'Exported ${widget.radio.waypoints.length} waypoints and ${tracks.length} trails as GPX.')));
+          l.mapGpxExported(widget.radio.waypoints.length, tracks.length))));
     } catch (error) {
-      messenger.showSnackBar(SnackBar(content: Text('Could not export GPX: $error')));
+      messenger.showSnackBar(SnackBar(content: Text(l.mapGpxFailed('$error'))));
     }
   }
 
-  static String _watchLabel(GeofenceWatch watch) => switch (watch) {
-        GeofenceWatch.tripContacts => 'Trip contacts',
-        GeofenceWatch.favorites => 'Favorites',
-        GeofenceWatch.allNodes => 'All nodes',
+  static String _watchLabel(AppLocalizations l, GeofenceWatch watch) => switch (watch) {
+        GeofenceWatch.tripContacts => l.mapWatchTrip,
+        GeofenceWatch.favorites => l.mapWatchFavorites,
+        GeofenceWatch.allNodes => l.mapWatchAll,
       };
 
-  static String _alertLabel(GeofenceAlertOn on) => switch (on) {
-        GeofenceAlertOn.arrive => 'arrive',
-        GeofenceAlertOn.leave => 'leave',
-        GeofenceAlertOn.both => 'arrive or leave',
+  static String _alertLabel(AppLocalizations l, GeofenceAlertOn on) => switch (on) {
+        GeofenceAlertOn.arrive => l.mapAlertArrive,
+        GeofenceAlertOn.leave => l.mapAlertLeave,
+        GeofenceAlertOn.both => l.mapAlertBoth,
       };
 
   /// Zones that alert on the phone when watched nodes arrive or leave.
@@ -575,24 +584,23 @@ class _MapPageState extends State<MapPage> {
               shrinkWrap: true,
               padding: const EdgeInsets.all(16),
               children: [
-                Text('Zones', style: Theme.of(sheetContext).textTheme.titleLarge),
-                const Text('Get a phone alert when someone arrives at or leaves a place, '
-                    'like camp or the trailhead. Alerts need the radio connected; nothing is sent over the mesh.'),
+                Text(l.mapZones, style: Theme.of(sheetContext).textTheme.titleLarge),
+                Text(l.mapZonesIntro),
                 const SizedBox(height: 8),
-                if (zones.isEmpty) const ListTile(contentPadding: EdgeInsets.zero, title: Text('No zones yet.')),
+                if (zones.isEmpty) ListTile(contentPadding: EdgeInsets.zero, title: Text(l.mapNoZones)),
                 for (final zone in zones)
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.fence),
                     title: Text(zone.name),
-                    subtitle: Text('${BastionUnitFormat.distance(zone.radiusMeters, units)} radius • '
-                        '${_watchLabel(zone.watch)} • alert when they ${_alertLabel(zone.alertOn)}'),
+                    subtitle: Text(l.mapZoneSummary(BastionUnitFormat.distance(zone.radiusMeters, units),
+                        _watchLabel(l, zone.watch), _alertLabel(l, zone.alertOn))),
                     onTap: () {
                       Navigator.pop(sheetContext);
                       _map.move(LatLng(zone.latitude, zone.longitude), 14);
                     },
                     trailing: IconButton(
-                      tooltip: 'Delete ${zone.name}',
+                      tooltip: l.mapDeleteZone(zone.name),
                       icon: const Icon(Icons.delete_outline),
                       onPressed: () async {
                         final problem = await widget.radio.removeGeofence(zone.id);
@@ -603,7 +611,7 @@ class _MapPageState extends State<MapPage> {
                 const SizedBox(height: 8),
                 FilledButton.icon(
                   icon: const Icon(Icons.add_location_alt_outlined),
-                  label: const Text('Add zone at map center'),
+                  label: Text(l.mapAddZone),
                   onPressed: zones.length >= BastionGeofenceStore.maxZones
                       ? null
                       : () async {
@@ -638,14 +646,14 @@ class _MapPageState extends State<MapPage> {
               padding: const EdgeInsets.symmetric(vertical: 12),
               children: [
                 ListTile(
-                  title: Text('Team', style: Theme.of(sheetContext).textTheme.titleLarge),
-                  subtitle: const Text('Your trip contacts. Tap one to find them on the map.'),
+                  title: Text(l.mapTeam, style: Theme.of(sheetContext).textTheme.titleLarge),
+                  subtitle: Text(l.mapTeamIntro),
                 ),
                 if (members.isEmpty)
-                  const ListTile(
-                    leading: Icon(Icons.info_outline),
-                    title: Text('No trip contacts yet'),
-                    subtitle: Text('Add up to 6 people on HOME → Trip. They show here and stand out on the map.'),
+                  ListTile(
+                    leading: const Icon(Icons.info_outline),
+                    title: Text(l.mapNoTeam),
+                    subtitle: Text(l.mapNoTeamHint),
                   ),
                 for (final m in members)
                   ListTile(
@@ -658,9 +666,9 @@ class _MapPageState extends State<MapPage> {
                     title: Text(m.name),
                     subtitle: Text(m.summaryIn(BastionPreferences.instance.units)),
                     trailing: Text(switch (m.freshness) {
-                      TeamFreshness.fresh => 'OK',
-                      TeamFreshness.stale => 'QUIET',
-                      TeamFreshness.lost => 'LOST',
+                      TeamFreshness.fresh => l.mapFreshOk,
+                      TeamFreshness.stale => l.mapFreshQuiet,
+                      TeamFreshness.lost => l.mapFreshLost,
                       TeamFreshness.unknown => '—',
                     }, style: const TextStyle(fontWeight: FontWeight.bold)),
                     enabled: m.hasPosition,
@@ -681,9 +689,10 @@ class _MapPageState extends State<MapPage> {
   }
 
   Future<void> _createWaypoint(BuildContext context, LatLng point) async {
+    final l = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     if (!widget.radio.isReady) {
-      messenger.showSnackBar(const SnackBar(content: Text('Connect a radio to share waypoints.')));
+      messenger.showSnackBar(SnackBar(content: Text(l.mapConnectForWaypoints)));
       return;
     }
     final waypoint = await showDialog<MeshWaypoint>(
@@ -693,13 +702,14 @@ class _MapPageState extends State<MapPage> {
     if (waypoint == null) return;
     try {
       await widget.radio.sendWaypoint(waypoint);
-      messenger.showSnackBar(SnackBar(content: Text('Waypoint "${waypoint.name}" shared on channel 0.')));
+      messenger.showSnackBar(SnackBar(content: Text(l.mapWaypointShared(waypoint.name))));
     } catch (error) {
-      messenger.showSnackBar(SnackBar(content: Text('Could not share waypoint: $error')));
+      messenger.showSnackBar(SnackBar(content: Text(l.mapWaypointFailed('$error'))));
     }
   }
 
   void _showWaypoint(BuildContext context, MeshWaypoint waypoint) {
+    final l = AppLocalizations.of(context);
     String? sender;
     if (waypoint.from != null) {
       sender = '!${waypoint.from!.toRadixString(16).padLeft(8, '0')}';
@@ -726,23 +736,23 @@ class _MapPageState extends State<MapPage> {
               const SizedBox(height: 12),
               Text('${waypoint.latitude.toStringAsFixed(5)}, ${waypoint.longitude.toStringAsFixed(5)}'),
               Text(waypoint.expires == null
-                  ? 'Never expires'
-                  : 'Expires ${waypoint.expires!.toLocal().toString().substring(0, 16)}'),
-              if (sender != null) Text('Shared by $sender'),
-              if (waypoint.lockedTo != 0) const Text('Locked to its creator'),
+                  ? l.mapNeverExpires
+                  : l.mapExpires(waypoint.expires!.toLocal().toString().substring(0, 16))),
+              if (sender != null) Text(l.mapSharedBy(sender)),
+              if (waypoint.lockedTo != 0) Text(l.mapLocked),
               const SizedBox(height: 12),
               if (canDelete)
                 OutlinedButton.icon(
                   icon: const Icon(Icons.delete_outline),
-                  label: const Text('Delete for everyone'),
+                  label: Text(l.mapDeleteEveryone),
                   onPressed: () async {
                     final messenger = ScaffoldMessenger.of(context);
                     Navigator.of(sheetContext).pop();
                     try {
                       await widget.radio.deleteWaypoint(waypoint);
-                      messenger.showSnackBar(SnackBar(content: Text('Deleted "${waypoint.name}".')));
+                      messenger.showSnackBar(SnackBar(content: Text(l.mapDeleted(waypoint.name))));
                     } catch (error) {
-                      messenger.showSnackBar(SnackBar(content: Text('Could not delete: $error')));
+                      messenger.showSnackBar(SnackBar(content: Text(l.mapDeleteFailed('$error'))));
                     }
                   },
                 ),
@@ -760,12 +770,12 @@ class _MapPageState extends State<MapPage> {
             localNode.latitude!, localNode.longitude!, node.latitude!, node.longitude!)
         : null;
     String ago(DateTime? time) {
-      if (time == null) return 'unknown';
+      if (time == null) return l.mapUnknown;
       final d = DateTime.now().difference(time);
-      if (d.inMinutes < 1) return 'just now';
-      if (d.inHours < 1) return '${d.inMinutes} min ago';
-      if (d.inDays < 1) return '${d.inHours} h ago';
-      return '${d.inDays} d ago';
+      if (d.inMinutes < 1) return l.agoNow;
+      if (d.inHours < 1) return l.agoMin(d.inMinutes);
+      if (d.inDays < 1) return l.agoHours(d.inHours);
+      return l.agoDays(d.inDays);
     }
 
     showModalBottomSheet<void>(
@@ -783,22 +793,22 @@ class _MapPageState extends State<MapPage> {
               Text('${node.latitude!.toStringAsFixed(5)}, ${node.longitude!.toStringAsFixed(5)}'
                   '${node.altitudeMeters == null ? '' : ' • ${BastionUnitFormat.altitude(node.altitudeMeters!, BastionPreferences.instance.units)}'}'),
               if (distance != null)
-                Text('${BastionUnitFormat.distance(distance, BastionPreferences.instance.units)} from this radio'),
-              Text('Position: ${ago(node.positionTime)} • Heard: ${ago(node.lastHeard)}'),
+                Text(l.mapFromThisRadio(BastionUnitFormat.distance(distance, BastionPreferences.instance.units))),
+              Text(l.mapPositionHeard(ago(node.positionTime), ago(node.lastHeard))),
               if (node.snr != null || node.hopsAway != null || node.noRfReason != null)
                 Text([
                   if (node.snr != null) 'SNR ${node.snr!.toStringAsFixed(1)} dB' else node.noRfReason!,
                   if (node.hopsAway != null)
-                    node.hopsAway == 0 ? 'direct' : '${node.hopsAway} hops',
+                    node.hopsAway == 0 ? l.mapDirect : l.hopsCount(node.hopsAway!),
                 ].join(' • ')),
               if (node.batteryLevel != null)
                 Text(node.batteryLevel! > 100
-                    ? 'Battery: external power'
-                    : 'Battery: ${node.batteryLevel}%'),
+                    ? l.mapBatteryExternal
+                    : l.mapBattery(node.batteryLevel!)),
               const SizedBox(height: 12),
               FilledButton.tonalIcon(
                 icon: const Icon(Icons.info_outline),
-                label: const Text('Open details'),
+                label: Text(l.mapOpenDetails),
                 onPressed: () {
                   Navigator.of(context)
                     ..pop()
@@ -827,11 +837,12 @@ class _NodePin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final label = node.shortName ?? node.displayName.characters.take(4).toString();
     return Semantics(
       button: true,
-      label: '${node.displayName}${isLocal ? ', this radio' : ''}'
-          '${team == null ? '' : ', trip contact, ${team!.summaryIn(BastionPreferences.instance.units)}'}',
+      label: '${node.displayName}${isLocal ? l.mapThisRadioSuffix : ''}'
+          '${team == null ? '' : l.mapTripContactSuffix(team!.summaryIn(BastionPreferences.instance.units))}',
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
@@ -880,7 +891,7 @@ class _WaypointPin extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
         button: true,
-        label: '${BastionRoutes.isRally(waypoint) ? 'Rally point' : 'Waypoint'} ${waypoint.name}',
+        label: '${BastionRoutes.isRally(waypoint) ? AppLocalizations.of(context).mapRallyPoint : AppLocalizations.of(context).mapWaypoint} ${waypoint.name}',
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: onTap,
@@ -922,12 +933,12 @@ class _WaypointDialogState extends State<_WaypointDialog> {
   bool _locked = false;
 
   static const _icons = ['📍', '⛺', '🚩', '⚠️', '💧', '🚗', '🏠', '📡'];
-  static const _lifetimes = <(String, Duration?)>[
-    ('1 hour', Duration(hours: 1)),
-    ('1 day', Duration(days: 1)),
-    ('1 week', Duration(days: 7)),
-    ('Never', null),
-  ];
+  List<(String, Duration?)> _lifetimes(AppLocalizations l) => [
+        (l.mapExpireHour, const Duration(hours: 1)),
+        (l.mapExpireDay, const Duration(days: 1)),
+        (l.mapExpireWeek, const Duration(days: 7)),
+        (l.mapExpireNever, null),
+      ];
 
   @override
   void dispose() {
@@ -938,9 +949,10 @@ class _WaypointDialogState extends State<_WaypointDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final name = _name.text.trim();
     return AlertDialog(
-      title: const Text('New waypoint'),
+      title: Text(l.mapNewWaypoint),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -951,19 +963,19 @@ class _WaypointDialogState extends State<_WaypointDialog> {
               controller: _name,
               autofocus: true,
               maxLength: BastionWaypointStore.maxNameLength,
-              decoration: const InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(labelText: l.mapName),
               onChanged: (_) => setState(() {}),
             ),
             TextField(
               controller: _description,
               maxLength: BastionWaypointStore.maxDescriptionLength,
-              decoration: const InputDecoration(labelText: 'Description (optional)'),
+              decoration: InputDecoration(labelText: l.mapDescription),
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               secondary: const Text('🚩', style: TextStyle(fontSize: 22)),
-              title: const Text('Rally point'),
-              subtitle: const Text('Where everyone should meet'),
+              title: Text(l.mapRallyPoint),
+              subtitle: Text(l.mapRallySub),
               value: _icon == '🚩',
               onChanged: (v) => setState(() {
                 _icon = v ? '🚩' : '📍';
@@ -984,9 +996,9 @@ class _WaypointDialogState extends State<_WaypointDialog> {
             const SizedBox(height: 8),
             DropdownButtonFormField<Duration?>(
               initialValue: _lifetime,
-              decoration: const InputDecoration(labelText: 'Expires after'),
+              decoration: InputDecoration(labelText: l.mapExpiresAfter),
               items: [
-                for (final (label, value) in _lifetimes)
+                for (final (label, value) in _lifetimes(l))
                   DropdownMenuItem(value: value, child: Text(label)),
               ],
               onChanged: (v) => setState(() => _lifetime = v),
@@ -994,16 +1006,16 @@ class _WaypointDialogState extends State<_WaypointDialog> {
             if (widget.localNodeNum != null)
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Only I can edit or delete'),
+                title: Text(l.mapOnlyMe),
                 value: _locked,
                 onChanged: (v) => setState(() => _locked = v),
               ),
-            Text('Shared with everyone on channel 0.', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+            Text(l.mapSharedChannel0, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
           ],
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(AppLocalizations.of(context).commonCancel)),
         FilledButton(
           onPressed: name.isEmpty
               ? null
@@ -1020,7 +1032,7 @@ class _WaypointDialogState extends State<_WaypointDialog> {
                       lockedTo: _locked ? widget.localNodeNum! : 0,
                     ),
                   ),
-          child: const Text('Share'),
+          child: Text(AppLocalizations.of(context).mapShare),
         ),
       ],
     );
@@ -1050,27 +1062,27 @@ class _ZoneDialogState extends State<_ZoneDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final name = _name.text.trim();
     final units = BastionPreferences.instance.units;
     return AlertDialog(
-      title: const Text('New zone'),
+      title: Text(l.mapNewZone),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Centered on ${widget.center.latitude.toStringAsFixed(5)}, '
-                '${widget.center.longitude.toStringAsFixed(5)}'),
+            Text(l.mapCenteredOn(widget.center.latitude.toStringAsFixed(5), widget.center.longitude.toStringAsFixed(5))),
             TextField(
               controller: _name,
               autofocus: true,
               maxLength: 30,
-              decoration: const InputDecoration(labelText: 'Name, e.g. Camp'),
+              decoration: InputDecoration(labelText: l.mapZoneName),
               onChanged: (_) => setState(() {}),
             ),
             DropdownButtonFormField<double>(
               initialValue: _radius,
-              decoration: const InputDecoration(labelText: 'Radius'),
+              decoration: InputDecoration(labelText: l.mapRadius),
               items: [
                 for (final r in BastionGeofence.radiusChoices)
                   DropdownMenuItem(value: r, child: Text(BastionUnitFormat.distance(r, units))),
@@ -1079,19 +1091,19 @@ class _ZoneDialogState extends State<_ZoneDialog> {
             ),
             DropdownButtonFormField<GeofenceWatch>(
               initialValue: _watch,
-              decoration: const InputDecoration(labelText: 'Watch'),
+              decoration: InputDecoration(labelText: l.mapWatch),
               items: [
                 for (final w in GeofenceWatch.values)
-                  DropdownMenuItem(value: w, child: Text(_MapPageState._watchLabel(w))),
+                  DropdownMenuItem(value: w, child: Text(_MapPageState._watchLabel(l, w))),
               ],
               onChanged: (v) => setState(() => _watch = v ?? _watch),
             ),
             DropdownButtonFormField<GeofenceAlertOn>(
               initialValue: _alertOn,
-              decoration: const InputDecoration(labelText: 'Alert when they'),
+              decoration: InputDecoration(labelText: l.mapAlertWhen),
               items: [
                 for (final a in GeofenceAlertOn.values)
-                  DropdownMenuItem(value: a, child: Text(_MapPageState._alertLabel(a))),
+                  DropdownMenuItem(value: a, child: Text(_MapPageState._alertLabel(l, a))),
               ],
               onChanged: (v) => setState(() => _alertOn = v ?? _alertOn),
             ),
@@ -1099,7 +1111,7 @@ class _ZoneDialogState extends State<_ZoneDialog> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(AppLocalizations.of(context).commonCancel)),
         FilledButton(
           onPressed: name.isEmpty
               ? null
@@ -1115,7 +1127,7 @@ class _ZoneDialogState extends State<_ZoneDialog> {
                       alertOn: _alertOn,
                     ),
                   ),
-          child: const Text('Add'),
+          child: Text(l.mapAdd),
         ),
       ],
     );
@@ -1180,16 +1192,15 @@ class _RouteNameDialogState extends State<_RouteNameDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-        title: const Text('Share route'),
+        title: Text(AppLocalizations.of(context).mapShareRoute),
         content: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
           TextField(controller: _name, autofocus: true, maxLength: 22,
-            decoration: const InputDecoration(labelText: 'Route name')),
-          Text('Sends ${widget.stops} waypoints on channel 0, about 3 seconds apart. '
-              'They expire after a day.'),
+            decoration: InputDecoration(labelText: AppLocalizations.of(context).mapRouteName)),
+          Text(AppLocalizations.of(context).mapRouteSends(widget.stops)),
         ]),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-          FilledButton(onPressed: () => Navigator.pop(context, _name.text), child: const Text('Share')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text(AppLocalizations.of(context).commonCancel)),
+          FilledButton(onPressed: () => Navigator.pop(context, _name.text), child: Text(AppLocalizations.of(context).mapShare)),
         ],
       );
 }

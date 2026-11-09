@@ -1317,4 +1317,375 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chatsScheduleCancel => 'Cancelar mensaje programado';
+
+  @override
+  String get mapNoPositions => 'Ningún nodo ha informado su posición todavía';
+
+  @override
+  String get mapConnectForPositions =>
+      'Conecta una radio para ver las posiciones de los nodos';
+
+  @override
+  String mapPlaced(int placed, int total) {
+    return '$placed de $total nodos ubicados';
+  }
+
+  @override
+  String mapWaypointCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count puntos de ruta',
+      one: '$count punto de ruta',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mapLongPressHint =>
+      'Mantén pulsado el mapa para colocar un punto de ruta';
+
+  @override
+  String get mapHeardWithin => 'Mostrar nodos oídos en';
+
+  @override
+  String get mapHeardAny => 'Oídos en cualquier momento';
+
+  @override
+  String get mapHeardHour => 'Oídos en la última hora';
+
+  @override
+  String get mapHeardDay => 'Oídos en las últimas 24 horas';
+
+  @override
+  String get mapHeardWeek => 'Oídos en los últimos 7 días';
+
+  @override
+  String get mapShowStreet => 'Mostrar mapa de calles';
+
+  @override
+  String get mapShowTopo => 'Mostrar mapa topográfico';
+
+  @override
+  String get mapLinkPlanner => 'Planificador de enlaces';
+
+  @override
+  String get mapRallyRoutes => 'Puntos de reunión y rutas';
+
+  @override
+  String get mapTeam => 'Equipo';
+
+  @override
+  String get mapZones => 'Zonas';
+
+  @override
+  String get mapExportGpx => 'Exportar GPX';
+
+  @override
+  String get mapHideTrails => 'Ocultar recorridos';
+
+  @override
+  String get mapShowTrails => 'Mostrar recorridos';
+
+  @override
+  String get mapHideLinks => 'Ocultar enlaces de radio';
+
+  @override
+  String get mapShowLinks => 'Mostrar enlaces de radio';
+
+  @override
+  String get mapShowAll => 'Mostrar todos los nodos';
+
+  @override
+  String mapPlanHint(int max) {
+    return 'Toca el mapa para añadir paradas, en orden. Hasta $max.';
+  }
+
+  @override
+  String mapPlanProgress(int count, int max, String distance) {
+    return '$count de $max paradas • $distance';
+  }
+
+  @override
+  String get mapUndo => 'Deshacer';
+
+  @override
+  String get mapShareRoute => 'Compartir ruta';
+
+  @override
+  String get mapRallyIntro =>
+      'Los puntos de reunión son donde todos deben encontrarse. Coloca uno manteniendo pulsado el mapa y elige \"Punto de reunión\". Las rutas se comparten como puntos de ruta numerados, así que otras aplicaciones Meshtastic también ven las paradas.';
+
+  @override
+  String get mapRallyPoints => 'Puntos de reunión';
+
+  @override
+  String get mapNoneYet => 'Ninguno todavía.';
+
+  @override
+  String mapDistanceOfYou(String distance, String direction) {
+    return 'A $distance al $direction de ti';
+  }
+
+  @override
+  String get mapNoOwnPosition => 'Tu radio aún no tiene posición';
+
+  @override
+  String get mapShowOnMap => 'Mostrar en el mapa';
+
+  @override
+  String get mapRoutes => 'Rutas';
+
+  @override
+  String mapStops(int count) {
+    return '$count paradas';
+  }
+
+  @override
+  String mapStopsHeard(int heard, int count) {
+    return '$heard de $count paradas oídas';
+  }
+
+  @override
+  String get mapFromYou => 'de ti';
+
+  @override
+  String mapFromNode(String name) {
+    return 'de $name';
+  }
+
+  @override
+  String get mapPlanRoute => 'Planificar una ruta';
+
+  @override
+  String get mapConnectForRoutes => 'Conecta una radio para compartir rutas';
+
+  @override
+  String mapRouteShared(int count) {
+    return 'Ruta compartida: $count paradas en el canal 0.';
+  }
+
+  @override
+  String mapRouteStopped(int sent, int count, String error) {
+    return 'La ruta se detuvo tras $sent de $count paradas: $error';
+  }
+
+  @override
+  String mapGpxExported(int waypoints, int trails) {
+    return 'Se exportaron $waypoints puntos de ruta y $trails recorridos como GPX.';
+  }
+
+  @override
+  String mapGpxFailed(String error) {
+    return 'No se pudo exportar GPX: $error';
+  }
+
+  @override
+  String get mapWatchTrip => 'Contactos del viaje';
+
+  @override
+  String get mapWatchFavorites => 'Favoritos';
+
+  @override
+  String get mapWatchAll => 'Todos los nodos';
+
+  @override
+  String get mapAlertArrive => 'lleguen';
+
+  @override
+  String get mapAlertLeave => 'se vayan';
+
+  @override
+  String get mapAlertBoth => 'lleguen o se vayan';
+
+  @override
+  String get mapZonesIntro =>
+      'Recibe un aviso en el teléfono cuando alguien llegue a un lugar o se vaya, como el campamento o el inicio del sendero. Los avisos necesitan la radio conectada; no se envía nada por la malla.';
+
+  @override
+  String get mapNoZones => 'Aún no hay zonas.';
+
+  @override
+  String mapZoneSummary(String radius, String watch, String alert) {
+    return 'Radio de $radius • $watch • avisar cuando $alert';
+  }
+
+  @override
+  String mapDeleteZone(String name) {
+    return 'Eliminar $name';
+  }
+
+  @override
+  String get mapAddZone => 'Añadir zona en el centro del mapa';
+
+  @override
+  String get mapTeamIntro =>
+      'Tus contactos del viaje. Toca uno para encontrarlo en el mapa.';
+
+  @override
+  String get mapNoTeam => 'Aún no hay contactos del viaje';
+
+  @override
+  String get mapNoTeamHint =>
+      'Añade hasta 6 personas en INICIO → Viaje. Aparecen aquí y destacan en el mapa.';
+
+  @override
+  String get mapFreshOk => 'BIEN';
+
+  @override
+  String get mapFreshQuiet => 'SILENCIO';
+
+  @override
+  String get mapFreshLost => 'PERDIDO';
+
+  @override
+  String get mapConnectForWaypoints =>
+      'Conecta una radio para compartir puntos de ruta.';
+
+  @override
+  String mapWaypointShared(String name) {
+    return 'Punto de ruta \"$name\" compartido en el canal 0.';
+  }
+
+  @override
+  String mapWaypointFailed(String error) {
+    return 'No se pudo compartir el punto de ruta: $error';
+  }
+
+  @override
+  String get mapNeverExpires => 'No caduca nunca';
+
+  @override
+  String mapExpires(String time) {
+    return 'Caduca $time';
+  }
+
+  @override
+  String mapSharedBy(String name) {
+    return 'Compartido por $name';
+  }
+
+  @override
+  String get mapLocked => 'Bloqueado para su creador';
+
+  @override
+  String get mapDeleteEveryone => 'Eliminar para todos';
+
+  @override
+  String mapDeleted(String name) {
+    return 'Se eliminó \"$name\".';
+  }
+
+  @override
+  String mapDeleteFailed(String error) {
+    return 'No se pudo eliminar: $error';
+  }
+
+  @override
+  String get mapUnknown => 'desconocido';
+
+  @override
+  String mapFromThisRadio(String distance) {
+    return 'A $distance de esta radio';
+  }
+
+  @override
+  String mapPositionHeard(String position, String heard) {
+    return 'Posición: $position • Oído: $heard';
+  }
+
+  @override
+  String get mapDirect => 'directo';
+
+  @override
+  String get mapBatteryExternal => 'Batería: alimentación externa';
+
+  @override
+  String mapBattery(int level) {
+    return 'Batería: $level%';
+  }
+
+  @override
+  String get mapOpenDetails => 'Abrir detalles';
+
+  @override
+  String get mapThisRadioSuffix => ', esta radio';
+
+  @override
+  String mapTripContactSuffix(String summary) {
+    return ', contacto del viaje, $summary';
+  }
+
+  @override
+  String get mapRallyPoint => 'Punto de reunión';
+
+  @override
+  String get mapWaypoint => 'Punto de ruta';
+
+  @override
+  String get mapExpireHour => '1 hora';
+
+  @override
+  String get mapExpireDay => '1 día';
+
+  @override
+  String get mapExpireWeek => '1 semana';
+
+  @override
+  String get mapExpireNever => 'Nunca';
+
+  @override
+  String get mapNewWaypoint => 'Nuevo punto de ruta';
+
+  @override
+  String get mapName => 'Nombre';
+
+  @override
+  String get mapDescription => 'Descripción (opcional)';
+
+  @override
+  String get mapRallySub => 'Donde todos deben encontrarse';
+
+  @override
+  String get mapExpiresAfter => 'Caduca después de';
+
+  @override
+  String get mapOnlyMe => 'Solo yo puedo editar o eliminar';
+
+  @override
+  String get mapSharedChannel0 => 'Se comparte con todos en el canal 0.';
+
+  @override
+  String get mapShare => 'Compartir';
+
+  @override
+  String get mapNewZone => 'Nueva zona';
+
+  @override
+  String mapCenteredOn(String lat, String lon) {
+    return 'Centrada en $lat, $lon';
+  }
+
+  @override
+  String get mapZoneName => 'Nombre, p. ej. Campamento';
+
+  @override
+  String get mapRadius => 'Radio de alcance';
+
+  @override
+  String get mapWatch => 'Vigilar';
+
+  @override
+  String get mapAlertWhen => 'Avisar cuando';
+
+  @override
+  String get mapAdd => 'Añadir';
+
+  @override
+  String get mapRouteName => 'Nombre de la ruta';
+
+  @override
+  String mapRouteSends(int count) {
+    return 'Envía $count puntos de ruta en el canal 0, con unos 3 segundos de separación. Caducan al cabo de un día.';
+  }
 }

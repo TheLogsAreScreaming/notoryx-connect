@@ -1,6 +1,7 @@
 import 'package:bastion/map_page.dart';
 import 'package:bastion/services/bastion_geofences.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,10 +12,28 @@ void main() {
   testWidgets('map explains how to get pins when no radio is connected', (tester) async {
     final radio = MeshtasticRadioCoordinator();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: MapPage(radio: radio))));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: Scaffold(body: MapPage(radio: radio))));
     await tester.pump();
     expect(find.text('Connect a radio to show node positions'), findsOneWidget);
     expect(find.text('OpenStreetMap contributors'), findsOneWidget);
+  });
+
+  testWidgets('the map and its heard-within menu are translated', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(body: MapPage(radio: radio)),
+    ));
+    await tester.pump();
+    expect(find.text('Conecta una radio para ver las posiciones de los nodos'), findsOneWidget);
+    expect(find.text('OpenStreetMap contributors'), findsOneWidget, reason: 'licence credit stays as written');
+    await tester.tap(find.byKey(const ValueKey('map-heard-filter')));
+    await tester.pumpAndSettle();
+    expect(find.text('Oídos en la última hora'), findsOneWidget);
   });
 
   testWidgets('a zone added from the map is saved and drawn', (tester) async {
@@ -23,7 +42,7 @@ void main() {
     addTearDown(radio.dispose);
     await tester.binding.setSurfaceSize(const Size(1000, 1000));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: MapPage(radio: radio))));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: Scaffold(body: MapPage(radio: radio))));
     await tester.pump();
 
     await tester.tap(find.byTooltip('Zones'));

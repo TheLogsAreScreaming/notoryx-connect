@@ -885,5 +885,325 @@
     }
   },
   "chatsScheduleMissed": "Not sent: the radio was not connected in time",
-  "chatsScheduleCancel": "Cancel scheduled message"
+  "chatsScheduleCancel": "Cancel scheduled message",
+  "mapNoPositions": "No node has reported a position yet",
+  "mapConnectForPositions": "Connect a radio to show node positions",
+  "mapPlaced": "{placed} of {total} nodes placed",
+  "@mapPlaced": {
+    "placeholders": {
+      "placed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "mapWaypointCount": "{count, plural, one{{count} waypoint} other{{count} waypoints}}",
+  "@mapWaypointCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapLongPressHint": "Long-press the map to drop a waypoint",
+  "mapHeardWithin": "Show nodes heard within",
+  "mapHeardAny": "Heard any time",
+  "mapHeardHour": "Heard in last hour",
+  "mapHeardDay": "Heard in last 24 hours",
+  "mapHeardWeek": "Heard in last 7 days",
+  "mapShowStreet": "Show street map",
+  "mapShowTopo": "Show topographic map",
+  "mapLinkPlanner": "Link planner",
+  "mapRallyRoutes": "Rally points & routes",
+  "mapTeam": "Team",
+  "mapZones": "Zones",
+  "mapExportGpx": "Export GPX",
+  "mapHideTrails": "Hide trails",
+  "mapShowTrails": "Show trails",
+  "mapHideLinks": "Hide radio links",
+  "mapShowLinks": "Show radio links",
+  "mapShowAll": "Show all nodes",
+  "mapPlanHint": "Tap the map to add stops, in order. Up to {max}.",
+  "@mapPlanHint": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "mapPlanProgress": "{count} of {max} stops • {distance}",
+  "@mapPlanProgress": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "mapUndo": "Undo",
+  "mapShareRoute": "Share route",
+  "mapRallyIntro": "Rally points are where everyone should meet. Drop one with a long-press and choose \"Rally point\". Routes are shared as numbered waypoints, so other Meshtastic apps see the stops too.",
+  "mapRallyPoints": "Rally points",
+  "mapNoneYet": "None yet.",
+  "mapDistanceOfYou": "{distance} {direction} of you",
+  "@mapDistanceOfYou": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "mapNoOwnPosition": "Your radio has no position yet",
+  "mapShowOnMap": "Show on map",
+  "mapRoutes": "Routes",
+  "mapStops": "{count} stops",
+  "@mapStops": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapStopsHeard": "{heard} of {count} stops heard",
+  "@mapStopsHeard": {
+    "placeholders": {
+      "heard": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapFromYou": "from you",
+  "mapFromNode": "from {name}",
+  "@mapFromNode": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mapPlanRoute": "Plan a route",
+  "mapConnectForRoutes": "Connect a radio to share routes",
+  "mapRouteShared": "Route shared: {count} stops on channel 0.",
+  "@mapRouteShared": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapRouteStopped": "Route stopped after {sent} of {count} stops: {error}",
+  "@mapRouteStopped": {
+    "placeholders": {
+      "sent": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      },
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "mapGpxExported": "Exported {waypoints} waypoints and {trails} trails as GPX.",
+  "@mapGpxExported": {
+    "placeholders": {
+      "waypoints": {
+        "type": "int"
+      },
+      "trails": {
+        "type": "int"
+      }
+    }
+  },
+  "mapGpxFailed": "Could not export GPX: {error}",
+  "@mapGpxFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "mapWatchTrip": "Trip contacts",
+  "mapWatchFavorites": "Favorites",
+  "mapWatchAll": "All nodes",
+  "mapAlertArrive": "arrive",
+  "mapAlertLeave": "leave",
+  "mapAlertBoth": "arrive or leave",
+  "mapZonesIntro": "Get a phone alert when someone arrives at or leaves a place, like camp or the trailhead. Alerts need the radio connected; nothing is sent over the mesh.",
+  "mapNoZones": "No zones yet.",
+  "mapZoneSummary": "{radius} radius • {watch} • alert when they {alert}",
+  "@mapZoneSummary": {
+    "placeholders": {
+      "radius": {
+        "type": "String"
+      },
+      "watch": {
+        "type": "String"
+      },
+      "alert": {
+        "type": "String"
+      }
+    }
+  },
+  "mapDeleteZone": "Delete {name}",
+  "@mapDeleteZone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mapAddZone": "Add zone at map center",
+  "mapTeamIntro": "Your trip contacts. Tap one to find them on the map.",
+  "mapNoTeam": "No trip contacts yet",
+  "mapNoTeamHint": "Add up to 6 people on HOME → Trip. They show here and stand out on the map.",
+  "mapFreshOk": "OK",
+  "mapFreshQuiet": "QUIET",
+  "mapFreshLost": "LOST",
+  "mapConnectForWaypoints": "Connect a radio to share waypoints.",
+  "mapWaypointShared": "Waypoint \"{name}\" shared on channel 0.",
+  "@mapWaypointShared": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mapWaypointFailed": "Could not share waypoint: {error}",
+  "@mapWaypointFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "mapNeverExpires": "Never expires",
+  "mapExpires": "Expires {time}",
+  "@mapExpires": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "mapSharedBy": "Shared by {name}",
+  "@mapSharedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mapLocked": "Locked to its creator",
+  "mapDeleteEveryone": "Delete for everyone",
+  "mapDeleted": "Deleted \"{name}\".",
+  "@mapDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mapDeleteFailed": "Could not delete: {error}",
+  "@mapDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "mapUnknown": "unknown",
+  "mapFromThisRadio": "{distance} from this radio",
+  "@mapFromThisRadio": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "mapPositionHeard": "Position: {position} • Heard: {heard}",
+  "@mapPositionHeard": {
+    "placeholders": {
+      "position": {
+        "type": "String"
+      },
+      "heard": {
+        "type": "String"
+      }
+    }
+  },
+  "mapDirect": "direct",
+  "mapBatteryExternal": "Battery: external power",
+  "mapBattery": "Battery: {level}%",
+  "@mapBattery": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "mapOpenDetails": "Open details",
+  "mapThisRadioSuffix": ", this radio",
+  "mapTripContactSuffix": ", trip contact, {summary}",
+  "@mapTripContactSuffix": {
+    "placeholders": {
+      "summary": {
+        "type": "String"
+      }
+    }
+  },
+  "mapRallyPoint": "Rally point",
+  "mapWaypoint": "Waypoint",
+  "mapExpireHour": "1 hour",
+  "mapExpireDay": "1 day",
+  "mapExpireWeek": "1 week",
+  "mapExpireNever": "Never",
+  "mapNewWaypoint": "New waypoint",
+  "mapName": "Name",
+  "mapDescription": "Description (optional)",
+  "mapRallySub": "Where everyone should meet",
+  "mapExpiresAfter": "Expires after",
+  "mapOnlyMe": "Only I can edit or delete",
+  "mapSharedChannel0": "Shared with everyone on channel 0.",
+  "mapShare": "Share",
+  "mapNewZone": "New zone",
+  "mapCenteredOn": "Centered on {lat}, {lon}",
+  "@mapCenteredOn": {
+    "placeholders": {
+      "lat": {
+        "type": "String"
+      },
+      "lon": {
+        "type": "String"
+      }
+    }
+  },
+  "mapZoneName": "Name, e.g. Camp",
+  "mapRadius": "Radius",
+  "mapWatch": "Watch",
+  "mapAlertWhen": "Alert when they",
+  "mapAdd": "Add",
+  "mapRouteName": "Route name",
+  "mapRouteSends": "Sends {count} waypoints on channel 0, about 3 seconds apart. They expire after a day.",
+  "@mapRouteSends": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
