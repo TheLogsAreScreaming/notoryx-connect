@@ -72,11 +72,8 @@ Future<void> main() async {
   await BastionChatStorage.useSqlite();
   await BastionFieldLog.instance.load();
   await BastionBotGuard.instance.load();
-<<<<<<< HEAD
   await BastionAppLock.instance.load();
-=======
   await BastionScheduledMessages.instance.load();
->>>>>>> origin/main
   runApp(const BastionApp());
 }
 
