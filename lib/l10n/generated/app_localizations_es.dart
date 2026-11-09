@@ -2117,4 +2117,186 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get homeStopNoMessage => 'Detener sin mensaje';
+
+  @override
+  String get frTitle => 'Registros de campo';
+
+  @override
+  String get frTplAssistance => 'Ayuda';
+
+  @override
+  String get frTplCheckIn => 'Reporte';
+
+  @override
+  String get frTplAllClear => 'Todo en orden';
+
+  @override
+  String get frTooLong => 'Escribe un mensaje de 1 a 220 bytes UTF-8.';
+
+  @override
+  String frBroadcastQ(int channel) {
+    return '¿Enviar al canal $channel?';
+  }
+
+  @override
+  String get frNoProof =>
+      'Enviar no demuestra que se haya recibido. Confírmalo con una respuesta o por voz.';
+
+  @override
+  String get frSendMessage => 'Enviar mensaje';
+
+  @override
+  String get frChanged =>
+      'La radio o el canal cambió. Vuelve a conectar y revisa el mensaje.';
+
+  @override
+  String get frSubmitted =>
+      'Entregado a la radio. Mira Chats para ver el estado del envío y las respuestas.';
+
+  @override
+  String get frIncidentLog => 'Registro de incidentes';
+
+  @override
+  String get frIncidentLogSub => 'Notas privadas guardadas en este teléfono';
+
+  @override
+  String get frIncidentField => 'Incidente u observación';
+
+  @override
+  String get frIncidentSaved => 'Incidente guardado.';
+
+  @override
+  String get frSaveIncident => 'Guardar incidente';
+
+  @override
+  String get frIncidentCopied =>
+      'CSV de incidentes copiado. Pégalo en un archivo o una hoja de cálculo.';
+
+  @override
+  String get frCopyIncident => 'Copiar CSV de incidentes';
+
+  @override
+  String frRadioOf(String time, String radio) {
+    return '$time • Radio $radio';
+  }
+
+  @override
+  String get frUnassigned => 'sin asignar';
+
+  @override
+  String get frRemoveIncident => 'Eliminar incidente';
+
+  @override
+  String get frRemoveIncidentQ => '¿Eliminar este incidente?';
+
+  @override
+  String get frKeep => 'Conservar';
+
+  @override
+  String get frRemove => 'Eliminar';
+
+  @override
+  String get frIncidentRemoved => 'Incidente eliminado.';
+
+  @override
+  String get frTemplates => 'Plantillas de emergencia y reporte';
+
+  @override
+  String get frTemplatesSub =>
+      'Edita los detalles, elige un canal y revisa antes de enviar';
+
+  @override
+  String get frMessageField => 'Mensaje: completa los datos en blanco';
+
+  @override
+  String get frBroadcastChannel => 'Canal de envío';
+
+  @override
+  String frChannelItem(int index, String name) {
+    return 'Canal $index • $name';
+  }
+
+  @override
+  String get frReview => 'Revisar mensaje';
+
+  @override
+  String get frNotEmergency =>
+      'Una plantilla es texto normal de la malla. No contacta con los servicios de emergencia.';
+
+  @override
+  String get frCoverage => 'Historial de cobertura';
+
+  @override
+  String get frCoverageSub =>
+      'Ubicación del receptor con la señal RF recibida • solo se guarda en el teléfono';
+
+  @override
+  String get frRecord => 'Registrar cobertura';
+
+  @override
+  String get frRecordSub =>
+      'Pide el GPS del teléfono. Se detiene al desconectar. No envía tu ubicación.';
+
+  @override
+  String get frRecordOn =>
+      'Registro de cobertura activado; esperando una posición GPS precisa y paquetes RF.';
+
+  @override
+  String get frRecordOff => 'Registro de cobertura detenido.';
+
+  @override
+  String frReadings(int count) {
+    return '$count lecturas • máximo 2000 lecturas de cobertura • la cobertura caduca a los 30 días';
+  }
+
+  @override
+  String get frCoverageCopied =>
+      'CSV de cobertura copiado. Pégalo en un archivo o una hoja de cálculo.';
+
+  @override
+  String get frCopyCoverage => 'Copiar CSV de cobertura';
+
+  @override
+  String get frBot => 'Protecciones del bot y horas de silencio';
+
+  @override
+  String get frBotSub =>
+      '6 respuestas/hora • 30 segundos entre respuestas • 5 minutos de espera por nodo';
+
+  @override
+  String get frBotEnable => 'Activa el modo bot en Chats para esta sesión.';
+
+  @override
+  String get frBotRules =>
+      'Solo cuentan los mensajes nuevos del canal elegido. Se ignoran las repeticiones y las respuestas de bots (NOTORYX: o Bastion:). Las horas de silencio usan la hora local del teléfono.';
+
+  @override
+  String get frQuiet => 'Horas de silencio';
+
+  @override
+  String get frQuietStart => 'Inicio de las horas de silencio';
+
+  @override
+  String get frQuietEnd => 'Fin de las horas de silencio';
+
+  @override
+  String get frBotChannel => 'Canal del bot';
+
+  @override
+  String frChannelN(int index) {
+    return 'Canal $index';
+  }
+
+  @override
+  String frBytes(int bytes, int max) {
+    return '$bytes de $max bytes. Las líneas en blanco no se envían.';
+  }
+
+  @override
+  String frBytesOver(int bytes, int max) {
+    return '$bytes de $max bytes. Demasiado largo para enviar: acorta un campo.';
+  }
+
+  @override
+  String get frUseReport => 'Usar informe';
 }

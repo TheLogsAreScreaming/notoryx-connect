@@ -1,6 +1,7 @@
 import 'package:bastion/field_tools_page.dart';
 import 'package:bastion/services/bastion_report_templates.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
@@ -38,7 +39,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     final radio = MeshtasticRadioCoordinator();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(home: FieldToolsPage(radio: radio)));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: FieldToolsPage(radio: radio)));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('message-templates')).first);
     await tester.tap(find.text('Emergency & check-in templates'));

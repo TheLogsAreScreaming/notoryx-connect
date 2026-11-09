@@ -6,6 +6,7 @@ import 'package:bastion/main.dart';
 import 'package:bastion/field_tools_page.dart';
 import 'package:bastion/services/bastion_preferences.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
@@ -72,7 +73,7 @@ void main() {
 
   testWidgets('offline templates cannot transmit and field screen fits large text', (tester) async {
     final radio = MeshtasticRadioCoordinator(); addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(builder: (context, child) => MediaQuery(
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, builder: (context, child) => MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(2)), child: child!),
       home: FieldToolsPage(radio: radio)));
     await tester.pumpAndSettle();
@@ -85,7 +86,7 @@ void main() {
 
   testWidgets('template send needs explicit confirmation and cannot queue after disconnect', (tester) async {
     final radio = TemplateRadio(); addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(home: FieldToolsPage(radio: radio)));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: FieldToolsPage(radio: radio)));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.text('Emergency & check-in templates'), 300, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.text('Emergency & check-in templates')); await tester.pumpAndSettle();
