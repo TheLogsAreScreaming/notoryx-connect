@@ -1269,5 +1269,109 @@
       }
     }
   },
-  "takHowTo": "In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out."
+  "takHowTo": "In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out.",
+  "ndFailed": "Failed: {error}",
+  "@ndFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "ndSendFailed": "Send failed: {error}",
+  "@ndSendFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "ndFieldNote": "Field note",
+  "ndRemoveFavorite": "Remove favorite",
+  "ndAddFavorite": "Add favorite",
+  "ndShortName": "Short name",
+  "ndHardware": "Hardware",
+  "ndThisRadio": "This radio",
+  "ndYes": "Yes",
+  "ndLastHeard": "Last heard",
+  "ndSignal": "Signal",
+  "ndHopsAway": "Hops away",
+  "ndDirect": "Direct",
+  "ndBattery": "Battery",
+  "ndExternalPower": "External power",
+  "ndVoltage": "Voltage",
+  "ndChannelUse": "Channel use",
+  "ndPosition": "Position",
+  "ndAltitude": "Altitude",
+  "ndPositionAge": "Position age",
+  "ndDistance": "Distance",
+  "ndEncounters": "Encounters",
+  "ndTraceroute": "Traceroute",
+  "ndRequestPosition": "Request position",
+  "ndPositionRequested": "Position requested. It updates when the node replies.",
+  "ndRequestTelemetry": "Request telemetry",
+  "ndTelemetryRequested": "Telemetry requested. It updates when the node replies.",
+  "ndRemoteAdmin": "Remote admin",
+  "ndRequestSensors": "Request sensors",
+  "ndSensorsRequested": "Sensor readings requested. Nodes without sensors don't answer.",
+  "ndMute": "Mute notifications",
+  "ndMuteSub": "Messages still show; no alerts or read-aloud",
+  "ndIgnore": "Ignore this node",
+  "ndIgnoreSub": "Hidden from nodes, map and chats; never notifies or gets bot replies. Undo here or in Settings.",
+  "ndAddNote": "Tap to add a note",
+  "ndDirectMessages": "DIRECT MESSAGES",
+  "ndNoDirect": "No direct messages with this node yet.",
+  "ndDirectMessage": "Direct message",
+  "ndSend": "Send",
+  "ndRadioLinks": "DIRECT RADIO LINKS",
+  "ndNoNeighbors": "No neighbor reports yet. Nodes share these when the Neighbor Info module is enabled (Settings → Change radio settings → Neighborinfo).",
+  "ndHears": "Hears directly ({count}):",
+  "@ndHears": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ndNoneReported": "  No neighbors reported",
+  "ndHeardBy": "Heard directly by ({count}):",
+  "@ndHeardBy": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ndTrustQ": "Trust the new key?",
+  "ndTrustBody": "Only do this if you have checked with {name}'s owner that they reset or replaced their radio. If not, someone else may be pretending to be this node.",
+  "@ndTrustBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ndTrust": "Trust new key",
+  "ndKeyChanged": "Security key changed",
+  "ndKeyChangedBody": "This node now shows a different key ({newCode}) from the one first seen ({oldCode}). Its radio may have been reset or replaced, or someone may be impersonating it. Check with its owner before sending private messages.",
+  "@ndKeyChangedBody": {
+    "placeholders": {
+      "newCode": {
+        "type": "String"
+      },
+      "oldCode": {
+        "type": "String"
+      }
+    }
+  },
+  "ndSecurityKey": "Security key",
+  "ndKeyNotShared": "Not shared yet. Nodes on firmware 2.5 or newer share a key for private direct messages.",
+  "ndSafetyCode": "Safety code {code}\nCompare this with the owner's radio to be sure it's them.",
+  "@ndSafetyCode": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  }
 }

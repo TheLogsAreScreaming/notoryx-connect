@@ -1789,4 +1789,181 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get takHowTo =>
       'En ATAK, abre Ajustes, luego Preferencias de red, luego Administrar entradas, y añade una entrada UDP en este puerto. Se omiten los nodos sin posición en la última hora.';
+
+  @override
+  String ndFailed(String error) {
+    return 'Falló: $error';
+  }
+
+  @override
+  String ndSendFailed(String error) {
+    return 'No se pudo enviar: $error';
+  }
+
+  @override
+  String get ndFieldNote => 'Nota de campo';
+
+  @override
+  String get ndRemoveFavorite => 'Quitar de favoritos';
+
+  @override
+  String get ndAddFavorite => 'Añadir a favoritos';
+
+  @override
+  String get ndShortName => 'Nombre corto';
+
+  @override
+  String get ndHardware => 'Hardware';
+
+  @override
+  String get ndThisRadio => 'Esta radio';
+
+  @override
+  String get ndYes => 'Sí';
+
+  @override
+  String get ndLastHeard => 'Oído por última vez';
+
+  @override
+  String get ndSignal => 'Señal';
+
+  @override
+  String get ndHopsAway => 'Saltos de distancia';
+
+  @override
+  String get ndDirect => 'Directo';
+
+  @override
+  String get ndBattery => 'Batería';
+
+  @override
+  String get ndExternalPower => 'Alimentación externa';
+
+  @override
+  String get ndVoltage => 'Voltaje';
+
+  @override
+  String get ndChannelUse => 'Uso del canal';
+
+  @override
+  String get ndPosition => 'Posición';
+
+  @override
+  String get ndAltitude => 'Altitud';
+
+  @override
+  String get ndPositionAge => 'Antigüedad de la posición';
+
+  @override
+  String get ndDistance => 'Distancia';
+
+  @override
+  String get ndEncounters => 'Encuentros';
+
+  @override
+  String get ndTraceroute => 'Traceroute';
+
+  @override
+  String get ndRequestPosition => 'Pedir posición';
+
+  @override
+  String get ndPositionRequested =>
+      'Posición pedida. Se actualiza cuando el nodo responda.';
+
+  @override
+  String get ndRequestTelemetry => 'Pedir telemetría';
+
+  @override
+  String get ndTelemetryRequested =>
+      'Telemetría pedida. Se actualiza cuando el nodo responda.';
+
+  @override
+  String get ndRemoteAdmin => 'Administración remota';
+
+  @override
+  String get ndRequestSensors => 'Pedir sensores';
+
+  @override
+  String get ndSensorsRequested =>
+      'Lecturas de sensores pedidas. Los nodos sin sensores no responden.';
+
+  @override
+  String get ndMute => 'Silenciar notificaciones';
+
+  @override
+  String get ndMuteSub =>
+      'Los mensajes se siguen viendo; sin avisos ni lectura en voz alta';
+
+  @override
+  String get ndIgnore => 'Ignorar este nodo';
+
+  @override
+  String get ndIgnoreSub =>
+      'Oculto en nodos, mapa y chats; nunca avisa ni recibe respuestas del bot. Deshazlo aquí o en Ajustes.';
+
+  @override
+  String get ndAddNote => 'Toca para añadir una nota';
+
+  @override
+  String get ndDirectMessages => 'MENSAJES DIRECTOS';
+
+  @override
+  String get ndNoDirect => 'Aún no hay mensajes directos con este nodo.';
+
+  @override
+  String get ndDirectMessage => 'Mensaje directo';
+
+  @override
+  String get ndSend => 'Enviar';
+
+  @override
+  String get ndRadioLinks => 'ENLACES DE RADIO DIRECTOS';
+
+  @override
+  String get ndNoNeighbors =>
+      'Aún no hay informes de vecinos. Los nodos los comparten cuando el módulo Neighbor Info está activado (Ajustes → Cambiar ajustes de la radio → Neighborinfo).';
+
+  @override
+  String ndHears(int count) {
+    return 'Oye directamente ($count):';
+  }
+
+  @override
+  String get ndNoneReported => '  No se informaron vecinos';
+
+  @override
+  String ndHeardBy(int count) {
+    return 'Lo oyen directamente ($count):';
+  }
+
+  @override
+  String get ndTrustQ => '¿Confiar en la nueva clave?';
+
+  @override
+  String ndTrustBody(String name) {
+    return 'Hazlo solo si confirmaste con el dueño de $name que reinició o cambió su radio. Si no, alguien podría estar haciéndose pasar por este nodo.';
+  }
+
+  @override
+  String get ndTrust => 'Confiar en la nueva clave';
+
+  @override
+  String get ndKeyChanged => 'La clave de seguridad cambió';
+
+  @override
+  String ndKeyChangedBody(String newCode, String oldCode) {
+    return 'Este nodo muestra ahora una clave distinta ($newCode) de la que se vio primero ($oldCode). Puede que su radio se haya reiniciado o cambiado, o que alguien se esté haciendo pasar por él. Confírmalo con su dueño antes de enviar mensajes privados.';
+  }
+
+  @override
+  String get ndSecurityKey => 'Clave de seguridad';
+
+  @override
+  String get ndKeyNotShared =>
+      'Aún no se ha compartido. Los nodos con firmware 2.5 o posterior comparten una clave para mensajes directos privados.';
+
+  @override
+  String ndSafetyCode(String code) {
+    return 'Código de seguridad $code\nCompáralo con la radio del dueño para asegurarte de que es esa persona.';
+  }
 }
