@@ -17,4 +17,16 @@ for field in ('FileDescription', 'ProductName'):
     if count != 1:
         raise SystemExit(f'Could not set {field}')
 resource.write_text(text)
+
+# local_auth_windows and geolocator_windows build with the old /await
+# coroutines, which Visual Studio 2026 rejects unless this is defined. Remove
+# once those plugins move to C++20 coroutines.
+cmake = Path('windows/CMakeLists.txt')
+text = cmake.read_text()
+flag = 'add_compile_definitions(_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS)'
+if flag not in text:
+    text, count = re.subn(r'^(project\([^)]*\)\n)', lambda m: m.group(1) + flag + '\n', text, count=1, flags=re.M)
+    if count != 1:
+        raise SystemExit('Could not add the coroutine flag to windows/CMakeLists.txt')
+    cmake.write_text(text)
 print('Prepared Windows branding')
