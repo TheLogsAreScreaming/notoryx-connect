@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bastion/main.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
+import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/beacon_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -42,6 +45,25 @@ void main() {
     expect(find.text('Mantén para SOS'), findsOneWidget);
     expect(find.text('Conectar radio'), findsOneWidget);
     expect(find.textContaining('Reportarse: '), findsOneWidget);
+  });
+
+  testWidgets('Beacons is translated', (tester) async {
+    tester.view.physicalSize = const Size(390, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: BeaconPage(radio: radio),
+    ));
+    await tester.pump();
+    expect(find.text('Balizas de la malla'), findsOneWidget);
+    expect(find.text('Aún no se han oído balizas'), findsOneWidget);
+    expect(find.text('Conéctate a una radio para enviar una baliza.'), findsOneWidget);
   });
 
   testWidgets('the Tools page is translated', (tester) async {

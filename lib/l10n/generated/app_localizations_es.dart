@@ -1940,4 +1940,131 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get homeStopNoMessage => 'Detener sin mensaje';
+
+  @override
+  String get bcShareQ => '¿Compartir tu canal principal?';
+
+  @override
+  String get bcShareBody =>
+      'La baliza incluirá el nombre y la clave de tu canal principal. Cualquiera dentro del alcance podrá unirse y leer sus mensajes.';
+
+  @override
+  String get bcShare => 'Compartir';
+
+  @override
+  String get bcSent => 'Baliza enviada.';
+
+  @override
+  String bcNotSent(String error) {
+    return 'No se envió la baliza: $error';
+  }
+
+  @override
+  String get bcTitle => 'Balizas de la malla';
+
+  @override
+  String get bcClear => 'Borrar balizas oídas';
+
+  @override
+  String get bcIntro =>
+      'Una baliza es un aviso corto que indica a las radios cercanas que hay una malla y puede invitarlas a un canal. Las radios con el firmware Meshtastic más reciente la muestran; NOTORYX Connect muestra las balizas que oye con cualquier firmware.';
+
+  @override
+  String get bcSendTitle => 'Enviar una baliza';
+
+  @override
+  String get bcMessage => 'Mensaje de la baliza';
+
+  @override
+  String get bcMessageHelp =>
+      'Se envía en tu canal principal. Como máximo una baliza por hora.';
+
+  @override
+  String bcBytes(int used, int max) {
+    return '$used/$max bytes';
+  }
+
+  @override
+  String get bcTooLong => 'Demasiado largo';
+
+  @override
+  String get bcAddLocationNone => 'Añadir mi ubicación (aún sin posición)';
+
+  @override
+  String get bcAddLocation => 'Añadir mi ubicación como Plus Code';
+
+  @override
+  String get bcInvite => 'Invitar a mi canal principal';
+
+  @override
+  String get bcInviteSub =>
+      'Incluye el nombre y la clave del canal, y tu región y preajuste';
+
+  @override
+  String get bcSending => 'Enviando…';
+
+  @override
+  String get bcSend => 'Enviar baliza';
+
+  @override
+  String get bcConnect => 'Conéctate a una radio para enviar una baliza.';
+
+  @override
+  String bcNext(String time) {
+    return 'La próxima baliza se puede enviar a las $time.';
+  }
+
+  @override
+  String get bcHeard => 'Balizas oídas';
+
+  @override
+  String get bcNoneHeard => 'Aún no se han oído balizas';
+
+  @override
+  String get bcNoneHeardSub =>
+      'Aquí aparecen las balizas de las radios a tu alcance en tus canales.';
+
+  @override
+  String bcFrom(String name) {
+    return 'De $name';
+  }
+
+  @override
+  String bcHeardAt(String time) {
+    return 'oída $time';
+  }
+
+  @override
+  String bcChannel(String name) {
+    return 'Canal \"$name\"';
+  }
+
+  @override
+  String get bcDefault => 'Predeterminado';
+
+  @override
+  String bcRegion(String name) {
+    return 'región $name';
+  }
+
+  @override
+  String bcPreset(String name) {
+    return 'preajuste $name';
+  }
+
+  @override
+  String bcSlot(int slot) {
+    return 'ranura $slot';
+  }
+
+  @override
+  String get bcNoMessage => '(sin mensaje)';
+
+  @override
+  String bcInvitesTo(String offer) {
+    return 'Invita a: $offer';
+  }
+
+  @override
+  String get bcJoin => 'Revisar y unirse al canal';
 }

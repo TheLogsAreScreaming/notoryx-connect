@@ -1400,5 +1400,112 @@
   },
   "homeSosActive": "SOS active",
   "homeImSafe": "I'm safe",
-  "homeStopNoMessage": "Stop without message"
+  "homeStopNoMessage": "Stop without message",
+  "bcShareQ": "Share your primary channel?",
+  "bcShareBody": "The beacon will include your primary channel's name and key. Anyone in range can then join it and read its messages.",
+  "bcShare": "Share",
+  "bcSent": "Beacon sent.",
+  "bcNotSent": "Beacon not sent: {error}",
+  "@bcNotSent": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "bcTitle": "Mesh beacons",
+  "bcClear": "Clear heard beacons",
+  "bcIntro": "A beacon is a short broadcast that tells nearby radios a mesh is here, and can invite them to a channel. Radios on the newer Meshtastic firmware show it; NOTORYX Connect shows beacons it hears with any firmware.",
+  "bcSendTitle": "Send a beacon",
+  "bcMessage": "Beacon message",
+  "bcMessageHelp": "Sent on your primary channel. At most one beacon an hour.",
+  "bcBytes": "{used}/{max} bytes",
+  "@bcBytes": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "bcTooLong": "Too long",
+  "bcAddLocationNone": "Add my location (no position yet)",
+  "bcAddLocation": "Add my location as a Plus Code",
+  "bcInvite": "Invite to my primary channel",
+  "bcInviteSub": "Includes the channel name and key, and your region and preset",
+  "bcSending": "Sending…",
+  "bcSend": "Send beacon",
+  "bcConnect": "Connect to a radio to send a beacon.",
+  "bcNext": "Next beacon can be sent at {time}.",
+  "@bcNext": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bcHeard": "Heard beacons",
+  "bcNoneHeard": "No beacons heard yet",
+  "bcNoneHeardSub": "Beacons from radios in range on your channels appear here.",
+  "bcFrom": "From {name}",
+  "@bcFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bcHeardAt": "heard {time}",
+  "@bcHeardAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bcChannel": "Channel \"{name}\"",
+  "@bcChannel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bcDefault": "Default",
+  "bcRegion": "region {name}",
+  "@bcRegion": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bcPreset": "preset {name}",
+  "@bcPreset": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bcSlot": "slot {slot}",
+  "@bcSlot": {
+    "placeholders": {
+      "slot": {
+        "type": "int"
+      }
+    }
+  },
+  "bcNoMessage": "(no message)",
+  "bcInvitesTo": "Invites to: {offer}",
+  "@bcInvitesTo": {
+    "placeholders": {
+      "offer": {
+        "type": "String"
+      }
+    }
+  },
+  "bcJoin": "Review and join channel"
 }

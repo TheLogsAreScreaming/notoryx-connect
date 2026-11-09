@@ -16,6 +16,7 @@ import 'package:bastion/radio_backup_page.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/trip_page.dart';
 import 'package:bastion/services/bastion_preferences.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -84,7 +85,7 @@ void main() {
       final radio = MeshtasticRadioCoordinator();
       addTearDown(radio.dispose);
       final boundary = GlobalKey();
-      await tester.pumpWidget(RepaintBoundary(key: boundary, child: MaterialApp(
+      await tester.pumpWidget(RepaintBoundary(key: boundary, child: MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, 
         debugShowCheckedModeBanner: false,
         theme: BastionApp.appearance(Brightness.dark),
         home: page.value(radio),

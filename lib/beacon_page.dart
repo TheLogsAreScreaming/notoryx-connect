@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import 'l10n/generated/app_localizations.dart';
+
 import 'theme/nx_components.dart';
 
 import 'channel_share_page.dart';
@@ -38,18 +40,20 @@ class _BeaconPageState extends State<BeaconPage> {
 
   int get _bytes => utf8.encode(_message.text).length;
 
+  AppLocalizations get l => AppLocalizations.of(context);
+
   Future<void> _send() async {
+    final l = this.l;
     final offer = _offerChannel;
     if (offer) {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Share your primary channel?'),
-          content: const Text('The beacon will include your primary channel\'s name and key. '
-              'Anyone in range can then join it and read its messages.'),
+          title: Text(l.bcShareQ),
+          content: Text(l.bcShareBody),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-            FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Share')),
+            TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.commonCancel)),
+            FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l.bcShare)),
           ],
         ),
       );
@@ -62,13 +66,13 @@ class _BeaconPageState extends State<BeaconPage> {
     try {
       await widget.radio.sendBeacon(_message.text, offerPrimaryChannel: offer);
       if (!mounted) return;
-      setState(() => _status = 'Beacon sent.');
+      setState(() => _status = l.bcSent);
     } catch (error) {
       if (!mounted) return;
       setState(() => _status = switch (error) {
         ArgumentError(:final message) => '$message',
         StateError(:final message) => message,
-        _ => 'Beacon not sent: $error',
+        _ => l.bcNotSent('$error'),
       });
     } finally {
       if (mounted) setState(() => _sending = false);
@@ -77,11 +81,11 @@ class _BeaconPageState extends State<BeaconPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Mesh beacons'), actions: [
+    appBar: AppBar(title: Text(l.bcTitle), actions: [
       AnimatedBuilder(
         animation: widget.radio,
         builder: (context, _) => IconButton(
-          tooltip: 'Clear heard beacons',
+          tooltip: l.bcClear,
           icon: const Icon(Icons.delete_sweep_outlined),
           onPressed: widget.radio.beacons.isEmpty ? null : widget.radio.clearBeacons,
         ),
@@ -95,24 +99,22 @@ class _BeaconPageState extends State<BeaconPage> {
         final canSend = radio.isReady && next == null && !_sending &&
             _message.text.trim().isNotEmpty && _bytes <= BastionBeaconLog.maxMessageBytes;
         return ListView(padding: const EdgeInsets.all(16), children: [
-          const Text('A beacon is a short broadcast that tells nearby radios a mesh is here, '
-              'and can invite them to a channel. Radios on the newer Meshtastic firmware show it; '
-              'NOTORYX Connect shows beacons it hears with any firmware.'),
+          Text(l.bcIntro),
           const SizedBox(height: 16),
           Card(child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              Text('Send a beacon', style: Theme.of(context).textTheme.titleMedium),
+              Text(l.bcSendTitle, style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 12),
               TextField(
                 controller: _message,
                 onChanged: (_) => setState(() {}),
                 decoration: InputDecoration(
-                  labelText: 'Beacon message',
-                  helperText: 'Sent on your primary channel. At most one beacon an hour.',
+                  labelText: l.bcMessage,
+                  helperText: l.bcMessageHelp,
                   helperMaxLines: 2,
-                  counterText: '$_bytes/${BastionBeaconLog.maxMessageBytes} bytes',
-                  errorText: _bytes > BastionBeaconLog.maxMessageBytes ? 'Too long' : null,
+                  counterText: l.bcBytes(_bytes, BastionBeaconLog.maxMessageBytes),
+                  errorText: _bytes > BastionBeaconLog.maxMessageBytes ? l.bcTooLong : null,
                 ),
               ),
               Align(
@@ -124,38 +126,38 @@ class _BeaconPageState extends State<BeaconPage> {
                     _message.text = text.isEmpty ? _plusCode! : '$text $_plusCode';
                   }),
                   icon: const Icon(Icons.add_location_alt_outlined),
-                  label: Text(_plusCode == null ? 'Add my location (no position yet)' : 'Add my location as a Plus Code'),
+                  label: Text(_plusCode == null ? l.bcAddLocationNone : l.bcAddLocation),
                 ),
               ),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Invite to my primary channel'),
-                subtitle: const Text('Includes the channel name and key, and your region and preset'),
+                title: Text(l.bcInvite),
+                subtitle: Text(l.bcInviteSub),
                 value: _offerChannel,
                 onChanged: (value) => setState(() => _offerChannel = value),
               ),
               FilledButton.icon(
                 onPressed: canSend ? _send : null,
                 icon: const Icon(Icons.campaign_outlined),
-                label: Text(_sending ? 'Sending…' : 'Send beacon'),
+                label: Text(_sending ? l.bcSending : l.bcSend),
               ),
               if (!radio.isReady)
-                const Padding(padding: EdgeInsets.only(top: 8),
-                  child: Text('Connect to a radio to send a beacon.'))
+                Padding(padding: const EdgeInsets.only(top: 8),
+                  child: Text(l.bcConnect))
               else if (next != null)
                 Padding(padding: const EdgeInsets.only(top: 8),
-                  child: Text('Next beacon can be sent at ${_time(next)}.')),
+                  child: Text(l.bcNext(_time(next)))),
               if (_status != null)
                 Semantics(liveRegion: true, child: Padding(
                   padding: const EdgeInsets.only(top: 8), child: Text(_status!))),
             ]),
           )),
-          const NxSectionLabel('Heard beacons'),
+          NxSectionLabel(l.bcHeard),
           if (radio.beacons.isEmpty)
-            const Card(child: ListTile(
-              leading: Icon(Icons.wifi_tethering_off),
-              title: Text('No beacons heard yet'),
-              subtitle: Text('Beacons from radios in range on your channels appear here.'),
+            Card(child: ListTile(
+              leading: const Icon(Icons.wifi_tethering_off),
+              title: Text(l.bcNoneHeard),
+              subtitle: Text(l.bcNoneHeardSub),
             )),
           for (final beacon in radio.beacons) _BeaconCard(radio: radio, beacon: beacon),
         ]);
@@ -171,36 +173,37 @@ class _BeaconCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final details = [
-      'From ${radio.nodeName(beacon.from)}',
-      'heard ${_time(beacon.heardAt)}',
+      l.bcFrom(radio.nodeName(beacon.from)),
+      l.bcHeardAt(_time(beacon.heardAt)),
       if (beacon.snr != null) 'SNR ${beacon.snr!.toStringAsFixed(1)} dB',
       if (beacon.rssi != null) 'RSSI ${beacon.rssi} dBm',
     ].join(' • ');
     final offer = [
       if (beacon.offerChannel != null)
-        'Channel "${beacon.offerChannel!.name.isEmpty ? 'Default' : beacon.offerChannel!.name}"',
-      if (beacon.offerRegion != null) 'region ${beacon.offerRegion!.name}',
-      if (beacon.offerPreset != null) 'preset ${beacon.offerPreset!.name}',
-      if (beacon.offerFrequencySlot != null) 'slot ${beacon.offerFrequencySlot}',
+        l.bcChannel(beacon.offerChannel!.name.isEmpty ? l.bcDefault : beacon.offerChannel!.name),
+      if (beacon.offerRegion != null) l.bcRegion(beacon.offerRegion!.name),
+      if (beacon.offerPreset != null) l.bcPreset(beacon.offerPreset!.name),
+      if (beacon.offerFrequencySlot != null) l.bcSlot(beacon.offerFrequencySlot!),
     ].join(', ');
     final link = beacon.joinLink;
     return Card(child: Padding(
       padding: const EdgeInsets.all(16),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(beacon.message.isEmpty ? '(no message)' : beacon.message,
+        Text(beacon.message.isEmpty ? l.bcNoMessage : beacon.message,
           style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 4),
         Text(details, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
         if (offer.isNotEmpty) ...[
           const SizedBox(height: 8),
-          Text('Invites to: $offer'),
+          Text(l.bcInvitesTo(offer)),
         ],
         if (link != null) ...[
           const SizedBox(height: 8),
           Align(alignment: AlignmentDirectional.centerStart, child: OutlinedButton.icon(
             icon: const Icon(Icons.group_add_outlined),
-            label: const Text('Review and join channel'),
+            label: Text(l.bcJoin),
             onPressed: radio.isReady ? () => Navigator.of(context).push(MaterialPageRoute<void>(
               builder: (_) => ChannelImportPage(radio: radio, initialLink: link))) : null,
           )),

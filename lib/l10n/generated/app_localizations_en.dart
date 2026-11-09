@@ -1920,4 +1920,131 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeStopNoMessage => 'Stop without message';
+
+  @override
+  String get bcShareQ => 'Share your primary channel?';
+
+  @override
+  String get bcShareBody =>
+      'The beacon will include your primary channel\'s name and key. Anyone in range can then join it and read its messages.';
+
+  @override
+  String get bcShare => 'Share';
+
+  @override
+  String get bcSent => 'Beacon sent.';
+
+  @override
+  String bcNotSent(String error) {
+    return 'Beacon not sent: $error';
+  }
+
+  @override
+  String get bcTitle => 'Mesh beacons';
+
+  @override
+  String get bcClear => 'Clear heard beacons';
+
+  @override
+  String get bcIntro =>
+      'A beacon is a short broadcast that tells nearby radios a mesh is here, and can invite them to a channel. Radios on the newer Meshtastic firmware show it; NOTORYX Connect shows beacons it hears with any firmware.';
+
+  @override
+  String get bcSendTitle => 'Send a beacon';
+
+  @override
+  String get bcMessage => 'Beacon message';
+
+  @override
+  String get bcMessageHelp =>
+      'Sent on your primary channel. At most one beacon an hour.';
+
+  @override
+  String bcBytes(int used, int max) {
+    return '$used/$max bytes';
+  }
+
+  @override
+  String get bcTooLong => 'Too long';
+
+  @override
+  String get bcAddLocationNone => 'Add my location (no position yet)';
+
+  @override
+  String get bcAddLocation => 'Add my location as a Plus Code';
+
+  @override
+  String get bcInvite => 'Invite to my primary channel';
+
+  @override
+  String get bcInviteSub =>
+      'Includes the channel name and key, and your region and preset';
+
+  @override
+  String get bcSending => 'Sending…';
+
+  @override
+  String get bcSend => 'Send beacon';
+
+  @override
+  String get bcConnect => 'Connect to a radio to send a beacon.';
+
+  @override
+  String bcNext(String time) {
+    return 'Next beacon can be sent at $time.';
+  }
+
+  @override
+  String get bcHeard => 'Heard beacons';
+
+  @override
+  String get bcNoneHeard => 'No beacons heard yet';
+
+  @override
+  String get bcNoneHeardSub =>
+      'Beacons from radios in range on your channels appear here.';
+
+  @override
+  String bcFrom(String name) {
+    return 'From $name';
+  }
+
+  @override
+  String bcHeardAt(String time) {
+    return 'heard $time';
+  }
+
+  @override
+  String bcChannel(String name) {
+    return 'Channel \"$name\"';
+  }
+
+  @override
+  String get bcDefault => 'Default';
+
+  @override
+  String bcRegion(String name) {
+    return 'region $name';
+  }
+
+  @override
+  String bcPreset(String name) {
+    return 'preset $name';
+  }
+
+  @override
+  String bcSlot(int slot) {
+    return 'slot $slot';
+  }
+
+  @override
+  String get bcNoMessage => '(no message)';
+
+  @override
+  String bcInvitesTo(String offer) {
+    return 'Invites to: $offer';
+  }
+
+  @override
+  String get bcJoin => 'Review and join channel';
 }
