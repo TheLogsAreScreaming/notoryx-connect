@@ -1429,6 +1429,720 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Refresh'**
   String get nodesRefresh;
+
+  /// No description provided for @setRadioSec.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio'**
+  String get setRadioSec;
+
+  /// No description provided for @setRadioConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio configuration'**
+  String get setRadioConfig;
+
+  /// No description provided for @setIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'Node identity'**
+  String get setIdentity;
+
+  /// No description provided for @setChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change radio settings'**
+  String get setChange;
+
+  /// No description provided for @setChangeSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner, LoRa, channels, device role and position'**
+  String get setChangeSub;
+
+  /// No description provided for @setDeviceLora.
+  ///
+  /// In en, this message translates to:
+  /// **'Device & LoRa'**
+  String get setDeviceLora;
+
+  /// No description provided for @setChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get setChannels;
+
+  /// No description provided for @setModules.
+  ///
+  /// In en, this message translates to:
+  /// **'Modules'**
+  String get setModules;
+
+  /// No description provided for @setShareLoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Share phone location with mesh'**
+  String get setShareLoc;
+
+  /// No description provided for @setPrecision.
+  ///
+  /// In en, this message translates to:
+  /// **'Location precision'**
+  String get setPrecision;
+
+  /// No description provided for @setPrecisionSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Rounded on this phone before it is sent'**
+  String get setPrecisionSub;
+
+  /// No description provided for @setLowPower.
+  ///
+  /// In en, this message translates to:
+  /// **'Low-power field mode'**
+  String get setLowPower;
+
+  /// No description provided for @setApp.
+  ///
+  /// In en, this message translates to:
+  /// **'App'**
+  String get setApp;
+
+  /// No description provided for @setWidget.
+  ///
+  /// In en, this message translates to:
+  /// **'Show messages on the home-screen widget'**
+  String get setWidget;
+
+  /// No description provided for @setYourData.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data'**
+  String get setYourData;
+
+  /// No description provided for @setRadioBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted radio backup'**
+  String get setRadioBackup;
+
+  /// No description provided for @setRadioBackupSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Save or restore settings and channel keys, protected by a password'**
+  String get setRadioBackupSub;
+
+  /// No description provided for @setPhoneBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone data backup'**
+  String get setPhoneBackup;
+
+  /// No description provided for @setPhoneBackupSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Chats, nodes, waypoints, records and settings, for moving to a new phone'**
+  String get setPhoneBackupSub;
+
+  /// No description provided for @setPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & data'**
+  String get setPrivacy;
+
+  /// No description provided for @setPrivacySub.
+  ///
+  /// In en, this message translates to:
+  /// **'What is stored and sent; delete chat history or all phone data'**
+  String get setPrivacySub;
+
+  /// No description provided for @setDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo mode'**
+  String get setDemo;
+
+  /// No description provided for @setAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get setAbout;
+
+  /// No description provided for @setLicenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Third-party licenses'**
+  String get setLicenses;
+
+  /// No description provided for @setReadAloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Read messages aloud'**
+  String get setReadAloud;
+
+  /// No description provided for @setReadSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Uses the phone\'s text-to-speech, including with the screen off'**
+  String get setReadSub;
+
+  /// No description provided for @setMqttTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Carry MQTT through this phone'**
+  String get setMqttTitle;
+
+  /// No description provided for @setBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Background connection'**
+  String get setBackground;
+
+  /// No description provided for @setOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get setOpenSettings;
+
+  /// No description provided for @setOfflineTiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline map tiles'**
+  String get setOfflineTiles;
+
+  /// No description provided for @setClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get setClear;
+
+  /// No description provided for @setAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Field alerts'**
+  String get setAlerts;
+
+  /// No description provided for @setAlertsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone notifications only; nothing is sent over the mesh'**
+  String get setAlertsSub;
+
+  /// No description provided for @setLowBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Low battery'**
+  String get setLowBattery;
+
+  /// No description provided for @setThreshold.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery threshold'**
+  String get setThreshold;
+
+  /// No description provided for @setNewNode.
+  ///
+  /// In en, this message translates to:
+  /// **'New node'**
+  String get setNewNode;
+
+  /// No description provided for @setNewNodeSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio hears a node for the first time'**
+  String get setNewNodeSub;
+
+  /// No description provided for @setFavQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite goes quiet'**
+  String get setFavQuiet;
+
+  /// No description provided for @setMeshQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh goes quiet'**
+  String get setMeshQuiet;
+
+  /// No description provided for @setMeshQuietSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Half or more of the nodes you were hearing stop being heard'**
+  String get setMeshQuietSub;
+
+  /// No description provided for @setQuietAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet after'**
+  String get setQuietAfter;
+
+  /// No description provided for @setRadioData.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio data'**
+  String get setRadioData;
+
+  /// No description provided for @setRadioDataSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Lost or replaced a radio? Move its messages, nodes and history to the new one'**
+  String get setRadioDataSub;
+
+  /// No description provided for @setMoveToConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Move to connected'**
+  String get setMoveToConnected;
+
+  /// No description provided for @setDataUnreadable.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio data could not be read.'**
+  String get setDataUnreadable;
+
+  /// No description provided for @setNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No radio data on this phone yet.'**
+  String get setNoData;
+
+  /// No description provided for @setFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get setFilters;
+
+  /// No description provided for @setFilterHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Incoming messages with these words are hidden, not deleted.'**
+  String get setFilterHelp;
+
+  /// No description provided for @setShowFiltered.
+  ///
+  /// In en, this message translates to:
+  /// **'Show filtered messages'**
+  String get setShowFiltered;
+
+  /// No description provided for @setIgnored.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignored'**
+  String get setIgnored;
+
+  /// No description provided for @setUnignore.
+  ///
+  /// In en, this message translates to:
+  /// **'Unignore'**
+  String get setUnignore;
+
+  /// No description provided for @setMuted.
+  ///
+  /// In en, this message translates to:
+  /// **'Muted'**
+  String get setMuted;
+
+  /// No description provided for @setUnmute.
+  ///
+  /// In en, this message translates to:
+  /// **'Unmute'**
+  String get setUnmute;
+
+  /// No description provided for @setOffLoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Off. Your phone location is never sent.'**
+  String get setOffLoc;
+
+  /// No description provided for @setOnNoRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'On. Starts when a radio is connected.'**
+  String get setOnNoRadio;
+
+  /// No description provided for @setOnNoFix.
+  ///
+  /// In en, this message translates to:
+  /// **'On. Waiting for a GPS fix.'**
+  String get setOnNoFix;
+
+  /// No description provided for @setOnSent.
+  ///
+  /// In en, this message translates to:
+  /// **'On. Last sent {time}.'**
+  String setOnSent(String time);
+
+  /// No description provided for @setSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio, how the app behaves, and your data.'**
+  String get setSubtitle;
+
+  /// No description provided for @setCanChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected • settings can be changed'**
+  String get setCanChange;
+
+  /// No description provided for @setReadOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Read-only: firmware {version} is older than {minimum}. Update at {url}.'**
+  String setReadOnly(String version, String minimum, String url);
+
+  /// No description provided for @setConnectToView.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio to view and change its settings'**
+  String get setConnectToView;
+
+  /// No description provided for @setWaitingNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for this radio\'s node information'**
+  String get setWaitingNode;
+
+  /// No description provided for @setNoLong.
+  ///
+  /// In en, this message translates to:
+  /// **'No long name'**
+  String get setNoLong;
+
+  /// No description provided for @setNoShort.
+  ///
+  /// In en, this message translates to:
+  /// **'No short name'**
+  String get setNoShort;
+
+  /// No description provided for @setNoId.
+  ///
+  /// In en, this message translates to:
+  /// **'ID not reported'**
+  String get setNoId;
+
+  /// No description provided for @setConfigWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Not received yet ({count} configuration messages)'**
+  String setConfigWait(int count);
+
+  /// No description provided for @setChannelWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Not received yet ({count} channel messages)'**
+  String setChannelWait(int count);
+
+  /// No description provided for @setModulesSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} module messages received. Change them in radio settings.'**
+  String setModulesSub(int count);
+
+  /// No description provided for @setShareLocSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{status}\nUsed when the radio has no GPS of its own. Updates every 5 min, or sooner when you move.'**
+  String setShareLocSub(String status);
+
+  /// No description provided for @setPrecise.
+  ///
+  /// In en, this message translates to:
+  /// **'Precise'**
+  String get setPrecise;
+
+  /// No description provided for @setAbout2.
+  ///
+  /// In en, this message translates to:
+  /// **'About {distance}'**
+  String setAbout2(String distance);
+
+  /// No description provided for @setLowPowerSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared location uses balanced GPS and updates every 15 min, or after 200 m of movement. The radio link and coverage recording are unchanged.'**
+  String get setLowPowerSub;
+
+  /// No description provided for @setWidgetSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Off: the widget shows only how many messages are unread. On: it also shows the sender and text, which anyone holding the phone can see.'**
+  String get setWidgetSub;
+
+  /// No description provided for @setDemoSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore the app with a pretend radio and mesh. Nothing is sent, and your own messages and settings are left alone.'**
+  String get setDemoSub;
+
+  /// No description provided for @setDevBuild.
+  ///
+  /// In en, this message translates to:
+  /// **'Development build • Independent mesh companion'**
+  String get setDevBuild;
+
+  /// No description provided for @setConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get setConnection;
+
+  /// No description provided for @setConnectionSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth LE • Safety mode on: no unverified device is treated as a mesh node'**
+  String get setConnectionSub;
+
+  /// No description provided for @setTrademark.
+  ///
+  /// In en, this message translates to:
+  /// **'Trademark & compatibility'**
+  String get setTrademark;
+
+  /// No description provided for @setDevWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Do not rely on this development build as your only way to call for help.'**
+  String get setDevWarning;
+
+  /// No description provided for @setChannelsKept.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel messages kept'**
+  String get setChannelsKept;
+
+  /// No description provided for @setChannelsDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, one{Channel messages deleted after {days} day} other{Channel messages deleted after {days} days}}'**
+  String setChannelsDeleted(int days);
+
+  /// No description provided for @setNewestPer.
+  ///
+  /// In en, this message translates to:
+  /// **'newest {count} per conversation'**
+  String setNewestPer(String count);
+
+  /// No description provided for @setReadOn.
+  ///
+  /// In en, this message translates to:
+  /// **'read aloud on'**
+  String get setReadOn;
+
+  /// No description provided for @setDeleteOld.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete old channel messages'**
+  String get setDeleteOld;
+
+  /// No description provided for @setDirectKept.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct messages are always kept'**
+  String get setDirectKept;
+
+  /// No description provided for @setNever.
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get setNever;
+
+  /// No description provided for @setAfterDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, one{After {days} day} other{After {days} days}}'**
+  String setAfterDays(int days);
+
+  /// No description provided for @setHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Message history'**
+  String get setHistory;
+
+  /// No description provided for @setHistoryHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Per channel or direct conversation. A lower limit deletes older messages.'**
+  String get setHistoryHelp;
+
+  /// No description provided for @setKeepNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep newest {count}'**
+  String setKeepNewest(String count);
+
+  /// No description provided for @setMqttOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off. Uses your phone\'s data when on.'**
+  String get setMqttOff;
+
+  /// No description provided for @setMqttWait.
+  ///
+  /// In en, this message translates to:
+  /// **'On. Waits for your radio.'**
+  String get setMqttWait;
+
+  /// No description provided for @setMqttNoConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio isn\'t set to use this. Turn on MQTT and \"Proxy to client\" in its settings.'**
+  String get setMqttNoConfig;
+
+  /// No description provided for @setMqttConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {host}. {up} sent, {down} received, about {kb} KB of data.'**
+  String setMqttConnected(String host, int up, int down, String kb);
+
+  /// No description provided for @setMqttConnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting to {host}…'**
+  String setMqttConnecting(String host);
+
+  /// No description provided for @setMqttFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t connect.'**
+  String get setMqttFailed;
+
+  /// No description provided for @setMqttStarting.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting…'**
+  String get setMqttStarting;
+
+  /// No description provided for @setBgOptimized.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery optimization can pause NOTORYX Connect when it is not on screen and drop the radio link. Set its battery use to Unrestricted to stay connected.'**
+  String get setBgOptimized;
+
+  /// No description provided for @setBgAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed to run in the background. A notification shows while a radio is connected.'**
+  String get setBgAllowed;
+
+  /// No description provided for @setSizeUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Size unknown'**
+  String get setSizeUnknown;
+
+  /// No description provided for @setMbSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'{mb} MB saved'**
+  String setMbSaved(String mb);
+
+  /// No description provided for @setTilesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Map areas you view online stay available offline for a year (up to 500 MB).'**
+  String get setTilesHelp;
+
+  /// No description provided for @setAlertSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert settings apply now, but could not be saved.'**
+  String get setAlertSaveFailed;
+
+  /// No description provided for @setLowBatterySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio or a favorite reports {pct}% or less'**
+  String setLowBatterySub(int pct);
+
+  /// No description provided for @setFavQuietSub.
+  ///
+  /// In en, this message translates to:
+  /// **'A favorite is not heard for {time} while connected'**
+  String setFavQuietSub(String time);
+
+  /// No description provided for @setTheConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'the connected radio'**
+  String get setTheConnected;
+
+  /// No description provided for @setMoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Move {label}?'**
+  String setMoveTitle(String label);
+
+  /// No description provided for @setMoveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Its messages, offline queue, NodeDex history, trails and telemetry history move to {to}. Whatever {to} already has is kept, so nothing is overwritten. {id} then no longer has an entry of its own.\n\nTo be safe, make a phone data backup first.'**
+  String setMoveBody(String to, String id);
+
+  /// No description provided for @setMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get setMove;
+
+  /// No description provided for @setMoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Moved {label} to {to}.'**
+  String setMoved(String label, String to);
+
+  /// No description provided for @setDataCounts.
+  ///
+  /// In en, this message translates to:
+  /// **'{messages} messages • {nodes} nodes • {trails} trails'**
+  String setDataCounts(int messages, int nodes, int trails);
+
+  /// No description provided for @setConnectNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to the new radio to move an old radio\'s data to it.'**
+  String get setConnectNew;
+
+  /// No description provided for @setFilterCounts.
+  ///
+  /// In en, this message translates to:
+  /// **'{ignored} ignored • {muted} muted • {words} filtered words'**
+  String setFilterCounts(int ignored, int muted, int words);
+
+  /// No description provided for @setFilteredWords.
+  ///
+  /// In en, this message translates to:
+  /// **'Filtered words'**
+  String get setFilteredWords;
+
+  /// No description provided for @setWordField.
+  ///
+  /// In en, this message translates to:
+  /// **'Word or phrase'**
+  String get setWordField;
+
+  /// No description provided for @setAddWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Add filtered word'**
+  String get setAddWord;
+
+  /// No description provided for @setRemoveWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {word}'**
+  String setRemoveWord(String word);
+
+  /// No description provided for @setIgnoredMuted.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignored and muted nodes'**
+  String get setIgnoredMuted;
+
+  /// No description provided for @setNoneIgnored.
+  ///
+  /// In en, this message translates to:
+  /// **'None. Open a node to ignore or mute it.'**
+  String get setNoneIgnored;
 }
 
 class _AppLocalizationsDelegate

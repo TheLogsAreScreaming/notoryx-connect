@@ -83,6 +83,25 @@ void main() {
     expect(find.text('RADIOS NEARBY'), findsNothing);
   });
 
+  testWidgets('Settings is translated, but the legal notice stays English', (tester) async {
+    const locale = Locale('es');
+    tester.platformDispatcher.localeTestValue = locale;
+    tester.platformDispatcher.localesTestValue = [locale];
+    addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+    tester.view.physicalSize = const Size(390, 6000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(const BastionApp());
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Ajustes')));
+    await tester.pumpAndSettle();
+    expect(find.text('Configuración de la radio'), findsOneWidget);
+    expect(find.text('Radio configuration'), findsNothing);
+    expect(find.textContaining('registered trademark of Meshtastic LLC'), findsOneWidget);
+  });
+
   for (final (locale, settings, offline) in [
     (const Locale('en'), 'Settings', 'Radio: Offline'),
     (const Locale('es'), 'Ajustes', 'Radio: Sin conexión'),
