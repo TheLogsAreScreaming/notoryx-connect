@@ -5,6 +5,7 @@ import 'package:bastion/services/bastion_trails.dart';
 import 'package:bastion/services/bastion_units.dart';
 import 'package:bastion/services/meshtastic_node_database.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -132,7 +133,7 @@ void main() {
   testWidgets('the Team sheet explains how to add trip contacts', (tester) async {
     final radio = MeshtasticRadioCoordinator();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: MapPage(radio: radio))));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: Scaffold(body: MapPage(radio: radio))));
     await tester.pump();
     await tester.tap(find.byTooltip('Team'));
     await tester.pumpAndSettle();

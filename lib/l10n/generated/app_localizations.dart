@@ -2143,6 +2143,618 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'None. Open a node to ignore or mute it.'**
   String get setNoneIgnored;
+
+  /// No description provided for @mapNoPositions.
+  ///
+  /// In en, this message translates to:
+  /// **'No node has reported a position yet'**
+  String get mapNoPositions;
+
+  /// No description provided for @mapConnectForPositions.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a radio to show node positions'**
+  String get mapConnectForPositions;
+
+  /// No description provided for @mapPlaced.
+  ///
+  /// In en, this message translates to:
+  /// **'{placed} of {total} nodes placed'**
+  String mapPlaced(int placed, int total);
+
+  /// No description provided for @mapWaypointCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} waypoint} other{{count} waypoints}}'**
+  String mapWaypointCount(int count);
+
+  /// No description provided for @mapLongPressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press the map to drop a waypoint'**
+  String get mapLongPressHint;
+
+  /// No description provided for @mapHeardWithin.
+  ///
+  /// In en, this message translates to:
+  /// **'Show nodes heard within'**
+  String get mapHeardWithin;
+
+  /// No description provided for @mapHeardAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard any time'**
+  String get mapHeardAny;
+
+  /// No description provided for @mapHeardHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard in last hour'**
+  String get mapHeardHour;
+
+  /// No description provided for @mapHeardDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard in last 24 hours'**
+  String get mapHeardDay;
+
+  /// No description provided for @mapHeardWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard in last 7 days'**
+  String get mapHeardWeek;
+
+  /// No description provided for @mapShowStreet.
+  ///
+  /// In en, this message translates to:
+  /// **'Show street map'**
+  String get mapShowStreet;
+
+  /// No description provided for @mapShowTopo.
+  ///
+  /// In en, this message translates to:
+  /// **'Show topographic map'**
+  String get mapShowTopo;
+
+  /// No description provided for @mapLinkPlanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Link planner'**
+  String get mapLinkPlanner;
+
+  /// No description provided for @mapRallyRoutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Rally points & routes'**
+  String get mapRallyRoutes;
+
+  /// No description provided for @mapTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'Team'**
+  String get mapTeam;
+
+  /// No description provided for @mapZones.
+  ///
+  /// In en, this message translates to:
+  /// **'Zones'**
+  String get mapZones;
+
+  /// No description provided for @mapExportGpx.
+  ///
+  /// In en, this message translates to:
+  /// **'Export GPX'**
+  String get mapExportGpx;
+
+  /// No description provided for @mapHideTrails.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide trails'**
+  String get mapHideTrails;
+
+  /// No description provided for @mapShowTrails.
+  ///
+  /// In en, this message translates to:
+  /// **'Show trails'**
+  String get mapShowTrails;
+
+  /// No description provided for @mapHideLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide radio links'**
+  String get mapHideLinks;
+
+  /// No description provided for @mapShowLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'Show radio links'**
+  String get mapShowLinks;
+
+  /// No description provided for @mapShowAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all nodes'**
+  String get mapShowAll;
+
+  /// No description provided for @mapPlanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the map to add stops, in order. Up to {max}.'**
+  String mapPlanHint(int max);
+
+  /// No description provided for @mapPlanProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {max} stops • {distance}'**
+  String mapPlanProgress(int count, int max, String distance);
+
+  /// No description provided for @mapUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get mapUndo;
+
+  /// No description provided for @mapShareRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Share route'**
+  String get mapShareRoute;
+
+  /// No description provided for @mapRallyIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Rally points are where everyone should meet. Drop one with a long-press and choose \"Rally point\". Routes are shared as numbered waypoints, so other Meshtastic apps see the stops too.'**
+  String get mapRallyIntro;
+
+  /// No description provided for @mapRallyPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Rally points'**
+  String get mapRallyPoints;
+
+  /// No description provided for @mapNoneYet.
+  ///
+  /// In en, this message translates to:
+  /// **'None yet.'**
+  String get mapNoneYet;
+
+  /// No description provided for @mapDistanceOfYou.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} {direction} of you'**
+  String mapDistanceOfYou(String distance, String direction);
+
+  /// No description provided for @mapNoOwnPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio has no position yet'**
+  String get mapNoOwnPosition;
+
+  /// No description provided for @mapShowOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Show on map'**
+  String get mapShowOnMap;
+
+  /// No description provided for @mapRoutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Routes'**
+  String get mapRoutes;
+
+  /// No description provided for @mapStops.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} stops'**
+  String mapStops(int count);
+
+  /// No description provided for @mapStopsHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'{heard} of {count} stops heard'**
+  String mapStopsHeard(int heard, int count);
+
+  /// No description provided for @mapFromYou.
+  ///
+  /// In en, this message translates to:
+  /// **'from you'**
+  String get mapFromYou;
+
+  /// No description provided for @mapFromNode.
+  ///
+  /// In en, this message translates to:
+  /// **'from {name}'**
+  String mapFromNode(String name);
+
+  /// No description provided for @mapPlanRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a route'**
+  String get mapPlanRoute;
+
+  /// No description provided for @mapConnectForRoutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a radio to share routes'**
+  String get mapConnectForRoutes;
+
+  /// No description provided for @mapRouteShared.
+  ///
+  /// In en, this message translates to:
+  /// **'Route shared: {count} stops on channel 0.'**
+  String mapRouteShared(int count);
+
+  /// No description provided for @mapRouteStopped.
+  ///
+  /// In en, this message translates to:
+  /// **'Route stopped after {sent} of {count} stops: {error}'**
+  String mapRouteStopped(int sent, int count, String error);
+
+  /// No description provided for @mapGpxExported.
+  ///
+  /// In en, this message translates to:
+  /// **'Exported {waypoints} waypoints and {trails} trails as GPX.'**
+  String mapGpxExported(int waypoints, int trails);
+
+  /// No description provided for @mapGpxFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not export GPX: {error}'**
+  String mapGpxFailed(String error);
+
+  /// No description provided for @mapWatchTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip contacts'**
+  String get mapWatchTrip;
+
+  /// No description provided for @mapWatchFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get mapWatchFavorites;
+
+  /// No description provided for @mapWatchAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All nodes'**
+  String get mapWatchAll;
+
+  /// No description provided for @mapAlertArrive.
+  ///
+  /// In en, this message translates to:
+  /// **'arrive'**
+  String get mapAlertArrive;
+
+  /// No description provided for @mapAlertLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'leave'**
+  String get mapAlertLeave;
+
+  /// No description provided for @mapAlertBoth.
+  ///
+  /// In en, this message translates to:
+  /// **'arrive or leave'**
+  String get mapAlertBoth;
+
+  /// No description provided for @mapZonesIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Get a phone alert when someone arrives at or leaves a place, like camp or the trailhead. Alerts need the radio connected; nothing is sent over the mesh.'**
+  String get mapZonesIntro;
+
+  /// No description provided for @mapNoZones.
+  ///
+  /// In en, this message translates to:
+  /// **'No zones yet.'**
+  String get mapNoZones;
+
+  /// No description provided for @mapZoneSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{radius} radius • {watch} • alert when they {alert}'**
+  String mapZoneSummary(String radius, String watch, String alert);
+
+  /// No description provided for @mapDeleteZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}'**
+  String mapDeleteZone(String name);
+
+  /// No description provided for @mapAddZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Add zone at map center'**
+  String get mapAddZone;
+
+  /// No description provided for @mapTeamIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Your trip contacts. Tap one to find them on the map.'**
+  String get mapTeamIntro;
+
+  /// No description provided for @mapNoTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'No trip contacts yet'**
+  String get mapNoTeam;
+
+  /// No description provided for @mapNoTeamHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add up to 6 people on HOME → Trip. They show here and stand out on the map.'**
+  String get mapNoTeamHint;
+
+  /// No description provided for @mapFreshOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get mapFreshOk;
+
+  /// No description provided for @mapFreshQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'QUIET'**
+  String get mapFreshQuiet;
+
+  /// No description provided for @mapFreshLost.
+  ///
+  /// In en, this message translates to:
+  /// **'LOST'**
+  String get mapFreshLost;
+
+  /// No description provided for @mapConnectForWaypoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a radio to share waypoints.'**
+  String get mapConnectForWaypoints;
+
+  /// No description provided for @mapWaypointShared.
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoint \"{name}\" shared on channel 0.'**
+  String mapWaypointShared(String name);
+
+  /// No description provided for @mapWaypointFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not share waypoint: {error}'**
+  String mapWaypointFailed(String error);
+
+  /// No description provided for @mapNeverExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Never expires'**
+  String get mapNeverExpires;
+
+  /// No description provided for @mapExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {time}'**
+  String mapExpires(String time);
+
+  /// No description provided for @mapSharedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared by {name}'**
+  String mapSharedBy(String name);
+
+  /// No description provided for @mapLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked to its creator'**
+  String get mapLocked;
+
+  /// No description provided for @mapDeleteEveryone.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete for everyone'**
+  String get mapDeleteEveryone;
+
+  /// No description provided for @mapDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted \"{name}\".'**
+  String mapDeleted(String name);
+
+  /// No description provided for @mapDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not delete: {error}'**
+  String mapDeleteFailed(String error);
+
+  /// No description provided for @mapUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'unknown'**
+  String get mapUnknown;
+
+  /// No description provided for @mapFromThisRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} from this radio'**
+  String mapFromThisRadio(String distance);
+
+  /// No description provided for @mapPositionHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Position: {position} • Heard: {heard}'**
+  String mapPositionHeard(String position, String heard);
+
+  /// No description provided for @mapDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'direct'**
+  String get mapDirect;
+
+  /// No description provided for @mapBatteryExternal.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery: external power'**
+  String get mapBatteryExternal;
+
+  /// No description provided for @mapBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery: {level}%'**
+  String mapBattery(int level);
+
+  /// No description provided for @mapOpenDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Open details'**
+  String get mapOpenDetails;
+
+  /// No description provided for @mapThisRadioSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **', this radio'**
+  String get mapThisRadioSuffix;
+
+  /// No description provided for @mapTripContactSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **', trip contact, {summary}'**
+  String mapTripContactSuffix(String summary);
+
+  /// No description provided for @mapRallyPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Rally point'**
+  String get mapRallyPoint;
+
+  /// No description provided for @mapWaypoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoint'**
+  String get mapWaypoint;
+
+  /// No description provided for @mapExpireHour.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get mapExpireHour;
+
+  /// No description provided for @mapExpireDay.
+  ///
+  /// In en, this message translates to:
+  /// **'1 day'**
+  String get mapExpireDay;
+
+  /// No description provided for @mapExpireWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'1 week'**
+  String get mapExpireWeek;
+
+  /// No description provided for @mapExpireNever.
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get mapExpireNever;
+
+  /// No description provided for @mapNewWaypoint.
+  ///
+  /// In en, this message translates to:
+  /// **'New waypoint'**
+  String get mapNewWaypoint;
+
+  /// No description provided for @mapName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get mapName;
+
+  /// No description provided for @mapDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description (optional)'**
+  String get mapDescription;
+
+  /// No description provided for @mapRallySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Where everyone should meet'**
+  String get mapRallySub;
+
+  /// No description provided for @mapExpiresAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires after'**
+  String get mapExpiresAfter;
+
+  /// No description provided for @mapOnlyMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Only I can edit or delete'**
+  String get mapOnlyMe;
+
+  /// No description provided for @mapSharedChannel0.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared with everyone on channel 0.'**
+  String get mapSharedChannel0;
+
+  /// No description provided for @mapShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get mapShare;
+
+  /// No description provided for @mapNewZone.
+  ///
+  /// In en, this message translates to:
+  /// **'New zone'**
+  String get mapNewZone;
+
+  /// No description provided for @mapCenteredOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Centered on {lat}, {lon}'**
+  String mapCenteredOn(String lat, String lon);
+
+  /// No description provided for @mapZoneName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, e.g. Camp'**
+  String get mapZoneName;
+
+  /// No description provided for @mapRadius.
+  ///
+  /// In en, this message translates to:
+  /// **'Radius'**
+  String get mapRadius;
+
+  /// No description provided for @mapWatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch'**
+  String get mapWatch;
+
+  /// No description provided for @mapAlertWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert when they'**
+  String get mapAlertWhen;
+
+  /// No description provided for @mapAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get mapAdd;
+
+  /// No description provided for @mapRouteName.
+  ///
+  /// In en, this message translates to:
+  /// **'Route name'**
+  String get mapRouteName;
+
+  /// No description provided for @mapRouteSends.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends {count} waypoints on channel 0, about 3 seconds apart. They expire after a day.'**
+  String mapRouteSends(int count);
 }
 
 class _AppLocalizationsDelegate

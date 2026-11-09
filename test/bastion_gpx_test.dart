@@ -5,6 +5,7 @@ import 'package:bastion/services/bastion_gpx.dart';
 import 'package:bastion/services/bastion_trails.dart';
 import 'package:bastion/services/bastion_waypoints.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -47,7 +48,7 @@ void main() {
   testWidgets('no Export GPX button when there is nothing to export', (tester) async {
     final radio = MeshtasticRadioCoordinator();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: MapPage(radio: radio))));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: Scaffold(body: MapPage(radio: radio))));
     await tester.pump();
     expect(find.byTooltip('Export GPX'), findsNothing);
   });

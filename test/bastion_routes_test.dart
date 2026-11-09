@@ -2,6 +2,7 @@ import 'package:bastion/map_page.dart';
 import 'package:bastion/services/bastion_routes.dart';
 import 'package:bastion/services/bastion_waypoints.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
@@ -78,7 +79,7 @@ void main() {
     addTearDown(radio.dispose);
     await tester.binding.setSurfaceSize(const Size(1000, 1000));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: MapPage(radio: radio))));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: Scaffold(body: MapPage(radio: radio))));
     await tester.pump();
 
     await tester.tap(find.byTooltip('Rally points & routes'));
