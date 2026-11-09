@@ -27,6 +27,7 @@ import 'privacy_page.dart';
 import 'radio_backup_page.dart';
 import 'services/bastion_chat_marks.dart';
 import 'services/bastion_message_search.dart';
+import 'services/bastion_scheduled_messages.dart';
 import 'mesh_health_page.dart';
 import 'mesh_tools_page.dart';
 import 'node_detail_page.dart';
@@ -69,6 +70,7 @@ Future<void> main() async {
   await BastionChatStorage.useSqlite();
   await BastionFieldLog.instance.load();
   await BastionBotGuard.instance.load();
+  await BastionScheduledMessages.instance.load();
   runApp(const BastionApp());
 }
 

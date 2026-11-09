@@ -40,9 +40,13 @@ class _ChatsPageState extends State<BastionChatsPage> {
   /// is open so the "new messages" divider doesn't vanish as you read.
   DateTime? _unreadSince;
 
+  final BastionScheduledMessages _scheduled = BastionScheduledMessages.instance;
+  Timer? _scheduleTimer;
+
   @override
   void initState() {
     super.initState();
+    _scheduleTimer = Timer.periodic(const Duration(seconds: 20), (_) => unawaited(_sendDue()));
     unawaited(_loadDrafts());
     if (widget.visible) _opened();
   }
@@ -57,6 +61,113 @@ class _ChatsPageState extends State<BastionChatsPage> {
   void _opened() {
     _unreadSince = widget.radio.chatMarks.lastRead;
     unawaited(widget.radio.markChatsRead());
+  }
+
+  Future<void> _sendDue() async {
+    if (!widget.radio.isReady) return;
+    await _scheduled.flushDue(DateTime.now(), (m) async {
+      await widget.radio.sendText(text: m.text, destination: m.destination, channel: m.channel);
+    });
+  }
+
+  /// Saves the composer text to send at a time the user picks.
+  Future<void> _schedule() async {
+    final text = composer.text.trim();
+    if (text.isEmpty) return;
+    final now = DateTime.now();
+    final tomorrow = DateTime(now.year, now.month, now.day + 1, 8);
+    final choice = await showModalBottomSheet<DateTime>(
+      context: context,
+      builder: (sheet) => SafeArea(child: SingleChildScrollView(child: Column(mainAxisSize: MainAxisSize.min, children: [
+        ListTile(title: Text(l.chatsSchedule, style: const TextStyle(fontWeight: FontWeight.bold)), subtitle: Text(l.chatsScheduleNote)),
+        for (final (label, at) in [
+          (l.chatsSchedule15, now.add(const Duration(minutes: 15))),
+          (l.chatsSchedule60, now.add(const Duration(hours: 1))),
+          (l.chatsSchedule240, now.add(const Duration(hours: 4))),
+          (l.chatsScheduleTomorrow, tomorrow),
+        ])
+          ListTile(leading: const Icon(Icons.schedule), title: Text(label), onTap: () => Navigator.pop(sheet, at)),
+        ListTile(
+          leading: const Icon(Icons.calendar_month),
+          title: Text(l.chatsSchedulePick),
+          onTap: () async {
+            final navigator = Navigator.of(sheet);
+            final date = await showDatePicker(context: sheet, firstDate: now, lastDate: now.add(const Duration(days: 30)), initialDate: now);
+            if (date == null || !sheet.mounted) return;
+            final time = await showTimePicker(context: sheet, initialTime: TimeOfDay.fromDateTime(now));
+            if (time == null) return;
+            navigator.pop(DateTime(date.year, date.month, date.day, time.hour, time.minute));
+          },
+        ),
+      ]))),
+    );
+    if (choice == null || !mounted) return;
+    final saved = await _scheduled.add(text: text, destination: destination, channel: channel, dueAt: choice);
+    if (!mounted) return;
+    if (!saved) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.chatsScheduleFull(BastionScheduledMessages.maxItems))));
+      return;
+    }
+    composer.clear();
+    _saveDraft();
+  }
+
+  Widget _scheduledList(BuildContext context) => ListenableBuilder(
+        listenable: _scheduled,
+        builder: (context, _) {
+          final items = _scheduled.items;
+          if (items.isEmpty) return const SizedBox.shrink();
+          final now = DateTime.now();
+          final material = MaterialLocalizations.of(context);
+          return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            NxSectionLabel(l.chatsScheduled),
+            Card(child: Column(children: [
+              for (final m in items)
+                ListTile(
+                  key: ValueKey('scheduled-${m.id}'),
+                  leading: Icon(BastionScheduledMessages.isMissed(m, now) ? Icons.error_outline : Icons.schedule),
+                  title: Text(m.text),
+                  subtitle: Text(BastionScheduledMessages.isMissed(m, now)
+                      ? l.chatsScheduleMissed
+                      : l.chatsScheduledFor(BastionChatDays.label(m.dueAt, now),
+                          material.formatTimeOfDay(TimeOfDay.fromDateTime(m.dueAt)))),
+                  trailing: IconButton(
+                    tooltip: l.chatsScheduleCancel,
+                    icon: const Icon(Icons.close),
+                    onPressed: () => unawaited(_scheduled.cancel(m.id)),
+                  ),
+                ),
+            ])),
+          ]);
+        },
+      );
+
+  /// Picks a conversation and puts the message in its composer for review.
+  Future<void> _forward(BastionChatMessage message) async {
+    final channels = [for (final c in widget.radio.channelMetadata) if (c.role != 0) c];
+    final nodes = [for (final n in widget.radio.nodes) if (n.num != widget.radio.localNodeNum) n];
+    final target = await showModalBottomSheet<(int, int)>(
+      context: context,
+      builder: (sheet) => SafeArea(child: ListView(shrinkWrap: true, children: [
+        ListTile(title: Text(l.chatsForwardTo, style: const TextStyle(fontWeight: FontWeight.bold))),
+        for (final c in channels)
+          ListTile(leading: const Icon(Icons.forum_outlined), title: Text(l.chatsChannelNumbered(c.index, c.name)),
+            onTap: () => Navigator.pop(sheet, (0xffffffff, c.index))),
+        for (final n in nodes)
+          ListTile(leading: const Icon(Icons.person_outline), title: Text(n.displayName),
+            onTap: () => Navigator.pop(sheet, (n.num, channel))),
+      ])),
+    );
+    if (target == null || !mounted) return;
+    final from = message.direction == BastionMessageDirection.outgoing ? null : _nodeName(message.from);
+    setState(() {
+      destination = target.$1;
+      channel = target.$2;
+      // Sent on air exactly as written, so this stays English.
+      composer.text = from == null ? 'Fwd: ${message.text}' : 'Fwd from $from: ${message.text}';
+    });
+    _saveDraft();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.chatsForwardReview)));
   }
 
   Future<void> _togglePin(BastionChatMessage message) async {
@@ -137,6 +248,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
 
   @override
   void dispose() {
+    _scheduleTimer?.cancel();
     _saveDraft();
     reply.dispose();
     composer.dispose();
@@ -146,6 +258,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
 
   static const _pinAction = '\u0000pin';
   static const _copyAction = '\u0000copy';
+  static const _forwardAction = '\u0000forward';
   static const _reactionChoices = ['👍', '❤️', '😂', '😮', '😢', '✅', '🙏'];
 
   /// How an incoming message got here: over the internet, directly, or
@@ -205,11 +318,17 @@ class _ChatsPageState extends State<BastionChatsPage> {
             title: Text(l.chatsCopyText),
             onTap: () => Navigator.pop(context, _copyAction),
           ),
+          ListTile(
+            leading: const Icon(Icons.forward),
+            title: Text(l.chatsForward),
+            onTap: () => Navigator.pop(context, _forwardAction),
+          ),
         ]),
       )),
     );
     if (emoji == null || !mounted) return;
     if (emoji == _pinAction) return _togglePin(message);
+    if (emoji == _forwardAction) return _forward(message);
     if (emoji == _copyAction) {
       await Clipboard.setData(ClipboardData(text: message.text));
       if (mounted) {
@@ -510,6 +629,12 @@ class _ChatsPageState extends State<BastionChatsPage> {
                 icon: const Icon(Icons.send),
                 label: Text(l.chatsSend),
               ),
+              TextButton.icon(
+                key: const ValueKey('chat-schedule'),
+                onPressed: _schedule,
+                icon: const Icon(Icons.schedule_send),
+                label: Text(l.chatsSchedule),
+              ),
               const SizedBox(height: NxSpace.sm),
               Text(l.chatsQuickReplies, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: scheme.onSurfaceVariant)),
               const SizedBox(height: NxSpace.xs),
@@ -528,6 +653,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
               ]),
             ]),
           )),
+          _scheduledList(context),
           if (pins.isNotEmpty) ...[
             NxSectionLabel(l.chatsPinned),
             Card(child: Column(children: [
