@@ -814,4 +814,438 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nodesRefresh => 'Refresh';
+
+  @override
+  String get setRadioSec => 'Radio';
+
+  @override
+  String get setRadioConfig => 'Radio configuration';
+
+  @override
+  String get setIdentity => 'Node identity';
+
+  @override
+  String get setChange => 'Change radio settings';
+
+  @override
+  String get setChangeSub => 'Owner, LoRa, channels, device role and position';
+
+  @override
+  String get setDeviceLora => 'Device & LoRa';
+
+  @override
+  String get setChannels => 'Channels';
+
+  @override
+  String get setModules => 'Modules';
+
+  @override
+  String get setShareLoc => 'Share phone location with mesh';
+
+  @override
+  String get setPrecision => 'Location precision';
+
+  @override
+  String get setPrecisionSub => 'Rounded on this phone before it is sent';
+
+  @override
+  String get setLowPower => 'Low-power field mode';
+
+  @override
+  String get setApp => 'App';
+
+  @override
+  String get setWidget => 'Show messages on the home-screen widget';
+
+  @override
+  String get setYourData => 'Your data';
+
+  @override
+  String get setRadioBackup => 'Encrypted radio backup';
+
+  @override
+  String get setRadioBackupSub =>
+      'Save or restore settings and channel keys, protected by a password';
+
+  @override
+  String get setPhoneBackup => 'Phone data backup';
+
+  @override
+  String get setPhoneBackupSub =>
+      'Chats, nodes, waypoints, records and settings, for moving to a new phone';
+
+  @override
+  String get setPrivacy => 'Privacy & data';
+
+  @override
+  String get setPrivacySub =>
+      'What is stored and sent; delete chat history or all phone data';
+
+  @override
+  String get setDemo => 'Demo mode';
+
+  @override
+  String get setAbout => 'About';
+
+  @override
+  String get setLicenses => 'Third-party licenses';
+
+  @override
+  String get setReadAloud => 'Read messages aloud';
+
+  @override
+  String get setReadSub =>
+      'Uses the phone\'s text-to-speech, including with the screen off';
+
+  @override
+  String get setMqttTitle => 'Carry MQTT through this phone';
+
+  @override
+  String get setBackground => 'Background connection';
+
+  @override
+  String get setOpenSettings => 'Open settings';
+
+  @override
+  String get setOfflineTiles => 'Offline map tiles';
+
+  @override
+  String get setClear => 'Clear';
+
+  @override
+  String get setAlerts => 'Field alerts';
+
+  @override
+  String get setAlertsSub =>
+      'Phone notifications only; nothing is sent over the mesh';
+
+  @override
+  String get setLowBattery => 'Low battery';
+
+  @override
+  String get setThreshold => 'Battery threshold';
+
+  @override
+  String get setNewNode => 'New node';
+
+  @override
+  String get setNewNodeSub => 'Your radio hears a node for the first time';
+
+  @override
+  String get setFavQuiet => 'Favorite goes quiet';
+
+  @override
+  String get setMeshQuiet => 'Mesh goes quiet';
+
+  @override
+  String get setMeshQuietSub =>
+      'Half or more of the nodes you were hearing stop being heard';
+
+  @override
+  String get setQuietAfter => 'Quiet after';
+
+  @override
+  String get setRadioData => 'Radio data';
+
+  @override
+  String get setRadioDataSub =>
+      'Lost or replaced a radio? Move its messages, nodes and history to the new one';
+
+  @override
+  String get setMoveToConnected => 'Move to connected';
+
+  @override
+  String get setDataUnreadable => 'Radio data could not be read.';
+
+  @override
+  String get setNoData => 'No radio data on this phone yet.';
+
+  @override
+  String get setFilters => 'Filters';
+
+  @override
+  String get setFilterHelp =>
+      'Incoming messages with these words are hidden, not deleted.';
+
+  @override
+  String get setShowFiltered => 'Show filtered messages';
+
+  @override
+  String get setIgnored => 'Ignored';
+
+  @override
+  String get setUnignore => 'Unignore';
+
+  @override
+  String get setMuted => 'Muted';
+
+  @override
+  String get setUnmute => 'Unmute';
+
+  @override
+  String get setOffLoc => 'Off. Your phone location is never sent.';
+
+  @override
+  String get setOnNoRadio => 'On. Starts when a radio is connected.';
+
+  @override
+  String get setOnNoFix => 'On. Waiting for a GPS fix.';
+
+  @override
+  String setOnSent(String time) {
+    return 'On. Last sent $time.';
+  }
+
+  @override
+  String get setSubtitle => 'Your radio, how the app behaves, and your data.';
+
+  @override
+  String get setCanChange => 'Connected • settings can be changed';
+
+  @override
+  String setReadOnly(String version, String minimum, String url) {
+    return 'Read-only: firmware $version is older than $minimum. Update at $url.';
+  }
+
+  @override
+  String get setConnectToView =>
+      'Connect to a radio to view and change its settings';
+
+  @override
+  String get setWaitingNode => 'Waiting for this radio\'s node information';
+
+  @override
+  String get setNoLong => 'No long name';
+
+  @override
+  String get setNoShort => 'No short name';
+
+  @override
+  String get setNoId => 'ID not reported';
+
+  @override
+  String setConfigWait(int count) {
+    return 'Not received yet ($count configuration messages)';
+  }
+
+  @override
+  String setChannelWait(int count) {
+    return 'Not received yet ($count channel messages)';
+  }
+
+  @override
+  String setModulesSub(int count) {
+    return '$count module messages received. Change them in radio settings.';
+  }
+
+  @override
+  String setShareLocSub(String status) {
+    return '$status\nUsed when the radio has no GPS of its own. Updates every 5 min, or sooner when you move.';
+  }
+
+  @override
+  String get setPrecise => 'Precise';
+
+  @override
+  String setAbout2(String distance) {
+    return 'About $distance';
+  }
+
+  @override
+  String get setLowPowerSub =>
+      'Shared location uses balanced GPS and updates every 15 min, or after 200 m of movement. The radio link and coverage recording are unchanged.';
+
+  @override
+  String get setWidgetSub =>
+      'Off: the widget shows only how many messages are unread. On: it also shows the sender and text, which anyone holding the phone can see.';
+
+  @override
+  String get setDemoSub =>
+      'Explore the app with a pretend radio and mesh. Nothing is sent, and your own messages and settings are left alone.';
+
+  @override
+  String get setDevBuild => 'Development build • Independent mesh companion';
+
+  @override
+  String get setConnection => 'Connection';
+
+  @override
+  String get setConnectionSub =>
+      'Bluetooth LE • Safety mode on: no unverified device is treated as a mesh node';
+
+  @override
+  String get setTrademark => 'Trademark & compatibility';
+
+  @override
+  String get setDevWarning =>
+      'Do not rely on this development build as your only way to call for help.';
+
+  @override
+  String get setChannelsKept => 'Channel messages kept';
+
+  @override
+  String setChannelsDeleted(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Channel messages deleted after $days days',
+      one: 'Channel messages deleted after $days day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setNewestPer(String count) {
+    return 'newest $count per conversation';
+  }
+
+  @override
+  String get setReadOn => 'read aloud on';
+
+  @override
+  String get setDeleteOld => 'Delete old channel messages';
+
+  @override
+  String get setDirectKept => 'Direct messages are always kept';
+
+  @override
+  String get setNever => 'Never';
+
+  @override
+  String setAfterDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'After $days days',
+      one: 'After $days day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setHistory => 'Message history';
+
+  @override
+  String get setHistoryHelp =>
+      'Per channel or direct conversation. A lower limit deletes older messages.';
+
+  @override
+  String setKeepNewest(String count) {
+    return 'Keep newest $count';
+  }
+
+  @override
+  String get setMqttOff => 'Off. Uses your phone\'s data when on.';
+
+  @override
+  String get setMqttWait => 'On. Waits for your radio.';
+
+  @override
+  String get setMqttNoConfig =>
+      'Your radio isn\'t set to use this. Turn on MQTT and \"Proxy to client\" in its settings.';
+
+  @override
+  String setMqttConnected(String host, int up, int down, String kb) {
+    return 'Connected to $host. $up sent, $down received, about $kb KB of data.';
+  }
+
+  @override
+  String setMqttConnecting(String host) {
+    return 'Connecting to $host…';
+  }
+
+  @override
+  String get setMqttFailed => 'Couldn\'t connect.';
+
+  @override
+  String get setMqttStarting => 'Starting…';
+
+  @override
+  String get setBgOptimized =>
+      'Battery optimization can pause NOTORYX Connect when it is not on screen and drop the radio link. Set its battery use to Unrestricted to stay connected.';
+
+  @override
+  String get setBgAllowed =>
+      'Allowed to run in the background. A notification shows while a radio is connected.';
+
+  @override
+  String get setSizeUnknown => 'Size unknown';
+
+  @override
+  String setMbSaved(String mb) {
+    return '$mb MB saved';
+  }
+
+  @override
+  String get setTilesHelp =>
+      'Map areas you view online stay available offline for a year (up to 500 MB).';
+
+  @override
+  String get setAlertSaveFailed =>
+      'Alert settings apply now, but could not be saved.';
+
+  @override
+  String setLowBatterySub(int pct) {
+    return 'Your radio or a favorite reports $pct% or less';
+  }
+
+  @override
+  String setFavQuietSub(String time) {
+    return 'A favorite is not heard for $time while connected';
+  }
+
+  @override
+  String get setTheConnected => 'the connected radio';
+
+  @override
+  String setMoveTitle(String label) {
+    return 'Move $label?';
+  }
+
+  @override
+  String setMoveBody(String to, String id) {
+    return 'Its messages, offline queue, NodeDex history, trails and telemetry history move to $to. Whatever $to already has is kept, so nothing is overwritten. $id then no longer has an entry of its own.\n\nTo be safe, make a phone data backup first.';
+  }
+
+  @override
+  String get setMove => 'Move';
+
+  @override
+  String setMoved(String label, String to) {
+    return 'Moved $label to $to.';
+  }
+
+  @override
+  String setDataCounts(int messages, int nodes, int trails) {
+    return '$messages messages • $nodes nodes • $trails trails';
+  }
+
+  @override
+  String get setConnectNew =>
+      'Connect to the new radio to move an old radio\'s data to it.';
+
+  @override
+  String setFilterCounts(int ignored, int muted, int words) {
+    return '$ignored ignored • $muted muted • $words filtered words';
+  }
+
+  @override
+  String get setFilteredWords => 'Filtered words';
+
+  @override
+  String get setWordField => 'Word or phrase';
+
+  @override
+  String get setAddWord => 'Add filtered word';
+
+  @override
+  String setRemoveWord(String word) {
+    return 'Remove $word';
+  }
+
+  @override
+  String get setIgnoredMuted => 'Ignored and muted nodes';
+
+  @override
+  String get setNoneIgnored => 'None. Open a node to ignore or mute it.';
 }

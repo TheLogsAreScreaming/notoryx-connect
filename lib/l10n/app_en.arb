@@ -536,5 +536,311 @@
     }
   },
   "nodesOtherUsb": "Other USB device",
-  "nodesRefresh": "Refresh"
+  "nodesRefresh": "Refresh",
+  "setRadioSec": "Radio",
+  "setRadioConfig": "Radio configuration",
+  "setIdentity": "Node identity",
+  "setChange": "Change radio settings",
+  "setChangeSub": "Owner, LoRa, channels, device role and position",
+  "setDeviceLora": "Device & LoRa",
+  "setChannels": "Channels",
+  "setModules": "Modules",
+  "setShareLoc": "Share phone location with mesh",
+  "setPrecision": "Location precision",
+  "setPrecisionSub": "Rounded on this phone before it is sent",
+  "setLowPower": "Low-power field mode",
+  "setApp": "App",
+  "setWidget": "Show messages on the home-screen widget",
+  "setYourData": "Your data",
+  "setRadioBackup": "Encrypted radio backup",
+  "setRadioBackupSub": "Save or restore settings and channel keys, protected by a password",
+  "setPhoneBackup": "Phone data backup",
+  "setPhoneBackupSub": "Chats, nodes, waypoints, records and settings, for moving to a new phone",
+  "setPrivacy": "Privacy & data",
+  "setPrivacySub": "What is stored and sent; delete chat history or all phone data",
+  "setDemo": "Demo mode",
+  "setAbout": "About",
+  "setLicenses": "Third-party licenses",
+  "setReadAloud": "Read messages aloud",
+  "setReadSub": "Uses the phone's text-to-speech, including with the screen off",
+  "setMqttTitle": "Carry MQTT through this phone",
+  "setBackground": "Background connection",
+  "setOpenSettings": "Open settings",
+  "setOfflineTiles": "Offline map tiles",
+  "setClear": "Clear",
+  "setAlerts": "Field alerts",
+  "setAlertsSub": "Phone notifications only; nothing is sent over the mesh",
+  "setLowBattery": "Low battery",
+  "setThreshold": "Battery threshold",
+  "setNewNode": "New node",
+  "setNewNodeSub": "Your radio hears a node for the first time",
+  "setFavQuiet": "Favorite goes quiet",
+  "setMeshQuiet": "Mesh goes quiet",
+  "setMeshQuietSub": "Half or more of the nodes you were hearing stop being heard",
+  "setQuietAfter": "Quiet after",
+  "setRadioData": "Radio data",
+  "setRadioDataSub": "Lost or replaced a radio? Move its messages, nodes and history to the new one",
+  "setMoveToConnected": "Move to connected",
+  "setDataUnreadable": "Radio data could not be read.",
+  "setNoData": "No radio data on this phone yet.",
+  "setFilters": "Filters",
+  "setFilterHelp": "Incoming messages with these words are hidden, not deleted.",
+  "setShowFiltered": "Show filtered messages",
+  "setIgnored": "Ignored",
+  "setUnignore": "Unignore",
+  "setMuted": "Muted",
+  "setUnmute": "Unmute",
+  "setOffLoc": "Off. Your phone location is never sent.",
+  "setOnNoRadio": "On. Starts when a radio is connected.",
+  "setOnNoFix": "On. Waiting for a GPS fix.",
+  "setOnSent": "On. Last sent {time}.",
+  "@setOnSent": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "setSubtitle": "Your radio, how the app behaves, and your data.",
+  "setCanChange": "Connected • settings can be changed",
+  "setReadOnly": "Read-only: firmware {version} is older than {minimum}. Update at {url}.",
+  "@setReadOnly": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "minimum": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "setConnectToView": "Connect to a radio to view and change its settings",
+  "setWaitingNode": "Waiting for this radio's node information",
+  "setNoLong": "No long name",
+  "setNoShort": "No short name",
+  "setNoId": "ID not reported",
+  "setConfigWait": "Not received yet ({count} configuration messages)",
+  "@setConfigWait": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setChannelWait": "Not received yet ({count} channel messages)",
+  "@setChannelWait": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setModulesSub": "{count} module messages received. Change them in radio settings.",
+  "@setModulesSub": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setShareLocSub": "{status}\nUsed when the radio has no GPS of its own. Updates every 5 min, or sooner when you move.",
+  "@setShareLocSub": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "setPrecise": "Precise",
+  "setAbout2": "About {distance}",
+  "@setAbout2": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "setLowPowerSub": "Shared location uses balanced GPS and updates every 15 min, or after 200 m of movement. The radio link and coverage recording are unchanged.",
+  "setWidgetSub": "Off: the widget shows only how many messages are unread. On: it also shows the sender and text, which anyone holding the phone can see.",
+  "setDemoSub": "Explore the app with a pretend radio and mesh. Nothing is sent, and your own messages and settings are left alone.",
+  "setDevBuild": "Development build • Independent mesh companion",
+  "setConnection": "Connection",
+  "setConnectionSub": "Bluetooth LE • Safety mode on: no unverified device is treated as a mesh node",
+  "setTrademark": "Trademark & compatibility",
+  "setDevWarning": "Do not rely on this development build as your only way to call for help.",
+  "setChannelsKept": "Channel messages kept",
+  "setChannelsDeleted": "{days, plural, one{Channel messages deleted after {days} day} other{Channel messages deleted after {days} days}}",
+  "@setChannelsDeleted": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "setNewestPer": "newest {count} per conversation",
+  "@setNewestPer": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "setReadOn": "read aloud on",
+  "setDeleteOld": "Delete old channel messages",
+  "setDirectKept": "Direct messages are always kept",
+  "setNever": "Never",
+  "setAfterDays": "{days, plural, one{After {days} day} other{After {days} days}}",
+  "@setAfterDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "setHistory": "Message history",
+  "setHistoryHelp": "Per channel or direct conversation. A lower limit deletes older messages.",
+  "setKeepNewest": "Keep newest {count}",
+  "@setKeepNewest": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "setMqttOff": "Off. Uses your phone's data when on.",
+  "setMqttWait": "On. Waits for your radio.",
+  "setMqttNoConfig": "Your radio isn't set to use this. Turn on MQTT and \"Proxy to client\" in its settings.",
+  "setMqttConnected": "Connected to {host}. {up} sent, {down} received, about {kb} KB of data.",
+  "@setMqttConnected": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      },
+      "up": {
+        "type": "int"
+      },
+      "down": {
+        "type": "int"
+      },
+      "kb": {
+        "type": "String"
+      }
+    }
+  },
+  "setMqttConnecting": "Connecting to {host}…",
+  "@setMqttConnecting": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "setMqttFailed": "Couldn't connect.",
+  "setMqttStarting": "Starting…",
+  "setBgOptimized": "Battery optimization can pause NOTORYX Connect when it is not on screen and drop the radio link. Set its battery use to Unrestricted to stay connected.",
+  "setBgAllowed": "Allowed to run in the background. A notification shows while a radio is connected.",
+  "setSizeUnknown": "Size unknown",
+  "setMbSaved": "{mb} MB saved",
+  "@setMbSaved": {
+    "placeholders": {
+      "mb": {
+        "type": "String"
+      }
+    }
+  },
+  "setTilesHelp": "Map areas you view online stay available offline for a year (up to 500 MB).",
+  "setAlertSaveFailed": "Alert settings apply now, but could not be saved.",
+  "setLowBatterySub": "Your radio or a favorite reports {pct}% or less",
+  "@setLowBatterySub": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "setFavQuietSub": "A favorite is not heard for {time} while connected",
+  "@setFavQuietSub": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "setTheConnected": "the connected radio",
+  "setMoveTitle": "Move {label}?",
+  "@setMoveTitle": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "setMoveBody": "Its messages, offline queue, NodeDex history, trails and telemetry history move to {to}. Whatever {to} already has is kept, so nothing is overwritten. {id} then no longer has an entry of its own.\n\nTo be safe, make a phone data backup first.",
+  "@setMoveBody": {
+    "placeholders": {
+      "to": {
+        "type": "String"
+      },
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "setMove": "Move",
+  "setMoved": "Moved {label} to {to}.",
+  "@setMoved": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "setDataCounts": "{messages} messages • {nodes} nodes • {trails} trails",
+  "@setDataCounts": {
+    "placeholders": {
+      "messages": {
+        "type": "int"
+      },
+      "nodes": {
+        "type": "int"
+      },
+      "trails": {
+        "type": "int"
+      }
+    }
+  },
+  "setConnectNew": "Connect to the new radio to move an old radio's data to it.",
+  "setFilterCounts": "{ignored} ignored • {muted} muted • {words} filtered words",
+  "@setFilterCounts": {
+    "placeholders": {
+      "ignored": {
+        "type": "int"
+      },
+      "muted": {
+        "type": "int"
+      },
+      "words": {
+        "type": "int"
+      }
+    }
+  },
+  "setFilteredWords": "Filtered words",
+  "setWordField": "Word or phrase",
+  "setAddWord": "Add filtered word",
+  "setRemoveWord": "Remove {word}",
+  "@setRemoveWord": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "setIgnoredMuted": "Ignored and muted nodes",
+  "setNoneIgnored": "None. Open a node to ignore or mute it."
 }
