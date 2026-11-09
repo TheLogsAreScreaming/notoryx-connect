@@ -31,6 +31,8 @@ import 'services/bastion_chat_marks.dart';
 import 'services/bastion_message_search.dart';
 import 'services/bastion_scheduled_messages.dart';
 import 'services/bastion_sms_relay.dart';
+import 'services/bastion_tak_bridge.dart';
+import 'tak_bridge_page.dart';
 import 'sms_relay_page.dart';
 import 'mesh_health_page.dart';
 import 'mesh_tools_page.dart';
@@ -77,6 +79,7 @@ Future<void> main() async {
   await BastionBotGuard.instance.load();
   await BastionAppLock.instance.load();
   await BastionScheduledMessages.instance.load();
+  await BastionTakBridge.instance.load();
   if (BastionSmsRelay.available) await BastionSmsRelay.instance.load();
   runApp(const BastionApp());
 }
@@ -212,6 +215,8 @@ class _BastionShellState extends State<BastionShell> {
   void initState() {
     super.initState();
     unawaited(_realRadio.prepareAlerts());
+    // The real radio only: demo nodes must never reach ATAK.
+    BastionTakBridge.instance.attach(() => _realRadio.nodes);
     _setUpShortcuts();
     // The widget follows the real radio, never the demo.
     if (BastionHomeWidget.supported) {
@@ -245,6 +250,7 @@ class _BastionShellState extends State<BastionShell> {
   void dispose() {
     ble.dispose();
     _homeWidget?.dispose();
+    BastionTakBridge.instance.detach();
     _realRadio.dispose();
     _demo?.dispose();
     super.dispose();

@@ -1246,5 +1246,28 @@
   "lockTitle": "NOTORYX Connect is locked",
   "lockBody": "Your radio stays connected while the app is locked.",
   "lockUnlock": "Unlock",
-  "lockReason": "Unlock NOTORYX Connect"
+  "lockReason": "Unlock NOTORYX Connect",
+  "takTitle": "ATAK feed",
+  "toolsTakSub": "Show mesh nodes in ATAK on this phone",
+  "takIntro": "Sends the position of each mesh node to ATAK on this phone, once every 30 seconds. Nothing leaves the phone, and nothing goes out over the mesh.",
+  "takSwitch": "Send mesh positions to ATAK",
+  "takPort": "UDP port",
+  "takBadPort": "Use a number from 1024 to 65535.",
+  "takStatus": "{count, plural, one{Sending {count} node} other{Sending {count} nodes}}",
+  "@takStatus": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "takProblem": "Could not send: {error}",
+  "@takProblem": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "takHowTo": "In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out."
 }

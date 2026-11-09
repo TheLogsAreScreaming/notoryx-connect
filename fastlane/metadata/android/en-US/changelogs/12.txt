@@ -1,0 +1,1 @@
+Optional app lock and encrypted chat history. SALUTE and 9-Line report forms. Forward messages and send them later. Beacons can carry a Plus Code, and remote settings use less airtime. The map can show nodes your radio has forgotten and a coverage heatmap. Chats, Nodes, Map and Settings now follow the phone language (English or Spanish).

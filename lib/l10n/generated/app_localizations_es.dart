@@ -1749,4 +1749,44 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lockReason => 'Desbloquear NOTORYX Connect';
+
+  @override
+  String get takTitle => 'Envío a ATAK';
+
+  @override
+  String get toolsTakSub =>
+      'Mostrar nodos de la malla en ATAK en este teléfono';
+
+  @override
+  String get takIntro =>
+      'Envía la posición de cada nodo de la malla a ATAK en este teléfono, cada 30 segundos. Nada sale del teléfono y no se envía nada por la malla.';
+
+  @override
+  String get takSwitch => 'Enviar posiciones de la malla a ATAK';
+
+  @override
+  String get takPort => 'Puerto UDP';
+
+  @override
+  String get takBadPort => 'Usa un número del 1024 al 65535.';
+
+  @override
+  String takStatus(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Enviando $count nodos',
+      one: 'Enviando $count nodo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String takProblem(String error) {
+    return 'No se pudo enviar: $error';
+  }
+
+  @override
+  String get takHowTo =>
+      'En ATAK, abre Ajustes, luego Preferencias de red, luego Administrar entradas, y añade una entrada UDP en este puerto. Se omiten los nodos sin posición en la última hora.';
 }
