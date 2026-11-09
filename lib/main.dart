@@ -211,6 +211,7 @@ class _BastionShellState extends State<BastionShell> {
   @override
   void initState() {
     super.initState();
+    unawaited(_realRadio.prepareAlerts());
     _setUpShortcuts();
     // The widget follows the real radio, never the demo.
     if (BastionHomeWidget.supported) {
