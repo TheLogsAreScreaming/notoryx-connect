@@ -5,6 +5,7 @@ import 'package:bastion/generated/meshtastic/mesh.pb.dart' show User;
 import 'package:bastion/generated/meshtastic/module_config.pb.dart';
 import 'package:bastion/services/meshtastic_admin_session.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -31,7 +32,7 @@ void main() {
   testWidgets('draft text remains correct while reconnect verification is pending', (tester) async {
     final radio = SaveVerificationRadio(apply: true)..reconnect = Completer<void>();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(home: RadioSettingsPage(radio: radio)));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: RadioSettingsPage(radio: radio)));
     await tester.tap(find.text('Owner')); await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField).first, 'Trail Updated'); await tester.pump();
     await tester.tap(find.text('SAVE')); await tester.pumpAndSettle();
@@ -48,7 +49,7 @@ void main() {
   for (final applied in [true, false]) {
     testWidgets('owner save closes only after matching fresh read: $applied', (tester) async {
       final radio = SaveVerificationRadio(apply: applied); addTearDown(radio.dispose);
-      await tester.pumpWidget(MaterialApp(home: RadioSettingsPage(radio: radio)));
+      await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: RadioSettingsPage(radio: radio)));
       await tester.tap(find.text('Owner')); await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField).first, 'Trail Updated'); await tester.pump();
       await tester.tap(find.text('SAVE')); await tester.pumpAndSettle();
@@ -71,7 +72,7 @@ void main() {
   testWidgets('unavailable settings stay read-only and clear of system navigation', (tester) async {
     final radio = UnavailableRadio();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(builder: (context, child) => MediaQuery(
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, builder: (context, child) => MediaQuery(
       data: MediaQuery.of(context).copyWith(padding: const EdgeInsets.only(bottom: 48)),
       child: child!), home: RadioSettingsPage(radio: radio)));
     final list = find.byType(Scrollable).first;
@@ -92,7 +93,7 @@ void main() {
   testWidgets('abbreviated module names have readable titles', (tester) async {
     final radio = MeshtasticRadioCoordinator();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(home: RadioSettingsPage(radio: radio)));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: RadioSettingsPage(radio: radio)));
     for (final title in ['Device UI', 'MQTT', 'External notifications',
         'Canned messages', 'Remote hardware', 'TAK', 'Mesh Beacon']) {
       tester.state<ScrollableState>(find.byType(Scrollable).first).position.jumpTo(0);
@@ -105,7 +106,7 @@ void main() {
   testWidgets('radio settings are locked until a radio is ready', (tester) async {
     final radio = MeshtasticRadioCoordinator();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(home: RadioSettingsPage(radio: radio)));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: RadioSettingsPage(radio: radio)));
 
     expect(find.text('Radio not ready'), findsOneWidget);
     for (final title in ['Owner', 'LoRa', 'Channels', 'Device', 'Position']) {

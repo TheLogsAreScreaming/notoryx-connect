@@ -1770,4 +1770,262 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get takHowTo =>
       'In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out.';
+
+  @override
+  String get rsTitle => 'Radio settings';
+
+  @override
+  String get rsNotReady => 'Radio not ready';
+
+  @override
+  String get rsNotReadySub =>
+      'Connect to a radio and wait for READY to change settings.';
+
+  @override
+  String get rsAvailability => 'Settings availability';
+
+  @override
+  String get rsAvailabilitySub =>
+      'Check reads before editing. Missing startup settings do not prove a module is unsupported. Results reset on reconnect.';
+
+  @override
+  String get rsStopChecking => 'Stop checking';
+
+  @override
+  String get rsOwner => 'Owner';
+
+  @override
+  String get rsOwnerSub => 'Long and short node names';
+
+  @override
+  String get rsLoraSub => 'Region, modem preset, hop limit, transmit';
+
+  @override
+  String get rsChannels => 'Channels';
+
+  @override
+  String get rsChannelsSub => 'Names, roles and encryption keys';
+
+  @override
+  String get rsDevice => 'Device';
+
+  @override
+  String get rsDeviceSub => 'Device role and rebroadcast mode';
+
+  @override
+  String get rsPosition => 'Position';
+
+  @override
+  String get rsPositionSub => 'Broadcast interval, GPS mode, smart position';
+
+  @override
+  String get rsAllSettings => 'ALL RADIO SETTINGS';
+
+  @override
+  String get rsModules => 'MODULES';
+
+  @override
+  String get rsRadioChanged =>
+      'Connected radio changed while loading. Retry the read.';
+
+  @override
+  String rsSaveQ(String section) {
+    return 'Save $section?';
+  }
+
+  @override
+  String get rsSaveWarning =>
+      'This writes the change to the connected radio. The radio may reboot and reconnect.';
+
+  @override
+  String get rsIdentityChanged =>
+      'Radio identity changed or is unavailable. Reload before saving.';
+
+  @override
+  String rsSaved(String section) {
+    return '$section saved and verified from radio.';
+  }
+
+  @override
+  String rsNotVerified(String error) {
+    return 'Save not verified: $error\nThe radio may have applied the change. Reload to inspect its current value; nothing will be resent automatically.';
+  }
+
+  @override
+  String get rsSaveButton => 'SAVE';
+
+  @override
+  String rsUnavailable(String section) {
+    return '$section settings are unavailable through this radio’s firmware API.';
+  }
+
+  @override
+  String rsReadFailed(String error) {
+    return 'Could not read from the radio: $error';
+  }
+
+  @override
+  String get rsRetry => 'Retry';
+
+  @override
+  String get rsWaitingReconnect =>
+      'Waiting for reconnect and a fresh settings read…';
+
+  @override
+  String get rsReload => 'Reload from radio';
+
+  @override
+  String get rsLongName => 'Long name';
+
+  @override
+  String get rsShortName => 'Short name';
+
+  @override
+  String get rsChooseRegion =>
+      'Choose a region before saving; the radio will not transmit without one.';
+
+  @override
+  String get rsCustomInvalid =>
+      'Custom settings require a positive bandwidth, spreading factor 5–12 and coding rate denominator 5–8. Check your radio’s supported values.';
+
+  @override
+  String get rsRegionWarning =>
+      'Changing region or modem preset disconnects this radio from nodes that keep the old settings.';
+
+  @override
+  String get rsRegion => 'Region';
+
+  @override
+  String get rsUsePreset => 'Use modem preset';
+
+  @override
+  String get rsModemPreset => 'Modem preset';
+
+  @override
+  String get rsBandwidth => 'Bandwidth (kHz)';
+
+  @override
+  String get rsSpreadFactor => 'Spreading factor';
+
+  @override
+  String get rsCodingRate => 'Coding rate denominator (5–8)';
+
+  @override
+  String get rsRxBoost => 'RX boosted gain';
+
+  @override
+  String get rsRxBoostSub =>
+      'Internal SX126x receiver gain; separate from external LNA';
+
+  @override
+  String get rsLna => 'External LNA';
+
+  @override
+  String get rsLnaReported =>
+      'External receive amplifier reported by this radio';
+
+  @override
+  String get rsLnaNone =>
+      'This radio has not reported a controllable external LNA';
+
+  @override
+  String rsHopLimit(int hops) {
+    return 'Hop limit: $hops';
+  }
+
+  @override
+  String get rsTransmit => 'Transmit enabled';
+
+  @override
+  String get rsTransmitSub => 'Off makes the radio receive-only';
+
+  @override
+  String rsInfraWarning(String role) {
+    return '$role is for fixed infrastructure with good coverage. On a handheld it wastes airtime and battery.';
+  }
+
+  @override
+  String get rsRole => 'Role';
+
+  @override
+  String get rsRebroadcast => 'Rebroadcast mode';
+
+  @override
+  String get rsIntervalInvalid =>
+      'Broadcast interval must be 0 (firmware default) or at least 30 seconds.';
+
+  @override
+  String get rsGpsMode => 'GPS mode';
+
+  @override
+  String get rsInterval => 'Broadcast interval (seconds, 0 = default)';
+
+  @override
+  String get rsSmart => 'Smart position broadcast';
+
+  @override
+  String get rsSmartSub => 'Send extra updates when the node moves';
+
+  @override
+  String get rsFixed => 'Fixed position';
+
+  @override
+  String get rsFixedSub => 'Report the last known position instead of GPS';
+
+  @override
+  String get rsShareQr => 'Share as QR code';
+
+  @override
+  String get rsImportLink => 'Import channel link';
+
+  @override
+  String get rsDisabled => 'Disabled';
+
+  @override
+  String get rsDefaultName => '(default name)';
+
+  @override
+  String rsChannelsFailed(String error) {
+    return 'Could not read channels: $error';
+  }
+
+  @override
+  String get rsNoEncryption => 'No encryption';
+
+  @override
+  String get rsDefaultKey => 'Default key';
+
+  @override
+  String get rsAes128 => 'AES-128 key';
+
+  @override
+  String get rsAes256 => 'AES-256 key';
+
+  @override
+  String get rsUnknownKey => 'Unrecognized key';
+
+  @override
+  String rsChannelN(int index) {
+    return 'Channel $index';
+  }
+
+  @override
+  String get rsKeyWarning =>
+      'The encryption key changes. Nodes without the new key can no longer read this channel. Share it from the channel QR code.';
+
+  @override
+  String get rsChannelName => 'Name (blank uses the preset name)';
+
+  @override
+  String rsEncryption(String key) {
+    return 'Encryption: $key';
+  }
+
+  @override
+  String get rsNewAes256 => 'New random AES-256';
+
+  @override
+  String rsGpsHidden(String model) {
+    return 'GPS pins are hidden: $model has its GPS wired by the maker, so they do nothing.';
+  }
 }

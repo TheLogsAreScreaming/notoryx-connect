@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bastion/main.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
+import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/radio_settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,6 +27,25 @@ void main() {
     for (final file in Directory('lib/l10n').listSync().whereType<File>().where((f) => f.path.endsWith('.arb'))) {
       expect(keysOf(file.path), english, reason: file.path);
     }
+  });
+
+  testWidgets('Radio settings is translated', (tester) async {
+    tester.view.physicalSize = const Size(390, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: RadioSettingsPage(radio: radio),
+    ));
+    await tester.pump();
+    expect(find.text('Ajustes de la radio'), findsOneWidget);
+    expect(find.text('Radio no preparada'), findsOneWidget);
+    expect(find.text('Propietario'), findsOneWidget);
   });
 
   testWidgets('the Tools page is translated', (tester) async {

@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
+import 'l10n/generated/app_localizations.dart';
 import 'package:protobuf/protobuf.dart';
 
 import 'channel_share_page.dart';
@@ -30,70 +32,70 @@ class RadioSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Radio settings')),
+    appBar: AppBar(title: Text(_l(context).rsTitle)),
     body: SafeArea(top: false, child: AnimatedBuilder(
       animation: radio,
       builder: (context, _) => ListView(
         padding: const EdgeInsets.all(16),
         children: [
           if (!radio.canAdminister)
-            const Card(
+            Card(
               child: ListTile(
-                leading: Icon(Icons.link_off),
-                title: Text('Radio not ready'),
+                leading: const Icon(Icons.link_off),
+                title: Text(_l(context).rsNotReady),
                 subtitle: Text(
-                  'Connect to a radio and wait for READY to change settings.',
+                  _l(context).rsNotReadySub,
                 ),
               ),
             ),
           Card(child: ListTile(
-            title: const Text('Settings availability'),
-            subtitle: const Text('Check reads before editing. Missing startup settings do not prove a module is unsupported. Results reset on reconnect.'),
+            title: Text(_l(context).rsAvailability),
+            subtitle: Text(_l(context).rsAvailabilitySub),
             trailing: radio.checkingSettings ? TextButton(
-              onPressed: radio.cancelSettingsCheck, child: const Text('Stop checking')) : const Icon(Icons.refresh),
+              onPressed: radio.cancelSettingsCheck, child: Text(_l(context).rsStopChecking)) : const Icon(Icons.refresh),
             onTap: radio.canAdminister && !radio.checkingSettings
                 ? radio.checkSettingsAvailability : null,
           )),
           _entry(
             context,
             Icons.person_outline,
-            'Owner',
-            'Long and short node names',
+            _l(context).rsOwner,
+            _l(context).rsOwnerSub,
             () => _OwnerEditor(radio: radio),
           ),
           _entry(
             context,
             Icons.settings_input_antenna,
             'LoRa',
-            'Region, modem preset, hop limit, transmit',
+            _l(context).rsLoraSub,
             () => _LoraEditor(radio: radio),
           ),
           _entry(
             context,
             Icons.forum_outlined,
-            'Channels',
-            'Names, roles and encryption keys',
+            _l(context).rsChannels,
+            _l(context).rsChannelsSub,
             () => _ChannelListPage(radio: radio),
           ),
           _entry(
             context,
             Icons.memory,
-            'Device',
-            'Device role and rebroadcast mode',
+            _l(context).rsDevice,
+            _l(context).rsDeviceSub,
             () => _DeviceEditor(radio: radio),
           ),
           _entry(
             context,
             Icons.my_location,
-            'Position',
-            'Broadcast interval, GPS mode, smart position',
+            _l(context).rsPosition,
+            _l(context).rsPositionSub,
             () => _PositionEditor(radio: radio),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(4, 20, 4, 8),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 20, 4, 8),
             child: Text(
-              'ALL RADIO SETTINGS',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              _l(context).rsAllSettings,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           for (final type in AdminMessage_ConfigType.values)
@@ -111,11 +113,11 @@ class RadioSettingsPage extends StatelessWidget {
                   empty: Config.new,
                 ),
               ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(4, 20, 4, 8),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 20, 4, 8),
             child: Text(
-              'MODULES',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              _l(context).rsModules,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           for (final type in AdminMessage_ModuleConfigType.values)
@@ -214,8 +216,9 @@ class _AdminEditorState<T extends GeneratedMessage>
     try {
       final node = widget.radio.localNodeNum;
       final value = await widget.load();
-      if (widget.radio.localNodeNum != node) throw StateError('Connected radio changed while loading. Retry the read.');
       if (!mounted) return;
+      // Looked up here, not before the read: _reload also runs from initState.
+      if (widget.radio.localNodeNum != node) throw StateError(_l(context).rsRadioChanged);
       _loadedNode = node;
       setState(() {
         _readRevision++;
@@ -233,26 +236,26 @@ class _AdminEditorState<T extends GeneratedMessage>
     if (original == null || draft == null || _saveAttempted) return;
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);
+    final l = _l(context);
     final warning = widget.warning?.call(original, draft);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Save ${widget.title.toLowerCase()}?'),
+        title: Text(l.rsSaveQ(widget.title)),
         content: Text(
           [
-            'This writes the change to the connected radio. '
-                'The radio may reboot and reconnect.',
+            l.rsSaveWarning,
             ?warning,
           ].join('\n\n'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(l.commonCancel),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Save'),
+            child: Text(l.commonSave),
           ),
         ],
       ),
@@ -260,7 +263,7 @@ class _AdminEditorState<T extends GeneratedMessage>
     if (confirmed != true || !mounted) return;
     final node = _loadedNode;
     if (node == null || widget.radio.localNodeNum != node) {
-      setState(() => _saveProblem = 'Radio identity changed or is unavailable. Reload before saving.');
+      setState(() => _saveProblem = l.rsIdentityChanged);
       return;
     }
     FocusScope.of(context).unfocus();
@@ -275,7 +278,7 @@ class _AdminEditorState<T extends GeneratedMessage>
       );
       if (!mounted) return;
       messenger.showSnackBar(
-        SnackBar(content: Text('${widget.title} saved and verified from radio.')),
+        SnackBar(content: Text(l.rsSaved(widget.title))),
       );
       navigator.pop();
     } catch (error) {
@@ -300,7 +303,7 @@ class _AdminEditorState<T extends GeneratedMessage>
                     dimension: 18,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : const Text('SAVE'),
+                : Text(_l(context).rsSaveButton),
           ),
         ],
       ),
@@ -309,14 +312,14 @@ class _AdminEditorState<T extends GeneratedMessage>
           padding: const EdgeInsets.all(16),
           children: [
             Text(loadError is MeshtasticSettingsUnavailable
-                ? '${widget.title} settings are unavailable through this radio’s firmware API.'
-                : 'Could not read from the radio: $loadError'),
+                ? _l(context).rsUnavailable(widget.title)
+                : _l(context).rsReadFailed('$loadError')),
             const SizedBox(height: 12),
             Align(
               alignment: Alignment.centerLeft,
               child: OutlinedButton(
                 onPressed: _reload,
-                child: const Text('Retry'),
+                child: Text(_l(context).rsRetry),
               ),
             ),
           ],
@@ -327,10 +330,10 @@ class _AdminEditorState<T extends GeneratedMessage>
           child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              if (_saving) const ListTile(title: Text('Waiting for reconnect and a fresh settings read…')),
+              if (_saving) ListTile(title: Text(_l(context).rsWaitingReconnect)),
               if (_saveProblem != null) Semantics(liveRegion: true, child: Text(_saveProblem!)),
               if (_saveAttempted && !_saving || _saveProblem != null && !_saving)
-                TextButton(onPressed: _reload, child: const Text('Reload from radio')),
+                TextButton(onPressed: _reload, child: Text(_l(context).rsReload)),
               KeyedSubtree(
                 key: ValueKey('settings-fields:$_readRevision'),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -427,7 +430,7 @@ class _OwnerEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _AdminEditor<User>(
     radio: radio,
-    title: 'Owner',
+    title: _l(context).rsOwner,
     load: radio.readOwner,
     save: radio.writeOwner,
     validate: (draft) =>
@@ -435,7 +438,7 @@ class _OwnerEditor extends StatelessWidget {
         BastionNodeIdentityValidation.shortNameError(draft.shortName),
     fields: (draft, changed) => [
       _DraftTextField(
-        label: 'Long name',
+        label: _l(context).rsLongName,
         initial: draft.longName,
         maxLength: 39,
         onChanged: (v) {
@@ -444,7 +447,7 @@ class _OwnerEditor extends StatelessWidget {
         },
       ),
       _DraftTextField(
-        label: 'Short name',
+        label: _l(context).rsShortName,
         initial: draft.shortName,
         maxLength: 4,
         onChanged: (v) {
@@ -470,7 +473,7 @@ class _LoraEditor extends StatelessWidget {
     save: (draft) => radio.writeConfig(Config(lora: draft)),
     validate: (draft) {
       if (draft.region == Config_LoRaConfig_RegionCode.UNSET) {
-        return 'Choose a region before saving; the radio will not transmit without one.';
+        return _l(context).rsChooseRegion;
       }
       if (!draft.usePreset &&
           (draft.bandwidth <= 0 ||
@@ -478,8 +481,7 @@ class _LoraEditor extends StatelessWidget {
               draft.spreadFactor > 12 ||
               draft.codingRate < 5 ||
               draft.codingRate > 8)) {
-        return 'Custom settings require a positive bandwidth, spreading factor 5–12 '
-            'and coding rate denominator 5–8. Check your radio’s supported values.';
+        return _l(context).rsCustomInvalid;
       }
       return null;
     },
@@ -491,12 +493,11 @@ class _LoraEditor extends StatelessWidget {
             original.spreadFactor != draft.spreadFactor ||
             original.codingRate != draft.codingRate ||
             original.overrideFrequency != draft.overrideFrequency
-        ? 'Changing region or modem preset disconnects this radio from '
-              'nodes that keep the old settings.'
+        ? _l(context).rsRegionWarning
         : null,
     fields: (draft, changed) => [
       _enumField(
-        label: 'Region',
+        label: _l(context).rsRegion,
         value: draft.region,
         values: Config_LoRaConfig_RegionCode.values,
         onChanged: (v) {
@@ -506,7 +507,7 @@ class _LoraEditor extends StatelessWidget {
       ),
       SwitchListTile(
         contentPadding: EdgeInsets.zero,
-        title: const Text('Use modem preset'),
+        title: Text(_l(context).rsUsePreset),
         value: draft.usePreset,
         onChanged: (v) {
           draft.usePreset = v;
@@ -515,7 +516,7 @@ class _LoraEditor extends StatelessWidget {
       ),
       if (draft.usePreset)
         _enumField(
-          label: 'Modem preset',
+          label: _l(context).rsModemPreset,
           value: draft.modemPreset,
           values: Config_LoRaConfig_ModemPreset.values,
           onChanged: (v) {
@@ -525,7 +526,7 @@ class _LoraEditor extends StatelessWidget {
         ),
       if (!draft.usePreset) ...[
         _DraftTextField(
-          label: 'Bandwidth (kHz)',
+          label: _l(context).rsBandwidth,
           initial: '${draft.bandwidth}',
           keyboardType: TextInputType.number,
           onChanged: (v) {
@@ -534,7 +535,7 @@ class _LoraEditor extends StatelessWidget {
           },
         ),
         _DraftTextField(
-          label: 'Spreading factor',
+          label: _l(context).rsSpreadFactor,
           initial: '${draft.spreadFactor}',
           keyboardType: TextInputType.number,
           onChanged: (v) {
@@ -543,7 +544,7 @@ class _LoraEditor extends StatelessWidget {
           },
         ),
         _DraftTextField(
-          label: 'Coding rate denominator (5–8)',
+          label: _l(context).rsCodingRate,
           initial: '${draft.codingRate}',
           keyboardType: TextInputType.number,
           onChanged: (v) {
@@ -565,9 +566,9 @@ class _LoraEditor extends StatelessWidget {
       ),
       SwitchListTile(
         contentPadding: EdgeInsets.zero,
-        title: const Text('RX boosted gain'),
-        subtitle: const Text(
-          'Internal SX126x receiver gain; separate from external LNA',
+        title: Text(_l(context).rsRxBoost),
+        subtitle: Text(
+          _l(context).rsRxBoostSub,
         ),
         value: draft.sx126xRxBoostedGain,
         onChanged: (v) {
@@ -577,11 +578,11 @@ class _LoraEditor extends StatelessWidget {
       ),
       SwitchListTile(
         contentPadding: EdgeInsets.zero,
-        title: const Text('External LNA'),
+        title: Text(_l(context).rsLna),
         subtitle: Text(
           BastionRadioPolicy.canControlLna(draft)
-              ? 'External receive amplifier reported by this radio'
-              : 'This radio has not reported a controllable external LNA',
+              ? _l(context).rsLnaReported
+              : _l(context).rsLnaNone,
         ),
         value: draft.femLnaMode == Config_LoRaConfig_FEM_LNA_Mode.ENABLED,
         onChanged: BastionRadioPolicy.canControlLna(draft)
@@ -594,7 +595,7 @@ class _LoraEditor extends StatelessWidget {
             : null,
       ),
       const SizedBox(height: 16),
-      Text('Hop limit: ${draft.hopLimit}'),
+      Text(_l(context).rsHopLimit(draft.hopLimit)),
       Slider(
         value: draft.hopLimit.clamp(1, 7).toDouble(),
         min: 1,
@@ -608,8 +609,8 @@ class _LoraEditor extends StatelessWidget {
       ),
       SwitchListTile(
         contentPadding: EdgeInsets.zero,
-        title: const Text('Transmit enabled'),
-        subtitle: const Text('Off makes the radio receive-only'),
+        title: Text(_l(context).rsTransmit),
+        subtitle: Text(_l(context).rsTransmitSub),
         value: draft.txEnabled,
         onChanged: (v) {
           draft.txEnabled = v;
@@ -634,18 +635,17 @@ class _DeviceEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _AdminEditor<Config_DeviceConfig>(
     radio: radio,
-    title: 'Device',
+    title: _l(context).rsDevice,
     load: () async =>
         (await radio.readConfig(AdminMessage_ConfigType.DEVICE_CONFIG)).device,
     save: (draft) => radio.writeConfig(Config(device: draft)),
     warning: (original, draft) =>
         original.role != draft.role && _infrastructureRoles.contains(draft.role)
-        ? '${_label(draft.role)} is for fixed infrastructure with good '
-              'coverage. On a handheld it wastes airtime and battery.'
+        ? _l(context).rsInfraWarning(_label(draft.role))
         : null,
     fields: (draft, changed) => [
       _enumField(
-        label: 'Role',
+        label: _l(context).rsRole,
         value: draft.role,
         // ROUTER_CLIENT is deprecated in firmware.
         values: Config_DeviceConfig_Role.values
@@ -657,7 +657,7 @@ class _DeviceEditor extends StatelessWidget {
         },
       ),
       _enumField(
-        label: 'Rebroadcast mode',
+        label: _l(context).rsRebroadcast,
         value: draft.rebroadcastMode,
         values: Config_DeviceConfig_RebroadcastMode.values,
         onChanged: (v) {
@@ -677,18 +677,18 @@ class _PositionEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _AdminEditor<Config_PositionConfig>(
     radio: radio,
-    title: 'Position',
+    title: _l(context).rsPosition,
     load: () async =>
         (await radio.readConfig(AdminMessage_ConfigType.POSITION_CONFIG))
             .position,
     save: (draft) => radio.writeConfig(Config(position: draft)),
     validate: (draft) =>
         draft.positionBroadcastSecs != 0 && draft.positionBroadcastSecs < 30
-        ? 'Broadcast interval must be 0 (firmware default) or at least 30 seconds.'
+        ? _l(context).rsIntervalInvalid
         : null,
     fields: (draft, changed) => [
       _enumField(
-        label: 'GPS mode',
+        label: _l(context).rsGpsMode,
         value: draft.gpsMode,
         values: Config_PositionConfig_GpsMode.values,
         onChanged: (v) {
@@ -697,7 +697,7 @@ class _PositionEditor extends StatelessWidget {
         },
       ),
       _DraftTextField(
-        label: 'Broadcast interval (seconds, 0 = default)',
+        label: _l(context).rsInterval,
         initial: '${draft.positionBroadcastSecs}',
         keyboardType: TextInputType.number,
         onChanged: (v) {
@@ -707,8 +707,8 @@ class _PositionEditor extends StatelessWidget {
       ),
       SwitchListTile(
         contentPadding: EdgeInsets.zero,
-        title: const Text('Smart position broadcast'),
-        subtitle: const Text('Send extra updates when the node moves'),
+        title: Text(_l(context).rsSmart),
+        subtitle: Text(_l(context).rsSmartSub),
         value: draft.positionBroadcastSmartEnabled,
         onChanged: (v) {
           draft.positionBroadcastSmartEnabled = v;
@@ -717,8 +717,8 @@ class _PositionEditor extends StatelessWidget {
       ),
       SwitchListTile(
         contentPadding: EdgeInsets.zero,
-        title: const Text('Fixed position'),
-        subtitle: const Text('Report the last known position instead of GPS'),
+        title: Text(_l(context).rsFixed),
+        subtitle: Text(_l(context).rsFixedSub),
         value: draft.fixedPosition,
         onChanged: (v) {
           draft.fixedPosition = v;
@@ -771,10 +771,10 @@ class _ChannelListPageState extends State<_ChannelListPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: const Text('Channels'),
+      title: Text(_l(context).rsChannels),
       actions: [
         IconButton(
-          tooltip: 'Share as QR code',
+          tooltip: _l(context).rsShareQr,
           icon: const Icon(Icons.qr_code),
           onPressed: () => Navigator.of(context).push(
             MaterialPageRoute<void>(
@@ -783,7 +783,7 @@ class _ChannelListPageState extends State<_ChannelListPage> {
           ),
         ),
         IconButton(
-          tooltip: 'Import channel link',
+          tooltip: _l(context).rsImportLink,
           icon: const Icon(Icons.download),
           onPressed: () async {
             await Navigator.of(context).push(
@@ -805,13 +805,13 @@ class _ChannelListPageState extends State<_ChannelListPage> {
               leading: CircleAvatar(child: Text('${channel.index}')),
               title: Text(
                 channel.role == Channel_Role.DISABLED
-                    ? 'Disabled'
+                    ? _l(context).rsDisabled
                     : channel.settings.name.isEmpty
-                    ? '(default name)'
+                    ? _l(context).rsDefaultName
                     : channel.settings.name,
               ),
               subtitle: Text(
-                '${_label(channel.role)} • ${_describeKey(channel.settings.psk)}',
+                '${_label(channel.role)} • ${_describeKey(_l(context), channel.settings.psk)}',
               ),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
@@ -833,10 +833,10 @@ class _ChannelListPageState extends State<_ChannelListPage> {
             child: Center(child: CircularProgressIndicator()),
           ),
         if (_error != null) ...[
-          Text('Could not read channels: $_error'),
+          Text(_l(context).rsChannelsFailed('$_error')),
           Align(
             alignment: Alignment.centerLeft,
-            child: OutlinedButton(onPressed: _load, child: const Text('Retry')),
+            child: OutlinedButton(onPressed: _load, child: Text(_l(context).rsRetry)),
           ),
         ],
       ],
@@ -844,13 +844,15 @@ class _ChannelListPageState extends State<_ChannelListPage> {
   );
 }
 
-String _describeKey(List<int> psk) => switch (psk.length) {
-  0 => 'No encryption',
-  1 when psk.first == 0 => 'No encryption',
-  1 => 'Default key',
-  16 => 'AES-128 key',
-  32 => 'AES-256 key',
-  _ => 'Unrecognized key',
+AppLocalizations _l(BuildContext context) => AppLocalizations.of(context);
+
+String _describeKey(AppLocalizations l, List<int> psk) => switch (psk.length) {
+  0 => l.rsNoEncryption,
+  1 when psk.first == 0 => l.rsNoEncryption,
+  1 => l.rsDefaultKey,
+  16 => l.rsAes128,
+  32 => l.rsAes256,
+  _ => l.rsUnknownKey,
 };
 
 class _ChannelEditor extends StatelessWidget {
@@ -862,7 +864,7 @@ class _ChannelEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _AdminEditor<Channel>(
     radio: radio,
-    title: 'Channel $index',
+    title: _l(context).rsChannelN(index),
     load: () => radio.readChannel(index),
     save: radio.writeChannel,
     validate: (draft) => BastionChannelValidation.validate(
@@ -876,13 +878,12 @@ class _ChannelEditor extends StatelessWidget {
           original.settings.psk,
           draft.settings.psk,
         )
-        ? 'The encryption key changes. Nodes without the new key can no '
-              'longer read this channel. Share it from the channel QR code.'
+        ? _l(context).rsKeyWarning
         : null,
     fields: (draft, changed) => [
       if (index != 0)
         _enumField(
-          label: 'Role',
+          label: _l(context).rsRole,
           value: draft.role,
           values: const [Channel_Role.SECONDARY, Channel_Role.DISABLED],
           onChanged: (v) {
@@ -891,7 +892,7 @@ class _ChannelEditor extends StatelessWidget {
           },
         ),
       _DraftTextField(
-        label: 'Name (blank uses the preset name)',
+        label: _l(context).rsChannelName,
         initial: draft.settings.name,
         maxLength: 11,
         onChanged: (v) {
@@ -900,7 +901,7 @@ class _ChannelEditor extends StatelessWidget {
         },
       ),
       const SizedBox(height: 8),
-      Text('Encryption: ${_describeKey(draft.settings.psk)}'),
+      Text(_l(context).rsEncryption(_describeKey(_l(context), draft.settings.psk))),
       Wrap(
         spacing: 8,
         children: [
@@ -909,7 +910,7 @@ class _ChannelEditor extends StatelessWidget {
               draft.ensureSettings().psk = const [1];
               changed();
             },
-            child: const Text('Default key'),
+            child: Text(_l(context).rsDefaultKey),
           ),
           OutlinedButton(
             onPressed: () {
@@ -920,14 +921,14 @@ class _ChannelEditor extends StatelessWidget {
               );
               changed();
             },
-            child: const Text('New random AES-256'),
+            child: Text(_l(context).rsNewAes256),
           ),
           OutlinedButton(
             onPressed: () {
               draft.ensureSettings().psk = const [0];
               changed();
             },
-            child: const Text('No encryption'),
+            child: Text(_l(context).rsNoEncryption),
           ),
         ],
       ),
@@ -1014,7 +1015,7 @@ class _OneofEditorState extends State<_OneofEditor> {
           changed: changed,
           hiddenFields: hideGpsPins ? BastionHardware.diyGpsFields : const {},
           notice: hideGpsPins
-              ? 'GPS pins are hidden: ${BastionHardware.name(model!)} has its GPS wired by the maker, so they do nothing.'
+              ? _l(context).rsGpsHidden(BastionHardware.name(model!))
               : null,
         ),
       ];
