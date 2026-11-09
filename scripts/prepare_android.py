@@ -43,6 +43,12 @@ if 'flutter_foreground_task.service.ForegroundService' not in s:
             android:exported="false" />
     </application>'''
     s=s.replace('    </application>', service, 1)
+# Notification actions: reply from the phone or a paired Wear OS watch.
+if 'ActionBroadcastReceiver' not in s:
+    s=s.replace('    </application>', '''        <receiver
+            android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver" />
+    </application>''', 1)
 # Home-screen status widget.
 if 'StatusWidgetProvider' not in s:
     receiver = '''        <receiver
