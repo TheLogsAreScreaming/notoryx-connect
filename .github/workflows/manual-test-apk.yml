@@ -7,6 +7,11 @@ on:
         required: true
         default: 'field-test'
         type: string
+      sms_relay:
+        description: 'Include the SMS relay (sideload only, never for Play)'
+        required: false
+        default: false
+        type: boolean
 permissions:
   contents: read
 jobs:
@@ -34,7 +39,7 @@ jobs:
           # flutter create replaces pubspec.lock with a template; restore the committed one.
           git checkout -- pubspec.lock
           rm -f test/widget_test.dart
-          python3 scripts/prepare_android.py
+          python3 scripts/prepare_android.py ${{ inputs.sms_relay && '--sms' || '' }}
       - run: |
           flutter pub get --enforce-lockfile
           dart run flutter_launcher_icons
@@ -42,9 +47,10 @@ jobs:
           # flutter_launcher_icons-*.yaml makes the tool skip the main config).
           test -f android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
           flutter analyze
+          bash scripts/warm_native_assets.sh
           flutter test
       - name: Build APK
-        run: flutter build apk --release --target-platform android-arm64
+        run: flutter build apk --release --target-platform android-arm64 ${{ inputs.sms_relay && '--dart-define=NOTORYX_SMS=true' || '' }}
       - name: Verify APK and checksum
         run: |
           test -s build/app/outputs/flutter-apk/app-release.apk

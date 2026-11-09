@@ -11,7 +11,10 @@ import os
 import sys
 args = sys.argv[1:]
 case = os.environ['BASTION_SMOKE_CASE']
-if args[0] == 'install':
+relaunched = os.path.exists('relaunched')
+if args[:3] == ['shell', 'input', 'keyevent']:
+    open('relaunched', 'w').close()
+elif args[0] == 'install':
     sys.exit(42 if case == 'install_failure' else 0)
 if args[:4] == ['shell', 'pm', 'list', 'packages']:
     print('package:com.bastionmesh.connect')
@@ -20,11 +23,13 @@ elif args[:3] == ['shell', 'am', 'start']:
 elif args[:2] == ['shell', 'pidof']:
     if case == 'process_gone':
         sys.exit(1)
-    print('12345')
+    print('67890' if case == 'relaunch_new_process' and relaunched else '12345')
 elif args[0] == 'logcat' and args[-1] == '-d':
     if any(arg.startswith('--pid=') for arg in args):
         assert '--pid=12345' in args
         print('FATAL EXCEPTION: main' if case == 'crash' else 'App is alive')
+    elif case == 'relaunch_crash' and relaunched:
+        print('FATAL EXCEPTION: main')
     elif case != 'never_displayed':
         print('ActivityTaskManager: Displayed com.bastionmesh.connect/com.bastionmesh.bastion.MainActivity: +15s')
 elif args[0] == 'exec-out':
@@ -63,6 +68,12 @@ class SmokeScriptTest(unittest.TestCase):
 
     def test_fatal_exception_fails(self):
         self.run_case('crash', False)
+
+    def test_crash_after_activity_recreated_fails(self):
+        self.run_case('relaunch_crash', False)
+
+    def test_new_process_after_activity_recreated_fails(self):
+        self.run_case('relaunch_new_process', False)
 
     def test_install_failure_retains_diagnostics(self):
         self.run_case('install_failure', False)

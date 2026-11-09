@@ -51,6 +51,7 @@ jobs:
           mkdir -p build/ci-diagnostics
           set -o pipefail
           flutter analyze 2>&1 | tee build/ci-diagnostics/analyze.log
+          bash scripts/warm_native_assets.sh
           flutter test --reporter expanded 2>&1 | tee build/ci-diagnostics/tests.log
       - name: Build development APK
         run: flutter build apk --release --target-platform android-arm64

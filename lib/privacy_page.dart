@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'services/app_exit.dart';
+import 'services/bastion_app_lock.dart';
+import 'services/bastion_chat_store.dart';
 import 'services/bastion_phone_backup.dart';
 import 'services/bastion_tile_cache.dart';
 import 'services/meshtastic_connection_controller.dart';
@@ -17,6 +19,28 @@ class PrivacyPage extends StatefulWidget {
 class _PrivacyPageState extends State<PrivacyPage> {
   bool _busy = false;
   String? _status;
+  bool _lockAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    BastionAppLock.instance.isAvailable().then((v) {
+      if (mounted) setState(() => _lockAvailable = v);
+    });
+  }
+
+  Future<void> _setEncrypted(bool value) async {
+    setState(() { _busy = true; _status = null; });
+    final problem = await BastionChatStorage.setEncrypted(value);
+    if (!mounted) return;
+    setState(() { _busy = false; _status = problem ?? (value ? 'Chat history is now encrypted.' : 'Chat history is no longer encrypted.'); });
+  }
+
+  Future<void> _setLock(bool value) async {
+    final changed = await BastionAppLock.instance.setEnabled(value, value ? 'Turn on app lock' : 'Turn off app lock');
+    if (!mounted) return;
+    setState(() => _status = changed ? null : 'App lock was not changed.');
+  }
 
   static const _stored = [
     'Chat history and offline queues for each radio (newest 500 messages per radio)',
@@ -101,6 +125,26 @@ class _PrivacyPageState extends State<PrivacyPage> {
             'Everything it keeps stays in this app\'s private storage on your phone and is '
             'removed if you uninstall it.'),
         const SizedBox(height: 12),
+        Card(child: SwitchListTile(
+          key: const ValueKey('app-lock-switch'),
+          secondary: const Icon(Icons.lock_outline),
+          title: const Text('App lock'),
+          subtitle: Text(_lockAvailable
+              ? 'Ask for your fingerprint, face or screen lock when opening the app, and after a minute away. You will also need it to reach SOS. The radio stays connected.'
+              : 'Set a screen lock on this phone to use app lock.'),
+          value: BastionAppLock.instance.enabled,
+          onChanged: _busy || !_lockAvailable ? null : _setLock,
+        )),
+        Card(child: SwitchListTile(
+          key: const ValueKey('chat-encryption-switch'),
+          secondary: const Icon(Icons.enhanced_encryption_outlined),
+          title: const Text('Encrypt chat history'),
+          subtitle: const Text('Scrambles saved messages using a key held in this phone\'s secure storage. '
+              'If that key is lost, for example after moving to a new phone, the saved history can\'t be read. '
+              'Export anything you need first.'),
+          value: BastionChatStorage.encrypted,
+          onChanged: _busy ? null : _setEncrypted,
+        )),
         _list('Stored on this phone', _stored),
         _list('Sent off this phone', _sent),
         const SizedBox(height: 8),

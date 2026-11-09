@@ -36,11 +36,15 @@ jobs:
           # flutter_launcher_icons-*.yaml makes the tool skip the main config).
           test -f android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
           flutter analyze
+          bash scripts/warm_native_assets.sh
           flutter test
       - name: Build Android App Bundle (not Play signed)
         run: flutter build appbundle --release
       - name: Verify bundle
-        run: test -s build/app/outputs/bundle/release/app-release.aab
+        run: |
+          test -s build/app/outputs/bundle/release/app-release.aab
+          # Google Play restricts SMS permissions; this build must never carry them.
+          if grep -q 'permission.SEND_SMS' android/app/src/main/AndroidManifest.xml; then exit 1; fi
       - uses: actions/upload-artifact@v7
         with:
           name: NOTORYX-Play-Readiness-AAB

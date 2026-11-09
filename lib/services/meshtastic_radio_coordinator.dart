@@ -54,6 +54,7 @@ import 'bastion_reconnect_supervisor.dart';
 import 'bastion_telemetry_codec.dart';
 import 'bastion_radio_policy.dart';
 import 'bastion_nodedex.dart';
+import 'bastion_sms_relay.dart';
 import 'meshtastic_ble_discovery.dart';
 import 'meshtastic_connection_controller.dart';
 import 'meshtastic_admin_session.dart';
@@ -1059,6 +1060,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         }
         _trails.record(nodes, {...trip.plan.members, ?_localNodeNum});
         _checkGeofences(nodes);
+        unawaited(_nodeDex.rememberPositions(nodes));
         notifyListeners();
       });
       _nodeDexSubscription = nodeDatabase.nodeUpdates.listen((node) {
@@ -1648,8 +1650,36 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   /// Notifies about a message that arrives while the app is backgrounded.
+  Future<void> _sendNotificationReply(BastionLocalMessageAlerts alerts, BastionNotificationReply reply) async {
+    try {
+      await sendText(text: reply.text, destination: reply.destination, channel: reply.channel);
+    } catch (_) {
+      await alerts.showReplyFailed(reply.text);
+    }
+  }
+
+  /// Asks for notification permission while the app is on screen (iOS).
+  Future<void> prepareAlerts() async {
+    final alerts = _alerts;
+    if (alerts is! BastionLocalMessageAlerts) return;
+    alerts.listenForReplies((reply) => unawaited(_sendNotificationReply(alerts, reply)));
+    await alerts.prepare();
+  }
+
+  Future<void> _relaySms(MeshtasticTextMessage message) async {
+    final reply = await BastionSmsRelay.instance.handle(
+        from: message.from, text: message.text, isBroadcast: message.isBroadcast, packetId: message.packetId);
+    if (reply == null || !isReady) return;
+    try {
+      await sendText(text: reply, destination: message.from, channel: message.channel);
+    } catch (_) {
+      // The reply is a courtesy; the SMS itself has already been handled.
+    }
+  }
+
   void _alertIncoming(MeshtasticTextMessage message) {
     if (filters.isSilenced(message.from) || filters.matchesWord(message.text)) return;
+    if (BastionSmsRelay.available && !message.isReaction) unawaited(_relaySms(message));
     String sender = '!${message.from.toRadixString(16).padLeft(8, '0')}';
     for (final node in _nodes) {
       if (node.num == message.from) sender = node.displayName;
@@ -1667,6 +1697,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         // A mention gets the same urgent alert as a direct message.
         isDirect: !message.isBroadcast || mentionsMe(message.text),
         channel: message.channel,
+        replyDestination: message.isBroadcast ? MeshtasticTextCodec.broadcastNode : message.from,
       ),
     );
   }
@@ -1841,6 +1872,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   @override
   void dispose() {
+    final alerts = _alerts;
+    if (alerts is BastionLocalMessageAlerts) alerts.stopListeningForReplies();
     _disposed = true;
     _lifecycle.dispose();
     unawaited(_bluetoothSubscription.cancel());

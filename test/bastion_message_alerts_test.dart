@@ -22,6 +22,7 @@ class _RecordingAlerts implements BastionMessageAlerts {
     required String text,
     required bool isDirect,
     required int channel,
+    int? replyDestination,
   }) async =>
       shown.add('${isDirect ? 'DM' : 'ch$channel'} $sender: $text');
 
@@ -30,6 +31,24 @@ class _RecordingAlerts implements BastionMessageAlerts {
 }
 
 void main() {
+  group('notification replies', () {
+    test('round-trip to the original sender and channel', () {
+      final reply = BastionNotificationReply.parse('reply', BastionNotificationReply.payload(0xabc, 3), ' on my way ')!;
+      expect((reply.destination, reply.channel, reply.text), (0xabc, 3, 'on my way'));
+    });
+
+    test('tapping the notification or an empty reply sends nothing', () {
+      expect(BastionNotificationReply.parse(null, '1:0', 'hi'), isNull);
+      expect(BastionNotificationReply.parse('reply', '1:0', '   '), isNull);
+      expect(BastionNotificationReply.parse('other', '1:0', 'hi'), isNull);
+    });
+
+    test('a damaged target sends nothing', () {
+      expect(BastionNotificationReply.parse('reply', null, 'hi'), isNull);
+      expect(BastionNotificationReply.parse('reply', 'x:y', 'hi'), isNull);
+    });
+  });
+
   TestWidgetsFlutterBinding.ensureInitialized();
 
   late _RecordingAlerts alerts;

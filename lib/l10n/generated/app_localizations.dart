@@ -2851,6 +2851,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sends {count} waypoints on channel 0, about 3 seconds apart. They expire after a day.'**
   String mapRouteSends(int count);
+
+  /// No description provided for @mapShowHeatmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Show coverage heatmap'**
+  String get mapShowHeatmap;
+
+  /// No description provided for @mapHideHeatmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide coverage heatmap'**
+  String get mapHideHeatmap;
+
+  /// No description provided for @mapHeatmapEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No coverage readings yet. Turn on Record coverage in Field records.'**
+  String get mapHeatmapEmpty;
+
+  /// No description provided for @mapHeatmapSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Coverage: {readings} readings. Numbers are average SNR in dB.'**
+  String mapHeatmapSummary(int readings);
+
+  /// No description provided for @mapHeatStrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong'**
+  String get mapHeatStrong;
+
+  /// No description provided for @mapHeatFair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get mapHeatFair;
+
+  /// No description provided for @mapHeatWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak'**
+  String get mapHeatWeak;
+
+  /// No description provided for @mapShowRemembered.
+  ///
+  /// In en, this message translates to:
+  /// **'Show remembered nodes'**
+  String get mapShowRemembered;
+
+  /// No description provided for @mapHideRemembered.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide remembered nodes'**
+  String get mapHideRemembered;
+
+  /// No description provided for @mapRememberedNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No remembered nodes with a saved position.'**
+  String get mapRememberedNone;
+
+  /// No description provided for @mapRememberedPin.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}, remembered, last seen {when}'**
+  String mapRememberedPin(String name, String when);
+
+  /// No description provided for @mapRememberedNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio no longer lists this node. This is where it last reported.'**
+  String get mapRememberedNote;
+
+  /// No description provided for @mapLastSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Last seen {when}'**
+  String mapLastSeen(String when);
+
+  /// No description provided for @lockTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTORYX Connect is locked'**
+  String get lockTitle;
+
+  /// No description provided for @lockBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio stays connected while the app is locked.'**
+  String get lockBody;
+
+  /// No description provided for @lockUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock'**
+  String get lockUnlock;
+
+  /// No description provided for @lockReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock NOTORYX Connect'**
+  String get lockReason;
+
+  /// No description provided for @takTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ATAK feed'**
+  String get takTitle;
+
+  /// No description provided for @toolsTakSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Show mesh nodes in ATAK on this phone'**
+  String get toolsTakSub;
+
+  /// No description provided for @takIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends the position of each mesh node to ATAK on this phone, once every 30 seconds. Nothing leaves the phone, and nothing goes out over the mesh.'**
+  String get takIntro;
+
+  /// No description provided for @takSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Send mesh positions to ATAK'**
+  String get takSwitch;
+
+  /// No description provided for @takPort.
+  ///
+  /// In en, this message translates to:
+  /// **'UDP port'**
+  String get takPort;
+
+  /// No description provided for @takBadPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a number from 1024 to 65535.'**
+  String get takBadPort;
+
+  /// No description provided for @takStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Sending {count} node} other{Sending {count} nodes}}'**
+  String takStatus(int count);
+
+  /// No description provided for @takProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not send: {error}'**
+  String takProblem(String error);
+
+  /// No description provided for @takHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out.'**
+  String get takHowTo;
 }
 
 class _AppLocalizationsDelegate

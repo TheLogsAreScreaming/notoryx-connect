@@ -151,6 +151,22 @@ class _ToolsPageState extends State<_ToolsPage> {
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(FieldToolsPage(radio: radio)),
       )),
+      if (!kIsWeb && Platform.isAndroid) // ATAK is an Android app.
+        Card(child: ListTile(
+        leading: const Icon(Icons.share_location),
+        title: Text(l.takTitle),
+        subtitle: Text(l.toolsTakSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(TakBridgePage(bridge: BastionTakBridge.instance)),
+      )),
+      if (BastionSmsRelay.available)
+        Card(child: ListTile(
+          leading: const Icon(Icons.sms_outlined),
+          title: const Text('SMS relay'),
+          subtitle: const Text('Let chosen nodes text through this phone'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(SmsRelayPage(radio: radio, relay: BastionSmsRelay.instance)),
+        )),
       NxSectionLabel(l.toolsSignal),
       Card(child: ExpansionTile(
         leading: const Icon(Icons.monitor_heart_outlined),

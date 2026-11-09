@@ -1,5 +1,7 @@
 # Run after flutter create to add BLE permissions and app label.
+# Pass --sms only for sideload builds: Google Play restricts SMS permissions.
 import re
+import sys
 from pathlib import Path
 p=Path('android/app/src/main/AndroidManifest.xml')
 s=p.read_text()
@@ -41,6 +43,12 @@ if 'flutter_foreground_task.service.ForegroundService' not in s:
             android:exported="false" />
     </application>'''
     s=s.replace('    </application>', service, 1)
+# Notification actions: reply from the phone or a paired Wear OS watch.
+if 'ActionBroadcastReceiver' not in s:
+    s=s.replace('    </application>', '''        <receiver
+            android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver" />
+    </application>''', 1)
 # Home-screen status widget.
 if 'StatusWidgetProvider' not in s:
     receiver = '''        <receiver
@@ -104,23 +112,36 @@ if not activity.exists():
 activity.write_text("""package com.bastionmesh.bastion
 
 import android.content.Context
-import io.flutter.embedding.android.FlutterActivity
+import android.os.Bundle
+import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 
-class MainActivity : FlutterActivity() {
-    // A new activity reattaches to the running engine, so the radio link and
-    // app state survive the activity being destroyed.
-    override fun provideFlutterEngine(context: Context): FlutterEngine {
-        val cache = FlutterEngineCache.getInstance()
-        return cache.get(ENGINE_ID) ?: FlutterEngine(context.applicationContext).also {
-            it.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
-            cache.put(ENGINE_ID, it)
-        }
+// FragmentActivity because the system fingerprint prompt needs it.
+class MainActivity : FlutterFragmentActivity() {
+    // The engine must be in the cache before the fragment is created. A new
+    // activity reattaches to it, so the radio link and app state survive the
+    // activity being destroyed.
+    override fun onCreate(savedInstanceState: Bundle?) {
+        ensureEngine(this)
+        super.onCreate(savedInstanceState)
     }
 
+    // FlutterFragmentActivity honors shouldDestroyEngineWithHost only for an
+    // engine named here. Provided any other way, the engine is destroyed with
+    // the activity but stays cached, and the next activity crashes on it.
+    override fun getCachedEngineId(): String = ENGINE_ID
+
     override fun shouldDestroyEngineWithHost(): Boolean = false
+
+    private fun ensureEngine(context: Context) {
+        val cache = FlutterEngineCache.getInstance()
+        if (cache.get(ENGINE_ID) != null) return
+        val engine = FlutterEngine(context.applicationContext)
+        engine.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
+        cache.put(ENGINE_ID, engine)
+    }
 
     private companion object {
         const val ENGINE_ID = "notoryx"
@@ -128,3 +149,25 @@ class MainActivity : FlutterActivity() {
 }
 """)
 print('Kept one Flutter engine across activities')
+
+# Optional SMS relay. Off unless asked for, so no Play build can carry it.
+if '--sms' in sys.argv[1:]:
+    source=activity.read_text()
+    anchor='    override fun shouldDestroyEngineWithHost(): Boolean = false\n'
+    if anchor not in source:
+        raise SystemExit('Could not add the SMS relay to MainActivity')
+    activity.write_text(source.replace(anchor, '''    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        SmsRelayChannel.attach(this, flutterEngine)
+    }
+
+''' + anchor, 1))
+    for src in Path('android_sms_overlay').rglob('*'):
+        if src.is_file():
+            dest=Path('android')/src.relative_to('android_sms_overlay')
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(src, dest)
+    manifest=p.read_text()
+    p.write_text(manifest.replace('<manifest xmlns:android="http://schemas.android.com/apk/res/android">',
+        '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n    <uses-permission android:name="android.permission.SEND_SMS" />', 1))
+    print('Added the sideload SMS relay')

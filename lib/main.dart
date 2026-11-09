@@ -15,6 +15,8 @@ import 'field_tools_page.dart';
 import 'home_page.dart';
 import 'services/bastion_units.dart';
 import 'services/bastion_field_log.dart';
+import 'app_lock_gate.dart';
+import 'services/bastion_app_lock.dart';
 import 'services/bastion_background_service.dart';
 import 'services/bastion_bot_guard.dart';
 import 'services/bastion_history_limit.dart';
@@ -28,6 +30,10 @@ import 'radio_backup_page.dart';
 import 'services/bastion_chat_marks.dart';
 import 'services/bastion_message_search.dart';
 import 'services/bastion_scheduled_messages.dart';
+import 'services/bastion_sms_relay.dart';
+import 'services/bastion_tak_bridge.dart';
+import 'tak_bridge_page.dart';
+import 'sms_relay_page.dart';
 import 'mesh_health_page.dart';
 import 'mesh_tools_page.dart';
 import 'node_detail_page.dart';
@@ -68,9 +74,13 @@ Future<void> main() async {
   await BastionPreferences.instance.load();
   // Chat history lives in its own database; older saves move over once.
   await BastionChatStorage.useSqlite();
+  await BastionChatStorage.applySavedEncryption();
   await BastionFieldLog.instance.load();
   await BastionBotGuard.instance.load();
+  await BastionAppLock.instance.load();
   await BastionScheduledMessages.instance.load();
+  await BastionTakBridge.instance.load();
+  if (BastionSmsRelay.available) await BastionSmsRelay.instance.load();
   runApp(const BastionApp());
 }
 
@@ -115,7 +125,11 @@ class _BastionAppState extends State<BastionApp> with WidgetsBindingObserver {
   // Seasonal follows the date, so check it again when the app comes back.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) setState(() {});
+    if (state == AppLifecycleState.paused) BastionAppLock.instance.onBackground();
+    if (state == AppLifecycleState.resumed) {
+      BastionAppLock.instance.onForeground();
+      setState(() {});
+    }
   }
 
   @override
@@ -130,6 +144,7 @@ class _BastionAppState extends State<BastionApp> with WidgetsBindingObserver {
         scrollBehavior: const BastionScrollBehavior(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
+        builder: (context, child) => BastionAppLockGate(lock: BastionAppLock.instance, child: child!),
         home: const BastionShell(),
       );
     },
@@ -199,6 +214,9 @@ class _BastionShellState extends State<BastionShell> {
   @override
   void initState() {
     super.initState();
+    unawaited(_realRadio.prepareAlerts());
+    // The real radio only: demo nodes must never reach ATAK.
+    BastionTakBridge.instance.attach(() => _realRadio.nodes);
     _setUpShortcuts();
     // The widget follows the real radio, never the demo.
     if (BastionHomeWidget.supported) {
@@ -232,6 +250,7 @@ class _BastionShellState extends State<BastionShell> {
   void dispose() {
     ble.dispose();
     _homeWidget?.dispose();
+    BastionTakBridge.instance.detach();
     _realRadio.dispose();
     _demo?.dispose();
     super.dispose();

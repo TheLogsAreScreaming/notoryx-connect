@@ -10,6 +10,8 @@ import 'package:share_plus/share_plus.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'link_planner_page.dart';
 import 'node_detail_page.dart';
+import 'services/bastion_coverage_grid.dart';
+import 'services/bastion_field_log.dart';
 import 'services/bastion_geo.dart';
 import 'services/bastion_geofences.dart';
 import 'services/bastion_gpx.dart';
@@ -21,6 +23,8 @@ import 'services/bastion_team.dart';
 import 'services/bastion_waypoints.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
+import 'services/bastion_nodedex.dart';
+import 'theme/notoryx_theme.dart';
 
 /// Mesh nodes with a reported position on an OpenStreetMap base map.
 ///
@@ -56,6 +60,8 @@ class _MapPageState extends State<MapPage> {
   bool _fitted = false;
   bool _showLinks = true;
   bool _showTrails = true;
+  bool _showHeatmap = false;
+  bool _showRemembered = false;
 
   /// Shows OpenTopoMap contour tiles instead of the street map.
   bool _topo = false;
@@ -181,6 +187,7 @@ class _MapPageState extends State<MapPage> {
                     userAgentPackageName: 'com.bastionmesh.connect',
                     maxNativeZoom: _topo ? 17 : 19,
                   ),
+                  if (_showHeatmap) _heatmapLayer(context),
                   if (widget.radio.geofences.isNotEmpty)
                     CircleLayer(circles: [
                       for (final zone in widget.radio.geofences)
@@ -222,6 +229,13 @@ class _MapPageState extends State<MapPage> {
                         )),
                     ]),
                   ],
+                  if (_showRemembered) MarkerLayer(markers: [
+                    for (final r in _remembered)
+                      Marker(point: LatLng(r.latitude!, r.longitude!), width: 48, height: 48,
+                        child: Semantics(button: true, label: l.mapRememberedPin(r.displayName, _when(r.lastSeen)),
+                          child: GestureDetector(behavior: HitTestBehavior.opaque, onTap: () => _showRememberedNode(context, r),
+                            child: ExcludeSemantics(child: Icon(Icons.history, size: 28, color: Theme.of(context).colorScheme.onSurfaceVariant))))),
+                  ]),
                   MarkerLayer(
                     markers: [
                       for (final waypoint in widget.radio.waypoints)
@@ -360,6 +374,18 @@ class _MapPageState extends State<MapPage> {
                             icon: Icon(_showLinks ? Icons.hub : Icons.hub_outlined),
                             onPressed: () => setState(() => _showLinks = !_showLinks),
                           ),
+                        IconButton(
+                          key: const ValueKey('map-heatmap'),
+                          tooltip: _showHeatmap ? l.mapHideHeatmap : l.mapShowHeatmap,
+                          icon: Icon(_showHeatmap ? Icons.grid_on : Icons.grid_off),
+                          onPressed: () => _toggleHeatmap(context),
+                        ),
+                        IconButton(
+                          key: const ValueKey('map-remembered'),
+                          tooltip: _showRemembered ? l.mapHideRemembered : l.mapShowRemembered,
+                          icon: Icon(_showRemembered ? Icons.history : Icons.history_toggle_off),
+                          onPressed: () => _toggleRemembered(context),
+                        ),
                         if (placed.isNotEmpty)
                           IconButton(
                             tooltip: l.mapShowAll,
@@ -418,6 +444,80 @@ class _MapPageState extends State<MapPage> {
   }
 
   /// Rally points with distance and direction, shared routes, and route planning.
+  List<CoverageCell> get _coverage =>
+      BastionCoverageGrid.build(BastionFieldLog.instance.records, radio: widget.radio.localNodeNum);
+
+  void _toggleHeatmap(BuildContext context) {
+    final messenger = ScaffoldMessenger.of(context);
+    final turningOn = !_showHeatmap;
+    setState(() => _showHeatmap = turningOn);
+    if (!turningOn) return;
+    final cells = _coverage;
+    final readings = cells.fold<int>(0, (sum, c) => sum + c.readings);
+    messenger.showSnackBar(SnackBar(content: Text(cells.isEmpty
+        ? l.mapHeatmapEmpty
+        : '${l.mapHeatmapSummary(readings)} ${l.mapHeatStrong} ≥ ${BastionCoverageGrid.strongSnr.round()}, '
+            '${l.mapHeatFair} ≥ ${BastionCoverageGrid.fairSnr.round()}, ${l.mapHeatWeak} < ${BastionCoverageGrid.fairSnr.round()}.')));
+  }
+
+  /// Colour is backed by the SNR number printed in each square.
+  Widget _heatmapLayer(BuildContext context) {
+    final theme = Theme.of(context);
+    final status = theme.extension<NxStatusColors>()!;
+    Color colour(CoverageBand band) => status.strong(switch (band) {
+          CoverageBand.strong => NxTone.success,
+          CoverageBand.fair => NxTone.warning,
+          CoverageBand.weak => NxTone.danger,
+        }, theme.colorScheme);
+    return PolygonLayer(polygons: [
+      for (final c in _coverage)
+        Polygon(
+          points: [
+            LatLng(c.south, c.west),
+            LatLng(c.south + BastionCoverageGrid.cellDegrees, c.west),
+            LatLng(c.south + BastionCoverageGrid.cellDegrees, c.west + BastionCoverageGrid.cellDegrees),
+            LatLng(c.south, c.west + BastionCoverageGrid.cellDegrees),
+          ],
+          color: colour(c.band).withValues(alpha: 0.2 + 0.4 * c.density),
+          borderColor: colour(c.band),
+          borderStrokeWidth: 1,
+          label: c.meanSnr.toStringAsFixed(0),
+          labelStyle: TextStyle(color: theme.colorScheme.onSurface, fontWeight: FontWeight.w700, fontSize: 12),
+        ),
+    ]);
+  }
+
+  /// Nodes with a saved position that the radio no longer places.
+  List<BastionNodeRecord> get _remembered {
+    final current = {for (final n in widget.radio.nodes) if (n.hasPosition) n.num};
+    return [for (final r in widget.radio.nodeDex) if (r.hasPosition && !current.contains(r.num)) r];
+  }
+
+  void _toggleRemembered(BuildContext context) {
+    final messenger = ScaffoldMessenger.of(context);
+    final turningOn = !_showRemembered;
+    setState(() => _showRemembered = turningOn);
+    if (turningOn && _remembered.isEmpty) {
+      messenger.showSnackBar(SnackBar(content: Text(l.mapRememberedNone)));
+    }
+  }
+
+  String _when(DateTime time) {
+    final d = DateTime.now().difference(time);
+    if (d.inMinutes < 1) return l.agoNow;
+    if (d.inHours < 1) return l.agoMin(d.inMinutes);
+    if (d.inDays < 1) return l.agoHours(d.inHours);
+    return l.agoDays(d.inDays);
+  }
+
+  void _showRememberedNode(BuildContext context, BastionNodeRecord r) {
+    showModalBottomSheet<void>(context: context, builder: (sheet) => SafeArea(child: ListTile(
+      leading: const Icon(Icons.history),
+      title: Text(r.displayName),
+      subtitle: Text('${l.mapLastSeen(_when(r.lastSeen))}\n${r.latitude!.toStringAsFixed(5)}, ${r.longitude!.toStringAsFixed(5)}\n${l.mapRememberedNote}'),
+    )));
+  }
+
   void _showRally(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,

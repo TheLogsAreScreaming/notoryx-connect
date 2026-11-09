@@ -1688,4 +1688,105 @@ class AppLocalizationsEs extends AppLocalizations {
   String mapRouteSends(int count) {
     return 'Envía $count puntos de ruta en el canal 0, con unos 3 segundos de separación. Caducan al cabo de un día.';
   }
+
+  @override
+  String get mapShowHeatmap => 'Mostrar mapa de cobertura';
+
+  @override
+  String get mapHideHeatmap => 'Ocultar mapa de cobertura';
+
+  @override
+  String get mapHeatmapEmpty =>
+      'Aún no hay lecturas de cobertura. Activa Registrar cobertura en Registros de campo.';
+
+  @override
+  String mapHeatmapSummary(int readings) {
+    return 'Cobertura: $readings lecturas. Los números son la SNR media en dB.';
+  }
+
+  @override
+  String get mapHeatStrong => 'Fuerte';
+
+  @override
+  String get mapHeatFair => 'Regular';
+
+  @override
+  String get mapHeatWeak => 'Débil';
+
+  @override
+  String get mapShowRemembered => 'Mostrar nodos recordados';
+
+  @override
+  String get mapHideRemembered => 'Ocultar nodos recordados';
+
+  @override
+  String get mapRememberedNone =>
+      'No hay nodos recordados con posición guardada.';
+
+  @override
+  String mapRememberedPin(String name, String when) {
+    return '$name, recordado, visto por última vez $when';
+  }
+
+  @override
+  String get mapRememberedNote =>
+      'Tu radio ya no muestra este nodo. Aquí fue donde informó por última vez.';
+
+  @override
+  String mapLastSeen(String when) {
+    return 'Visto por última vez $when';
+  }
+
+  @override
+  String get lockTitle => 'NOTORYX Connect está bloqueado';
+
+  @override
+  String get lockBody =>
+      'Tu radio sigue conectada mientras la aplicación está bloqueada.';
+
+  @override
+  String get lockUnlock => 'Desbloquear';
+
+  @override
+  String get lockReason => 'Desbloquear NOTORYX Connect';
+
+  @override
+  String get takTitle => 'Envío a ATAK';
+
+  @override
+  String get toolsTakSub =>
+      'Mostrar nodos de la malla en ATAK en este teléfono';
+
+  @override
+  String get takIntro =>
+      'Envía la posición de cada nodo de la malla a ATAK en este teléfono, cada 30 segundos. Nada sale del teléfono y no se envía nada por la malla.';
+
+  @override
+  String get takSwitch => 'Enviar posiciones de la malla a ATAK';
+
+  @override
+  String get takPort => 'Puerto UDP';
+
+  @override
+  String get takBadPort => 'Usa un número del 1024 al 65535.';
+
+  @override
+  String takStatus(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Enviando $count nodos',
+      one: 'Enviando $count nodo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String takProblem(String error) {
+    return 'No se pudo enviar: $error';
+  }
+
+  @override
+  String get takHowTo =>
+      'En ATAK, abre Ajustes, luego Preferencias de red, luego Administrar entradas, y añade una entrada UDP en este puerto. Se omiten los nodos sin posición en la última hora.';
 }

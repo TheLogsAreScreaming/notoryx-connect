@@ -40,6 +40,7 @@ jobs:
       - name: Validate source
         run: |
           flutter analyze
+          bash scripts/warm_native_assets.sh
           flutter test --coverage
       - name: Protocol and coverage reports
         run: |

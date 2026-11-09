@@ -1672,4 +1672,102 @@ class AppLocalizationsEn extends AppLocalizations {
   String mapRouteSends(int count) {
     return 'Sends $count waypoints on channel 0, about 3 seconds apart. They expire after a day.';
   }
+
+  @override
+  String get mapShowHeatmap => 'Show coverage heatmap';
+
+  @override
+  String get mapHideHeatmap => 'Hide coverage heatmap';
+
+  @override
+  String get mapHeatmapEmpty =>
+      'No coverage readings yet. Turn on Record coverage in Field records.';
+
+  @override
+  String mapHeatmapSummary(int readings) {
+    return 'Coverage: $readings readings. Numbers are average SNR in dB.';
+  }
+
+  @override
+  String get mapHeatStrong => 'Strong';
+
+  @override
+  String get mapHeatFair => 'Fair';
+
+  @override
+  String get mapHeatWeak => 'Weak';
+
+  @override
+  String get mapShowRemembered => 'Show remembered nodes';
+
+  @override
+  String get mapHideRemembered => 'Hide remembered nodes';
+
+  @override
+  String get mapRememberedNone => 'No remembered nodes with a saved position.';
+
+  @override
+  String mapRememberedPin(String name, String when) {
+    return '$name, remembered, last seen $when';
+  }
+
+  @override
+  String get mapRememberedNote =>
+      'Your radio no longer lists this node. This is where it last reported.';
+
+  @override
+  String mapLastSeen(String when) {
+    return 'Last seen $when';
+  }
+
+  @override
+  String get lockTitle => 'NOTORYX Connect is locked';
+
+  @override
+  String get lockBody => 'Your radio stays connected while the app is locked.';
+
+  @override
+  String get lockUnlock => 'Unlock';
+
+  @override
+  String get lockReason => 'Unlock NOTORYX Connect';
+
+  @override
+  String get takTitle => 'ATAK feed';
+
+  @override
+  String get toolsTakSub => 'Show mesh nodes in ATAK on this phone';
+
+  @override
+  String get takIntro =>
+      'Sends the position of each mesh node to ATAK on this phone, once every 30 seconds. Nothing leaves the phone, and nothing goes out over the mesh.';
+
+  @override
+  String get takSwitch => 'Send mesh positions to ATAK';
+
+  @override
+  String get takPort => 'UDP port';
+
+  @override
+  String get takBadPort => 'Use a number from 1024 to 65535.';
+
+  @override
+  String takStatus(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Sending $count nodes',
+      one: 'Sending $count node',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String takProblem(String error) {
+    return 'Could not send: $error';
+  }
+
+  @override
+  String get takHowTo =>
+      'In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out.';
 }

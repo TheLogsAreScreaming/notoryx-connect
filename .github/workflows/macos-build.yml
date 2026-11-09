@@ -48,6 +48,7 @@ jobs:
       - name: Analyze and test
         run: |
           flutter analyze
+          bash scripts/warm_native_assets.sh
           flutter test
       - name: Build universal macOS app
         run: flutter build macos --release
