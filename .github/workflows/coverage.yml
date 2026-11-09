@@ -21,7 +21,7 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get --enforce-lockfile
-      - run: flutter test --coverage --reporter expanded
+      - run: bash scripts/warm_native_assets.sh && flutter test --coverage --reporter expanded
       - name: Summarize line coverage
         run: |
           python3 - <<'PY'
