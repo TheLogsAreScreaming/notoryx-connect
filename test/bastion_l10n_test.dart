@@ -26,6 +26,25 @@ void main() {
     }
   });
 
+  testWidgets('the Tools page is translated', (tester) async {
+    const locale = Locale('es');
+    tester.platformDispatcher.localeTestValue = locale;
+    tester.platformDispatcher.localesTestValue = [locale];
+    addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(const BastionApp());
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Herramientas')));
+    await tester.pumpAndSettle();
+    expect(find.text('Doctor de conexión'), findsOneWidget);
+    expect(find.text('Radio cargada'), findsOneWidget);
+    expect(find.text('Connection doctor'), findsNothing);
+  });
+
   for (final (locale, settings, offline) in [
     (const Locale('en'), 'Settings', 'Radio: Offline'),
     (const Locale('es'), 'Ajustes', 'Radio: Sin conexión'),
