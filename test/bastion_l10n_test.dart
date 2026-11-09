@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bastion/main.dart';
+import 'package:bastion/channel_share_page.dart';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/node_detail_page.dart';
@@ -64,6 +65,24 @@ void main() {
     expect(find.text('Mantén para SOS'), findsOneWidget);
     expect(find.text('Conectar radio'), findsOneWidget);
     expect(find.textContaining('Reportarse: '), findsOneWidget);
+  });
+
+  testWidgets('Channel import is translated', (tester) async {
+    tester.view.physicalSize = const Size(390, 2000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: ChannelImportPage(radio: radio),
+    ));
+    await tester.pump();
+    expect(find.text('Importar canales'), findsOneWidget);
+    expect(find.text('Enlace de canal de Meshtastic'), findsOneWidget);
   });
 
   testWidgets('the Tools page is translated', (tester) async {

@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'l10n/generated/app_localizations.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import 'generated/meshtastic/apponly.pb.dart';
@@ -25,18 +26,19 @@ class _ChannelSharePageState extends State<ChannelSharePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Share channels')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).csShareTitle)),
         body: FutureBuilder<ChannelSet>(
           future: _channels,
           builder: (context, snapshot) {
+            final l = AppLocalizations.of(context);
             if (snapshot.hasError) {
               return ListView(padding: const EdgeInsets.all(16), children: [
-                Text('Could not read channels: ${snapshot.error}'),
+                Text(l.csReadFailed('${snapshot.error}')),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: OutlinedButton(
                     onPressed: () => setState(() => _channels = widget.radio.readChannelSet()),
-                    child: const Text('Retry'),
+                    child: Text(l.csRetry),
                   ),
                 ),
               ]);
@@ -56,7 +58,7 @@ class _ChannelSharePageState extends State<ChannelSharePage> {
                 ),
                 const SizedBox(height: 16),
                 for (final (i, s) in set.settings.indexed)
-                  Text('${i == 0 ? 'Primary' : 'Secondary'}: ${s.name.isEmpty ? '(default name)' : s.name}'),
+                  Text((i == 0 ? l.csPrimary : l.csSecondary)(s.name.isEmpty ? l.csDefaultName : s.name)),
                 const SizedBox(height: 12),
                 SelectableText(link, style: const TextStyle(fontSize: 12)),
                 const SizedBox(height: 8),
@@ -64,18 +66,18 @@ class _ChannelSharePageState extends State<ChannelSharePage> {
                   alignment: Alignment.centerLeft,
                   child: OutlinedButton.icon(
                     icon: const Icon(Icons.copy),
-                    label: const Text('Copy link'),
+                    label: Text(l.csCopyLink),
                     onPressed: () async {
                       final messenger = ScaffoldMessenger.of(context);
+                      final copied = l.csCopied;
                       await Clipboard.setData(ClipboardData(text: link));
-                      messenger.showSnackBar(const SnackBar(content: Text('Channel link copied.')));
+                      messenger.showSnackBar(SnackBar(content: Text(copied)));
                     },
                   ),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'This code contains your channel encryption keys. Anyone who '
-                  'scans it can read and send on these channels.',
+                  l.csKeysWarning,
                   style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                 ),
               ],
@@ -149,19 +151,17 @@ class _ChannelImportPageState extends State<ChannelImportPage> {
     if (set == null) return;
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);
+    final l = AppLocalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(_replace ? 'Replace all channels?' : 'Add channels?'),
+        title: Text(_replace ? l.csReplaceQ : l.csAddQ),
         content: Text(_replace
-            ? 'All 8 channel slots${set.hasLoraConfig() ? ' and the LoRa settings' : ''} '
-                'will be overwritten. You will lose access to current channels '
-                'unless you have their link. The radio will reboot.'
-            : 'New channels from the link go into free slots. Existing channels '
-                'and LoRa settings stay the same.'),
+            ? (set.hasLoraConfig() ? l.csReplaceLoraBody : l.csReplaceBody)
+            : l.csAddBody),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-          FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Apply')),
+          TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.commonCancel)),
+          FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l.csApply)),
         ],
       ),
     );
@@ -170,29 +170,30 @@ class _ChannelImportPageState extends State<ChannelImportPage> {
     try {
       final count = await widget.radio.applyChannelSet(set, replace: _replace);
       messenger.showSnackBar(SnackBar(content: Text(count == 0
-          ? 'All channels from the link are already on the radio.'
-          : '$count channel${count == 1 ? '' : 's'} written and verified from radio.')));
+          ? l.csAlreadyThere
+          : l.csWritten(count))));
       navigator.pop();
     } on ChannelImportException catch (error) {
       if (!mounted) return;
       setState(() {
         _saving = false;
         _importProblem = error.radioMayHaveChanged
-            ? 'Import not verified: ${error.message}\nNothing will be resent automatically.'
-            : 'Import refused: ${error.message}';
+            ? l.csNotVerified(error.message)
+            : l.csRefused(error.message);
         _importUncertain = error.radioMayHaveChanged;
       });
     } catch (error) {
       if (!mounted) return;
-      setState(() { _saving = false; _importProblem = 'Import failed: $error'; });
+      setState(() { _saving = false; _importProblem = l.csFailed('$error'); });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final set = _set;
+    final l = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Import channels')),
+      appBar: AppBar(title: Text(l.csImportTitle)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -200,10 +201,10 @@ class _ChannelImportPageState extends State<ChannelImportPage> {
           if (!Platform.isWindows)
           FilledButton.tonalIcon(
             icon: const Icon(Icons.qr_code_scanner),
-            label: const Text('Scan channel QR code'),
+            label: Text(l.csScan),
             onPressed: () async {
               final scanned = await Navigator.of(context).push<String>(
-                MaterialPageRoute(builder: (_) => const QrScanPage(title: 'Scan channel QR')),
+                MaterialPageRoute(builder: (_) => QrScanPage(title: l.csScanTitle)),
               );
               if (scanned == null || !mounted) return;
               _link.text = scanned;
@@ -216,11 +217,11 @@ class _ChannelImportPageState extends State<ChannelImportPage> {
             minLines: 2,
             maxLines: 4,
             decoration: InputDecoration(
-              labelText: 'Meshtastic channel link',
+              labelText: l.csLinkLabel,
               hintText: MeshtasticChannelUrl.prefix,
               errorText: _error,
               suffixIcon: IconButton(
-                tooltip: 'Paste',
+                tooltip: l.csPaste,
                 icon: const Icon(Icons.content_paste),
                 onPressed: () async {
                   final data = await Clipboard.getData(Clipboard.kTextPlain);
@@ -235,15 +236,15 @@ class _ChannelImportPageState extends State<ChannelImportPage> {
           if (set != null) ...[
             const SizedBox(height: 12),
             for (final (i, s) in set.settings.indexed)
-              Text('${i + 1}. ${s.name.isEmpty ? '(default name)' : s.name}'),
+              Text('${i + 1}. ${s.name.isEmpty ? l.csDefaultName : s.name}'),
             if (set.hasLoraConfig())
-              Text('LoRa: ${set.loraConfig.region.name}, '
-                  '${set.loraConfig.usePreset ? set.loraConfig.modemPreset.name : 'custom modem'}'),
+              Text(l.csLora(set.loraConfig.region.name,
+                  set.loraConfig.usePreset ? set.loraConfig.modemPreset.name : l.csCustomModem)),
             const SizedBox(height: 8),
             SegmentedButton<bool>(
-              segments: const [
-                ButtonSegment(value: false, label: Text('Add to radio')),
-                ButtonSegment(value: true, label: Text('Replace all')),
+              segments: [
+                ButtonSegment(value: false, label: Text(l.csAdd)),
+                ButtonSegment(value: true, label: Text(l.csReplaceAll)),
               ],
               selected: {_replace},
               onSelectionChanged: (v) => setState(() => _replace = v.single),
@@ -257,7 +258,7 @@ class _ChannelImportPageState extends State<ChannelImportPage> {
               onPressed: _saving || _importUncertain || !widget.radio.canAdminister ? null : _apply,
               child: _saving
                   ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Text('Apply to radio'),
+                  : Text(l.csApplyRadio),
             ),
           ],
         ],

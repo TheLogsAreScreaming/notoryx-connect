@@ -2096,4 +2096,121 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeStopNoMessage => 'Stop without message';
+
+  @override
+  String get csShareTitle => 'Share channels';
+
+  @override
+  String csReadFailed(String error) {
+    return 'Could not read channels: $error';
+  }
+
+  @override
+  String get csRetry => 'Retry';
+
+  @override
+  String csPrimary(String name) {
+    return 'Primary: $name';
+  }
+
+  @override
+  String csSecondary(String name) {
+    return 'Secondary: $name';
+  }
+
+  @override
+  String get csDefaultName => '(default name)';
+
+  @override
+  String get csCopyLink => 'Copy link';
+
+  @override
+  String get csCopied => 'Channel link copied.';
+
+  @override
+  String get csKeysWarning =>
+      'This code contains your channel encryption keys. Anyone who scans it can read and send on these channels.';
+
+  @override
+  String get csReplaceQ => 'Replace all channels?';
+
+  @override
+  String get csAddQ => 'Add channels?';
+
+  @override
+  String get csReplaceBody =>
+      'All 8 channel slots will be overwritten. You will lose access to current channels unless you have their link. The radio will reboot.';
+
+  @override
+  String get csReplaceLoraBody =>
+      'All 8 channel slots and the LoRa settings will be overwritten. You will lose access to current channels unless you have their link. The radio will reboot.';
+
+  @override
+  String get csAddBody =>
+      'New channels from the link go into free slots. Existing channels and LoRa settings stay the same.';
+
+  @override
+  String get csApply => 'Apply';
+
+  @override
+  String get csAlreadyThere =>
+      'All channels from the link are already on the radio.';
+
+  @override
+  String csWritten(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count channels written and verified from radio.',
+      one: '$count channel written and verified from radio.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String csNotVerified(String error) {
+    return 'Import not verified: $error\nNothing will be resent automatically.';
+  }
+
+  @override
+  String csRefused(String error) {
+    return 'Import refused: $error';
+  }
+
+  @override
+  String csFailed(String error) {
+    return 'Import failed: $error';
+  }
+
+  @override
+  String get csImportTitle => 'Import channels';
+
+  @override
+  String get csScan => 'Scan channel QR code';
+
+  @override
+  String get csScanTitle => 'Scan channel QR';
+
+  @override
+  String get csLinkLabel => 'Meshtastic channel link';
+
+  @override
+  String get csPaste => 'Paste';
+
+  @override
+  String csLora(String region, String modem) {
+    return 'LoRa: $region, $modem';
+  }
+
+  @override
+  String get csCustomModem => 'custom modem';
+
+  @override
+  String get csAdd => 'Add to radio';
+
+  @override
+  String get csReplaceAll => 'Replace all';
+
+  @override
+  String get csApplyRadio => 'Apply to radio';
 }

@@ -3553,6 +3553,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stop without message'**
   String get homeStopNoMessage;
+
+  /// No description provided for @csShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share channels'**
+  String get csShareTitle;
+
+  /// No description provided for @csReadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read channels: {error}'**
+  String csReadFailed(String error);
+
+  /// No description provided for @csRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get csRetry;
+
+  /// No description provided for @csPrimary.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary: {name}'**
+  String csPrimary(String name);
+
+  /// No description provided for @csSecondary.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary: {name}'**
+  String csSecondary(String name);
+
+  /// No description provided for @csDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'(default name)'**
+  String get csDefaultName;
+
+  /// No description provided for @csCopyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link'**
+  String get csCopyLink;
+
+  /// No description provided for @csCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel link copied.'**
+  String get csCopied;
+
+  /// No description provided for @csKeysWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This code contains your channel encryption keys. Anyone who scans it can read and send on these channels.'**
+  String get csKeysWarning;
+
+  /// No description provided for @csReplaceQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace all channels?'**
+  String get csReplaceQ;
+
+  /// No description provided for @csAddQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Add channels?'**
+  String get csAddQ;
+
+  /// No description provided for @csReplaceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'All 8 channel slots will be overwritten. You will lose access to current channels unless you have their link. The radio will reboot.'**
+  String get csReplaceBody;
+
+  /// No description provided for @csReplaceLoraBody.
+  ///
+  /// In en, this message translates to:
+  /// **'All 8 channel slots and the LoRa settings will be overwritten. You will lose access to current channels unless you have their link. The radio will reboot.'**
+  String get csReplaceLoraBody;
+
+  /// No description provided for @csAddBody.
+  ///
+  /// In en, this message translates to:
+  /// **'New channels from the link go into free slots. Existing channels and LoRa settings stay the same.'**
+  String get csAddBody;
+
+  /// No description provided for @csApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get csApply;
+
+  /// No description provided for @csAlreadyThere.
+  ///
+  /// In en, this message translates to:
+  /// **'All channels from the link are already on the radio.'**
+  String get csAlreadyThere;
+
+  /// No description provided for @csWritten.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} channel written and verified from radio.} other{{count} channels written and verified from radio.}}'**
+  String csWritten(int count);
+
+  /// No description provided for @csNotVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Import not verified: {error}\nNothing will be resent automatically.'**
+  String csNotVerified(String error);
+
+  /// No description provided for @csRefused.
+  ///
+  /// In en, this message translates to:
+  /// **'Import refused: {error}'**
+  String csRefused(String error);
+
+  /// No description provided for @csFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String csFailed(String error);
+
+  /// No description provided for @csImportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import channels'**
+  String get csImportTitle;
+
+  /// No description provided for @csScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan channel QR code'**
+  String get csScan;
+
+  /// No description provided for @csScanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan channel QR'**
+  String get csScanTitle;
+
+  /// No description provided for @csLinkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Meshtastic channel link'**
+  String get csLinkLabel;
+
+  /// No description provided for @csPaste.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste'**
+  String get csPaste;
+
+  /// No description provided for @csLora.
+  ///
+  /// In en, this message translates to:
+  /// **'LoRa: {region}, {modem}'**
+  String csLora(String region, String modem);
+
+  /// No description provided for @csCustomModem.
+  ///
+  /// In en, this message translates to:
+  /// **'custom modem'**
+  String get csCustomModem;
+
+  /// No description provided for @csAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to radio'**
+  String get csAdd;
+
+  /// No description provided for @csReplaceAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace all'**
+  String get csReplaceAll;
+
+  /// No description provided for @csApplyRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to radio'**
+  String get csApplyRadio;
 }
 
 class _AppLocalizationsDelegate

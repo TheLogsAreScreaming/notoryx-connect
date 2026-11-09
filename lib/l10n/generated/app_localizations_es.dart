@@ -2117,4 +2117,121 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get homeStopNoMessage => 'Detener sin mensaje';
+
+  @override
+  String get csShareTitle => 'Compartir canales';
+
+  @override
+  String csReadFailed(String error) {
+    return 'No se pudieron leer los canales: $error';
+  }
+
+  @override
+  String get csRetry => 'Reintentar';
+
+  @override
+  String csPrimary(String name) {
+    return 'Principal: $name';
+  }
+
+  @override
+  String csSecondary(String name) {
+    return 'Secundario: $name';
+  }
+
+  @override
+  String get csDefaultName => '(nombre predeterminado)';
+
+  @override
+  String get csCopyLink => 'Copiar enlace';
+
+  @override
+  String get csCopied => 'Enlace del canal copiado.';
+
+  @override
+  String get csKeysWarning =>
+      'Este código contiene las claves de cifrado de tus canales. Cualquiera que lo escanee podrá leer y enviar en estos canales.';
+
+  @override
+  String get csReplaceQ => '¿Reemplazar todos los canales?';
+
+  @override
+  String get csAddQ => '¿Añadir canales?';
+
+  @override
+  String get csReplaceBody =>
+      'Se sobrescribirán las 8 ranuras de canal. Perderás el acceso a los canales actuales a menos que tengas su enlace. La radio se reiniciará.';
+
+  @override
+  String get csReplaceLoraBody =>
+      'Se sobrescribirán las 8 ranuras de canal y los ajustes LoRa. Perderás el acceso a los canales actuales a menos que tengas su enlace. La radio se reiniciará.';
+
+  @override
+  String get csAddBody =>
+      'Los canales nuevos del enlace van a ranuras libres. Los canales existentes y los ajustes LoRa no cambian.';
+
+  @override
+  String get csApply => 'Aplicar';
+
+  @override
+  String get csAlreadyThere =>
+      'Todos los canales del enlace ya están en la radio.';
+
+  @override
+  String csWritten(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count canales escritos y verificados desde la radio.',
+      one: '$count canal escrito y verificado desde la radio.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String csNotVerified(String error) {
+    return 'Importación sin verificar: $error\nNo se reenviará nada automáticamente.';
+  }
+
+  @override
+  String csRefused(String error) {
+    return 'Importación rechazada: $error';
+  }
+
+  @override
+  String csFailed(String error) {
+    return 'La importación falló: $error';
+  }
+
+  @override
+  String get csImportTitle => 'Importar canales';
+
+  @override
+  String get csScan => 'Escanear código QR del canal';
+
+  @override
+  String get csScanTitle => 'Escanear QR del canal';
+
+  @override
+  String get csLinkLabel => 'Enlace de canal de Meshtastic';
+
+  @override
+  String get csPaste => 'Pegar';
+
+  @override
+  String csLora(String region, String modem) {
+    return 'LoRa: $region, $modem';
+  }
+
+  @override
+  String get csCustomModem => 'módem personalizado';
+
+  @override
+  String get csAdd => 'Añadir a la radio';
+
+  @override
+  String get csReplaceAll => 'Reemplazar todo';
+
+  @override
+  String get csApplyRadio => 'Aplicar a la radio';
 }
