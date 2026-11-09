@@ -1964,5 +1964,77 @@
   "csCustomModem": "custom modem",
   "csAdd": "Add to radio",
   "csReplaceAll": "Replace all",
-  "csApplyRadio": "Apply to radio"
+  "csApplyRadio": "Apply to radio",
+  "trTitle": "Plan your trip",
+  "trName": "Trip name",
+  "trContacts": "TRIP CONTACTS ({count}/{max})",
+  "@trContacts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "trContactsSub": "Check-ins and SOS go to each of them as a direct message.",
+  "trNoNodes": "No nodes yet",
+  "trNoNodesSub": "Connect to your radio so nearby nodes and favorites appear here.",
+  "trOverdue": "Overdue alert",
+  "trOverdueHelp": "Warns you when a trip contact has not been heard for this long",
+  "trOff": "Off",
+  "trMinutes": "{count} min",
+  "@trMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "trHours": "{count} h",
+  "@trHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "trReminder": "Check-in reminder",
+  "trReminderHelp": "Reminds you to check in this long after your last check-in",
+  "trEvery": "Every {time}",
+  "@trEvery": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "trSosChannel": "Also send SOS on a channel",
+  "trSosChannelHelp": "Everyone on that channel sees your SOS, not just trip contacts",
+  "trContactsOnly": "No, trip contacts only",
+  "trChannelItem": "Channel {index} • {name}",
+  "@trChannelItem": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "trDefault": "Default",
+  "trReadiness": "Readiness check",
+  "trEnd": "End trip",
+  "trStart": "Start trip",
+  "trRunning": "Trip running since {time}. Overdue alerts and reminders are on.",
+  "@trRunning": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "trNotRunning": "Starting the trip turns on overdue alerts and check-in reminders. Check-ins and SOS work any time."
 }

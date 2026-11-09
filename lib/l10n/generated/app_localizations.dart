@@ -4693,6 +4693,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply to radio'**
   String get csApplyRadio;
+
+  /// No description provided for @trTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan your trip'**
+  String get trTitle;
+
+  /// No description provided for @trName.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip name'**
+  String get trName;
+
+  /// No description provided for @trContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'TRIP CONTACTS ({count}/{max})'**
+  String trContacts(int count, int max);
+
+  /// No description provided for @trContactsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-ins and SOS go to each of them as a direct message.'**
+  String get trContactsSub;
+
+  /// No description provided for @trNoNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes yet'**
+  String get trNoNodes;
+
+  /// No description provided for @trNoNodesSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to your radio so nearby nodes and favorites appear here.'**
+  String get trNoNodesSub;
+
+  /// No description provided for @trOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue alert'**
+  String get trOverdue;
+
+  /// No description provided for @trOverdueHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Warns you when a trip contact has not been heard for this long'**
+  String get trOverdueHelp;
+
+  /// No description provided for @trOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get trOff;
+
+  /// No description provided for @trMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} min'**
+  String trMinutes(int count);
+
+  /// No description provided for @trHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} h'**
+  String trHours(int count);
+
+  /// No description provided for @trReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in reminder'**
+  String get trReminder;
+
+  /// No description provided for @trReminderHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminds you to check in this long after your last check-in'**
+  String get trReminderHelp;
+
+  /// No description provided for @trEvery.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {time}'**
+  String trEvery(String time);
+
+  /// No description provided for @trSosChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Also send SOS on a channel'**
+  String get trSosChannel;
+
+  /// No description provided for @trSosChannelHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone on that channel sees your SOS, not just trip contacts'**
+  String get trSosChannelHelp;
+
+  /// No description provided for @trContactsOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'No, trip contacts only'**
+  String get trContactsOnly;
+
+  /// No description provided for @trChannelItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index} • {name}'**
+  String trChannelItem(int index, String name);
+
+  /// No description provided for @trDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get trDefault;
+
+  /// No description provided for @trReadiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Readiness check'**
+  String get trReadiness;
+
+  /// No description provided for @trEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'End trip'**
+  String get trEnd;
+
+  /// No description provided for @trStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start trip'**
+  String get trStart;
+
+  /// No description provided for @trRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip running since {time}. Overdue alerts and reminders are on.'**
+  String trRunning(String time);
+
+  /// No description provided for @trNotRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting the trip turns on overdue alerts and check-in reminders. Check-ins and SOS work any time.'**
+  String get trNotRunning;
 }
 
 class _AppLocalizationsDelegate

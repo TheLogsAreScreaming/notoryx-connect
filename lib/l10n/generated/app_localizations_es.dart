@@ -2806,4 +2806,94 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get csApplyRadio => 'Aplicar a la radio';
+
+  @override
+  String get trTitle => 'Planifica tu viaje';
+
+  @override
+  String get trName => 'Nombre del viaje';
+
+  @override
+  String trContacts(int count, int max) {
+    return 'CONTACTOS DEL VIAJE ($count/$max)';
+  }
+
+  @override
+  String get trContactsSub =>
+      'Los reportes y el SOS les llegan a cada uno como mensaje directo.';
+
+  @override
+  String get trNoNodes => 'Aún no hay nodos';
+
+  @override
+  String get trNoNodesSub =>
+      'Conéctate a tu radio para que aparezcan aquí los nodos cercanos y tus favoritos.';
+
+  @override
+  String get trOverdue => 'Aviso de retraso';
+
+  @override
+  String get trOverdueHelp =>
+      'Te avisa cuando no se ha oído a un contacto del viaje durante este tiempo';
+
+  @override
+  String get trOff => 'Desactivado';
+
+  @override
+  String trMinutes(int count) {
+    return '$count min';
+  }
+
+  @override
+  String trHours(int count) {
+    return '$count h';
+  }
+
+  @override
+  String get trReminder => 'Recordatorio de reporte';
+
+  @override
+  String get trReminderHelp =>
+      'Te recuerda reportarte este tiempo después de tu último reporte';
+
+  @override
+  String trEvery(String time) {
+    return 'Cada $time';
+  }
+
+  @override
+  String get trSosChannel => 'Enviar también el SOS a un canal';
+
+  @override
+  String get trSosChannelHelp =>
+      'Todos los de ese canal ven tu SOS, no solo los contactos del viaje';
+
+  @override
+  String get trContactsOnly => 'No, solo contactos del viaje';
+
+  @override
+  String trChannelItem(int index, String name) {
+    return 'Canal $index • $name';
+  }
+
+  @override
+  String get trDefault => 'Predeterminado';
+
+  @override
+  String get trReadiness => 'Comprobación previa';
+
+  @override
+  String get trEnd => 'Terminar viaje';
+
+  @override
+  String get trStart => 'Empezar viaje';
+
+  @override
+  String trRunning(String time) {
+    return 'Viaje en curso desde las $time. Los avisos de retraso y los recordatorios están activados.';
+  }
+
+  @override
+  String get trNotRunning =>
+      'Al empezar el viaje se activan los avisos de retraso y los recordatorios de reporte. Los reportes y el SOS funcionan en cualquier momento.';
 }

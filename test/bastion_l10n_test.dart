@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bastion/main.dart';
-import 'package:bastion/radio_settings_page.dart';
+import 'package:bastion/trip_page.dart';
+import 'package:bastion/beacon_page.dart';
 import 'package:bastion/channel_share_page.dart';
+import 'package:bastion/radio_settings_page.dart';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/field_tools_page.dart';
-import 'package:bastion/beacon_page.dart';
 import 'package:bastion/node_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,17 +72,7 @@ void main() {
   });
 
   testWidgets('Field records is translated, but templates stay as sent on air', (tester) async {
-  });
-
-  testWidgets('Radio settings is translated', (tester) async {
-  });
-
-  testWidgets('Beacons is translated', (tester) async {
     tester.view.physicalSize = const Size(390, 3000);
-  });
-
-  testWidgets('Channel import is translated', (tester) async {
-    tester.view.physicalSize = const Size(390, 2000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
@@ -101,23 +92,81 @@ void main() {
     await tester.tap(find.text('Todo en orden'));
     await tester.pump();
     expect(find.textContaining('ALL CLEAR | Name:'), findsOneWidget);
+  });
+
+  testWidgets('Radio settings is translated', (tester) async {
+    tester.view.physicalSize = const Size(390, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: RadioSettingsPage(radio: radio),
     ));
     await tester.pump();
     expect(find.text('Ajustes de la radio'), findsOneWidget);
     expect(find.text('Radio no preparada'), findsOneWidget);
     expect(find.text('Propietario'), findsOneWidget);
+  });
+
+  testWidgets('Beacons is translated', (tester) async {
+    tester.view.physicalSize = const Size(390, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: BeaconPage(radio: radio),
     ));
     await tester.pump();
     expect(find.text('Balizas de la malla'), findsOneWidget);
     expect(find.text('Aún no se han oído balizas'), findsOneWidget);
     expect(find.text('Conéctate a una radio para enviar una baliza.'), findsOneWidget);
+  });
+
+  testWidgets('Channel import is translated', (tester) async {
+    tester.view.physicalSize = const Size(390, 2000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: ChannelImportPage(radio: radio),
     ));
     await tester.pump();
     expect(find.text('Importar canales'), findsOneWidget);
     expect(find.text('Enlace de canal de Meshtastic'), findsOneWidget);
+  });
+
+  testWidgets('Trip is translated', (tester) async {
+    tester.view.physicalSize = const Size(390, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: TripPage(radio: radio),
+    ));
+    await tester.pump();
+    expect(find.text('Planifica tu viaje'), findsOneWidget);
+    expect(find.text('Empezar viaje'), findsOneWidget);
+    expect(find.text('Aún no hay nodos'), findsOneWidget);
   });
 
   testWidgets('the Tools page is translated', (tester) async {

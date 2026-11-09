@@ -2780,4 +2780,94 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get csApplyRadio => 'Apply to radio';
+
+  @override
+  String get trTitle => 'Plan your trip';
+
+  @override
+  String get trName => 'Trip name';
+
+  @override
+  String trContacts(int count, int max) {
+    return 'TRIP CONTACTS ($count/$max)';
+  }
+
+  @override
+  String get trContactsSub =>
+      'Check-ins and SOS go to each of them as a direct message.';
+
+  @override
+  String get trNoNodes => 'No nodes yet';
+
+  @override
+  String get trNoNodesSub =>
+      'Connect to your radio so nearby nodes and favorites appear here.';
+
+  @override
+  String get trOverdue => 'Overdue alert';
+
+  @override
+  String get trOverdueHelp =>
+      'Warns you when a trip contact has not been heard for this long';
+
+  @override
+  String get trOff => 'Off';
+
+  @override
+  String trMinutes(int count) {
+    return '$count min';
+  }
+
+  @override
+  String trHours(int count) {
+    return '$count h';
+  }
+
+  @override
+  String get trReminder => 'Check-in reminder';
+
+  @override
+  String get trReminderHelp =>
+      'Reminds you to check in this long after your last check-in';
+
+  @override
+  String trEvery(String time) {
+    return 'Every $time';
+  }
+
+  @override
+  String get trSosChannel => 'Also send SOS on a channel';
+
+  @override
+  String get trSosChannelHelp =>
+      'Everyone on that channel sees your SOS, not just trip contacts';
+
+  @override
+  String get trContactsOnly => 'No, trip contacts only';
+
+  @override
+  String trChannelItem(int index, String name) {
+    return 'Channel $index • $name';
+  }
+
+  @override
+  String get trDefault => 'Default';
+
+  @override
+  String get trReadiness => 'Readiness check';
+
+  @override
+  String get trEnd => 'End trip';
+
+  @override
+  String get trStart => 'Start trip';
+
+  @override
+  String trRunning(String time) {
+    return 'Trip running since $time. Overdue alerts and reminders are on.';
+  }
+
+  @override
+  String get trNotRunning =>
+      'Starting the trip turns on overdue alerts and check-in reminders. Check-ins and SOS work any time.';
 }

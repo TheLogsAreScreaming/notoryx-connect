@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/generated/app_localizations.dart';
+
 import 'services/bastion_trip.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'trip_readiness_page.dart';
@@ -16,6 +18,8 @@ class _TripPageState extends State<TripPage> {
   late final TextEditingController _name =
       TextEditingController(text: widget.radio.trip.plan.name);
   String? _status;
+
+  AppLocalizations get l => AppLocalizations.of(context);
 
   BastionTripController get _trip => widget.radio.trip;
 
@@ -52,7 +56,7 @@ class _TripPageState extends State<TripPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Plan your trip')),
+    appBar: AppBar(title: Text(l.trTitle)),
     body: SafeArea(top: false, child: AnimatedBuilder(
       animation: widget.radio,
       builder: (context, _) {
@@ -61,7 +65,7 @@ class _TripPageState extends State<TripPage> {
         return ListView(padding: const EdgeInsets.all(16), children: [
           TextField(
             controller: _name,
-            decoration: const InputDecoration(labelText: 'Trip name'),
+            decoration: InputDecoration(labelText: l.trName),
             textCapitalization: TextCapitalization.sentences,
             onSubmitted: (value) => _update(plan.copyWith(name: value.trim().isEmpty ? 'My trip' : value.trim())),
             onTapOutside: (_) {
@@ -70,15 +74,15 @@ class _TripPageState extends State<TripPage> {
             },
           ),
           const SizedBox(height: 16),
-          Text('TRIP CONTACTS (${plan.members.length}/${TripPlan.maxMembers})',
+          Text(l.trContacts(plan.members.length, TripPlan.maxMembers),
             style: const TextStyle(fontWeight: FontWeight.bold)),
-          const Text('Check-ins and SOS go to each of them as a direct message.'),
+          Text(l.trContactsSub),
           const SizedBox(height: 8),
           if (_candidates().isEmpty)
-            const Card(child: ListTile(
-              leading: Icon(Icons.person_search),
-              title: Text('No nodes yet'),
-              subtitle: Text('Connect to your radio so nearby nodes and favorites appear here.'),
+            Card(child: ListTile(
+              leading: const Icon(Icons.person_search),
+              title: Text(l.trNoNodes),
+              subtitle: Text(l.trNoNodesSub),
             )),
           for (final c in _candidates())
             CheckboxListTile(
@@ -93,26 +97,26 @@ class _TripPageState extends State<TripPage> {
           DropdownButtonFormField<int>(
             isExpanded: true,
             initialValue: overdueChoices.contains(plan.overdueMinutes) ? plan.overdueMinutes : 60,
-            decoration: const InputDecoration(
-              labelText: 'Overdue alert',
-              helperText: 'Warns you when a trip contact has not been heard for this long',
+            decoration: InputDecoration(
+              labelText: l.trOverdue,
+              helperText: l.trOverdueHelp,
               helperMaxLines: 2,
             ),
             items: [for (final m in overdueChoices)
-              DropdownMenuItem(value: m, child: Text(m == 0 ? 'Off' : _minutes(m)))],
+              DropdownMenuItem(value: m, child: Text(m == 0 ? l.trOff : _minutes(l, m)))],
             onChanged: (m) => _update(plan.copyWith(overdueMinutes: m)),
           ),
           const SizedBox(height: 12),
           DropdownButtonFormField<int>(
             isExpanded: true,
             initialValue: reminderChoices.contains(plan.reminderMinutes) ? plan.reminderMinutes : 0,
-            decoration: const InputDecoration(
-              labelText: 'Check-in reminder',
-              helperText: 'Reminds you to check in this long after your last check-in',
+            decoration: InputDecoration(
+              labelText: l.trReminder,
+              helperText: l.trReminderHelp,
               helperMaxLines: 2,
             ),
             items: [for (final m in reminderChoices)
-              DropdownMenuItem(value: m, child: Text(m == 0 ? 'Off' : 'Every ${_minutes(m)}'))],
+              DropdownMenuItem(value: m, child: Text(m == 0 ? l.trOff : l.trEvery(_minutes(l, m))))],
             onChanged: (m) => _update(plan.copyWith(reminderMinutes: m)),
           ),
           const SizedBox(height: 12),
@@ -120,16 +124,16 @@ class _TripPageState extends State<TripPage> {
             isExpanded: true,
             initialValue: plan.sosChannel >= 0 && channels.any((c) => c.index == plan.sosChannel)
                 ? plan.sosChannel : -1,
-            decoration: const InputDecoration(
-              labelText: 'Also send SOS on a channel',
-              helperText: 'Everyone on that channel sees your SOS, not just trip contacts',
+            decoration: InputDecoration(
+              labelText: l.trSosChannel,
+              helperText: l.trSosChannelHelp,
               helperMaxLines: 2,
             ),
             items: [
-              const DropdownMenuItem(value: -1, child: Text('No, trip contacts only')),
+              DropdownMenuItem(value: -1, child: Text(l.trContactsOnly)),
               for (final c in channels)
                 DropdownMenuItem(value: c.index,
-                  child: Text('Channel ${c.index} • ${c.name.isEmpty ? 'Default' : c.name}')),
+                  child: Text(l.trChannelItem(c.index, c.name.isEmpty ? l.trDefault : c.name))),
             ],
             onChanged: (i) => _update(plan.copyWith(sosChannel: i)),
           ),
@@ -137,7 +141,7 @@ class _TripPageState extends State<TripPage> {
           OutlinedButton.icon(
             key: const ValueKey('open-readiness'),
             icon: const Icon(Icons.fact_check_outlined),
-            label: const Text('Readiness check'),
+            label: Text(l.trReadiness),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
               builder: (_) => TripReadinessPage(radio: widget.radio))),
           ),
@@ -145,20 +149,19 @@ class _TripPageState extends State<TripPage> {
           if (plan.active)
             OutlinedButton.icon(
               icon: const Icon(Icons.stop_circle_outlined),
-              label: const Text('End trip'),
+              label: Text(l.trEnd),
               onPressed: _trip.stopTrip,
             )
           else
             FilledButton.icon(
               icon: const Icon(Icons.hiking),
-              label: const Text('Start trip'),
+              label: Text(l.trStart),
               onPressed: plan.members.isEmpty ? null : _trip.startTrip,
             ),
           const SizedBox(height: 8),
           Text(plan.active
-              ? 'Trip running since ${_time(plan.startedAt!)}. Overdue alerts and reminders are on.'
-              : 'Starting the trip turns on overdue alerts and check-in reminders. '
-                'Check-ins and SOS work any time.'),
+              ? l.trRunning(_time(plan.startedAt!))
+              : l.trNotRunning),
           if (_status != null) Padding(padding: const EdgeInsets.only(top: 8), child: Text(_status!)),
         ]);
       },
@@ -166,7 +169,7 @@ class _TripPageState extends State<TripPage> {
   );
 }
 
-String _minutes(int m) => m < 60 ? '$m min' : '${m ~/ 60} h';
+String _minutes(AppLocalizations l, int m) => m < 60 ? l.trMinutes(m) : l.trHours(m ~/ 60);
 
 String _time(DateTime t) {
   final l = t.toLocal();
