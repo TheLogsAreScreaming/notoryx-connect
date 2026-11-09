@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'meshtastic_node_database.dart';
 
+double? _toDouble(Object? value) => value is num ? value.toDouble() : null;
+
 class BastionNodeRecord {
   const BastionNodeRecord({
     required this.num,
@@ -16,6 +18,9 @@ class BastionNodeRecord {
     this.hardwareModel,
     this.favorite = false,
     this.note = '',
+    this.latitude,
+    this.longitude,
+    this.positionTime,
   });
 
   final int num;
@@ -29,6 +34,13 @@ class BastionNodeRecord {
   final bool favorite;
   final String note;
 
+  /// Where the node last reported, kept after the radio forgets it.
+  final double? latitude;
+  final double? longitude;
+  final DateTime? positionTime;
+
+  bool get hasPosition => latitude != null && longitude != null;
+
   String get displayName => (longName?.isNotEmpty ?? false)
       ? longName!
       : (id ?? '!${num.toRadixString(16).padLeft(8, '0')}');
@@ -36,6 +48,7 @@ class BastionNodeRecord {
   BastionNodeRecord copyWith({
     String? id, String? longName, String? shortName, int? hardwareModel,
     DateTime? lastSeen, int? encounters, bool? favorite, String? note,
+    double? latitude, double? longitude, DateTime? positionTime,
   }) => BastionNodeRecord(
     num: num, id: id ?? this.id, longName: longName ?? this.longName,
     shortName: shortName ?? this.shortName,
@@ -43,6 +56,8 @@ class BastionNodeRecord {
     firstSeen: firstSeen, lastSeen: lastSeen ?? this.lastSeen,
     encounters: encounters ?? this.encounters,
     favorite: favorite ?? this.favorite, note: note ?? this.note,
+    latitude: latitude ?? this.latitude, longitude: longitude ?? this.longitude,
+    positionTime: positionTime ?? this.positionTime,
   );
 
   Map<String, Object?> toJson() => {
@@ -51,6 +66,9 @@ class BastionNodeRecord {
     'firstSeen': firstSeen.toUtc().toIso8601String(),
     'lastSeen': lastSeen.toUtc().toIso8601String(),
     'encounters': encounters, 'favorite': favorite, 'note': note,
+    if (hasPosition) 'lat': latitude,
+    if (hasPosition) 'lon': longitude,
+    if (positionTime != null) 'positionTime': positionTime!.toUtc().toIso8601String(),
   };
 
   static BastionNodeRecord fromJson(Map<String, Object?> json) =>
@@ -64,6 +82,9 @@ class BastionNodeRecord {
         encounters: json['encounters']! as int,
         favorite: json['favorite'] as bool? ?? false,
         note: json['note'] as String? ?? '',
+        latitude: _toDouble(json['lat']),
+        longitude: _toDouble(json['lon']),
+        positionTime: json['positionTime'] == null ? null : DateTime.tryParse(json['positionTime']! as String)?.toLocal(),
       );
 }
 
@@ -91,6 +112,8 @@ class BastionNodeDex {
   bool _annotationsLoaded = false;
   bool _recordsBlocked = false;
   bool _annotationsBlocked = false;
+  bool _positionsDirty = false;
+  DateTime? _positionsSavedAt;
 
   /// The radio whose encounters are shown; null before any radio connected.
   int? get radio => _radio;
@@ -178,6 +201,7 @@ class BastionNodeDex {
   static BastionNodeRecord _merge(BastionNodeRecord? a, BastionNodeRecord b) {
     if (a == null) return b;
     final newer = b.lastSeen.isAfter(a.lastSeen) ? b : a;
+    final placed = !a.hasPosition ? b : !b.hasPosition ? a : (b.positionTime ?? b.lastSeen).isAfter(a.positionTime ?? a.lastSeen) ? b : a;
     return BastionNodeRecord(
       num: a.num, id: newer.id ?? a.id ?? b.id,
       longName: newer.longName ?? a.longName ?? b.longName,
@@ -185,6 +209,7 @@ class BastionNodeDex {
       hardwareModel: newer.hardwareModel ?? a.hardwareModel ?? b.hardwareModel,
       firstSeen: a.firstSeen.isBefore(b.firstSeen) ? a.firstSeen : b.firstSeen,
       lastSeen: newer.lastSeen, encounters: a.encounters + b.encounters,
+      latitude: placed.latitude, longitude: placed.longitude, positionTime: placed.positionTime,
     );
   }
 
@@ -249,6 +274,26 @@ class BastionNodeDex {
             hardwareModel: node.hardwareModel, lastSeen: now,
             encounters: old.encounters + 1);
     if (_radio != null) await _saveRecords();
+  }
+
+  /// Copies the latest positions of known nodes, so they survive the radio's
+  /// own node list dropping them. Saved at most once a minute.
+  Future<void> rememberPositions(Iterable<MeshtasticNode> nodes, {DateTime? now}) async {
+    var changed = false;
+    for (final node in nodes) {
+      final old = _records[node.num];
+      if (old == null || !node.hasPosition) continue;
+      if (old.latitude == node.latitude && old.longitude == node.longitude) continue;
+      _records[node.num] = old.copyWith(
+          latitude: node.latitude, longitude: node.longitude, positionTime: node.positionTime);
+      changed = true;
+    }
+    if (changed) _positionsDirty = true;
+    final at = now ?? DateTime.now();
+    final last = _positionsSavedAt;
+    if (!_positionsDirty || (last != null && at.difference(last) < const Duration(minutes: 1))) return;
+    _positionsSavedAt = at;
+    if (await _saveRecords()) _positionsDirty = false;
   }
 
   Future<void> setFavorite(int num, bool value) async {

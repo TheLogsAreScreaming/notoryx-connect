@@ -2851,6 +2851,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sends {count} waypoints on channel 0, about 3 seconds apart. They expire after a day.'**
   String mapRouteSends(int count);
+
+  /// No description provided for @mapShowHeatmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Show coverage heatmap'**
+  String get mapShowHeatmap;
+
+  /// No description provided for @mapHideHeatmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide coverage heatmap'**
+  String get mapHideHeatmap;
+
+  /// No description provided for @mapHeatmapEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No coverage readings yet. Turn on Record coverage in Field records.'**
+  String get mapHeatmapEmpty;
+
+  /// No description provided for @mapHeatmapSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Coverage: {readings} readings. Numbers are average SNR in dB.'**
+  String mapHeatmapSummary(int readings);
+
+  /// No description provided for @mapHeatStrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong'**
+  String get mapHeatStrong;
+
+  /// No description provided for @mapHeatFair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get mapHeatFair;
+
+  /// No description provided for @mapHeatWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak'**
+  String get mapHeatWeak;
+
+  /// No description provided for @mapShowRemembered.
+  ///
+  /// In en, this message translates to:
+  /// **'Show remembered nodes'**
+  String get mapShowRemembered;
+
+  /// No description provided for @mapHideRemembered.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide remembered nodes'**
+  String get mapHideRemembered;
+
+  /// No description provided for @mapRememberedNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No remembered nodes with a saved position.'**
+  String get mapRememberedNone;
+
+  /// No description provided for @mapRememberedPin.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}, remembered, last seen {when}'**
+  String mapRememberedPin(String name, String when);
+
+  /// No description provided for @mapRememberedNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio no longer lists this node. This is where it last reported.'**
+  String get mapRememberedNote;
+
+  /// No description provided for @mapLastSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Last seen {when}'**
+  String mapLastSeen(String when);
 }
 
 class _AppLocalizationsDelegate

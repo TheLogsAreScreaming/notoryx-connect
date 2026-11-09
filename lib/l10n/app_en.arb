@@ -1205,5 +1205,42 @@
         "type": "int"
       }
     }
+  },
+  "mapShowHeatmap": "Show coverage heatmap",
+  "mapHideHeatmap": "Hide coverage heatmap",
+  "mapHeatmapEmpty": "No coverage readings yet. Turn on Record coverage in Field records.",
+  "mapHeatmapSummary": "Coverage: {readings} readings. Numbers are average SNR in dB.",
+  "@mapHeatmapSummary": {
+    "placeholders": {
+      "readings": {
+        "type": "int"
+      }
+    }
+  },
+  "mapHeatStrong": "Strong",
+  "mapHeatFair": "Fair",
+  "mapHeatWeak": "Weak",
+  "mapShowRemembered": "Show remembered nodes",
+  "mapHideRemembered": "Hide remembered nodes",
+  "mapRememberedNone": "No remembered nodes with a saved position.",
+  "mapRememberedPin": "{name}, remembered, last seen {when}",
+  "@mapRememberedPin": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "mapRememberedNote": "Your radio no longer lists this node. This is where it last reported.",
+  "mapLastSeen": "Last seen {when}",
+  "@mapLastSeen": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
   }
 }

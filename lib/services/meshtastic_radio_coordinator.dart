@@ -1059,6 +1059,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         }
         _trails.record(nodes, {...trip.plan.members, ?_localNodeNum});
         _checkGeofences(nodes);
+        unawaited(_nodeDex.rememberPositions(nodes));
         notifyListeners();
       });
       _nodeDexSubscription = nodeDatabase.nodeUpdates.listen((node) {

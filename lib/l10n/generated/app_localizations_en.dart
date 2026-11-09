@@ -1672,4 +1672,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String mapRouteSends(int count) {
     return 'Sends $count waypoints on channel 0, about 3 seconds apart. They expire after a day.';
   }
+
+  @override
+  String get mapShowHeatmap => 'Show coverage heatmap';
+
+  @override
+  String get mapHideHeatmap => 'Hide coverage heatmap';
+
+  @override
+  String get mapHeatmapEmpty =>
+      'No coverage readings yet. Turn on Record coverage in Field records.';
+
+  @override
+  String mapHeatmapSummary(int readings) {
+    return 'Coverage: $readings readings. Numbers are average SNR in dB.';
+  }
+
+  @override
+  String get mapHeatStrong => 'Strong';
+
+  @override
+  String get mapHeatFair => 'Fair';
+
+  @override
+  String get mapHeatWeak => 'Weak';
+
+  @override
+  String get mapShowRemembered => 'Show remembered nodes';
+
+  @override
+  String get mapHideRemembered => 'Hide remembered nodes';
+
+  @override
+  String get mapRememberedNone => 'No remembered nodes with a saved position.';
+
+  @override
+  String mapRememberedPin(String name, String when) {
+    return '$name, remembered, last seen $when';
+  }
+
+  @override
+  String get mapRememberedNote =>
+      'Your radio no longer lists this node. This is where it last reported.';
+
+  @override
+  String mapLastSeen(String when) {
+    return 'Last seen $when';
+  }
 }
