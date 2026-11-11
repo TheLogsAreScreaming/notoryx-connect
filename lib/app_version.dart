@@ -1,2 +1,2 @@
 /// App version written into backups; must match `version:` in pubspec.yaml.
-const bastionAppVersion = '1.0.0+12';
+const bastionAppVersion = '1.0.0+13';
