@@ -1,0 +1,1 @@
+Fixes a crash when Android recreates the app's screen. Reply to messages from the notification or a paired Wear OS watch. Optional position feed to ATAK. Home, Map, Radio settings, Node detail, Field records, Beacons, channel sharing, Trip, Privacy and backups now follow the phone language (English or Spanish). Trip page dropdowns fit narrow screens.
