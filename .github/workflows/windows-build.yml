@@ -53,12 +53,19 @@ jobs:
           $Line = Select-String -Path pubspec.yaml -Pattern '^version: *(.+)\+(.+)$'
           $Version = $Line.Matches[0].Groups[1].Value + '-' + $Line.Matches[0].Groups[2].Value
           $Release = 'build/windows/x64/runner/Release'
-          if (-not (Test-Path "$Release/bastion.exe")) { throw 'bastion.exe was not built' }
+          if (-not (Test-Path "$Release/notoryx_connect.exe")) { throw 'notoryx_connect.exe was not built' }
           if (-not (Get-ChildItem "$Release" -Recurse -Filter '*sqlite3*.dll')) { throw 'The SQLite library is missing' }
           New-Item -ItemType Directory -Force dist | Out-Null
           Compress-Archive -Path "$Release/*" -DestinationPath "dist/NOTORYX-Connect-$Version-Windows-x64.zip"
-          Get-FileHash dist/*.zip -Algorithm SHA256 | ForEach-Object { "$($_.Hash.ToLower())  $(Split-Path $_.Path -Leaf)" } | Set-Content dist/SHA256SUMS-Windows.txt
-          "Version: $Version`nCommit: $env:GITHUB_SHA`nRun: $env:GITHUB_RUN_ID" | Set-Content dist/BUILD-INFO-Windows.txt
+          # Unix line endings, so `shasum -c` works on macOS and Linux too.
+          $Sums = (Get-FileHash dist/*.zip -Algorithm SHA256 | ForEach-Object { "$($_.Hash.ToLower())  $(Split-Path $_.Path -Leaf)" }) -join "`n"
+          [IO.File]::WriteAllText("$PWD/dist/SHA256SUMS-Windows.txt", "$Sums`n")
+          [IO.File]::WriteAllText("$PWD/dist/BUILD-INFO-Windows.txt", "Version: $Version`nCommit: $env:GITHUB_SHA`nRun: $env:GITHUB_RUN_ID`n")
+      - name: Check the checksum file
+        run: |
+          cd dist
+          if grep -q $'\r' SHA256SUMS-Windows.txt; then echo "Checksum file has Windows line endings"; exit 1; fi
+          sha256sum -c SHA256SUMS-Windows.txt
       - uses: actions/upload-artifact@v7
         with:
           name: NOTORYX-Connect-Windows-${{ github.run_number }}
