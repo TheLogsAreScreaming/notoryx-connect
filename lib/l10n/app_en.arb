@@ -2036,5 +2036,127 @@
       }
     }
   },
-  "trNotRunning": "Starting the trip turns on overdue alerts and check-in reminders. Check-ins and SOS work any time."
+  "trNotRunning": "Starting the trip turns on overdue alerts and check-in reminders. Check-ins and SOS work any time.",
+  "pvEncryptedOn": "Chat history is now encrypted.",
+  "pvEncryptedOff": "Chat history is no longer encrypted.",
+  "pvLockOnReason": "Turn on app lock",
+  "pvLockOffReason": "Turn off app lock",
+  "pvLockUnchanged": "App lock was not changed.",
+  "pvStored1": "Chat history and offline queues for each radio (newest 500 messages per radio)",
+  "pvStored2": "NodeDex: nodes your radios have heard, plus your favorites and notes",
+  "pvStored3": "Waypoints received from the mesh",
+  "pvStored4": "Incident log and coverage records, only if you create them",
+  "pvStored5": "Field alert, bot, location and appearance settings",
+  "pvStored6": "Map tiles for areas you have viewed",
+  "pvSent1": "Messages you send go to your radio, which transmits them on the mesh using the channel's encryption key",
+  "pvSent2": "Your phone location, only while \"Share phone location\" is on, at the precision you choose",
+  "pvSent3": "Position, telemetry and traceroute requests that you start",
+  "pvSent4": "Map tile requests to OpenStreetMap servers when you view the map; they see your IP address",
+  "pvSent5": "Topographic map tile requests to OpenTopoMap servers, only while the topo map is shown; they see your IP address",
+  "pvSent6": "Points along a link to the Open-Meteo elevation service, only when you check a link in the Link planner",
+  "pvDisconnectFirst": "Disconnect the radio before deleting phone data.",
+  "pvDeleteAllQ": "Delete all phone data?",
+  "pvDeleteChatsQ": "Delete chat history?",
+  "pvDeleteAllBody": "Deletes chats and offline queues for every radio, NodeDex, favorites and notes, waypoints, field records, cached map tiles and all app settings from this phone. Radio settings are not changed. This cannot be undone; make a phone data backup first if you may need it.\n\nThe app closes afterwards.",
+  "pvDeleteChatsBody": "Deletes chat history and queued messages for every radio from this phone. Messages already sent on the mesh are not affected. This cannot be undone.\n\nThe app closes afterwards.",
+  "pvDelete": "Delete",
+  "pvDeleteFailed": "Delete failed: {error}",
+  "@pvDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "pvDeleted": "Deleted",
+  "pvDeletedBody": "NOTORYX Connect will close now so nothing still in memory is saved again.",
+  "pvCloseApp": "Close app",
+  "pvTitle": "Privacy & data",
+  "pvIntro": "NOTORYX Connect has no account, analytics, ads or servers of its own. Everything it keeps stays in this app's private storage on your phone and is removed if you uninstall it.",
+  "pvAppLock": "App lock",
+  "pvAppLockSub": "Ask for your fingerprint, face or screen lock when opening the app, and after a minute away. You will also need it to reach SOS. The radio stays connected.",
+  "pvAppLockNone": "Set a screen lock on this phone to use app lock.",
+  "pvEncrypt": "Encrypt chat history",
+  "pvEncryptSub": "Scrambles saved messages using a key held in this phone's secure storage. If that key is lost, for example after moving to a new phone, the saved history can't be read. Export anything you need first.",
+  "pvStored": "Stored on this phone",
+  "pvSent": "Sent off this phone",
+  "pvDeleteChats": "Delete chat history",
+  "pvDeleteAll": "Delete all phone data",
+  "pbFailed": "Operation failed: {error}",
+  "@pbFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "pbShortPassword": "Use at least 12 characters for the backup password.",
+  "pbCreated": "Backup created. Save the file somewhere off this phone. Keep the password separately; it cannot be recovered.",
+  "pbDisconnectFirst": "Disconnect the radio before restoring phone data.",
+  "pbReplaceQ": "Replace all phone data?",
+  "pbSummary": "Backup created {date} by version {version}.\n\nIt has chat history for {radios, plural, one{{radios} radio} other{{radios} radios}} ({messages} messages) and {items} saved items in all.\n\nEverything NOTORYX Connect stores on this phone (chats, offline queues, NodeDex, waypoints, field records and settings) is replaced. Radio settings are not changed. The app closes when the restore finishes; open it again to continue.",
+  "@pbSummary": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      },
+      "radios": {
+        "type": "int"
+      },
+      "messages": {
+        "type": "int"
+      },
+      "items": {
+        "type": "int"
+      }
+    }
+  },
+  "pbReplace": "Replace phone data",
+  "pbRestored": "Restore complete",
+  "pbRestoredBody": "NOTORYX Connect will close now so nothing still in memory overwrites the restored data. Open it again to continue.",
+  "pbTitle": "Phone data backup",
+  "pbIntro": "Backs up everything NOTORYX Connect stores on this phone: chat history and offline queues for every radio, NodeDex favorites and notes, waypoints, field records and app settings. Use it to move to a new phone. The file is encrypted with your password. Radio settings have their own backup.",
+  "pbPassword": "Backup password (at least 12 characters)",
+  "pbCreate": "Create backup file",
+  "pbRestore": "Restore from file",
+  "rbFailed": "Operation failed. If a restore had started, settings may be partially changed. Reconnect and check the radio before retrying.",
+  "rbReady": "Encrypted backup ready. Copy it and save it in a text file. Keep the password separately; it cannot be recovered.",
+  "rbReplaceQ": "Replace radio settings?",
+  "rbSummary": "Backup from radio {source} (firmware {firmware}), created {date}.\n\nTarget: {target}. Replaces owner names, all 8 channel slots including their secret keys, {configs} configuration sections and {modules} modules. Device identity/security keys, session credentials, phone chats and maps are not restored (use Phone data backup for those).\n\nSave a backup of the target first. The radio may reboot or lose mesh connectivity. A radio write cannot guarantee rollback after a power or connection failure.",
+  "@rbSummary": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "firmware": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "configs": {
+        "type": "int"
+      },
+      "modules": {
+        "type": "int"
+      }
+    }
+  },
+  "rbReplace": "Replace settings",
+  "rbRadioChanged": "Connected radio changed.",
+  "rbRestored": "Restore complete. Fresh radio readback matches the backup.",
+  "rbTitle": "Encrypted radio backup",
+  "rbIntro": "Backs up fresh radio configuration and modules reported by the firmware, all channel slots and owner names. Channel keys and any network/module credentials are password encrypted. Device identity keys and session credentials are excluded.",
+  "rbCreate": "Create encrypted backup",
+  "rbText": "Encrypted backup text",
+  "rbTextHint": "Paste a saved encrypted backup to restore",
+  "rbCopied": "Encrypted backup copied. Save it in a text file.",
+  "rbCopy": "Copy encrypted backup",
+  "rbReview": "Review and restore"
 }

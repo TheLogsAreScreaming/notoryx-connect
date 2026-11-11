@@ -6,6 +6,7 @@ import 'package:bastion/services/bastion_encrypted_backup.dart';
 import 'package:bastion/services/bastion_message_archive.dart';
 import 'package:bastion/services/bastion_phone_backup.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -110,7 +111,7 @@ void main() {
     addTearDown(radio.dispose);
     radio.connection.beginConnect('Field Radio');
     final files = _Files()..toOpen = 'unused';
-    await tester.pumpWidget(MaterialApp(home: PhoneBackupPage(radio: radio, files: files)));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: PhoneBackupPage(radio: radio, files: files)));
     await tester.enterText(find.byType(TextField), 'correct horse battery');
     await tester.tap(find.text('Restore from file'));
     await tester.pumpAndSettle();
@@ -133,7 +134,7 @@ void main() {
     final radio = MeshtasticRadioCoordinator();
     addTearDown(radio.dispose);
     radio.connection.beginConnect('Field Radio');
-    await tester.pumpWidget(MaterialApp(home: PrivacyPage(radio: radio)));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: PrivacyPage(radio: radio)));
     await tester.scrollUntilVisible(find.text('Sent off this phone'), 200, scrollable: find.byType(Scrollable).first);
     expect(find.text('Sent off this phone'), findsOneWidget);
     await tester.scrollUntilVisible(find.text('Delete all phone data'), 200, scrollable: find.byType(Scrollable).first);

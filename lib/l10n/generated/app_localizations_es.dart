@@ -2896,4 +2896,260 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get trNotRunning =>
       'Al empezar el viaje se activan los avisos de retraso y los recordatorios de reporte. Los reportes y el SOS funcionan en cualquier momento.';
+
+  @override
+  String get pvEncryptedOn => 'El historial de chat ahora está cifrado.';
+
+  @override
+  String get pvEncryptedOff => 'El historial de chat ya no está cifrado.';
+
+  @override
+  String get pvLockOnReason => 'Activar el bloqueo de la aplicación';
+
+  @override
+  String get pvLockOffReason => 'Desactivar el bloqueo de la aplicación';
+
+  @override
+  String get pvLockUnchanged => 'No se cambió el bloqueo de la aplicación.';
+
+  @override
+  String get pvStored1 =>
+      'Historial de chat y colas sin conexión de cada radio (los 500 mensajes más recientes por radio)';
+
+  @override
+  String get pvStored2 =>
+      'NodeDex: los nodos que oyeron tus radios, más tus favoritos y notas';
+
+  @override
+  String get pvStored3 => 'Puntos de ruta recibidos de la malla';
+
+  @override
+  String get pvStored4 =>
+      'Registro de incidentes y de cobertura, solo si los creas';
+
+  @override
+  String get pvStored5 =>
+      'Ajustes de avisos de campo, bot, ubicación y apariencia';
+
+  @override
+  String get pvStored6 => 'Teselas de mapa de las zonas que has visto';
+
+  @override
+  String get pvSent1 =>
+      'Los mensajes que envías van a tu radio, que los transmite por la malla con la clave de cifrado del canal';
+
+  @override
+  String get pvSent2 =>
+      'La ubicación de tu teléfono, solo mientras \"Compartir ubicación del teléfono\" esté activado, con la precisión que elijas';
+
+  @override
+  String get pvSent3 =>
+      'Las peticiones de posición, telemetría y traceroute que inicies';
+
+  @override
+  String get pvSent4 =>
+      'Peticiones de teselas a los servidores de OpenStreetMap cuando ves el mapa; ven tu dirección IP';
+
+  @override
+  String get pvSent5 =>
+      'Peticiones de teselas topográficas a los servidores de OpenTopoMap, solo mientras se muestra el mapa topográfico; ven tu dirección IP';
+
+  @override
+  String get pvSent6 =>
+      'Puntos de un enlace al servicio de elevación Open-Meteo, solo cuando compruebas un enlace en el planificador';
+
+  @override
+  String get pvDisconnectFirst =>
+      'Desconecta la radio antes de borrar los datos del teléfono.';
+
+  @override
+  String get pvDeleteAllQ => '¿Borrar todos los datos del teléfono?';
+
+  @override
+  String get pvDeleteChatsQ => '¿Borrar el historial de chat?';
+
+  @override
+  String get pvDeleteAllBody =>
+      'Borra de este teléfono los chats y colas sin conexión de todas las radios, NodeDex, favoritos y notas, puntos de ruta, registros de campo, teselas de mapa guardadas y todos los ajustes de la aplicación. Los ajustes de la radio no cambian. No se puede deshacer; haz antes una copia de seguridad de los datos del teléfono si puedes necesitarlos.\n\nLa aplicación se cierra después.';
+
+  @override
+  String get pvDeleteChatsBody =>
+      'Borra de este teléfono el historial de chat y los mensajes en cola de todas las radios. Los mensajes ya enviados por la malla no se ven afectados. No se puede deshacer.\n\nLa aplicación se cierra después.';
+
+  @override
+  String get pvDelete => 'Borrar';
+
+  @override
+  String pvDeleteFailed(String error) {
+    return 'No se pudo borrar: $error';
+  }
+
+  @override
+  String get pvDeleted => 'Borrado';
+
+  @override
+  String get pvDeletedBody =>
+      'NOTORYX Connect se cerrará ahora para que no se vuelva a guardar nada que siga en memoria.';
+
+  @override
+  String get pvCloseApp => 'Cerrar la aplicación';
+
+  @override
+  String get pvTitle => 'Privacidad y datos';
+
+  @override
+  String get pvIntro =>
+      'NOTORYX Connect no tiene cuenta, analíticas, anuncios ni servidores propios. Todo lo que guarda se queda en el almacenamiento privado de la aplicación en tu teléfono y se elimina si la desinstalas.';
+
+  @override
+  String get pvAppLock => 'Bloqueo de la aplicación';
+
+  @override
+  String get pvAppLockSub =>
+      'Pide tu huella, cara o bloqueo de pantalla al abrir la aplicación y tras un minuto fuera. También lo necesitarás para llegar al SOS. La radio sigue conectada.';
+
+  @override
+  String get pvAppLockNone =>
+      'Configura un bloqueo de pantalla en este teléfono para usar el bloqueo de la aplicación.';
+
+  @override
+  String get pvEncrypt => 'Cifrar el historial de chat';
+
+  @override
+  String get pvEncryptSub =>
+      'Cifra los mensajes guardados con una clave que se guarda en el almacenamiento seguro del teléfono. Si se pierde esa clave, por ejemplo al cambiar de teléfono, el historial guardado no se podrá leer. Exporta antes lo que necesites.';
+
+  @override
+  String get pvStored => 'Guardado en este teléfono';
+
+  @override
+  String get pvSent => 'Enviado fuera de este teléfono';
+
+  @override
+  String get pvDeleteChats => 'Borrar el historial de chat';
+
+  @override
+  String get pvDeleteAll => 'Borrar todos los datos del teléfono';
+
+  @override
+  String pbFailed(String error) {
+    return 'La operación falló: $error';
+  }
+
+  @override
+  String get pbShortPassword =>
+      'Usa al menos 12 caracteres para la contraseña de la copia.';
+
+  @override
+  String get pbCreated =>
+      'Copia creada. Guarda el archivo fuera de este teléfono. Guarda la contraseña aparte; no se puede recuperar.';
+
+  @override
+  String get pbDisconnectFirst =>
+      'Desconecta la radio antes de restaurar los datos del teléfono.';
+
+  @override
+  String get pbReplaceQ => '¿Reemplazar todos los datos del teléfono?';
+
+  @override
+  String pbSummary(
+    String date,
+    String version,
+    int radios,
+    int messages,
+    int items,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      radios,
+      locale: localeName,
+      other: '$radios radios',
+      one: '$radios radio',
+    );
+    return 'Copia creada el $date con la versión $version.\n\nTiene historial de chat de $_temp0 ($messages mensajes) y $items elementos guardados en total.\n\nSe reemplaza todo lo que NOTORYX Connect guarda en este teléfono (chats, colas sin conexión, NodeDex, puntos de ruta, registros de campo y ajustes). Los ajustes de la radio no cambian. La aplicación se cierra al terminar la restauración; vuelve a abrirla para continuar.';
+  }
+
+  @override
+  String get pbReplace => 'Reemplazar datos del teléfono';
+
+  @override
+  String get pbRestored => 'Restauración completada';
+
+  @override
+  String get pbRestoredBody =>
+      'NOTORYX Connect se cerrará ahora para que nada que siga en memoria sobrescriba los datos restaurados. Vuelve a abrirla para continuar.';
+
+  @override
+  String get pbTitle => 'Copia de seguridad del teléfono';
+
+  @override
+  String get pbIntro =>
+      'Guarda una copia de todo lo que NOTORYX Connect almacena en este teléfono: historial de chat y colas sin conexión de todas las radios, favoritos y notas de NodeDex, puntos de ruta, registros de campo y ajustes. Sirve para cambiar de teléfono. El archivo se cifra con tu contraseña. Los ajustes de la radio tienen su propia copia.';
+
+  @override
+  String get pbPassword => 'Contraseña de la copia (al menos 12 caracteres)';
+
+  @override
+  String get pbCreate => 'Crear archivo de copia';
+
+  @override
+  String get pbRestore => 'Restaurar desde archivo';
+
+  @override
+  String get rbFailed =>
+      'La operación falló. Si había empezado una restauración, los ajustes pueden haber cambiado en parte. Vuelve a conectar y revisa la radio antes de reintentar.';
+
+  @override
+  String get rbReady =>
+      'Copia cifrada lista. Cópiala y guárdala en un archivo de texto. Guarda la contraseña aparte; no se puede recuperar.';
+
+  @override
+  String get rbReplaceQ => '¿Reemplazar los ajustes de la radio?';
+
+  @override
+  String rbSummary(
+    String source,
+    String firmware,
+    String date,
+    String target,
+    int configs,
+    int modules,
+  ) {
+    return 'Copia de la radio $source (firmware $firmware), creada el $date.\n\nDestino: $target. Reemplaza los nombres del propietario, las 8 ranuras de canal con sus claves secretas, $configs secciones de configuración y $modules módulos. No se restauran las claves de identidad y seguridad del dispositivo, las credenciales de sesión, los chats del teléfono ni los mapas (usa la copia de datos del teléfono para eso).\n\nHaz antes una copia del destino. La radio puede reiniciarse o perder la conexión con la malla. Una escritura en la radio no garantiza poder deshacerla tras un fallo de corriente o de conexión.';
+  }
+
+  @override
+  String get rbReplace => 'Reemplazar ajustes';
+
+  @override
+  String get rbRadioChanged => 'La radio conectada cambió.';
+
+  @override
+  String get rbRestored =>
+      'Restauración completada. La nueva lectura de la radio coincide con la copia.';
+
+  @override
+  String get rbTitle => 'Copia cifrada de la radio';
+
+  @override
+  String get rbIntro =>
+      'Guarda una copia de la configuración y los módulos que informa el firmware, todas las ranuras de canal y los nombres del propietario. Las claves de canal y las credenciales de red o módulos se cifran con contraseña. Se excluyen las claves de identidad del dispositivo y las credenciales de sesión.';
+
+  @override
+  String get rbCreate => 'Crear copia cifrada';
+
+  @override
+  String get rbText => 'Texto de la copia cifrada';
+
+  @override
+  String get rbTextHint => 'Pega una copia cifrada guardada para restaurarla';
+
+  @override
+  String get rbCopied =>
+      'Copia cifrada copiada. Guárdala en un archivo de texto.';
+
+  @override
+  String get rbCopy => 'Copiar copia cifrada';
+
+  @override
+  String get rbReview => 'Revisar y restaurar';
 }

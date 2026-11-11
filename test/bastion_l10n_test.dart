@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bastion/main.dart';
+import 'package:bastion/radio_backup_page.dart';
+import 'package:bastion/phone_backup_page.dart';
+import 'package:bastion/privacy_page.dart';
 import 'package:bastion/trip_page.dart';
 import 'package:bastion/beacon_page.dart';
 import 'package:bastion/channel_share_page.dart';
@@ -167,6 +170,30 @@ void main() {
     expect(find.text('Planifica tu viaje'), findsOneWidget);
     expect(find.text('Empezar viaje'), findsOneWidget);
     expect(find.text('Aún no hay nodos'), findsOneWidget);
+  });
+
+  testWidgets('Privacy and backups are translated', (tester) async {
+    tester.view.physicalSize = const Size(390, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    for (final (page, title) in [
+      (PrivacyPage(radio: radio) as Widget, 'Privacidad y datos'),
+      (PhoneBackupPage(radio: radio), 'Copia de seguridad del teléfono'),
+      (RadioBackupPage(radio: radio), 'Copia cifrada de la radio'),
+    ]) {
+      await tester.pumpWidget(MaterialApp(
+        key: ValueKey(title),
+        locale: const Locale('es'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: page,
+      ));
+      await tester.pump();
+      expect(find.text(title), findsOneWidget);
+    }
   });
 
   testWidgets('the Tools page is translated', (tester) async {

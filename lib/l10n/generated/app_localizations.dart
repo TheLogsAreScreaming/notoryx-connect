@@ -4837,6 +4837,421 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Starting the trip turns on overdue alerts and check-in reminders. Check-ins and SOS work any time.'**
   String get trNotRunning;
+
+  /// No description provided for @pvEncryptedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat history is now encrypted.'**
+  String get pvEncryptedOn;
+
+  /// No description provided for @pvEncryptedOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat history is no longer encrypted.'**
+  String get pvEncryptedOff;
+
+  /// No description provided for @pvLockOnReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on app lock'**
+  String get pvLockOnReason;
+
+  /// No description provided for @pvLockOffReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off app lock'**
+  String get pvLockOffReason;
+
+  /// No description provided for @pvLockUnchanged.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock was not changed.'**
+  String get pvLockUnchanged;
+
+  /// No description provided for @pvStored1.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat history and offline queues for each radio (newest 500 messages per radio)'**
+  String get pvStored1;
+
+  /// No description provided for @pvStored2.
+  ///
+  /// In en, this message translates to:
+  /// **'NodeDex: nodes your radios have heard, plus your favorites and notes'**
+  String get pvStored2;
+
+  /// No description provided for @pvStored3.
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoints received from the mesh'**
+  String get pvStored3;
+
+  /// No description provided for @pvStored4.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident log and coverage records, only if you create them'**
+  String get pvStored4;
+
+  /// No description provided for @pvStored5.
+  ///
+  /// In en, this message translates to:
+  /// **'Field alert, bot, location and appearance settings'**
+  String get pvStored5;
+
+  /// No description provided for @pvStored6.
+  ///
+  /// In en, this message translates to:
+  /// **'Map tiles for areas you have viewed'**
+  String get pvStored6;
+
+  /// No description provided for @pvSent1.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages you send go to your radio, which transmits them on the mesh using the channel\'s encryption key'**
+  String get pvSent1;
+
+  /// No description provided for @pvSent2.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone location, only while \"Share phone location\" is on, at the precision you choose'**
+  String get pvSent2;
+
+  /// No description provided for @pvSent3.
+  ///
+  /// In en, this message translates to:
+  /// **'Position, telemetry and traceroute requests that you start'**
+  String get pvSent3;
+
+  /// No description provided for @pvSent4.
+  ///
+  /// In en, this message translates to:
+  /// **'Map tile requests to OpenStreetMap servers when you view the map; they see your IP address'**
+  String get pvSent4;
+
+  /// No description provided for @pvSent5.
+  ///
+  /// In en, this message translates to:
+  /// **'Topographic map tile requests to OpenTopoMap servers, only while the topo map is shown; they see your IP address'**
+  String get pvSent5;
+
+  /// No description provided for @pvSent6.
+  ///
+  /// In en, this message translates to:
+  /// **'Points along a link to the Open-Meteo elevation service, only when you check a link in the Link planner'**
+  String get pvSent6;
+
+  /// No description provided for @pvDisconnectFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect the radio before deleting phone data.'**
+  String get pvDisconnectFirst;
+
+  /// No description provided for @pvDeleteAllQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all phone data?'**
+  String get pvDeleteAllQ;
+
+  /// No description provided for @pvDeleteChatsQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete chat history?'**
+  String get pvDeleteChatsQ;
+
+  /// No description provided for @pvDeleteAllBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Deletes chats and offline queues for every radio, NodeDex, favorites and notes, waypoints, field records, cached map tiles and all app settings from this phone. Radio settings are not changed. This cannot be undone; make a phone data backup first if you may need it.\n\nThe app closes afterwards.'**
+  String get pvDeleteAllBody;
+
+  /// No description provided for @pvDeleteChatsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Deletes chat history and queued messages for every radio from this phone. Messages already sent on the mesh are not affected. This cannot be undone.\n\nThe app closes afterwards.'**
+  String get pvDeleteChatsBody;
+
+  /// No description provided for @pvDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get pvDelete;
+
+  /// No description provided for @pvDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete failed: {error}'**
+  String pvDeleteFailed(String error);
+
+  /// No description provided for @pvDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted'**
+  String get pvDeleted;
+
+  /// No description provided for @pvDeletedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTORYX Connect will close now so nothing still in memory is saved again.'**
+  String get pvDeletedBody;
+
+  /// No description provided for @pvCloseApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Close app'**
+  String get pvCloseApp;
+
+  /// No description provided for @pvTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & data'**
+  String get pvTitle;
+
+  /// No description provided for @pvIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTORYX Connect has no account, analytics, ads or servers of its own. Everything it keeps stays in this app\'s private storage on your phone and is removed if you uninstall it.'**
+  String get pvIntro;
+
+  /// No description provided for @pvAppLock.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock'**
+  String get pvAppLock;
+
+  /// No description provided for @pvAppLockSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for your fingerprint, face or screen lock when opening the app, and after a minute away. You will also need it to reach SOS. The radio stays connected.'**
+  String get pvAppLockSub;
+
+  /// No description provided for @pvAppLockNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a screen lock on this phone to use app lock.'**
+  String get pvAppLockNone;
+
+  /// No description provided for @pvEncrypt.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypt chat history'**
+  String get pvEncrypt;
+
+  /// No description provided for @pvEncryptSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Scrambles saved messages using a key held in this phone\'s secure storage. If that key is lost, for example after moving to a new phone, the saved history can\'t be read. Export anything you need first.'**
+  String get pvEncryptSub;
+
+  /// No description provided for @pvStored.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored on this phone'**
+  String get pvStored;
+
+  /// No description provided for @pvSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent off this phone'**
+  String get pvSent;
+
+  /// No description provided for @pvDeleteChats.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete chat history'**
+  String get pvDeleteChats;
+
+  /// No description provided for @pvDeleteAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all phone data'**
+  String get pvDeleteAll;
+
+  /// No description provided for @pbFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation failed: {error}'**
+  String pbFailed(String error);
+
+  /// No description provided for @pbShortPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least 12 characters for the backup password.'**
+  String get pbShortPassword;
+
+  /// No description provided for @pbCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup created. Save the file somewhere off this phone. Keep the password separately; it cannot be recovered.'**
+  String get pbCreated;
+
+  /// No description provided for @pbDisconnectFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect the radio before restoring phone data.'**
+  String get pbDisconnectFirst;
+
+  /// No description provided for @pbReplaceQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace all phone data?'**
+  String get pbReplaceQ;
+
+  /// No description provided for @pbSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup created {date} by version {version}.\n\nIt has chat history for {radios, plural, one{{radios} radio} other{{radios} radios}} ({messages} messages) and {items} saved items in all.\n\nEverything NOTORYX Connect stores on this phone (chats, offline queues, NodeDex, waypoints, field records and settings) is replaced. Radio settings are not changed. The app closes when the restore finishes; open it again to continue.'**
+  String pbSummary(
+    String date,
+    String version,
+    int radios,
+    int messages,
+    int items,
+  );
+
+  /// No description provided for @pbReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace phone data'**
+  String get pbReplace;
+
+  /// No description provided for @pbRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore complete'**
+  String get pbRestored;
+
+  /// No description provided for @pbRestoredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTORYX Connect will close now so nothing still in memory overwrites the restored data. Open it again to continue.'**
+  String get pbRestoredBody;
+
+  /// No description provided for @pbTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone data backup'**
+  String get pbTitle;
+
+  /// No description provided for @pbIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Backs up everything NOTORYX Connect stores on this phone: chat history and offline queues for every radio, NodeDex favorites and notes, waypoints, field records and app settings. Use it to move to a new phone. The file is encrypted with your password. Radio settings have their own backup.'**
+  String get pbIntro;
+
+  /// No description provided for @pbPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup password (at least 12 characters)'**
+  String get pbPassword;
+
+  /// No description provided for @pbCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create backup file'**
+  String get pbCreate;
+
+  /// No description provided for @pbRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from file'**
+  String get pbRestore;
+
+  /// No description provided for @rbFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation failed. If a restore had started, settings may be partially changed. Reconnect and check the radio before retrying.'**
+  String get rbFailed;
+
+  /// No description provided for @rbReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted backup ready. Copy it and save it in a text file. Keep the password separately; it cannot be recovered.'**
+  String get rbReady;
+
+  /// No description provided for @rbReplaceQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace radio settings?'**
+  String get rbReplaceQ;
+
+  /// No description provided for @rbSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup from radio {source} (firmware {firmware}), created {date}.\n\nTarget: {target}. Replaces owner names, all 8 channel slots including their secret keys, {configs} configuration sections and {modules} modules. Device identity/security keys, session credentials, phone chats and maps are not restored (use Phone data backup for those).\n\nSave a backup of the target first. The radio may reboot or lose mesh connectivity. A radio write cannot guarantee rollback after a power or connection failure.'**
+  String rbSummary(
+    String source,
+    String firmware,
+    String date,
+    String target,
+    int configs,
+    int modules,
+  );
+
+  /// No description provided for @rbReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace settings'**
+  String get rbReplace;
+
+  /// No description provided for @rbRadioChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected radio changed.'**
+  String get rbRadioChanged;
+
+  /// No description provided for @rbRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore complete. Fresh radio readback matches the backup.'**
+  String get rbRestored;
+
+  /// No description provided for @rbTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted radio backup'**
+  String get rbTitle;
+
+  /// No description provided for @rbIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Backs up fresh radio configuration and modules reported by the firmware, all channel slots and owner names. Channel keys and any network/module credentials are password encrypted. Device identity keys and session credentials are excluded.'**
+  String get rbIntro;
+
+  /// No description provided for @rbCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create encrypted backup'**
+  String get rbCreate;
+
+  /// No description provided for @rbText.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted backup text'**
+  String get rbText;
+
+  /// No description provided for @rbTextHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a saved encrypted backup to restore'**
+  String get rbTextHint;
+
+  /// No description provided for @rbCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted backup copied. Save it in a text file.'**
+  String get rbCopied;
+
+  /// No description provided for @rbCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy encrypted backup'**
+  String get rbCopy;
+
+  /// No description provided for @rbReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review and restore'**
+  String get rbReview;
 }
 
 class _AppLocalizationsDelegate

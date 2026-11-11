@@ -2870,4 +2870,258 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get trNotRunning =>
       'Starting the trip turns on overdue alerts and check-in reminders. Check-ins and SOS work any time.';
+
+  @override
+  String get pvEncryptedOn => 'Chat history is now encrypted.';
+
+  @override
+  String get pvEncryptedOff => 'Chat history is no longer encrypted.';
+
+  @override
+  String get pvLockOnReason => 'Turn on app lock';
+
+  @override
+  String get pvLockOffReason => 'Turn off app lock';
+
+  @override
+  String get pvLockUnchanged => 'App lock was not changed.';
+
+  @override
+  String get pvStored1 =>
+      'Chat history and offline queues for each radio (newest 500 messages per radio)';
+
+  @override
+  String get pvStored2 =>
+      'NodeDex: nodes your radios have heard, plus your favorites and notes';
+
+  @override
+  String get pvStored3 => 'Waypoints received from the mesh';
+
+  @override
+  String get pvStored4 =>
+      'Incident log and coverage records, only if you create them';
+
+  @override
+  String get pvStored5 => 'Field alert, bot, location and appearance settings';
+
+  @override
+  String get pvStored6 => 'Map tiles for areas you have viewed';
+
+  @override
+  String get pvSent1 =>
+      'Messages you send go to your radio, which transmits them on the mesh using the channel\'s encryption key';
+
+  @override
+  String get pvSent2 =>
+      'Your phone location, only while \"Share phone location\" is on, at the precision you choose';
+
+  @override
+  String get pvSent3 =>
+      'Position, telemetry and traceroute requests that you start';
+
+  @override
+  String get pvSent4 =>
+      'Map tile requests to OpenStreetMap servers when you view the map; they see your IP address';
+
+  @override
+  String get pvSent5 =>
+      'Topographic map tile requests to OpenTopoMap servers, only while the topo map is shown; they see your IP address';
+
+  @override
+  String get pvSent6 =>
+      'Points along a link to the Open-Meteo elevation service, only when you check a link in the Link planner';
+
+  @override
+  String get pvDisconnectFirst =>
+      'Disconnect the radio before deleting phone data.';
+
+  @override
+  String get pvDeleteAllQ => 'Delete all phone data?';
+
+  @override
+  String get pvDeleteChatsQ => 'Delete chat history?';
+
+  @override
+  String get pvDeleteAllBody =>
+      'Deletes chats and offline queues for every radio, NodeDex, favorites and notes, waypoints, field records, cached map tiles and all app settings from this phone. Radio settings are not changed. This cannot be undone; make a phone data backup first if you may need it.\n\nThe app closes afterwards.';
+
+  @override
+  String get pvDeleteChatsBody =>
+      'Deletes chat history and queued messages for every radio from this phone. Messages already sent on the mesh are not affected. This cannot be undone.\n\nThe app closes afterwards.';
+
+  @override
+  String get pvDelete => 'Delete';
+
+  @override
+  String pvDeleteFailed(String error) {
+    return 'Delete failed: $error';
+  }
+
+  @override
+  String get pvDeleted => 'Deleted';
+
+  @override
+  String get pvDeletedBody =>
+      'NOTORYX Connect will close now so nothing still in memory is saved again.';
+
+  @override
+  String get pvCloseApp => 'Close app';
+
+  @override
+  String get pvTitle => 'Privacy & data';
+
+  @override
+  String get pvIntro =>
+      'NOTORYX Connect has no account, analytics, ads or servers of its own. Everything it keeps stays in this app\'s private storage on your phone and is removed if you uninstall it.';
+
+  @override
+  String get pvAppLock => 'App lock';
+
+  @override
+  String get pvAppLockSub =>
+      'Ask for your fingerprint, face or screen lock when opening the app, and after a minute away. You will also need it to reach SOS. The radio stays connected.';
+
+  @override
+  String get pvAppLockNone =>
+      'Set a screen lock on this phone to use app lock.';
+
+  @override
+  String get pvEncrypt => 'Encrypt chat history';
+
+  @override
+  String get pvEncryptSub =>
+      'Scrambles saved messages using a key held in this phone\'s secure storage. If that key is lost, for example after moving to a new phone, the saved history can\'t be read. Export anything you need first.';
+
+  @override
+  String get pvStored => 'Stored on this phone';
+
+  @override
+  String get pvSent => 'Sent off this phone';
+
+  @override
+  String get pvDeleteChats => 'Delete chat history';
+
+  @override
+  String get pvDeleteAll => 'Delete all phone data';
+
+  @override
+  String pbFailed(String error) {
+    return 'Operation failed: $error';
+  }
+
+  @override
+  String get pbShortPassword =>
+      'Use at least 12 characters for the backup password.';
+
+  @override
+  String get pbCreated =>
+      'Backup created. Save the file somewhere off this phone. Keep the password separately; it cannot be recovered.';
+
+  @override
+  String get pbDisconnectFirst =>
+      'Disconnect the radio before restoring phone data.';
+
+  @override
+  String get pbReplaceQ => 'Replace all phone data?';
+
+  @override
+  String pbSummary(
+    String date,
+    String version,
+    int radios,
+    int messages,
+    int items,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      radios,
+      locale: localeName,
+      other: '$radios radios',
+      one: '$radios radio',
+    );
+    return 'Backup created $date by version $version.\n\nIt has chat history for $_temp0 ($messages messages) and $items saved items in all.\n\nEverything NOTORYX Connect stores on this phone (chats, offline queues, NodeDex, waypoints, field records and settings) is replaced. Radio settings are not changed. The app closes when the restore finishes; open it again to continue.';
+  }
+
+  @override
+  String get pbReplace => 'Replace phone data';
+
+  @override
+  String get pbRestored => 'Restore complete';
+
+  @override
+  String get pbRestoredBody =>
+      'NOTORYX Connect will close now so nothing still in memory overwrites the restored data. Open it again to continue.';
+
+  @override
+  String get pbTitle => 'Phone data backup';
+
+  @override
+  String get pbIntro =>
+      'Backs up everything NOTORYX Connect stores on this phone: chat history and offline queues for every radio, NodeDex favorites and notes, waypoints, field records and app settings. Use it to move to a new phone. The file is encrypted with your password. Radio settings have their own backup.';
+
+  @override
+  String get pbPassword => 'Backup password (at least 12 characters)';
+
+  @override
+  String get pbCreate => 'Create backup file';
+
+  @override
+  String get pbRestore => 'Restore from file';
+
+  @override
+  String get rbFailed =>
+      'Operation failed. If a restore had started, settings may be partially changed. Reconnect and check the radio before retrying.';
+
+  @override
+  String get rbReady =>
+      'Encrypted backup ready. Copy it and save it in a text file. Keep the password separately; it cannot be recovered.';
+
+  @override
+  String get rbReplaceQ => 'Replace radio settings?';
+
+  @override
+  String rbSummary(
+    String source,
+    String firmware,
+    String date,
+    String target,
+    int configs,
+    int modules,
+  ) {
+    return 'Backup from radio $source (firmware $firmware), created $date.\n\nTarget: $target. Replaces owner names, all 8 channel slots including their secret keys, $configs configuration sections and $modules modules. Device identity/security keys, session credentials, phone chats and maps are not restored (use Phone data backup for those).\n\nSave a backup of the target first. The radio may reboot or lose mesh connectivity. A radio write cannot guarantee rollback after a power or connection failure.';
+  }
+
+  @override
+  String get rbReplace => 'Replace settings';
+
+  @override
+  String get rbRadioChanged => 'Connected radio changed.';
+
+  @override
+  String get rbRestored =>
+      'Restore complete. Fresh radio readback matches the backup.';
+
+  @override
+  String get rbTitle => 'Encrypted radio backup';
+
+  @override
+  String get rbIntro =>
+      'Backs up fresh radio configuration and modules reported by the firmware, all channel slots and owner names. Channel keys and any network/module credentials are password encrypted. Device identity keys and session credentials are excluded.';
+
+  @override
+  String get rbCreate => 'Create encrypted backup';
+
+  @override
+  String get rbText => 'Encrypted backup text';
+
+  @override
+  String get rbTextHint => 'Paste a saved encrypted backup to restore';
+
+  @override
+  String get rbCopied => 'Encrypted backup copied. Save it in a text file.';
+
+  @override
+  String get rbCopy => 'Copy encrypted backup';
+
+  @override
+  String get rbReview => 'Review and restore';
 }
