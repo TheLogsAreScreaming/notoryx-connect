@@ -1617,5 +1617,546 @@
       }
     }
   },
-  "frUseReport": "Use report"
+  "frUseReport": "Use report",
+  "rsTitle": "Radio settings",
+  "rsNotReady": "Radio not ready",
+  "rsNotReadySub": "Connect to a radio and wait for READY to change settings.",
+  "rsAvailability": "Settings availability",
+  "rsAvailabilitySub": "Check reads before editing. Missing startup settings do not prove a module is unsupported. Results reset on reconnect.",
+  "rsStopChecking": "Stop checking",
+  "rsOwner": "Owner",
+  "rsOwnerSub": "Long and short node names",
+  "rsLoraSub": "Region, modem preset, hop limit, transmit",
+  "rsChannels": "Channels",
+  "rsChannelsSub": "Names, roles and encryption keys",
+  "rsDevice": "Device",
+  "rsDeviceSub": "Device role and rebroadcast mode",
+  "rsPosition": "Position",
+  "rsPositionSub": "Broadcast interval, GPS mode, smart position",
+  "rsAllSettings": "ALL RADIO SETTINGS",
+  "rsModules": "MODULES",
+  "rsRadioChanged": "Connected radio changed while loading. Retry the read.",
+  "rsSaveQ": "Save {section}?",
+  "@rsSaveQ": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "rsSaveWarning": "This writes the change to the connected radio. The radio may reboot and reconnect.",
+  "rsIdentityChanged": "Radio identity changed or is unavailable. Reload before saving.",
+  "rsSaved": "{section} saved and verified from radio.",
+  "@rsSaved": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "rsNotVerified": "Save not verified: {error}\nThe radio may have applied the change. Reload to inspect its current value; nothing will be resent automatically.",
+  "@rsNotVerified": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "rsSaveButton": "SAVE",
+  "rsUnavailable": "{section} settings are unavailable through this radio’s firmware API.",
+  "@rsUnavailable": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "rsReadFailed": "Could not read from the radio: {error}",
+  "@rsReadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "rsRetry": "Retry",
+  "rsWaitingReconnect": "Waiting for reconnect and a fresh settings read…",
+  "rsReload": "Reload from radio",
+  "rsLongName": "Long name",
+  "rsShortName": "Short name",
+  "rsChooseRegion": "Choose a region before saving; the radio will not transmit without one.",
+  "rsCustomInvalid": "Custom settings require a positive bandwidth, spreading factor 5–12 and coding rate denominator 5–8. Check your radio’s supported values.",
+  "rsRegionWarning": "Changing region or modem preset disconnects this radio from nodes that keep the old settings.",
+  "rsRegion": "Region",
+  "rsUsePreset": "Use modem preset",
+  "rsModemPreset": "Modem preset",
+  "rsBandwidth": "Bandwidth (kHz)",
+  "rsSpreadFactor": "Spreading factor",
+  "rsCodingRate": "Coding rate denominator (5–8)",
+  "rsRxBoost": "RX boosted gain",
+  "rsRxBoostSub": "Internal SX126x receiver gain; separate from external LNA",
+  "rsLna": "External LNA",
+  "rsLnaReported": "External receive amplifier reported by this radio",
+  "rsLnaNone": "This radio has not reported a controllable external LNA",
+  "rsHopLimit": "Hop limit: {hops}",
+  "@rsHopLimit": {
+    "placeholders": {
+      "hops": {
+        "type": "int"
+      }
+    }
+  },
+  "rsTransmit": "Transmit enabled",
+  "rsTransmitSub": "Off makes the radio receive-only",
+  "rsInfraWarning": "{role} is for fixed infrastructure with good coverage. On a handheld it wastes airtime and battery.",
+  "@rsInfraWarning": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "rsRole": "Role",
+  "rsRebroadcast": "Rebroadcast mode",
+  "rsIntervalInvalid": "Broadcast interval must be 0 (firmware default) or at least 30 seconds.",
+  "rsGpsMode": "GPS mode",
+  "rsInterval": "Broadcast interval (seconds, 0 = default)",
+  "rsSmart": "Smart position broadcast",
+  "rsSmartSub": "Send extra updates when the node moves",
+  "rsFixed": "Fixed position",
+  "rsFixedSub": "Report the last known position instead of GPS",
+  "rsShareQr": "Share as QR code",
+  "rsImportLink": "Import channel link",
+  "rsDisabled": "Disabled",
+  "rsDefaultName": "(default name)",
+  "rsChannelsFailed": "Could not read channels: {error}",
+  "@rsChannelsFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "rsNoEncryption": "No encryption",
+  "rsDefaultKey": "Default key",
+  "rsAes128": "AES-128 key",
+  "rsAes256": "AES-256 key",
+  "rsUnknownKey": "Unrecognized key",
+  "rsChannelN": "Channel {index}",
+  "@rsChannelN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "rsKeyWarning": "The encryption key changes. Nodes without the new key can no longer read this channel. Share it from the channel QR code.",
+  "rsChannelName": "Name (blank uses the preset name)",
+  "rsEncryption": "Encryption: {key}",
+  "@rsEncryption": {
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "rsNewAes256": "New random AES-256",
+  "rsGpsHidden": "GPS pins are hidden: {model} has its GPS wired by the maker, so they do nothing.",
+  "@rsGpsHidden": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  },
+  "bcShareQ": "Share your primary channel?",
+  "bcShareBody": "The beacon will include your primary channel's name and key. Anyone in range can then join it and read its messages.",
+  "bcShare": "Share",
+  "bcSent": "Beacon sent.",
+  "bcNotSent": "Beacon not sent: {error}",
+  "@bcNotSent": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "bcTitle": "Mesh beacons",
+  "bcClear": "Clear heard beacons",
+  "bcIntro": "A beacon is a short broadcast that tells nearby radios a mesh is here, and can invite them to a channel. Radios on the newer Meshtastic firmware show it; NOTORYX Connect shows beacons it hears with any firmware.",
+  "bcSendTitle": "Send a beacon",
+  "bcMessage": "Beacon message",
+  "bcMessageHelp": "Sent on your primary channel. At most one beacon an hour.",
+  "bcBytes": "{used}/{max} bytes",
+  "@bcBytes": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "bcTooLong": "Too long",
+  "bcAddLocationNone": "Add my location (no position yet)",
+  "bcAddLocation": "Add my location as a Plus Code",
+  "bcInvite": "Invite to my primary channel",
+  "bcInviteSub": "Includes the channel name and key, and your region and preset",
+  "bcSending": "Sending…",
+  "bcSend": "Send beacon",
+  "bcConnect": "Connect to a radio to send a beacon.",
+  "bcNext": "Next beacon can be sent at {time}.",
+  "@bcNext": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bcHeard": "Heard beacons",
+  "bcNoneHeard": "No beacons heard yet",
+  "bcNoneHeardSub": "Beacons from radios in range on your channels appear here.",
+  "bcFrom": "From {name}",
+  "@bcFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bcHeardAt": "heard {time}",
+  "@bcHeardAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bcChannel": "Channel \"{name}\"",
+  "@bcChannel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bcDefault": "Default",
+  "bcRegion": "region {name}",
+  "@bcRegion": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bcPreset": "preset {name}",
+  "@bcPreset": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bcSlot": "slot {slot}",
+  "@bcSlot": {
+    "placeholders": {
+      "slot": {
+        "type": "int"
+      }
+    }
+  },
+  "bcNoMessage": "(no message)",
+  "bcInvitesTo": "Invites to: {offer}",
+  "@bcInvitesTo": {
+    "placeholders": {
+      "offer": {
+        "type": "String"
+      }
+    }
+  },
+  "bcJoin": "Review and join channel",
+  "csShareTitle": "Share channels",
+  "csReadFailed": "Could not read channels: {error}",
+  "@csReadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "csRetry": "Retry",
+  "csPrimary": "Primary: {name}",
+  "@csPrimary": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "csSecondary": "Secondary: {name}",
+  "@csSecondary": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "csDefaultName": "(default name)",
+  "csCopyLink": "Copy link",
+  "csCopied": "Channel link copied.",
+  "csKeysWarning": "This code contains your channel encryption keys. Anyone who scans it can read and send on these channels.",
+  "csReplaceQ": "Replace all channels?",
+  "csAddQ": "Add channels?",
+  "csReplaceBody": "All 8 channel slots will be overwritten. You will lose access to current channels unless you have their link. The radio will reboot.",
+  "csReplaceLoraBody": "All 8 channel slots and the LoRa settings will be overwritten. You will lose access to current channels unless you have their link. The radio will reboot.",
+  "csAddBody": "New channels from the link go into free slots. Existing channels and LoRa settings stay the same.",
+  "csApply": "Apply",
+  "csAlreadyThere": "All channels from the link are already on the radio.",
+  "csWritten": "{count, plural, one{{count} channel written and verified from radio.} other{{count} channels written and verified from radio.}}",
+  "@csWritten": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "csNotVerified": "Import not verified: {error}\nNothing will be resent automatically.",
+  "@csNotVerified": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "csRefused": "Import refused: {error}",
+  "@csRefused": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "csFailed": "Import failed: {error}",
+  "@csFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "csImportTitle": "Import channels",
+  "csScan": "Scan channel QR code",
+  "csScanTitle": "Scan channel QR",
+  "csLinkLabel": "Meshtastic channel link",
+  "csPaste": "Paste",
+  "csLora": "LoRa: {region}, {modem}",
+  "@csLora": {
+    "placeholders": {
+      "region": {
+        "type": "String"
+      },
+      "modem": {
+        "type": "String"
+      }
+    }
+  },
+  "csCustomModem": "custom modem",
+  "csAdd": "Add to radio",
+  "csReplaceAll": "Replace all",
+  "csApplyRadio": "Apply to radio",
+  "trTitle": "Plan your trip",
+  "trName": "Trip name",
+  "trContacts": "TRIP CONTACTS ({count}/{max})",
+  "@trContacts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "trContactsSub": "Check-ins and SOS go to each of them as a direct message.",
+  "trNoNodes": "No nodes yet",
+  "trNoNodesSub": "Connect to your radio so nearby nodes and favorites appear here.",
+  "trOverdue": "Overdue alert",
+  "trOverdueHelp": "Warns you when a trip contact has not been heard for this long",
+  "trOff": "Off",
+  "trMinutes": "{count} min",
+  "@trMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "trHours": "{count} h",
+  "@trHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "trReminder": "Check-in reminder",
+  "trReminderHelp": "Reminds you to check in this long after your last check-in",
+  "trEvery": "Every {time}",
+  "@trEvery": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "trSosChannel": "Also send SOS on a channel",
+  "trSosChannelHelp": "Everyone on that channel sees your SOS, not just trip contacts",
+  "trContactsOnly": "No, trip contacts only",
+  "trChannelItem": "Channel {index} • {name}",
+  "@trChannelItem": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "trDefault": "Default",
+  "trReadiness": "Readiness check",
+  "trEnd": "End trip",
+  "trStart": "Start trip",
+  "trRunning": "Trip running since {time}. Overdue alerts and reminders are on.",
+  "@trRunning": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "trNotRunning": "Starting the trip turns on overdue alerts and check-in reminders. Check-ins and SOS work any time.",
+  "pvEncryptedOn": "Chat history is now encrypted.",
+  "pvEncryptedOff": "Chat history is no longer encrypted.",
+  "pvLockOnReason": "Turn on app lock",
+  "pvLockOffReason": "Turn off app lock",
+  "pvLockUnchanged": "App lock was not changed.",
+  "pvStored1": "Chat history and offline queues for each radio (newest 500 messages per radio)",
+  "pvStored2": "NodeDex: nodes your radios have heard, plus your favorites and notes",
+  "pvStored3": "Waypoints received from the mesh",
+  "pvStored4": "Incident log and coverage records, only if you create them",
+  "pvStored5": "Field alert, bot, location and appearance settings",
+  "pvStored6": "Map tiles for areas you have viewed",
+  "pvSent1": "Messages you send go to your radio, which transmits them on the mesh using the channel's encryption key",
+  "pvSent2": "Your phone location, only while \"Share phone location\" is on, at the precision you choose",
+  "pvSent3": "Position, telemetry and traceroute requests that you start",
+  "pvSent4": "Map tile requests to OpenStreetMap servers when you view the map; they see your IP address",
+  "pvSent5": "Topographic map tile requests to OpenTopoMap servers, only while the topo map is shown; they see your IP address",
+  "pvSent6": "Points along a link to the Open-Meteo elevation service, only when you check a link in the Link planner",
+  "pvDisconnectFirst": "Disconnect the radio before deleting phone data.",
+  "pvDeleteAllQ": "Delete all phone data?",
+  "pvDeleteChatsQ": "Delete chat history?",
+  "pvDeleteAllBody": "Deletes chats and offline queues for every radio, NodeDex, favorites and notes, waypoints, field records, cached map tiles and all app settings from this phone. Radio settings are not changed. This cannot be undone; make a phone data backup first if you may need it.\n\nThe app closes afterwards.",
+  "pvDeleteChatsBody": "Deletes chat history and queued messages for every radio from this phone. Messages already sent on the mesh are not affected. This cannot be undone.\n\nThe app closes afterwards.",
+  "pvDelete": "Delete",
+  "pvDeleteFailed": "Delete failed: {error}",
+  "@pvDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "pvDeleted": "Deleted",
+  "pvDeletedBody": "NOTORYX Connect will close now so nothing still in memory is saved again.",
+  "pvCloseApp": "Close app",
+  "pvTitle": "Privacy & data",
+  "pvIntro": "NOTORYX Connect has no account, analytics, ads or servers of its own. Everything it keeps stays in this app's private storage on your phone and is removed if you uninstall it.",
+  "pvAppLock": "App lock",
+  "pvAppLockSub": "Ask for your fingerprint, face or screen lock when opening the app, and after a minute away. You will also need it to reach SOS. The radio stays connected.",
+  "pvAppLockNone": "Set a screen lock on this phone to use app lock.",
+  "pvEncrypt": "Encrypt chat history",
+  "pvEncryptSub": "Scrambles saved messages using a key held in this phone's secure storage. If that key is lost, for example after moving to a new phone, the saved history can't be read. Export anything you need first.",
+  "pvStored": "Stored on this phone",
+  "pvSent": "Sent off this phone",
+  "pvDeleteChats": "Delete chat history",
+  "pvDeleteAll": "Delete all phone data",
+  "pbFailed": "Operation failed: {error}",
+  "@pbFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "pbShortPassword": "Use at least 12 characters for the backup password.",
+  "pbCreated": "Backup created. Save the file somewhere off this phone. Keep the password separately; it cannot be recovered.",
+  "pbDisconnectFirst": "Disconnect the radio before restoring phone data.",
+  "pbReplaceQ": "Replace all phone data?",
+  "pbSummary": "Backup created {date} by version {version}.\n\nIt has chat history for {radios, plural, one{{radios} radio} other{{radios} radios}} ({messages} messages) and {items} saved items in all.\n\nEverything NOTORYX Connect stores on this phone (chats, offline queues, NodeDex, waypoints, field records and settings) is replaced. Radio settings are not changed. The app closes when the restore finishes; open it again to continue.",
+  "@pbSummary": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      },
+      "radios": {
+        "type": "int"
+      },
+      "messages": {
+        "type": "int"
+      },
+      "items": {
+        "type": "int"
+      }
+    }
+  },
+  "pbReplace": "Replace phone data",
+  "pbRestored": "Restore complete",
+  "pbRestoredBody": "NOTORYX Connect will close now so nothing still in memory overwrites the restored data. Open it again to continue.",
+  "pbTitle": "Phone data backup",
+  "pbIntro": "Backs up everything NOTORYX Connect stores on this phone: chat history and offline queues for every radio, NodeDex favorites and notes, waypoints, field records and app settings. Use it to move to a new phone. The file is encrypted with your password. Radio settings have their own backup.",
+  "pbPassword": "Backup password (at least 12 characters)",
+  "pbCreate": "Create backup file",
+  "pbRestore": "Restore from file",
+  "rbFailed": "Operation failed. If a restore had started, settings may be partially changed. Reconnect and check the radio before retrying.",
+  "rbReady": "Encrypted backup ready. Copy it and save it in a text file. Keep the password separately; it cannot be recovered.",
+  "rbReplaceQ": "Replace radio settings?",
+  "rbSummary": "Backup from radio {source} (firmware {firmware}), created {date}.\n\nTarget: {target}. Replaces owner names, all 8 channel slots including their secret keys, {configs} configuration sections and {modules} modules. Device identity/security keys, session credentials, phone chats and maps are not restored (use Phone data backup for those).\n\nSave a backup of the target first. The radio may reboot or lose mesh connectivity. A radio write cannot guarantee rollback after a power or connection failure.",
+  "@rbSummary": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "firmware": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "configs": {
+        "type": "int"
+      },
+      "modules": {
+        "type": "int"
+      }
+    }
+  },
+  "rbReplace": "Replace settings",
+  "rbRadioChanged": "Connected radio changed.",
+  "rbRestored": "Restore complete. Fresh radio readback matches the backup.",
+  "rbTitle": "Encrypted radio backup",
+  "rbIntro": "Backs up fresh radio configuration and modules reported by the firmware, all channel slots and owner names. Channel keys and any network/module credentials are password encrypted. Device identity keys and session credentials are excluded.",
+  "rbCreate": "Create encrypted backup",
+  "rbText": "Encrypted backup text",
+  "rbTextHint": "Paste a saved encrypted backup to restore",
+  "rbCopied": "Encrypted backup copied. Save it in a text file.",
+  "rbCopy": "Copy encrypted backup",
+  "rbReview": "Review and restore"
 }

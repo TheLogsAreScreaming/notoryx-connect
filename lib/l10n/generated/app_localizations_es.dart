@@ -2299,4 +2299,857 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get frUseReport => 'Usar informe';
+
+  @override
+  String get rsTitle => 'Ajustes de la radio';
+
+  @override
+  String get rsNotReady => 'Radio no preparada';
+
+  @override
+  String get rsNotReadySub =>
+      'Conéctate a una radio y espera a READY para cambiar los ajustes.';
+
+  @override
+  String get rsAvailability => 'Disponibilidad de ajustes';
+
+  @override
+  String get rsAvailabilitySub =>
+      'Comprueba las lecturas antes de editar. Que falten ajustes al inicio no demuestra que un módulo no sea compatible. Los resultados se reinician al reconectar.';
+
+  @override
+  String get rsStopChecking => 'Dejar de comprobar';
+
+  @override
+  String get rsOwner => 'Propietario';
+
+  @override
+  String get rsOwnerSub => 'Nombres largo y corto del nodo';
+
+  @override
+  String get rsLoraSub =>
+      'Región, preajuste de módem, límite de saltos, transmisión';
+
+  @override
+  String get rsChannels => 'Canales';
+
+  @override
+  String get rsChannelsSub => 'Nombres, funciones y claves de cifrado';
+
+  @override
+  String get rsDevice => 'Dispositivo';
+
+  @override
+  String get rsDeviceSub => 'Función del dispositivo y modo de retransmisión';
+
+  @override
+  String get rsPosition => 'Posición';
+
+  @override
+  String get rsPositionSub =>
+      'Intervalo de emisión, modo GPS, posición inteligente';
+
+  @override
+  String get rsAllSettings => 'TODOS LOS AJUSTES DE LA RADIO';
+
+  @override
+  String get rsModules => 'MÓDULOS';
+
+  @override
+  String get rsRadioChanged =>
+      'La radio conectada cambió durante la carga. Vuelve a intentar la lectura.';
+
+  @override
+  String rsSaveQ(String section) {
+    return '¿Guardar $section?';
+  }
+
+  @override
+  String get rsSaveWarning =>
+      'Esto escribe el cambio en la radio conectada. La radio puede reiniciarse y volver a conectarse.';
+
+  @override
+  String get rsIdentityChanged =>
+      'La identidad de la radio cambió o no está disponible. Recarga antes de guardar.';
+
+  @override
+  String rsSaved(String section) {
+    return '$section guardado y verificado desde la radio.';
+  }
+
+  @override
+  String rsNotVerified(String error) {
+    return 'Guardado sin verificar: $error\nEs posible que la radio haya aplicado el cambio. Recarga para ver su valor actual; no se reenviará nada automáticamente.';
+  }
+
+  @override
+  String get rsSaveButton => 'GUARDAR';
+
+  @override
+  String rsUnavailable(String section) {
+    return 'Los ajustes de $section no están disponibles en la API del firmware de esta radio.';
+  }
+
+  @override
+  String rsReadFailed(String error) {
+    return 'No se pudo leer de la radio: $error';
+  }
+
+  @override
+  String get rsRetry => 'Reintentar';
+
+  @override
+  String get rsWaitingReconnect =>
+      'Esperando la reconexión y una nueva lectura de ajustes…';
+
+  @override
+  String get rsReload => 'Recargar desde la radio';
+
+  @override
+  String get rsLongName => 'Nombre largo';
+
+  @override
+  String get rsShortName => 'Nombre corto';
+
+  @override
+  String get rsChooseRegion =>
+      'Elige una región antes de guardar; la radio no transmitirá sin una.';
+
+  @override
+  String get rsCustomInvalid =>
+      'Los ajustes personalizados requieren un ancho de banda positivo, factor de dispersión 5–12 y denominador de tasa de codificación 5–8. Comprueba los valores que admite tu radio.';
+
+  @override
+  String get rsRegionWarning =>
+      'Cambiar la región o el preajuste de módem desconecta esta radio de los nodos que mantengan los ajustes anteriores.';
+
+  @override
+  String get rsRegion => 'Región';
+
+  @override
+  String get rsUsePreset => 'Usar preajuste de módem';
+
+  @override
+  String get rsModemPreset => 'Preajuste de módem';
+
+  @override
+  String get rsBandwidth => 'Ancho de banda (kHz)';
+
+  @override
+  String get rsSpreadFactor => 'Factor de dispersión';
+
+  @override
+  String get rsCodingRate => 'Denominador de tasa de codificación (5–8)';
+
+  @override
+  String get rsRxBoost => 'Ganancia de recepción ampliada';
+
+  @override
+  String get rsRxBoostSub =>
+      'Ganancia interna del receptor SX126x; distinta del LNA externo';
+
+  @override
+  String get rsLna => 'LNA externo';
+
+  @override
+  String get rsLnaReported =>
+      'Amplificador de recepción externo informado por esta radio';
+
+  @override
+  String get rsLnaNone =>
+      'Esta radio no ha informado de un LNA externo controlable';
+
+  @override
+  String rsHopLimit(int hops) {
+    return 'Límite de saltos: $hops';
+  }
+
+  @override
+  String get rsTransmit => 'Transmisión activada';
+
+  @override
+  String get rsTransmitSub => 'Desactivada, la radio solo recibe';
+
+  @override
+  String rsInfraWarning(String role) {
+    return '$role es para infraestructura fija con buena cobertura. En un equipo portátil desperdicia tiempo de aire y batería.';
+  }
+
+  @override
+  String get rsRole => 'Función';
+
+  @override
+  String get rsRebroadcast => 'Modo de retransmisión';
+
+  @override
+  String get rsIntervalInvalid =>
+      'El intervalo de emisión debe ser 0 (valor del firmware) o al menos 30 segundos.';
+
+  @override
+  String get rsGpsMode => 'Modo GPS';
+
+  @override
+  String get rsInterval =>
+      'Intervalo de emisión (segundos, 0 = predeterminado)';
+
+  @override
+  String get rsSmart => 'Emisión inteligente de posición';
+
+  @override
+  String get rsSmartSub =>
+      'Envía actualizaciones extra cuando el nodo se mueve';
+
+  @override
+  String get rsFixed => 'Posición fija';
+
+  @override
+  String get rsFixedSub =>
+      'Informa la última posición conocida en lugar del GPS';
+
+  @override
+  String get rsShareQr => 'Compartir como código QR';
+
+  @override
+  String get rsImportLink => 'Importar enlace de canal';
+
+  @override
+  String get rsDisabled => 'Desactivado';
+
+  @override
+  String get rsDefaultName => '(nombre predeterminado)';
+
+  @override
+  String rsChannelsFailed(String error) {
+    return 'No se pudieron leer los canales: $error';
+  }
+
+  @override
+  String get rsNoEncryption => 'Sin cifrado';
+
+  @override
+  String get rsDefaultKey => 'Clave predeterminada';
+
+  @override
+  String get rsAes128 => 'Clave AES-128';
+
+  @override
+  String get rsAes256 => 'Clave AES-256';
+
+  @override
+  String get rsUnknownKey => 'Clave no reconocida';
+
+  @override
+  String rsChannelN(int index) {
+    return 'Canal $index';
+  }
+
+  @override
+  String get rsKeyWarning =>
+      'La clave de cifrado cambia. Los nodos sin la nueva clave ya no podrán leer este canal. Compártela desde el código QR del canal.';
+
+  @override
+  String get rsChannelName => 'Nombre (en blanco usa el nombre del preajuste)';
+
+  @override
+  String rsEncryption(String key) {
+    return 'Cifrado: $key';
+  }
+
+  @override
+  String get rsNewAes256 => 'Nueva AES-256 aleatoria';
+
+  @override
+  String rsGpsHidden(String model) {
+    return 'Los pines GPS están ocultos: $model tiene el GPS conectado de fábrica, así que no hacen nada.';
+  }
+
+  @override
+  String get bcShareQ => '¿Compartir tu canal principal?';
+
+  @override
+  String get bcShareBody =>
+      'La baliza incluirá el nombre y la clave de tu canal principal. Cualquiera dentro del alcance podrá unirse y leer sus mensajes.';
+
+  @override
+  String get bcShare => 'Compartir';
+
+  @override
+  String get bcSent => 'Baliza enviada.';
+
+  @override
+  String bcNotSent(String error) {
+    return 'No se envió la baliza: $error';
+  }
+
+  @override
+  String get bcTitle => 'Balizas de la malla';
+
+  @override
+  String get bcClear => 'Borrar balizas oídas';
+
+  @override
+  String get bcIntro =>
+      'Una baliza es un aviso corto que indica a las radios cercanas que hay una malla y puede invitarlas a un canal. Las radios con el firmware Meshtastic más reciente la muestran; NOTORYX Connect muestra las balizas que oye con cualquier firmware.';
+
+  @override
+  String get bcSendTitle => 'Enviar una baliza';
+
+  @override
+  String get bcMessage => 'Mensaje de la baliza';
+
+  @override
+  String get bcMessageHelp =>
+      'Se envía en tu canal principal. Como máximo una baliza por hora.';
+
+  @override
+  String bcBytes(int used, int max) {
+    return '$used/$max bytes';
+  }
+
+  @override
+  String get bcTooLong => 'Demasiado largo';
+
+  @override
+  String get bcAddLocationNone => 'Añadir mi ubicación (aún sin posición)';
+
+  @override
+  String get bcAddLocation => 'Añadir mi ubicación como Plus Code';
+
+  @override
+  String get bcInvite => 'Invitar a mi canal principal';
+
+  @override
+  String get bcInviteSub =>
+      'Incluye el nombre y la clave del canal, y tu región y preajuste';
+
+  @override
+  String get bcSending => 'Enviando…';
+
+  @override
+  String get bcSend => 'Enviar baliza';
+
+  @override
+  String get bcConnect => 'Conéctate a una radio para enviar una baliza.';
+
+  @override
+  String bcNext(String time) {
+    return 'La próxima baliza se puede enviar a las $time.';
+  }
+
+  @override
+  String get bcHeard => 'Balizas oídas';
+
+  @override
+  String get bcNoneHeard => 'Aún no se han oído balizas';
+
+  @override
+  String get bcNoneHeardSub =>
+      'Aquí aparecen las balizas de las radios a tu alcance en tus canales.';
+
+  @override
+  String bcFrom(String name) {
+    return 'De $name';
+  }
+
+  @override
+  String bcHeardAt(String time) {
+    return 'oída $time';
+  }
+
+  @override
+  String bcChannel(String name) {
+    return 'Canal \"$name\"';
+  }
+
+  @override
+  String get bcDefault => 'Predeterminado';
+
+  @override
+  String bcRegion(String name) {
+    return 'región $name';
+  }
+
+  @override
+  String bcPreset(String name) {
+    return 'preajuste $name';
+  }
+
+  @override
+  String bcSlot(int slot) {
+    return 'ranura $slot';
+  }
+
+  @override
+  String get bcNoMessage => '(sin mensaje)';
+
+  @override
+  String bcInvitesTo(String offer) {
+    return 'Invita a: $offer';
+  }
+
+  @override
+  String get bcJoin => 'Revisar y unirse al canal';
+
+  @override
+  String get csShareTitle => 'Compartir canales';
+
+  @override
+  String csReadFailed(String error) {
+    return 'No se pudieron leer los canales: $error';
+  }
+
+  @override
+  String get csRetry => 'Reintentar';
+
+  @override
+  String csPrimary(String name) {
+    return 'Principal: $name';
+  }
+
+  @override
+  String csSecondary(String name) {
+    return 'Secundario: $name';
+  }
+
+  @override
+  String get csDefaultName => '(nombre predeterminado)';
+
+  @override
+  String get csCopyLink => 'Copiar enlace';
+
+  @override
+  String get csCopied => 'Enlace del canal copiado.';
+
+  @override
+  String get csKeysWarning =>
+      'Este código contiene las claves de cifrado de tus canales. Cualquiera que lo escanee podrá leer y enviar en estos canales.';
+
+  @override
+  String get csReplaceQ => '¿Reemplazar todos los canales?';
+
+  @override
+  String get csAddQ => '¿Añadir canales?';
+
+  @override
+  String get csReplaceBody =>
+      'Se sobrescribirán las 8 ranuras de canal. Perderás el acceso a los canales actuales a menos que tengas su enlace. La radio se reiniciará.';
+
+  @override
+  String get csReplaceLoraBody =>
+      'Se sobrescribirán las 8 ranuras de canal y los ajustes LoRa. Perderás el acceso a los canales actuales a menos que tengas su enlace. La radio se reiniciará.';
+
+  @override
+  String get csAddBody =>
+      'Los canales nuevos del enlace van a ranuras libres. Los canales existentes y los ajustes LoRa no cambian.';
+
+  @override
+  String get csApply => 'Aplicar';
+
+  @override
+  String get csAlreadyThere =>
+      'Todos los canales del enlace ya están en la radio.';
+
+  @override
+  String csWritten(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count canales escritos y verificados desde la radio.',
+      one: '$count canal escrito y verificado desde la radio.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String csNotVerified(String error) {
+    return 'Importación sin verificar: $error\nNo se reenviará nada automáticamente.';
+  }
+
+  @override
+  String csRefused(String error) {
+    return 'Importación rechazada: $error';
+  }
+
+  @override
+  String csFailed(String error) {
+    return 'La importación falló: $error';
+  }
+
+  @override
+  String get csImportTitle => 'Importar canales';
+
+  @override
+  String get csScan => 'Escanear código QR del canal';
+
+  @override
+  String get csScanTitle => 'Escanear QR del canal';
+
+  @override
+  String get csLinkLabel => 'Enlace de canal de Meshtastic';
+
+  @override
+  String get csPaste => 'Pegar';
+
+  @override
+  String csLora(String region, String modem) {
+    return 'LoRa: $region, $modem';
+  }
+
+  @override
+  String get csCustomModem => 'módem personalizado';
+
+  @override
+  String get csAdd => 'Añadir a la radio';
+
+  @override
+  String get csReplaceAll => 'Reemplazar todo';
+
+  @override
+  String get csApplyRadio => 'Aplicar a la radio';
+
+  @override
+  String get trTitle => 'Planifica tu viaje';
+
+  @override
+  String get trName => 'Nombre del viaje';
+
+  @override
+  String trContacts(int count, int max) {
+    return 'CONTACTOS DEL VIAJE ($count/$max)';
+  }
+
+  @override
+  String get trContactsSub =>
+      'Los reportes y el SOS les llegan a cada uno como mensaje directo.';
+
+  @override
+  String get trNoNodes => 'Aún no hay nodos';
+
+  @override
+  String get trNoNodesSub =>
+      'Conéctate a tu radio para que aparezcan aquí los nodos cercanos y tus favoritos.';
+
+  @override
+  String get trOverdue => 'Aviso de retraso';
+
+  @override
+  String get trOverdueHelp =>
+      'Te avisa cuando no se ha oído a un contacto del viaje durante este tiempo';
+
+  @override
+  String get trOff => 'Desactivado';
+
+  @override
+  String trMinutes(int count) {
+    return '$count min';
+  }
+
+  @override
+  String trHours(int count) {
+    return '$count h';
+  }
+
+  @override
+  String get trReminder => 'Recordatorio de reporte';
+
+  @override
+  String get trReminderHelp =>
+      'Te recuerda reportarte este tiempo después de tu último reporte';
+
+  @override
+  String trEvery(String time) {
+    return 'Cada $time';
+  }
+
+  @override
+  String get trSosChannel => 'Enviar también el SOS a un canal';
+
+  @override
+  String get trSosChannelHelp =>
+      'Todos los de ese canal ven tu SOS, no solo los contactos del viaje';
+
+  @override
+  String get trContactsOnly => 'No, solo contactos del viaje';
+
+  @override
+  String trChannelItem(int index, String name) {
+    return 'Canal $index • $name';
+  }
+
+  @override
+  String get trDefault => 'Predeterminado';
+
+  @override
+  String get trReadiness => 'Comprobación previa';
+
+  @override
+  String get trEnd => 'Terminar viaje';
+
+  @override
+  String get trStart => 'Empezar viaje';
+
+  @override
+  String trRunning(String time) {
+    return 'Viaje en curso desde las $time. Los avisos de retraso y los recordatorios están activados.';
+  }
+
+  @override
+  String get trNotRunning =>
+      'Al empezar el viaje se activan los avisos de retraso y los recordatorios de reporte. Los reportes y el SOS funcionan en cualquier momento.';
+
+  @override
+  String get pvEncryptedOn => 'El historial de chat ahora está cifrado.';
+
+  @override
+  String get pvEncryptedOff => 'El historial de chat ya no está cifrado.';
+
+  @override
+  String get pvLockOnReason => 'Activar el bloqueo de la aplicación';
+
+  @override
+  String get pvLockOffReason => 'Desactivar el bloqueo de la aplicación';
+
+  @override
+  String get pvLockUnchanged => 'No se cambió el bloqueo de la aplicación.';
+
+  @override
+  String get pvStored1 =>
+      'Historial de chat y colas sin conexión de cada radio (los 500 mensajes más recientes por radio)';
+
+  @override
+  String get pvStored2 =>
+      'NodeDex: los nodos que oyeron tus radios, más tus favoritos y notas';
+
+  @override
+  String get pvStored3 => 'Puntos de ruta recibidos de la malla';
+
+  @override
+  String get pvStored4 =>
+      'Registro de incidentes y de cobertura, solo si los creas';
+
+  @override
+  String get pvStored5 =>
+      'Ajustes de avisos de campo, bot, ubicación y apariencia';
+
+  @override
+  String get pvStored6 => 'Teselas de mapa de las zonas que has visto';
+
+  @override
+  String get pvSent1 =>
+      'Los mensajes que envías van a tu radio, que los transmite por la malla con la clave de cifrado del canal';
+
+  @override
+  String get pvSent2 =>
+      'La ubicación de tu teléfono, solo mientras \"Compartir ubicación del teléfono\" esté activado, con la precisión que elijas';
+
+  @override
+  String get pvSent3 =>
+      'Las peticiones de posición, telemetría y traceroute que inicies';
+
+  @override
+  String get pvSent4 =>
+      'Peticiones de teselas a los servidores de OpenStreetMap cuando ves el mapa; ven tu dirección IP';
+
+  @override
+  String get pvSent5 =>
+      'Peticiones de teselas topográficas a los servidores de OpenTopoMap, solo mientras se muestra el mapa topográfico; ven tu dirección IP';
+
+  @override
+  String get pvSent6 =>
+      'Puntos de un enlace al servicio de elevación Open-Meteo, solo cuando compruebas un enlace en el planificador';
+
+  @override
+  String get pvDisconnectFirst =>
+      'Desconecta la radio antes de borrar los datos del teléfono.';
+
+  @override
+  String get pvDeleteAllQ => '¿Borrar todos los datos del teléfono?';
+
+  @override
+  String get pvDeleteChatsQ => '¿Borrar el historial de chat?';
+
+  @override
+  String get pvDeleteAllBody =>
+      'Borra de este teléfono los chats y colas sin conexión de todas las radios, NodeDex, favoritos y notas, puntos de ruta, registros de campo, teselas de mapa guardadas y todos los ajustes de la aplicación. Los ajustes de la radio no cambian. No se puede deshacer; haz antes una copia de seguridad de los datos del teléfono si puedes necesitarlos.\n\nLa aplicación se cierra después.';
+
+  @override
+  String get pvDeleteChatsBody =>
+      'Borra de este teléfono el historial de chat y los mensajes en cola de todas las radios. Los mensajes ya enviados por la malla no se ven afectados. No se puede deshacer.\n\nLa aplicación se cierra después.';
+
+  @override
+  String get pvDelete => 'Borrar';
+
+  @override
+  String pvDeleteFailed(String error) {
+    return 'No se pudo borrar: $error';
+  }
+
+  @override
+  String get pvDeleted => 'Borrado';
+
+  @override
+  String get pvDeletedBody =>
+      'NOTORYX Connect se cerrará ahora para que no se vuelva a guardar nada que siga en memoria.';
+
+  @override
+  String get pvCloseApp => 'Cerrar la aplicación';
+
+  @override
+  String get pvTitle => 'Privacidad y datos';
+
+  @override
+  String get pvIntro =>
+      'NOTORYX Connect no tiene cuenta, analíticas, anuncios ni servidores propios. Todo lo que guarda se queda en el almacenamiento privado de la aplicación en tu teléfono y se elimina si la desinstalas.';
+
+  @override
+  String get pvAppLock => 'Bloqueo de la aplicación';
+
+  @override
+  String get pvAppLockSub =>
+      'Pide tu huella, cara o bloqueo de pantalla al abrir la aplicación y tras un minuto fuera. También lo necesitarás para llegar al SOS. La radio sigue conectada.';
+
+  @override
+  String get pvAppLockNone =>
+      'Configura un bloqueo de pantalla en este teléfono para usar el bloqueo de la aplicación.';
+
+  @override
+  String get pvEncrypt => 'Cifrar el historial de chat';
+
+  @override
+  String get pvEncryptSub =>
+      'Cifra los mensajes guardados con una clave que se guarda en el almacenamiento seguro del teléfono. Si se pierde esa clave, por ejemplo al cambiar de teléfono, el historial guardado no se podrá leer. Exporta antes lo que necesites.';
+
+  @override
+  String get pvStored => 'Guardado en este teléfono';
+
+  @override
+  String get pvSent => 'Enviado fuera de este teléfono';
+
+  @override
+  String get pvDeleteChats => 'Borrar el historial de chat';
+
+  @override
+  String get pvDeleteAll => 'Borrar todos los datos del teléfono';
+
+  @override
+  String pbFailed(String error) {
+    return 'La operación falló: $error';
+  }
+
+  @override
+  String get pbShortPassword =>
+      'Usa al menos 12 caracteres para la contraseña de la copia.';
+
+  @override
+  String get pbCreated =>
+      'Copia creada. Guarda el archivo fuera de este teléfono. Guarda la contraseña aparte; no se puede recuperar.';
+
+  @override
+  String get pbDisconnectFirst =>
+      'Desconecta la radio antes de restaurar los datos del teléfono.';
+
+  @override
+  String get pbReplaceQ => '¿Reemplazar todos los datos del teléfono?';
+
+  @override
+  String pbSummary(
+    String date,
+    String version,
+    int radios,
+    int messages,
+    int items,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      radios,
+      locale: localeName,
+      other: '$radios radios',
+      one: '$radios radio',
+    );
+    return 'Copia creada el $date con la versión $version.\n\nTiene historial de chat de $_temp0 ($messages mensajes) y $items elementos guardados en total.\n\nSe reemplaza todo lo que NOTORYX Connect guarda en este teléfono (chats, colas sin conexión, NodeDex, puntos de ruta, registros de campo y ajustes). Los ajustes de la radio no cambian. La aplicación se cierra al terminar la restauración; vuelve a abrirla para continuar.';
+  }
+
+  @override
+  String get pbReplace => 'Reemplazar datos del teléfono';
+
+  @override
+  String get pbRestored => 'Restauración completada';
+
+  @override
+  String get pbRestoredBody =>
+      'NOTORYX Connect se cerrará ahora para que nada que siga en memoria sobrescriba los datos restaurados. Vuelve a abrirla para continuar.';
+
+  @override
+  String get pbTitle => 'Copia de seguridad del teléfono';
+
+  @override
+  String get pbIntro =>
+      'Guarda una copia de todo lo que NOTORYX Connect almacena en este teléfono: historial de chat y colas sin conexión de todas las radios, favoritos y notas de NodeDex, puntos de ruta, registros de campo y ajustes. Sirve para cambiar de teléfono. El archivo se cifra con tu contraseña. Los ajustes de la radio tienen su propia copia.';
+
+  @override
+  String get pbPassword => 'Contraseña de la copia (al menos 12 caracteres)';
+
+  @override
+  String get pbCreate => 'Crear archivo de copia';
+
+  @override
+  String get pbRestore => 'Restaurar desde archivo';
+
+  @override
+  String get rbFailed =>
+      'La operación falló. Si había empezado una restauración, los ajustes pueden haber cambiado en parte. Vuelve a conectar y revisa la radio antes de reintentar.';
+
+  @override
+  String get rbReady =>
+      'Copia cifrada lista. Cópiala y guárdala en un archivo de texto. Guarda la contraseña aparte; no se puede recuperar.';
+
+  @override
+  String get rbReplaceQ => '¿Reemplazar los ajustes de la radio?';
+
+  @override
+  String rbSummary(
+    String source,
+    String firmware,
+    String date,
+    String target,
+    int configs,
+    int modules,
+  ) {
+    return 'Copia de la radio $source (firmware $firmware), creada el $date.\n\nDestino: $target. Reemplaza los nombres del propietario, las 8 ranuras de canal con sus claves secretas, $configs secciones de configuración y $modules módulos. No se restauran las claves de identidad y seguridad del dispositivo, las credenciales de sesión, los chats del teléfono ni los mapas (usa la copia de datos del teléfono para eso).\n\nHaz antes una copia del destino. La radio puede reiniciarse o perder la conexión con la malla. Una escritura en la radio no garantiza poder deshacerla tras un fallo de corriente o de conexión.';
+  }
+
+  @override
+  String get rbReplace => 'Reemplazar ajustes';
+
+  @override
+  String get rbRadioChanged => 'La radio conectada cambió.';
+
+  @override
+  String get rbRestored =>
+      'Restauración completada. La nueva lectura de la radio coincide con la copia.';
+
+  @override
+  String get rbTitle => 'Copia cifrada de la radio';
+
+  @override
+  String get rbIntro =>
+      'Guarda una copia de la configuración y los módulos que informa el firmware, todas las ranuras de canal y los nombres del propietario. Las claves de canal y las credenciales de red o módulos se cifran con contraseña. Se excluyen las claves de identidad del dispositivo y las credenciales de sesión.';
+
+  @override
+  String get rbCreate => 'Crear copia cifrada';
+
+  @override
+  String get rbText => 'Texto de la copia cifrada';
+
+  @override
+  String get rbTextHint => 'Pega una copia cifrada guardada para restaurarla';
+
+  @override
+  String get rbCopied =>
+      'Copia cifrada copiada. Guárdala en un archivo de texto.';
+
+  @override
+  String get rbCopy => 'Copiar copia cifrada';
+
+  @override
+  String get rbReview => 'Revisar y restaurar';
 }

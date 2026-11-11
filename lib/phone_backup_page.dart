@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'l10n/generated/app_localizations.dart';
+
 import 'services/app_exit.dart';
 import 'services/bastion_phone_backup.dart';
 import 'services/meshtastic_connection_controller.dart';
@@ -62,6 +64,8 @@ class _PhoneBackupPageState extends State<PhoneBackupPage> {
   bool _busy = false;
   String? _status;
 
+  AppLocalizations get l => AppLocalizations.of(context);
+
   @override
   void dispose() {
     _password.clear();
@@ -78,7 +82,7 @@ class _PhoneBackupPageState extends State<PhoneBackupPage> {
     } on StateError catch (error) {
       if (mounted) setState(() => _status = error.message);
     } catch (error) {
-      if (mounted) setState(() => _status = 'Operation failed: $error');
+      if (mounted) setState(() => _status = l.pbFailed('$error'));
     } finally {
       if (mounted) {
         _password.clear();
@@ -90,7 +94,7 @@ class _PhoneBackupPageState extends State<PhoneBackupPage> {
   String _checkedPassword() {
     final password = _password.text;
     if (password.length < 12) {
-      throw const FormatException('Use at least 12 characters for the backup password.');
+      throw FormatException(l.pbShortPassword);
     }
     return password;
   }
@@ -102,14 +106,13 @@ class _PhoneBackupPageState extends State<PhoneBackupPage> {
     final day = DateTime.now().toIso8601String().substring(0, 10);
     await widget.files.save('notoryx-phone-backup-$day.json', encrypted);
     if (mounted) {
-      setState(() => _status = 'Backup created. Save the file somewhere off this phone. '
-          'Keep the password separately; it cannot be recovered.');
+      setState(() => _status = l.pbCreated);
     }
   });
 
   Future<void> _restore() => _run(() async {
     if (widget.radio.connection.state != MeshtasticConnectionState.disconnected) {
-      throw const FormatException('Disconnect the radio before restoring phone data.');
+      throw FormatException(l.pbDisconnectFirst);
     }
     final password = _checkedPassword();
     final encrypted = await widget.files.open();
@@ -118,27 +121,21 @@ class _PhoneBackupPageState extends State<PhoneBackupPage> {
     final (summary, values) = BastionPhoneBackup.parse(plain);
     if (!mounted) return;
     final confirmed = await showDialog<bool>(context: context, builder: (context) => AlertDialog(
-      title: const Text('Replace all phone data?'),
-      content: Text('Backup created ${summary.exportedAt.toString().substring(0, 16)} '
-          'by version ${summary.appVersion}.\n\n'
-          'It has chat history for ${summary.radios} radio${summary.radios == 1 ? '' : 's'} '
-          '(${summary.messages} messages) and ${summary.items} saved items in all.\n\n'
-          'Everything NOTORYX Connect stores on this phone (chats, offline queues, NodeDex, '
-          'waypoints, field records and settings) is replaced. Radio settings are not changed. '
-          'The app closes when the restore finishes; open it again to continue.'),
+      title: Text(l.pbReplaceQ),
+      content: Text(l.pbSummary(summary.exportedAt.toString().substring(0, 16), '${summary.appVersion}',
+          summary.radios, summary.messages, summary.items)),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-        FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Replace phone data')),
+        TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.commonCancel)),
+        FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l.pbReplace)),
       ],
     ));
     if (confirmed != true || !mounted) return;
     await BastionPhoneBackup().restore(values);
     if (!mounted) return;
     await showDialog<void>(context: context, barrierDismissible: false, builder: (context) => AlertDialog(
-      title: const Text('Restore complete'),
-      content: const Text('NOTORYX Connect will close now so nothing still in memory '
-          'overwrites the restored data. Open it again to continue.'),
-      actions: [FilledButton(onPressed: () => Navigator.pop(context), child: const Text('Close app'))],
+      title: Text(l.pbRestored),
+      content: Text(l.pbRestoredBody),
+      actions: [FilledButton(onPressed: () => Navigator.pop(context), child: Text(l.pvCloseApp))],
     ));
     await closeApp();
   });
@@ -147,23 +144,20 @@ class _PhoneBackupPageState extends State<PhoneBackupPage> {
   Widget build(BuildContext context) => PopScope(
     canPop: !_busy,
     child: Scaffold(
-      appBar: AppBar(title: const Text('Phone data backup')),
+      appBar: AppBar(title: Text(l.pbTitle)),
       body: ListView(padding: const EdgeInsets.all(16), children: [
-        const Text('Backs up everything NOTORYX Connect stores on this phone: chat history and '
-            'offline queues for every radio, NodeDex favorites and notes, waypoints, field '
-            'records and app settings. Use it to move to a new phone. The file is encrypted '
-            'with your password. Radio settings have their own backup.'),
+        Text(l.pbIntro),
         const SizedBox(height: 16),
         TextField(controller: _password, obscureText: true, enableSuggestions: false,
             autocorrect: false, enabled: !_busy,
-            decoration: const InputDecoration(labelText: 'Backup password (at least 12 characters)',
-                border: OutlineInputBorder())),
+            decoration: InputDecoration(labelText: l.pbPassword,
+                border: const OutlineInputBorder())),
         const SizedBox(height: 12),
         FilledButton.icon(onPressed: _busy ? null : _backup,
-            icon: const Icon(Icons.lock), label: const Text('Create backup file')),
+            icon: const Icon(Icons.lock), label: Text(l.pbCreate)),
         const SizedBox(height: 8),
         OutlinedButton.icon(onPressed: _busy ? null : _restore,
-            icon: const Icon(Icons.restore_page_outlined), label: const Text('Restore from file')),
+            icon: const Icon(Icons.restore_page_outlined), label: Text(l.pbRestore)),
         if (_busy) const Padding(padding: EdgeInsets.all(16), child: Center(child: CircularProgressIndicator())),
         if (_status != null) Padding(padding: const EdgeInsets.all(16), child: Text(_status!)),
       ]),

@@ -3865,6 +3865,1393 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use report'**
   String get frUseReport;
+
+  /// No description provided for @rsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio settings'**
+  String get rsTitle;
+
+  /// No description provided for @rsNotReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio not ready'**
+  String get rsNotReady;
+
+  /// No description provided for @rsNotReadySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio and wait for READY to change settings.'**
+  String get rsNotReadySub;
+
+  /// No description provided for @rsAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings availability'**
+  String get rsAvailability;
+
+  /// No description provided for @rsAvailabilitySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Check reads before editing. Missing startup settings do not prove a module is unsupported. Results reset on reconnect.'**
+  String get rsAvailabilitySub;
+
+  /// No description provided for @rsStopChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop checking'**
+  String get rsStopChecking;
+
+  /// No description provided for @rsOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get rsOwner;
+
+  /// No description provided for @rsOwnerSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Long and short node names'**
+  String get rsOwnerSub;
+
+  /// No description provided for @rsLoraSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Region, modem preset, hop limit, transmit'**
+  String get rsLoraSub;
+
+  /// No description provided for @rsChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get rsChannels;
+
+  /// No description provided for @rsChannelsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Names, roles and encryption keys'**
+  String get rsChannelsSub;
+
+  /// No description provided for @rsDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get rsDevice;
+
+  /// No description provided for @rsDeviceSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Device role and rebroadcast mode'**
+  String get rsDeviceSub;
+
+  /// No description provided for @rsPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get rsPosition;
+
+  /// No description provided for @rsPositionSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast interval, GPS mode, smart position'**
+  String get rsPositionSub;
+
+  /// No description provided for @rsAllSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'ALL RADIO SETTINGS'**
+  String get rsAllSettings;
+
+  /// No description provided for @rsModules.
+  ///
+  /// In en, this message translates to:
+  /// **'MODULES'**
+  String get rsModules;
+
+  /// No description provided for @rsRadioChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected radio changed while loading. Retry the read.'**
+  String get rsRadioChanged;
+
+  /// No description provided for @rsSaveQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Save {section}?'**
+  String rsSaveQ(String section);
+
+  /// No description provided for @rsSaveWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This writes the change to the connected radio. The radio may reboot and reconnect.'**
+  String get rsSaveWarning;
+
+  /// No description provided for @rsIdentityChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio identity changed or is unavailable. Reload before saving.'**
+  String get rsIdentityChanged;
+
+  /// No description provided for @rsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'{section} saved and verified from radio.'**
+  String rsSaved(String section);
+
+  /// No description provided for @rsNotVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Save not verified: {error}\nThe radio may have applied the change. Reload to inspect its current value; nothing will be resent automatically.'**
+  String rsNotVerified(String error);
+
+  /// No description provided for @rsSaveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE'**
+  String get rsSaveButton;
+
+  /// No description provided for @rsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'{section} settings are unavailable through this radio’s firmware API.'**
+  String rsUnavailable(String section);
+
+  /// No description provided for @rsReadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read from the radio: {error}'**
+  String rsReadFailed(String error);
+
+  /// No description provided for @rsRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get rsRetry;
+
+  /// No description provided for @rsWaitingReconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for reconnect and a fresh settings read…'**
+  String get rsWaitingReconnect;
+
+  /// No description provided for @rsReload.
+  ///
+  /// In en, this message translates to:
+  /// **'Reload from radio'**
+  String get rsReload;
+
+  /// No description provided for @rsLongName.
+  ///
+  /// In en, this message translates to:
+  /// **'Long name'**
+  String get rsLongName;
+
+  /// No description provided for @rsShortName.
+  ///
+  /// In en, this message translates to:
+  /// **'Short name'**
+  String get rsShortName;
+
+  /// No description provided for @rsChooseRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a region before saving; the radio will not transmit without one.'**
+  String get rsChooseRegion;
+
+  /// No description provided for @rsCustomInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom settings require a positive bandwidth, spreading factor 5–12 and coding rate denominator 5–8. Check your radio’s supported values.'**
+  String get rsCustomInvalid;
+
+  /// No description provided for @rsRegionWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing region or modem preset disconnects this radio from nodes that keep the old settings.'**
+  String get rsRegionWarning;
+
+  /// No description provided for @rsRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get rsRegion;
+
+  /// No description provided for @rsUsePreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Use modem preset'**
+  String get rsUsePreset;
+
+  /// No description provided for @rsModemPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Modem preset'**
+  String get rsModemPreset;
+
+  /// No description provided for @rsBandwidth.
+  ///
+  /// In en, this message translates to:
+  /// **'Bandwidth (kHz)'**
+  String get rsBandwidth;
+
+  /// No description provided for @rsSpreadFactor.
+  ///
+  /// In en, this message translates to:
+  /// **'Spreading factor'**
+  String get rsSpreadFactor;
+
+  /// No description provided for @rsCodingRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Coding rate denominator (5–8)'**
+  String get rsCodingRate;
+
+  /// No description provided for @rsRxBoost.
+  ///
+  /// In en, this message translates to:
+  /// **'RX boosted gain'**
+  String get rsRxBoost;
+
+  /// No description provided for @rsRxBoostSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal SX126x receiver gain; separate from external LNA'**
+  String get rsRxBoostSub;
+
+  /// No description provided for @rsLna.
+  ///
+  /// In en, this message translates to:
+  /// **'External LNA'**
+  String get rsLna;
+
+  /// No description provided for @rsLnaReported.
+  ///
+  /// In en, this message translates to:
+  /// **'External receive amplifier reported by this radio'**
+  String get rsLnaReported;
+
+  /// No description provided for @rsLnaNone.
+  ///
+  /// In en, this message translates to:
+  /// **'This radio has not reported a controllable external LNA'**
+  String get rsLnaNone;
+
+  /// No description provided for @rsHopLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Hop limit: {hops}'**
+  String rsHopLimit(int hops);
+
+  /// No description provided for @rsTransmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Transmit enabled'**
+  String get rsTransmit;
+
+  /// No description provided for @rsTransmitSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Off makes the radio receive-only'**
+  String get rsTransmitSub;
+
+  /// No description provided for @rsInfraWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'{role} is for fixed infrastructure with good coverage. On a handheld it wastes airtime and battery.'**
+  String rsInfraWarning(String role);
+
+  /// No description provided for @rsRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get rsRole;
+
+  /// No description provided for @rsRebroadcast.
+  ///
+  /// In en, this message translates to:
+  /// **'Rebroadcast mode'**
+  String get rsRebroadcast;
+
+  /// No description provided for @rsIntervalInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast interval must be 0 (firmware default) or at least 30 seconds.'**
+  String get rsIntervalInvalid;
+
+  /// No description provided for @rsGpsMode.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS mode'**
+  String get rsGpsMode;
+
+  /// No description provided for @rsInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast interval (seconds, 0 = default)'**
+  String get rsInterval;
+
+  /// No description provided for @rsSmart.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart position broadcast'**
+  String get rsSmart;
+
+  /// No description provided for @rsSmartSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Send extra updates when the node moves'**
+  String get rsSmartSub;
+
+  /// No description provided for @rsFixed.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed position'**
+  String get rsFixed;
+
+  /// No description provided for @rsFixedSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Report the last known position instead of GPS'**
+  String get rsFixedSub;
+
+  /// No description provided for @rsShareQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Share as QR code'**
+  String get rsShareQr;
+
+  /// No description provided for @rsImportLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Import channel link'**
+  String get rsImportLink;
+
+  /// No description provided for @rsDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get rsDisabled;
+
+  /// No description provided for @rsDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'(default name)'**
+  String get rsDefaultName;
+
+  /// No description provided for @rsChannelsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read channels: {error}'**
+  String rsChannelsFailed(String error);
+
+  /// No description provided for @rsNoEncryption.
+  ///
+  /// In en, this message translates to:
+  /// **'No encryption'**
+  String get rsNoEncryption;
+
+  /// No description provided for @rsDefaultKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Default key'**
+  String get rsDefaultKey;
+
+  /// No description provided for @rsAes128.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-128 key'**
+  String get rsAes128;
+
+  /// No description provided for @rsAes256.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-256 key'**
+  String get rsAes256;
+
+  /// No description provided for @rsUnknownKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Unrecognized key'**
+  String get rsUnknownKey;
+
+  /// No description provided for @rsChannelN.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}'**
+  String rsChannelN(int index);
+
+  /// No description provided for @rsKeyWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The encryption key changes. Nodes without the new key can no longer read this channel. Share it from the channel QR code.'**
+  String get rsKeyWarning;
+
+  /// No description provided for @rsChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name (blank uses the preset name)'**
+  String get rsChannelName;
+
+  /// No description provided for @rsEncryption.
+  ///
+  /// In en, this message translates to:
+  /// **'Encryption: {key}'**
+  String rsEncryption(String key);
+
+  /// No description provided for @rsNewAes256.
+  ///
+  /// In en, this message translates to:
+  /// **'New random AES-256'**
+  String get rsNewAes256;
+
+  /// No description provided for @rsGpsHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS pins are hidden: {model} has its GPS wired by the maker, so they do nothing.'**
+  String rsGpsHidden(String model);
+
+  /// No description provided for @bcShareQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your primary channel?'**
+  String get bcShareQ;
+
+  /// No description provided for @bcShareBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The beacon will include your primary channel\'s name and key. Anyone in range can then join it and read its messages.'**
+  String get bcShareBody;
+
+  /// No description provided for @bcShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get bcShare;
+
+  /// No description provided for @bcSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Beacon sent.'**
+  String get bcSent;
+
+  /// No description provided for @bcNotSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Beacon not sent: {error}'**
+  String bcNotSent(String error);
+
+  /// No description provided for @bcTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh beacons'**
+  String get bcTitle;
+
+  /// No description provided for @bcClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear heard beacons'**
+  String get bcClear;
+
+  /// No description provided for @bcIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'A beacon is a short broadcast that tells nearby radios a mesh is here, and can invite them to a channel. Radios on the newer Meshtastic firmware show it; NOTORYX Connect shows beacons it hears with any firmware.'**
+  String get bcIntro;
+
+  /// No description provided for @bcSendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a beacon'**
+  String get bcSendTitle;
+
+  /// No description provided for @bcMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Beacon message'**
+  String get bcMessage;
+
+  /// No description provided for @bcMessageHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent on your primary channel. At most one beacon an hour.'**
+  String get bcMessageHelp;
+
+  /// No description provided for @bcBytes.
+  ///
+  /// In en, this message translates to:
+  /// **'{used}/{max} bytes'**
+  String bcBytes(int used, int max);
+
+  /// No description provided for @bcTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Too long'**
+  String get bcTooLong;
+
+  /// No description provided for @bcAddLocationNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Add my location (no position yet)'**
+  String get bcAddLocationNone;
+
+  /// No description provided for @bcAddLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Add my location as a Plus Code'**
+  String get bcAddLocation;
+
+  /// No description provided for @bcInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite to my primary channel'**
+  String get bcInvite;
+
+  /// No description provided for @bcInviteSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Includes the channel name and key, and your region and preset'**
+  String get bcInviteSub;
+
+  /// No description provided for @bcSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending…'**
+  String get bcSending;
+
+  /// No description provided for @bcSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send beacon'**
+  String get bcSend;
+
+  /// No description provided for @bcConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio to send a beacon.'**
+  String get bcConnect;
+
+  /// No description provided for @bcNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next beacon can be sent at {time}.'**
+  String bcNext(String time);
+
+  /// No description provided for @bcHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard beacons'**
+  String get bcHeard;
+
+  /// No description provided for @bcNoneHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'No beacons heard yet'**
+  String get bcNoneHeard;
+
+  /// No description provided for @bcNoneHeardSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Beacons from radios in range on your channels appear here.'**
+  String get bcNoneHeardSub;
+
+  /// No description provided for @bcFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From {name}'**
+  String bcFrom(String name);
+
+  /// No description provided for @bcHeardAt.
+  ///
+  /// In en, this message translates to:
+  /// **'heard {time}'**
+  String bcHeardAt(String time);
+
+  /// No description provided for @bcChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel \"{name}\"'**
+  String bcChannel(String name);
+
+  /// No description provided for @bcDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get bcDefault;
+
+  /// No description provided for @bcRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'region {name}'**
+  String bcRegion(String name);
+
+  /// No description provided for @bcPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'preset {name}'**
+  String bcPreset(String name);
+
+  /// No description provided for @bcSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'slot {slot}'**
+  String bcSlot(int slot);
+
+  /// No description provided for @bcNoMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'(no message)'**
+  String get bcNoMessage;
+
+  /// No description provided for @bcInvitesTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Invites to: {offer}'**
+  String bcInvitesTo(String offer);
+
+  /// No description provided for @bcJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Review and join channel'**
+  String get bcJoin;
+
+  /// No description provided for @csShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share channels'**
+  String get csShareTitle;
+
+  /// No description provided for @csReadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read channels: {error}'**
+  String csReadFailed(String error);
+
+  /// No description provided for @csRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get csRetry;
+
+  /// No description provided for @csPrimary.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary: {name}'**
+  String csPrimary(String name);
+
+  /// No description provided for @csSecondary.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary: {name}'**
+  String csSecondary(String name);
+
+  /// No description provided for @csDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'(default name)'**
+  String get csDefaultName;
+
+  /// No description provided for @csCopyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link'**
+  String get csCopyLink;
+
+  /// No description provided for @csCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel link copied.'**
+  String get csCopied;
+
+  /// No description provided for @csKeysWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This code contains your channel encryption keys. Anyone who scans it can read and send on these channels.'**
+  String get csKeysWarning;
+
+  /// No description provided for @csReplaceQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace all channels?'**
+  String get csReplaceQ;
+
+  /// No description provided for @csAddQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Add channels?'**
+  String get csAddQ;
+
+  /// No description provided for @csReplaceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'All 8 channel slots will be overwritten. You will lose access to current channels unless you have their link. The radio will reboot.'**
+  String get csReplaceBody;
+
+  /// No description provided for @csReplaceLoraBody.
+  ///
+  /// In en, this message translates to:
+  /// **'All 8 channel slots and the LoRa settings will be overwritten. You will lose access to current channels unless you have their link. The radio will reboot.'**
+  String get csReplaceLoraBody;
+
+  /// No description provided for @csAddBody.
+  ///
+  /// In en, this message translates to:
+  /// **'New channels from the link go into free slots. Existing channels and LoRa settings stay the same.'**
+  String get csAddBody;
+
+  /// No description provided for @csApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get csApply;
+
+  /// No description provided for @csAlreadyThere.
+  ///
+  /// In en, this message translates to:
+  /// **'All channels from the link are already on the radio.'**
+  String get csAlreadyThere;
+
+  /// No description provided for @csWritten.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} channel written and verified from radio.} other{{count} channels written and verified from radio.}}'**
+  String csWritten(int count);
+
+  /// No description provided for @csNotVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Import not verified: {error}\nNothing will be resent automatically.'**
+  String csNotVerified(String error);
+
+  /// No description provided for @csRefused.
+  ///
+  /// In en, this message translates to:
+  /// **'Import refused: {error}'**
+  String csRefused(String error);
+
+  /// No description provided for @csFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String csFailed(String error);
+
+  /// No description provided for @csImportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import channels'**
+  String get csImportTitle;
+
+  /// No description provided for @csScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan channel QR code'**
+  String get csScan;
+
+  /// No description provided for @csScanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan channel QR'**
+  String get csScanTitle;
+
+  /// No description provided for @csLinkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Meshtastic channel link'**
+  String get csLinkLabel;
+
+  /// No description provided for @csPaste.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste'**
+  String get csPaste;
+
+  /// No description provided for @csLora.
+  ///
+  /// In en, this message translates to:
+  /// **'LoRa: {region}, {modem}'**
+  String csLora(String region, String modem);
+
+  /// No description provided for @csCustomModem.
+  ///
+  /// In en, this message translates to:
+  /// **'custom modem'**
+  String get csCustomModem;
+
+  /// No description provided for @csAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to radio'**
+  String get csAdd;
+
+  /// No description provided for @csReplaceAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace all'**
+  String get csReplaceAll;
+
+  /// No description provided for @csApplyRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to radio'**
+  String get csApplyRadio;
+
+  /// No description provided for @trTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan your trip'**
+  String get trTitle;
+
+  /// No description provided for @trName.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip name'**
+  String get trName;
+
+  /// No description provided for @trContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'TRIP CONTACTS ({count}/{max})'**
+  String trContacts(int count, int max);
+
+  /// No description provided for @trContactsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-ins and SOS go to each of them as a direct message.'**
+  String get trContactsSub;
+
+  /// No description provided for @trNoNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes yet'**
+  String get trNoNodes;
+
+  /// No description provided for @trNoNodesSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to your radio so nearby nodes and favorites appear here.'**
+  String get trNoNodesSub;
+
+  /// No description provided for @trOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue alert'**
+  String get trOverdue;
+
+  /// No description provided for @trOverdueHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Warns you when a trip contact has not been heard for this long'**
+  String get trOverdueHelp;
+
+  /// No description provided for @trOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get trOff;
+
+  /// No description provided for @trMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} min'**
+  String trMinutes(int count);
+
+  /// No description provided for @trHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} h'**
+  String trHours(int count);
+
+  /// No description provided for @trReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in reminder'**
+  String get trReminder;
+
+  /// No description provided for @trReminderHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminds you to check in this long after your last check-in'**
+  String get trReminderHelp;
+
+  /// No description provided for @trEvery.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {time}'**
+  String trEvery(String time);
+
+  /// No description provided for @trSosChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Also send SOS on a channel'**
+  String get trSosChannel;
+
+  /// No description provided for @trSosChannelHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone on that channel sees your SOS, not just trip contacts'**
+  String get trSosChannelHelp;
+
+  /// No description provided for @trContactsOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'No, trip contacts only'**
+  String get trContactsOnly;
+
+  /// No description provided for @trChannelItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index} • {name}'**
+  String trChannelItem(int index, String name);
+
+  /// No description provided for @trDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get trDefault;
+
+  /// No description provided for @trReadiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Readiness check'**
+  String get trReadiness;
+
+  /// No description provided for @trEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'End trip'**
+  String get trEnd;
+
+  /// No description provided for @trStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start trip'**
+  String get trStart;
+
+  /// No description provided for @trRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip running since {time}. Overdue alerts and reminders are on.'**
+  String trRunning(String time);
+
+  /// No description provided for @trNotRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting the trip turns on overdue alerts and check-in reminders. Check-ins and SOS work any time.'**
+  String get trNotRunning;
+
+  /// No description provided for @pvEncryptedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat history is now encrypted.'**
+  String get pvEncryptedOn;
+
+  /// No description provided for @pvEncryptedOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat history is no longer encrypted.'**
+  String get pvEncryptedOff;
+
+  /// No description provided for @pvLockOnReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on app lock'**
+  String get pvLockOnReason;
+
+  /// No description provided for @pvLockOffReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off app lock'**
+  String get pvLockOffReason;
+
+  /// No description provided for @pvLockUnchanged.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock was not changed.'**
+  String get pvLockUnchanged;
+
+  /// No description provided for @pvStored1.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat history and offline queues for each radio (newest 500 messages per radio)'**
+  String get pvStored1;
+
+  /// No description provided for @pvStored2.
+  ///
+  /// In en, this message translates to:
+  /// **'NodeDex: nodes your radios have heard, plus your favorites and notes'**
+  String get pvStored2;
+
+  /// No description provided for @pvStored3.
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoints received from the mesh'**
+  String get pvStored3;
+
+  /// No description provided for @pvStored4.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident log and coverage records, only if you create them'**
+  String get pvStored4;
+
+  /// No description provided for @pvStored5.
+  ///
+  /// In en, this message translates to:
+  /// **'Field alert, bot, location and appearance settings'**
+  String get pvStored5;
+
+  /// No description provided for @pvStored6.
+  ///
+  /// In en, this message translates to:
+  /// **'Map tiles for areas you have viewed'**
+  String get pvStored6;
+
+  /// No description provided for @pvSent1.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages you send go to your radio, which transmits them on the mesh using the channel\'s encryption key'**
+  String get pvSent1;
+
+  /// No description provided for @pvSent2.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone location, only while \"Share phone location\" is on, at the precision you choose'**
+  String get pvSent2;
+
+  /// No description provided for @pvSent3.
+  ///
+  /// In en, this message translates to:
+  /// **'Position, telemetry and traceroute requests that you start'**
+  String get pvSent3;
+
+  /// No description provided for @pvSent4.
+  ///
+  /// In en, this message translates to:
+  /// **'Map tile requests to OpenStreetMap servers when you view the map; they see your IP address'**
+  String get pvSent4;
+
+  /// No description provided for @pvSent5.
+  ///
+  /// In en, this message translates to:
+  /// **'Topographic map tile requests to OpenTopoMap servers, only while the topo map is shown; they see your IP address'**
+  String get pvSent5;
+
+  /// No description provided for @pvSent6.
+  ///
+  /// In en, this message translates to:
+  /// **'Points along a link to the Open-Meteo elevation service, only when you check a link in the Link planner'**
+  String get pvSent6;
+
+  /// No description provided for @pvDisconnectFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect the radio before deleting phone data.'**
+  String get pvDisconnectFirst;
+
+  /// No description provided for @pvDeleteAllQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all phone data?'**
+  String get pvDeleteAllQ;
+
+  /// No description provided for @pvDeleteChatsQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete chat history?'**
+  String get pvDeleteChatsQ;
+
+  /// No description provided for @pvDeleteAllBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Deletes chats and offline queues for every radio, NodeDex, favorites and notes, waypoints, field records, cached map tiles and all app settings from this phone. Radio settings are not changed. This cannot be undone; make a phone data backup first if you may need it.\n\nThe app closes afterwards.'**
+  String get pvDeleteAllBody;
+
+  /// No description provided for @pvDeleteChatsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Deletes chat history and queued messages for every radio from this phone. Messages already sent on the mesh are not affected. This cannot be undone.\n\nThe app closes afterwards.'**
+  String get pvDeleteChatsBody;
+
+  /// No description provided for @pvDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get pvDelete;
+
+  /// No description provided for @pvDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete failed: {error}'**
+  String pvDeleteFailed(String error);
+
+  /// No description provided for @pvDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted'**
+  String get pvDeleted;
+
+  /// No description provided for @pvDeletedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTORYX Connect will close now so nothing still in memory is saved again.'**
+  String get pvDeletedBody;
+
+  /// No description provided for @pvCloseApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Close app'**
+  String get pvCloseApp;
+
+  /// No description provided for @pvTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & data'**
+  String get pvTitle;
+
+  /// No description provided for @pvIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTORYX Connect has no account, analytics, ads or servers of its own. Everything it keeps stays in this app\'s private storage on your phone and is removed if you uninstall it.'**
+  String get pvIntro;
+
+  /// No description provided for @pvAppLock.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock'**
+  String get pvAppLock;
+
+  /// No description provided for @pvAppLockSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for your fingerprint, face or screen lock when opening the app, and after a minute away. You will also need it to reach SOS. The radio stays connected.'**
+  String get pvAppLockSub;
+
+  /// No description provided for @pvAppLockNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a screen lock on this phone to use app lock.'**
+  String get pvAppLockNone;
+
+  /// No description provided for @pvEncrypt.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypt chat history'**
+  String get pvEncrypt;
+
+  /// No description provided for @pvEncryptSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Scrambles saved messages using a key held in this phone\'s secure storage. If that key is lost, for example after moving to a new phone, the saved history can\'t be read. Export anything you need first.'**
+  String get pvEncryptSub;
+
+  /// No description provided for @pvStored.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored on this phone'**
+  String get pvStored;
+
+  /// No description provided for @pvSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent off this phone'**
+  String get pvSent;
+
+  /// No description provided for @pvDeleteChats.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete chat history'**
+  String get pvDeleteChats;
+
+  /// No description provided for @pvDeleteAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all phone data'**
+  String get pvDeleteAll;
+
+  /// No description provided for @pbFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation failed: {error}'**
+  String pbFailed(String error);
+
+  /// No description provided for @pbShortPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least 12 characters for the backup password.'**
+  String get pbShortPassword;
+
+  /// No description provided for @pbCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup created. Save the file somewhere off this phone. Keep the password separately; it cannot be recovered.'**
+  String get pbCreated;
+
+  /// No description provided for @pbDisconnectFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect the radio before restoring phone data.'**
+  String get pbDisconnectFirst;
+
+  /// No description provided for @pbReplaceQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace all phone data?'**
+  String get pbReplaceQ;
+
+  /// No description provided for @pbSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup created {date} by version {version}.\n\nIt has chat history for {radios, plural, one{{radios} radio} other{{radios} radios}} ({messages} messages) and {items} saved items in all.\n\nEverything NOTORYX Connect stores on this phone (chats, offline queues, NodeDex, waypoints, field records and settings) is replaced. Radio settings are not changed. The app closes when the restore finishes; open it again to continue.'**
+  String pbSummary(
+    String date,
+    String version,
+    int radios,
+    int messages,
+    int items,
+  );
+
+  /// No description provided for @pbReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace phone data'**
+  String get pbReplace;
+
+  /// No description provided for @pbRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore complete'**
+  String get pbRestored;
+
+  /// No description provided for @pbRestoredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTORYX Connect will close now so nothing still in memory overwrites the restored data. Open it again to continue.'**
+  String get pbRestoredBody;
+
+  /// No description provided for @pbTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone data backup'**
+  String get pbTitle;
+
+  /// No description provided for @pbIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Backs up everything NOTORYX Connect stores on this phone: chat history and offline queues for every radio, NodeDex favorites and notes, waypoints, field records and app settings. Use it to move to a new phone. The file is encrypted with your password. Radio settings have their own backup.'**
+  String get pbIntro;
+
+  /// No description provided for @pbPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup password (at least 12 characters)'**
+  String get pbPassword;
+
+  /// No description provided for @pbCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create backup file'**
+  String get pbCreate;
+
+  /// No description provided for @pbRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from file'**
+  String get pbRestore;
+
+  /// No description provided for @rbFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation failed. If a restore had started, settings may be partially changed. Reconnect and check the radio before retrying.'**
+  String get rbFailed;
+
+  /// No description provided for @rbReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted backup ready. Copy it and save it in a text file. Keep the password separately; it cannot be recovered.'**
+  String get rbReady;
+
+  /// No description provided for @rbReplaceQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace radio settings?'**
+  String get rbReplaceQ;
+
+  /// No description provided for @rbSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup from radio {source} (firmware {firmware}), created {date}.\n\nTarget: {target}. Replaces owner names, all 8 channel slots including their secret keys, {configs} configuration sections and {modules} modules. Device identity/security keys, session credentials, phone chats and maps are not restored (use Phone data backup for those).\n\nSave a backup of the target first. The radio may reboot or lose mesh connectivity. A radio write cannot guarantee rollback after a power or connection failure.'**
+  String rbSummary(
+    String source,
+    String firmware,
+    String date,
+    String target,
+    int configs,
+    int modules,
+  );
+
+  /// No description provided for @rbReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace settings'**
+  String get rbReplace;
+
+  /// No description provided for @rbRadioChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected radio changed.'**
+  String get rbRadioChanged;
+
+  /// No description provided for @rbRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore complete. Fresh radio readback matches the backup.'**
+  String get rbRestored;
+
+  /// No description provided for @rbTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted radio backup'**
+  String get rbTitle;
+
+  /// No description provided for @rbIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Backs up fresh radio configuration and modules reported by the firmware, all channel slots and owner names. Channel keys and any network/module credentials are password encrypted. Device identity keys and session credentials are excluded.'**
+  String get rbIntro;
+
+  /// No description provided for @rbCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create encrypted backup'**
+  String get rbCreate;
+
+  /// No description provided for @rbText.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted backup text'**
+  String get rbText;
+
+  /// No description provided for @rbTextHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a saved encrypted backup to restore'**
+  String get rbTextHint;
+
+  /// No description provided for @rbCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted backup copied. Save it in a text file.'**
+  String get rbCopied;
+
+  /// No description provided for @rbCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy encrypted backup'**
+  String get rbCopy;
+
+  /// No description provided for @rbReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review and restore'**
+  String get rbReview;
 }
 
 class _AppLocalizationsDelegate
