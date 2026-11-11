@@ -99,7 +99,11 @@ void main() {
     final now = DateTime.now();
     final seen = now.subtract(const Duration(minutes: 30));
     final old = _msg(1, now.subtract(const Duration(days: 1)), text: 'yesterday note');
-    final fresh = _msg(2, now.subtract(const Duration(minutes: 5)), text: 'fresh news');
+    // Keep the fresh message inside today even just after midnight, or the
+    // "Today" divider can't appear.
+    final sinceMidnight = now.difference(DateTime(now.year, now.month, now.day));
+    final gap = sinceMidnight < const Duration(minutes: 10) ? sinceMidnight ~/ 2 : const Duration(minutes: 5);
+    final fresh = _msg(2, now.subtract(gap), text: 'fresh news');
     final prefs = SharedPreferencesAsync();
     await prefs.setString('bastion.comms.archive.v1', jsonEncode({
       'messages': [old.toJson(), fresh.toJson()],
