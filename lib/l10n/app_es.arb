@@ -856,5 +856,15 @@
   "rbTextHint": "Pega una copia cifrada guardada para restaurarla",
   "rbCopied": "Copia cifrada copiada. Guárdala en un archivo de texto.",
   "rbCopy": "Copiar copia cifrada",
-  "rbReview": "Revisar y restaurar"
+  "rbReview": "Revisar y restaurar",
+  "nrTitle": "Pasar a una radio nueva",
+  "nrSub": "{done} de {total} hechos",
+  "nrStep1": "Con la radio antigua conectada, crea aquí una copia cifrada y guarda el texto en un lugar seguro.",
+  "nrStep2": "Anota la región y el preajuste de módem de la radio antigua (Ajustes de la radio → LoRa).",
+  "nrStep3": "Actualiza el firmware de la radio nueva a la misma versión o a una posterior.",
+  "nrStep4": "Conecta la radio nueva y configura primero su región, para que pueda transmitir.",
+  "nrStep5": "Pega la copia, revísala y restaura. Usa la misma contraseña.",
+  "nrStep6": "Revisa los canales: los nombres y las claves deben coincidir; envía un mensaje de prueba a alguien en cada canal.",
+  "nrStep7": "La radio nueva tiene su propio ID de nodo y su clave de seguridad. Avisa a tus contactos y vuelve a añadirla como administradora en los nodos que gestionas a distancia.",
+  "nrReset": "Empezar de nuevo"
 }

@@ -24,6 +24,8 @@ class _RadioBackupPageState extends State<RadioBackupPage> {
   final _encrypted = TextEditingController();
   bool _busy = false;
   String? _status;
+  // Steps ticked in the new-radio checklist; kept only while the page is open.
+  final Set<int> _done = {};
 
   AppLocalizations get l => AppLocalizations.of(context);
 
@@ -82,6 +84,29 @@ class _RadioBackupPageState extends State<RadioBackupPage> {
     if (mounted) setState(() => _status = l.rbRestored);
   });
 
+  /// A guide for replacing a radio; the backup above does the copying.
+  Widget _newRadioChecklist() {
+    final steps = [l.nrStep1, l.nrStep2, l.nrStep3, l.nrStep4, l.nrStep5, l.nrStep6, l.nrStep7];
+    return Card(key: const ValueKey('new-radio-checklist'), child: ExpansionTile(
+      leading: const Icon(Icons.swap_horiz),
+      title: Text(l.nrTitle),
+      subtitle: Text(l.nrSub(_done.length, steps.length)),
+      children: [
+        for (final (i, step) in steps.indexed)
+          CheckboxListTile(
+            key: ValueKey('new-radio-step-$i'),
+            value: _done.contains(i),
+            controlAffinity: ListTileControlAffinity.leading,
+            title: Text('${i + 1}. $step'),
+            onChanged: (v) => setState(() => v == true ? _done.add(i) : _done.remove(i)),
+          ),
+        if (_done.isNotEmpty)
+          Align(alignment: AlignmentDirectional.centerEnd, child: TextButton(
+            onPressed: () => setState(_done.clear), child: Text(l.nrReset))),
+      ],
+    ));
+  }
+
   @override
   Widget build(BuildContext context) => PopScope(
     canPop: !_busy,
@@ -112,6 +137,9 @@ class _RadioBackupPageState extends State<RadioBackupPage> {
           icon: const Icon(Icons.settings_backup_restore), label: Text(l.rbReview)),
       if (_busy) const Padding(padding: EdgeInsets.all(16), child: Center(child: CircularProgressIndicator())),
       if (_status != null) Padding(padding: const EdgeInsets.all(16), child: Text(_status!)),
+      // Below the status, so backup results stay next to the buttons.
+      const SizedBox(height: 16),
+      _newRadioChecklist(),
     ]),
   ));
 }
