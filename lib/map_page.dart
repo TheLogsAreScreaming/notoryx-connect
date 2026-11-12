@@ -290,6 +290,19 @@ class _MapPageState extends State<MapPage> {
                           ),
                         ),
                       ]),
+                      // The squares are only colour and numbers on the map,
+                      // so say the same in words for screen readers and everyone else.
+                      if (_showHeatmap)
+                        if (_coverage case final cells when cells.isNotEmpty)
+                          Semantics(liveRegion: true, child: Padding(
+                            padding: const EdgeInsets.only(top: 6),
+                            child: Text(l.mapHeatSummary(
+                              cells.where((c) => c.band == CoverageBand.strong).length,
+                              cells.where((c) => c.band == CoverageBand.fair).length,
+                              cells.where((c) => c.band == CoverageBand.weak).length,
+                              cells.fold<int>(0, (sum, c) => sum + c.readings),
+                            ), key: const ValueKey('heatmap-summary')),
+                          )),
                       Wrap(alignment: WrapAlignment.end, children: [
                         PopupMenuButton<BastionHeardWithin>(
                           key: const ValueKey('map-heard-filter'),

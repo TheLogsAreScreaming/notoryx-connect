@@ -5678,6 +5678,276 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Slope, wires, contamination'**
   String get frNine9Hint;
+
+  /// No description provided for @svcConnectToCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio to check in.'**
+  String get svcConnectToCheckIn;
+
+  /// No description provided for @svcChooseContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose trip contacts first.'**
+  String get svcChooseContacts;
+
+  /// No description provided for @svcConnectToSos.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio to send an SOS.'**
+  String get svcConnectToSos;
+
+  /// No description provided for @svcChooseSosTargets.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose trip contacts or an SOS channel first.'**
+  String get svcChooseSosTargets;
+
+  /// No description provided for @svcFirmwareUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio runs firmware {version}. NOTORYX Connect needs {minimum} or newer to change radio settings, so settings are read-only. Messages still work. Update at {url}.'**
+  String svcFirmwareUnsupported(String version, String minimum, String url);
+
+  /// No description provided for @svcFirmwareOutdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio runs firmware {version}. Updating to {recommended} or newer at {url} turns on newer features such as sensor readings and security key checks.'**
+  String svcFirmwareOutdated(String version, String recommended, String url);
+
+  /// No description provided for @svcToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get svcToday;
+
+  /// No description provided for @svcYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get svcYesterday;
+
+  /// No description provided for @svcLowBatteryOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio battery is low'**
+  String get svcLowBatteryOwn;
+
+  /// No description provided for @svcLowBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} battery is low'**
+  String svcLowBattery(String name);
+
+  /// No description provided for @svcLowBatteryOwnBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio reports {level}% battery.'**
+  String svcLowBatteryOwnBody(int level);
+
+  /// No description provided for @svcLowBatteryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} reports {level}% battery.'**
+  String svcLowBatteryBody(String name, int level);
+
+  /// No description provided for @svcNewNode.
+  ///
+  /// In en, this message translates to:
+  /// **'New node: {name}'**
+  String svcNewNode(String name);
+
+  /// No description provided for @svcNewNodeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio heard {name} for the first time.'**
+  String svcNewNodeBody(String name);
+
+  /// No description provided for @svcMeshQuieter.
+  ///
+  /// In en, this message translates to:
+  /// **'The mesh has gone quieter'**
+  String get svcMeshQuieter;
+
+  /// No description provided for @svcMeshQuieterBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard {active} nodes in the last hour, down from {peak}. A repeater may be down, or you may have moved out of range.'**
+  String svcMeshQuieterBody(int active, int peak);
+
+  /// No description provided for @svcQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has gone quiet'**
+  String svcQuiet(String name);
+
+  /// No description provided for @svcQuietBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Not heard for {time}.'**
+  String svcQuietBody(String time);
+
+  /// No description provided for @svcHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} h {minutes} min'**
+  String svcHoursMinutes(int hours, int minutes);
+
+  /// No description provided for @svcMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String svcMinutes(int minutes);
+
+  /// No description provided for @svcReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get svcReply;
+
+  /// No description provided for @svcDirectChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct messages'**
+  String get svcDirectChannel;
+
+  /// No description provided for @svcDirectChannelSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages sent to you on the mesh.'**
+  String get svcDirectChannelSub;
+
+  /// No description provided for @svcChannelChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel messages'**
+  String get svcChannelChannel;
+
+  /// No description provided for @svcChannelChannelSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages on your mesh channels.'**
+  String get svcChannelChannelSub;
+
+  /// No description provided for @svcFieldChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Field alerts'**
+  String get svcFieldChannel;
+
+  /// No description provided for @svcFieldChannelSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Low battery, new nodes and favorites that go quiet.'**
+  String get svcFieldChannelSub;
+
+  /// No description provided for @svcFromChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'{sender} • channel {channel}'**
+  String svcFromChannel(String sender, int channel);
+
+  /// No description provided for @mapHeatSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Coverage map: {strong} strong, {fair} fair, {weak} weak areas, from {readings} readings.'**
+  String mapHeatSummary(int strong, int fair, int weak, int readings);
+
+  /// No description provided for @nrTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Moving to a new radio'**
+  String get nrTitle;
+
+  /// No description provided for @nrSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} done'**
+  String nrSub(int done, int total);
+
+  /// No description provided for @nrStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'With the old radio connected, create an encrypted backup here and save the text somewhere safe.'**
+  String get nrStep1;
+
+  /// No description provided for @nrStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Write down the old radio\'s region and modem preset (Radio settings → LoRa).'**
+  String get nrStep2;
+
+  /// No description provided for @nrStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the new radio\'s firmware to the same version or newer.'**
+  String get nrStep3;
+
+  /// No description provided for @nrStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect the new radio and set its region before anything else, so it may transmit.'**
+  String get nrStep4;
+
+  /// No description provided for @nrStep5.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste the backup, review it and restore. Use the same password.'**
+  String get nrStep5;
+
+  /// No description provided for @nrStep6.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Channels: names and keys should match, and send a test message to someone on each channel.'**
+  String get nrStep6;
+
+  /// No description provided for @nrStep7.
+  ///
+  /// In en, this message translates to:
+  /// **'The new radio has its own node ID and security key. Tell your contacts, and re-add it as an admin on any nodes you manage remotely.'**
+  String get nrStep7;
+
+  /// No description provided for @nrReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Start over'**
+  String get nrReset;
+
+  /// No description provided for @cpLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Position shared on this channel'**
+  String get cpLabel;
+
+  /// No description provided for @cpHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'How exact your radio\'s position is when sent on this channel. Other channels keep their own setting.'**
+  String get cpHelp;
+
+  /// No description provided for @cpNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set: the firmware decides'**
+  String get cpNotSet;
+
+  /// No description provided for @cpNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t share position'**
+  String get cpNone;
+
+  /// No description provided for @cpExact.
+  ///
+  /// In en, this message translates to:
+  /// **'Exact position'**
+  String get cpExact;
+
+  /// No description provided for @cpWithin.
+  ///
+  /// In en, this message translates to:
+  /// **'Within about {distance}'**
+  String cpWithin(String distance);
 }
 
 class _AppLocalizationsDelegate

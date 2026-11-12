@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bastion_chat_message.dart';
 import 'bastion_field_alerts.dart';
+import '../l10n/bastion_text.dart';
 
 /// Check-in choices, in the order the buttons show them.
 const checkInLabels = ["I'm OK", 'At camp', 'Delayed', 'Heading back'];
@@ -368,16 +369,16 @@ class BastionTripController extends ChangeNotifier {
 
   /// Why a check-in can't be sent now, or null when it can.
   String? get checkInBlocked {
-    if (!_radio.isReady) return 'Connect to a radio to check in.';
-    if (_plan.members.isEmpty) return 'Choose trip contacts first.';
+    if (!_radio.isReady) return BastionText.l.svcConnectToCheckIn;
+    if (_plan.members.isEmpty) return BastionText.l.svcChooseContacts;
     return null;
   }
 
   /// Why an SOS can't be sent now, or null when it can.
   String? get sosBlocked {
-    if (!_radio.isReady) return 'Connect to a radio to send an SOS.';
+    if (!_radio.isReady) return BastionText.l.svcConnectToSos;
     if (_plan.members.isEmpty && _plan.sosChannel < 0) {
-      return 'Choose trip contacts or an SOS channel first.';
+      return BastionText.l.svcChooseSosTargets;
     }
     return null;
   }

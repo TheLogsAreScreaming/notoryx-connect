@@ -5,6 +5,8 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import '../l10n/bastion_text.dart';
+
 import 'bastion_field_alerts.dart';
 
 /// Shows a phone notification for an incoming mesh message.
@@ -67,36 +69,37 @@ class BastionLocalMessageAlerts implements BastionMessageAlerts {
 
   // Replying works from the phone and from a paired Wear OS watch, which
   // mirrors this action. The text goes out over the mesh as typed.
-  static const _replyAction = AndroidNotificationAction(
+  static AndroidNotificationAction get _replyAction => AndroidNotificationAction(
     _replyActionId,
-    'Reply',
+    BastionText.l.svcReply,
     allowGeneratedReplies: true,
-    inputs: [AndroidNotificationActionInput(label: 'Reply')],
+    inputs: [AndroidNotificationActionInput(label: BastionText.l.svcReply)],
   );
 
-  static const _direct = AndroidNotificationDetails(
+  // Names and descriptions show in Android's notification settings.
+  static AndroidNotificationDetails get _direct => AndroidNotificationDetails(
     'bastion_direct_messages',
-    'Direct messages',
-    channelDescription: 'Messages sent to you on the mesh.',
+    BastionText.l.svcDirectChannel,
+    channelDescription: BastionText.l.svcDirectChannelSub,
     importance: Importance.high,
     priority: Priority.high,
     category: AndroidNotificationCategory.message,
     actions: [_replyAction],
   );
 
-  static const _channel = AndroidNotificationDetails(
+  static AndroidNotificationDetails get _channel => AndroidNotificationDetails(
     'bastion_channel_messages',
-    'Channel messages',
-    channelDescription: 'Messages on your mesh channels.',
+    BastionText.l.svcChannelChannel,
+    channelDescription: BastionText.l.svcChannelChannelSub,
     importance: Importance.defaultImportance,
     category: AndroidNotificationCategory.message,
     actions: [_replyAction],
   );
 
-  static const _field = AndroidNotificationDetails(
+  static AndroidNotificationDetails get _field => AndroidNotificationDetails(
     'bastion_field_alerts',
-    'Field alerts',
-    channelDescription: 'Low battery, new nodes and favorites that go quiet.',
+    BastionText.l.svcFieldChannel,
+    channelDescription: BastionText.l.svcFieldChannelSub,
     importance: Importance.high,
     priority: Priority.high,
     category: AndroidNotificationCategory.status,
@@ -111,7 +114,7 @@ class BastionLocalMessageAlerts implements BastionMessageAlerts {
         id: alert.notificationId,
         title: alert.title,
         body: alert.body,
-        notificationDetails: const NotificationDetails(android: _field, iOS: _ios),
+        notificationDetails: NotificationDetails(android: _field, iOS: _ios),
       );
     } catch (error) {
       debugPrint('Field alert failed: $error');
@@ -155,7 +158,7 @@ class BastionLocalMessageAlerts implements BastionMessageAlerts {
         id: text.hashCode & 0x7fffffff,
         title: 'Reply not sent',
         body: text,
-        notificationDetails: const NotificationDetails(android: _field, iOS: _ios),
+        notificationDetails: NotificationDetails(android: _field, iOS: _ios),
       );
     } catch (error) {
       debugPrint('Reply failure alert failed: $error');
@@ -200,7 +203,7 @@ class BastionLocalMessageAlerts implements BastionMessageAlerts {
     try {
       await _plugin.show(
         id: packetId & 0x7fffffff,
-        title: isDirect ? sender : '$sender • channel $channel',
+        title: isDirect ? sender : BastionText.l.svcFromChannel(sender, channel),
         body: text,
         notificationDetails: NotificationDetails(android: isDirect ? _direct : _channel, iOS: _ios),
         payload: replyDestination == null ? null : BastionNotificationReply.payload(replyDestination, channel),

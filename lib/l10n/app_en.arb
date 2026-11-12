@@ -2274,5 +2274,198 @@
   "frNine8": "Patient status",
   "frNine8Hint": "Who the patients are",
   "frNine9": "Hazards and terrain",
-  "frNine9Hint": "Slope, wires, contamination"
+  "frNine9Hint": "Slope, wires, contamination",
+  "svcConnectToCheckIn": "Connect to a radio to check in.",
+  "svcChooseContacts": "Choose trip contacts first.",
+  "svcConnectToSos": "Connect to a radio to send an SOS.",
+  "svcChooseSosTargets": "Choose trip contacts or an SOS channel first.",
+  "svcFirmwareUnsupported": "Your radio runs firmware {version}. NOTORYX Connect needs {minimum} or newer to change radio settings, so settings are read-only. Messages still work. Update at {url}.",
+  "@svcFirmwareUnsupported": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "minimum": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "svcFirmwareOutdated": "Your radio runs firmware {version}. Updating to {recommended} or newer at {url} turns on newer features such as sensor readings and security key checks.",
+  "@svcFirmwareOutdated": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "recommended": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "svcToday": "Today",
+  "svcYesterday": "Yesterday",
+  "svcLowBatteryOwn": "Your radio battery is low",
+  "svcLowBattery": "{name} battery is low",
+  "@svcLowBattery": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "svcLowBatteryOwnBody": "Your radio reports {level}% battery.",
+  "@svcLowBatteryOwnBody": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "svcLowBatteryBody": "{name} reports {level}% battery.",
+  "@svcLowBatteryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "svcNewNode": "New node: {name}",
+  "@svcNewNode": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "svcNewNodeBody": "Your radio heard {name} for the first time.",
+  "@svcNewNodeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "svcMeshQuieter": "The mesh has gone quieter",
+  "svcMeshQuieterBody": "Heard {active} nodes in the last hour, down from {peak}. A repeater may be down, or you may have moved out of range.",
+  "@svcMeshQuieterBody": {
+    "placeholders": {
+      "active": {
+        "type": "int"
+      },
+      "peak": {
+        "type": "int"
+      }
+    }
+  },
+  "svcQuiet": "{name} has gone quiet",
+  "@svcQuiet": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "svcQuietBody": "Not heard for {time}.",
+  "@svcQuietBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "svcHoursMinutes": "{hours} h {minutes} min",
+  "@svcHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "svcMinutes": "{minutes} min",
+  "@svcMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "svcReply": "Reply",
+  "svcDirectChannel": "Direct messages",
+  "svcDirectChannelSub": "Messages sent to you on the mesh.",
+  "svcChannelChannel": "Channel messages",
+  "svcChannelChannelSub": "Messages on your mesh channels.",
+  "svcFieldChannel": "Field alerts",
+  "svcFieldChannelSub": "Low battery, new nodes and favorites that go quiet.",
+  "svcFromChannel": "{sender} • channel {channel}",
+  "@svcFromChannel": {
+    "placeholders": {
+      "sender": {
+        "type": "String"
+      },
+      "channel": {
+        "type": "int"
+      }
+    }
+  },
+  "mapHeatSummary": "Coverage map: {strong} strong, {fair} fair, {weak} weak areas, from {readings} readings.",
+  "@mapHeatSummary": {
+    "placeholders": {
+      "strong": {
+        "type": "int"
+      },
+      "fair": {
+        "type": "int"
+      },
+      "weak": {
+        "type": "int"
+      },
+      "readings": {
+        "type": "int"
+      }
+    }
+  },
+  "nrTitle": "Moving to a new radio",
+  "nrSub": "{done} of {total} done",
+  "@nrSub": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "nrStep1": "With the old radio connected, create an encrypted backup here and save the text somewhere safe.",
+  "nrStep2": "Write down the old radio's region and modem preset (Radio settings → LoRa).",
+  "nrStep3": "Update the new radio's firmware to the same version or newer.",
+  "nrStep4": "Connect the new radio and set its region before anything else, so it may transmit.",
+  "nrStep5": "Paste the backup, review it and restore. Use the same password.",
+  "nrStep6": "Check Channels: names and keys should match, and send a test message to someone on each channel.",
+  "nrStep7": "The new radio has its own node ID and security key. Tell your contacts, and re-add it as an admin on any nodes you manage remotely.",
+  "nrReset": "Start over",
+  "cpLabel": "Position shared on this channel",
+  "cpHelp": "How exact your radio's position is when sent on this channel. Other channels keep their own setting.",
+  "cpNotSet": "Not set: the firmware decides",
+  "cpNone": "Don't share position",
+  "cpExact": "Exact position",
+  "cpWithin": "Within about {distance}",
+  "@cpWithin": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  }
 }

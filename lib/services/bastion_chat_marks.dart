@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../l10n/bastion_text.dart';
 
 import 'bastion_chat_message.dart';
 
@@ -23,11 +26,19 @@ abstract final class BastionChatDays {
     final days = DateTime.utc(today.year, today.month, today.day)
         .difference(DateTime.utc(day.year, day.month, day.day))
         .inDays;
-    if (days == 0) return 'Today';
-    if (days == 1) return 'Yesterday';
-    if (days > 1 && days < 7) return _weekdays[day.weekday - 1];
-    final date = '${_months[day.month - 1]} ${day.day}';
-    return day.year == today.year ? date : '$date, ${day.year}';
+    final l = BastionText.l;
+    if (days == 0) return l.svcToday;
+    if (days == 1) return l.svcYesterday;
+    final weekday = days > 1 && days < 7;
+    try {
+      return DateFormat(weekday ? 'EEEE' : day.year == today.year ? 'MMMd' : 'yMMMd', l.localeName).format(day);
+    } on Exception {
+      // Date names load with the app's localizations; outside it (some
+      // tests) they aren't there, so fall back to English.
+      if (weekday) return _weekdays[day.weekday - 1];
+      final date = '${_months[day.month - 1]} ${day.day}';
+      return day.year == today.year ? date : '$date, ${day.year}';
+    }
   }
 }
 

@@ -3354,4 +3354,181 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get frNine9Hint => 'Slope, wires, contamination';
+
+  @override
+  String get svcConnectToCheckIn => 'Connect to a radio to check in.';
+
+  @override
+  String get svcChooseContacts => 'Choose trip contacts first.';
+
+  @override
+  String get svcConnectToSos => 'Connect to a radio to send an SOS.';
+
+  @override
+  String get svcChooseSosTargets =>
+      'Choose trip contacts or an SOS channel first.';
+
+  @override
+  String svcFirmwareUnsupported(String version, String minimum, String url) {
+    return 'Your radio runs firmware $version. NOTORYX Connect needs $minimum or newer to change radio settings, so settings are read-only. Messages still work. Update at $url.';
+  }
+
+  @override
+  String svcFirmwareOutdated(String version, String recommended, String url) {
+    return 'Your radio runs firmware $version. Updating to $recommended or newer at $url turns on newer features such as sensor readings and security key checks.';
+  }
+
+  @override
+  String get svcToday => 'Today';
+
+  @override
+  String get svcYesterday => 'Yesterday';
+
+  @override
+  String get svcLowBatteryOwn => 'Your radio battery is low';
+
+  @override
+  String svcLowBattery(String name) {
+    return '$name battery is low';
+  }
+
+  @override
+  String svcLowBatteryOwnBody(int level) {
+    return 'Your radio reports $level% battery.';
+  }
+
+  @override
+  String svcLowBatteryBody(String name, int level) {
+    return '$name reports $level% battery.';
+  }
+
+  @override
+  String svcNewNode(String name) {
+    return 'New node: $name';
+  }
+
+  @override
+  String svcNewNodeBody(String name) {
+    return 'Your radio heard $name for the first time.';
+  }
+
+  @override
+  String get svcMeshQuieter => 'The mesh has gone quieter';
+
+  @override
+  String svcMeshQuieterBody(int active, int peak) {
+    return 'Heard $active nodes in the last hour, down from $peak. A repeater may be down, or you may have moved out of range.';
+  }
+
+  @override
+  String svcQuiet(String name) {
+    return '$name has gone quiet';
+  }
+
+  @override
+  String svcQuietBody(String time) {
+    return 'Not heard for $time.';
+  }
+
+  @override
+  String svcHoursMinutes(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String svcMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get svcReply => 'Reply';
+
+  @override
+  String get svcDirectChannel => 'Direct messages';
+
+  @override
+  String get svcDirectChannelSub => 'Messages sent to you on the mesh.';
+
+  @override
+  String get svcChannelChannel => 'Channel messages';
+
+  @override
+  String get svcChannelChannelSub => 'Messages on your mesh channels.';
+
+  @override
+  String get svcFieldChannel => 'Field alerts';
+
+  @override
+  String get svcFieldChannelSub =>
+      'Low battery, new nodes and favorites that go quiet.';
+
+  @override
+  String svcFromChannel(String sender, int channel) {
+    return '$sender • channel $channel';
+  }
+
+  @override
+  String mapHeatSummary(int strong, int fair, int weak, int readings) {
+    return 'Coverage map: $strong strong, $fair fair, $weak weak areas, from $readings readings.';
+  }
+
+  @override
+  String get nrTitle => 'Moving to a new radio';
+
+  @override
+  String nrSub(int done, int total) {
+    return '$done of $total done';
+  }
+
+  @override
+  String get nrStep1 =>
+      'With the old radio connected, create an encrypted backup here and save the text somewhere safe.';
+
+  @override
+  String get nrStep2 =>
+      'Write down the old radio\'s region and modem preset (Radio settings → LoRa).';
+
+  @override
+  String get nrStep3 =>
+      'Update the new radio\'s firmware to the same version or newer.';
+
+  @override
+  String get nrStep4 =>
+      'Connect the new radio and set its region before anything else, so it may transmit.';
+
+  @override
+  String get nrStep5 =>
+      'Paste the backup, review it and restore. Use the same password.';
+
+  @override
+  String get nrStep6 =>
+      'Check Channels: names and keys should match, and send a test message to someone on each channel.';
+
+  @override
+  String get nrStep7 =>
+      'The new radio has its own node ID and security key. Tell your contacts, and re-add it as an admin on any nodes you manage remotely.';
+
+  @override
+  String get nrReset => 'Start over';
+
+  @override
+  String get cpLabel => 'Position shared on this channel';
+
+  @override
+  String get cpHelp =>
+      'How exact your radio\'s position is when sent on this channel. Other channels keep their own setting.';
+
+  @override
+  String get cpNotSet => 'Not set: the firmware decides';
+
+  @override
+  String get cpNone => 'Don\'t share position';
+
+  @override
+  String get cpExact => 'Exact position';
+
+  @override
+  String cpWithin(String distance) {
+    return 'Within about $distance';
+  }
 }

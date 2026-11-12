@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../l10n/bastion_text.dart';
 
 /// Which local field alerts are on, and their thresholds.
 @immutable
@@ -152,8 +153,8 @@ class BastionFieldAlertEngine {
     }
     if (level > settings.batteryThreshold || !_active.add(key)) return null;
     return BastionFieldAlert(BastionAlertKind.lowBattery, nodeNum,
-        isLocal ? 'Your radio battery is low' : '$name battery is low',
-        isLocal ? 'Your radio reports $level% battery.' : '$name reports $level% battery.');
+        isLocal ? BastionText.l.svcLowBatteryOwn : BastionText.l.svcLowBattery(name),
+        isLocal ? BastionText.l.svcLowBatteryOwnBody(level) : BastionText.l.svcLowBatteryBody(name, level));
   }
 
   /// A node update heard live. [knownBefore] says whether this radio had
@@ -163,8 +164,8 @@ class BastionFieldAlertEngine {
     _active.remove('silent:$nodeNum');
     if (!inSession || !settings.newNode || knownBefore || nodeNum == _localNode) return null;
     if (!_active.add('new:$nodeNum')) return null;
-    return BastionFieldAlert(BastionAlertKind.newNode, nodeNum, 'New node: $name',
-        'Your radio heard $name for the first time.');
+    return BastionFieldAlert(BastionAlertKind.newNode, nodeNum, BastionText.l.svcNewNode(name),
+        BastionText.l.svcNewNodeBody(name));
   }
 
   /// Below this many nodes, normal comings and goings look like an outage.
@@ -189,8 +190,8 @@ class BastionFieldAlertEngine {
     }
     if (_meshPeak < meshDropMinimum || active * 2 > _meshPeak) return null;
     if (now.difference(start) < meshActiveWindow || !_active.add(key)) return null;
-    return BastionFieldAlert(BastionAlertKind.meshDrop, 0, 'The mesh has gone quieter',
-        'Heard $active nodes in the last hour, down from $_meshPeak. A repeater may be down, or you may have moved out of range.');
+    return BastionFieldAlert(BastionAlertKind.meshDrop, 0, BastionText.l.svcMeshQuieter,
+        BastionText.l.svcMeshQuieterBody(active, _meshPeak));
   }
 
   /// Favorites not heard for [BastionAlertSettings.silence] during this
@@ -211,13 +212,13 @@ class BastionFieldAlertEngine {
         _active.remove(key);
       } else if (_active.add(key)) {
         alerts.add(BastionFieldAlert(BastionAlertKind.favoriteSilent, f.num,
-            '${f.name} has gone quiet',
-            'Not heard for ${_describe(now.difference(since))}.'));
+            BastionText.l.svcQuiet(f.name),
+            BastionText.l.svcQuietBody(_describe(now.difference(since)))));
       }
     }
     return alerts;
   }
 
   static String _describe(Duration d) =>
-      d.inHours >= 1 ? '${d.inHours} h ${d.inMinutes % 60} min' : '${d.inMinutes} min';
+      d.inHours >= 1 ? BastionText.l.svcHoursMinutes(d.inHours, d.inMinutes % 60) : BastionText.l.svcMinutes(d.inMinutes);
 }

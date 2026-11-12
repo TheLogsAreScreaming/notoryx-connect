@@ -87,7 +87,7 @@ check(
 count("Text scale clamped or disabled", r"withClampedTextScaling|textScaleFactor|TextScaler\.(?:noScaling|linear)")
 count("FittedBox (shrinks text instead of wrapping)", r"\bFittedBox\(")
 count("TextOverflow.ellipsis (can hide text at large sizes)", r"TextOverflow\.ellipsis")
-count("Reduce-motion checks", r"disableAnimations")
+count("Reduce-motion checks", r"(?i)disableanimations")
 count("Bold-text checks", r"boldTextOf|\.boldText")
 count("Semantics widgets", r"\bSemantics\(")
 count("Live regions", r"liveRegion")
