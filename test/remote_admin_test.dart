@@ -9,6 +9,7 @@ import 'package:bastion/remote_admin_page.dart';
 import 'package:bastion/services/bastion_demo_radio.dart';
 import 'package:bastion/services/meshtastic_admin_session.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
@@ -196,7 +197,7 @@ void main() {
     testWidgets('shows the reason when it cannot open', (tester) async {
       final radio = BastionDemoRadio();
       addTearDown(radio.dispose);
-      await tester.pumpWidget(MaterialApp(home: RemoteAdminPage(radio: radio, nodeNum: 0xDE300002)));
+      await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: RemoteAdminPage(radio: radio, nodeNum: 0xDE300002)));
       expect(find.text('Remote admin isn\'t available'), findsOneWidget);
       expect(find.text('Ridge Relay'), findsOneWidget);
       expect(find.text('Check access'), findsNothing);
@@ -206,7 +207,7 @@ void main() {
       final radio = BastionDemoRadio();
       addTearDown(radio.dispose);
       final mesh = FakeMesh();
-      await tester.pumpWidget(MaterialApp(home: RemoteAdminPage(
+      await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: RemoteAdminPage(
         radio: radio, nodeNum: 0xDE300002, openSession: () => remoteSession(mesh))));
 
       await tester.tap(find.text('Check access'));
@@ -229,7 +230,7 @@ void main() {
       final radio = BastionDemoRadio();
       addTearDown(radio.dispose);
       final mesh = FakeMesh()..authorized = false;
-      await tester.pumpWidget(MaterialApp(home: RemoteAdminPage(
+      await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: RemoteAdminPage(
         radio: radio, nodeNum: 0xDE300002, openSession: () => remoteSession(mesh))));
       await tester.tap(find.text('Check access'));
       await tester.pumpAndSettle();
@@ -241,7 +242,7 @@ void main() {
       final radio = BastionDemoRadio();
       addTearDown(radio.dispose);
       final mesh = FakeMesh();
-      await tester.pumpWidget(MaterialApp(home: RemoteAdminPage(
+      await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: RemoteAdminPage(
         radio: radio, nodeNum: 0xDE300002, openSession: () => remoteSession(mesh))));
       await tester.tap(find.text('Check access'));
       await tester.pumpAndSettle();

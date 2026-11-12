@@ -196,6 +196,34 @@ void main() {
     }
   });
 
+  testWidgets('SALUTE form labels are translated, but the report stays English', (tester) async {
+    tester.view.physicalSize = const Size(390, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      locale: const Locale('es'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: FieldToolsPage(radio: radio),
+    ));
+    await tester.pump();
+    await tester.tap(find.text('Plantillas de emergencia y reporte'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('report-SALUTE')));
+    await tester.pumpAndSettle();
+    // On the button behind the dialog and as the dialog title.
+    expect(find.text('Informe SALUTE'), findsNWidgets(2));
+    expect(find.text('S. Tamaño'), findsOneWidget);
+    await tester.enterText(find.byKey(const ValueKey('report-field-S')), '3');
+    await tester.pump();
+    await tester.tap(find.text('Usar informe'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('SALUTE | S: 3'), findsOneWidget);
+  });
+
   testWidgets('the Tools page is translated', (tester) async {
     const locale = Locale('es');
     tester.platformDispatcher.localeTestValue = locale;

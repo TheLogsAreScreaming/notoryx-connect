@@ -115,7 +115,7 @@ class _FieldToolsPageState extends State<FieldToolsPage> {
               Wrap(spacing: 8, children: [for (final (label, body) in templates)
                 OutlinedButton(onPressed: () => setState(() => message.text = body), child: Text(label)),
                 for (final r in BastionReportTemplate.all)
-                  OutlinedButton(key: ValueKey('report-${r.tag}'), onPressed: () => fillReport(r), child: Text(r.title))]),
+                  OutlinedButton(key: ValueKey('report-${r.tag}'), onPressed: () => fillReport(r), child: Text(switch (r.tag) { 'SALUTE' => l.frSaluteTitle, '9LINE' => l.frNineTitle, _ => r.title }))]),
               TextField(controller: message, minLines: 3, maxLines: 6,
                 decoration: InputDecoration(labelText: l.frMessageField)),
               DropdownButtonFormField<int>(initialValue: channels.any((c) => c.index == channel) ? channel : null,
@@ -178,6 +178,27 @@ class _ReportDialog extends StatefulWidget {
 }
 
 class _ReportDialogState extends State<_ReportDialog> {
+  /// The form's labels in the phone's language. The report text sent on
+  /// air keeps the standard English codes.
+  (String, String) _text(AppLocalizations l, BastionReportField f) => switch ((widget.template.tag, f.code)) {
+        ('SALUTE', 'S') => (l.frSaluteS, l.frSaluteSHint),
+        ('SALUTE', 'A') => (l.frSaluteA, l.frSaluteAHint),
+        ('SALUTE', 'L') => (l.frSaluteL, l.frSaluteLHint),
+        ('SALUTE', 'U') => (l.frSaluteU, l.frSaluteUHint),
+        ('SALUTE', 'T') => (l.frSaluteT, l.frSaluteTHint),
+        ('SALUTE', 'E') => (l.frSaluteE, l.frSaluteEHint),
+        ('9LINE', '1') => (l.frNine1, l.frNine1Hint),
+        ('9LINE', '2') => (l.frNine2, l.frNine2Hint),
+        ('9LINE', '3') => (l.frNine3, l.frNine3Hint),
+        ('9LINE', '4') => (l.frNine4, l.frNine4Hint),
+        ('9LINE', '5') => (l.frNine5, l.frNine5Hint),
+        ('9LINE', '6') => (l.frNine6, l.frNine6Hint),
+        ('9LINE', '7') => (l.frNine7, l.frNine7Hint),
+        ('9LINE', '8') => (l.frNine8, l.frNine8Hint),
+        ('9LINE', '9') => (l.frNine9, l.frNine9Hint),
+        _ => (f.label, f.hint),
+      };
+
   late final Map<String, TextEditingController> fields = {
     for (final f in widget.template.fields) f.code: TextEditingController(text: _prefill(f)),
   };
@@ -202,11 +223,11 @@ class _ReportDialogState extends State<_ReportDialog> {
     final scheme = Theme.of(context).colorScheme;
     final l = AppLocalizations.of(context);
     return AlertDialog(
-      title: Text(widget.template.title),
+      title: Text(switch (widget.template.tag) { 'SALUTE' => l.frSaluteTitle, '9LINE' => l.frNineTitle, _ => widget.template.title }),
       content: SingleChildScrollView(child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
         for (final f in widget.template.fields)
           TextField(key: ValueKey('report-field-${f.code}'), controller: fields[f.code],
-            decoration: InputDecoration(labelText: '${f.code}. ${f.label}', hintText: f.hint),
+            decoration: InputDecoration(labelText: '${f.code}. ${_text(l, f).$1}', hintText: _text(l, f).$2),
             onChanged: (_) => setState(() {})),
         const SizedBox(height: 12),
         Text(over ? l.frBytesOver(bytes, BastionReportTemplate.maxBytes)

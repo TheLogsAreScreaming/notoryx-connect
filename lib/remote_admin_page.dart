@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:protobuf/protobuf.dart';
 
+import 'l10n/generated/app_localizations.dart';
+
 import 'generated/meshtastic/admin.pb.dart';
 import 'generated/meshtastic/config.pb.dart';
 import 'generated/meshtastic/mesh.pb.dart';
@@ -97,6 +99,17 @@ class _RemoteAdminPageState extends State<RemoteAdminPage> {
     return _hexId;
   }
 
+  AppLocalizations get l => AppLocalizations.of(context);
+
+  /// The section's name in the phone's language; LoRa stays as it is.
+  String _sectionName(RemoteConfigSection s) => switch (s.type) {
+        AdminMessage_ConfigType.DEVICE_CONFIG => l.rsDevice,
+        AdminMessage_ConfigType.POSITION_CONFIG => l.rsPosition,
+        AdminMessage_ConfigType.POWER_CONFIG => l.raPower,
+        AdminMessage_ConfigType.DISPLAY_CONFIG => l.raDisplay,
+        _ => s.label,
+      };
+
   String get _hexId => '!${widget.nodeNum.toRadixString(16).padLeft(8, '0')}';
 
   Future<T?> _call<T>(Future<T> Function(MeshtasticAdminSession s) action) async {
@@ -141,17 +154,16 @@ class _RemoteAdminPageState extends State<RemoteAdminPage> {
     final draft = _draft;
     if (section == null || draft == null) return;
     if (section.risky && !await _confirm(
-      'Change LoRa settings remotely?',
-      'If the node ends up on a different region, preset or frequency from the rest of the mesh, '
-      'it can no longer be reached and someone will have to fix it in person.',
-      'Save anyway',
+      l.raLoraQ,
+      l.raLoraBody,
+      l.raSaveAnyway,
     )) {
       return;
     }
     final saved = await _call((s) async { await s.setConfig(section.wrap(draft)); return true; });
     if (saved == true) {
       setState(() => _dirty = false);
-      _toast('${section.label} settings sent. The node may restart to apply them.');
+      _toast(l.raSent(_sectionName(section)));
     }
   }
 
@@ -169,17 +181,16 @@ class _RemoteAdminPageState extends State<RemoteAdminPage> {
     final saved = await _call((s) async { await s.setOwner(updated); return true; });
     if (saved == true) {
       setState(() => _owner = updated);
-      _toast('Name sent to the node.');
+      _toast(l.raNameSent);
     }
   }
 
   Future<void> _reboot() async {
-    if (!await _confirm('Restart $_nodeName?',
-        'The node goes off the mesh for a short while as it restarts.', 'Restart')) {
+    if (!await _confirm(l.raRestartQ(_nodeName), l.raRestartBody, l.raRestart)) {
       return;
     }
     final sent = await _call((s) async { await s.reboot(); return true; });
-    if (sent == true) _toast('Restart requested.');
+    if (sent == true) _toast(l.raRestartRequested);
   }
 
   Future<bool> _confirm(String title, String body, String action) async =>
@@ -189,7 +200,7 @@ class _RemoteAdminPageState extends State<RemoteAdminPage> {
           title: Text(title),
           content: Text(body),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(dialogContext, false), child: const Text('Cancel')),
+            TextButton(onPressed: () => Navigator.pop(dialogContext, false), child: Text(l.commonCancel)),
             FilledButton(onPressed: () => Navigator.pop(dialogContext, true), child: Text(action)),
           ],
         ),
@@ -205,38 +216,38 @@ class _RemoteAdminPageState extends State<RemoteAdminPage> {
       onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
         final navigator = Navigator.of(context);
-        if (await _confirm('Discard changes?', 'Your edits haven\'t been sent to the node.', 'Discard')) {
+        if (await _confirm(l.raDiscardQ, l.raDiscardBody, l.raDiscard)) {
           setState(() => _dirty = false);
           navigator.pop();
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Remote admin')),
+        appBar: AppBar(title: Text(l.raTitle)),
         body: ListView(padding: NxSpace.page, children: [
           NxPageHeader(
             title: _nodeName,
-            subtitle: 'Change this node\'s settings over the mesh. Each request uses airtime and can take up to a minute.',
+            subtitle: l.raIntro,
           ),
           if (_openProblem != null)
-            NxBanner(tone: NxTone.warning, title: 'Remote admin isn\'t available', message: _openProblem!)
+            NxBanner(tone: NxTone.warning, title: l.raUnavailable, message: _openProblem!)
           else ...[
             _AdminKeyCard(publicKey: widget.radio.localPublicKey, nodeName: _nodeName),
             if (_working) Padding(
               padding: const EdgeInsets.symmetric(vertical: NxSpace.xs),
-              child: Semantics(label: 'Waiting for the node', child: const LinearProgressIndicator()),
+              child: Semantics(label: l.raWaiting, child: const LinearProgressIndicator()),
             ),
             if (_error != null) NxBanner(tone: NxTone.danger, message: _error!),
-            NxSectionLabel('Access'),
+            NxSectionLabel(l.raAccess),
             if (_metadata == null)
               NxGroupCard(padding: const EdgeInsets.all(NxSpace.md), children: [
-                const Text('Ask the node for its details. If it answers, your radio is allowed to manage it.'),
+                Text(l.raAccessHint),
                 const SizedBox(height: NxSpace.sm),
                 Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: FilledButton.icon(
                     onPressed: _working ? null : _checkAccess,
                     icon: const Icon(Icons.admin_panel_settings_outlined),
-                    label: const Text('Check access'),
+                    label: Text(l.raCheckAccess),
                   ),
                 ),
               ])
@@ -244,36 +255,37 @@ class _RemoteAdminPageState extends State<RemoteAdminPage> {
               NxGroupCard(children: [
                 ListTile(
                   leading: const Icon(Icons.verified_user_outlined),
-                  title: const Text('Access confirmed'),
-                  subtitle: Text('Firmware ${_metadata!.firmwareVersion.isEmpty ? 'unknown' : _metadata!.firmwareVersion}'
-                      ' · ${_metadata!.role.name.replaceAll('_', ' ').toLowerCase()}'),
+                  title: Text(l.raAccessConfirmed),
+                  subtitle: Text(l.raFirmware(
+                      _metadata!.firmwareVersion.isEmpty ? l.raUnknown : _metadata!.firmwareVersion,
+                      _metadata!.role.name.replaceAll('_', ' ').toLowerCase())),
                 ),
                 if (_owner != null) ListTile(
                   leading: const Icon(Icons.badge_outlined),
-                  title: Text(_owner!.longName.isEmpty ? 'No name' : _owner!.longName),
-                  subtitle: Text('Short name ${_owner!.shortName.isEmpty ? '—' : _owner!.shortName}'),
-                  trailing: TextButton(onPressed: _working ? null : _editOwner, child: const Text('Rename')),
+                  title: Text(_owner!.longName.isEmpty ? l.raNoName : _owner!.longName),
+                  subtitle: Text(l.raShortName(_owner!.shortName.isEmpty ? '—' : _owner!.shortName)),
+                  trailing: TextButton(onPressed: _working ? null : _editOwner, child: Text(l.raRename)),
                 ),
                 ListTile(
                   leading: const Icon(Icons.restart_alt),
-                  title: const Text('Restart node'),
+                  title: Text(l.raRestartNode),
                   onTap: _working ? null : _reboot,
                 ),
               ]),
-              NxSectionLabel('Settings'),
+              NxSectionLabel(l.raSettings),
               Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
                 for (final s in RemoteConfigSection.all)
                   ChoiceChip(
-                    label: Text(s.label),
+                    label: Text(_sectionName(s)),
                     selected: identical(s, section),
                     onSelected: _working || _dirty ? null : (_) => _openSection(s),
                   ),
               ]),
               if (section != null && draft != null) ...[
                 if (section.risky)
-                  const NxBanner(
+                  NxBanner(
                     tone: NxTone.warning,
-                    message: 'A wrong LoRa setting can cut this node off the mesh. Change it only if you can reach the node in person.',
+                    message: l.raLoraWarning,
                   ),
                 NxGroupCard(padding: const EdgeInsets.all(NxSpace.sm), children: [
                   ProtoFieldList(
@@ -286,12 +298,12 @@ class _RemoteAdminPageState extends State<RemoteAdminPage> {
                 Row(children: [
                   Expanded(child: FilledButton(
                     onPressed: _working || !_dirty ? null : _saveSection,
-                    child: Text('Send ${section.label} settings'),
+                    child: Text(l.raSend(_sectionName(section))),
                   )),
                   const SizedBox(width: NxSpace.xs),
                   OutlinedButton(
                     onPressed: _working || !_dirty ? null : () => _openSection(section),
-                    child: const Text('Undo'),
+                    child: Text(l.raUndo),
                   ),
                 ]),
               ],
@@ -312,26 +324,27 @@ class _AdminKeyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final key = publicKey;
     final encoded = key == null ? null : base64Encode(key);
     return NxGroupCard(padding: const EdgeInsets.all(NxSpace.md), children: [
-      Text('Your radio\'s admin key', style: Theme.of(context).textTheme.titleSmall),
+      Text(l.raKeyTitle, style: Theme.of(context).textTheme.titleSmall),
       const SizedBox(height: NxSpace.xxs),
-      Text('Before $nodeName will accept changes, its owner adds this key under '
-          'Radio settings → Security → Admin key, using any Meshtastic app.'),
+      Text(l.raKeyBody(nodeName)),
       const SizedBox(height: NxSpace.xs),
       if (encoded == null)
-        const Text('Your radio hasn\'t reported its key yet.')
+        Text(l.raNoKey)
       else
         Row(children: [
           Expanded(child: SelectableText(encoded, style: const TextStyle(fontFamily: 'monospace'))),
           IconButton(
-            tooltip: 'Copy admin key',
+            tooltip: l.raCopyKey,
             icon: const Icon(Icons.copy),
             onPressed: () async {
               final messenger = ScaffoldMessenger.of(context);
+              final copied = l.raKeyCopied;
               await Clipboard.setData(ClipboardData(text: encoded));
-              messenger.showSnackBar(const SnackBar(content: Text('Admin key copied.')));
+              messenger.showSnackBar(SnackBar(content: Text(copied)));
             },
           ),
         ]),
@@ -362,32 +375,32 @@ class _OwnerDialogState extends State<_OwnerDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-        title: const Text('Rename node'),
+        title: Text(AppLocalizations.of(context).raRenameTitle),
         content: Form(
           key: _form,
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             TextFormField(
               controller: _long,
-              decoration: const InputDecoration(labelText: 'Long name'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context).rsLongName),
               validator: (v) => BastionNodeIdentityValidation.longNameError(v ?? ''),
             ),
             const SizedBox(height: NxSpace.sm),
             TextFormField(
               controller: _short,
-              decoration: const InputDecoration(labelText: 'Short name'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context).rsShortName),
               validator: (v) => BastionNodeIdentityValidation.shortNameError(v ?? ''),
             ),
           ]),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text(AppLocalizations.of(context).commonCancel)),
           FilledButton(
             onPressed: () {
               if (_form.currentState!.validate()) {
                 Navigator.pop(context, (_long.text.trim(), _short.text.trim()));
               }
             },
-            child: const Text('Send'),
+            child: Text(AppLocalizations.of(context).raSendButton),
           ),
         ],
       );

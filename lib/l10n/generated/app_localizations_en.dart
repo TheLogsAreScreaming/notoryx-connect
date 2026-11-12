@@ -3124,4 +3124,234 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rbReview => 'Review and restore';
+
+  @override
+  String get raPower => 'Power';
+
+  @override
+  String get raDisplay => 'Display';
+
+  @override
+  String get raLoraQ => 'Change LoRa settings remotely?';
+
+  @override
+  String get raLoraBody =>
+      'If the node ends up on a different region, preset or frequency from the rest of the mesh, it can no longer be reached and someone will have to fix it in person.';
+
+  @override
+  String get raSaveAnyway => 'Save anyway';
+
+  @override
+  String raSent(String section) {
+    return '$section settings sent. The node may restart to apply them.';
+  }
+
+  @override
+  String get raNameSent => 'Name sent to the node.';
+
+  @override
+  String raRestartQ(String name) {
+    return 'Restart $name?';
+  }
+
+  @override
+  String get raRestartBody =>
+      'The node goes off the mesh for a short while as it restarts.';
+
+  @override
+  String get raRestart => 'Restart';
+
+  @override
+  String get raRestartRequested => 'Restart requested.';
+
+  @override
+  String get raDiscardQ => 'Discard changes?';
+
+  @override
+  String get raDiscardBody => 'Your edits haven\'t been sent to the node.';
+
+  @override
+  String get raDiscard => 'Discard';
+
+  @override
+  String get raTitle => 'Remote admin';
+
+  @override
+  String get raIntro =>
+      'Change this node\'s settings over the mesh. Each request uses airtime and can take up to a minute.';
+
+  @override
+  String get raUnavailable => 'Remote admin isn\'t available';
+
+  @override
+  String get raWaiting => 'Waiting for the node';
+
+  @override
+  String get raAccess => 'Access';
+
+  @override
+  String get raAccessHint =>
+      'Ask the node for its details. If it answers, your radio is allowed to manage it.';
+
+  @override
+  String get raCheckAccess => 'Check access';
+
+  @override
+  String get raAccessConfirmed => 'Access confirmed';
+
+  @override
+  String raFirmware(String version, String role) {
+    return 'Firmware $version · $role';
+  }
+
+  @override
+  String get raUnknown => 'unknown';
+
+  @override
+  String get raNoName => 'No name';
+
+  @override
+  String raShortName(String name) {
+    return 'Short name $name';
+  }
+
+  @override
+  String get raRename => 'Rename';
+
+  @override
+  String get raRestartNode => 'Restart node';
+
+  @override
+  String get raSettings => 'Settings';
+
+  @override
+  String get raLoraWarning =>
+      'A wrong LoRa setting can cut this node off the mesh. Change it only if you can reach the node in person.';
+
+  @override
+  String raSend(String section) {
+    return 'Send $section settings';
+  }
+
+  @override
+  String get raUndo => 'Undo';
+
+  @override
+  String get raKeyTitle => 'Your radio\'s admin key';
+
+  @override
+  String raKeyBody(String name) {
+    return 'Before $name will accept changes, its owner adds this key under Radio settings → Security → Admin key, using any Meshtastic app.';
+  }
+
+  @override
+  String get raNoKey => 'Your radio hasn\'t reported its key yet.';
+
+  @override
+  String get raCopyKey => 'Copy admin key';
+
+  @override
+  String get raKeyCopied => 'Admin key copied.';
+
+  @override
+  String get raRenameTitle => 'Rename node';
+
+  @override
+  String get raSendButton => 'Send';
+
+  @override
+  String get frSaluteTitle => 'SALUTE report';
+
+  @override
+  String get frNineTitle => '9-Line medical evacuation';
+
+  @override
+  String get frSaluteS => 'Size';
+
+  @override
+  String get frSaluteSHint => 'How many people or vehicles';
+
+  @override
+  String get frSaluteA => 'Activity';
+
+  @override
+  String get frSaluteAHint => 'What they are doing';
+
+  @override
+  String get frSaluteL => 'Location';
+
+  @override
+  String get frSaluteLHint => 'Where they are';
+
+  @override
+  String get frSaluteU => 'Unit';
+
+  @override
+  String get frSaluteUHint => 'Who they are, uniform or markings';
+
+  @override
+  String get frSaluteT => 'Time';
+
+  @override
+  String get frSaluteTHint => 'When you saw them';
+
+  @override
+  String get frSaluteE => 'Equipment';
+
+  @override
+  String get frSaluteEHint => 'What they have with them';
+
+  @override
+  String get frNine1 => 'Pickup location';
+
+  @override
+  String get frNine1Hint => 'Coordinates or landmark';
+
+  @override
+  String get frNine2 => 'Radio frequency and callsign';
+
+  @override
+  String get frNine2Hint => 'How to reach you';
+
+  @override
+  String get frNine3 => 'Patients by urgency';
+
+  @override
+  String get frNine3Hint => 'For example 1 urgent, 2 routine';
+
+  @override
+  String get frNine4 => 'Special equipment';
+
+  @override
+  String get frNine4Hint => 'None, hoist, extraction, ventilator';
+
+  @override
+  String get frNine5 => 'Patients by type';
+
+  @override
+  String get frNine5Hint => 'Litter or walking';
+
+  @override
+  String get frNine6 => 'Security at pickup';
+
+  @override
+  String get frNine6Hint => 'No threat, possible, or armed escort';
+
+  @override
+  String get frNine7 => 'How the site is marked';
+
+  @override
+  String get frNine7Hint => 'Panel, smoke, light, or none';
+
+  @override
+  String get frNine8 => 'Patient status';
+
+  @override
+  String get frNine8Hint => 'Who the patients are';
+
+  @override
+  String get frNine9 => 'Hazards and terrain';
+
+  @override
+  String get frNine9Hint => 'Slope, wires, contamination';
 }

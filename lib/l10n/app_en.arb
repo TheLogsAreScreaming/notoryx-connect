@@ -2158,5 +2158,121 @@
   "rbTextHint": "Paste a saved encrypted backup to restore",
   "rbCopied": "Encrypted backup copied. Save it in a text file.",
   "rbCopy": "Copy encrypted backup",
-  "rbReview": "Review and restore"
+  "rbReview": "Review and restore",
+  "raPower": "Power",
+  "raDisplay": "Display",
+  "raLoraQ": "Change LoRa settings remotely?",
+  "raLoraBody": "If the node ends up on a different region, preset or frequency from the rest of the mesh, it can no longer be reached and someone will have to fix it in person.",
+  "raSaveAnyway": "Save anyway",
+  "raSent": "{section} settings sent. The node may restart to apply them.",
+  "@raSent": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "raNameSent": "Name sent to the node.",
+  "raRestartQ": "Restart {name}?",
+  "@raRestartQ": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "raRestartBody": "The node goes off the mesh for a short while as it restarts.",
+  "raRestart": "Restart",
+  "raRestartRequested": "Restart requested.",
+  "raDiscardQ": "Discard changes?",
+  "raDiscardBody": "Your edits haven't been sent to the node.",
+  "raDiscard": "Discard",
+  "raTitle": "Remote admin",
+  "raIntro": "Change this node's settings over the mesh. Each request uses airtime and can take up to a minute.",
+  "raUnavailable": "Remote admin isn't available",
+  "raWaiting": "Waiting for the node",
+  "raAccess": "Access",
+  "raAccessHint": "Ask the node for its details. If it answers, your radio is allowed to manage it.",
+  "raCheckAccess": "Check access",
+  "raAccessConfirmed": "Access confirmed",
+  "raFirmware": "Firmware {version} · {role}",
+  "@raFirmware": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "raUnknown": "unknown",
+  "raNoName": "No name",
+  "raShortName": "Short name {name}",
+  "@raShortName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "raRename": "Rename",
+  "raRestartNode": "Restart node",
+  "raSettings": "Settings",
+  "raLoraWarning": "A wrong LoRa setting can cut this node off the mesh. Change it only if you can reach the node in person.",
+  "raSend": "Send {section} settings",
+  "@raSend": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "raUndo": "Undo",
+  "raKeyTitle": "Your radio's admin key",
+  "raKeyBody": "Before {name} will accept changes, its owner adds this key under Radio settings → Security → Admin key, using any Meshtastic app.",
+  "@raKeyBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "raNoKey": "Your radio hasn't reported its key yet.",
+  "raCopyKey": "Copy admin key",
+  "raKeyCopied": "Admin key copied.",
+  "raRenameTitle": "Rename node",
+  "raSendButton": "Send",
+  "frSaluteTitle": "SALUTE report",
+  "frNineTitle": "9-Line medical evacuation",
+  "frSaluteS": "Size",
+  "frSaluteSHint": "How many people or vehicles",
+  "frSaluteA": "Activity",
+  "frSaluteAHint": "What they are doing",
+  "frSaluteL": "Location",
+  "frSaluteLHint": "Where they are",
+  "frSaluteU": "Unit",
+  "frSaluteUHint": "Who they are, uniform or markings",
+  "frSaluteT": "Time",
+  "frSaluteTHint": "When you saw them",
+  "frSaluteE": "Equipment",
+  "frSaluteEHint": "What they have with them",
+  "frNine1": "Pickup location",
+  "frNine1Hint": "Coordinates or landmark",
+  "frNine2": "Radio frequency and callsign",
+  "frNine2Hint": "How to reach you",
+  "frNine3": "Patients by urgency",
+  "frNine3Hint": "For example 1 urgent, 2 routine",
+  "frNine4": "Special equipment",
+  "frNine4Hint": "None, hoist, extraction, ventilator",
+  "frNine5": "Patients by type",
+  "frNine5Hint": "Litter or walking",
+  "frNine6": "Security at pickup",
+  "frNine6Hint": "No threat, possible, or armed escort",
+  "frNine7": "How the site is marked",
+  "frNine7Hint": "Panel, smoke, light, or none",
+  "frNine8": "Patient status",
+  "frNine8Hint": "Who the patients are",
+  "frNine9": "Hazards and terrain",
+  "frNine9Hint": "Slope, wires, contamination"
 }
