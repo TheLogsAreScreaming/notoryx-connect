@@ -2417,5 +2417,22 @@
         "type": "int"
       }
     }
+  },
+  "mapHeatSummary": "Coverage map: {strong} strong, {fair} fair, {weak} weak areas, from {readings} readings.",
+  "@mapHeatSummary": {
+    "placeholders": {
+      "strong": {
+        "type": "int"
+      },
+      "fair": {
+        "type": "int"
+      },
+      "weak": {
+        "type": "int"
+      },
+      "readings": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'package:bastion/services/bastion_field_log.dart';
+import 'dart:convert';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/map_page.dart';
 import 'package:bastion/services/bastion_coverage_grid.dart';
@@ -82,6 +84,43 @@ void main() {
       expect(record.hasPosition, isFalse);
       expect(record.toJson().containsKey('lat'), isFalse);
     });
+  });
+
+  testWidgets('the heatmap is summarised in words', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.withData({
+      'bastion.field_log.v1': jsonEncode([
+        for (final r in [
+          reading(35.2001, -80.8001, 5),
+          reading(35.3001, -80.8001, -5),
+          reading(35.4001, -80.8001, -15),
+          reading(35.4002, -80.8002, -15),
+        ])
+          {...r, 'time': DateTime.now().toUtc().toIso8601String()},
+      ]),
+    });
+    await BastionFieldLog.instance.load();
+    addTearDown(() async {
+      // The log is shared, so leave it empty for the next test.
+      SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
+      await BastionFieldLog.instance.load();
+    });
+    expect(BastionFieldLog.instance.records, hasLength(4));
+    tester.view.physicalSize = const Size(600, 1000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      theme: NotoryxTheme.build(Brightness.dark),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(body: MapPage(radio: radio)),
+    ));
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('map-heatmap')));
+    await tester.pump();
+    expect(find.text('Coverage map: 1 strong, 1 fair, 1 weak areas, from 4 readings.'), findsOneWidget);
   });
 
   testWidgets('heatmap and remembered buttons explain an empty map', (tester) async {

@@ -3466,4 +3466,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String svcFromChannel(String sender, int channel) {
     return '$sender • channel $channel';
   }
+
+  @override
+  String mapHeatSummary(int strong, int fair, int weak, int readings) {
+    return 'Coverage map: $strong strong, $fair fair, $weak weak areas, from $readings readings.';
+  }
 }

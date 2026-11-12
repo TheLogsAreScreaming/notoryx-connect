@@ -955,5 +955,6 @@
   "svcChannelChannelSub": "Mensajes en tus canales de la malla.",
   "svcFieldChannel": "Avisos de campo",
   "svcFieldChannelSub": "Batería baja, nodos nuevos y favoritos que quedan en silencio.",
-  "svcFromChannel": "{sender} • canal {channel}"
+  "svcFromChannel": "{sender} • canal {channel}",
+  "mapHeatSummary": "Mapa de cobertura: {strong} zonas fuertes, {fair} regulares y {weak} débiles, de {readings} lecturas."
 }
