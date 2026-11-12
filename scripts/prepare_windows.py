@@ -3,6 +3,8 @@ import re
 from pathlib import Path
 
 NAME = 'NOTORYX Connect'
+# The .exe name; flutter create derives 'bastion' from the old project name.
+BINARY = 'notoryx_connect'
 
 main = Path('windows/runner/main.cpp')
 text, count = re.subn(r'window\.Create\(L"[^"]*"', f'window.Create(L"{NAME}"', main.read_text())
@@ -16,6 +18,10 @@ for field in ('FileDescription', 'ProductName'):
     text, count = re.subn(rf'(VALUE "{field}", )"[^"]*"', rf'\1"{NAME}"', text)
     if count != 1:
         raise SystemExit(f'Could not set {field}')
+for field, value in (('InternalName', BINARY), ('OriginalFilename', BINARY + '.exe')):
+    text, count = re.subn(rf'(VALUE "{field}", )"[^"]*"', rf'\1"{value}"', text)
+    if count != 1:
+        raise SystemExit(f'Could not set {field}')
 resource.write_text(text)
 
 # local_auth_windows and geolocator_windows build with the old /await
@@ -23,6 +29,10 @@ resource.write_text(text)
 # once those plugins move to C++20 coroutines.
 cmake = Path('windows/CMakeLists.txt')
 text = cmake.read_text()
+text, count = re.subn(r'^set\(BINARY_NAME "[^"]*"\)', f'set(BINARY_NAME "{BINARY}")', text, count=1, flags=re.M)
+if count != 1:
+    raise SystemExit('Could not set BINARY_NAME in windows/CMakeLists.txt')
+cmake.write_text(text)
 flag = 'add_compile_definitions(_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS)'
 if flag not in text:
     text, count = re.subn(r'^(project\([^)]*\)\n)', lambda m: m.group(1) + flag + '\n', text, count=1, flags=re.M)
