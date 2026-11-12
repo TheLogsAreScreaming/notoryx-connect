@@ -856,5 +856,6 @@
   "rbTextHint": "Pega una copia cifrada guardada para restaurarla",
   "rbCopied": "Copia cifrada copiada. Guárdala en un archivo de texto.",
   "rbCopy": "Copiar copia cifrada",
-  "rbReview": "Revisar y restaurar"
+  "rbReview": "Revisar y restaurar",
+  "mapHeatSummary": "Mapa de cobertura: {strong} zonas fuertes, {fair} regulares y {weak} débiles, de {readings} lecturas."
 }

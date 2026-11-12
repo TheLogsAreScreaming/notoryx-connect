@@ -2158,5 +2158,22 @@
   "rbTextHint": "Paste a saved encrypted backup to restore",
   "rbCopied": "Encrypted backup copied. Save it in a text file.",
   "rbCopy": "Copy encrypted backup",
-  "rbReview": "Review and restore"
+  "rbReview": "Review and restore",
+  "mapHeatSummary": "Coverage map: {strong} strong, {fair} fair, {weak} weak areas, from {readings} readings.",
+  "@mapHeatSummary": {
+    "placeholders": {
+      "strong": {
+        "type": "int"
+      },
+      "fair": {
+        "type": "int"
+      },
+      "weak": {
+        "type": "int"
+      },
+      "readings": {
+        "type": "int"
+      }
+    }
+  }
 }

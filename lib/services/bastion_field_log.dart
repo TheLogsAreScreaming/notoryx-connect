@@ -16,6 +16,9 @@ class BastionFieldLog extends ChangeNotifier {
   bool recording = false;
 
   Future<void> load() async {
+    // Replace, not add to, what is in memory, so loading again can't double records.
+    _records.clear();
+    error = null;
     try {
       final raw = await SharedPreferencesAsync().getString('bastion.field_log.v1');
       if (raw != null) {

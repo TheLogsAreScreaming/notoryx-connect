@@ -34,7 +34,7 @@ The scanner matches text patterns, so a flagged line is a place to look, not a c
 | Text scaling clamped or disabled | 0 | Good: nothing blocks system text size |
 | `FittedBox` | 0 | Good: text isn't shrunk to fit |
 | `TextOverflow.ellipsis` | 4 in 4 files | Can cut text off; reviewed below |
-| Reduce-motion checks | 0 | See known problems |
+| Reduce-motion checks | 1 | All animation goes through `NxMotion.of`, which turns it off |
 | Bold-text checks | 0 | Whether bold text works hasn't been checked |
 | Live regions | 11 in 10 files | Some status changes are announced |
 | `Text` not translated | 277 in 30 files | Untranslated screens are English only |
@@ -51,6 +51,9 @@ The main tabs have large-text checks in the older test. Contrast for all themes 
 
 ## Fixed in this audit
 
+- **Heatmap (beta.10):** when it's on, the map header says in words how many areas are strong, fair and weak, and from how many readings. Screen readers announce it.
+- **Reduce motion (beta.10):** already handled. Every animation uses `NxMotion.of`, which returns no motion when the system asks; the first scan missed it because it looked for the wrong capitalisation. The SOS button's 2-second fill is timing for the hold, not decoration, and screen readers get a confirm dialog instead of the hold.
+
 - Trip page dropdowns overflowed the screen with long option text. They now use the full width.
 
 ## Reviewed and left as they are
@@ -61,9 +64,9 @@ The main tabs have large-text checks in the older test. Contrast for all themes 
 ## Known problems
 
 1. **The map is visual by nature.** Pins are labelled for screen readers, but there's no non-visual way to explore positions apart from the Nodes list.
-2. **The new heatmap can't be read by a screen reader.** Its squares have no labels. The numbers are visible on screen only.
+2. **The heatmap's squares can't be explored one by one.** The header now summarises them in words, but you can't find where a weak area is without looking.
 3. **Hold-to-send SOS.** The Home button is a 2-second hold, with a confirm step. Whether it works well with TalkBack and VoiceOver is the most important thing to test.
-4. **Reduce motion isn't read anywhere.** The app has little animation (the SOS hold progress and theme cards), but this hasn't been reviewed on a phone.
+4. **Reduce motion** is handled in code but hasn't been checked on a phone.
 5. **Untranslated screens** stay English, including Field records, Radio settings and backups.
 
 ## Next

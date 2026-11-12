@@ -5252,6 +5252,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Review and restore'**
   String get rbReview;
+
+  /// No description provided for @mapHeatSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Coverage map: {strong} strong, {fair} fair, {weak} weak areas, from {readings} readings.'**
+  String mapHeatSummary(int strong, int fair, int weak, int readings);
 }
 
 class _AppLocalizationsDelegate

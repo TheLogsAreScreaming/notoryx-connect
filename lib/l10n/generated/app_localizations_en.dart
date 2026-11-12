@@ -3124,4 +3124,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rbReview => 'Review and restore';
+
+  @override
+  String mapHeatSummary(int strong, int fair, int weak, int readings) {
+    return 'Coverage map: $strong strong, $fair fair, $weak weak areas, from $readings readings.';
+  }
 }

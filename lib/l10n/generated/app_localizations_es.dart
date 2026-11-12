@@ -3152,4 +3152,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get rbReview => 'Revisar y restaurar';
+
+  @override
+  String mapHeatSummary(int strong, int fair, int weak, int readings) {
+    return 'Mapa de cobertura: $strong zonas fuertes, $fair regulares y $weak débiles, de $readings lecturas.';
+  }
 }
