@@ -3124,4 +3124,116 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rbReview => 'Review and restore';
+
+  @override
+  String get svcConnectToCheckIn => 'Connect to a radio to check in.';
+
+  @override
+  String get svcChooseContacts => 'Choose trip contacts first.';
+
+  @override
+  String get svcConnectToSos => 'Connect to a radio to send an SOS.';
+
+  @override
+  String get svcChooseSosTargets =>
+      'Choose trip contacts or an SOS channel first.';
+
+  @override
+  String svcFirmwareUnsupported(String version, String minimum, String url) {
+    return 'Your radio runs firmware $version. NOTORYX Connect needs $minimum or newer to change radio settings, so settings are read-only. Messages still work. Update at $url.';
+  }
+
+  @override
+  String svcFirmwareOutdated(String version, String recommended, String url) {
+    return 'Your radio runs firmware $version. Updating to $recommended or newer at $url turns on newer features such as sensor readings and security key checks.';
+  }
+
+  @override
+  String get svcToday => 'Today';
+
+  @override
+  String get svcYesterday => 'Yesterday';
+
+  @override
+  String get svcLowBatteryOwn => 'Your radio battery is low';
+
+  @override
+  String svcLowBattery(String name) {
+    return '$name battery is low';
+  }
+
+  @override
+  String svcLowBatteryOwnBody(int level) {
+    return 'Your radio reports $level% battery.';
+  }
+
+  @override
+  String svcLowBatteryBody(String name, int level) {
+    return '$name reports $level% battery.';
+  }
+
+  @override
+  String svcNewNode(String name) {
+    return 'New node: $name';
+  }
+
+  @override
+  String svcNewNodeBody(String name) {
+    return 'Your radio heard $name for the first time.';
+  }
+
+  @override
+  String get svcMeshQuieter => 'The mesh has gone quieter';
+
+  @override
+  String svcMeshQuieterBody(int active, int peak) {
+    return 'Heard $active nodes in the last hour, down from $peak. A repeater may be down, or you may have moved out of range.';
+  }
+
+  @override
+  String svcQuiet(String name) {
+    return '$name has gone quiet';
+  }
+
+  @override
+  String svcQuietBody(String time) {
+    return 'Not heard for $time.';
+  }
+
+  @override
+  String svcHoursMinutes(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String svcMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get svcReply => 'Reply';
+
+  @override
+  String get svcDirectChannel => 'Direct messages';
+
+  @override
+  String get svcDirectChannelSub => 'Messages sent to you on the mesh.';
+
+  @override
+  String get svcChannelChannel => 'Channel messages';
+
+  @override
+  String get svcChannelChannelSub => 'Messages on your mesh channels.';
+
+  @override
+  String get svcFieldChannel => 'Field alerts';
+
+  @override
+  String get svcFieldChannelSub =>
+      'Low battery, new nodes and favorites that go quiet.';
+
+  @override
+  String svcFromChannel(String sender, int channel) {
+    return '$sender • channel $channel';
+  }
 }

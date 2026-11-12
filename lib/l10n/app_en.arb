@@ -2158,5 +2158,148 @@
   "rbTextHint": "Paste a saved encrypted backup to restore",
   "rbCopied": "Encrypted backup copied. Save it in a text file.",
   "rbCopy": "Copy encrypted backup",
-  "rbReview": "Review and restore"
+  "rbReview": "Review and restore",
+  "svcConnectToCheckIn": "Connect to a radio to check in.",
+  "svcChooseContacts": "Choose trip contacts first.",
+  "svcConnectToSos": "Connect to a radio to send an SOS.",
+  "svcChooseSosTargets": "Choose trip contacts or an SOS channel first.",
+  "svcFirmwareUnsupported": "Your radio runs firmware {version}. NOTORYX Connect needs {minimum} or newer to change radio settings, so settings are read-only. Messages still work. Update at {url}.",
+  "@svcFirmwareUnsupported": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "minimum": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "svcFirmwareOutdated": "Your radio runs firmware {version}. Updating to {recommended} or newer at {url} turns on newer features such as sensor readings and security key checks.",
+  "@svcFirmwareOutdated": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "recommended": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "svcToday": "Today",
+  "svcYesterday": "Yesterday",
+  "svcLowBatteryOwn": "Your radio battery is low",
+  "svcLowBattery": "{name} battery is low",
+  "@svcLowBattery": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "svcLowBatteryOwnBody": "Your radio reports {level}% battery.",
+  "@svcLowBatteryOwnBody": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "svcLowBatteryBody": "{name} reports {level}% battery.",
+  "@svcLowBatteryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "svcNewNode": "New node: {name}",
+  "@svcNewNode": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "svcNewNodeBody": "Your radio heard {name} for the first time.",
+  "@svcNewNodeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "svcMeshQuieter": "The mesh has gone quieter",
+  "svcMeshQuieterBody": "Heard {active} nodes in the last hour, down from {peak}. A repeater may be down, or you may have moved out of range.",
+  "@svcMeshQuieterBody": {
+    "placeholders": {
+      "active": {
+        "type": "int"
+      },
+      "peak": {
+        "type": "int"
+      }
+    }
+  },
+  "svcQuiet": "{name} has gone quiet",
+  "@svcQuiet": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "svcQuietBody": "Not heard for {time}.",
+  "@svcQuietBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "svcHoursMinutes": "{hours} h {minutes} min",
+  "@svcHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "svcMinutes": "{minutes} min",
+  "@svcMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "svcReply": "Reply",
+  "svcDirectChannel": "Direct messages",
+  "svcDirectChannelSub": "Messages sent to you on the mesh.",
+  "svcChannelChannel": "Channel messages",
+  "svcChannelChannelSub": "Messages on your mesh channels.",
+  "svcFieldChannel": "Field alerts",
+  "svcFieldChannelSub": "Low battery, new nodes and favorites that go quiet.",
+  "svcFromChannel": "{sender} • channel {channel}",
+  "@svcFromChannel": {
+    "placeholders": {
+      "sender": {
+        "type": "String"
+      },
+      "channel": {
+        "type": "int"
+      }
+    }
+  }
 }

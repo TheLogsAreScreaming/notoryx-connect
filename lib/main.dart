@@ -16,6 +16,7 @@ import 'home_page.dart';
 import 'services/bastion_units.dart';
 import 'services/bastion_field_log.dart';
 import 'app_lock_gate.dart';
+import 'l10n/bastion_text.dart';
 import 'services/bastion_app_lock.dart';
 import 'services/bastion_background_service.dart';
 import 'services/bastion_bot_guard.dart';
@@ -144,7 +145,11 @@ class _BastionAppState extends State<BastionApp> with WidgetsBindingObserver {
         scrollBehavior: const BastionScrollBehavior(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        builder: (context, child) => BastionAppLockGate(lock: BastionAppLock.instance, child: child!),
+        builder: (context, child) {
+          // Services and notifications follow the phone's language too.
+          BastionText.use(Localizations.localeOf(context));
+          return BastionAppLockGate(lock: BastionAppLock.instance, child: child!);
+        },
         home: const BastionShell(),
       );
     },
