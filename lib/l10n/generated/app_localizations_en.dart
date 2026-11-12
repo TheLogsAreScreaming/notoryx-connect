@@ -3471,4 +3471,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String mapHeatSummary(int strong, int fair, int weak, int readings) {
     return 'Coverage map: $strong strong, $fair fair, $weak weak areas, from $readings readings.';
   }
+
+  @override
+  String get nrTitle => 'Moving to a new radio';
+
+  @override
+  String nrSub(int done, int total) {
+    return '$done of $total done';
+  }
+
+  @override
+  String get nrStep1 =>
+      'With the old radio connected, create an encrypted backup here and save the text somewhere safe.';
+
+  @override
+  String get nrStep2 =>
+      'Write down the old radio\'s region and modem preset (Radio settings → LoRa).';
+
+  @override
+  String get nrStep3 =>
+      'Update the new radio\'s firmware to the same version or newer.';
+
+  @override
+  String get nrStep4 =>
+      'Connect the new radio and set its region before anything else, so it may transmit.';
+
+  @override
+  String get nrStep5 =>
+      'Paste the backup, review it and restore. Use the same password.';
+
+  @override
+  String get nrStep6 =>
+      'Check Channels: names and keys should match, and send a test message to someone on each channel.';
+
+  @override
+  String get nrStep7 =>
+      'The new radio has its own node ID and security key. Tell your contacts, and re-add it as an admin on any nodes you manage remotely.';
+
+  @override
+  String get nrReset => 'Start over';
 }

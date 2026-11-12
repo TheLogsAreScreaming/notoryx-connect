@@ -5852,6 +5852,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coverage map: {strong} strong, {fair} fair, {weak} weak areas, from {readings} readings.'**
   String mapHeatSummary(int strong, int fair, int weak, int readings);
+
+  /// No description provided for @nrTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Moving to a new radio'**
+  String get nrTitle;
+
+  /// No description provided for @nrSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} done'**
+  String nrSub(int done, int total);
+
+  /// No description provided for @nrStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'With the old radio connected, create an encrypted backup here and save the text somewhere safe.'**
+  String get nrStep1;
+
+  /// No description provided for @nrStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Write down the old radio\'s region and modem preset (Radio settings → LoRa).'**
+  String get nrStep2;
+
+  /// No description provided for @nrStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the new radio\'s firmware to the same version or newer.'**
+  String get nrStep3;
+
+  /// No description provided for @nrStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect the new radio and set its region before anything else, so it may transmit.'**
+  String get nrStep4;
+
+  /// No description provided for @nrStep5.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste the backup, review it and restore. Use the same password.'**
+  String get nrStep5;
+
+  /// No description provided for @nrStep6.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Channels: names and keys should match, and send a test message to someone on each channel.'**
+  String get nrStep6;
+
+  /// No description provided for @nrStep7.
+  ///
+  /// In en, this message translates to:
+  /// **'The new radio has its own node ID and security key. Tell your contacts, and re-add it as an admin on any nodes you manage remotely.'**
+  String get nrStep7;
+
+  /// No description provided for @nrReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Start over'**
+  String get nrReset;
 }
 
 class _AppLocalizationsDelegate

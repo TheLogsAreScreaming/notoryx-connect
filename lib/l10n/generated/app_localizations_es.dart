@@ -3499,4 +3499,43 @@ class AppLocalizationsEs extends AppLocalizations {
   String mapHeatSummary(int strong, int fair, int weak, int readings) {
     return 'Mapa de cobertura: $strong zonas fuertes, $fair regulares y $weak débiles, de $readings lecturas.';
   }
+
+  @override
+  String get nrTitle => 'Pasar a una radio nueva';
+
+  @override
+  String nrSub(int done, int total) {
+    return '$done de $total hechos';
+  }
+
+  @override
+  String get nrStep1 =>
+      'Con la radio antigua conectada, crea aquí una copia cifrada y guarda el texto en un lugar seguro.';
+
+  @override
+  String get nrStep2 =>
+      'Anota la región y el preajuste de módem de la radio antigua (Ajustes de la radio → LoRa).';
+
+  @override
+  String get nrStep3 =>
+      'Actualiza el firmware de la radio nueva a la misma versión o a una posterior.';
+
+  @override
+  String get nrStep4 =>
+      'Conecta la radio nueva y configura primero su región, para que pueda transmitir.';
+
+  @override
+  String get nrStep5 =>
+      'Pega la copia, revísala y restaura. Usa la misma contraseña.';
+
+  @override
+  String get nrStep6 =>
+      'Revisa los canales: los nombres y las claves deben coincidir; envía un mensaje de prueba a alguien en cada canal.';
+
+  @override
+  String get nrStep7 =>
+      'La radio nueva tiene su propio ID de nodo y su clave de seguridad. Avisa a tus contactos y vuelve a añadirla como administradora en los nodos que gestionas a distancia.';
+
+  @override
+  String get nrReset => 'Empezar de nuevo';
 }
