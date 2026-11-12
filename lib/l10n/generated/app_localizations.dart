@@ -5252,6 +5252,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Review and restore'**
   String get rbReview;
+
+  /// No description provided for @raPower.
+  ///
+  /// In en, this message translates to:
+  /// **'Power'**
+  String get raPower;
+
+  /// No description provided for @raDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Display'**
+  String get raDisplay;
+
+  /// No description provided for @raLoraQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Change LoRa settings remotely?'**
+  String get raLoraQ;
+
+  /// No description provided for @raLoraBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If the node ends up on a different region, preset or frequency from the rest of the mesh, it can no longer be reached and someone will have to fix it in person.'**
+  String get raLoraBody;
+
+  /// No description provided for @raSaveAnyway.
+  ///
+  /// In en, this message translates to:
+  /// **'Save anyway'**
+  String get raSaveAnyway;
+
+  /// No description provided for @raSent.
+  ///
+  /// In en, this message translates to:
+  /// **'{section} settings sent. The node may restart to apply them.'**
+  String raSent(String section);
+
+  /// No description provided for @raNameSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Name sent to the node.'**
+  String get raNameSent;
+
+  /// No description provided for @raRestartQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart {name}?'**
+  String raRestartQ(String name);
+
+  /// No description provided for @raRestartBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The node goes off the mesh for a short while as it restarts.'**
+  String get raRestartBody;
+
+  /// No description provided for @raRestart.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get raRestart;
+
+  /// No description provided for @raRestartRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart requested.'**
+  String get raRestartRequested;
+
+  /// No description provided for @raDiscardQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard changes?'**
+  String get raDiscardQ;
+
+  /// No description provided for @raDiscardBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your edits haven\'t been sent to the node.'**
+  String get raDiscardBody;
+
+  /// No description provided for @raDiscard.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get raDiscard;
+
+  /// No description provided for @raTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote admin'**
+  String get raTitle;
+
+  /// No description provided for @raIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Change this node\'s settings over the mesh. Each request uses airtime and can take up to a minute.'**
+  String get raIntro;
+
+  /// No description provided for @raUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote admin isn\'t available'**
+  String get raUnavailable;
+
+  /// No description provided for @raWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the node'**
+  String get raWaiting;
+
+  /// No description provided for @raAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Access'**
+  String get raAccess;
+
+  /// No description provided for @raAccessHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask the node for its details. If it answers, your radio is allowed to manage it.'**
+  String get raAccessHint;
+
+  /// No description provided for @raCheckAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Check access'**
+  String get raCheckAccess;
+
+  /// No description provided for @raAccessConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Access confirmed'**
+  String get raAccessConfirmed;
+
+  /// No description provided for @raFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware {version} · {role}'**
+  String raFirmware(String version, String role);
+
+  /// No description provided for @raUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'unknown'**
+  String get raUnknown;
+
+  /// No description provided for @raNoName.
+  ///
+  /// In en, this message translates to:
+  /// **'No name'**
+  String get raNoName;
+
+  /// No description provided for @raShortName.
+  ///
+  /// In en, this message translates to:
+  /// **'Short name {name}'**
+  String raShortName(String name);
+
+  /// No description provided for @raRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get raRename;
+
+  /// No description provided for @raRestartNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart node'**
+  String get raRestartNode;
+
+  /// No description provided for @raSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get raSettings;
+
+  /// No description provided for @raLoraWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'A wrong LoRa setting can cut this node off the mesh. Change it only if you can reach the node in person.'**
+  String get raLoraWarning;
+
+  /// No description provided for @raSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send {section} settings'**
+  String raSend(String section);
+
+  /// No description provided for @raUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get raUndo;
+
+  /// No description provided for @raKeyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio\'s admin key'**
+  String get raKeyTitle;
+
+  /// No description provided for @raKeyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Before {name} will accept changes, its owner adds this key under Radio settings → Security → Admin key, using any Meshtastic app.'**
+  String raKeyBody(String name);
+
+  /// No description provided for @raNoKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio hasn\'t reported its key yet.'**
+  String get raNoKey;
+
+  /// No description provided for @raCopyKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy admin key'**
+  String get raCopyKey;
+
+  /// No description provided for @raKeyCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin key copied.'**
+  String get raKeyCopied;
+
+  /// No description provided for @raRenameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename node'**
+  String get raRenameTitle;
+
+  /// No description provided for @raSendButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get raSendButton;
+
+  /// No description provided for @frSaluteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SALUTE report'**
+  String get frSaluteTitle;
+
+  /// No description provided for @frNineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'9-Line medical evacuation'**
+  String get frNineTitle;
+
+  /// No description provided for @frSaluteS.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get frSaluteS;
+
+  /// No description provided for @frSaluteSHint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many people or vehicles'**
+  String get frSaluteSHint;
+
+  /// No description provided for @frSaluteA.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get frSaluteA;
+
+  /// No description provided for @frSaluteAHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What they are doing'**
+  String get frSaluteAHint;
+
+  /// No description provided for @frSaluteL.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get frSaluteL;
+
+  /// No description provided for @frSaluteLHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Where they are'**
+  String get frSaluteLHint;
+
+  /// No description provided for @frSaluteU.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get frSaluteU;
+
+  /// No description provided for @frSaluteUHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Who they are, uniform or markings'**
+  String get frSaluteUHint;
+
+  /// No description provided for @frSaluteT.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get frSaluteT;
+
+  /// No description provided for @frSaluteTHint.
+  ///
+  /// In en, this message translates to:
+  /// **'When you saw them'**
+  String get frSaluteTHint;
+
+  /// No description provided for @frSaluteE.
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment'**
+  String get frSaluteE;
+
+  /// No description provided for @frSaluteEHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What they have with them'**
+  String get frSaluteEHint;
+
+  /// No description provided for @frNine1.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup location'**
+  String get frNine1;
+
+  /// No description provided for @frNine1Hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinates or landmark'**
+  String get frNine1Hint;
+
+  /// No description provided for @frNine2.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio frequency and callsign'**
+  String get frNine2;
+
+  /// No description provided for @frNine2Hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How to reach you'**
+  String get frNine2Hint;
+
+  /// No description provided for @frNine3.
+  ///
+  /// In en, this message translates to:
+  /// **'Patients by urgency'**
+  String get frNine3;
+
+  /// No description provided for @frNine3Hint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example 1 urgent, 2 routine'**
+  String get frNine3Hint;
+
+  /// No description provided for @frNine4.
+  ///
+  /// In en, this message translates to:
+  /// **'Special equipment'**
+  String get frNine4;
+
+  /// No description provided for @frNine4Hint.
+  ///
+  /// In en, this message translates to:
+  /// **'None, hoist, extraction, ventilator'**
+  String get frNine4Hint;
+
+  /// No description provided for @frNine5.
+  ///
+  /// In en, this message translates to:
+  /// **'Patients by type'**
+  String get frNine5;
+
+  /// No description provided for @frNine5Hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Litter or walking'**
+  String get frNine5Hint;
+
+  /// No description provided for @frNine6.
+  ///
+  /// In en, this message translates to:
+  /// **'Security at pickup'**
+  String get frNine6;
+
+  /// No description provided for @frNine6Hint.
+  ///
+  /// In en, this message translates to:
+  /// **'No threat, possible, or armed escort'**
+  String get frNine6Hint;
+
+  /// No description provided for @frNine7.
+  ///
+  /// In en, this message translates to:
+  /// **'How the site is marked'**
+  String get frNine7;
+
+  /// No description provided for @frNine7Hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Panel, smoke, light, or none'**
+  String get frNine7Hint;
+
+  /// No description provided for @frNine8.
+  ///
+  /// In en, this message translates to:
+  /// **'Patient status'**
+  String get frNine8;
+
+  /// No description provided for @frNine8Hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Who the patients are'**
+  String get frNine8Hint;
+
+  /// No description provided for @frNine9.
+  ///
+  /// In en, this message translates to:
+  /// **'Hazards and terrain'**
+  String get frNine9;
+
+  /// No description provided for @frNine9Hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Slope, wires, contamination'**
+  String get frNine9Hint;
 }
 
 class _AppLocalizationsDelegate

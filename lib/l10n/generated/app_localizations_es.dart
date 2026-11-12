@@ -3152,4 +3152,234 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get rbReview => 'Revisar y restaurar';
+
+  @override
+  String get raPower => 'Energía';
+
+  @override
+  String get raDisplay => 'Pantalla';
+
+  @override
+  String get raLoraQ => '¿Cambiar los ajustes LoRa a distancia?';
+
+  @override
+  String get raLoraBody =>
+      'Si el nodo queda en una región, preajuste o frecuencia distinta del resto de la malla, ya no se podrá contactar y alguien tendrá que arreglarlo en persona.';
+
+  @override
+  String get raSaveAnyway => 'Guardar de todos modos';
+
+  @override
+  String raSent(String section) {
+    return 'Ajustes de $section enviados. El nodo puede reiniciarse para aplicarlos.';
+  }
+
+  @override
+  String get raNameSent => 'Nombre enviado al nodo.';
+
+  @override
+  String raRestartQ(String name) {
+    return '¿Reiniciar $name?';
+  }
+
+  @override
+  String get raRestartBody =>
+      'El nodo sale de la malla un rato mientras se reinicia.';
+
+  @override
+  String get raRestart => 'Reiniciar';
+
+  @override
+  String get raRestartRequested => 'Reinicio solicitado.';
+
+  @override
+  String get raDiscardQ => '¿Descartar los cambios?';
+
+  @override
+  String get raDiscardBody => 'Tus cambios no se han enviado al nodo.';
+
+  @override
+  String get raDiscard => 'Descartar';
+
+  @override
+  String get raTitle => 'Administración remota';
+
+  @override
+  String get raIntro =>
+      'Cambia los ajustes de este nodo a través de la malla. Cada petición usa tiempo de aire y puede tardar hasta un minuto.';
+
+  @override
+  String get raUnavailable => 'La administración remota no está disponible';
+
+  @override
+  String get raWaiting => 'Esperando al nodo';
+
+  @override
+  String get raAccess => 'Acceso';
+
+  @override
+  String get raAccessHint =>
+      'Pide sus datos al nodo. Si responde, tu radio puede administrarlo.';
+
+  @override
+  String get raCheckAccess => 'Comprobar acceso';
+
+  @override
+  String get raAccessConfirmed => 'Acceso confirmado';
+
+  @override
+  String raFirmware(String version, String role) {
+    return 'Firmware $version · $role';
+  }
+
+  @override
+  String get raUnknown => 'desconocido';
+
+  @override
+  String get raNoName => 'Sin nombre';
+
+  @override
+  String raShortName(String name) {
+    return 'Nombre corto $name';
+  }
+
+  @override
+  String get raRename => 'Cambiar nombre';
+
+  @override
+  String get raRestartNode => 'Reiniciar nodo';
+
+  @override
+  String get raSettings => 'Ajustes';
+
+  @override
+  String get raLoraWarning =>
+      'Un ajuste LoRa incorrecto puede dejar este nodo fuera de la malla. Cámbialo solo si puedes llegar al nodo en persona.';
+
+  @override
+  String raSend(String section) {
+    return 'Enviar ajustes de $section';
+  }
+
+  @override
+  String get raUndo => 'Deshacer';
+
+  @override
+  String get raKeyTitle => 'Clave de administración de tu radio';
+
+  @override
+  String raKeyBody(String name) {
+    return 'Para que $name acepte cambios, su dueño debe añadir esta clave en Ajustes de la radio → Seguridad → Clave de administración, con cualquier aplicación de Meshtastic.';
+  }
+
+  @override
+  String get raNoKey => 'Tu radio aún no ha informado su clave.';
+
+  @override
+  String get raCopyKey => 'Copiar clave de administración';
+
+  @override
+  String get raKeyCopied => 'Clave de administración copiada.';
+
+  @override
+  String get raRenameTitle => 'Cambiar el nombre del nodo';
+
+  @override
+  String get raSendButton => 'Enviar';
+
+  @override
+  String get frSaluteTitle => 'Informe SALUTE';
+
+  @override
+  String get frNineTitle => 'Evacuación médica de 9 líneas';
+
+  @override
+  String get frSaluteS => 'Tamaño';
+
+  @override
+  String get frSaluteSHint => 'Cuántas personas o vehículos';
+
+  @override
+  String get frSaluteA => 'Actividad';
+
+  @override
+  String get frSaluteAHint => 'Qué están haciendo';
+
+  @override
+  String get frSaluteL => 'Ubicación';
+
+  @override
+  String get frSaluteLHint => 'Dónde están';
+
+  @override
+  String get frSaluteU => 'Unidad';
+
+  @override
+  String get frSaluteUHint => 'Quiénes son, uniforme o distintivos';
+
+  @override
+  String get frSaluteT => 'Hora';
+
+  @override
+  String get frSaluteTHint => 'Cuándo los viste';
+
+  @override
+  String get frSaluteE => 'Equipo';
+
+  @override
+  String get frSaluteEHint => 'Qué llevan consigo';
+
+  @override
+  String get frNine1 => 'Lugar de recogida';
+
+  @override
+  String get frNine1Hint => 'Coordenadas o punto de referencia';
+
+  @override
+  String get frNine2 => 'Frecuencia de radio e indicativo';
+
+  @override
+  String get frNine2Hint => 'Cómo contactarte';
+
+  @override
+  String get frNine3 => 'Pacientes por urgencia';
+
+  @override
+  String get frNine3Hint => 'Por ejemplo 1 urgente, 2 de rutina';
+
+  @override
+  String get frNine4 => 'Equipo especial';
+
+  @override
+  String get frNine4Hint => 'Ninguno, grúa, extracción, respirador';
+
+  @override
+  String get frNine5 => 'Pacientes por tipo';
+
+  @override
+  String get frNine5Hint => 'En camilla o caminando';
+
+  @override
+  String get frNine6 => 'Seguridad en la recogida';
+
+  @override
+  String get frNine6Hint => 'Sin amenaza, posible o escolta armada';
+
+  @override
+  String get frNine7 => 'Cómo está señalizado el lugar';
+
+  @override
+  String get frNine7Hint => 'Panel, humo, luz o nada';
+
+  @override
+  String get frNine8 => 'Estado del paciente';
+
+  @override
+  String get frNine8Hint => 'Quiénes son los pacientes';
+
+  @override
+  String get frNine9 => 'Peligros y terreno';
+
+  @override
+  String get frNine9Hint => 'Pendiente, cables, contaminación';
 }
