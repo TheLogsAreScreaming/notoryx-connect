@@ -1,6 +1,6 @@
 name: NOTORYX Windows Build
 
-# Builds NOTORYX Connect for 64-bit Windows as a zip. It is not code signed,
+# Builds NOTORYX Connect for 64-bit Windows as a zip and an installer. It is not code signed,
 # so Windows SmartScreen warns on first launch.
 on:
   workflow_dispatch:
@@ -13,6 +13,7 @@ on:
     paths:
       - 'scripts/prepare_windows.py'
       - '.github/workflows/windows-build.yml'
+      - 'installer/**'
       - 'lib/services/bastion_chat_store.dart'
 
 permissions:
@@ -57,8 +58,17 @@ jobs:
           if (-not (Get-ChildItem "$Release" -Recurse -Filter '*sqlite3*.dll')) { throw 'The SQLite library is missing' }
           New-Item -ItemType Directory -Force dist | Out-Null
           Compress-Archive -Path "$Release/*" -DestinationPath "dist/NOTORYX-Connect-$Version-Windows-x64.zip"
+          # Installer: Inno Setup is usually on the runner; install it if not.
+          $Iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $Iscc)) {
+            foreach ($try in 1..3) { choco install innosetup -y --no-progress; if (Test-Path $Iscc) { break }; Start-Sleep -Seconds (20 * $try) }
+          }
+          if (-not (Test-Path $Iscc)) { throw 'Inno Setup could not be installed' }
+          & $Iscc "/DAppVersion=$Version" "/DSourceDir=$PWD\build\windows\x64\runner\Release" "/DOutputDir=$PWD\dist" installer\notoryx_connect.iss
+          if ($LASTEXITCODE -ne 0) { throw 'The installer did not build' }
+          if (-not (Test-Path "dist/NOTORYX-Connect-$Version-Windows-x64-setup.exe")) { throw 'The installer is missing' }
           # Unix line endings, so `shasum -c` works on macOS and Linux too.
-          $Sums = (Get-FileHash dist/*.zip -Algorithm SHA256 | ForEach-Object { "$($_.Hash.ToLower())  $(Split-Path $_.Path -Leaf)" }) -join "`n"
+          $Sums = (Get-FileHash dist/*.zip, dist/*-setup.exe -Algorithm SHA256 | ForEach-Object { "$($_.Hash.ToLower())  $(Split-Path $_.Path -Leaf)" }) -join "`n"
           [IO.File]::WriteAllText("$PWD/dist/SHA256SUMS-Windows.txt", "$Sums`n")
           [IO.File]::WriteAllText("$PWD/dist/BUILD-INFO-Windows.txt", "Version: $Version`nCommit: $env:GITHUB_SHA`nRun: $env:GITHUB_RUN_ID`n")
       - name: Check the checksum file
