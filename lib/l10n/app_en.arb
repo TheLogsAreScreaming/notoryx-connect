@@ -2158,5 +2158,18 @@
   "rbTextHint": "Paste a saved encrypted backup to restore",
   "rbCopied": "Encrypted backup copied. Save it in a text file.",
   "rbCopy": "Copy encrypted backup",
-  "rbReview": "Review and restore"
+  "rbReview": "Review and restore",
+  "cpLabel": "Position shared on this channel",
+  "cpHelp": "How exact your radio's position is when sent on this channel. Other channels keep their own setting.",
+  "cpNotSet": "Not set: the firmware decides",
+  "cpNone": "Don't share position",
+  "cpExact": "Exact position",
+  "cpWithin": "Within about {distance}",
+  "@cpWithin": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  }
 }

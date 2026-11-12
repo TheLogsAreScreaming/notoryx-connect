@@ -3124,4 +3124,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rbReview => 'Review and restore';
+
+  @override
+  String get cpLabel => 'Position shared on this channel';
+
+  @override
+  String get cpHelp =>
+      'How exact your radio\'s position is when sent on this channel. Other channels keep their own setting.';
+
+  @override
+  String get cpNotSet => 'Not set: the firmware decides';
+
+  @override
+  String get cpNone => 'Don\'t share position';
+
+  @override
+  String get cpExact => 'Exact position';
+
+  @override
+  String cpWithin(String distance) {
+    return 'Within about $distance';
+  }
 }

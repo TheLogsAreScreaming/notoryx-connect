@@ -856,5 +856,11 @@
   "rbTextHint": "Pega una copia cifrada guardada para restaurarla",
   "rbCopied": "Copia cifrada copiada. Guárdala en un archivo de texto.",
   "rbCopy": "Copiar copia cifrada",
-  "rbReview": "Revisar y restaurar"
+  "rbReview": "Revisar y restaurar",
+  "cpLabel": "Posición compartida en este canal",
+  "cpHelp": "Qué tan exacta es la posición de tu radio al enviarse en este canal. Los demás canales tienen su propio ajuste.",
+  "cpNotSet": "Sin configurar: decide el firmware",
+  "cpNone": "No compartir la posición",
+  "cpExact": "Posición exacta",
+  "cpWithin": "A unos {distance}"
 }

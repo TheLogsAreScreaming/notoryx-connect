@@ -5252,6 +5252,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Review and restore'**
   String get rbReview;
+
+  /// No description provided for @cpLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Position shared on this channel'**
+  String get cpLabel;
+
+  /// No description provided for @cpHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'How exact your radio\'s position is when sent on this channel. Other channels keep their own setting.'**
+  String get cpHelp;
+
+  /// No description provided for @cpNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set: the firmware decides'**
+  String get cpNotSet;
+
+  /// No description provided for @cpNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t share position'**
+  String get cpNone;
+
+  /// No description provided for @cpExact.
+  ///
+  /// In en, this message translates to:
+  /// **'Exact position'**
+  String get cpExact;
+
+  /// No description provided for @cpWithin.
+  ///
+  /// In en, this message translates to:
+  /// **'Within about {distance}'**
+  String cpWithin(String distance);
 }
 
 class _AppLocalizationsDelegate

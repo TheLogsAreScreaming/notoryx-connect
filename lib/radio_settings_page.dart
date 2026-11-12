@@ -12,7 +12,10 @@ import 'generated/meshtastic/config.pb.dart';
 import 'generated/meshtastic/mesh.pb.dart' show User;
 import 'generated/meshtastic/module_config.pb.dart';
 import 'proto_form.dart';
+import 'services/bastion_channel_precision.dart';
 import 'services/bastion_channel_validation.dart';
+import 'services/bastion_preferences.dart';
+import 'services/bastion_units.dart';
 import 'services/bastion_hardware.dart';
 import 'services/bastion_radio_policy.dart';
 import 'services/bastion_settings_verifier.dart';
@@ -900,6 +903,7 @@ class _ChannelEditor extends StatelessWidget {
           changed();
         },
       ),
+      _precisionField(context, draft, changed),
       const SizedBox(height: 8),
       Text(_l(context).rsEncryption(_describeKey(_l(context), draft.settings.psk))),
       Wrap(
@@ -933,6 +937,34 @@ class _ChannelEditor extends StatelessWidget {
         ],
       ),
     ],
+  );
+}
+
+/// The radio's own position precision for one channel.
+Widget _precisionField(BuildContext context, Channel draft, VoidCallback changed) {
+  final l = _l(context);
+  final set = draft.settings.hasModuleSettings();
+  final bits = draft.settings.moduleSettings.positionPrecision;
+  String label(int value, int metres) => switch (value) {
+        BastionChannelPrecision.none => l.cpNone,
+        BastionChannelPrecision.exact => l.cpExact,
+        _ => l.cpWithin(BastionUnitFormat.distance(metres.toDouble(), BastionPreferences.instance.units)),
+      };
+  return DropdownButtonFormField<int>(
+    key: ValueKey('channel-precision:$set:$bits'),
+    isExpanded: true,
+    initialValue: set && BastionChannelPrecision.choices.containsKey(bits) ? bits : null,
+    hint: Text(l.cpNotSet),
+    decoration: InputDecoration(labelText: l.cpLabel, helperText: l.cpHelp, helperMaxLines: 3),
+    items: [
+      for (final e in BastionChannelPrecision.choices.entries)
+        DropdownMenuItem(value: e.key, child: Text(label(e.key, e.value))),
+    ],
+    onChanged: (v) {
+      if (v == null) return;
+      draft.ensureSettings().ensureModuleSettings().positionPrecision = v;
+      changed();
+    },
   );
 }
 
