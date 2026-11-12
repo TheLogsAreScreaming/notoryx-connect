@@ -3538,4 +3538,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nrReset => 'Empezar de nuevo';
+
+  @override
+  String get cpLabel => 'Posición compartida en este canal';
+
+  @override
+  String get cpHelp =>
+      'Qué tan exacta es la posición de tu radio al enviarse en este canal. Los demás canales tienen su propio ajuste.';
+
+  @override
+  String get cpNotSet => 'Sin configurar: decide el firmware';
+
+  @override
+  String get cpNone => 'No compartir la posición';
+
+  @override
+  String get cpExact => 'Posición exacta';
+
+  @override
+  String cpWithin(String distance) {
+    return 'A unos $distance';
+  }
 }

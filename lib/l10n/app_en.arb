@@ -2454,5 +2454,18 @@
   "nrStep5": "Paste the backup, review it and restore. Use the same password.",
   "nrStep6": "Check Channels: names and keys should match, and send a test message to someone on each channel.",
   "nrStep7": "The new radio has its own node ID and security key. Tell your contacts, and re-add it as an admin on any nodes you manage remotely.",
-  "nrReset": "Start over"
+  "nrReset": "Start over",
+  "cpLabel": "Position shared on this channel",
+  "cpHelp": "How exact your radio's position is when sent on this channel. Other channels keep their own setting.",
+  "cpNotSet": "Not set: the firmware decides",
+  "cpNone": "Don't share position",
+  "cpExact": "Exact position",
+  "cpWithin": "Within about {distance}",
+  "@cpWithin": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  }
 }
