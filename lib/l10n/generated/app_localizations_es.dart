@@ -3382,4 +3382,116 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get frNine9Hint => 'Pendiente, cables, contaminación';
+
+  @override
+  String get svcConnectToCheckIn => 'Conéctate a una radio para reportarte.';
+
+  @override
+  String get svcChooseContacts => 'Elige primero los contactos del viaje.';
+
+  @override
+  String get svcConnectToSos => 'Conéctate a una radio para enviar un SOS.';
+
+  @override
+  String get svcChooseSosTargets =>
+      'Elige primero contactos del viaje o un canal para el SOS.';
+
+  @override
+  String svcFirmwareUnsupported(String version, String minimum, String url) {
+    return 'Tu radio tiene el firmware $version. NOTORYX Connect necesita $minimum o posterior para cambiar los ajustes de la radio, así que los ajustes son de solo lectura. Los mensajes siguen funcionando. Actualízalo en $url.';
+  }
+
+  @override
+  String svcFirmwareOutdated(String version, String recommended, String url) {
+    return 'Tu radio tiene el firmware $version. Al actualizar a $recommended o posterior en $url se activan funciones nuevas, como las lecturas de sensores y la comprobación de claves de seguridad.';
+  }
+
+  @override
+  String get svcToday => 'Hoy';
+
+  @override
+  String get svcYesterday => 'Ayer';
+
+  @override
+  String get svcLowBatteryOwn => 'La batería de tu radio está baja';
+
+  @override
+  String svcLowBattery(String name) {
+    return 'La batería de $name está baja';
+  }
+
+  @override
+  String svcLowBatteryOwnBody(int level) {
+    return 'Tu radio informa de un $level% de batería.';
+  }
+
+  @override
+  String svcLowBatteryBody(String name, int level) {
+    return '$name informa de un $level% de batería.';
+  }
+
+  @override
+  String svcNewNode(String name) {
+    return 'Nodo nuevo: $name';
+  }
+
+  @override
+  String svcNewNodeBody(String name) {
+    return 'Tu radio oyó a $name por primera vez.';
+  }
+
+  @override
+  String get svcMeshQuieter => 'La malla está más silenciosa';
+
+  @override
+  String svcMeshQuieterBody(int active, int peak) {
+    return 'Se oyeron $active nodos en la última hora, frente a $peak. Puede que un repetidor haya caído o que te hayas alejado del alcance.';
+  }
+
+  @override
+  String svcQuiet(String name) {
+    return '$name está en silencio';
+  }
+
+  @override
+  String svcQuietBody(String time) {
+    return 'Sin noticias desde hace $time.';
+  }
+
+  @override
+  String svcHoursMinutes(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String svcMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get svcReply => 'Responder';
+
+  @override
+  String get svcDirectChannel => 'Mensajes directos';
+
+  @override
+  String get svcDirectChannelSub => 'Mensajes que te envían por la malla.';
+
+  @override
+  String get svcChannelChannel => 'Mensajes de canal';
+
+  @override
+  String get svcChannelChannelSub => 'Mensajes en tus canales de la malla.';
+
+  @override
+  String get svcFieldChannel => 'Avisos de campo';
+
+  @override
+  String get svcFieldChannelSub =>
+      'Batería baja, nodos nuevos y favoritos que quedan en silencio.';
+
+  @override
+  String svcFromChannel(String sender, int channel) {
+    return '$sender • canal $channel';
+  }
 }

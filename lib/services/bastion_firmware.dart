@@ -1,3 +1,5 @@
+import '../l10n/bastion_text.dart';
+
 /// How well the connected radio's firmware suits this app.
 enum FirmwareSupport {
   /// Recent enough for everything the app does.
@@ -51,11 +53,9 @@ abstract final class BastionFirmware {
     final shown = parse(version) == null ? version : version!.split('.').take(3).join('.');
     return switch (supportOf(version)) {
       FirmwareSupport.unsupported =>
-        'Your radio runs firmware $shown. NOTORYX Connect needs ${_label(minimum)} or newer to change radio settings, '
-            'so settings are read-only. Messages still work. Update at $flasher.',
+        BastionText.l.svcFirmwareUnsupported('$shown', _label(minimum), '$flasher'),
       FirmwareSupport.outdated =>
-        'Your radio runs firmware $shown. Updating to ${_label(recommended)} or newer at $flasher '
-            'turns on newer features such as sensor readings and security key checks.',
+        BastionText.l.svcFirmwareOutdated('$shown', _label(recommended), '$flasher'),
       FirmwareSupport.supported || FirmwareSupport.unknown => null,
     };
   }
