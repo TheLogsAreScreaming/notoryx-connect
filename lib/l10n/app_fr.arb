@@ -1151,5 +1151,12 @@
   "nodesFavoritesOnly": "Favoris uniquement",
   "nodesNoFavorites": "Aucun favori pour l'instant",
   "nodesNoFavoritesHint": "Ouvrez un nœud et touchez son étoile pour lui faire confiance. Favoris uniquement n'affichera alors que les personnes de confiance.",
-  "mapShowAllNodes": "Afficher tous les nœuds"
+  "mapShowAllNodes": "Afficher tous les nœuds",
+  "topologyTitle": "Schéma du réseau",
+  "topologyEmpty": "Rien à dessiner pour l'instant. Les nœuds apparaissent dès que votre radio connaît leur nombre de sauts, ou qu'un nœud envoie Neighbor Info.",
+  "topologyHint": "Votre radio est au centre et chaque anneau est un saut de plus. Les lignes sont les liens des rapports Neighbor Info (plus épais = meilleur signal) et les nœuds entendus directement. Touchez un point pour ouvrir le nœud.",
+  "topologyNoReports": "Pas encore de rapports Neighbor Info : seuls les nœuds entendus directement ont des lignes. Activez le module Neighbor Info sur vos radios pour voir plus de liens.",
+  "topologyRing": "{count, plural, =0{Entendus directement} =1{À 1 saut} other{À {count} sauts}}",
+  "topologyLinks": "{count, plural, =1{1 lien} other{{count} liens}}",
+  "topologySemantics": "Schéma du réseau : {count} nœuds sur {rings} anneaux autour de votre radio."
 }

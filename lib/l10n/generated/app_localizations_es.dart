@@ -4209,4 +4209,47 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mapShowAllNodes => 'Mostrar todos los nodos';
+
+  @override
+  String get topologyTitle => 'Diagrama de red';
+
+  @override
+  String get topologyEmpty =>
+      'Aún no hay nada que dibujar. Los nodos aparecen cuando tu radio sabe a cuántos saltos están o cuando un nodo envía Neighbor Info.';
+
+  @override
+  String get topologyHint =>
+      'Tu radio está en el centro y cada anillo es un salto más. Las líneas son enlaces de los informes Neighbor Info (más gruesas = mejor señal) y nodos que tu radio oye directamente. Toca un punto para abrir el nodo.';
+
+  @override
+  String get topologyNoReports =>
+      'Aún no hay informes Neighbor Info, así que solo tienen líneas los nodos oídos directamente. Activa el módulo Neighbor Info en tus radios para ver más enlaces.';
+
+  @override
+  String topologyRing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'A $count saltos',
+      one: 'A 1 salto',
+      zero: 'Oídos directamente',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String topologyLinks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count enlaces',
+      one: '1 enlace',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String topologySemantics(int count, int rings) {
+    return 'Diagrama de red: $count nodos en $rings anillos alrededor de tu radio.';
+  }
 }

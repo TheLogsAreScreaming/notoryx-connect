@@ -4227,4 +4227,47 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mapShowAllNodes => 'Alle Knoten zeigen';
+
+  @override
+  String get topologyTitle => 'Netzdiagramm';
+
+  @override
+  String get topologyEmpty =>
+      'Noch nichts zu zeichnen. Knoten erscheinen, sobald dein Funkgerät weiß, wie viele Sprünge entfernt sie sind, oder ein Knoten Neighbor Info sendet.';
+
+  @override
+  String get topologyHint =>
+      'Dein Funkgerät ist in der Mitte, jeder Ring ist ein Sprung mehr. Linien sind Verbindungen aus Neighbor-Info-Berichten (dicker = besseres Signal) und direkt gehörte Knoten. Tippe auf einen Punkt, um den Knoten zu öffnen.';
+
+  @override
+  String get topologyNoReports =>
+      'Noch keine Neighbor-Info-Berichte, daher haben nur direkt gehörte Knoten Linien. Schalte das Neighbor-Info-Modul auf deinen Funkgeräten ein, um mehr Verbindungen zu sehen.';
+
+  @override
+  String topologyRing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Sprünge entfernt',
+      one: '1 Sprung entfernt',
+      zero: 'Direkt gehört',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String topologyLinks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Verbindungen',
+      one: '1 Verbindung',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String topologySemantics(int count, int rings) {
+    return 'Netzdiagramm: $count Knoten auf $rings Ringen um dein Funkgerät.';
+  }
 }

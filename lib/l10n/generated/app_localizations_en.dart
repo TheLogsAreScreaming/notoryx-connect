@@ -4176,4 +4176,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapShowAllNodes => 'Show all nodes';
+
+  @override
+  String get topologyTitle => 'Network diagram';
+
+  @override
+  String get topologyEmpty =>
+      'Nothing to draw yet. Nodes appear once your radio knows how many hops away they are, or a node sends Neighbor Info.';
+
+  @override
+  String get topologyHint =>
+      'Your radio is in the middle and each ring is one more hop. Lines are links from Neighbor Info reports (bolder = better signal) and nodes your radio hears directly. Tap a dot to open the node.';
+
+  @override
+  String get topologyNoReports =>
+      'No Neighbor Info reports yet, so only nodes heard directly have lines. Turn on the Neighbor Info module on your radios to see more links.';
+
+  @override
+  String topologyRing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hops away',
+      one: '1 hop away',
+      zero: 'Heard directly',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String topologyLinks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count links',
+      one: '1 link',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String topologySemantics(int count, int rings) {
+    return 'Network diagram: $count nodes on $rings rings around your radio.';
+  }
 }

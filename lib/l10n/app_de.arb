@@ -1151,5 +1151,12 @@
   "nodesFavoritesOnly": "Nur Favoriten",
   "nodesNoFavorites": "Noch keine Favoriten",
   "nodesNoFavoritesHint": "Öffne einen Knoten und tippe auf seinen Stern, um ihm zu vertrauen. Nur Favoriten zeigt dann nur die Personen, denen du vertraust.",
-  "mapShowAllNodes": "Alle Knoten zeigen"
+  "mapShowAllNodes": "Alle Knoten zeigen",
+  "topologyTitle": "Netzdiagramm",
+  "topologyEmpty": "Noch nichts zu zeichnen. Knoten erscheinen, sobald dein Funkgerät weiß, wie viele Sprünge entfernt sie sind, oder ein Knoten Neighbor Info sendet.",
+  "topologyHint": "Dein Funkgerät ist in der Mitte, jeder Ring ist ein Sprung mehr. Linien sind Verbindungen aus Neighbor-Info-Berichten (dicker = besseres Signal) und direkt gehörte Knoten. Tippe auf einen Punkt, um den Knoten zu öffnen.",
+  "topologyNoReports": "Noch keine Neighbor-Info-Berichte, daher haben nur direkt gehörte Knoten Linien. Schalte das Neighbor-Info-Modul auf deinen Funkgeräten ein, um mehr Verbindungen zu sehen.",
+  "topologyRing": "{count, plural, =0{Direkt gehört} =1{1 Sprung entfernt} other{{count} Sprünge entfernt}}",
+  "topologyLinks": "{count, plural, =1{1 Verbindung} other{{count} Verbindungen}}",
+  "topologySemantics": "Netzdiagramm: {count} Knoten auf {rings} Ringen um dein Funkgerät."
 }

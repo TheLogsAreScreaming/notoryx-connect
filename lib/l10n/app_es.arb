@@ -1151,5 +1151,12 @@
   "nodesFavoritesOnly": "Solo favoritos",
   "nodesNoFavorites": "Aún no hay favoritos",
   "nodesNoFavoritesHint": "Abre un nodo y toca su estrella para confiar en él. Solo favoritos mostrará únicamente a las personas de confianza.",
-  "mapShowAllNodes": "Mostrar todos los nodos"
+  "mapShowAllNodes": "Mostrar todos los nodos",
+  "topologyTitle": "Diagrama de red",
+  "topologyEmpty": "Aún no hay nada que dibujar. Los nodos aparecen cuando tu radio sabe a cuántos saltos están o cuando un nodo envía Neighbor Info.",
+  "topologyHint": "Tu radio está en el centro y cada anillo es un salto más. Las líneas son enlaces de los informes Neighbor Info (más gruesas = mejor señal) y nodos que tu radio oye directamente. Toca un punto para abrir el nodo.",
+  "topologyNoReports": "Aún no hay informes Neighbor Info, así que solo tienen líneas los nodos oídos directamente. Activa el módulo Neighbor Info en tus radios para ver más enlaces.",
+  "topologyRing": "{count, plural, =0{Oídos directamente} =1{A 1 salto} other{A {count} saltos}}",
+  "topologyLinks": "{count, plural, =1{1 enlace} other{{count} enlaces}}",
+  "topologySemantics": "Diagrama de red: {count} nodos en {rings} anillos alrededor de tu radio."
 }

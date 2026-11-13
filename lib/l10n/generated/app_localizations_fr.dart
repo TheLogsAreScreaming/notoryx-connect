@@ -4231,4 +4231,47 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mapShowAllNodes => 'Afficher tous les nœuds';
+
+  @override
+  String get topologyTitle => 'Schéma du réseau';
+
+  @override
+  String get topologyEmpty =>
+      'Rien à dessiner pour l\'instant. Les nœuds apparaissent dès que votre radio connaît leur nombre de sauts, ou qu\'un nœud envoie Neighbor Info.';
+
+  @override
+  String get topologyHint =>
+      'Votre radio est au centre et chaque anneau est un saut de plus. Les lignes sont les liens des rapports Neighbor Info (plus épais = meilleur signal) et les nœuds entendus directement. Touchez un point pour ouvrir le nœud.';
+
+  @override
+  String get topologyNoReports =>
+      'Pas encore de rapports Neighbor Info : seuls les nœuds entendus directement ont des lignes. Activez le module Neighbor Info sur vos radios pour voir plus de liens.';
+
+  @override
+  String topologyRing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'À $count sauts',
+      one: 'À 1 saut',
+      zero: 'Entendus directement',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String topologyLinks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count liens',
+      one: '1 lien',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String topologySemantics(int count, int rings) {
+    return 'Schéma du réseau : $count nœuds sur $rings anneaux autour de votre radio.';
+  }
 }
