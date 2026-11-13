@@ -2677,17 +2677,41 @@
   "sntHide": "Hide messages from flagged senders",
   "sntHideSub": "Channel messages only. You can turn this off at any time.",
   "sntSynced": "Ban list updated {time}",
-  "@sntSynced": {"placeholders": {"time": {"type": "String"}}},
+  "@sntSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "sntNeverSynced": "Ban list not downloaded yet",
   "sntFlaggedCount": "Flagged nodes: {count}",
-  "@sntFlaggedCount": {"placeholders": {"count": {"type": "int"}}},
+  "@sntFlaggedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "sntQueued": "Reports waiting to send: {count}",
-  "@sntQueued": {"placeholders": {"count": {"type": "int"}}},
+  "@sntQueued": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "sntRefresh": "Update now",
   "sntYourNode": "Your node",
   "sntYourNodeClear": "Your node is not flagged.",
   "sntYourNodeFlagged": "Your node is flagged (case {caseRef}). If this is a mistake, you can appeal.",
-  "@sntYourNodeFlagged": {"placeholders": {"caseRef": {"type": "String"}}},
+  "@sntYourNodeFlagged": {
+    "placeholders": {
+      "caseRef": {
+        "type": "String"
+      }
+    }
+  },
   "sntYourNodeUnknown": "Connect a radio to check your node.",
   "sntAppealPending": "Your appeal is being reviewed.",
   "sntAppeal": "Appeal",
@@ -2695,7 +2719,13 @@
   "sntYourReports": "Your recent reports",
   "sntReport": "Report to moderators",
   "sntReportTitle": "Report {name}",
-  "@sntReportTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@sntReportTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "sntReasonSpam": "Spam or advertising",
   "sntReasonFlooding": "Flooding the mesh",
   "sntReasonAbuse": "Harassment or abuse",
@@ -2706,15 +2736,33 @@
   "sntSends": "Sends the node's ID and name, your reason and, if ticked, this message. Not your name, key or location.",
   "sntSend": "Send report",
   "sntSent": "Report sent ({caseRef})",
-  "@sntSent": {"placeholders": {"caseRef": {"type": "String"}}},
+  "@sntSent": {
+    "placeholders": {
+      "caseRef": {
+        "type": "String"
+      }
+    }
+  },
   "sntQueuedOne": "No connection. The report will be sent later.",
   "sntRejected": "Report not accepted: {message}",
-  "@sntRejected": {"placeholders": {"message": {"type": "String"}}},
+  "@sntRejected": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
   "sntOffPrompt": "Turn on community moderation?",
   "sntTurnOn": "Turn on",
   "sntFlagged": "Flagged",
   "sntFlaggedHint": "Flagged by NOTORYX moderators (case {caseRef}). Advisory only.",
-  "@sntFlaggedHint": {"placeholders": {"caseRef": {"type": "String"}}},
+  "@sntFlaggedHint": {
+    "placeholders": {
+      "caseRef": {
+        "type": "String"
+      }
+    }
+  },
   "sntCaseRef": "Case number (SNT-1234)",
   "sntStatement": "Why should the ban be lifted?",
   "sntContact": "Contact (optional, only moderators see it)",
@@ -2724,5 +2772,27 @@
   "sntAppealNotOpen": "That case has no active ban, or an appeal is already waiting.",
   "sntAppealTooMany": "Too many appeals. Try again in a minute.",
   "sntFailed": "Couldn't reach the moderation service. Try again later.",
-  "pvSent7": "Reports, appeals and ban-list checks to NOTORYX moderators through sentinel-relay.meshmayhem.org, only if you turn on Community moderation"
+  "pvSent7": "Reports, appeals and ban-list checks to NOTORYX moderators through sentinel-relay.meshmayhem.org, only if you turn on Community moderation",
+  "psTitle": "Find a place",
+  "psHint": "Node, waypoint or place name",
+  "psNoLocal": "No nodes or waypoints match. Try searching online.",
+  "psOnlineNote": "Searching online sends what you typed to OpenStreetMap's Nominatim service, which also sees your IP address. It needs internet access.",
+  "psSearchOnline": "Search online",
+  "psTooSoon": "Wait a second before searching online again.",
+  "psOnlineFailed": "Couldn't search online. Check the phone has internet access and try again.",
+  "psNoOnline": "No places found online.",
+  "psAttribution": "Place data © OpenStreetMap contributors",
+  "psKindNode": "Node",
+  "psKindWaypoint": "Waypoint",
+  "psKindOnline": "Place",
+  "mapFindPlace": "Find a place",
+  "mapFoundPin": "Found: {name}",
+  "@mapFoundPin": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pvSent8": "What you type into Find a place, to OpenStreetMap's Nominatim service, only when you press Search online; it sees your IP address"
 }

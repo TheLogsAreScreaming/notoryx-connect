@@ -4047,4 +4047,54 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get pvSent7 =>
       'Reports, appeals and ban-list checks to NOTORYX moderators through sentinel-relay.meshmayhem.org, only if you turn on Community moderation';
+
+  @override
+  String get psTitle => 'Find a place';
+
+  @override
+  String get psHint => 'Node, waypoint or place name';
+
+  @override
+  String get psNoLocal => 'No nodes or waypoints match. Try searching online.';
+
+  @override
+  String get psOnlineNote =>
+      'Searching online sends what you typed to OpenStreetMap\'s Nominatim service, which also sees your IP address. It needs internet access.';
+
+  @override
+  String get psSearchOnline => 'Search online';
+
+  @override
+  String get psTooSoon => 'Wait a second before searching online again.';
+
+  @override
+  String get psOnlineFailed =>
+      'Couldn\'t search online. Check the phone has internet access and try again.';
+
+  @override
+  String get psNoOnline => 'No places found online.';
+
+  @override
+  String get psAttribution => 'Place data © OpenStreetMap contributors';
+
+  @override
+  String get psKindNode => 'Node';
+
+  @override
+  String get psKindWaypoint => 'Waypoint';
+
+  @override
+  String get psKindOnline => 'Place';
+
+  @override
+  String get mapFindPlace => 'Find a place';
+
+  @override
+  String mapFoundPin(String name) {
+    return 'Found: $name';
+  }
+
+  @override
+  String get pvSent8 =>
+      'What you type into Find a place, to OpenStreetMap\'s Nominatim service, only when you press Search online; it sees your IP address';
 }
