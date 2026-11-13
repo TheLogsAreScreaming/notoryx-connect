@@ -4218,4 +4218,17 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get takSamePort =>
       'Utilisez un port différent de celui où les positions sont envoyées.';
+
+  @override
+  String get nodesFavoritesOnly => 'Favoris uniquement';
+
+  @override
+  String get nodesNoFavorites => 'Aucun favori pour l\'instant';
+
+  @override
+  String get nodesNoFavoritesHint =>
+      'Ouvrez un nœud et touchez son étoile pour lui faire confiance. Favoris uniquement n\'affichera alors que les personnes de confiance.';
+
+  @override
+  String get mapShowAllNodes => 'Afficher tous les nœuds';
 }

@@ -4196,4 +4196,17 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get takSamePort =>
       'Usa un puerto distinto del que recibe las posiciones enviadas.';
+
+  @override
+  String get nodesFavoritesOnly => 'Solo favoritos';
+
+  @override
+  String get nodesNoFavorites => 'Aún no hay favoritos';
+
+  @override
+  String get nodesNoFavoritesHint =>
+      'Abre un nodo y toca su estrella para confiar en él. Solo favoritos mostrará únicamente a las personas de confianza.';
+
+  @override
+  String get mapShowAllNodes => 'Mostrar todos los nodos';
 }

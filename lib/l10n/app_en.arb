@@ -2844,5 +2844,9 @@
       }
     }
   },
-  "takSamePort": "Use a different port from the one positions are sent to."
+  "takSamePort": "Use a different port from the one positions are sent to.",
+  "nodesFavoritesOnly": "Favorites only",
+  "nodesNoFavorites": "No favorites yet",
+  "nodesNoFavoritesHint": "Open a node and tap its star to trust it. Favorites only then shows just the people you trust.",
+  "mapShowAllNodes": "Show all nodes"
 }

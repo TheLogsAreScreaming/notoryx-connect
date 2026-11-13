@@ -145,10 +145,15 @@ class _MapPageState extends State<MapPage> {
 
   List<MeshtasticNode> get _placed {
     final heard = BastionPreferences.instance.heardWithin;
+    final favoritesOnly = BastionPreferences.instance.favoritesOnly;
+    final favorites = widget.radio.favoriteNums;
     final now = DateTime.now();
     final local = widget.radio.localNode?.num;
     return widget.radio.nodes
-        .where((n) => n.hasPosition && heard.matches(n.lastHeard, now, always: n.num == local))
+        .where((n) =>
+            n.hasPosition &&
+            heard.matches(n.lastHeard, now, always: n.num == local) &&
+            (!favoritesOnly || n.num == local || favorites.contains(n.num)))
         .toList();
   }
 
@@ -349,6 +354,20 @@ class _MapPageState extends State<MapPage> {
                           tooltip: l.mapFindPlace,
                           icon: const Icon(Icons.search),
                           onPressed: () => _findPlace(context),
+                        ),
+                        IconButton(
+                          key: const ValueKey('map-favorites-only'),
+                          tooltip: BastionPreferences.instance.favoritesOnly
+                              ? l.mapShowAllNodes
+                              : l.nodesFavoritesOnly,
+                          isSelected: BastionPreferences.instance.favoritesOnly,
+                          icon: const Icon(Icons.star_border),
+                          selectedIcon: const Icon(Icons.star),
+                          onPressed: () async {
+                            await BastionPreferences.instance
+                                .update(favorites: !BastionPreferences.instance.favoritesOnly);
+                            if (mounted) setState(() {});
+                          },
                         ),
                         PopupMenuButton<BastionHeardWithin>(
                           key: const ValueKey('map-heard-filter'),

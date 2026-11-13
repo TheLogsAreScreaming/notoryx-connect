@@ -4214,4 +4214,17 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get takSamePort =>
       'Verwenden Sie einen anderen Port als den, an den Positionen gesendet werden.';
+
+  @override
+  String get nodesFavoritesOnly => 'Nur Favoriten';
+
+  @override
+  String get nodesNoFavorites => 'Noch keine Favoriten';
+
+  @override
+  String get nodesNoFavoritesHint =>
+      'Öffne einen Knoten und tippe auf seinen Stern, um ihm zu vertrauen. Nur Favoriten zeigt dann nur die Personen, denen du vertraust.';
+
+  @override
+  String get mapShowAllNodes => 'Alle Knoten zeigen';
 }

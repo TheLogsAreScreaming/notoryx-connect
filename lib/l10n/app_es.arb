@@ -1147,5 +1147,9 @@
   "takPoint": "Punto del mapa",
   "mapTakPin": "ATAK {kind}: {callsign}",
   "mapTakUpdated": "Desde ATAK, actualizado a las {time}. Visible hasta las {stale}.",
-  "takSamePort": "Usa un puerto distinto del que recibe las posiciones enviadas."
+  "takSamePort": "Usa un puerto distinto del que recibe las posiciones enviadas.",
+  "nodesFavoritesOnly": "Solo favoritos",
+  "nodesNoFavorites": "Aún no hay favoritos",
+  "nodesNoFavoritesHint": "Abre un nodo y toca su estrella para confiar en él. Solo favoritos mostrará únicamente a las personas de confianza.",
+  "mapShowAllNodes": "Mostrar todos los nodos"
 }

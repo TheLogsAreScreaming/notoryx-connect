@@ -296,12 +296,15 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     return problem;
   }
 
+  /// Nodes starred as favourites.
+  Set<int> get favoriteNums => {for (final r in _nodeDex.records) if (r.favorite) r.num};
+
   /// Phone alerts for watched nodes crossing a zone's edge. This radio's
   /// own position never alerts.
   void _checkGeofences(List<MeshtasticNode> nodes) {
     final zones = _geofenceStore.zones;
     if (zones.isEmpty) return;
-    final favorites = {for (final r in _nodeDex.records) if (r.favorite) r.num};
+    final favorites = favoriteNums;
     final everyone = {for (final n in nodes) n.num};
     _geofenceEngine.check(zones, [
       for (final n in nodes)

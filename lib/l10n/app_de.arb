@@ -1147,5 +1147,9 @@
   "takPoint": "Kartenpunkt",
   "mapTakPin": "ATAK {kind}: {callsign}",
   "mapTakUpdated": "Von ATAK, aktualisiert um {time}. Angezeigt bis {stale}.",
-  "takSamePort": "Verwenden Sie einen anderen Port als den, an den Positionen gesendet werden."
+  "takSamePort": "Verwenden Sie einen anderen Port als den, an den Positionen gesendet werden.",
+  "nodesFavoritesOnly": "Nur Favoriten",
+  "nodesNoFavorites": "Noch keine Favoriten",
+  "nodesNoFavoritesHint": "Öffne einen Knoten und tippe auf seinen Stern, um ihm zu vertrauen. Nur Favoriten zeigt dann nur die Personen, denen du vertraust.",
+  "mapShowAllNodes": "Alle Knoten zeigen"
 }
