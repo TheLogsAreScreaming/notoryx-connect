@@ -10,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'link_planner_page.dart';
 import 'node_detail_page.dart';
+import 'place_search_page.dart';
 import 'services/bastion_coverage_grid.dart';
 import 'services/bastion_field_log.dart';
 import 'services/bastion_geo.dart';
@@ -25,6 +26,7 @@ import 'services/bastion_waypoints.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'services/bastion_nodedex.dart';
+import 'services/bastion_place_search.dart';
 import 'theme/notoryx_theme.dart';
 
 /// Mesh nodes with a reported position on an OpenStreetMap base map.
@@ -67,6 +69,9 @@ class _MapPageState extends State<MapPage> {
   bool _showTrails = true;
   bool _showHeatmap = false;
   bool _showRemembered = false;
+
+  /// The last place chosen in Find a place, shown with a pin until cleared.
+  PlaceResult? _found;
 
   /// Shows OpenTopoMap contour tiles instead of the street map.
   bool _topo = false;
@@ -136,6 +141,15 @@ class _MapPageState extends State<MapPage> {
             '${l.mapTakUpdated(TimeOfDay.fromDateTime(m.received).format(context), TimeOfDay.fromDateTime(m.stale).format(context))}'),
       )),
     );
+  }
+
+  Future<void> _findPlace(BuildContext context) async {
+    final result = await Navigator.of(context).push(MaterialPageRoute<PlaceResult>(
+      builder: (_) => PlaceSearchPage(nodes: widget.radio.nodes, waypoints: widget.radio.waypoints),
+    ));
+    if (result == null || !mounted) return;
+    setState(() => _found = result);
+    _map.move(LatLng(result.latitude, result.longitude), 14);
   }
 
   @override
@@ -267,6 +281,26 @@ class _MapPageState extends State<MapPage> {
                           child: _TakPin(marker: m, onTap: () => _showTak(context, m)),
                         ),
                     ]),
+                  if (_found case final found?)
+                    MarkerLayer(markers: [
+                      Marker(
+                        point: LatLng(found.latitude, found.longitude),
+                        width: 48,
+                        height: 48,
+                        alignment: Alignment.topCenter,
+                        child: Semantics(
+                          button: true,
+                          label: l.mapFoundPin(found.name),
+                          child: GestureDetector(
+                            key: const ValueKey('found-pin'),
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () => setState(() => _found = null),
+                            child: const ExcludeSemantics(
+                                child: Icon(Icons.location_on, size: 44, color: MapPage.accent)),
+                          ),
+                        ),
+                      ),
+                    ]),
                   MarkerLayer(
                     markers: [
                       for (final waypoint in widget.radio.waypoints)
@@ -335,6 +369,12 @@ class _MapPageState extends State<MapPage> {
                             ), key: const ValueKey('heatmap-summary')),
                           )),
                       Wrap(alignment: WrapAlignment.end, children: [
+                        IconButton(
+                          key: const ValueKey('map-find-place'),
+                          tooltip: l.mapFindPlace,
+                          icon: const Icon(Icons.search),
+                          onPressed: () => _findPlace(context),
+                        ),
                         PopupMenuButton<BastionHeardWithin>(
                           key: const ValueKey('map-heard-filter'),
                           tooltip: l.mapHeardWithin,

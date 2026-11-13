@@ -2773,6 +2773,28 @@
   "sntAppealTooMany": "Too many appeals. Try again in a minute.",
   "sntFailed": "Couldn't reach the moderation service. Try again later.",
   "pvSent7": "Reports, appeals and ban-list checks to NOTORYX moderators through sentinel-relay.meshmayhem.org, only if you turn on Community moderation",
+  "psTitle": "Find a place",
+  "psHint": "Node, waypoint or place name",
+  "psNoLocal": "No nodes or waypoints match. Try searching online.",
+  "psOnlineNote": "Searching online sends what you typed to OpenStreetMap's Nominatim service, which also sees your IP address. It needs internet access.",
+  "psSearchOnline": "Search online",
+  "psTooSoon": "Wait a second before searching online again.",
+  "psOnlineFailed": "Couldn't search online. Check the phone has internet access and try again.",
+  "psNoOnline": "No places found online.",
+  "psAttribution": "Place data © OpenStreetMap contributors",
+  "psKindNode": "Node",
+  "psKindWaypoint": "Waypoint",
+  "psKindOnline": "Place",
+  "mapFindPlace": "Find a place",
+  "mapFoundPin": "Found: {name}",
+  "@mapFoundPin": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pvSent8": "What you type into Find a place, to OpenStreetMap's Nominatim service, only when you press Search online; it sees your IP address",
   "takReceiveTitle": "From ATAK",
   "takReceiveIntro": "Shows markers that ATAK on this phone shares, such as team members and map points, on this app's map. They stay on this phone and are never sent over the mesh.",
   "takReceiveSwitch": "Show ATAK markers on the map",

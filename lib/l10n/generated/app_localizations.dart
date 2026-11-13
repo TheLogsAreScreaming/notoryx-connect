@@ -6813,6 +6813,96 @@ abstract class AppLocalizations {
   /// **'Reports, appeals and ban-list checks to NOTORYX moderators through sentinel-relay.meshmayhem.org, only if you turn on Community moderation'**
   String get pvSent7;
 
+  /// No description provided for @psTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a place'**
+  String get psTitle;
+
+  /// No description provided for @psHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Node, waypoint or place name'**
+  String get psHint;
+
+  /// No description provided for @psNoLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes or waypoints match. Try searching online.'**
+  String get psNoLocal;
+
+  /// No description provided for @psOnlineNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching online sends what you typed to OpenStreetMap\'s Nominatim service, which also sees your IP address. It needs internet access.'**
+  String get psOnlineNote;
+
+  /// No description provided for @psSearchOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Search online'**
+  String get psSearchOnline;
+
+  /// No description provided for @psTooSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait a second before searching online again.'**
+  String get psTooSoon;
+
+  /// No description provided for @psOnlineFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t search online. Check the phone has internet access and try again.'**
+  String get psOnlineFailed;
+
+  /// No description provided for @psNoOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'No places found online.'**
+  String get psNoOnline;
+
+  /// No description provided for @psAttribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Place data © OpenStreetMap contributors'**
+  String get psAttribution;
+
+  /// No description provided for @psKindNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Node'**
+  String get psKindNode;
+
+  /// No description provided for @psKindWaypoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoint'**
+  String get psKindWaypoint;
+
+  /// No description provided for @psKindOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get psKindOnline;
+
+  /// No description provided for @mapFindPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a place'**
+  String get mapFindPlace;
+
+  /// No description provided for @mapFoundPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Found: {name}'**
+  String mapFoundPin(String name);
+
+  /// No description provided for @pvSent8.
+  ///
+  /// In en, this message translates to:
+  /// **'What you type into Find a place, to OpenStreetMap\'s Nominatim service, only when you press Search online; it sees your IP address'**
+  String get pvSent8;
+
   /// No description provided for @takReceiveTitle.
   ///
   /// In en, this message translates to:

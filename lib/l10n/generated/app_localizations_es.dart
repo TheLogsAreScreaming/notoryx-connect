@@ -4079,6 +4079,59 @@ class AppLocalizationsEs extends AppLocalizations {
       'Denuncias, apelaciones y consultas de la lista de bloqueos a los moderadores de NOTORYX a través de sentinel-relay.meshmayhem.org, solo si activas la moderación comunitaria';
 
   @override
+  String get psTitle => 'Buscar un lugar';
+
+  @override
+  String get psHint => 'Nodo, punto de ruta o lugar';
+
+  @override
+  String get psNoLocal =>
+      'Ningún nodo ni punto de ruta coincide. Prueba a buscar en línea.';
+
+  @override
+  String get psOnlineNote =>
+      'La búsqueda en línea envía lo que escribiste al servicio Nominatim de OpenStreetMap, que también ve tu dirección IP. Necesita acceso a internet.';
+
+  @override
+  String get psSearchOnline => 'Buscar en línea';
+
+  @override
+  String get psTooSoon =>
+      'Espera un segundo antes de volver a buscar en línea.';
+
+  @override
+  String get psOnlineFailed =>
+      'No se pudo buscar en línea. Comprueba que el teléfono tenga acceso a internet y vuelve a intentarlo.';
+
+  @override
+  String get psNoOnline => 'No se encontraron lugares en línea.';
+
+  @override
+  String get psAttribution =>
+      'Datos de lugares © colaboradores de OpenStreetMap';
+
+  @override
+  String get psKindNode => 'Nodo';
+
+  @override
+  String get psKindWaypoint => 'Punto de ruta';
+
+  @override
+  String get psKindOnline => 'Lugar';
+
+  @override
+  String get mapFindPlace => 'Buscar un lugar';
+
+  @override
+  String mapFoundPin(String name) {
+    return 'Encontrado: $name';
+  }
+
+  @override
+  String get pvSent8 =>
+      'Lo que escribes en Buscar un lugar, al servicio Nominatim de OpenStreetMap, solo cuando pulsas Buscar en línea; ve tu dirección IP';
+
+  @override
   String get takReceiveTitle => 'Desde ATAK';
 
   @override
