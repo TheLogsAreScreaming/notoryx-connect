@@ -1248,7 +1248,7 @@
   "lockUnlock": "Unlock",
   "lockReason": "Unlock NOTORYX Connect",
   "takTitle": "ATAK feed",
-  "toolsTakSub": "Show mesh nodes in ATAK on this phone",
+  "toolsTakSub": "Swap positions with ATAK on this phone",
   "takIntro": "Sends the position of each mesh node to ATAK on this phone, once every 30 seconds. Nothing leaves the phone, and nothing goes out over the mesh.",
   "takSwitch": "Send mesh positions to ATAK",
   "takPort": "UDP port",
@@ -2677,17 +2677,41 @@
   "sntHide": "Hide messages from flagged senders",
   "sntHideSub": "Channel messages only. You can turn this off at any time.",
   "sntSynced": "Ban list updated {time}",
-  "@sntSynced": {"placeholders": {"time": {"type": "String"}}},
+  "@sntSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "sntNeverSynced": "Ban list not downloaded yet",
   "sntFlaggedCount": "Flagged nodes: {count}",
-  "@sntFlaggedCount": {"placeholders": {"count": {"type": "int"}}},
+  "@sntFlaggedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "sntQueued": "Reports waiting to send: {count}",
-  "@sntQueued": {"placeholders": {"count": {"type": "int"}}},
+  "@sntQueued": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "sntRefresh": "Update now",
   "sntYourNode": "Your node",
   "sntYourNodeClear": "Your node is not flagged.",
   "sntYourNodeFlagged": "Your node is flagged (case {caseRef}). If this is a mistake, you can appeal.",
-  "@sntYourNodeFlagged": {"placeholders": {"caseRef": {"type": "String"}}},
+  "@sntYourNodeFlagged": {
+    "placeholders": {
+      "caseRef": {
+        "type": "String"
+      }
+    }
+  },
   "sntYourNodeUnknown": "Connect a radio to check your node.",
   "sntAppealPending": "Your appeal is being reviewed.",
   "sntAppeal": "Appeal",
@@ -2695,7 +2719,13 @@
   "sntYourReports": "Your recent reports",
   "sntReport": "Report to moderators",
   "sntReportTitle": "Report {name}",
-  "@sntReportTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@sntReportTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "sntReasonSpam": "Spam or advertising",
   "sntReasonFlooding": "Flooding the mesh",
   "sntReasonAbuse": "Harassment or abuse",
@@ -2706,15 +2736,33 @@
   "sntSends": "Sends the node's ID and name, your reason and, if ticked, this message. Not your name, key or location.",
   "sntSend": "Send report",
   "sntSent": "Report sent ({caseRef})",
-  "@sntSent": {"placeholders": {"caseRef": {"type": "String"}}},
+  "@sntSent": {
+    "placeholders": {
+      "caseRef": {
+        "type": "String"
+      }
+    }
+  },
   "sntQueuedOne": "No connection. The report will be sent later.",
   "sntRejected": "Report not accepted: {message}",
-  "@sntRejected": {"placeholders": {"message": {"type": "String"}}},
+  "@sntRejected": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
   "sntOffPrompt": "Turn on community moderation?",
   "sntTurnOn": "Turn on",
   "sntFlagged": "Flagged",
   "sntFlaggedHint": "Flagged by NOTORYX moderators (case {caseRef}). Advisory only.",
-  "@sntFlaggedHint": {"placeholders": {"caseRef": {"type": "String"}}},
+  "@sntFlaggedHint": {
+    "placeholders": {
+      "caseRef": {
+        "type": "String"
+      }
+    }
+  },
   "sntCaseRef": "Case number (SNT-1234)",
   "sntStatement": "Why should the ban be lifted?",
   "sntContact": "Contact (optional, only moderators see it)",
@@ -2724,5 +2772,55 @@
   "sntAppealNotOpen": "That case has no active ban, or an appeal is already waiting.",
   "sntAppealTooMany": "Too many appeals. Try again in a minute.",
   "sntFailed": "Couldn't reach the moderation service. Try again later.",
-  "pvSent7": "Reports, appeals and ban-list checks to NOTORYX moderators through sentinel-relay.meshmayhem.org, only if you turn on Community moderation"
+  "pvSent7": "Reports, appeals and ban-list checks to NOTORYX moderators through sentinel-relay.meshmayhem.org, only if you turn on Community moderation",
+  "takReceiveTitle": "From ATAK",
+  "takReceiveIntro": "Shows markers that ATAK on this phone shares, such as team members and map points, on this app's map. They stay on this phone and are never sent over the mesh.",
+  "takReceiveSwitch": "Show ATAK markers on the map",
+  "takReceivePort": "UDP port to listen on",
+  "takReceiveStatus": "{count, plural, =0{Listening. No markers yet.} one{Showing {count} marker} other{Showing {count} markers}}",
+  "@takReceiveStatus": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "takReceiveProblem": "Could not listen: {error}",
+  "@takReceiveProblem": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "takReceiveHowTo": "In ATAK, open Settings, then Network Preferences, then Manage Outputs, and add a UDP output to 127.0.0.1 on this port. Markers disappear when ATAK says they are stale.",
+  "takClear": "Clear markers",
+  "takFriendly": "Friendly",
+  "takHostile": "Hostile",
+  "takNeutral": "Neutral",
+  "takUnknown": "Unknown",
+  "takPoint": "Map point",
+  "mapTakPin": "ATAK {kind}: {callsign}",
+  "@mapTakPin": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "callsign": {
+        "type": "String"
+      }
+    }
+  },
+  "mapTakUpdated": "From ATAK, updated {time}. Shown until {stale}.",
+  "@mapTakUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "stale": {
+        "type": "String"
+      }
+    }
+  },
+  "takSamePort": "Use a different port from the one positions are sent to."
 }

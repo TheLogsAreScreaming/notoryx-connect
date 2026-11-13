@@ -2963,7 +2963,7 @@ abstract class AppLocalizations {
   /// No description provided for @toolsTakSub.
   ///
   /// In en, this message translates to:
-  /// **'Show mesh nodes in ATAK on this phone'**
+  /// **'Swap positions with ATAK on this phone'**
   String get toolsTakSub;
 
   /// No description provided for @takIntro.
@@ -6812,6 +6812,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reports, appeals and ban-list checks to NOTORYX moderators through sentinel-relay.meshmayhem.org, only if you turn on Community moderation'**
   String get pvSent7;
+
+  /// No description provided for @takReceiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'From ATAK'**
+  String get takReceiveTitle;
+
+  /// No description provided for @takReceiveIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows markers that ATAK on this phone shares, such as team members and map points, on this app\'s map. They stay on this phone and are never sent over the mesh.'**
+  String get takReceiveIntro;
+
+  /// No description provided for @takReceiveSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Show ATAK markers on the map'**
+  String get takReceiveSwitch;
+
+  /// No description provided for @takReceivePort.
+  ///
+  /// In en, this message translates to:
+  /// **'UDP port to listen on'**
+  String get takReceivePort;
+
+  /// No description provided for @takReceiveStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Listening. No markers yet.} one{Showing {count} marker} other{Showing {count} markers}}'**
+  String takReceiveStatus(int count);
+
+  /// No description provided for @takReceiveProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not listen: {error}'**
+  String takReceiveProblem(String error);
+
+  /// No description provided for @takReceiveHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'In ATAK, open Settings, then Network Preferences, then Manage Outputs, and add a UDP output to 127.0.0.1 on this port. Markers disappear when ATAK says they are stale.'**
+  String get takReceiveHowTo;
+
+  /// No description provided for @takClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear markers'**
+  String get takClear;
+
+  /// No description provided for @takFriendly.
+  ///
+  /// In en, this message translates to:
+  /// **'Friendly'**
+  String get takFriendly;
+
+  /// No description provided for @takHostile.
+  ///
+  /// In en, this message translates to:
+  /// **'Hostile'**
+  String get takHostile;
+
+  /// No description provided for @takNeutral.
+  ///
+  /// In en, this message translates to:
+  /// **'Neutral'**
+  String get takNeutral;
+
+  /// No description provided for @takUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get takUnknown;
+
+  /// No description provided for @takPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Map point'**
+  String get takPoint;
+
+  /// No description provided for @mapTakPin.
+  ///
+  /// In en, this message translates to:
+  /// **'ATAK {kind}: {callsign}'**
+  String mapTakPin(String kind, String callsign);
+
+  /// No description provided for @mapTakUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'From ATAK, updated {time}. Shown until {stale}.'**
+  String mapTakUpdated(String time, String stale);
+
+  /// No description provided for @takSamePort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a different port from the one positions are sent to.'**
+  String get takSamePort;
 }
 
 class _AppLocalizationsDelegate
