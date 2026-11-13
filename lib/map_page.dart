@@ -26,7 +26,7 @@ import 'services/bastion_team.dart';
 import 'services/bastion_waypoints.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
-import 'services/bastion_nodedex.dart';
+import 'services/bastion_node_vault.dart';
 import 'services/bastion_place_search.dart';
 import 'theme/notoryx_theme.dart';
 
@@ -136,6 +136,21 @@ class _MapPageState extends State<MapPage> {
     if (result == null || !mounted) return;
     setState(() => _found = result);
     _map.move(LatLng(result.latitude, result.longitude), 14);
+  }
+
+  void _showTak(BuildContext context, TakMarker m) {
+    final kind = _TakPin.kind(AppLocalizations.of(context), m);
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) => SafeArea(child: ListTile(
+        leading: Icon(_TakPin.icon(m), semanticLabel: kind),
+        title: Text(m.callsign),
+        subtitle: Text('$kind · ${m.type}\n'
+            '${m.latitude.toStringAsFixed(5)}, ${m.longitude.toStringAsFixed(5)}\n'
+            '${l.mapTakUpdated(TimeOfDay.fromDateTime(m.received).format(context), TimeOfDay.fromDateTime(m.stale).format(context))}'),
+      )),
+    );
   }
 
   @override
@@ -281,6 +296,16 @@ class _MapPageState extends State<MapPage> {
                           ),
                         ),
                       ),
+                    ]),
+                  if (takMarkers.isNotEmpty)
+                    MarkerLayer(markers: [
+                      for (final m in takMarkers)
+                        Marker(
+                          point: LatLng(m.latitude, m.longitude),
+                          width: 96,
+                          height: MediaQuery.textScalerOf(context).scale(56),
+                          child: _TakPin(marker: m, onTap: () => _showTak(context, m)),
+                        ),
                     ]),
                   MarkerLayer(
                     markers: [
@@ -576,7 +601,7 @@ class _MapPageState extends State<MapPage> {
   /// Nodes with a saved position that the radio no longer places.
   List<BastionNodeRecord> get _remembered {
     final current = {for (final n in widget.radio.nodes) if (n.hasPosition) n.num};
-    return [for (final r in widget.radio.nodeDex) if (r.hasPosition && !current.contains(r.num)) r];
+    return [for (final r in widget.radio.nodeVault) if (r.hasPosition && !current.contains(r.num)) r];
   }
 
   void _toggleRemembered(BuildContext context) {

@@ -94,10 +94,11 @@ class BastionNodeRecord {
 /// the node. Favorites and notes describe the remote node itself, so they are
 /// shared across radios. History saved before this split moves to the first
 /// radio that connects; the original is kept under `$legacyKey.migrated`.
-class BastionNodeDex {
-  BastionNodeDex({SharedPreferencesAsync? preferences})
+class BastionNodeVault {
+  BastionNodeVault({SharedPreferencesAsync? preferences})
       : _preferences = preferences;
 
+  // Stored keys keep their original names so existing phones and backups still load.
   static const legacyKey = 'bastion.nodedex.v1';
   static const annotationsKey = 'bastion.nodedex.annotations.v1';
   static String radioKey(int radio) =>

@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bastion_chat_message.dart';
 import 'bastion_geofences.dart';
 import 'bastion_node_journal.dart';
-import 'bastion_nodedex.dart';
+import 'bastion_node_vault.dart';
 import 'bastion_telemetry_codec.dart';
 import 'bastion_telemetry_history.dart';
 import 'bastion_trip.dart';
@@ -172,7 +172,7 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
   @override
   String? get backgroundProblem => null;
   @override
-  List<BastionNodeRecord> get nodeDex => const [];
+  List<BastionNodeRecord> get nodeVault => const [];
 
   /// A journal kept in memory, filled with the demo nodes.
   @override

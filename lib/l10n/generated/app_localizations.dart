@@ -2079,7 +2079,7 @@ abstract class AppLocalizations {
   /// No description provided for @setMoveBody.
   ///
   /// In en, this message translates to:
-  /// **'Its messages, offline queue, NodeDex history, trails and telemetry history move to {to}. Whatever {to} already has is kept, so nothing is overwritten. {id} then no longer has an entry of its own.\n\nTo be safe, make a phone data backup first.'**
+  /// **'Its messages, offline queue, NodeVault history, trails and telemetry history move to {to}. Whatever {to} already has is kept, so nothing is overwritten. {id} then no longer has an entry of its own.\n\nTo be safe, make a phone data backup first.'**
   String setMoveBody(String to, String id);
 
   /// No description provided for @setMove.
@@ -4881,7 +4881,7 @@ abstract class AppLocalizations {
   /// No description provided for @pvStored2.
   ///
   /// In en, this message translates to:
-  /// **'NodeDex: nodes your radios have heard, plus your favorites and notes'**
+  /// **'NodeVault: nodes your radios have heard, plus your favorites and notes'**
   String get pvStored2;
 
   /// No description provided for @pvStored3.
@@ -4965,7 +4965,7 @@ abstract class AppLocalizations {
   /// No description provided for @pvDeleteAllBody.
   ///
   /// In en, this message translates to:
-  /// **'Deletes chats and offline queues for every radio, NodeDex, favorites and notes, waypoints, field records, cached map tiles and all app settings from this phone. Radio settings are not changed. This cannot be undone; make a phone data backup first if you may need it.\n\nThe app closes afterwards.'**
+  /// **'Deletes chats and offline queues for every radio, NodeVault, favorites and notes, waypoints, field records, cached map tiles and all app settings from this phone. Radio settings are not changed. This cannot be undone; make a phone data backup first if you may need it.\n\nThe app closes afterwards.'**
   String get pvDeleteAllBody;
 
   /// No description provided for @pvDeleteChatsBody.
@@ -5103,7 +5103,7 @@ abstract class AppLocalizations {
   /// No description provided for @pbSummary.
   ///
   /// In en, this message translates to:
-  /// **'Backup created {date} by version {version}.\n\nIt has chat history for {radios, plural, one{{radios} radio} other{{radios} radios}} ({messages} messages) and {items} saved items in all.\n\nEverything NOTORYX Connect stores on this phone (chats, offline queues, NodeDex, waypoints, field records and settings) is replaced. Radio settings are not changed. The app closes when the restore finishes; open it again to continue.'**
+  /// **'Backup created {date} by version {version}.\n\nIt has chat history for {radios, plural, one{{radios} radio} other{{radios} radios}} ({messages} messages) and {items} saved items in all.\n\nEverything NOTORYX Connect stores on this phone (chats, offline queues, NodeVault, waypoints, field records and settings) is replaced. Radio settings are not changed. The app closes when the restore finishes; open it again to continue.'**
   String pbSummary(
     String date,
     String version,
@@ -5139,7 +5139,7 @@ abstract class AppLocalizations {
   /// No description provided for @pbIntro.
   ///
   /// In en, this message translates to:
-  /// **'Backs up everything NOTORYX Connect stores on this phone: chat history and offline queues for every radio, NodeDex favorites and notes, waypoints, field records and app settings. Use it to move to a new phone. The file is encrypted with your password. Radio settings have their own backup.'**
+  /// **'Backs up everything NOTORYX Connect stores on this phone: chat history and offline queues for every radio, NodeVault favorites and notes, waypoints, field records and app settings. Use it to move to a new phone. The file is encrypted with your password. Radio settings have their own backup.'**
   String get pbIntro;
 
   /// No description provided for @pbPassword.

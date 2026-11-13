@@ -337,9 +337,9 @@ class _NodesPage extends StatelessWidget {
             ]),
           )),
         ],
-        if (radio.nodeDex.isNotEmpty && BastionPreferences.instance.encounters) ...[
+        if (radio.nodeVault.isNotEmpty && BastionPreferences.instance.encounters) ...[
           NxSectionLabel(l.nodesEncounters),
-          for (final record in radio.nodeDex)
+          for (final record in radio.nodeVault)
             Card(child: ListTile(
               leading: Icon(record.favorite ? Icons.star : Icons.person_pin_circle_outlined,
                 color: record.favorite ? scheme.primary : null),
