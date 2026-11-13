@@ -1216,7 +1216,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String setMoveBody(String to, String id) {
-    return 'Sus mensajes, cola sin conexión, historial de NodeDex, rutas y telemetría pasan a $to. Lo que $to ya tenga se conserva, así que no se sobrescribe nada. Después, $id ya no tendrá entrada propia.\n\nPor seguridad, haz antes una copia de los datos del teléfono.';
+    return 'Sus mensajes, cola sin conexión, historial de NodeVault, rutas y telemetría pasan a $to. Lo que $to ya tenga se conserva, así que no se sobrescribe nada. Después, $id ya no tendrá entrada propia.\n\nPor seguridad, haz antes una copia de los datos del teléfono.';
   }
 
   @override
@@ -2917,7 +2917,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pvStored2 =>
-      'NodeDex: los nodos que oyeron tus radios, más tus favoritos y notas';
+      'NodeVault: los nodos que oyeron tus radios, más tus favoritos y notas';
 
   @override
   String get pvStored3 => 'Puntos de ruta recibidos de la malla';
@@ -2969,7 +2969,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pvDeleteAllBody =>
-      'Borra de este teléfono los chats y colas sin conexión de todas las radios, NodeDex, favoritos y notas, puntos de ruta, registros de campo, teselas de mapa guardadas y todos los ajustes de la aplicación. Los ajustes de la radio no cambian. No se puede deshacer; haz antes una copia de seguridad de los datos del teléfono si puedes necesitarlos.\n\nLa aplicación se cierra después.';
+      'Borra de este teléfono los chats y colas sin conexión de todas las radios, NodeVault, favoritos y notas, puntos de ruta, registros de campo, teselas de mapa guardadas y todos los ajustes de la aplicación. Los ajustes de la radio no cambian. No se puede deshacer; haz antes una copia de seguridad de los datos del teléfono si puedes necesitarlos.\n\nLa aplicación se cierra después.';
 
   @override
   String get pvDeleteChatsBody =>
@@ -3064,7 +3064,7 @@ class AppLocalizationsEs extends AppLocalizations {
       other: '$radios radios',
       one: '$radios radio',
     );
-    return 'Copia creada el $date con la versión $version.\n\nTiene historial de chat de $_temp0 ($messages mensajes) y $items elementos guardados en total.\n\nSe reemplaza todo lo que NOTORYX Connect guarda en este teléfono (chats, colas sin conexión, NodeDex, puntos de ruta, registros de campo y ajustes). Los ajustes de la radio no cambian. La aplicación se cierra al terminar la restauración; vuelve a abrirla para continuar.';
+    return 'Copia creada el $date con la versión $version.\n\nTiene historial de chat de $_temp0 ($messages mensajes) y $items elementos guardados en total.\n\nSe reemplaza todo lo que NOTORYX Connect guarda en este teléfono (chats, colas sin conexión, NodeVault, puntos de ruta, registros de campo y ajustes). Los ajustes de la radio no cambian. La aplicación se cierra al terminar la restauración; vuelve a abrirla para continuar.';
   }
 
   @override
@@ -3082,7 +3082,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pbIntro =>
-      'Guarda una copia de todo lo que NOTORYX Connect almacena en este teléfono: historial de chat y colas sin conexión de todas las radios, favoritos y notas de NodeDex, puntos de ruta, registros de campo y ajustes. Sirve para cambiar de teléfono. El archivo se cifra con tu contraseña. Los ajustes de la radio tienen su propia copia.';
+      'Guarda una copia de todo lo que NOTORYX Connect almacena en este teléfono: historial de chat y colas sin conexión de todas las radios, favoritos y notas de NodeVault, puntos de ruta, registros de campo y ajustes. Sirve para cambiar de teléfono. El archivo se cifra con tu contraseña. Los ajustes de la radio tienen su propia copia.';
 
   @override
   String get pbPassword => 'Contraseña de la copia (al menos 12 caracteres)';

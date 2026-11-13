@@ -1227,7 +1227,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String setMoveBody(String to, String id) {
-    return 'Ses messages, sa file hors ligne, son historique NodeDex, ses traces et son historique de télémétrie passent à $to. Ce que $to possède déjà est conservé, donc rien n\'est écrasé. $id n\'a ensuite plus d\'entrée propre.\n\nPar précaution, faites d\'abord une sauvegarde des données du téléphone.';
+    return 'Ses messages, sa file hors ligne, son historique NodeVault, ses traces et son historique de télémétrie passent à $to. Ce que $to possède déjà est conservé, donc rien n\'est écrasé. $id n\'a ensuite plus d\'entrée propre.\n\nPar précaution, faites d\'abord une sauvegarde des données du téléphone.';
   }
 
   @override
@@ -2933,7 +2933,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pvStored2 =>
-      'NodeDex : les nœuds que vos radios ont entendus, ainsi que vos favoris et notes';
+      'NodeVault : les nœuds que vos radios ont entendus, ainsi que vos favoris et notes';
 
   @override
   String get pvStored3 => 'Points de passage reçus du maillage';
@@ -2985,7 +2985,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pvDeleteAllBody =>
-      'Supprime de ce téléphone les discussions et files hors ligne de chaque radio, NodeDex, favoris et notes, points de passage, registres de terrain, tuiles de carte en cache et tous les réglages de l\'application. Les réglages de la radio ne changent pas. Cette action est irréversible ; faites d\'abord une sauvegarde des données du téléphone si vous pourriez en avoir besoin.\n\nL\'application se ferme ensuite.';
+      'Supprime de ce téléphone les discussions et files hors ligne de chaque radio, NodeVault, favoris et notes, points de passage, registres de terrain, tuiles de carte en cache et tous les réglages de l\'application. Les réglages de la radio ne changent pas. Cette action est irréversible ; faites d\'abord une sauvegarde des données du téléphone si vous pourriez en avoir besoin.\n\nL\'application se ferme ensuite.';
 
   @override
   String get pvDeleteChatsBody =>
@@ -3080,7 +3080,7 @@ class AppLocalizationsFr extends AppLocalizations {
       other: '$radios radios',
       one: '$radios radio',
     );
-    return 'Sauvegarde créée le $date par la version $version.\n\nElle contient l\'historique des discussions de $_temp0 ($messages messages) et $items éléments enregistrés au total.\n\nTout ce que NOTORYX Connect stocke sur ce téléphone (discussions, files hors ligne, NodeDex, points de passage, registres de terrain et réglages) est remplacé. Les réglages de la radio ne changent pas. L\'application se ferme à la fin de la restauration ; rouvrez-la pour continuer.';
+    return 'Sauvegarde créée le $date par la version $version.\n\nElle contient l\'historique des discussions de $_temp0 ($messages messages) et $items éléments enregistrés au total.\n\nTout ce que NOTORYX Connect stocke sur ce téléphone (discussions, files hors ligne, NodeVault, points de passage, registres de terrain et réglages) est remplacé. Les réglages de la radio ne changent pas. L\'application se ferme à la fin de la restauration ; rouvrez-la pour continuer.';
   }
 
   @override
@@ -3098,7 +3098,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pbIntro =>
-      'Sauvegarde tout ce que NOTORYX Connect stocke sur ce téléphone : historique des discussions et files hors ligne de chaque radio, favoris et notes NodeDex, points de passage, registres de terrain et réglages de l\'application. Utilisez-la pour passer à un nouveau téléphone. Le fichier est chiffré avec votre mot de passe. Les réglages de la radio ont leur propre sauvegarde.';
+      'Sauvegarde tout ce que NOTORYX Connect stocke sur ce téléphone : historique des discussions et files hors ligne de chaque radio, favoris et notes NodeVault, points de passage, registres de terrain et réglages de l\'application. Utilisez-la pour passer à un nouveau téléphone. Le fichier est chiffré avec votre mot de passe. Les réglages de la radio ont leur propre sauvegarde.';
 
   @override
   String get pbPassword =>

@@ -107,7 +107,7 @@ Newer betas install over older ones and keep your data. Don't uninstall first.
 
 ### Privacy and backups
 - **Settings → Privacy & data** explains what's stored and sent, and can delete chat history or all phone data.
-- **Encrypted phone data backup** to a file: chats and queues for every radio, NodeDex, waypoints, field records and settings. Restoring replaces everything and rolls back if it fails.
+- **Encrypted phone data backup** to a file: chats and queues for every radio, NodeVault, waypoints, field records and settings. Restoring replaces everything and rolls back if it fails.
 - Light, dark and system themes, and layouts that hold up with large text.
 
 ## Safety
