@@ -6524,6 +6524,294 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unknown'**
   String get cpUnknown;
+
+  /// No description provided for @sntTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Community moderation'**
+  String get sntTitle;
+
+  /// No description provided for @sntToolSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report spam to NOTORYX moderators and see flagged nodes'**
+  String get sntToolSubtitle;
+
+  /// No description provided for @sntIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports go to NOTORYX moderators, who review each one by hand. Approved bans come back as an advisory list: flagged nodes get a label, and nothing on the mesh is blocked.'**
+  String get sntIntro;
+
+  /// No description provided for @sntEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Use community moderation'**
+  String get sntEnable;
+
+  /// No description provided for @sntEnableSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Off by default. While it is off, NOTORYX never contacts the moderation service.'**
+  String get sntEnableSub;
+
+  /// No description provided for @sntHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide messages from flagged senders'**
+  String get sntHide;
+
+  /// No description provided for @sntHideSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel messages only. You can turn this off at any time.'**
+  String get sntHideSub;
+
+  /// No description provided for @sntSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Ban list updated {time}'**
+  String sntSynced(String time);
+
+  /// No description provided for @sntNeverSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Ban list not downloaded yet'**
+  String get sntNeverSynced;
+
+  /// No description provided for @sntFlaggedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Flagged nodes: {count}'**
+  String sntFlaggedCount(int count);
+
+  /// No description provided for @sntQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports waiting to send: {count}'**
+  String sntQueued(int count);
+
+  /// No description provided for @sntRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Update now'**
+  String get sntRefresh;
+
+  /// No description provided for @sntYourNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Your node'**
+  String get sntYourNode;
+
+  /// No description provided for @sntYourNodeClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Your node is not flagged.'**
+  String get sntYourNodeClear;
+
+  /// No description provided for @sntYourNodeFlagged.
+  ///
+  /// In en, this message translates to:
+  /// **'Your node is flagged (case {caseRef}). If this is a mistake, you can appeal.'**
+  String sntYourNodeFlagged(String caseRef);
+
+  /// No description provided for @sntYourNodeUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a radio to check your node.'**
+  String get sntYourNodeUnknown;
+
+  /// No description provided for @sntAppealPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Your appeal is being reviewed.'**
+  String get sntAppealPending;
+
+  /// No description provided for @sntAppeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Appeal'**
+  String get sntAppeal;
+
+  /// No description provided for @sntAppealOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Appeal a case by number'**
+  String get sntAppealOther;
+
+  /// No description provided for @sntYourReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recent reports'**
+  String get sntYourReports;
+
+  /// No description provided for @sntReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Report to moderators'**
+  String get sntReport;
+
+  /// No description provided for @sntReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report {name}'**
+  String sntReportTitle(String name);
+
+  /// No description provided for @sntReasonSpam.
+  ///
+  /// In en, this message translates to:
+  /// **'Spam or advertising'**
+  String get sntReasonSpam;
+
+  /// No description provided for @sntReasonFlooding.
+  ///
+  /// In en, this message translates to:
+  /// **'Flooding the mesh'**
+  String get sntReasonFlooding;
+
+  /// No description provided for @sntReasonAbuse.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment or abuse'**
+  String get sntReasonAbuse;
+
+  /// No description provided for @sntReasonImpersonation.
+  ///
+  /// In en, this message translates to:
+  /// **'Impersonation'**
+  String get sntReasonImpersonation;
+
+  /// No description provided for @sntReasonOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get sntReasonOther;
+
+  /// No description provided for @sntNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Details (optional)'**
+  String get sntNote;
+
+  /// No description provided for @sntIncludeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Include this message'**
+  String get sntIncludeMessage;
+
+  /// No description provided for @sntSends.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends the node\'s ID and name, your reason and, if ticked, this message. Not your name, key or location.'**
+  String get sntSends;
+
+  /// No description provided for @sntSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send report'**
+  String get sntSend;
+
+  /// No description provided for @sntSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Report sent ({caseRef})'**
+  String sntSent(String caseRef);
+
+  /// No description provided for @sntQueuedOne.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection. The report will be sent later.'**
+  String get sntQueuedOne;
+
+  /// No description provided for @sntRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Report not accepted: {message}'**
+  String sntRejected(String message);
+
+  /// No description provided for @sntOffPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on community moderation?'**
+  String get sntOffPrompt;
+
+  /// No description provided for @sntTurnOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get sntTurnOn;
+
+  /// No description provided for @sntFlagged.
+  ///
+  /// In en, this message translates to:
+  /// **'Flagged'**
+  String get sntFlagged;
+
+  /// No description provided for @sntFlaggedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Flagged by NOTORYX moderators (case {caseRef}). Advisory only.'**
+  String sntFlaggedHint(String caseRef);
+
+  /// No description provided for @sntCaseRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Case number (SNT-1234)'**
+  String get sntCaseRef;
+
+  /// No description provided for @sntStatement.
+  ///
+  /// In en, this message translates to:
+  /// **'Why should the ban be lifted?'**
+  String get sntStatement;
+
+  /// No description provided for @sntContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact (optional, only moderators see it)'**
+  String get sntContact;
+
+  /// No description provided for @sntAppealSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send appeal'**
+  String get sntAppealSend;
+
+  /// No description provided for @sntAppealReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'Appeal sent. A moderator will review it.'**
+  String get sntAppealReceived;
+
+  /// No description provided for @sntAppealUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'No Meshtastic case has that number.'**
+  String get sntAppealUnknown;
+
+  /// No description provided for @sntAppealNotOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'That case has no active ban, or an appeal is already waiting.'**
+  String get sntAppealNotOpen;
+
+  /// No description provided for @sntAppealTooMany.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many appeals. Try again in a minute.'**
+  String get sntAppealTooMany;
+
+  /// No description provided for @sntFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t reach the moderation service. Try again later.'**
+  String get sntFailed;
+
+  /// No description provided for @pvSent7.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports, appeals and ban-list checks to NOTORYX moderators through sentinel-relay.meshmayhem.org, only if you turn on Community moderation'**
+  String get pvSent7;
 }
 
 class _AppLocalizationsDelegate

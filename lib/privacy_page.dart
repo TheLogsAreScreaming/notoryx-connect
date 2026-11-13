@@ -48,7 +48,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   List<String> get _stored => [l.pvStored1, l.pvStored2, l.pvStored3, l.pvStored4, l.pvStored5, l.pvStored6];
 
-  List<String> get _sent => [l.pvSent1, l.pvSent2, l.pvSent3, l.pvSent4, l.pvSent5, l.pvSent6];
+  List<String> get _sent => [l.pvSent1, l.pvSent2, l.pvSent3, l.pvSent4, l.pvSent5, l.pvSent6, l.pvSent7];
 
   Future<void> _erase({required bool everything}) async {
     final l = this.l;

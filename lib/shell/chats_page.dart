@@ -259,6 +259,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
   static const _pinAction = '\u0000pin';
   static const _copyAction = '\u0000copy';
   static const _forwardAction = '\u0000forward';
+  static const _reportAction = '\u0000report';
   static const _reactionChoices = ['👍', '❤️', '😂', '😮', '😢', '✅', '🙏'];
 
   /// How an incoming message got here: over the internet, directly, or
@@ -323,12 +324,27 @@ class _ChatsPageState extends State<BastionChatsPage> {
             title: Text(l.chatsForward),
             onTap: () => Navigator.pop(context, _forwardAction),
           ),
+          if (message.direction == BastionMessageDirection.incoming)
+            ListTile(
+              key: const ValueKey('chat-sentinel-report'),
+              leading: const Icon(Icons.flag_outlined),
+              title: Text(l.sntReport),
+              onTap: () => Navigator.pop(context, _reportAction),
+            ),
         ]),
       )),
     );
     if (emoji == null || !mounted) return;
     if (emoji == _pinAction) return _togglePin(message);
     if (emoji == _forwardAction) return _forward(message);
+    if (emoji == _reportAction) {
+      return showSentinelReportSheet(
+        context,
+        nodeNum: message.from,
+        nodeName: _nodeName(message.from),
+        messageExcerpt: message.text,
+      );
+    }
     if (emoji == _copyAction) {
       await Clipboard.setData(ClipboardData(text: message.text));
       if (mounted) {
@@ -442,6 +458,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
                   ].join(' • '),
                   style: type.labelMedium?.copyWith(color: mentioned ? scheme.onPrimaryContainer : scheme.onSurfaceVariant),
                 )),
+                if (!outgoing) SentinelFlag(message.from),
                 if (pinned) Icon(Icons.push_pin, size: 14, semanticLabel: l.chatsPinned, color: scheme.onSurfaceVariant),
                 const SizedBox(width: NxSpace.xxs),
                 Text(_clock(message.timestamp), style: type.labelMedium?.copyWith(
@@ -500,11 +517,13 @@ class _ChatsPageState extends State<BastionChatsPage> {
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
-    animation: widget.radio,
+    animation: Listenable.merge([widget.radio, SentinelService.instance]),
     builder: (context, _) {
       final all = widget.radio.messages;
-      // Reactions show under the message they react to, not on their own.
-      final messages = [for (final m in all) if (!m.isReaction) m];
+      final sentinel = SentinelService.instance;
+      // Reactions show under the message they react to, not on their own;
+      // flagged senders are hidden only if the user chose that.
+      final messages = [for (final m in all) if (!m.isReaction && !sentinelHides(sentinel, m)) m];
       final reactions = <int, List<BastionChatMessage>>{};
       for (final m in all) {
         if (m.isReaction && m.replyId != null) (reactions[m.replyId!] ??= []).add(m);

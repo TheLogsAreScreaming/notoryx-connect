@@ -57,6 +57,8 @@ import 'theme/notoryx_theme.dart';
 import 'theme/notoryx_tokens.dart';
 import 'theme/nx_components.dart';
 import 'connection_doctor_page.dart';
+import 'sentinel_page.dart';
+import 'services/bastion_sentinel.dart';
 
 part 'shell/nodes_page.dart';
 part 'shell/chats_page.dart';
@@ -220,6 +222,7 @@ class _BastionShellState extends State<BastionShell> {
   void initState() {
     super.initState();
     unawaited(_realRadio.prepareAlerts());
+    unawaited(SentinelService.instance.start());
     // The real radio only: demo nodes must never reach ATAK.
     BastionTakBridge.instance.attach(() => _realRadio.nodes);
     _setUpShortcuts();
