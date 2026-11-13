@@ -1248,7 +1248,7 @@
   "lockUnlock": "Unlock",
   "lockReason": "Unlock NOTORYX Connect",
   "takTitle": "ATAK feed",
-  "toolsTakSub": "Show mesh nodes in ATAK on this phone",
+  "toolsTakSub": "Swap positions with ATAK on this phone",
   "takIntro": "Sends the position of each mesh node to ATAK on this phone, once every 30 seconds. Nothing leaves the phone, and nothing goes out over the mesh.",
   "takSwitch": "Send mesh positions to ATAK",
   "takPort": "UDP port",
@@ -2795,6 +2795,56 @@
     }
   },
   "pvSent8": "What you type into Find a place, to OpenStreetMap's Nominatim service, only when you press Search online; it sees your IP address",
+  "takReceiveTitle": "From ATAK",
+  "takReceiveIntro": "Shows markers that ATAK on this phone shares, such as team members and map points, on this app's map. They stay on this phone and are never sent over the mesh.",
+  "takReceiveSwitch": "Show ATAK markers on the map",
+  "takReceivePort": "UDP port to listen on",
+  "takReceiveStatus": "{count, plural, =0{Listening. No markers yet.} one{Showing {count} marker} other{Showing {count} markers}}",
+  "@takReceiveStatus": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "takReceiveProblem": "Could not listen: {error}",
+  "@takReceiveProblem": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "takReceiveHowTo": "In ATAK, open Settings, then Network Preferences, then Manage Outputs, and add a UDP output to 127.0.0.1 on this port. Markers disappear when ATAK says they are stale.",
+  "takClear": "Clear markers",
+  "takFriendly": "Friendly",
+  "takHostile": "Hostile",
+  "takNeutral": "Neutral",
+  "takUnknown": "Unknown",
+  "takPoint": "Map point",
+  "mapTakPin": "ATAK {kind}: {callsign}",
+  "@mapTakPin": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "callsign": {
+        "type": "String"
+      }
+    }
+  },
+  "mapTakUpdated": "From ATAK, updated {time}. Shown until {stale}.",
+  "@mapTakUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "stale": {
+        "type": "String"
+      }
+    }
+  },
+  "takSamePort": "Use a different port from the one positions are sent to.",
   "nodesFavoritesOnly": "Favorites only",
   "nodesNoFavorites": "No favorites yet",
   "nodesNoFavoritesHint": "Open a node and tap its star to trust it. Favorites only then shows just the people you trust.",

@@ -1736,7 +1736,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get takTitle => 'ATAK feed';
 
   @override
-  String get toolsTakSub => 'Show mesh nodes in ATAK on this phone';
+  String get toolsTakSub => 'Swap positions with ATAK on this phone';
 
   @override
   String get takIntro =>
@@ -4097,6 +4097,72 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get pvSent8 =>
       'What you type into Find a place, to OpenStreetMap\'s Nominatim service, only when you press Search online; it sees your IP address';
+
+  @override
+  String get takReceiveTitle => 'From ATAK';
+
+  @override
+  String get takReceiveIntro =>
+      'Shows markers that ATAK on this phone shares, such as team members and map points, on this app\'s map. They stay on this phone and are never sent over the mesh.';
+
+  @override
+  String get takReceiveSwitch => 'Show ATAK markers on the map';
+
+  @override
+  String get takReceivePort => 'UDP port to listen on';
+
+  @override
+  String takReceiveStatus(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Showing $count markers',
+      one: 'Showing $count marker',
+      zero: 'Listening. No markers yet.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String takReceiveProblem(String error) {
+    return 'Could not listen: $error';
+  }
+
+  @override
+  String get takReceiveHowTo =>
+      'In ATAK, open Settings, then Network Preferences, then Manage Outputs, and add a UDP output to 127.0.0.1 on this port. Markers disappear when ATAK says they are stale.';
+
+  @override
+  String get takClear => 'Clear markers';
+
+  @override
+  String get takFriendly => 'Friendly';
+
+  @override
+  String get takHostile => 'Hostile';
+
+  @override
+  String get takNeutral => 'Neutral';
+
+  @override
+  String get takUnknown => 'Unknown';
+
+  @override
+  String get takPoint => 'Map point';
+
+  @override
+  String mapTakPin(String kind, String callsign) {
+    return 'ATAK $kind: $callsign';
+  }
+
+  @override
+  String mapTakUpdated(String time, String stale) {
+    return 'From ATAK, updated $time. Shown until $stale.';
+  }
+
+  @override
+  String get takSamePort =>
+      'Use a different port from the one positions are sent to.';
 
   @override
   String get nodesFavoritesOnly => 'Favorites only';

@@ -48,6 +48,13 @@ void main() {
     expect(items.firstWhere((i) => i.id == 'battery').title, 'Batería de la radio');
   });
 
+  test('services speak French and German too', () {
+    BastionText.use(const Locale('fr'));
+    expect(BastionChatDays.label(now, now), 'Aujourd\'hui');
+    BastionText.use(const Locale('de'));
+    expect(BastionChatDays.label(now, now), 'Heute');
+  });
+
   test('an unsupported language falls back to English', () {
     BastionText.use(const Locale('xx'));
     expect(BastionChatDays.label(now, now), 'Today');
