@@ -138,6 +138,21 @@ class _MapPageState extends State<MapPage> {
     _map.move(LatLng(result.latitude, result.longitude), 14);
   }
 
+  void _showTak(BuildContext context, TakMarker m) {
+    final kind = _TakPin.kind(AppLocalizations.of(context), m);
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) => SafeArea(child: ListTile(
+        leading: Icon(_TakPin.icon(m), semanticLabel: kind),
+        title: Text(m.callsign),
+        subtitle: Text('$kind · ${m.type}\n'
+            '${m.latitude.toStringAsFixed(5)}, ${m.longitude.toStringAsFixed(5)}\n'
+            '${l.mapTakUpdated(TimeOfDay.fromDateTime(m.received).format(context), TimeOfDay.fromDateTime(m.stale).format(context))}'),
+      )),
+    );
+  }
+
   @override
   void dispose() {
     _map.dispose();
@@ -281,6 +296,16 @@ class _MapPageState extends State<MapPage> {
                           ),
                         ),
                       ),
+                    ]),
+                  if (takMarkers.isNotEmpty)
+                    MarkerLayer(markers: [
+                      for (final m in takMarkers)
+                        Marker(
+                          point: LatLng(m.latitude, m.longitude),
+                          width: 96,
+                          height: MediaQuery.textScalerOf(context).scale(56),
+                          child: _TakPin(marker: m, onTap: () => _showTak(context, m)),
+                        ),
                     ]),
                   MarkerLayer(
                     markers: [
