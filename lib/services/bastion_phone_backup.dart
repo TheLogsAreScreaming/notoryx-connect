@@ -28,7 +28,7 @@ class PhoneBackupSummary {
 }
 
 /// Encrypted backup of everything this app stores on the phone: chat
-/// history and offline queues for every radio, NodeDex, waypoints, field
+/// history and offline queues for every radio, NodeVault, waypoints, field
 /// records, bot limits and app settings. Radio settings have their own backup.
 ///
 /// Restore replaces all phone data with the backup's. It refuses a backup

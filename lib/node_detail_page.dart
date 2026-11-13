@@ -7,7 +7,7 @@ import 'services/bastion_preferences.dart';
 import 'services/bastion_units.dart';
 import 'services/bastion_chat_message.dart';
 import 'services/bastion_geo.dart';
-import 'services/bastion_nodedex.dart';
+import 'services/bastion_node_vault.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'services/bastion_node_keys.dart';
@@ -51,7 +51,7 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
   }
 
   BastionNodeRecord? get _record {
-    for (final record in _radio.nodeDex) {
+    for (final record in _radio.nodeVault) {
       if (record.num == widget.nodeNum) return record;
     }
     return null;

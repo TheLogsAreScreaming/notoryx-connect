@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/map_page.dart';
 import 'package:bastion/services/bastion_coverage_grid.dart';
-import 'package:bastion/services/bastion_nodedex.dart';
+import 'package:bastion/services/bastion_node_vault.dart';
 import 'package:bastion/services/meshtastic_node_database.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/theme/notoryx_theme.dart';
@@ -52,23 +52,23 @@ void main() {
     final t0 = DateTime(2026, 11, 9, 12);
 
     test('survive a reload after the radio forgets the node', () async {
-      final dex = BastionNodeDex();
+      final dex = BastionNodeVault();
       await dex.useRadio(9);
       await dex.observe(node(5, 1));
       await dex.rememberPositions([node(5, 1.5)], now: t0);
-      final reopened = BastionNodeDex();
+      final reopened = BastionNodeVault();
       await reopened.useRadio(9);
       expect(reopened.records.single.latitude, 1.5);
     });
 
     test('are saved at most once a minute, then catch up', () async {
-      final dex = BastionNodeDex();
+      final dex = BastionNodeVault();
       await dex.useRadio(9);
       await dex.observe(node(5, 1));
       await dex.rememberPositions([node(5, 1.1)], now: t0);
       await dex.rememberPositions([node(5, 1.2)], now: t0.add(const Duration(seconds: 10)));
       Future<double?> saved() async {
-        final again = BastionNodeDex();
+        final again = BastionNodeVault();
         await again.useRadio(9);
         return again.records.single.latitude;
       }

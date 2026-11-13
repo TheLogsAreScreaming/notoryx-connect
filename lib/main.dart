@@ -41,7 +41,7 @@ import 'node_detail_page.dart';
 import 'radio_settings_page.dart';
 import 'services/bastion_tile_cache.dart';
 import 'traceroute_page.dart';
-import 'services/bastion_nodedex.dart';
+import 'services/bastion_node_vault.dart';
 import 'services/meshtastic_ble_discovery.dart';
 import 'services/meshtastic_connection_controller.dart';
 import 'services/bastion_chat_store.dart';
