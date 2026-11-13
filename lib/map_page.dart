@@ -20,6 +20,7 @@ import 'services/bastion_gpx.dart';
 import 'services/bastion_heard_filter.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_routes.dart';
+import 'services/bastion_tak_bridge.dart';
 import 'services/bastion_units.dart';
 import 'services/bastion_team.dart';
 import 'services/bastion_waypoints.dart';
@@ -34,9 +35,12 @@ import 'theme/notoryx_theme.dart';
 /// Tiles load from tile.openstreetmap.org and need internet access; node
 /// positions come only from the radio.
 class MapPage extends StatefulWidget {
-  const MapPage({super.key, required this.radio, this.shareFile = _shareFile});
+  const MapPage({super.key, required this.radio, this.shareFile = _shareFile, this.tak});
 
   final MeshtasticRadioCoordinator radio;
+
+  /// Markers from ATAK; the app-wide bridge when null.
+  final BastionTakBridge? tak;
 
   /// Hands an exported file to the system share sheet; replaced in tests.
   final Future<void> Function(String fileName, String text) shareFile;
@@ -58,6 +62,7 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   AppLocalizations get l => AppLocalizations.of(context);
+  BastionTakBridge get _tak => widget.tak ?? BastionTakBridge.instance;
 
   final MapController _map = MapController();
   bool _fitted = false;
@@ -141,10 +146,15 @@ class _MapPageState extends State<MapPage> {
 
   List<MeshtasticNode> get _placed {
     final heard = BastionPreferences.instance.heardWithin;
+    final favoritesOnly = BastionPreferences.instance.favoritesOnly;
+    final favorites = widget.radio.favoriteNums;
     final now = DateTime.now();
     final local = widget.radio.localNode?.num;
     return widget.radio.nodes
-        .where((n) => n.hasPosition && heard.matches(n.lastHeard, now, always: n.num == local))
+        .where((n) =>
+            n.hasPosition &&
+            heard.matches(n.lastHeard, now, always: n.num == local) &&
+            (!favoritesOnly || n.num == local || favorites.contains(n.num)))
         .toList();
   }
 
@@ -164,9 +174,10 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
-        animation: widget.radio,
+        animation: Listenable.merge([widget.radio, _tak]),
         builder: (context, _) {
           final placed = _placed;
+          final takMarkers = _tak.receive ? _tak.markers : const <TakMarker>[];
           final local = widget.radio.localNodeNum;
           final team = _team;
           final trails = _trailLines(team, local);
@@ -344,6 +355,20 @@ class _MapPageState extends State<MapPage> {
                           tooltip: l.mapFindPlace,
                           icon: const Icon(Icons.search),
                           onPressed: () => _findPlace(context),
+                        ),
+                        IconButton(
+                          key: const ValueKey('map-favorites-only'),
+                          tooltip: BastionPreferences.instance.favoritesOnly
+                              ? l.mapShowAllNodes
+                              : l.nodesFavoritesOnly,
+                          isSelected: BastionPreferences.instance.favoritesOnly,
+                          icon: const Icon(Icons.star_border),
+                          selectedIcon: const Icon(Icons.star),
+                          onPressed: () async {
+                            await BastionPreferences.instance
+                                .update(favorites: !BastionPreferences.instance.favoritesOnly);
+                            if (mounted) setState(() {});
+                          },
                         ),
                         PopupMenuButton<BastionHeardWithin>(
                           key: const ValueKey('map-heard-filter'),
@@ -1037,6 +1062,72 @@ class _NodePin extends StatelessWidget {
             Icon(isLocal ? Icons.my_location : team != null ? Icons.person_pin_circle : Icons.location_on,
                 color: MapPage.accent, size: 26),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A marker shared by ATAK. The side is shown by shape and in words, not only colour.
+class _TakPin extends StatelessWidget {
+  const _TakPin({required this.marker, required this.onTap});
+
+  final TakMarker marker;
+  final VoidCallback onTap;
+
+  static IconData icon(TakMarker m) => m.isPoint
+      ? Icons.push_pin_outlined
+      : switch (m.affiliation) {
+          TakAffiliation.friendly => Icons.shield_outlined,
+          TakAffiliation.hostile => Icons.warning_amber_rounded,
+          TakAffiliation.neutral => Icons.crop_square,
+          TakAffiliation.unknown => Icons.help_outline,
+        };
+
+  static String kind(AppLocalizations l, TakMarker m) => m.isPoint
+      ? l.takPoint
+      : switch (m.affiliation) {
+          TakAffiliation.friendly => l.takFriendly,
+          TakAffiliation.hostile => l.takHostile,
+          TakAffiliation.neutral => l.takNeutral,
+          TakAffiliation.unknown => l.takUnknown,
+        };
+
+  static Color _color(TakMarker m) => m.isPoint
+      ? Colors.black87
+      : switch (m.affiliation) {
+          TakAffiliation.friendly => const Color(0xFF0B5CAD),
+          TakAffiliation.hostile => const Color(0xFFB3261E),
+          TakAffiliation.neutral => const Color(0xFF1C7442),
+          TakAffiliation.unknown => const Color(0xFF835500),
+        };
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Semantics(
+      button: true,
+      label: l.mapTakPin(kind(l, marker), marker.callsign),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: ExcludeSemantics(
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white, shape: BoxShape.circle, border: Border.all(color: _color(marker), width: 2)),
+              padding: const EdgeInsets.all(3),
+              child: Icon(icon(marker), size: 22, color: _color(marker)),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              color: Colors.black54,
+              child: Text(marker.callsign,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.white, fontSize: 12)),
+            ),
+          ]),
         ),
       ),
     );
