@@ -5948,6 +5948,582 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Within about {distance}'**
   String cpWithin(String distance);
+
+  /// No description provided for @rdBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio battery'**
+  String get rdBattery;
+
+  /// No description provided for @rdNotReported.
+  ///
+  /// In en, this message translates to:
+  /// **'Not reported yet.'**
+  String get rdNotReported;
+
+  /// No description provided for @rdExternal.
+  ///
+  /// In en, this message translates to:
+  /// **'On external power.'**
+  String get rdExternal;
+
+  /// No description provided for @rdChargeNow.
+  ///
+  /// In en, this message translates to:
+  /// **'{level}%. Charge the radio before you leave.'**
+  String rdChargeNow(int level);
+
+  /// No description provided for @rdChargeSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'{level}%. Consider charging or bringing a power bank.'**
+  String rdChargeSoon(int level);
+
+  /// No description provided for @rdLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'{level}%.'**
+  String rdLevel(int level);
+
+  /// No description provided for @rdFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware'**
+  String get rdFirmware;
+
+  /// No description provided for @rdConnectToCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your radio to check.'**
+  String get rdConnectToCheck;
+
+  /// No description provided for @rdTooOld.
+  ///
+  /// In en, this message translates to:
+  /// **'Too old.'**
+  String get rdTooOld;
+
+  /// No description provided for @rdUpdateRecommended.
+  ///
+  /// In en, this message translates to:
+  /// **'Update recommended.'**
+  String get rdUpdateRecommended;
+
+  /// No description provided for @rdVersionUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Version not reported.'**
+  String get rdVersionUnknown;
+
+  /// No description provided for @rdSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Supported.'**
+  String get rdSupported;
+
+  /// No description provided for @rdChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get rdChannels;
+
+  /// No description provided for @rdNoChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'No channels on this radio.'**
+  String get rdNoChannels;
+
+  /// No description provided for @rdSosChannelGone.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS channel {channel} no longer exists. Pick another in your trip plan.'**
+  String rdSosChannelGone(int channel);
+
+  /// No description provided for @rdChannelsSet.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} channel set up.} other{{count} channels set up.}}'**
+  String rdChannelsSet(int count);
+
+  /// No description provided for @rdContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip contacts'**
+  String get rdContacts;
+
+  /// No description provided for @rdChooseContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose who gets your check-ins and SOS.'**
+  String get rdChooseContacts;
+
+  /// No description provided for @rdNoRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'No route to {names}.'**
+  String rdNoRoute(String names);
+
+  /// No description provided for @rdNotHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Not heard in the last 2 hours: {names}. Run a route test, or check they\'re on.'**
+  String rdNotHeard(String names);
+
+  /// No description provided for @rdAllHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'All {count} heard recently.'**
+  String rdAllHeard(int count);
+
+  /// No description provided for @rdPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get rdPosition;
+
+  /// No description provided for @rdRecentPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio has a recent position.'**
+  String get rdRecentPosition;
+
+  /// No description provided for @rdWaitingPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a position from this phone. Check location is on.'**
+  String get rdWaitingPhone;
+
+  /// No description provided for @rdNoPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent position, so others can\'t see where you are. Turn on the radio\'s GPS or share this phone\'s location.'**
+  String get rdNoPosition;
+
+  /// No description provided for @rdBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get rdBackground;
+
+  /// No description provided for @rdBackgroundRestricted.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery optimisation can cut the link with the screen off. Set NOTORYX Connect to \"Unrestricted\".'**
+  String get rdBackgroundRestricted;
+
+  /// No description provided for @rdBackgroundOk.
+  ///
+  /// In en, this message translates to:
+  /// **'The app can stay connected with the screen off.'**
+  String get rdBackgroundOk;
+
+  /// No description provided for @rdCouldntCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t check.'**
+  String get rdCouldntCheck;
+
+  /// No description provided for @rpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Readiness check'**
+  String get rpTitle;
+
+  /// No description provided for @rpReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to go'**
+  String get rpReady;
+
+  /// No description provided for @rpCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Check these before you leave'**
+  String get rpCheck;
+
+  /// No description provided for @rpNotReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Not ready yet'**
+  String get rpNotReady;
+
+  /// No description provided for @rpNeedRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Some checks need your radio'**
+  String get rpNeedRadio;
+
+  /// No description provided for @rpNotReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent or queued does not mean received. Agree a backup plan.'**
+  String get rpNotReceived;
+
+  /// No description provided for @rpTestRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Test a route'**
+  String get rpTestRoute;
+
+  /// No description provided for @rpTestHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends one route request to that contact. Use sparingly on busy meshes.'**
+  String get rpTestHint;
+
+  /// No description provided for @rpRouteFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Route found'**
+  String get rpRouteFound;
+
+  /// No description provided for @rpNoRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'No route found'**
+  String get rpNoRoute;
+
+  /// No description provided for @rpNotTested.
+  ///
+  /// In en, this message translates to:
+  /// **'Not tested'**
+  String get rpNotTested;
+
+  /// No description provided for @rpTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Test'**
+  String get rpTest;
+
+  /// No description provided for @rpStatusReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get rpStatusReady;
+
+  /// No description provided for @rpStatusCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get rpStatusCheck;
+
+  /// No description provided for @rpStatusFix.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix first'**
+  String get rpStatusFix;
+
+  /// No description provided for @rpStatusUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get rpStatusUnknown;
+
+  /// No description provided for @cdFixBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on Bluetooth'**
+  String get cdFixBluetooth;
+
+  /// No description provided for @cdFixPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Bluetooth access'**
+  String get cdFixPermission;
+
+  /// No description provided for @cdFixBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Open battery settings'**
+  String get cdFixBattery;
+
+  /// No description provided for @cdFixRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get cdFixRetry;
+
+  /// No description provided for @cdFixScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan for radios'**
+  String get cdFixScan;
+
+  /// No description provided for @cdFixFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'How to update'**
+  String get cdFixFirmware;
+
+  /// No description provided for @cdTheRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'the radio'**
+  String get cdTheRadio;
+
+  /// No description provided for @cdYourRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'your radio'**
+  String get cdYourRadio;
+
+  /// No description provided for @cdBluetoothOffDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth is off. Turn it on and the app reconnects by itself.'**
+  String get cdBluetoothOffDetail;
+
+  /// No description provided for @cdPermissionDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'The app isn\'t allowed to use Bluetooth. Allow \"Nearby devices\" when asked, or in Android Settings → Apps → NOTORYX Connect → Permissions.'**
+  String get cdPermissionDetail;
+
+  /// No description provided for @cdPairedDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} may be connected to another phone or app. A radio talks to one phone at a time: close the other app or turn off Bluetooth on the other phone, then try again. If it keeps failing, forget the radio in Android Bluetooth settings and pair again.'**
+  String cdPairedDetail(String name);
+
+  /// No description provided for @cdTimeoutDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} didn\'t answer in time. Move closer, check it\'s switched on, or restart it, then try again.'**
+  String cdTimeoutDetail(String name);
+
+  /// No description provided for @cdNetworkDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t reach the radio over the network. Check the phone and radio are on the same Wi-Fi, and that the address and port (usually 4403) are right.'**
+  String get cdNetworkDetail;
+
+  /// No description provided for @cdUsbDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'The USB link failed. Unplug and plug the cable back in, and allow USB access when Android asks.'**
+  String get cdUsbDetail;
+
+  /// No description provided for @cdGaveUpDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'The link dropped and reconnecting didn\'t work. Check {name} is on and in range, then try again.'**
+  String cdGaveUpDetail(String name);
+
+  /// No description provided for @cdNotMeshtasticDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'The device answered but doesn\'t look like a Meshtastic radio, or its firmware is too old.'**
+  String get cdNotMeshtasticDetail;
+
+  /// No description provided for @cdUnknownProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown problem.'**
+  String get cdUnknownProblem;
+
+  /// No description provided for @cdBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth'**
+  String get cdBluetooth;
+
+  /// No description provided for @cdOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On.'**
+  String get cdOn;
+
+  /// No description provided for @cdBluetoothOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth is off.'**
+  String get cdBluetoothOff;
+
+  /// No description provided for @cdCouldntCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t check.'**
+  String get cdCouldntCheck;
+
+  /// No description provided for @cdAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth access'**
+  String get cdAccess;
+
+  /// No description provided for @cdAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed.'**
+  String get cdAllowed;
+
+  /// No description provided for @cdNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'The app isn\'t allowed to find and connect to radios.'**
+  String get cdNotAllowed;
+
+  /// No description provided for @cdLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio link'**
+  String get cdLink;
+
+  /// No description provided for @cdConnectedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {name}.'**
+  String cdConnectedTo(String name);
+
+  /// No description provided for @cdConnectingTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting to {name}…'**
+  String cdConnectingTo(String name);
+
+  /// No description provided for @cdNoneFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No radios found. Check the radio is on and within a few metres, that Bluetooth is enabled in its settings, and that it isn\'t connected to another phone.'**
+  String get cdNoneFound;
+
+  /// No description provided for @cdNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected.'**
+  String get cdNotConnected;
+
+  /// No description provided for @cdBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get cdBackground;
+
+  /// No description provided for @cdBatteryOptimised.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery optimisation can cut the radio link when the screen is off. Set NOTORYX Connect to \"Unrestricted\".'**
+  String get cdBatteryOptimised;
+
+  /// No description provided for @cdBackgroundOk.
+  ///
+  /// In en, this message translates to:
+  /// **'The link can stay open with the screen off.'**
+  String get cdBackgroundOk;
+
+  /// No description provided for @cdFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware'**
+  String get cdFirmware;
+
+  /// No description provided for @cdFirmwareTooOld.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware too old.'**
+  String get cdFirmwareTooOld;
+
+  /// No description provided for @cdSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Supported.'**
+  String get cdSupported;
+
+  /// No description provided for @cpFlasherCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied flasher.meshtastic.org. Open it on a computer with the radio plugged in.'**
+  String get cpFlasherCopied;
+
+  /// No description provided for @cpFixFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t work: {error}'**
+  String cpFixFailed(String error);
+
+  /// No description provided for @cpReportCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Report copied. It holds connection details only: no messages, keys or positions.'**
+  String get cpReportCopied;
+
+  /// No description provided for @cpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection doctor'**
+  String get cpTitle;
+
+  /// No description provided for @cpChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking…'**
+  String get cpChecking;
+
+  /// No description provided for @cpNoProblems.
+  ///
+  /// In en, this message translates to:
+  /// **'No problems found'**
+  String get cpNoProblems;
+
+  /// No description provided for @cpProblems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 problem found} other{{count} problems found}}'**
+  String cpProblems(int count);
+
+  /// No description provided for @cpStillFails.
+  ///
+  /// In en, this message translates to:
+  /// **'If the radio still won\'t connect, copy the report below and share it.'**
+  String get cpStillFails;
+
+  /// No description provided for @cpFixFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix the first problem, then check again.'**
+  String get cpFixFirst;
+
+  /// No description provided for @cpCheckAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get cpCheckAgain;
+
+  /// No description provided for @cpCopyReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy report'**
+  String get cpCopyReport;
+
+  /// No description provided for @cpRecentEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent connection events'**
+  String get cpRecentEvents;
+
+  /// No description provided for @cpNoEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet. Events appear here as the app connects.'**
+  String get cpNoEvents;
+
+  /// No description provided for @cpOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get cpOk;
+
+  /// No description provided for @cpProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem'**
+  String get cpProblem;
+
+  /// No description provided for @cpUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get cpUnknown;
 }
 
 class _AppLocalizationsDelegate
