@@ -128,21 +128,6 @@ class _MapPageState extends State<MapPage> {
     return lines;
   }
 
-  void _showTak(BuildContext context, TakMarker m) {
-    final kind = _TakPin.kind(AppLocalizations.of(context), m);
-    showModalBottomSheet<void>(
-      context: context,
-      showDragHandle: true,
-      builder: (context) => SafeArea(child: ListTile(
-        leading: Icon(_TakPin.icon(m), semanticLabel: kind),
-        title: Text(m.callsign),
-        subtitle: Text('$kind · ${m.type}\n'
-            '${m.latitude.toStringAsFixed(5)}, ${m.longitude.toStringAsFixed(5)}\n'
-            '${l.mapTakUpdated(TimeOfDay.fromDateTime(m.received).format(context), TimeOfDay.fromDateTime(m.stale).format(context))}'),
-      )),
-    );
-  }
-
   Future<void> _findPlace(BuildContext context) async {
     final result = await Navigator.of(context).push(MaterialPageRoute<PlaceResult>(
       builder: (_) => PlaceSearchPage(nodes: widget.radio.nodes, waypoints: widget.radio.waypoints),
@@ -286,16 +271,6 @@ class _MapPageState extends State<MapPage> {
                           child: GestureDetector(behavior: HitTestBehavior.opaque, onTap: () => _showRememberedNode(context, r),
                             child: ExcludeSemantics(child: Icon(Icons.history, size: 28, color: Theme.of(context).colorScheme.onSurfaceVariant))))),
                   ]),
-                  if (takMarkers.isNotEmpty)
-                    MarkerLayer(markers: [
-                      for (final m in takMarkers)
-                        Marker(
-                          point: LatLng(m.latitude, m.longitude),
-                          width: 96,
-                          height: MediaQuery.textScalerOf(context).scale(56),
-                          child: _TakPin(marker: m, onTap: () => _showTak(context, m)),
-                        ),
-                    ]),
                   if (_found case final found?)
                     MarkerLayer(markers: [
                       Marker(
