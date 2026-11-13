@@ -4278,6 +4278,174 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get njTitle => 'Diario de nodos';
+
+  @override
+  String get njToolSub =>
+      'Cada nodo que este teléfono ha oído y cómo se comporta';
+
+  @override
+  String get njSubtitle =>
+      'Se guarda en este teléfono para todas las radios. Las etiquetas son estimaciones según lo oído.';
+
+  @override
+  String get njStorageProblem =>
+      'No se pudo leer el diario. Las entradas nuevas se conservan hasta cerrar la app.';
+
+  @override
+  String get njEmptyTitle => 'Aún no se ha oído nada';
+
+  @override
+  String get njEmptyDetail =>
+      'Los nodos aparecen aquí la primera vez que una radio los oye.';
+
+  @override
+  String get njSearch => 'Buscar nombres, ID y etiquetas';
+
+  @override
+  String get njAll => 'Todos';
+
+  @override
+  String njCount(int shown, int total) {
+    return 'Mostrando $shown de $total';
+  }
+
+  @override
+  String get njNoMatch => 'Ningún nodo coincide.';
+
+  @override
+  String get njLearning => 'Aún aprendiendo';
+
+  @override
+  String njLastHeard(String time) {
+    return 'Oído por última vez $time';
+  }
+
+  @override
+  String njFirstHeard(String time) {
+    return 'Oído por primera vez $time';
+  }
+
+  @override
+  String njStats(int heard, int days) {
+    return 'Oído $heard veces en $days días';
+  }
+
+  @override
+  String get njSteadyRelay => 'Repetidor siempre activo';
+
+  @override
+  String get njRoamer => 'Itinerante';
+
+  @override
+  String get njRegular => 'Visitante habitual';
+
+  @override
+  String get njRarelyHeard => 'Rara vez oído';
+
+  @override
+  String get njNewcomer => 'Recién llegado';
+
+  @override
+  String get njGoneQuiet => 'En silencio';
+
+  @override
+  String get njInternetLinked => 'Vía internet';
+
+  @override
+  String get njConfLow => 'Confianza baja';
+
+  @override
+  String get njConfMedium => 'Confianza media';
+
+  @override
+  String get njConfHigh => 'Confianza alta';
+
+  @override
+  String njEvHoursOnAir(int a, int b) {
+    return 'En el aire $a de las últimas $b horas';
+  }
+
+  @override
+  String njEvPlacesSpread(int count, String distance) {
+    return 'Informó $count lugares separados hasta $distance';
+  }
+
+  @override
+  String njEvStaysPut(String distance) {
+    return 'Las posiciones informadas quedan dentro de $distance';
+  }
+
+  @override
+  String njEvExternalPower(int count) {
+    return '$count actualizaciones indicaron alimentación externa';
+  }
+
+  @override
+  String njEvDaysHeard(int count) {
+    return 'Oído en $count días distintos';
+  }
+
+  @override
+  String njEvFewHours(int hours, int days) {
+    return 'Oído solo en $hours horas durante $days días';
+  }
+
+  @override
+  String njEvFirstHeard(int hours) {
+    return 'Oído por primera vez hace $hours horas';
+  }
+
+  @override
+  String njEvSilentDays(int days) {
+    return 'En silencio desde hace $days días';
+  }
+
+  @override
+  String njEvViaInternet(int a, int b) {
+    return '$a de $b actualizaciones llegaron por internet';
+  }
+
+  @override
+  String get njWhy => 'Qué suele hacer';
+
+  @override
+  String get njNoLabels =>
+      'Aún no se ha oído lo suficiente para describir este nodo.';
+
+  @override
+  String get njTags => 'Etiquetas';
+
+  @override
+  String get njAddTag => 'Añadir etiqueta';
+
+  @override
+  String njAddThisTag(String tag) {
+    return 'Añadir etiqueta $tag';
+  }
+
+  @override
+  String njRemoveTag(String tag) {
+    return 'Quitar etiqueta $tag';
+  }
+
+  @override
+  String get njNotes => 'Notas';
+
+  @override
+  String get njNoteHint => 'Lo que valga la pena recordar de este nodo';
+
+  @override
+  String get njSaveNote => 'Guardar nota';
+
+  @override
+  String get njSaved => 'Guardado';
+
+  @override
+  String get njSaveFailed =>
+      'No se pudo guardar. El cambio se conserva hasta cerrar la app.';
+
+  @override
   String get drTitle => 'Repetición del día';
 
   @override

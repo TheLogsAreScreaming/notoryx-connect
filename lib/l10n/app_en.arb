@@ -2897,6 +2897,173 @@
       }
     }
   },
+  "njTitle": "Node journal",
+  "njToolSub": "Every node this phone has heard, and how it behaves",
+  "njSubtitle": "Kept on this phone across every radio. Labels are best guesses from what was heard.",
+  "njStorageProblem": "The journal couldn't be read from storage. New entries are kept until the app closes.",
+  "njEmptyTitle": "Nothing heard yet",
+  "njEmptyDetail": "Nodes appear here the first time a radio hears them.",
+  "njSearch": "Search names, IDs and tags",
+  "njAll": "All",
+  "njCount": "Showing {shown} of {total}",
+  "@njCount": {
+    "placeholders": {
+      "shown": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "njNoMatch": "No nodes match.",
+  "njLearning": "Still learning",
+  "njLastHeard": "Last heard {time}",
+  "@njLastHeard": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "njFirstHeard": "First heard {time}",
+  "@njFirstHeard": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "njStats": "Heard {heard} times on {days} days",
+  "@njStats": {
+    "placeholders": {
+      "heard": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "njSteadyRelay": "Always-on relay",
+  "njRoamer": "Roamer",
+  "njRegular": "Regular visitor",
+  "njRarelyHeard": "Rarely heard",
+  "njNewcomer": "Newcomer",
+  "njGoneQuiet": "Gone quiet",
+  "njInternetLinked": "Internet-linked",
+  "njConfLow": "Low confidence",
+  "njConfMedium": "Medium confidence",
+  "njConfHigh": "High confidence",
+  "njEvHoursOnAir": "On the air in {a} of the last {b} hours",
+  "@njEvHoursOnAir": {
+    "placeholders": {
+      "a": {
+        "type": "int"
+      },
+      "b": {
+        "type": "int"
+      }
+    }
+  },
+  "njEvPlacesSpread": "Reported {count} places up to {distance} apart",
+  "@njEvPlacesSpread": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "njEvStaysPut": "Reported positions stay within {distance}",
+  "@njEvStaysPut": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "njEvExternalPower": "{count} updates said it runs on external power",
+  "@njEvExternalPower": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "njEvDaysHeard": "Heard on {count} different days",
+  "@njEvDaysHeard": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "njEvFewHours": "Heard in only {hours} hours over {days} days",
+  "@njEvFewHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "njEvFirstHeard": "First heard {hours} hours ago",
+  "@njEvFirstHeard": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "njEvSilentDays": "Silent for {days} days",
+  "@njEvSilentDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "njEvViaInternet": "{a} of {b} updates came over the internet",
+  "@njEvViaInternet": {
+    "placeholders": {
+      "a": {
+        "type": "int"
+      },
+      "b": {
+        "type": "int"
+      }
+    }
+  },
+  "njWhy": "What it tends to do",
+  "njNoLabels": "Not enough heard yet to describe this node.",
+  "njTags": "Tags",
+  "njAddTag": "Add tag",
+  "njAddThisTag": "Add tag {tag}",
+  "@njAddThisTag": {
+    "placeholders": {
+      "tag": {
+        "type": "String"
+      }
+    }
+  },
+  "njRemoveTag": "Remove tag {tag}",
+  "@njRemoveTag": {
+    "placeholders": {
+      "tag": {
+        "type": "String"
+      }
+    }
+  },
+  "njNotes": "Notes",
+  "njNoteHint": "Anything worth remembering about this node",
+  "njSaveNote": "Save note",
+  "njSaved": "Saved",
+  "njSaveFailed": "Couldn't save. The change is kept until the app closes.",
   "drTitle": "Day replay",
   "drToolSub": "Play back where your team went on a chosen day",
   "drSubtitle": "Trip contacts and this radio, kept on this phone for 14 days.",

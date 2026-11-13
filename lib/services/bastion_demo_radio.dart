@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bastion_chat_message.dart';
 import 'bastion_day_tracks.dart';
 import 'bastion_geofences.dart';
+import 'bastion_node_journal.dart';
 import 'bastion_node_vault.dart';
 import 'bastion_telemetry_codec.dart';
 import 'bastion_telemetry_history.dart';
@@ -191,6 +192,16 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
     }
     unawaited(walk());
     return tracks;
+  }();
+
+  /// A journal kept in memory, filled with the demo nodes.
+  @override
+  late final BastionNodeJournal nodeJournal = () {
+    final journal = BastionNodeJournal(preferences: _MemoryPreferences(), clock: _clock);
+    for (final n in _demoNodes) {
+      unawaited(journal.observe(n));
+    }
+    return journal;
   }();
   @override
   bool get canAdminister => false;
