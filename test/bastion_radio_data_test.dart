@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bastion/services/bastion_message_archive.dart';
-import 'package:bastion/services/bastion_nodedex.dart';
+import 'package:bastion/services/bastion_node_vault.dart';
 import 'package:bastion/services/bastion_radio_data.dart';
 import 'package:bastion/services/bastion_trails.dart';
 import 'package:bastion/services/meshtastic_connection_controller.dart';
@@ -45,14 +45,14 @@ void main() {
   });
 
   Future<void> seedDex(int radio, List<BastionNodeRecord> records) => prefs.setString(
-      BastionNodeDex.radioKey(radio), jsonEncode([for (final r in records) r.toJson()]));
+      BastionNodeVault.radioKey(radio), jsonEncode([for (final r in records) r.toJson()]));
 
   test('lists each radio with its name and what is stored', () async {
     await BastionMessageArchive(radio: oldRadio).save(messages: [msg(1, oldRadio, 'a'), msg(2, oldRadio, 'b')], pending: []);
     await seedDex(oldRadio, [rec(oldRadio, name: 'Old Echo'), rec(0x77)]);
     await seedDex(newRadio, [rec(0x77)]);
     await prefs.setString(BastionTrails.key(oldRadio), jsonEncode({'119': [[1.0, 2.0, 1762000000]]}));
-    await prefs.setString('${BastionNodeDex.radioKey(newRadio)}.unreadable', 'x');
+    await prefs.setString('${BastionNodeVault.radioKey(newRadio)}.unreadable', 'x');
 
     final radios = await BastionRadioData().list();
     expect([for (final r in radios) r.radio], [oldRadio, newRadio]);
@@ -67,17 +67,17 @@ void main() {
     await seedDex(oldRadio, [rec(0x88)]);
     final data = BastionRadioData();
     await data.keepBeforeMove(newRadio);
-    expect(await prefs.getString('${BastionNodeDex.radioKey(newRadio)}${BastionRadioData.beforeMoveSuffix}'),
-        await prefs.getString(BastionNodeDex.radioKey(newRadio)));
+    expect(await prefs.getString('${BastionNodeVault.radioKey(newRadio)}${BastionRadioData.beforeMoveSuffix}'),
+        await prefs.getString(BastionNodeVault.radioKey(newRadio)));
     await data.remove(oldRadio);
-    expect(await prefs.getString(BastionNodeDex.radioKey(oldRadio)), isNull);
+    expect(await prefs.getString(BastionNodeVault.radioKey(oldRadio)), isNull);
     expect([for (final r in await data.list()) r.radio], [newRadio]);
   });
 
-  test('NodeDex merges the old radio into the new one without losing either', () async {
+  test('NodeVault merges the old radio into the new one without losing either', () async {
     await seedDex(newRadio, [rec(0x77, encounters: 2, day: 3), rec(0x99)]);
     await seedDex(oldRadio, [rec(0x77, name: 'Hiker', encounters: 5, day: 1), rec(0x88)]);
-    final dex = BastionNodeDex();
+    final dex = BastionNodeVault();
     await dex.useRadio(newRadio);
     expect(await dex.importRadio(oldRadio), isTrue);
     final byNum = {for (final r in dex.records) r.num: r};
@@ -86,7 +86,7 @@ void main() {
     expect(byNum[0x77]!.longName, 'Hiker');
     expect(byNum[0x77]!.firstSeen, DateTime.utc(2026, 11, 1).toLocal());
 
-    final reloaded = BastionNodeDex();
+    final reloaded = BastionNodeVault();
     await reloaded.useRadio(newRadio);
     expect(reloaded.records, hasLength(3));
   });

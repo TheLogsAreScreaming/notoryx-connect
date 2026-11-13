@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bastion_chat_store.dart';
 import 'bastion_message_archive.dart';
-import 'bastion_nodedex.dart';
+import 'bastion_node_vault.dart';
 import 'bastion_telemetry_history.dart';
 import 'bastion_trails.dart';
 
@@ -21,10 +21,10 @@ class StoredRadio {
   /// The radio's node number.
   final int radio;
 
-  /// The radio's long name when one of the NodeDex lists knows it.
+  /// The radio's long name when one of the NodeVault lists knows it.
   final String? name;
 
-  /// Saved messages, NodeDex nodes and nodes with a trail.
+  /// Saved messages, NodeVault nodes and nodes with a trail.
   final int messages;
   final int nodes;
   final int trails;
@@ -33,7 +33,7 @@ class StoredRadio {
   String get label => name == null ? id : '$name ($id)';
 }
 
-/// Messages, NodeDex history, trails and telemetry are stored per radio. This lists
+/// Messages, NodeVault history, trails and telemetry are stored per radio. This lists
 /// them and helps hand a lost or replaced radio's data to the new one.
 class BastionRadioData {
   BastionRadioData({SharedPreferencesAsync? preferences})
@@ -48,7 +48,7 @@ class BastionRadioData {
   /// Every key holding [radio]'s data.
   static List<String> keysOf(int radio) => [
         BastionMessageArchive.radioKey(radio),
-        BastionNodeDex.radioKey(radio),
+        BastionNodeVault.radioKey(radio),
         BastionTrails.key(radio),
         BastionTelemetryHistory.key(radio),
       ];
@@ -71,7 +71,7 @@ class BastionRadioData {
         if (_radioKey.firstMatch(key) case final match?)
           int.parse(match[1]!, radix: 16),
     };
-    final dex = {for (final r in radios) r: _decodeList(await _read(BastionNodeDex.radioKey(r)))};
+    final dex = {for (final r in radios) r: _decodeList(await _read(BastionNodeVault.radioKey(r)))};
     final names = <int, String>{};
     for (final records in dex.values) {
       for (final record in records) {

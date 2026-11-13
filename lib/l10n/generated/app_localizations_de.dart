@@ -1221,7 +1221,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String setMoveBody(String to, String id) {
-    return 'Nachrichten, Offline-Warteschlange, NodeDex-Verlauf, Spuren und Telemetrieverlauf gehen auf $to über. Was $to bereits hat, bleibt erhalten, es wird also nichts überschrieben. $id hat danach keinen eigenen Eintrag mehr.\n\nErstellen Sie sicherheitshalber zuerst eine Sicherung der Telefondaten.';
+    return 'Nachrichten, Offline-Warteschlange, NodeVault-Verlauf, Spuren und Telemetrieverlauf gehen auf $to über. Was $to bereits hat, bleibt erhalten, es wird also nichts überschrieben. $id hat danach keinen eigenen Eintrag mehr.\n\nErstellen Sie sicherheitshalber zuerst eine Sicherung der Telefondaten.';
   }
 
   @override
@@ -2926,7 +2926,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get pvStored2 =>
-      'NodeDex: von Ihren Funkgeräten gehörte Knoten sowie Ihre Favoriten und Notizen';
+      'NodeVault: von Ihren Funkgeräten gehörte Knoten sowie Ihre Favoriten und Notizen';
 
   @override
   String get pvStored3 => 'Aus dem Mesh empfangene Wegpunkte';
@@ -2978,7 +2978,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get pvDeleteAllBody =>
-      'Löscht Chats und Offline-Warteschlangen aller Funkgeräte, NodeDex, Favoriten und Notizen, Wegpunkte, Feldaufzeichnungen, zwischengespeicherte Kartenkacheln und alle App-Einstellungen von diesem Telefon. Die Funkgeräteeinstellungen bleiben unverändert. Das kann nicht rückgängig gemacht werden; erstellen Sie vorher eine Sicherung der Telefondaten, falls Sie sie brauchen könnten.\n\nDie App wird danach geschlossen.';
+      'Löscht Chats und Offline-Warteschlangen aller Funkgeräte, NodeVault, Favoriten und Notizen, Wegpunkte, Feldaufzeichnungen, zwischengespeicherte Kartenkacheln und alle App-Einstellungen von diesem Telefon. Die Funkgeräteeinstellungen bleiben unverändert. Das kann nicht rückgängig gemacht werden; erstellen Sie vorher eine Sicherung der Telefondaten, falls Sie sie brauchen könnten.\n\nDie App wird danach geschlossen.';
 
   @override
   String get pvDeleteChatsBody =>
@@ -3073,7 +3073,7 @@ class AppLocalizationsDe extends AppLocalizations {
       other: '$radios Funkgeräten',
       one: '$radios Funkgerät',
     );
-    return 'Sicherung erstellt am $date mit Version $version.\n\nSie enthält den Chatverlauf von $_temp0 ($messages Nachrichten) und insgesamt $items gespeicherte Einträge.\n\nAlles, was NOTORYX Connect auf diesem Telefon speichert (Chats, Offline-Warteschlangen, NodeDex, Wegpunkte, Feldaufzeichnungen und Einstellungen), wird ersetzt. Die Funkgeräteeinstellungen bleiben unverändert. Die App wird nach der Wiederherstellung geschlossen; öffnen Sie sie erneut, um fortzufahren.';
+    return 'Sicherung erstellt am $date mit Version $version.\n\nSie enthält den Chatverlauf von $_temp0 ($messages Nachrichten) und insgesamt $items gespeicherte Einträge.\n\nAlles, was NOTORYX Connect auf diesem Telefon speichert (Chats, Offline-Warteschlangen, NodeVault, Wegpunkte, Feldaufzeichnungen und Einstellungen), wird ersetzt. Die Funkgeräteeinstellungen bleiben unverändert. Die App wird nach der Wiederherstellung geschlossen; öffnen Sie sie erneut, um fortzufahren.';
   }
 
   @override
@@ -3091,7 +3091,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get pbIntro =>
-      'Sichert alles, was NOTORYX Connect auf diesem Telefon speichert: Chatverlauf und Offline-Warteschlangen aller Funkgeräte, NodeDex-Favoriten und -Notizen, Wegpunkte, Feldaufzeichnungen und App-Einstellungen. Nutzen Sie sie für den Umzug auf ein neues Telefon. Die Datei wird mit Ihrem Passwort verschlüsselt. Die Funkgeräteeinstellungen haben eine eigene Sicherung.';
+      'Sichert alles, was NOTORYX Connect auf diesem Telefon speichert: Chatverlauf und Offline-Warteschlangen aller Funkgeräte, NodeVault-Favoriten und -Notizen, Wegpunkte, Feldaufzeichnungen und App-Einstellungen. Nutzen Sie sie für den Umzug auf ein neues Telefon. Die Datei wird mit Ihrem Passwort verschlüsselt. Die Funkgeräteeinstellungen haben eine eigene Sicherung.';
 
   @override
   String get pbPassword => 'Sicherungspasswort (mindestens 12 Zeichen)';

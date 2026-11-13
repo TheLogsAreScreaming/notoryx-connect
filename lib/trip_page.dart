@@ -45,7 +45,7 @@ class _TripPageState extends State<TripPage> {
     final result = <({int num, String name})>[];
     for (final num in [
       ..._trip.plan.members,
-      for (final r in widget.radio.nodeDex) if (r.favorite) r.num,
+      for (final r in widget.radio.nodeVault) if (r.favorite) r.num,
       for (final n in widget.radio.nodes) n.num,
     ]) {
       if (num == me || !seen.add(num)) continue;

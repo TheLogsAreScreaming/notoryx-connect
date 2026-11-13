@@ -1,5 +1,5 @@
 First NOTORYX Connect release.
-• Chat history, queues and NodeDex kept separately for each radio
+• Chat history, queues and NodeVault kept separately for each radio
 • Channel imports confirmed by reading back from the radio
 • Field alerts for low battery, new nodes and quiet favorites
 • Encrypted phone data backup and restore

@@ -53,7 +53,7 @@ import 'bastion_reconnect_policy.dart';
 import 'bastion_reconnect_supervisor.dart';
 import 'bastion_telemetry_codec.dart';
 import 'bastion_radio_policy.dart';
-import 'bastion_nodedex.dart';
+import 'bastion_node_vault.dart';
 import 'bastion_day_tracks.dart';
 import 'bastion_sms_relay.dart';
 import 'meshtastic_ble_discovery.dart';
@@ -139,13 +139,13 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     for (final node in _nodes) {
       if (node.num == num) return node.displayName;
     }
-    for (final record in _nodeDex.records) {
+    for (final record in _nodeVault.records) {
       if (record.num == num) return record.displayName;
     }
     return '!${num.toRadixString(16).padLeft(8, '0')}';
   }
 
-  bool _isFavorite(int num) => _nodeDex.records.any((r) => r.num == num && r.favorite);
+  bool _isFavorite(int num) => _nodeVault.records.any((r) => r.num == num && r.favorite);
 
   void _raise(BastionFieldAlert? alert) {
     if (alert != null && !filters.isSilenced(alert.nodeNum)) unawaited(_alerts.showFieldAlert(alert));
@@ -163,7 +163,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _silenceTimer = Timer.periodic(const Duration(minutes: 1), (_) {
       if (!isReady) return;
       final favorites = [
-        for (final r in _nodeDex.records)
+        for (final r in _nodeVault.records)
           if (r.favorite)
             (num: r.num, name: _nodeName(r.num),
               lastHeard: _nodes.where((n) => n.num == r.num).firstOrNull?.lastHeard),
@@ -313,7 +313,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   /// Nodes starred as favourites.
-  Set<int> get favoriteNums => {for (final r in _nodeDex.records) if (r.favorite) r.num};
+  Set<int> get favoriteNums => {for (final r in _nodeVault.records) if (r.favorite) r.num};
 
   /// Phone alerts for watched nodes crossing a zone's edge. This radio's
   /// own position never alerts.
@@ -384,7 +384,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     BastionForegroundService(:final problem) => problem.value,
     _ => null,
   };
-  final BastionNodeDex _nodeDex = BastionNodeDex();
+  final BastionNodeVault _nodeVault = BastionNodeVault();
   final BastionBackgroundKeeper _background;
   final BastionMessageAlerts _alerts;
   final PhoneLocationSource _location;
@@ -431,7 +431,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   MeshtasticAdminSession? _admin;
   MeshtasticTraceroute? _traceroute;
   StreamSubscription<List<MeshtasticNode>>? _nodeSubscription;
-  StreamSubscription<MeshtasticNode>? _nodeDexSubscription;
+  StreamSubscription<MeshtasticNode>? _nodeVaultSubscription;
   StreamSubscription<void>? _messageSubscription;
   StreamSubscription<Uint8List>? _identitySubscription;
   StreamSubscription<void>? _linkLossSubscription;
@@ -736,7 +736,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     return null;
   }
 
-  List<BastionNodeRecord> get nodeDex => _nodeDex.records;
+  List<BastionNodeRecord> get nodeVault => _nodeVault.records;
   List<double> get snrHistory => List.unmodifiable(_snrHistory);
   double? get latestSnr => _snrHistory.isEmpty ? null : _snrHistory.last;
   int get receivedTextPackets => _receivedTextPackets;
@@ -779,12 +779,12 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   int get moduleConfigCount => _moduleConfigSnapshots.length;
 
   Future<void> setNodeFavorite(int num, bool value) async {
-    await _nodeDex.setFavorite(num, value);
+    await _nodeVault.setFavorite(num, value);
     notifyListeners();
   }
 
   Future<void> setNodeNote(int num, String note) async {
-    await _nodeDex.setNote(num, note);
+    await _nodeVault.setNote(num, note);
     notifyListeners();
   }
 
@@ -810,10 +810,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   final BastionRadioData _radioData = BastionRadioData();
 
-  /// Radios with messages, NodeDex history or trails on this phone.
+  /// Radios with messages, NodeVault history or trails on this phone.
   Future<List<StoredRadio>> storedRadios() => _radioData.list();
 
-  /// Hands [from]'s messages, offline queue, NodeDex history, trails and telemetry to
+  /// Hands [from]'s messages, offline queue, NodeVault history, trails and telemetry to
   /// the connected radio (after a radio is lost or replaced). The connected
   /// radio's own data is kept, merged with it, and also copied aside first.
   /// [from]'s copy is deleted only when everything was saved. Returns a
@@ -836,7 +836,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       return "This radio's data could not be copied aside first, so nothing was moved.";
     }
     final messagesSaved = await messaging.importHistory(snapshot);
-    final nodesSaved = await _nodeDex.importRadio(from);
+    final nodesSaved = await _nodeVault.importRadio(from);
     final trailsSaved = await _trails.importRadio(from) &&
         await _telemetryHistory.importRadio(from);
     _syncMessageSnapshot(messaging);
@@ -855,7 +855,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   Future<void> _loadArchive() async {
     final last = await _history.lastRadio();
     if (last != null) _setArchive(BastionMessageArchive(radio: last));
-    await _nodeDex.useRadio(last);
+    await _nodeVault.useRadio(last);
     if (last != null) await _trails.useRadio(last);
     if (last != null) await _telemetryHistory.useRadio(last);
     final snapshot = await _archive.load();
@@ -870,7 +870,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _archive.addListener(notifyListeners);
   }
 
-  /// Switches chat history, the offline queue and NodeDex to the radio that
+  /// Switches chat history, the offline queue and NodeVault to the radio that
   /// just identified itself, moving unassigned history to radios first.
   Future<void> _useRadioHistory(MeshtasticMessagingService messaging, int nodeNum) async {
     await _archiveLoaded;
@@ -879,7 +879,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     if (_messaging != messaging) return;
     _setArchive(archive);
     await messaging.attachArchive(archive);
-    await _nodeDex.useRadio(nodeNum);
+    await _nodeVault.useRadio(nodeNum);
     await _trails.useRadio(nodeNum);
     await _telemetryHistory.useRadio(nodeNum);
     if (_messaging == messaging) _syncMessageSnapshot(messaging);
@@ -945,7 +945,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         ..channelMessageMaxAge = _channelMaxAge
         ..historyLimit = BastionPreferences.instance.historyLimit
         ..isIgnoredSender = filters.isIgnored;
-      _nodeDex.detach();
+      _nodeVault.detach();
       final handshake = MeshtasticHandshake(
         session: session,
         connection: connection,
@@ -1091,16 +1091,16 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         _trails.record(nodes, {...trip.plan.members, ?_localNodeNum});
         unawaited(_dayTracks.record(nodes, {...trip.plan.members, ?_localNodeNum}));
         _checkGeofences(nodes);
-        unawaited(_nodeDex.rememberPositions(nodes));
+        unawaited(_nodeVault.rememberPositions(nodes));
         notifyListeners();
       });
-      _nodeDexSubscription = nodeDatabase.nodeUpdates.listen((node) {
+      _nodeVaultSubscription = nodeDatabase.nodeUpdates.listen((node) {
         if (connection.isReady) {
           _raise(_fieldAlerts.nodeHeard(node.num, node.displayName,
-              knownBefore: _nodeDex.records.any((r) => r.num == node.num),
+              knownBefore: _nodeVault.records.any((r) => r.num == node.num),
               settings: _alertSettings));
         }
-        unawaited(_nodeDex.observe(node).then((_) => notifyListeners()));
+        unawaited(_nodeVault.observe(node).then((_) => notifyListeners()));
       });
       _messageSubscription = messaging.changes.listen((_) {
         _syncMessageSnapshot(messaging);
@@ -1858,8 +1858,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     if (messaging != null) _syncMessageSnapshot(messaging);
     await _nodeSubscription?.cancel();
     _nodeSubscription = null;
-    await _nodeDexSubscription?.cancel();
-    _nodeDexSubscription = null;
+    await _nodeVaultSubscription?.cancel();
+    _nodeVaultSubscription = null;
     await _messageSubscription?.cancel();
     _messageSubscription = null;
     await _incomingSubscription?.cancel();
