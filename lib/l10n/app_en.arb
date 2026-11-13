@@ -2794,5 +2794,9 @@
       }
     }
   },
-  "pvSent8": "What you type into Find a place, to OpenStreetMap's Nominatim service, only when you press Search online; it sees your IP address"
+  "pvSent8": "What you type into Find a place, to OpenStreetMap's Nominatim service, only when you press Search online; it sees your IP address",
+  "nodesFavoritesOnly": "Favorites only",
+  "nodesNoFavorites": "No favorites yet",
+  "nodesNoFavoritesHint": "Open a node and tap its star to trust it. Favorites only then shows just the people you trust.",
+  "mapShowAllNodes": "Show all nodes"
 }

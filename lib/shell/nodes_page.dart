@@ -109,10 +109,14 @@ class _NodesPage extends StatelessWidget {
       final local = radio.localNode;
       final connectedName = radio.connection.deviceName;
       final heard = BastionPreferences.instance.heardWithin;
+      final favoritesOnly = BastionPreferences.instance.favoritesOnly;
+      final favorites = radio.favoriteNums;
       final now = DateTime.now();
       final shown = [
         for (final n in radio.nodes)
-          if (heard.matches(n.lastHeard, now, always: n.num == local?.num)) n,
+          if (heard.matches(n.lastHeard, now, always: n.num == local?.num) &&
+              (!favoritesOnly || n.num == local?.num || favorites.contains(n.num)))
+            n,
       ];
       return ListView(
       padding: NxSpace.page,
@@ -226,14 +230,33 @@ class _NodesPage extends StatelessWidget {
                     ),
             )),
         if (radio.nodes.isNotEmpty) ...[
-          NxSectionLabel(heard.window == null
+          NxSectionLabel(heard.window == null && !favoritesOnly
               ? l.nodesCount(radio.nodes.length)
               : l.nodesCountOf(shown.length, radio.nodes.length)),
           _HeardFilterChips(
             value: heard,
             onChanged: (v) => BastionPreferences.instance.update(heard: v),
           ),
-          if (shown.isEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: NxSpace.xs),
+            child: FilterChip(
+              key: const ValueKey('nodes-favorites-only'),
+              avatar: Icon(favoritesOnly ? Icons.star : Icons.star_border),
+              showCheckmark: false,
+              label: Text(l.nodesFavoritesOnly),
+              selected: favoritesOnly,
+              onSelected: (v) => BastionPreferences.instance.update(favorites: v),
+            ),
+          ),
+          if (shown.isEmpty && favoritesOnly && heard.window == null)
+            NxEmptyState(icon: Icons.star_border,
+              title: l.nodesNoFavorites,
+              detail: l.nodesNoFavoritesHint,
+              action: TextButton(
+                onPressed: () => BastionPreferences.instance.update(favorites: false),
+                child: Text(l.nodesShowAll),
+              ))
+          else if (shown.isEmpty)
             NxEmptyState(icon: Icons.filter_alt_off_outlined,
               title: l.nodesNoneHeard(_heardLabel(context, heard)),
               detail: l.nodesPickLonger,

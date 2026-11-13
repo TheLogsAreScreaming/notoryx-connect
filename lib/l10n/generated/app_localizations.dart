@@ -6902,6 +6902,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What you type into Find a place, to OpenStreetMap\'s Nominatim service, only when you press Search online; it sees your IP address'**
   String get pvSent8;
+
+  /// No description provided for @nodesFavoritesOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites only'**
+  String get nodesFavoritesOnly;
+
+  /// No description provided for @nodesNoFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites yet'**
+  String get nodesNoFavorites;
+
+  /// No description provided for @nodesNoFavoritesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Open a node and tap its star to trust it. Favorites only then shows just the people you trust.'**
+  String get nodesNoFavoritesHint;
+
+  /// No description provided for @mapShowAllNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all nodes'**
+  String get mapShowAllNodes;
 }
 
 class _AppLocalizationsDelegate

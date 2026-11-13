@@ -1131,5 +1131,9 @@
   "psKindOnline": "Lugar",
   "mapFindPlace": "Buscar un lugar",
   "mapFoundPin": "Encontrado: {name}",
-  "pvSent8": "Lo que escribes en Buscar un lugar, al servicio Nominatim de OpenStreetMap, solo cuando pulsas Buscar en línea; ve tu dirección IP"
+  "pvSent8": "Lo que escribes en Buscar un lugar, al servicio Nominatim de OpenStreetMap, solo cuando pulsas Buscar en línea; ve tu dirección IP",
+  "nodesFavoritesOnly": "Solo favoritos",
+  "nodesNoFavorites": "Aún no hay favoritos",
+  "nodesNoFavoritesHint": "Abre un nodo y toca su estrella para confiar en él. Solo favoritos mostrará únicamente a las personas de confianza.",
+  "mapShowAllNodes": "Mostrar todos los nodos"
 }

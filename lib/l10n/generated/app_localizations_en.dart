@@ -4097,4 +4097,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get pvSent8 =>
       'What you type into Find a place, to OpenStreetMap\'s Nominatim service, only when you press Search online; it sees your IP address';
+
+  @override
+  String get nodesFavoritesOnly => 'Favorites only';
+
+  @override
+  String get nodesNoFavorites => 'No favorites yet';
+
+  @override
+  String get nodesNoFavoritesHint =>
+      'Open a node and tap its star to trust it. Favorites only then shows just the people you trust.';
+
+  @override
+  String get mapShowAllNodes => 'Show all nodes';
 }

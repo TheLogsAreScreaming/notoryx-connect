@@ -4131,4 +4131,17 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get pvSent8 =>
       'Lo que escribes en Buscar un lugar, al servicio Nominatim de OpenStreetMap, solo cuando pulsas Buscar en línea; ve tu dirección IP';
+
+  @override
+  String get nodesFavoritesOnly => 'Solo favoritos';
+
+  @override
+  String get nodesNoFavorites => 'Aún no hay favoritos';
+
+  @override
+  String get nodesNoFavoritesHint =>
+      'Abre un nodo y toca su estrella para confiar en él. Solo favoritos mostrará únicamente a las personas de confianza.';
+
+  @override
+  String get mapShowAllNodes => 'Mostrar todos los nodos';
 }
