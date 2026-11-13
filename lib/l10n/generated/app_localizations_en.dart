@@ -4243,4 +4243,74 @@ class AppLocalizationsEn extends AppLocalizations {
   String mapRouteWatching(String name, String distance) {
     return 'Watching $name • alert past $distance';
   }
+
+  @override
+  String get drTitle => 'Day replay';
+
+  @override
+  String get drToolSub => 'Play back where your team went on a chosen day';
+
+  @override
+  String get drSubtitle =>
+      'Trip contacts and this radio, kept on this phone for 14 days.';
+
+  @override
+  String get drEmptyTitle => 'No days recorded yet';
+
+  @override
+  String get drEmptyDetail =>
+      'Add people as trip contacts. Their positions are kept by day from then on.';
+
+  @override
+  String get drDay => 'Day';
+
+  @override
+  String get drNoPositions => 'No positions on this day.';
+
+  @override
+  String get drPlay => 'Play';
+
+  @override
+  String get drPause => 'Pause';
+
+  @override
+  String drAt(String time) {
+    return 'At $time';
+  }
+
+  @override
+  String get drSpeed => 'Speed';
+
+  @override
+  String drSpeedTimes(int times) {
+    return '$times×';
+  }
+
+  @override
+  String get drWho => 'Team at this time';
+
+  @override
+  String drNotYet(String time) {
+    return 'First position at $time';
+  }
+
+  @override
+  String drMoving(String time) {
+    return 'On the move, last report $time';
+  }
+
+  @override
+  String drStill(String time) {
+    return 'Last report $time';
+  }
+
+  @override
+  String drCovered(String distance) {
+    return 'Covered $distance so far';
+  }
+
+  @override
+  String drMapSummary(int count, String time) {
+    return 'Map of $count team members at $time. Their positions are listed below.';
+  }
 }

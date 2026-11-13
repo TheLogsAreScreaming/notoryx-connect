@@ -54,6 +54,7 @@ import 'bastion_reconnect_supervisor.dart';
 import 'bastion_telemetry_codec.dart';
 import 'bastion_radio_policy.dart';
 import 'bastion_nodedex.dart';
+import 'bastion_day_tracks.dart';
 import 'bastion_sms_relay.dart';
 import 'meshtastic_ble_discovery.dart';
 import 'meshtastic_connection_controller.dart';
@@ -790,6 +791,11 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   /// Shows the last connected radio's history until a radio connects.
   final BastionTrails _trails = BastionTrails();
 
+  final BastionDayTracks _dayTracks = BastionDayTracks();
+
+  /// Team positions kept by day for Day replay.
+  BastionDayTracks get dayTracks => _dayTracks;
+
   /// Recent movement of a trip contact or this radio, oldest first.
   List<TrailPoint> trailOf(int num) => _trails.trailOf(num);
 
@@ -1083,6 +1089,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           if (n.publicKey != null) unawaited(_checkNodeKey(n));
         }
         _trails.record(nodes, {...trip.plan.members, ?_localNodeNum});
+        unawaited(_dayTracks.record(nodes, {...trip.plan.members, ?_localNodeNum}));
         _checkGeofences(nodes);
         unawaited(_nodeDex.rememberPositions(nodes));
         notifyListeners();
@@ -1841,6 +1848,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   Future<void> _shutdownSession({required bool resetConnection}) async {
     _stopFieldAlerts();
     unawaited(_trails.flush());
+    unawaited(_dayTracks.flush());
     unawaited(_telemetryHistory.flush());
     await _coverageLocation?.cancel();
     _coverageLocation = null;

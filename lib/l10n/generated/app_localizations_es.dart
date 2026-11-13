@@ -4276,4 +4276,74 @@ class AppLocalizationsEs extends AppLocalizations {
   String mapRouteWatching(String name, String distance) {
     return 'Vigilando $name • aviso a más de $distance';
   }
+
+  @override
+  String get drTitle => 'Repetición del día';
+
+  @override
+  String get drToolSub => 'Reproduce por dónde fue tu equipo un día concreto';
+
+  @override
+  String get drSubtitle =>
+      'Contactos del viaje y esta radio, guardados en este teléfono 14 días.';
+
+  @override
+  String get drEmptyTitle => 'Aún no hay días grabados';
+
+  @override
+  String get drEmptyDetail =>
+      'Añade personas como contactos del viaje. Desde entonces sus posiciones se guardan por día.';
+
+  @override
+  String get drDay => 'Día';
+
+  @override
+  String get drNoPositions => 'No hay posiciones en este día.';
+
+  @override
+  String get drPlay => 'Reproducir';
+
+  @override
+  String get drPause => 'Pausa';
+
+  @override
+  String drAt(String time) {
+    return 'A las $time';
+  }
+
+  @override
+  String get drSpeed => 'Velocidad';
+
+  @override
+  String drSpeedTimes(int times) {
+    return '$times×';
+  }
+
+  @override
+  String get drWho => 'Equipo a esta hora';
+
+  @override
+  String drNotYet(String time) {
+    return 'Primera posición a las $time';
+  }
+
+  @override
+  String drMoving(String time) {
+    return 'En movimiento, último informe $time';
+  }
+
+  @override
+  String drStill(String time) {
+    return 'Último informe $time';
+  }
+
+  @override
+  String drCovered(String distance) {
+    return 'Recorrido hasta ahora: $distance';
+  }
+
+  @override
+  String drMapSummary(int count, String time) {
+    return 'Mapa de $count miembros del equipo a las $time. Sus posiciones están abajo.';
+  }
 }

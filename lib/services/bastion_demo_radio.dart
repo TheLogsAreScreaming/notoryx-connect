@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bastion_chat_message.dart';
+import 'bastion_day_tracks.dart';
 import 'bastion_geofences.dart';
 import 'bastion_nodedex.dart';
 import 'bastion_telemetry_codec.dart';
@@ -172,6 +173,25 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
   String? get backgroundProblem => null;
   @override
   List<BastionNodeRecord> get nodeDex => const [];
+
+  /// A morning walk for Mara and Sam, kept in memory for Day replay.
+  @override
+  late final BastionDayTracks dayTracks = () {
+    final tracks = BastionDayTracks(preferences: _MemoryPreferences(), clock: _clock);
+    final now = _clock();
+    Future<void> walk() async {
+      for (var step = 18; step >= 0; step--) {
+        final at = now.subtract(Duration(minutes: step * 10));
+        final k = (18 - step) / 18;
+        await tracks.record([
+          MeshtasticNode(num: 0xDE300003, latitude: _baseLat + (-0.012 * k), longitude: _baseLon + 0.031 * k, positionTime: at),
+          MeshtasticNode(num: 0xDE300005, latitude: _baseLat + (-0.026 * k), longitude: _baseLon - 0.015 * k * k, positionTime: at),
+        ], const {0xDE300003, 0xDE300005});
+      }
+    }
+    unawaited(walk());
+    return tracks;
+  }();
   @override
   bool get canAdminister => false;
   @override

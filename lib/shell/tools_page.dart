@@ -145,6 +145,14 @@ class _ToolsPageState extends State<_ToolsPage> {
       ]),
       NxSectionLabel(l.toolsRecords),
       Card(child: ListTile(
+        key: const ValueKey('tools-day-replay'),
+        leading: const Icon(Icons.history),
+        title: Text(l.drTitle),
+        subtitle: Text(l.drToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(DayReplayPage(tracks: radio.dayTracks, nameOf: radio.nodeName)),
+      )),
+      Card(child: ListTile(
         leading: const Icon(Icons.assignment_outlined),
         title: Text(l.toolsIncident),
         subtitle: Text(l.toolsIncidentSub),
