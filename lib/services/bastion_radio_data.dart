@@ -66,7 +66,11 @@ class BastionRadioData {
 
   /// Radios with data on this phone, by node number.
   Future<List<StoredRadio>> list() async {
-    await BastionNodeVault.migrateStoredKeys(_store);
+    try {
+      await BastionNodeVault.migrateStoredKeys(_store);
+    } on Object catch (_) {
+      // Storage unavailable; the steps below report it.
+    }
     final radios = <int>{
       for (final key in {...await _store.getKeys(), ...await _chats.keys()})
         if (_radioKey.firstMatch(key) case final match?)
@@ -98,7 +102,11 @@ class BastionRadioData {
 
   /// Copies [radio]'s data aside before another radio's is merged into it.
   Future<void> keepBeforeMove(int radio) async {
-    await BastionNodeVault.migrateStoredKeys(_store);
+    try {
+      await BastionNodeVault.migrateStoredKeys(_store);
+    } on Object catch (_) {
+      // Storage unavailable; the steps below report it.
+    }
     for (final key in keysOf(radio)) {
       final raw = await _get(key);
       if (raw != null) await _set('$key$beforeMoveSuffix', raw);
@@ -107,7 +115,11 @@ class BastionRadioData {
 
   /// Deletes [radio]'s data once it has been moved.
   Future<void> remove(int radio) async {
-    await BastionNodeVault.migrateStoredKeys(_store);
+    try {
+      await BastionNodeVault.migrateStoredKeys(_store);
+    } on Object catch (_) {
+      // Storage unavailable; the steps below report it.
+    }
     for (final key in keysOf(radio)) {
       await _remove(key);
     }

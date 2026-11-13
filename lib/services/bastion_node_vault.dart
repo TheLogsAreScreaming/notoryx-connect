@@ -113,7 +113,14 @@ class BastionNodeVault {
   /// restored older backup) to the current names, then removes the old keys.
   /// A value already saved under the current name is kept. Safe to call often.
   static Future<void> migrateStoredKeys(SharedPreferencesAsync store) async {
-    for (final key in await store.getKeys()) {
+    final Set<String> keys;
+    try {
+      keys = await store.getKeys();
+    } on Object catch (e) {
+      debugPrint('NodeVault: stored keys unavailable: $e');
+      return;
+    }
+    for (final key in keys) {
       if (!key.startsWith(_formerPrefix)) continue;
       final target = _prefix + key.substring(_formerPrefix.length);
       try {
@@ -164,7 +171,11 @@ class BastionNodeVault {
   /// Shows [radio]'s encounters, first moving any unassigned history to it.
   /// Nodes observed while no radio was attached are merged in.
   Future<void> useRadio(int? radio) async {
-    await migrateStoredKeys(_store);
+    try {
+      await migrateStoredKeys(_store);
+    } on Object catch (e) {
+      debugPrint('NodeVault: could not move stored keys: $e');
+    }
     final observed = _radio == null && radio != null ? Map.of(_records) : <int, BastionNodeRecord>{};
     _radio = radio;
     _records.clear();
