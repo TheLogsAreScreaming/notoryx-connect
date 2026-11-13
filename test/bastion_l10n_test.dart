@@ -97,6 +97,29 @@ void main() {
     expect(find.textContaining('ALL CLEAR | Name:'), findsOneWidget);
   });
 
+  for (final (code, title, alertsLabel) in [
+    ('fr', 'Registres de terrain', 'Journal d\'incidents'),
+    ('de', 'Feldaufzeichnungen', 'Einsatzprotokoll'),
+  ]) {
+    testWidgets('Field records is in $code too', (tester) async {
+      tester.view.physicalSize = const Size(390, 3000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final radio = MeshtasticRadioCoordinator();
+      addTearDown(radio.dispose);
+      await tester.pumpWidget(MaterialApp(
+        locale: Locale(code),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: FieldToolsPage(radio: radio),
+      ));
+      await tester.pump();
+      expect(find.text(title), findsOneWidget);
+      expect(find.text(alertsLabel), findsOneWidget);
+    });
+  }
+
   testWidgets('Radio settings is translated', (tester) async {
     tester.view.physicalSize = const Size(390, 3000);
     tester.view.devicePixelRatio = 1;
