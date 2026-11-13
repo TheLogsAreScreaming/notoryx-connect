@@ -4479,4 +4479,191 @@ class AppLocalizationsEn extends AppLocalizations {
   String drMapSummary(int count, String time) {
     return 'Map of $count team members at $time. Their positions are listed below.';
   }
+
+  @override
+  String get clTitle => 'Checklists';
+
+  @override
+  String get clToolSub =>
+      'Reusable checklists that work offline, with saved records';
+
+  @override
+  String get clSubtitle =>
+      'Everything stays on this phone. Each finished run is kept with its times and can be exported.';
+
+  @override
+  String get clStorageProblem =>
+      'Saved checklists couldn\'t be read. Changes are kept until the app closes and nothing stored is overwritten.';
+
+  @override
+  String get clInProgress => 'In progress';
+
+  @override
+  String get clChecklists => 'Checklists';
+
+  @override
+  String get clCompleted => 'Completed';
+
+  @override
+  String get clEmptyTitle => 'No checklists yet';
+
+  @override
+  String get clEmptyDetail => 'Make your own, or start from two common ones.';
+
+  @override
+  String get clAddStarters => 'Add starter checklists';
+
+  @override
+  String get clStarterRadio => 'Radio check';
+
+  @override
+  String get clStarterRadio0 => 'Battery above half';
+
+  @override
+  String get clStarterRadio1 => 'Channel and region match the team';
+
+  @override
+  String get clStarterRadio2 => 'Position sharing set as agreed';
+
+  @override
+  String get clStarterRadio3 => 'Test message delivered';
+
+  @override
+  String get clStarterRadio4 => 'Spare power packed';
+
+  @override
+  String get clNew => 'New checklist';
+
+  @override
+  String get clEdit => 'Edit checklist';
+
+  @override
+  String clEditNamed(String name) {
+    return 'Edit $name';
+  }
+
+  @override
+  String clStartNamed(String name) {
+    return 'Start $name';
+  }
+
+  @override
+  String clSteps(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count steps',
+      one: '1 step',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String clProgress(int done, int total) {
+    return '$done of $total done';
+  }
+
+  @override
+  String get clName => 'Name';
+
+  @override
+  String get clStepsLabel => 'Steps';
+
+  @override
+  String clStepN(int n) {
+    return 'Step $n';
+  }
+
+  @override
+  String clMoveUp(int n) {
+    return 'Move step $n up';
+  }
+
+  @override
+  String clMoveDown(int n) {
+    return 'Move step $n down';
+  }
+
+  @override
+  String clRemoveStep(int n) {
+    return 'Remove step $n';
+  }
+
+  @override
+  String get clAddStep => 'Add step';
+
+  @override
+  String get clNeedTitleAndStep =>
+      'Give the checklist a name and at least one step.';
+
+  @override
+  String get clSave => 'Save checklist';
+
+  @override
+  String get clDelete => 'Delete';
+
+  @override
+  String get clCancel => 'Cancel';
+
+  @override
+  String get clDeleteTitle => 'Delete this checklist?';
+
+  @override
+  String get clDeleteBody => 'Records of earlier runs are kept.';
+
+  @override
+  String clStarted(String time) {
+    return 'Started $time';
+  }
+
+  @override
+  String clFinishedAt(String time) {
+    return 'Finished $time';
+  }
+
+  @override
+  String clTickedAt(String time) {
+    return 'Done $time';
+  }
+
+  @override
+  String get clNote => 'Note';
+
+  @override
+  String get clNoNote => 'No note.';
+
+  @override
+  String get clNoteHint => 'Anything to remember about this run';
+
+  @override
+  String get clFinish => 'Finish and save record';
+
+  @override
+  String get clFinishEarlyTitle => 'Finish with steps left?';
+
+  @override
+  String clFinishEarlyBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count steps are not done. They are saved as not done.',
+      one: '1 step is not done. It is saved as not done.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get clKeepGoing => 'Keep going';
+
+  @override
+  String get clExport => 'Export record';
+
+  @override
+  String get clExportCsv => 'Spreadsheet (CSV)';
+
+  @override
+  String get clExportJson => 'Data file (JSON)';
+
+  @override
+  String get clExportFailed => 'Couldn\'t open the share sheet.';
 }

@@ -3133,5 +3133,141 @@
         "type": "String"
       }
     }
-  }
+  },
+  "clTitle": "Checklists",
+  "clToolSub": "Reusable checklists that work offline, with saved records",
+  "clSubtitle": "Everything stays on this phone. Each finished run is kept with its times and can be exported.",
+  "clStorageProblem": "Saved checklists couldn't be read. Changes are kept until the app closes and nothing stored is overwritten.",
+  "clInProgress": "In progress",
+  "clChecklists": "Checklists",
+  "clCompleted": "Completed",
+  "clEmptyTitle": "No checklists yet",
+  "clEmptyDetail": "Make your own, or start from two common ones.",
+  "clAddStarters": "Add starter checklists",
+  "clStarterRadio": "Radio check",
+  "clStarterRadio0": "Battery above half",
+  "clStarterRadio1": "Channel and region match the team",
+  "clStarterRadio2": "Position sharing set as agreed",
+  "clStarterRadio3": "Test message delivered",
+  "clStarterRadio4": "Spare power packed",
+  "clNew": "New checklist",
+  "clEdit": "Edit checklist",
+  "clEditNamed": "Edit {name}",
+  "@clEditNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "clStartNamed": "Start {name}",
+  "@clStartNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "clSteps": "{count, plural, =1{1 step} other{{count} steps}}",
+  "@clSteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "clProgress": "{done} of {total} done",
+  "@clProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "clName": "Name",
+  "clStepsLabel": "Steps",
+  "clStepN": "Step {n}",
+  "@clStepN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "clMoveUp": "Move step {n} up",
+  "@clMoveUp": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "clMoveDown": "Move step {n} down",
+  "@clMoveDown": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "clRemoveStep": "Remove step {n}",
+  "@clRemoveStep": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "clAddStep": "Add step",
+  "clNeedTitleAndStep": "Give the checklist a name and at least one step.",
+  "clSave": "Save checklist",
+  "clDelete": "Delete",
+  "clCancel": "Cancel",
+  "clDeleteTitle": "Delete this checklist?",
+  "clDeleteBody": "Records of earlier runs are kept.",
+  "clStarted": "Started {time}",
+  "@clStarted": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "clFinishedAt": "Finished {time}",
+  "@clFinishedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "clTickedAt": "Done {time}",
+  "@clTickedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "clNote": "Note",
+  "clNoNote": "No note.",
+  "clNoteHint": "Anything to remember about this run",
+  "clFinish": "Finish and save record",
+  "clFinishEarlyTitle": "Finish with steps left?",
+  "clFinishEarlyBody": "{count, plural, =1{1 step is not done. It is saved as not done.} other{{count} steps are not done. They are saved as not done.}}",
+  "@clFinishEarlyBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "clKeepGoing": "Keep going",
+  "clExport": "Export record",
+  "clExportCsv": "Spreadsheet (CSV)",
+  "clExportJson": "Data file (JSON)",
+  "clExportFailed": "Couldn't open the share sheet."
 }

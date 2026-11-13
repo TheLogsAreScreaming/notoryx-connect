@@ -7482,6 +7482,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Map of {count} team members at {time}. Their positions are listed below.'**
   String drMapSummary(int count, String time);
+
+  /// No description provided for @clTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Checklists'**
+  String get clTitle;
+
+  /// No description provided for @clToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Reusable checklists that work offline, with saved records'**
+  String get clToolSub;
+
+  /// No description provided for @clSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything stays on this phone. Each finished run is kept with its times and can be exported.'**
+  String get clSubtitle;
+
+  /// No description provided for @clStorageProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved checklists couldn\'t be read. Changes are kept until the app closes and nothing stored is overwritten.'**
+  String get clStorageProblem;
+
+  /// No description provided for @clInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get clInProgress;
+
+  /// No description provided for @clChecklists.
+  ///
+  /// In en, this message translates to:
+  /// **'Checklists'**
+  String get clChecklists;
+
+  /// No description provided for @clCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get clCompleted;
+
+  /// No description provided for @clEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No checklists yet'**
+  String get clEmptyTitle;
+
+  /// No description provided for @clEmptyDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Make your own, or start from two common ones.'**
+  String get clEmptyDetail;
+
+  /// No description provided for @clAddStarters.
+  ///
+  /// In en, this message translates to:
+  /// **'Add starter checklists'**
+  String get clAddStarters;
+
+  /// No description provided for @clStarterRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio check'**
+  String get clStarterRadio;
+
+  /// No description provided for @clStarterRadio0.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery above half'**
+  String get clStarterRadio0;
+
+  /// No description provided for @clStarterRadio1.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel and region match the team'**
+  String get clStarterRadio1;
+
+  /// No description provided for @clStarterRadio2.
+  ///
+  /// In en, this message translates to:
+  /// **'Position sharing set as agreed'**
+  String get clStarterRadio2;
+
+  /// No description provided for @clStarterRadio3.
+  ///
+  /// In en, this message translates to:
+  /// **'Test message delivered'**
+  String get clStarterRadio3;
+
+  /// No description provided for @clStarterRadio4.
+  ///
+  /// In en, this message translates to:
+  /// **'Spare power packed'**
+  String get clStarterRadio4;
+
+  /// No description provided for @clNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New checklist'**
+  String get clNew;
+
+  /// No description provided for @clEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit checklist'**
+  String get clEdit;
+
+  /// No description provided for @clEditNamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit {name}'**
+  String clEditNamed(String name);
+
+  /// No description provided for @clStartNamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Start {name}'**
+  String clStartNamed(String name);
+
+  /// No description provided for @clSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 step} other{{count} steps}}'**
+  String clSteps(int count);
+
+  /// No description provided for @clProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} done'**
+  String clProgress(int done, int total);
+
+  /// No description provided for @clName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get clName;
+
+  /// No description provided for @clStepsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get clStepsLabel;
+
+  /// No description provided for @clStepN.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {n}'**
+  String clStepN(int n);
+
+  /// No description provided for @clMoveUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Move step {n} up'**
+  String clMoveUp(int n);
+
+  /// No description provided for @clMoveDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Move step {n} down'**
+  String clMoveDown(int n);
+
+  /// No description provided for @clRemoveStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove step {n}'**
+  String clRemoveStep(int n);
+
+  /// No description provided for @clAddStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Add step'**
+  String get clAddStep;
+
+  /// No description provided for @clNeedTitleAndStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the checklist a name and at least one step.'**
+  String get clNeedTitleAndStep;
+
+  /// No description provided for @clSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save checklist'**
+  String get clSave;
+
+  /// No description provided for @clDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get clDelete;
+
+  /// No description provided for @clCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get clCancel;
+
+  /// No description provided for @clDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this checklist?'**
+  String get clDeleteTitle;
+
+  /// No description provided for @clDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Records of earlier runs are kept.'**
+  String get clDeleteBody;
+
+  /// No description provided for @clStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Started {time}'**
+  String clStarted(String time);
+
+  /// No description provided for @clFinishedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished {time}'**
+  String clFinishedAt(String time);
+
+  /// No description provided for @clTickedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Done {time}'**
+  String clTickedAt(String time);
+
+  /// No description provided for @clNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get clNote;
+
+  /// No description provided for @clNoNote.
+  ///
+  /// In en, this message translates to:
+  /// **'No note.'**
+  String get clNoNote;
+
+  /// No description provided for @clNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything to remember about this run'**
+  String get clNoteHint;
+
+  /// No description provided for @clFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish and save record'**
+  String get clFinish;
+
+  /// No description provided for @clFinishEarlyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish with steps left?'**
+  String get clFinishEarlyTitle;
+
+  /// No description provided for @clFinishEarlyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 step is not done. It is saved as not done.} other{{count} steps are not done. They are saved as not done.}}'**
+  String clFinishEarlyBody(int count);
+
+  /// No description provided for @clKeepGoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep going'**
+  String get clKeepGoing;
+
+  /// No description provided for @clExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export record'**
+  String get clExport;
+
+  /// No description provided for @clExportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Spreadsheet (CSV)'**
+  String get clExportCsv;
+
+  /// No description provided for @clExportJson.
+  ///
+  /// In en, this message translates to:
+  /// **'Data file (JSON)'**
+  String get clExportJson;
+
+  /// No description provided for @clExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the share sheet.'**
+  String get clExportFailed;
 }
 
 class _AppLocalizationsDelegate

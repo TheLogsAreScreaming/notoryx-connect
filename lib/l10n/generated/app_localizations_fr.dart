@@ -4535,4 +4535,194 @@ class AppLocalizationsFr extends AppLocalizations {
   String drMapSummary(int count, String time) {
     return 'Carte de $count membres de l\'équipe à $time. Leurs positions sont listées dessous.';
   }
+
+  @override
+  String get clTitle => 'Listes de contrôle';
+
+  @override
+  String get clToolSub =>
+      'Listes réutilisables hors ligne, avec historique enregistré';
+
+  @override
+  String get clSubtitle =>
+      'Tout reste sur ce téléphone. Chaque passage terminé est gardé avec ses heures et peut être exporté.';
+
+  @override
+  String get clStorageProblem =>
+      'Impossible de lire les listes enregistrées. Les changements sont gardés jusqu\'à la fermeture et rien n\'est écrasé.';
+
+  @override
+  String get clInProgress => 'En cours';
+
+  @override
+  String get clChecklists => 'Listes';
+
+  @override
+  String get clCompleted => 'Terminées';
+
+  @override
+  String get clEmptyTitle => 'Pas encore de liste';
+
+  @override
+  String get clEmptyDetail =>
+      'Créez la vôtre ou partez de deux listes courantes.';
+
+  @override
+  String get clAddStarters => 'Ajouter des listes de départ';
+
+  @override
+  String get clStarterRadio => 'Vérification radio';
+
+  @override
+  String get clStarterRadio0 => 'Batterie au-dessus de la moitié';
+
+  @override
+  String get clStarterRadio1 => 'Canal et région identiques à l\'équipe';
+
+  @override
+  String get clStarterRadio2 => 'Partage de position réglé comme convenu';
+
+  @override
+  String get clStarterRadio3 => 'Message de test remis';
+
+  @override
+  String get clStarterRadio4 => 'Alimentation de secours emportée';
+
+  @override
+  String get clNew => 'Nouvelle liste';
+
+  @override
+  String get clEdit => 'Modifier la liste';
+
+  @override
+  String clEditNamed(String name) {
+    return 'Modifier $name';
+  }
+
+  @override
+  String clStartNamed(String name) {
+    return 'Commencer $name';
+  }
+
+  @override
+  String clSteps(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count étapes',
+      one: '1 étape',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String clProgress(int done, int total) {
+    return '$done sur $total faits';
+  }
+
+  @override
+  String get clName => 'Nom';
+
+  @override
+  String get clStepsLabel => 'Étapes';
+
+  @override
+  String clStepN(int n) {
+    return 'Étape $n';
+  }
+
+  @override
+  String clMoveUp(int n) {
+    return 'Monter l\'étape $n';
+  }
+
+  @override
+  String clMoveDown(int n) {
+    return 'Descendre l\'étape $n';
+  }
+
+  @override
+  String clRemoveStep(int n) {
+    return 'Retirer l\'étape $n';
+  }
+
+  @override
+  String get clAddStep => 'Ajouter une étape';
+
+  @override
+  String get clNeedTitleAndStep =>
+      'Donnez un nom à la liste et au moins une étape.';
+
+  @override
+  String get clSave => 'Enregistrer la liste';
+
+  @override
+  String get clDelete => 'Supprimer';
+
+  @override
+  String get clCancel => 'Annuler';
+
+  @override
+  String get clDeleteTitle => 'Supprimer cette liste ?';
+
+  @override
+  String get clDeleteBody =>
+      'L\'historique des passages précédents est conservé.';
+
+  @override
+  String clStarted(String time) {
+    return 'Commencée $time';
+  }
+
+  @override
+  String clFinishedAt(String time) {
+    return 'Terminée $time';
+  }
+
+  @override
+  String clTickedAt(String time) {
+    return 'Fait $time';
+  }
+
+  @override
+  String get clNote => 'Note';
+
+  @override
+  String get clNoNote => 'Pas de note.';
+
+  @override
+  String get clNoteHint => 'Ce qu\'il faut retenir de ce passage';
+
+  @override
+  String get clFinish => 'Terminer et enregistrer';
+
+  @override
+  String get clFinishEarlyTitle => 'Terminer avec des étapes restantes ?';
+
+  @override
+  String clFinishEarlyBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count étapes ne sont pas faites. Elles seront enregistrées comme non faites.',
+      one: '1 étape n\'est pas faite. Elle sera enregistrée comme non faite.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get clKeepGoing => 'Continuer';
+
+  @override
+  String get clExport => 'Exporter l\'historique';
+
+  @override
+  String get clExportCsv => 'Tableur (CSV)';
+
+  @override
+  String get clExportJson => 'Fichier de données (JSON)';
+
+  @override
+  String get clExportFailed => 'Impossible d\'ouvrir le partage.';
 }

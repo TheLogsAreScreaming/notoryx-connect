@@ -4514,4 +4514,193 @@ class AppLocalizationsEs extends AppLocalizations {
   String drMapSummary(int count, String time) {
     return 'Mapa de $count miembros del equipo a las $time. Sus posiciones están abajo.';
   }
+
+  @override
+  String get clTitle => 'Listas de control';
+
+  @override
+  String get clToolSub =>
+      'Listas reutilizables que funcionan sin conexión, con registros guardados';
+
+  @override
+  String get clSubtitle =>
+      'Todo queda en este teléfono. Cada recorrido terminado se guarda con sus horas y se puede exportar.';
+
+  @override
+  String get clStorageProblem =>
+      'No se pudieron leer las listas guardadas. Los cambios se conservan hasta cerrar la app y no se sobrescribe nada.';
+
+  @override
+  String get clInProgress => 'En curso';
+
+  @override
+  String get clChecklists => 'Listas';
+
+  @override
+  String get clCompleted => 'Completadas';
+
+  @override
+  String get clEmptyTitle => 'Aún no hay listas';
+
+  @override
+  String get clEmptyDetail => 'Crea la tuya o empieza con dos habituales.';
+
+  @override
+  String get clAddStarters => 'Añadir listas de inicio';
+
+  @override
+  String get clStarterRadio => 'Comprobación de radio';
+
+  @override
+  String get clStarterRadio0 => 'Batería por encima de la mitad';
+
+  @override
+  String get clStarterRadio1 => 'Canal y región coinciden con el equipo';
+
+  @override
+  String get clStarterRadio2 =>
+      'Compartir posición configurado según lo acordado';
+
+  @override
+  String get clStarterRadio3 => 'Mensaje de prueba entregado';
+
+  @override
+  String get clStarterRadio4 => 'Energía de repuesto guardada';
+
+  @override
+  String get clNew => 'Nueva lista';
+
+  @override
+  String get clEdit => 'Editar lista';
+
+  @override
+  String clEditNamed(String name) {
+    return 'Editar $name';
+  }
+
+  @override
+  String clStartNamed(String name) {
+    return 'Empezar $name';
+  }
+
+  @override
+  String clSteps(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pasos',
+      one: '1 paso',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String clProgress(int done, int total) {
+    return '$done de $total hechos';
+  }
+
+  @override
+  String get clName => 'Nombre';
+
+  @override
+  String get clStepsLabel => 'Pasos';
+
+  @override
+  String clStepN(int n) {
+    return 'Paso $n';
+  }
+
+  @override
+  String clMoveUp(int n) {
+    return 'Subir paso $n';
+  }
+
+  @override
+  String clMoveDown(int n) {
+    return 'Bajar paso $n';
+  }
+
+  @override
+  String clRemoveStep(int n) {
+    return 'Quitar paso $n';
+  }
+
+  @override
+  String get clAddStep => 'Añadir paso';
+
+  @override
+  String get clNeedTitleAndStep =>
+      'Pon un nombre a la lista y al menos un paso.';
+
+  @override
+  String get clSave => 'Guardar lista';
+
+  @override
+  String get clDelete => 'Eliminar';
+
+  @override
+  String get clCancel => 'Cancelar';
+
+  @override
+  String get clDeleteTitle => '¿Eliminar esta lista?';
+
+  @override
+  String get clDeleteBody =>
+      'Los registros de recorridos anteriores se conservan.';
+
+  @override
+  String clStarted(String time) {
+    return 'Empezada $time';
+  }
+
+  @override
+  String clFinishedAt(String time) {
+    return 'Terminada $time';
+  }
+
+  @override
+  String clTickedAt(String time) {
+    return 'Hecho $time';
+  }
+
+  @override
+  String get clNote => 'Nota';
+
+  @override
+  String get clNoNote => 'Sin nota.';
+
+  @override
+  String get clNoteHint => 'Lo que convenga recordar de este recorrido';
+
+  @override
+  String get clFinish => 'Terminar y guardar registro';
+
+  @override
+  String get clFinishEarlyTitle => '¿Terminar con pasos pendientes?';
+
+  @override
+  String clFinishEarlyBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pasos sin hacer. Se guardarán como no hechos.',
+      one: '1 paso sin hacer. Se guardará como no hecho.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get clKeepGoing => 'Seguir';
+
+  @override
+  String get clExport => 'Exportar registro';
+
+  @override
+  String get clExportCsv => 'Hoja de cálculo (CSV)';
+
+  @override
+  String get clExportJson => 'Archivo de datos (JSON)';
+
+  @override
+  String get clExportFailed => 'No se pudo abrir el menú de compartir.';
 }
