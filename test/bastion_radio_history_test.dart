@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:bastion/services/bastion_background_service.dart';
 import 'package:bastion/services/bastion_message_archive.dart';
-import 'package:bastion/services/bastion_nodedex.dart';
+import 'package:bastion/services/bastion_node_vault.dart';
 import 'package:bastion/services/bastion_radio_history.dart';
 import 'package:bastion/services/meshtastic_connection_controller.dart';
 import 'package:bastion/services/meshtastic_messaging_service.dart';
@@ -144,11 +144,11 @@ void main() {
     });
   });
 
-  group('NodeDex', () {
+  group('NodeVault', () {
     MeshtasticNode node(int num, String name) => MeshtasticNode(num: num, longName: name);
 
     test('encounters are per radio; favorites and notes are shared', () async {
-      final dex = BastionNodeDex();
+      final dex = BastionNodeVault();
       await dex.useRadio(radioA);
       await dex.observe(node(7, 'Ridge'));
       await dex.setFavorite(7, true);
@@ -161,50 +161,50 @@ void main() {
       expect(dex.records.single.note, 'solar repeater');
       expect(dex.records.single.encounters, 1);
 
-      final reloaded = BastionNodeDex();
+      final reloaded = BastionNodeVault();
       await reloaded.useRadio(radioA);
       expect(reloaded.records.single.encounters, 1);
       expect(reloaded.records.single.favorite, isTrue);
     });
 
-    test('pre-split NodeDex moves to the first radio, keeping favorites', () async {
+    test('pre-split NodeVault moves to the first radio, keeping favorites', () async {
       final now = DateTime.utc(2026, 10, 1).toIso8601String();
       final legacy = jsonEncode([
         {'num': 7, 'longName': 'Ridge', 'firstSeen': now, 'lastSeen': now, 'encounters': 4, 'favorite': true, 'note': 'gate'},
         {'num': 8, 'firstSeen': now, 'lastSeen': now, 'encounters': 1},
       ]);
-      await prefs.setString(BastionNodeDex.legacyKey, legacy);
-      final dex = BastionNodeDex();
+      await prefs.setString(BastionNodeVault.legacyKey, legacy);
+      final dex = BastionNodeVault();
       await dex.useRadio(radioA);
       expect(dex.records.map((r) => r.num), [7, 8]);
       expect(dex.records.first.note, 'gate');
       expect(dex.records.first.encounters, 4);
-      expect(await prefs.getString(BastionNodeDex.legacyKey), isNull);
-      expect(await prefs.getString('${BastionNodeDex.legacyKey}.migrated'), legacy);
+      expect(await prefs.getString(BastionNodeVault.legacyKey), isNull);
+      expect(await prefs.getString('${BastionNodeVault.legacyKey}.migrated'), legacy);
     });
 
     test('nodes heard before the radio identifies itself are kept for it', () async {
-      final dex = BastionNodeDex();
+      final dex = BastionNodeVault();
       await dex.useRadio(radioA);
       dex.detach();
       await dex.observe(node(9, 'Early'));
       await dex.useRadio(radioB);
       expect(dex.records.single.num, 9);
-      final reloaded = BastionNodeDex();
+      final reloaded = BastionNodeVault();
       await reloaded.useRadio(radioB);
       expect(reloaded.records.single.longName, 'Early');
     });
 
-    test('unreadable radio NodeDex is never overwritten', () async {
+    test('unreadable radio NodeVault is never overwritten', () async {
       final now = DateTime.utc(2026, 10, 1).toIso8601String();
       final stored = jsonEncode([{'num': 7, 'firstSeen': now, 'lastSeen': now, 'encounters': 3}]);
-      await prefs.setString(BastionNodeDex.radioKey(radioA), stored);
-      store.failReads = {BastionNodeDex.radioKey(radioA)};
-      final dex = BastionNodeDex();
+      await prefs.setString(BastionNodeVault.radioKey(radioA), stored);
+      store.failReads = {BastionNodeVault.radioKey(radioA)};
+      final dex = BastionNodeVault();
       await dex.useRadio(radioA);
       await dex.observe(node(8, 'New'));
       store.failReads = {};
-      expect(await prefs.getString(BastionNodeDex.radioKey(radioA)), stored);
+      expect(await prefs.getString(BastionNodeVault.radioKey(radioA)), stored);
     });
   });
 }

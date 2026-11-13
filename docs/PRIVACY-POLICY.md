@@ -12,7 +12,7 @@ NOTORYX Connect ("the app") is an independent Android app for talking to LoRa me
 ## What is stored on your phone
 Stored in the app's private storage, which other apps cannot read. Uninstalling the app deletes it.
 - Chat history and queued outgoing messages, kept separately for each radio (the newest 500 messages per radio).
-- NodeDex: the mesh nodes your radios have heard, with any favorites and notes you add.
+- NodeVault: the mesh nodes your radios have heard, with any favorites and notes you add.
 - Waypoints received from the mesh.
 - Incident log entries and coverage records, only if you create them.
 - App settings (alerts, bot replies, location sharing, appearance).

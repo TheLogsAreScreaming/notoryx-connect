@@ -1204,7 +1204,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String setMoveBody(String to, String id) {
-    return 'Its messages, offline queue, NodeDex history, trails and telemetry history move to $to. Whatever $to already has is kept, so nothing is overwritten. $id then no longer has an entry of its own.\n\nTo be safe, make a phone data backup first.';
+    return 'Its messages, offline queue, NodeVault history, trails and telemetry history move to $to. Whatever $to already has is kept, so nothing is overwritten. $id then no longer has an entry of its own.\n\nTo be safe, make a phone data backup first.';
   }
 
   @override
@@ -2892,7 +2892,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pvStored2 =>
-      'NodeDex: nodes your radios have heard, plus your favorites and notes';
+      'NodeVault: nodes your radios have heard, plus your favorites and notes';
 
   @override
   String get pvStored3 => 'Waypoints received from the mesh';
@@ -2943,7 +2943,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pvDeleteAllBody =>
-      'Deletes chats and offline queues for every radio, NodeDex, favorites and notes, waypoints, field records, cached map tiles and all app settings from this phone. Radio settings are not changed. This cannot be undone; make a phone data backup first if you may need it.\n\nThe app closes afterwards.';
+      'Deletes chats and offline queues for every radio, NodeVault, favorites and notes, waypoints, field records, cached map tiles and all app settings from this phone. Radio settings are not changed. This cannot be undone; make a phone data backup first if you may need it.\n\nThe app closes afterwards.';
 
   @override
   String get pvDeleteChatsBody =>
@@ -3038,7 +3038,7 @@ class AppLocalizationsEn extends AppLocalizations {
       other: '$radios radios',
       one: '$radios radio',
     );
-    return 'Backup created $date by version $version.\n\nIt has chat history for $_temp0 ($messages messages) and $items saved items in all.\n\nEverything NOTORYX Connect stores on this phone (chats, offline queues, NodeDex, waypoints, field records and settings) is replaced. Radio settings are not changed. The app closes when the restore finishes; open it again to continue.';
+    return 'Backup created $date by version $version.\n\nIt has chat history for $_temp0 ($messages messages) and $items saved items in all.\n\nEverything NOTORYX Connect stores on this phone (chats, offline queues, NodeVault, waypoints, field records and settings) is replaced. Radio settings are not changed. The app closes when the restore finishes; open it again to continue.';
   }
 
   @override
@@ -3056,7 +3056,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pbIntro =>
-      'Backs up everything NOTORYX Connect stores on this phone: chat history and offline queues for every radio, NodeDex favorites and notes, waypoints, field records and app settings. Use it to move to a new phone. The file is encrypted with your password. Radio settings have their own backup.';
+      'Backs up everything NOTORYX Connect stores on this phone: chat history and offline queues for every radio, NodeVault favorites and notes, waypoints, field records and app settings. Use it to move to a new phone. The file is encrypted with your password. Radio settings have their own backup.';
 
   @override
   String get pbPassword => 'Backup password (at least 12 characters)';

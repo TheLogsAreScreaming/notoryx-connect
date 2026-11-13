@@ -48,8 +48,8 @@ Application baseline: `main`. Preserve `feature/bastion-beta`; see [release read
 - Every config section and module editable through a generated settings form
 - Channel sharing as `meshtastic.org/e/#` links and QR codes, including camera scanning
 - Reproducible builds: committed `pubspec.lock`, enforced in every workflow (#63)
-- Encrypted phone data backup/restore to a file: chats and queues for every radio, NodeDex, waypoints, field records and settings; replace-all restore with rollback on failure
-- Chat history, offline queue and NodeDex kept per radio, with migration of existing data (#65)
+- Encrypted phone data backup/restore to a file: chats and queues for every radio, NodeVault, waypoints, field records and settings; replace-all restore with rollback on failure
+- Chat history, offline queue and NodeVault kept per radio, with migration of existing data (#65)
 - Local field alerts (phone notifications only): low battery for your radio and favorites, new nodes heard live, favorites quiet during a connection; one alert per condition until it recovers
 
 ## Release gates
