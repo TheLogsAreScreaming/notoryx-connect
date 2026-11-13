@@ -11,6 +11,7 @@ import 'l10n/generated/app_localizations.dart';
 import 'link_planner_page.dart';
 import 'node_detail_page.dart';
 import 'place_search_page.dart';
+import 'network_diagram_page.dart';
 import 'services/bastion_coverage_grid.dart';
 import 'services/bastion_field_log.dart';
 import 'services/bastion_geo.dart';
@@ -421,6 +422,13 @@ class _MapPageState extends State<MapPage> {
                             icon: Icon(_showTrails ? Icons.timeline : Icons.timeline_outlined),
                             onPressed: () => setState(() => _showTrails = !_showTrails),
                           ),
+                        IconButton(
+                          key: const ValueKey('map-network-diagram'),
+                          tooltip: l.topologyTitle,
+                          icon: const Icon(Icons.account_tree_outlined),
+                          onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                              builder: (_) => NetworkDiagramPage(radio: widget.radio))),
+                        ),
                         if (widget.radio.neighborReports.isNotEmpty)
                           IconButton(
                             tooltip: _showLinks ? l.mapHideLinks : l.mapShowLinks,

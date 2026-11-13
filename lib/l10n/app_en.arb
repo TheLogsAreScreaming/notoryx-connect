@@ -2794,5 +2794,36 @@
       }
     }
   },
-  "pvSent8": "What you type into Find a place, to OpenStreetMap's Nominatim service, only when you press Search online; it sees your IP address"
+  "pvSent8": "What you type into Find a place, to OpenStreetMap's Nominatim service, only when you press Search online; it sees your IP address",
+  "topologyTitle": "Network diagram",
+  "topologyEmpty": "Nothing to draw yet. Nodes appear once your radio knows how many hops away they are, or a node sends Neighbor Info.",
+  "topologyHint": "Your radio is in the middle and each ring is one more hop. Lines are links from Neighbor Info reports (bolder = better signal) and nodes your radio hears directly. Tap a dot to open the node.",
+  "topologyNoReports": "No Neighbor Info reports yet, so only nodes heard directly have lines. Turn on the Neighbor Info module on your radios to see more links.",
+  "topologyRing": "{count, plural, =0{Heard directly} =1{1 hop away} other{{count} hops away}}",
+  "@topologyRing": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "topologyLinks": "{count, plural, =1{1 link} other{{count} links}}",
+  "@topologyLinks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "topologySemantics": "Network diagram: {count} nodes on {rings} rings around your radio.",
+  "@topologySemantics": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "rings": {
+        "type": "int"
+      }
+    }
+  }
 }

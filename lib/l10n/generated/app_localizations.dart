@@ -6902,6 +6902,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What you type into Find a place, to OpenStreetMap\'s Nominatim service, only when you press Search online; it sees your IP address'**
   String get pvSent8;
+
+  /// No description provided for @topologyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Network diagram'**
+  String get topologyTitle;
+
+  /// No description provided for @topologyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to draw yet. Nodes appear once your radio knows how many hops away they are, or a node sends Neighbor Info.'**
+  String get topologyEmpty;
+
+  /// No description provided for @topologyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio is in the middle and each ring is one more hop. Lines are links from Neighbor Info reports (bolder = better signal) and nodes your radio hears directly. Tap a dot to open the node.'**
+  String get topologyHint;
+
+  /// No description provided for @topologyNoReports.
+  ///
+  /// In en, this message translates to:
+  /// **'No Neighbor Info reports yet, so only nodes heard directly have lines. Turn on the Neighbor Info module on your radios to see more links.'**
+  String get topologyNoReports;
+
+  /// No description provided for @topologyRing.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Heard directly} =1{1 hop away} other{{count} hops away}}'**
+  String topologyRing(int count);
+
+  /// No description provided for @topologyLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 link} other{{count} links}}'**
+  String topologyLinks(int count);
+
+  /// No description provided for @topologySemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Network diagram: {count} nodes on {rings} rings around your radio.'**
+  String topologySemantics(int count, int rings);
 }
 
 class _AppLocalizationsDelegate
