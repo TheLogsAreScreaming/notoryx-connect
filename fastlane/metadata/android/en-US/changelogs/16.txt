@@ -1,0 +1,1 @@
+Community moderation (off by default): report spam to NOTORYX moderators from a message or a node, see a Flagged label on nodes with an approved ban, optionally hide them, and appeal a ban on your own node.
