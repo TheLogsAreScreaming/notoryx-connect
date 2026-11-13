@@ -4245,6 +4245,242 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get njTitle => 'Node journal';
+
+  @override
+  String get njToolSub => 'Every node this phone has heard, and how it behaves';
+
+  @override
+  String get njSubtitle =>
+      'Kept on this phone across every radio. Labels are best guesses from what was heard.';
+
+  @override
+  String get njStorageProblem =>
+      'The journal couldn\'t be read from storage. New entries are kept until the app closes.';
+
+  @override
+  String get njEmptyTitle => 'Nothing heard yet';
+
+  @override
+  String get njEmptyDetail =>
+      'Nodes appear here the first time a radio hears them.';
+
+  @override
+  String get njSearch => 'Search names, IDs and tags';
+
+  @override
+  String get njAll => 'All';
+
+  @override
+  String njCount(int shown, int total) {
+    return 'Showing $shown of $total';
+  }
+
+  @override
+  String get njNoMatch => 'No nodes match.';
+
+  @override
+  String get njLearning => 'Still learning';
+
+  @override
+  String njLastHeard(String time) {
+    return 'Last heard $time';
+  }
+
+  @override
+  String njFirstHeard(String time) {
+    return 'First heard $time';
+  }
+
+  @override
+  String njStats(int heard, int days) {
+    return 'Heard $heard times on $days days';
+  }
+
+  @override
+  String get njSteadyRelay => 'Always-on relay';
+
+  @override
+  String get njRoamer => 'Roamer';
+
+  @override
+  String get njRegular => 'Regular visitor';
+
+  @override
+  String get njRarelyHeard => 'Rarely heard';
+
+  @override
+  String get njNewcomer => 'Newcomer';
+
+  @override
+  String get njGoneQuiet => 'Gone quiet';
+
+  @override
+  String get njInternetLinked => 'Internet-linked';
+
+  @override
+  String get njConfLow => 'Low confidence';
+
+  @override
+  String get njConfMedium => 'Medium confidence';
+
+  @override
+  String get njConfHigh => 'High confidence';
+
+  @override
+  String njEvHoursOnAir(int a, int b) {
+    return 'On the air in $a of the last $b hours';
+  }
+
+  @override
+  String njEvPlacesSpread(int count, String distance) {
+    return 'Reported $count places up to $distance apart';
+  }
+
+  @override
+  String njEvStaysPut(String distance) {
+    return 'Reported positions stay within $distance';
+  }
+
+  @override
+  String njEvExternalPower(int count) {
+    return '$count updates said it runs on external power';
+  }
+
+  @override
+  String njEvDaysHeard(int count) {
+    return 'Heard on $count different days';
+  }
+
+  @override
+  String njEvFewHours(int hours, int days) {
+    return 'Heard in only $hours hours over $days days';
+  }
+
+  @override
+  String njEvFirstHeard(int hours) {
+    return 'First heard $hours hours ago';
+  }
+
+  @override
+  String njEvSilentDays(int days) {
+    return 'Silent for $days days';
+  }
+
+  @override
+  String njEvViaInternet(int a, int b) {
+    return '$a of $b updates came over the internet';
+  }
+
+  @override
+  String get njWhy => 'What it tends to do';
+
+  @override
+  String get njNoLabels => 'Not enough heard yet to describe this node.';
+
+  @override
+  String get njTags => 'Tags';
+
+  @override
+  String get njAddTag => 'Add tag';
+
+  @override
+  String njAddThisTag(String tag) {
+    return 'Add tag $tag';
+  }
+
+  @override
+  String njRemoveTag(String tag) {
+    return 'Remove tag $tag';
+  }
+
+  @override
+  String get njNotes => 'Notes';
+
+  @override
+  String get njNoteHint => 'Anything worth remembering about this node';
+
+  @override
+  String get njSaveNote => 'Save note';
+
+  @override
+  String get njSaved => 'Saved';
+
+  @override
+  String get njSaveFailed =>
+      'Couldn\'t save. The change is kept until the app closes.';
+
+  @override
+  String get drTitle => 'Day replay';
+
+  @override
+  String get drToolSub => 'Play back where your team went on a chosen day';
+
+  @override
+  String get drSubtitle =>
+      'Trip contacts and this radio, kept on this phone for 14 days.';
+
+  @override
+  String get drEmptyTitle => 'No days recorded yet';
+
+  @override
+  String get drEmptyDetail =>
+      'Add people as trip contacts. Their positions are kept by day from then on.';
+
+  @override
+  String get drDay => 'Day';
+
+  @override
+  String get drNoPositions => 'No positions on this day.';
+
+  @override
+  String get drPlay => 'Play';
+
+  @override
+  String get drPause => 'Pause';
+
+  @override
+  String drAt(String time) {
+    return 'At $time';
+  }
+
+  @override
+  String get drSpeed => 'Speed';
+
+  @override
+  String drSpeedTimes(int times) {
+    return '$times×';
+  }
+
+  @override
+  String get drWho => 'Team at this time';
+
+  @override
+  String drNotYet(String time) {
+    return 'First position at $time';
+  }
+
+  @override
+  String drMoving(String time) {
+    return 'On the move, last report $time';
+  }
+
+  @override
+  String drStill(String time) {
+    return 'Last report $time';
+  }
+
+  @override
+  String drCovered(String distance) {
+    return 'Covered $distance so far';
+  }
+
+  @override
+  String drMapSummary(int count, String time) {
+    return 'Map of $count team members at $time. Their positions are listed below.';
+  }
+
+  @override
   String get clTitle => 'Checklists';
 
   @override

@@ -7111,6 +7111,378 @@ abstract class AppLocalizations {
   /// **'Watching {name} • alert past {distance}'**
   String mapRouteWatching(String name, String distance);
 
+  /// No description provided for @njTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Node journal'**
+  String get njTitle;
+
+  /// No description provided for @njToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Every node this phone has heard, and how it behaves'**
+  String get njToolSub;
+
+  /// No description provided for @njSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on this phone across every radio. Labels are best guesses from what was heard.'**
+  String get njSubtitle;
+
+  /// No description provided for @njStorageProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'The journal couldn\'t be read from storage. New entries are kept until the app closes.'**
+  String get njStorageProblem;
+
+  /// No description provided for @njEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing heard yet'**
+  String get njEmptyTitle;
+
+  /// No description provided for @njEmptyDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes appear here the first time a radio hears them.'**
+  String get njEmptyDetail;
+
+  /// No description provided for @njSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search names, IDs and tags'**
+  String get njSearch;
+
+  /// No description provided for @njAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get njAll;
+
+  /// No description provided for @njCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {shown} of {total}'**
+  String njCount(int shown, int total);
+
+  /// No description provided for @njNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes match.'**
+  String get njNoMatch;
+
+  /// No description provided for @njLearning.
+  ///
+  /// In en, this message translates to:
+  /// **'Still learning'**
+  String get njLearning;
+
+  /// No description provided for @njLastHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Last heard {time}'**
+  String njLastHeard(String time);
+
+  /// No description provided for @njFirstHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'First heard {time}'**
+  String njFirstHeard(String time);
+
+  /// No description provided for @njStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard {heard} times on {days} days'**
+  String njStats(int heard, int days);
+
+  /// No description provided for @njSteadyRelay.
+  ///
+  /// In en, this message translates to:
+  /// **'Always-on relay'**
+  String get njSteadyRelay;
+
+  /// No description provided for @njRoamer.
+  ///
+  /// In en, this message translates to:
+  /// **'Roamer'**
+  String get njRoamer;
+
+  /// No description provided for @njRegular.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular visitor'**
+  String get njRegular;
+
+  /// No description provided for @njRarelyHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Rarely heard'**
+  String get njRarelyHeard;
+
+  /// No description provided for @njNewcomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Newcomer'**
+  String get njNewcomer;
+
+  /// No description provided for @njGoneQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Gone quiet'**
+  String get njGoneQuiet;
+
+  /// No description provided for @njInternetLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'Internet-linked'**
+  String get njInternetLinked;
+
+  /// No description provided for @njConfLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low confidence'**
+  String get njConfLow;
+
+  /// No description provided for @njConfMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium confidence'**
+  String get njConfMedium;
+
+  /// No description provided for @njConfHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High confidence'**
+  String get njConfHigh;
+
+  /// No description provided for @njEvHoursOnAir.
+  ///
+  /// In en, this message translates to:
+  /// **'On the air in {a} of the last {b} hours'**
+  String njEvHoursOnAir(int a, int b);
+
+  /// No description provided for @njEvPlacesSpread.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported {count} places up to {distance} apart'**
+  String njEvPlacesSpread(int count, String distance);
+
+  /// No description provided for @njEvStaysPut.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported positions stay within {distance}'**
+  String njEvStaysPut(String distance);
+
+  /// No description provided for @njEvExternalPower.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} updates said it runs on external power'**
+  String njEvExternalPower(int count);
+
+  /// No description provided for @njEvDaysHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard on {count} different days'**
+  String njEvDaysHeard(int count);
+
+  /// No description provided for @njEvFewHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard in only {hours} hours over {days} days'**
+  String njEvFewHours(int hours, int days);
+
+  /// No description provided for @njEvFirstHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'First heard {hours} hours ago'**
+  String njEvFirstHeard(int hours);
+
+  /// No description provided for @njEvSilentDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Silent for {days} days'**
+  String njEvSilentDays(int days);
+
+  /// No description provided for @njEvViaInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'{a} of {b} updates came over the internet'**
+  String njEvViaInternet(int a, int b);
+
+  /// No description provided for @njWhy.
+  ///
+  /// In en, this message translates to:
+  /// **'What it tends to do'**
+  String get njWhy;
+
+  /// No description provided for @njNoLabels.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough heard yet to describe this node.'**
+  String get njNoLabels;
+
+  /// No description provided for @njTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get njTags;
+
+  /// No description provided for @njAddTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tag'**
+  String get njAddTag;
+
+  /// No description provided for @njAddThisTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tag {tag}'**
+  String njAddThisTag(String tag);
+
+  /// No description provided for @njRemoveTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove tag {tag}'**
+  String njRemoveTag(String tag);
+
+  /// No description provided for @njNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get njNotes;
+
+  /// No description provided for @njNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything worth remembering about this node'**
+  String get njNoteHint;
+
+  /// No description provided for @njSaveNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Save note'**
+  String get njSaveNote;
+
+  /// No description provided for @njSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get njSaved;
+
+  /// No description provided for @njSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save. The change is kept until the app closes.'**
+  String get njSaveFailed;
+
+  /// No description provided for @drTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Day replay'**
+  String get drTitle;
+
+  /// No description provided for @drToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Play back where your team went on a chosen day'**
+  String get drToolSub;
+
+  /// No description provided for @drSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip contacts and this radio, kept on this phone for 14 days.'**
+  String get drSubtitle;
+
+  /// No description provided for @drEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No days recorded yet'**
+  String get drEmptyTitle;
+
+  /// No description provided for @drEmptyDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Add people as trip contacts. Their positions are kept by day from then on.'**
+  String get drEmptyDetail;
+
+  /// No description provided for @drDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get drDay;
+
+  /// No description provided for @drNoPositions.
+  ///
+  /// In en, this message translates to:
+  /// **'No positions on this day.'**
+  String get drNoPositions;
+
+  /// No description provided for @drPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get drPlay;
+
+  /// No description provided for @drPause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get drPause;
+
+  /// No description provided for @drAt.
+  ///
+  /// In en, this message translates to:
+  /// **'At {time}'**
+  String drAt(String time);
+
+  /// No description provided for @drSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get drSpeed;
+
+  /// No description provided for @drSpeedTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'{times}×'**
+  String drSpeedTimes(int times);
+
+  /// No description provided for @drWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Team at this time'**
+  String get drWho;
+
+  /// No description provided for @drNotYet.
+  ///
+  /// In en, this message translates to:
+  /// **'First position at {time}'**
+  String drNotYet(String time);
+
+  /// No description provided for @drMoving.
+  ///
+  /// In en, this message translates to:
+  /// **'On the move, last report {time}'**
+  String drMoving(String time);
+
+  /// No description provided for @drStill.
+  ///
+  /// In en, this message translates to:
+  /// **'Last report {time}'**
+  String drStill(String time);
+
+  /// No description provided for @drCovered.
+  ///
+  /// In en, this message translates to:
+  /// **'Covered {distance} so far'**
+  String drCovered(String distance);
+
+  /// No description provided for @drMapSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Map of {count} team members at {time}. Their positions are listed below.'**
+  String drMapSummary(int count, String time);
+
   /// No description provided for @clTitle.
   ///
   /// In en, this message translates to:

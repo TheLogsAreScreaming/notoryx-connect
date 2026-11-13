@@ -40,6 +40,8 @@ import 'mesh_tools_page.dart';
 import 'node_detail_page.dart';
 import 'checklists_page.dart';
 import 'services/bastion_checklists.dart';
+import 'day_replay_page.dart';
+import 'node_journal_page.dart';
 import 'radio_settings_page.dart';
 import 'services/bastion_tile_cache.dart';
 import 'traceroute_page.dart';

@@ -4300,6 +4300,243 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get njTitle => 'Journal des nœuds';
+
+  @override
+  String get njToolSub =>
+      'Chaque nœud entendu par ce téléphone et son comportement';
+
+  @override
+  String get njSubtitle =>
+      'Conservé sur ce téléphone pour toutes les radios. Les étiquettes sont des estimations d\'après ce qui a été entendu.';
+
+  @override
+  String get njStorageProblem =>
+      'Impossible de lire le journal. Les nouvelles entrées sont gardées jusqu\'à la fermeture de l\'app.';
+
+  @override
+  String get njEmptyTitle => 'Rien d\'entendu pour l\'instant';
+
+  @override
+  String get njEmptyDetail =>
+      'Les nœuds apparaissent ici dès qu\'une radio les entend.';
+
+  @override
+  String get njSearch => 'Rechercher noms, ID et tags';
+
+  @override
+  String get njAll => 'Tous';
+
+  @override
+  String njCount(int shown, int total) {
+    return '$shown sur $total affichés';
+  }
+
+  @override
+  String get njNoMatch => 'Aucun nœud ne correspond.';
+
+  @override
+  String get njLearning => 'Encore en observation';
+
+  @override
+  String njLastHeard(String time) {
+    return 'Entendu pour la dernière fois $time';
+  }
+
+  @override
+  String njFirstHeard(String time) {
+    return 'Entendu pour la première fois $time';
+  }
+
+  @override
+  String njStats(int heard, int days) {
+    return 'Entendu $heard fois sur $days jours';
+  }
+
+  @override
+  String get njSteadyRelay => 'Relais toujours actif';
+
+  @override
+  String get njRoamer => 'Itinérant';
+
+  @override
+  String get njRegular => 'Visiteur régulier';
+
+  @override
+  String get njRarelyHeard => 'Rarement entendu';
+
+  @override
+  String get njNewcomer => 'Nouveau venu';
+
+  @override
+  String get njGoneQuiet => 'Devenu silencieux';
+
+  @override
+  String get njInternetLinked => 'Relié par internet';
+
+  @override
+  String get njConfLow => 'Confiance faible';
+
+  @override
+  String get njConfMedium => 'Confiance moyenne';
+
+  @override
+  String get njConfHigh => 'Confiance élevée';
+
+  @override
+  String njEvHoursOnAir(int a, int b) {
+    return 'Actif $a des $b dernières heures';
+  }
+
+  @override
+  String njEvPlacesSpread(int count, String distance) {
+    return 'A signalé $count lieux distants jusqu\'à $distance';
+  }
+
+  @override
+  String njEvStaysPut(String distance) {
+    return 'Les positions signalées restent dans un rayon de $distance';
+  }
+
+  @override
+  String njEvExternalPower(int count) {
+    return '$count mises à jour indiquent une alimentation externe';
+  }
+
+  @override
+  String njEvDaysHeard(int count) {
+    return 'Entendu sur $count jours différents';
+  }
+
+  @override
+  String njEvFewHours(int hours, int days) {
+    return 'Entendu seulement $hours heures sur $days jours';
+  }
+
+  @override
+  String njEvFirstHeard(int hours) {
+    return 'Entendu pour la première fois il y a $hours heures';
+  }
+
+  @override
+  String njEvSilentDays(int days) {
+    return 'Silencieux depuis $days jours';
+  }
+
+  @override
+  String njEvViaInternet(int a, int b) {
+    return '$a mises à jour sur $b sont venues par internet';
+  }
+
+  @override
+  String get njWhy => 'Ce qu\'il fait d\'habitude';
+
+  @override
+  String get njNoLabels => 'Pas encore assez d\'écoute pour décrire ce nœud.';
+
+  @override
+  String get njTags => 'Tags';
+
+  @override
+  String get njAddTag => 'Ajouter un tag';
+
+  @override
+  String njAddThisTag(String tag) {
+    return 'Ajouter le tag $tag';
+  }
+
+  @override
+  String njRemoveTag(String tag) {
+    return 'Retirer le tag $tag';
+  }
+
+  @override
+  String get njNotes => 'Notes';
+
+  @override
+  String get njNoteHint => 'Tout ce qui mérite d\'être retenu sur ce nœud';
+
+  @override
+  String get njSaveNote => 'Enregistrer la note';
+
+  @override
+  String get njSaved => 'Enregistré';
+
+  @override
+  String get njSaveFailed =>
+      'Échec de l\'enregistrement. La modification est gardée jusqu\'à la fermeture de l\'app.';
+
+  @override
+  String get drTitle => 'Rejouer la journée';
+
+  @override
+  String get drToolSub => 'Revoir où votre équipe est allée un jour donné';
+
+  @override
+  String get drSubtitle =>
+      'Contacts de sortie et cette radio, conservés 14 jours sur ce téléphone.';
+
+  @override
+  String get drEmptyTitle => 'Aucune journée enregistrée';
+
+  @override
+  String get drEmptyDetail =>
+      'Ajoutez des personnes comme contacts de sortie. Leurs positions seront ensuite gardées par jour.';
+
+  @override
+  String get drDay => 'Jour';
+
+  @override
+  String get drNoPositions => 'Aucune position ce jour-là.';
+
+  @override
+  String get drPlay => 'Lecture';
+
+  @override
+  String get drPause => 'Pause';
+
+  @override
+  String drAt(String time) {
+    return 'À $time';
+  }
+
+  @override
+  String get drSpeed => 'Vitesse';
+
+  @override
+  String drSpeedTimes(int times) {
+    return '$times×';
+  }
+
+  @override
+  String get drWho => 'Équipe à cette heure';
+
+  @override
+  String drNotYet(String time) {
+    return 'Première position à $time';
+  }
+
+  @override
+  String drMoving(String time) {
+    return 'En déplacement, dernier rapport $time';
+  }
+
+  @override
+  String drStill(String time) {
+    return 'Dernier rapport $time';
+  }
+
+  @override
+  String drCovered(String distance) {
+    return 'Parcouru jusqu\'ici : $distance';
+  }
+
+  @override
+  String drMapSummary(int count, String time) {
+    return 'Carte de $count membres de l\'équipe à $time. Leurs positions sont listées dessous.';
+  }
+
+  @override
   String get clTitle => 'Listes de contrôle';
 
   @override

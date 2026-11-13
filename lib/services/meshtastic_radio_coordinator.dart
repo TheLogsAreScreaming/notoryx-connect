@@ -54,6 +54,8 @@ import 'bastion_reconnect_supervisor.dart';
 import 'bastion_telemetry_codec.dart';
 import 'bastion_radio_policy.dart';
 import 'bastion_node_vault.dart';
+import 'bastion_day_tracks.dart';
+import 'bastion_node_journal.dart';
 import 'bastion_sms_relay.dart';
 import 'meshtastic_ble_discovery.dart';
 import 'meshtastic_connection_controller.dart';
@@ -384,6 +386,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _ => null,
   };
   final BastionNodeVault _nodeVault = BastionNodeVault();
+  final BastionNodeJournal _journal = BastionNodeJournal();
   final BastionBackgroundKeeper _background;
   final BastionMessageAlerts _alerts;
   final PhoneLocationSource _location;
@@ -736,6 +739,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   List<BastionNodeRecord> get nodeVault => _nodeVault.records;
+
+  /// Every node this phone has heard on any radio, with behaviour, tags and notes.
+  BastionNodeJournal get nodeJournal => _journal;
   List<double> get snrHistory => List.unmodifiable(_snrHistory);
   double? get latestSnr => _snrHistory.isEmpty ? null : _snrHistory.last;
   int get receivedTextPackets => _receivedTextPackets;
@@ -789,6 +795,11 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   /// Shows the last connected radio's history until a radio connects.
   final BastionTrails _trails = BastionTrails();
+
+  final BastionDayTracks _dayTracks = BastionDayTracks();
+
+  /// Team positions kept by day for Day replay.
+  BastionDayTracks get dayTracks => _dayTracks;
 
   /// Recent movement of a trip contact or this radio, oldest first.
   List<TrailPoint> trailOf(int num) => _trails.trailOf(num);
@@ -1083,6 +1094,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           if (n.publicKey != null) unawaited(_checkNodeKey(n));
         }
         _trails.record(nodes, {...trip.plan.members, ?_localNodeNum});
+        unawaited(_dayTracks.record(nodes, {...trip.plan.members, ?_localNodeNum}));
         _checkGeofences(nodes);
         unawaited(_nodeVault.rememberPositions(nodes));
         notifyListeners();
@@ -1094,6 +1106,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
               settings: _alertSettings));
         }
         unawaited(_nodeVault.observe(node).then((_) => notifyListeners()));
+        unawaited(_journal.observe(node));
       });
       _messageSubscription = messaging.changes.listen((_) {
         _syncMessageSnapshot(messaging);
@@ -1841,6 +1854,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   Future<void> _shutdownSession({required bool resetConnection}) async {
     _stopFieldAlerts();
     unawaited(_trails.flush());
+    unawaited(_dayTracks.flush());
+    unawaited(_journal.flush());
     unawaited(_telemetryHistory.flush());
     await _coverageLocation?.cancel();
     _coverageLocation = null;

@@ -4296,6 +4296,244 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get njTitle => 'Knotentagebuch';
+
+  @override
+  String get njToolSub =>
+      'Jeder Knoten, den dieses Telefon gehört hat, und wie er sich verhält';
+
+  @override
+  String get njSubtitle =>
+      'Auf diesem Telefon für alle Funkgeräte gespeichert. Die Kennzeichnungen sind Schätzungen aus dem Gehörten.';
+
+  @override
+  String get njStorageProblem =>
+      'Das Tagebuch konnte nicht gelesen werden. Neue Einträge bleiben bis zum Schließen der App erhalten.';
+
+  @override
+  String get njEmptyTitle => 'Noch nichts gehört';
+
+  @override
+  String get njEmptyDetail =>
+      'Knoten erscheinen hier, sobald ein Funkgerät sie zum ersten Mal hört.';
+
+  @override
+  String get njSearch => 'Namen, IDs und Tags suchen';
+
+  @override
+  String get njAll => 'Alle';
+
+  @override
+  String njCount(int shown, int total) {
+    return '$shown von $total angezeigt';
+  }
+
+  @override
+  String get njNoMatch => 'Keine passenden Knoten.';
+
+  @override
+  String get njLearning => 'Lernt noch';
+
+  @override
+  String njLastHeard(String time) {
+    return 'Zuletzt gehört $time';
+  }
+
+  @override
+  String njFirstHeard(String time) {
+    return 'Zuerst gehört $time';
+  }
+
+  @override
+  String njStats(int heard, int days) {
+    return '$heard-mal an $days Tagen gehört';
+  }
+
+  @override
+  String get njSteadyRelay => 'Dauerhaft aktives Relais';
+
+  @override
+  String get njRoamer => 'Unterwegs';
+
+  @override
+  String get njRegular => 'Regelmäßiger Besucher';
+
+  @override
+  String get njRarelyHeard => 'Selten gehört';
+
+  @override
+  String get njNewcomer => 'Neuling';
+
+  @override
+  String get njGoneQuiet => 'Verstummt';
+
+  @override
+  String get njInternetLinked => 'Über Internet verbunden';
+
+  @override
+  String get njConfLow => 'Geringe Sicherheit';
+
+  @override
+  String get njConfMedium => 'Mittlere Sicherheit';
+
+  @override
+  String get njConfHigh => 'Hohe Sicherheit';
+
+  @override
+  String njEvHoursOnAir(int a, int b) {
+    return 'In $a der letzten $b Stunden aktiv';
+  }
+
+  @override
+  String njEvPlacesSpread(int count, String distance) {
+    return '$count Orte gemeldet, bis zu $distance auseinander';
+  }
+
+  @override
+  String njEvStaysPut(String distance) {
+    return 'Gemeldete Positionen bleiben innerhalb von $distance';
+  }
+
+  @override
+  String njEvExternalPower(int count) {
+    return '$count Meldungen nannten externe Stromversorgung';
+  }
+
+  @override
+  String njEvDaysHeard(int count) {
+    return 'An $count verschiedenen Tagen gehört';
+  }
+
+  @override
+  String njEvFewHours(int hours, int days) {
+    return 'Nur in $hours Stunden über $days Tage gehört';
+  }
+
+  @override
+  String njEvFirstHeard(int hours) {
+    return 'Zuerst vor $hours Stunden gehört';
+  }
+
+  @override
+  String njEvSilentDays(int days) {
+    return 'Seit $days Tagen still';
+  }
+
+  @override
+  String njEvViaInternet(int a, int b) {
+    return '$a von $b Meldungen kamen über das Internet';
+  }
+
+  @override
+  String get njWhy => 'Was er meist tut';
+
+  @override
+  String get njNoLabels =>
+      'Noch zu wenig gehört, um diesen Knoten zu beschreiben.';
+
+  @override
+  String get njTags => 'Tags';
+
+  @override
+  String get njAddTag => 'Tag hinzufügen';
+
+  @override
+  String njAddThisTag(String tag) {
+    return 'Tag $tag hinzufügen';
+  }
+
+  @override
+  String njRemoveTag(String tag) {
+    return 'Tag $tag entfernen';
+  }
+
+  @override
+  String get njNotes => 'Notizen';
+
+  @override
+  String get njNoteHint => 'Alles Wissenswerte über diesen Knoten';
+
+  @override
+  String get njSaveNote => 'Notiz speichern';
+
+  @override
+  String get njSaved => 'Gespeichert';
+
+  @override
+  String get njSaveFailed =>
+      'Speichern fehlgeschlagen. Die Änderung bleibt bis zum Schließen der App erhalten.';
+
+  @override
+  String get drTitle => 'Tagesrückblick';
+
+  @override
+  String get drToolSub => 'Abspielen, wo dein Team an einem Tag unterwegs war';
+
+  @override
+  String get drSubtitle =>
+      'Tour-Kontakte und dieses Funkgerät, 14 Tage auf diesem Telefon gespeichert.';
+
+  @override
+  String get drEmptyTitle => 'Noch keine Tage aufgezeichnet';
+
+  @override
+  String get drEmptyDetail =>
+      'Füge Personen als Tour-Kontakte hinzu. Ab dann werden ihre Positionen pro Tag gespeichert.';
+
+  @override
+  String get drDay => 'Tag';
+
+  @override
+  String get drNoPositions => 'Keine Positionen an diesem Tag.';
+
+  @override
+  String get drPlay => 'Abspielen';
+
+  @override
+  String get drPause => 'Pause';
+
+  @override
+  String drAt(String time) {
+    return 'Um $time';
+  }
+
+  @override
+  String get drSpeed => 'Tempo';
+
+  @override
+  String drSpeedTimes(int times) {
+    return '$times×';
+  }
+
+  @override
+  String get drWho => 'Team zu dieser Zeit';
+
+  @override
+  String drNotYet(String time) {
+    return 'Erste Position um $time';
+  }
+
+  @override
+  String drMoving(String time) {
+    return 'Unterwegs, letzte Meldung $time';
+  }
+
+  @override
+  String drStill(String time) {
+    return 'Letzte Meldung $time';
+  }
+
+  @override
+  String drCovered(String distance) {
+    return 'Bisher zurückgelegt: $distance';
+  }
+
+  @override
+  String drMapSummary(int count, String time) {
+    return 'Karte von $count Teammitgliedern um $time. Ihre Positionen stehen darunter.';
+  }
+
+  @override
   String get clTitle => 'Checklisten';
 
   @override
