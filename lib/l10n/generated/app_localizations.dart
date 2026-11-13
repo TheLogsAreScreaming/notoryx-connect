@@ -7374,6 +7374,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t save. The change is kept until the app closes.'**
   String get njSaveFailed;
+
+  /// No description provided for @drTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Day replay'**
+  String get drTitle;
+
+  /// No description provided for @drToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Play back where your team went on a chosen day'**
+  String get drToolSub;
+
+  /// No description provided for @drSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip contacts and this radio, kept on this phone for 14 days.'**
+  String get drSubtitle;
+
+  /// No description provided for @drEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No days recorded yet'**
+  String get drEmptyTitle;
+
+  /// No description provided for @drEmptyDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Add people as trip contacts. Their positions are kept by day from then on.'**
+  String get drEmptyDetail;
+
+  /// No description provided for @drDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get drDay;
+
+  /// No description provided for @drNoPositions.
+  ///
+  /// In en, this message translates to:
+  /// **'No positions on this day.'**
+  String get drNoPositions;
+
+  /// No description provided for @drPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get drPlay;
+
+  /// No description provided for @drPause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get drPause;
+
+  /// No description provided for @drAt.
+  ///
+  /// In en, this message translates to:
+  /// **'At {time}'**
+  String drAt(String time);
+
+  /// No description provided for @drSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get drSpeed;
+
+  /// No description provided for @drSpeedTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'{times}×'**
+  String drSpeedTimes(int times);
+
+  /// No description provided for @drWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Team at this time'**
+  String get drWho;
+
+  /// No description provided for @drNotYet.
+  ///
+  /// In en, this message translates to:
+  /// **'First position at {time}'**
+  String drNotYet(String time);
+
+  /// No description provided for @drMoving.
+  ///
+  /// In en, this message translates to:
+  /// **'On the move, last report {time}'**
+  String drMoving(String time);
+
+  /// No description provided for @drStill.
+  ///
+  /// In en, this message translates to:
+  /// **'Last report {time}'**
+  String drStill(String time);
+
+  /// No description provided for @drCovered.
+  ///
+  /// In en, this message translates to:
+  /// **'Covered {distance} so far'**
+  String drCovered(String distance);
+
+  /// No description provided for @drMapSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Map of {count} team members at {time}. Their positions are listed below.'**
+  String drMapSummary(int count, String time);
 }
 
 class _AppLocalizationsDelegate

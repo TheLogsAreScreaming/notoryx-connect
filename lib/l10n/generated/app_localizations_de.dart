@@ -4462,4 +4462,74 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get njSaveFailed =>
       'Speichern fehlgeschlagen. Die Änderung bleibt bis zum Schließen der App erhalten.';
+
+  @override
+  String get drTitle => 'Tagesrückblick';
+
+  @override
+  String get drToolSub => 'Abspielen, wo dein Team an einem Tag unterwegs war';
+
+  @override
+  String get drSubtitle =>
+      'Tour-Kontakte und dieses Funkgerät, 14 Tage auf diesem Telefon gespeichert.';
+
+  @override
+  String get drEmptyTitle => 'Noch keine Tage aufgezeichnet';
+
+  @override
+  String get drEmptyDetail =>
+      'Füge Personen als Tour-Kontakte hinzu. Ab dann werden ihre Positionen pro Tag gespeichert.';
+
+  @override
+  String get drDay => 'Tag';
+
+  @override
+  String get drNoPositions => 'Keine Positionen an diesem Tag.';
+
+  @override
+  String get drPlay => 'Abspielen';
+
+  @override
+  String get drPause => 'Pause';
+
+  @override
+  String drAt(String time) {
+    return 'Um $time';
+  }
+
+  @override
+  String get drSpeed => 'Tempo';
+
+  @override
+  String drSpeedTimes(int times) {
+    return '$times×';
+  }
+
+  @override
+  String get drWho => 'Team zu dieser Zeit';
+
+  @override
+  String drNotYet(String time) {
+    return 'Erste Position um $time';
+  }
+
+  @override
+  String drMoving(String time) {
+    return 'Unterwegs, letzte Meldung $time';
+  }
+
+  @override
+  String drStill(String time) {
+    return 'Letzte Meldung $time';
+  }
+
+  @override
+  String drCovered(String distance) {
+    return 'Bisher zurückgelegt: $distance';
+  }
+
+  @override
+  String drMapSummary(int count, String time) {
+    return 'Karte von $count Teammitgliedern um $time. Ihre Positionen stehen darunter.';
+  }
 }

@@ -3063,5 +3063,75 @@
   "njNoteHint": "Anything worth remembering about this node",
   "njSaveNote": "Save note",
   "njSaved": "Saved",
-  "njSaveFailed": "Couldn't save. The change is kept until the app closes."
+  "njSaveFailed": "Couldn't save. The change is kept until the app closes.",
+  "drTitle": "Day replay",
+  "drToolSub": "Play back where your team went on a chosen day",
+  "drSubtitle": "Trip contacts and this radio, kept on this phone for 14 days.",
+  "drEmptyTitle": "No days recorded yet",
+  "drEmptyDetail": "Add people as trip contacts. Their positions are kept by day from then on.",
+  "drDay": "Day",
+  "drNoPositions": "No positions on this day.",
+  "drPlay": "Play",
+  "drPause": "Pause",
+  "drAt": "At {time}",
+  "@drAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "drSpeed": "Speed",
+  "drSpeedTimes": "{times}×",
+  "@drSpeedTimes": {
+    "placeholders": {
+      "times": {
+        "type": "int"
+      }
+    }
+  },
+  "drWho": "Team at this time",
+  "drNotYet": "First position at {time}",
+  "@drNotYet": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "drMoving": "On the move, last report {time}",
+  "@drMoving": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "drStill": "Last report {time}",
+  "@drStill": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "drCovered": "Covered {distance} so far",
+  "@drCovered": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "drMapSummary": "Map of {count} team members at {time}. Their positions are listed below.",
+  "@drMapSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -38,6 +38,7 @@ import 'sms_relay_page.dart';
 import 'mesh_health_page.dart';
 import 'mesh_tools_page.dart';
 import 'node_detail_page.dart';
+import 'day_replay_page.dart';
 import 'node_journal_page.dart';
 import 'radio_settings_page.dart';
 import 'services/bastion_tile_cache.dart';

@@ -4465,4 +4465,74 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get njSaveFailed =>
       'Échec de l\'enregistrement. La modification est gardée jusqu\'à la fermeture de l\'app.';
+
+  @override
+  String get drTitle => 'Rejouer la journée';
+
+  @override
+  String get drToolSub => 'Revoir où votre équipe est allée un jour donné';
+
+  @override
+  String get drSubtitle =>
+      'Contacts de sortie et cette radio, conservés 14 jours sur ce téléphone.';
+
+  @override
+  String get drEmptyTitle => 'Aucune journée enregistrée';
+
+  @override
+  String get drEmptyDetail =>
+      'Ajoutez des personnes comme contacts de sortie. Leurs positions seront ensuite gardées par jour.';
+
+  @override
+  String get drDay => 'Jour';
+
+  @override
+  String get drNoPositions => 'Aucune position ce jour-là.';
+
+  @override
+  String get drPlay => 'Lecture';
+
+  @override
+  String get drPause => 'Pause';
+
+  @override
+  String drAt(String time) {
+    return 'À $time';
+  }
+
+  @override
+  String get drSpeed => 'Vitesse';
+
+  @override
+  String drSpeedTimes(int times) {
+    return '$times×';
+  }
+
+  @override
+  String get drWho => 'Équipe à cette heure';
+
+  @override
+  String drNotYet(String time) {
+    return 'Première position à $time';
+  }
+
+  @override
+  String drMoving(String time) {
+    return 'En déplacement, dernier rapport $time';
+  }
+
+  @override
+  String drStill(String time) {
+    return 'Dernier rapport $time';
+  }
+
+  @override
+  String drCovered(String distance) {
+    return 'Parcouru jusqu\'ici : $distance';
+  }
+
+  @override
+  String drMapSummary(int count, String time) {
+    return 'Carte de $count membres de l\'équipe à $time. Leurs positions sont listées dessous.';
+  }
 }
