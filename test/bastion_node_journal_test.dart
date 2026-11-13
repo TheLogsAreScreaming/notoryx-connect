@@ -1,6 +1,6 @@
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/node_journal_page.dart';
-import 'package:bastion/node_sigil.dart';
+import 'package:bastion/node_mark.dart';
 import 'package:bastion/services/bastion_node_journal.dart';
 import 'package:bastion/services/meshtastic_node_database.dart';
 import 'package:flutter/material.dart';
@@ -179,11 +179,11 @@ void main() {
     });
   });
 
-  group('sigil', () {
-    test('the same node always gets the same sigil, and neighbours differ', () {
-      expect(NodeSigilSpec.of(0xDEADBEEF), NodeSigilSpec.of(0xDEADBEEF));
-      expect(NodeSigilSpec.hash(0), 0x4b95f515, reason: 'FNV-1a must not change between versions');
-      final specs = {for (var n = 0x1000; n < 0x1040; n++) NodeSigilSpec.of(n)};
+  group('mark', () {
+    test('the same node always gets the same mark, and neighbours differ', () {
+      expect(NodeMarkSpec.of(0xDEADBEEF), NodeMarkSpec.of(0xDEADBEEF));
+      expect(NodeMarkSpec.hash(0), 0x4b95f515, reason: 'FNV-1a must not change between versions');
+      final specs = {for (var n = 0x1000; n < 0x1040; n++) NodeMarkSpec.of(n)};
       expect(specs.length, greaterThan(60));
       for (final s in specs) {
         expect(s.points, inInclusiveRange(3, 7));
@@ -208,14 +208,14 @@ void main() {
       home: home,
     );
 
-    testWidgets('lists nodes with sigils hidden from screen readers and filters by tag', (tester) async {
+    testWidgets('lists nodes with marks hidden from screen readers and filters by tag', (tester) async {
       final journal = await seeded();
       final semantics = tester.ensureSemantics();
       await tester.pumpWidget(app(NodeJournalPage(journal: journal, clock: () => _start)));
       await tester.pumpAndSettle();
       expect(find.text('Summit relay'), findsOneWidget);
-      expect(find.byType(NodeSigil), findsNWidgets(2));
-      expect(find.descendant(of: find.byType(NodeSigil), matching: find.byType(ExcludeSemantics)), findsNWidgets(2));
+      expect(find.byType(NodeMark), findsNWidgets(2));
+      expect(find.descendant(of: find.byType(NodeMark), matching: find.byType(ExcludeSemantics)), findsNWidgets(2));
       expect(find.textContaining('Newcomer ·'), findsNWidgets(2));
       await tester.enterText(find.byType(TextField), 'team');
       await tester.pump();

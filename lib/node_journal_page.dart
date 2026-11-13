@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'l10n/generated/app_localizations.dart';
-import 'node_sigil.dart';
+import 'node_mark.dart';
 import 'services/bastion_node_journal.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_units.dart';
@@ -137,7 +137,7 @@ class _NodeJournalPageState extends State<NodeJournalPage> {
               for (final r in shown)
                 Card(child: ListTile(
                   key: ValueKey('journal-${r.entry.num}'),
-                  leading: NodeSigil(num: r.entry.num),
+                  leading: NodeMark(num: r.entry.num),
                   title: Text(r.entry.displayName),
                   subtitle: Text([
                     if (r.labels.isEmpty)
@@ -161,7 +161,7 @@ class _NodeJournalPageState extends State<NodeJournalPage> {
   }
 }
 
-/// One node's journal page: its sigil, labels with evidence, tags and notes.
+/// One node's journal page: its mark, labels with evidence, tags and notes.
 class JournalEntryPage extends StatefulWidget {
   const JournalEntryPage({super.key, required this.journal, required this.num, this.clock = DateTime.now});
   final BastionNodeJournal journal;
@@ -217,7 +217,7 @@ class _JournalEntryPageState extends State<JournalEntryPage> {
           appBar: AppBar(title: Text(e.displayName)),
           body: ListView(padding: NxSpace.page, children: [
             Row(children: [
-              NodeSigil(num: e.num, size: 72),
+              NodeMark(num: e.num, size: 72),
               const SizedBox(width: NxSpace.md),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Semantics(header: true, child: Text(e.displayName, style: type.titleLarge)),
