@@ -16,6 +16,7 @@ import 'theme/notoryx_theme.dart';
 import 'theme/nx_components.dart';
 import 'remote_admin_page.dart';
 import 'traceroute_page.dart';
+import 'sentinel_page.dart';
 
 /// Everything known about one mesh node, with actions to reach it.
 class NodeDetailPage extends StatefulWidget {
@@ -162,7 +163,11 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
 
       return Scaffold(
         appBar: AppBar(
-          title: Text(node?.displayName ?? record?.displayName ?? _hexId),
+          title: Row(mainAxisSize: MainAxisSize.min, children: [
+            Flexible(child: Text(node?.displayName ?? record?.displayName ?? _hexId,
+                overflow: TextOverflow.ellipsis)),
+            SentinelFlag(widget.nodeNum),
+          ]),
           actions: [
             IconButton(
               tooltip: (record?.favorite ?? false)
@@ -252,6 +257,16 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
+                  OutlinedButton.icon(
+                    key: const ValueKey('node-sentinel-report'),
+                    icon: const Icon(Icons.flag_outlined),
+                    label: Text(l.sntReport),
+                    onPressed: () => showSentinelReportSheet(
+                      context,
+                      nodeNum: widget.nodeNum,
+                      nodeName: node?.displayName ?? record?.displayName ?? _hexId,
+                    ),
+                  ),
                   OutlinedButton.icon(
                     icon: const Icon(Icons.route),
                     label: Text(l.ndTraceroute),

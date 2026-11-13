@@ -3908,4 +3908,174 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cpUnknown => 'Desconocido';
+
+  @override
+  String get sntTitle => 'Moderación comunitaria';
+
+  @override
+  String get sntToolSubtitle =>
+      'Denuncia spam a los moderadores de NOTORYX y ve nodos marcados';
+
+  @override
+  String get sntIntro =>
+      'Las denuncias llegan a los moderadores de NOTORYX, que revisan cada una a mano. Los bloqueos aprobados vuelven como lista orientativa: los nodos marcados llevan una etiqueta y nada se bloquea en la malla.';
+
+  @override
+  String get sntEnable => 'Usar moderación comunitaria';
+
+  @override
+  String get sntEnableSub =>
+      'Desactivada por defecto. Mientras esté desactivada, NOTORYX nunca contacta con el servicio de moderación.';
+
+  @override
+  String get sntHide => 'Ocultar mensajes de remitentes marcados';
+
+  @override
+  String get sntHideSub =>
+      'Solo mensajes de canal. Puedes desactivarlo cuando quieras.';
+
+  @override
+  String sntSynced(String time) {
+    return 'Lista de bloqueos actualizada $time';
+  }
+
+  @override
+  String get sntNeverSynced => 'Lista de bloqueos aún no descargada';
+
+  @override
+  String sntFlaggedCount(int count) {
+    return 'Nodos marcados: $count';
+  }
+
+  @override
+  String sntQueued(int count) {
+    return 'Denuncias pendientes de envío: $count';
+  }
+
+  @override
+  String get sntRefresh => 'Actualizar ahora';
+
+  @override
+  String get sntYourNode => 'Tu nodo';
+
+  @override
+  String get sntYourNodeClear => 'Tu nodo no está marcado.';
+
+  @override
+  String sntYourNodeFlagged(String caseRef) {
+    return 'Tu nodo está marcado (caso $caseRef). Si es un error, puedes apelar.';
+  }
+
+  @override
+  String get sntYourNodeUnknown => 'Conecta una radio para comprobar tu nodo.';
+
+  @override
+  String get sntAppealPending => 'Tu apelación está en revisión.';
+
+  @override
+  String get sntAppeal => 'Apelar';
+
+  @override
+  String get sntAppealOther => 'Apelar un caso por número';
+
+  @override
+  String get sntYourReports => 'Tus denuncias recientes';
+
+  @override
+  String get sntReport => 'Denunciar a los moderadores';
+
+  @override
+  String sntReportTitle(String name) {
+    return 'Denunciar a $name';
+  }
+
+  @override
+  String get sntReasonSpam => 'Spam o publicidad';
+
+  @override
+  String get sntReasonFlooding => 'Saturar la malla';
+
+  @override
+  String get sntReasonAbuse => 'Acoso o abuso';
+
+  @override
+  String get sntReasonImpersonation => 'Suplantación';
+
+  @override
+  String get sntReasonOther => 'Otro';
+
+  @override
+  String get sntNote => 'Detalles (opcional)';
+
+  @override
+  String get sntIncludeMessage => 'Incluir este mensaje';
+
+  @override
+  String get sntSends =>
+      'Envía el ID y el nombre del nodo, tu motivo y, si está marcado, este mensaje. No tu nombre, clave ni ubicación.';
+
+  @override
+  String get sntSend => 'Enviar denuncia';
+
+  @override
+  String sntSent(String caseRef) {
+    return 'Denuncia enviada ($caseRef)';
+  }
+
+  @override
+  String get sntQueuedOne => 'Sin conexión. La denuncia se enviará más tarde.';
+
+  @override
+  String sntRejected(String message) {
+    return 'Denuncia no aceptada: $message';
+  }
+
+  @override
+  String get sntOffPrompt => '¿Activar la moderación comunitaria?';
+
+  @override
+  String get sntTurnOn => 'Activar';
+
+  @override
+  String get sntFlagged => 'Marcado';
+
+  @override
+  String sntFlaggedHint(String caseRef) {
+    return 'Marcado por los moderadores de NOTORYX (caso $caseRef). Solo orientativo.';
+  }
+
+  @override
+  String get sntCaseRef => 'Número de caso (SNT-1234)';
+
+  @override
+  String get sntStatement => '¿Por qué debería levantarse el bloqueo?';
+
+  @override
+  String get sntContact => 'Contacto (opcional, solo lo ven los moderadores)';
+
+  @override
+  String get sntAppealSend => 'Enviar apelación';
+
+  @override
+  String get sntAppealReceived =>
+      'Apelación enviada. Un moderador la revisará.';
+
+  @override
+  String get sntAppealUnknown => 'Ningún caso de Meshtastic tiene ese número.';
+
+  @override
+  String get sntAppealNotOpen =>
+      'Ese caso no tiene un bloqueo activo o ya hay una apelación pendiente.';
+
+  @override
+  String get sntAppealTooMany =>
+      'Demasiadas apelaciones. Inténtalo de nuevo en un minuto.';
+
+  @override
+  String get sntFailed =>
+      'No se pudo contactar con el servicio de moderación. Inténtalo más tarde.';
+
+  @override
+  String get pvSent7 =>
+      'Denuncias, apelaciones y consultas de la lista de bloqueos a los moderadores de NOTORYX a través de sentinel-relay.meshmayhem.org, solo si activas la moderación comunitaria';
 }

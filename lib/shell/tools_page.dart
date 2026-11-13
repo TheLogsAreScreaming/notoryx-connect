@@ -151,6 +151,14 @@ class _ToolsPageState extends State<_ToolsPage> {
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(FieldToolsPage(radio: radio)),
       )),
+      Card(child: ListTile(
+        key: const ValueKey('tools-sentinel'),
+        leading: const Icon(Icons.shield_outlined),
+        title: Text(l.sntTitle),
+        subtitle: Text(l.sntToolSubtitle),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(SentinelPage(localNodeNum: radio.localNodeNum)),
+      )),
       if (!kIsWeb && Platform.isAndroid) // ATAK is an Android app.
         Card(child: ListTile(
         leading: const Icon(Icons.share_location),

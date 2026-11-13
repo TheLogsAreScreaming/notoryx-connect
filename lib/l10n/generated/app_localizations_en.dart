@@ -3879,4 +3879,172 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cpUnknown => 'Unknown';
+
+  @override
+  String get sntTitle => 'Community moderation';
+
+  @override
+  String get sntToolSubtitle =>
+      'Report spam to NOTORYX moderators and see flagged nodes';
+
+  @override
+  String get sntIntro =>
+      'Reports go to NOTORYX moderators, who review each one by hand. Approved bans come back as an advisory list: flagged nodes get a label, and nothing on the mesh is blocked.';
+
+  @override
+  String get sntEnable => 'Use community moderation';
+
+  @override
+  String get sntEnableSub =>
+      'Off by default. While it is off, NOTORYX never contacts the moderation service.';
+
+  @override
+  String get sntHide => 'Hide messages from flagged senders';
+
+  @override
+  String get sntHideSub =>
+      'Channel messages only. You can turn this off at any time.';
+
+  @override
+  String sntSynced(String time) {
+    return 'Ban list updated $time';
+  }
+
+  @override
+  String get sntNeverSynced => 'Ban list not downloaded yet';
+
+  @override
+  String sntFlaggedCount(int count) {
+    return 'Flagged nodes: $count';
+  }
+
+  @override
+  String sntQueued(int count) {
+    return 'Reports waiting to send: $count';
+  }
+
+  @override
+  String get sntRefresh => 'Update now';
+
+  @override
+  String get sntYourNode => 'Your node';
+
+  @override
+  String get sntYourNodeClear => 'Your node is not flagged.';
+
+  @override
+  String sntYourNodeFlagged(String caseRef) {
+    return 'Your node is flagged (case $caseRef). If this is a mistake, you can appeal.';
+  }
+
+  @override
+  String get sntYourNodeUnknown => 'Connect a radio to check your node.';
+
+  @override
+  String get sntAppealPending => 'Your appeal is being reviewed.';
+
+  @override
+  String get sntAppeal => 'Appeal';
+
+  @override
+  String get sntAppealOther => 'Appeal a case by number';
+
+  @override
+  String get sntYourReports => 'Your recent reports';
+
+  @override
+  String get sntReport => 'Report to moderators';
+
+  @override
+  String sntReportTitle(String name) {
+    return 'Report $name';
+  }
+
+  @override
+  String get sntReasonSpam => 'Spam or advertising';
+
+  @override
+  String get sntReasonFlooding => 'Flooding the mesh';
+
+  @override
+  String get sntReasonAbuse => 'Harassment or abuse';
+
+  @override
+  String get sntReasonImpersonation => 'Impersonation';
+
+  @override
+  String get sntReasonOther => 'Other';
+
+  @override
+  String get sntNote => 'Details (optional)';
+
+  @override
+  String get sntIncludeMessage => 'Include this message';
+
+  @override
+  String get sntSends =>
+      'Sends the node\'s ID and name, your reason and, if ticked, this message. Not your name, key or location.';
+
+  @override
+  String get sntSend => 'Send report';
+
+  @override
+  String sntSent(String caseRef) {
+    return 'Report sent ($caseRef)';
+  }
+
+  @override
+  String get sntQueuedOne => 'No connection. The report will be sent later.';
+
+  @override
+  String sntRejected(String message) {
+    return 'Report not accepted: $message';
+  }
+
+  @override
+  String get sntOffPrompt => 'Turn on community moderation?';
+
+  @override
+  String get sntTurnOn => 'Turn on';
+
+  @override
+  String get sntFlagged => 'Flagged';
+
+  @override
+  String sntFlaggedHint(String caseRef) {
+    return 'Flagged by NOTORYX moderators (case $caseRef). Advisory only.';
+  }
+
+  @override
+  String get sntCaseRef => 'Case number (SNT-1234)';
+
+  @override
+  String get sntStatement => 'Why should the ban be lifted?';
+
+  @override
+  String get sntContact => 'Contact (optional, only moderators see it)';
+
+  @override
+  String get sntAppealSend => 'Send appeal';
+
+  @override
+  String get sntAppealReceived => 'Appeal sent. A moderator will review it.';
+
+  @override
+  String get sntAppealUnknown => 'No Meshtastic case has that number.';
+
+  @override
+  String get sntAppealNotOpen =>
+      'That case has no active ban, or an appeal is already waiting.';
+
+  @override
+  String get sntAppealTooMany => 'Too many appeals. Try again in a minute.';
+
+  @override
+  String get sntFailed =>
+      'Couldn\'t reach the moderation service. Try again later.';
+
+  @override
+  String get pvSent7 =>
+      'Reports, appeals and ban-list checks to NOTORYX moderators through sentinel-relay.meshmayhem.org, only if you turn on Community moderation';
 }
