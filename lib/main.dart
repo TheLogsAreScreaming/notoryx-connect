@@ -45,6 +45,8 @@ import 'node_journal_page.dart';
 import 'radio_settings_page.dart';
 import 'services/bastion_tile_cache.dart';
 import 'traceroute_page.dart';
+import 'timeline_page.dart';
+import 'services/bastion_timeline.dart';
 import 'services/bastion_node_vault.dart';
 import 'services/meshtastic_ble_discovery.dart';
 import 'services/meshtastic_connection_controller.dart';
@@ -229,6 +231,8 @@ class _BastionShellState extends State<BastionShell> {
     unawaited(SentinelService.instance.start());
     // The real radio only: demo nodes must never reach ATAK.
     BastionTakBridge.instance.attach(() => _realRadio.nodes);
+    // The timeline records the real radio only, never the demo.
+    BastionTimeline.instance.attach(CoordinatorTimelineSource(_realRadio));
     _setUpShortcuts();
     // The widget follows the real radio, never the demo.
     if (BastionHomeWidget.supported) {
@@ -263,6 +267,7 @@ class _BastionShellState extends State<BastionShell> {
     ble.dispose();
     _homeWidget?.dispose();
     BastionTakBridge.instance.detach();
+    BastionTimeline.instance.detach();
     _realRadio.dispose();
     _demo?.dispose();
     super.dispose();

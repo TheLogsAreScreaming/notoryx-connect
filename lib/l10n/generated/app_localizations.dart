@@ -216,6 +216,114 @@ abstract class AppLocalizations {
   /// **'Find out why a radio won\'t connect or keeps dropping'**
   String get toolsDoctorSub;
 
+  /// No description provided for @tlTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get tlTitle;
+
+  /// No description provided for @tlToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages, new nodes, signal changes and waypoints in one feed'**
+  String get tlToolSub;
+
+  /// No description provided for @tlSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on this phone for each radio. A signal change is a direct link moving by 6 dB or more.'**
+  String get tlSubtitle;
+
+  /// No description provided for @tlSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search the timeline'**
+  String get tlSearch;
+
+  /// No description provided for @tlClearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get tlClearSearch;
+
+  /// No description provided for @tlKindMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get tlKindMessages;
+
+  /// No description provided for @tlKindNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'New nodes'**
+  String get tlKindNodes;
+
+  /// No description provided for @tlKindSignal.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal changes'**
+  String get tlKindSignal;
+
+  /// No description provided for @tlKindWaypoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoints'**
+  String get tlKindWaypoints;
+
+  /// No description provided for @tlShowing.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} entry} other{{count} entries}}'**
+  String tlShowing(int count);
+
+  /// No description provided for @tlEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet. Connect a radio and the timeline fills in as the mesh is heard.'**
+  String get tlEmpty;
+
+  /// No description provided for @tlNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches these filters.'**
+  String get tlNoMatch;
+
+  /// No description provided for @tlYouSent.
+  ///
+  /// In en, this message translates to:
+  /// **'You sent a message'**
+  String get tlYouSent;
+
+  /// No description provided for @tlMessageFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Message from {name}'**
+  String tlMessageFrom(String name);
+
+  /// No description provided for @tlNodeJoined.
+  ///
+  /// In en, this message translates to:
+  /// **'New node: {name}'**
+  String tlNodeJoined(String name);
+
+  /// No description provided for @tlSignalUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal up: {name}, {from} → {to} dB'**
+  String tlSignalUp(String name, String from, String to);
+
+  /// No description provided for @tlSignalDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal down: {name}, {from} → {to} dB'**
+  String tlSignalDown(String name, String from, String to);
+
+  /// No description provided for @tlWaypoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoint: {name}'**
+  String tlWaypoint(String name);
+
   /// No description provided for @toolsBeforeYouGo.
   ///
   /// In en, this message translates to:

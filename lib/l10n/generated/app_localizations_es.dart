@@ -72,6 +72,81 @@ class AppLocalizationsEs extends AppLocalizations {
       'Averigua por qué una radio no conecta o se desconecta';
 
   @override
+  String get tlTitle => 'Cronología';
+
+  @override
+  String get tlToolSub =>
+      'Mensajes, nodos nuevos, cambios de señal y puntos de ruta en un solo listado';
+
+  @override
+  String get tlSubtitle =>
+      'Se guarda en este teléfono para cada radio. Un cambio de señal es un enlace directo que varía 6 dB o más.';
+
+  @override
+  String get tlSearch => 'Buscar en la cronología';
+
+  @override
+  String get tlClearSearch => 'Borrar búsqueda';
+
+  @override
+  String get tlKindMessages => 'Mensajes';
+
+  @override
+  String get tlKindNodes => 'Nodos nuevos';
+
+  @override
+  String get tlKindSignal => 'Cambios de señal';
+
+  @override
+  String get tlKindWaypoints => 'Puntos de ruta';
+
+  @override
+  String tlShowing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count entradas',
+      one: '$count entrada',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tlEmpty =>
+      'Aún no hay nada. Conecta una radio y la cronología se irá llenando con lo que se oiga en la malla.';
+
+  @override
+  String get tlNoMatch => 'Nada coincide con estos filtros.';
+
+  @override
+  String get tlYouSent => 'Enviaste un mensaje';
+
+  @override
+  String tlMessageFrom(String name) {
+    return 'Mensaje de $name';
+  }
+
+  @override
+  String tlNodeJoined(String name) {
+    return 'Nodo nuevo: $name';
+  }
+
+  @override
+  String tlSignalUp(String name, String from, String to) {
+    return 'Señal mejor: $name, $from → $to dB';
+  }
+
+  @override
+  String tlSignalDown(String name, String from, String to) {
+    return 'Señal peor: $name, $from → $to dB';
+  }
+
+  @override
+  String tlWaypoint(String name) {
+    return 'Punto de ruta: $name';
+  }
+
+  @override
   String get toolsBeforeYouGo => 'Antes de salir';
 
   @override

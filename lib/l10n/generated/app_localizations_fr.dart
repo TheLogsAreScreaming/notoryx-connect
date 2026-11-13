@@ -72,6 +72,81 @@ class AppLocalizationsFr extends AppLocalizations {
       'Comprendre pourquoi une radio ne se connecte pas ou décroche';
 
   @override
+  String get tlTitle => 'Chronologie';
+
+  @override
+  String get tlToolSub =>
+      'Messages, nouveaux nœuds, changements de signal et points de passage dans un seul fil';
+
+  @override
+  String get tlSubtitle =>
+      'Conservée sur ce téléphone pour chaque radio. Un changement de signal est un lien direct qui varie de 6 dB ou plus.';
+
+  @override
+  String get tlSearch => 'Rechercher dans la chronologie';
+
+  @override
+  String get tlClearSearch => 'Effacer la recherche';
+
+  @override
+  String get tlKindMessages => 'Messages';
+
+  @override
+  String get tlKindNodes => 'Nouveaux nœuds';
+
+  @override
+  String get tlKindSignal => 'Changements de signal';
+
+  @override
+  String get tlKindWaypoints => 'Points de passage';
+
+  @override
+  String tlShowing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count entrées',
+      one: '$count entrée',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tlEmpty =>
+      'Rien pour l\'instant. Connectez une radio et la chronologie se remplira au fil de ce qui est entendu sur le maillage.';
+
+  @override
+  String get tlNoMatch => 'Rien ne correspond à ces filtres.';
+
+  @override
+  String get tlYouSent => 'Vous avez envoyé un message';
+
+  @override
+  String tlMessageFrom(String name) {
+    return 'Message de $name';
+  }
+
+  @override
+  String tlNodeJoined(String name) {
+    return 'Nouveau nœud : $name';
+  }
+
+  @override
+  String tlSignalUp(String name, String from, String to) {
+    return 'Signal en hausse : $name, $from → $to dB';
+  }
+
+  @override
+  String tlSignalDown(String name, String from, String to) {
+    return 'Signal en baisse : $name, $from → $to dB';
+  }
+
+  @override
+  String tlWaypoint(String name) {
+    return 'Point de passage : $name';
+  }
+
+  @override
   String get toolsBeforeYouGo => 'Avant de partir';
 
   @override

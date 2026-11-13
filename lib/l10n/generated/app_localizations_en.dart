@@ -72,6 +72,81 @@ class AppLocalizationsEn extends AppLocalizations {
       'Find out why a radio won\'t connect or keeps dropping';
 
   @override
+  String get tlTitle => 'Timeline';
+
+  @override
+  String get tlToolSub =>
+      'Messages, new nodes, signal changes and waypoints in one feed';
+
+  @override
+  String get tlSubtitle =>
+      'Kept on this phone for each radio. A signal change is a direct link moving by 6 dB or more.';
+
+  @override
+  String get tlSearch => 'Search the timeline';
+
+  @override
+  String get tlClearSearch => 'Clear search';
+
+  @override
+  String get tlKindMessages => 'Messages';
+
+  @override
+  String get tlKindNodes => 'New nodes';
+
+  @override
+  String get tlKindSignal => 'Signal changes';
+
+  @override
+  String get tlKindWaypoints => 'Waypoints';
+
+  @override
+  String tlShowing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count entries',
+      one: '$count entry',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tlEmpty =>
+      'Nothing yet. Connect a radio and the timeline fills in as the mesh is heard.';
+
+  @override
+  String get tlNoMatch => 'Nothing matches these filters.';
+
+  @override
+  String get tlYouSent => 'You sent a message';
+
+  @override
+  String tlMessageFrom(String name) {
+    return 'Message from $name';
+  }
+
+  @override
+  String tlNodeJoined(String name) {
+    return 'New node: $name';
+  }
+
+  @override
+  String tlSignalUp(String name, String from, String to) {
+    return 'Signal up: $name, $from → $to dB';
+  }
+
+  @override
+  String tlSignalDown(String name, String from, String to) {
+    return 'Signal down: $name, $from → $to dB';
+  }
+
+  @override
+  String tlWaypoint(String name) {
+    return 'Waypoint: $name';
+  }
+
+  @override
   String get toolsBeforeYouGo => 'Before you go';
 
   @override
