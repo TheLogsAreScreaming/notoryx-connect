@@ -4294,4 +4294,193 @@ class AppLocalizationsDe extends AppLocalizations {
   String mapRouteWatching(String name, String distance) {
     return 'Beobachte $name • Alarm ab $distance';
   }
+
+  @override
+  String get clTitle => 'Checklisten';
+
+  @override
+  String get clToolSub =>
+      'Wiederverwendbare Checklisten, offline, mit gespeicherten Protokollen';
+
+  @override
+  String get clSubtitle =>
+      'Alles bleibt auf diesem Telefon. Jeder abgeschlossene Durchgang wird mit Zeiten gespeichert und kann exportiert werden.';
+
+  @override
+  String get clStorageProblem =>
+      'Gespeicherte Checklisten konnten nicht gelesen werden. Änderungen bleiben bis zum Schließen erhalten, nichts wird überschrieben.';
+
+  @override
+  String get clInProgress => 'In Arbeit';
+
+  @override
+  String get clChecklists => 'Checklisten';
+
+  @override
+  String get clCompleted => 'Abgeschlossen';
+
+  @override
+  String get clEmptyTitle => 'Noch keine Checklisten';
+
+  @override
+  String get clEmptyDetail =>
+      'Erstelle eine eigene oder starte mit zwei üblichen.';
+
+  @override
+  String get clAddStarters => 'Start-Checklisten hinzufügen';
+
+  @override
+  String get clStarterRadio => 'Funkcheck';
+
+  @override
+  String get clStarterRadio0 => 'Akku über der Hälfte';
+
+  @override
+  String get clStarterRadio1 => 'Kanal und Region passen zum Team';
+
+  @override
+  String get clStarterRadio2 => 'Positionsfreigabe wie vereinbart eingestellt';
+
+  @override
+  String get clStarterRadio3 => 'Testnachricht zugestellt';
+
+  @override
+  String get clStarterRadio4 => 'Ersatzstrom eingepackt';
+
+  @override
+  String get clNew => 'Neue Checkliste';
+
+  @override
+  String get clEdit => 'Checkliste bearbeiten';
+
+  @override
+  String clEditNamed(String name) {
+    return '$name bearbeiten';
+  }
+
+  @override
+  String clStartNamed(String name) {
+    return '$name starten';
+  }
+
+  @override
+  String clSteps(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Schritte',
+      one: '1 Schritt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String clProgress(int done, int total) {
+    return '$done von $total erledigt';
+  }
+
+  @override
+  String get clName => 'Name';
+
+  @override
+  String get clStepsLabel => 'Schritte';
+
+  @override
+  String clStepN(int n) {
+    return 'Schritt $n';
+  }
+
+  @override
+  String clMoveUp(int n) {
+    return 'Schritt $n nach oben';
+  }
+
+  @override
+  String clMoveDown(int n) {
+    return 'Schritt $n nach unten';
+  }
+
+  @override
+  String clRemoveStep(int n) {
+    return 'Schritt $n entfernen';
+  }
+
+  @override
+  String get clAddStep => 'Schritt hinzufügen';
+
+  @override
+  String get clNeedTitleAndStep =>
+      'Gib der Checkliste einen Namen und mindestens einen Schritt.';
+
+  @override
+  String get clSave => 'Checkliste speichern';
+
+  @override
+  String get clDelete => 'Löschen';
+
+  @override
+  String get clCancel => 'Abbrechen';
+
+  @override
+  String get clDeleteTitle => 'Diese Checkliste löschen?';
+
+  @override
+  String get clDeleteBody => 'Protokolle früherer Durchgänge bleiben erhalten.';
+
+  @override
+  String clStarted(String time) {
+    return 'Begonnen $time';
+  }
+
+  @override
+  String clFinishedAt(String time) {
+    return 'Abgeschlossen $time';
+  }
+
+  @override
+  String clTickedAt(String time) {
+    return 'Erledigt $time';
+  }
+
+  @override
+  String get clNote => 'Notiz';
+
+  @override
+  String get clNoNote => 'Keine Notiz.';
+
+  @override
+  String get clNoteHint => 'Was zu diesem Durchgang wichtig ist';
+
+  @override
+  String get clFinish => 'Abschließen und speichern';
+
+  @override
+  String get clFinishEarlyTitle => 'Mit offenen Schritten abschließen?';
+
+  @override
+  String clFinishEarlyBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Schritte sind offen. Sie werden als nicht erledigt gespeichert.',
+      one: '1 Schritt ist offen. Er wird als nicht erledigt gespeichert.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get clKeepGoing => 'Weitermachen';
+
+  @override
+  String get clExport => 'Protokoll exportieren';
+
+  @override
+  String get clExportCsv => 'Tabelle (CSV)';
+
+  @override
+  String get clExportJson => 'Datendatei (JSON)';
+
+  @override
+  String get clExportFailed => 'Teilen konnte nicht geöffnet werden.';
 }

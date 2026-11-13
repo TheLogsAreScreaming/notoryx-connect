@@ -48,6 +48,14 @@ class _ToolsPageState extends State<_ToolsPage> {
         onTap: () => _open(ConnectionDoctorPage(radio: radio, discovery: widget.discovery)),
       )),
       NxSectionLabel(l.toolsBeforeYouGo),
+      Card(child: ListTile(
+        key: const ValueKey('tools-checklists'),
+        leading: const Icon(Icons.fact_check_outlined),
+        title: Text(l.clTitle),
+        subtitle: Text(l.clToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(ChecklistsPage(store: BastionChecklists.instance)),
+      )),
       Card(child: ExpansionTile(
         initiallyExpanded: true,
         leading: const Icon(Icons.checklist),
