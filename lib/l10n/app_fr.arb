@@ -1158,5 +1158,12 @@
   "topologyNoReports": "Pas encore de rapports Neighbor Info : seuls les nœuds entendus directement ont des lignes. Activez le module Neighbor Info sur vos radios pour voir plus de liens.",
   "topologyRing": "{count, plural, =0{Entendus directement} =1{À 1 saut} other{À {count} sauts}}",
   "topologyLinks": "{count, plural, =1{1 lien} other{{count} liens}}",
-  "topologySemantics": "Schéma du réseau : {count} nœuds sur {rings} anneaux autour de votre radio."
+  "topologySemantics": "Schéma du réseau : {count} nœuds sur {rings} anneaux autour de votre radio.",
+  "mapRouteWatchTitle": "Alerte hors itinéraire",
+  "mapRouteWatchLimit": "Alerter quand quelqu'un est à plus de",
+  "mapRouteWatchWho": "Surveiller",
+  "mapRouteWatchHint": "Chaque personne surveillée qui était sur l'itinéraire alerte une fois en dépassant la limite, puis seulement après y être revenue. L'alerte continue après l'expiration des points de l'itinéraire. Un itinéraire à la fois.",
+  "mapRouteWatchStart": "Surveiller",
+  "mapRouteWatchStop": "Arrêter",
+  "mapRouteWatching": "Surveillance de {name} • alerte au-delà de {distance}"
 }

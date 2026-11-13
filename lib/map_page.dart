@@ -643,6 +643,20 @@ class _MapPageState extends State<MapPage> {
               ),
             const SizedBox(height: 8),
             Text(l.mapRoutes, style: type.titleSmall),
+            if (widget.radio.routeWatch case final watching?)
+              ListTile(
+                key: const ValueKey('route-watching'),
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.notifications_active_outlined),
+                title: Text(l.mapRouteWatching(watching.name,
+                    BastionUnitFormat.distance(watching.limitMeters, units))),
+                subtitle: Text(_watchLabel(l, watching.watch)),
+                trailing: TextButton(
+                  key: const ValueKey('route-watch-stop'),
+                  onPressed: () => widget.radio.setRouteWatch(null),
+                  child: Text(l.mapRouteWatchStop),
+                ),
+              ),
             if (routes.isEmpty)
               ListTile(contentPadding: EdgeInsets.zero, title: Text(l.mapNoneYet)),
             for (final r in routes)
@@ -655,7 +669,15 @@ class _MapPageState extends State<MapPage> {
                   if (r.stops.length >= 2) BastionUnitFormat.distance(r.lengthMeters, units),
                   r.from == null ? l.mapFromYou : l.mapFromNode(widget.radio.nodeName(r.from!)),
                 ].join(' • ')),
-                trailing: IconButton(
+                trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                  if (r.stops.length >= 2)
+                    IconButton(
+                      key: ValueKey('route-watch-${r.name}'),
+                      tooltip: l.mapRouteWatchTitle,
+                      icon: const Icon(Icons.notification_add_outlined),
+                      onPressed: () => _watchRoute(sheetContext, r),
+                    ),
+                  IconButton(
                   tooltip: l.mapShowOnMap,
                   icon: const Icon(Icons.center_focus_strong),
                   onPressed: () {
@@ -668,6 +690,7 @@ class _MapPageState extends State<MapPage> {
                     }
                   },
                 ),
+                ]),
               ),
             const SizedBox(height: 8),
             FilledButton.icon(
@@ -739,6 +762,68 @@ class _MapPageState extends State<MapPage> {
           l.mapGpxExported(widget.radio.waypoints.length, tracks.length))));
     } catch (error) {
       messenger.showSnackBar(SnackBar(content: Text(l.mapGpxFailed('$error'))));
+    }
+  }
+
+  /// Asks how far off [route] is too far and whom to watch, then watches it.
+  Future<void> _watchRoute(BuildContext context, SharedRoute route) async {
+    final l = AppLocalizations.of(context);
+    final units = BastionPreferences.instance.units;
+    var limit = 100.0;
+    var watch = GeofenceWatch.tripContacts;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (dialog) => StatefulBuilder(
+        builder: (dialog, setDialog) => AlertDialog(
+          title: Text(l.mapRouteWatchTitle),
+          content: SingleChildScrollView(
+            child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(route.name, style: Theme.of(dialog).textTheme.titleSmall),
+              const SizedBox(height: 8),
+              Text(l.mapRouteWatchLimit),
+              Wrap(spacing: 6, children: [
+                for (final m in BastionRouteWatch.limits)
+                  ChoiceChip(
+                    key: ValueKey('route-limit-${m.round()}'),
+                    label: Text(BastionUnitFormat.distance(m, units)),
+                    selected: m == limit,
+                    onSelected: (_) => setDialog(() => limit = m),
+                  ),
+              ]),
+              const SizedBox(height: 8),
+              Text(l.mapRouteWatchWho),
+              Wrap(spacing: 6, children: [
+                for (final w in GeofenceWatch.values)
+                  ChoiceChip(
+                    label: Text(_watchLabel(l, w)),
+                    selected: w == watch,
+                    onSelected: (_) => setDialog(() => watch = w),
+                  ),
+              ]),
+              const SizedBox(height: 8),
+              Text(l.mapRouteWatchHint, style: Theme.of(dialog).textTheme.bodySmall),
+            ]),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(dialog, false), child: Text(l.commonCancel)),
+            FilledButton(
+              key: const ValueKey('route-watch-save'),
+              onPressed: () => Navigator.pop(dialog, true),
+              child: Text(l.mapRouteWatchStart),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (ok != true) return;
+    final problem = await widget.radio.setRouteWatch(BastionRouteWatch(
+      name: route.name,
+      points: [for (final p in route.points) (latitude: p.latitude, longitude: p.longitude)],
+      limitMeters: limit,
+      watch: watch,
+    ));
+    if (problem != null && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(problem)));
     }
   }
 

@@ -1158,5 +1158,12 @@
   "topologyNoReports": "Noch keine Neighbor-Info-Berichte, daher haben nur direkt gehörte Knoten Linien. Schalte das Neighbor-Info-Modul auf deinen Funkgeräten ein, um mehr Verbindungen zu sehen.",
   "topologyRing": "{count, plural, =0{Direkt gehört} =1{1 Sprung entfernt} other{{count} Sprünge entfernt}}",
   "topologyLinks": "{count, plural, =1{1 Verbindung} other{{count} Verbindungen}}",
-  "topologySemantics": "Netzdiagramm: {count} Knoten auf {rings} Ringen um dein Funkgerät."
+  "topologySemantics": "Netzdiagramm: {count} Knoten auf {rings} Ringen um dein Funkgerät.",
+  "mapRouteWatchTitle": "Abseits-der-Route-Alarm",
+  "mapRouteWatchLimit": "Alarm, wenn jemand weiter entfernt ist als",
+  "mapRouteWatchWho": "Beobachten",
+  "mapRouteWatchHint": "Jede beobachtete Person, die auf der Route war, löst einmal einen Alarm aus, wenn sie das Limit überschreitet, und erst nach ihrer Rückkehr wieder. Der Alarm funktioniert auch, nachdem die Wegpunkte der Route abgelaufen sind. Eine Route zur Zeit.",
+  "mapRouteWatchStart": "Beobachten",
+  "mapRouteWatchStop": "Beenden",
+  "mapRouteWatching": "Beobachte {name} • Alarm ab {distance}"
 }

@@ -4270,4 +4270,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String topologySemantics(int count, int rings) {
     return 'Netzdiagramm: $count Knoten auf $rings Ringen um dein Funkgerät.';
   }
+
+  @override
+  String get mapRouteWatchTitle => 'Abseits-der-Route-Alarm';
+
+  @override
+  String get mapRouteWatchLimit => 'Alarm, wenn jemand weiter entfernt ist als';
+
+  @override
+  String get mapRouteWatchWho => 'Beobachten';
+
+  @override
+  String get mapRouteWatchHint =>
+      'Jede beobachtete Person, die auf der Route war, löst einmal einen Alarm aus, wenn sie das Limit überschreitet, und erst nach ihrer Rückkehr wieder. Der Alarm funktioniert auch, nachdem die Wegpunkte der Route abgelaufen sind. Eine Route zur Zeit.';
+
+  @override
+  String get mapRouteWatchStart => 'Beobachten';
+
+  @override
+  String get mapRouteWatchStop => 'Beenden';
+
+  @override
+  String mapRouteWatching(String name, String distance) {
+    return 'Beobachte $name • Alarm ab $distance';
+  }
 }

@@ -4252,4 +4252,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String topologySemantics(int count, int rings) {
     return 'Diagrama de red: $count nodos en $rings anillos alrededor de tu radio.';
   }
+
+  @override
+  String get mapRouteWatchTitle => 'Alerta de salida de ruta';
+
+  @override
+  String get mapRouteWatchLimit => 'Avisar cuando alguien esté a más de';
+
+  @override
+  String get mapRouteWatchWho => 'Vigilar';
+
+  @override
+  String get mapRouteWatchHint =>
+      'Cada persona vigilada que haya estado en la ruta avisa una vez al pasar el límite, y de nuevo solo tras volver. La alerta sigue funcionando aunque caduquen los puntos de la ruta. Una ruta a la vez.';
+
+  @override
+  String get mapRouteWatchStart => 'Vigilar';
+
+  @override
+  String get mapRouteWatchStop => 'Detener';
+
+  @override
+  String mapRouteWatching(String name, String distance) {
+    return 'Vigilando $name • aviso a más de $distance';
+  }
 }

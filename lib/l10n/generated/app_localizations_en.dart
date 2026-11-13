@@ -4219,4 +4219,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String topologySemantics(int count, int rings) {
     return 'Network diagram: $count nodes on $rings rings around your radio.';
   }
+
+  @override
+  String get mapRouteWatchTitle => 'Off-route alert';
+
+  @override
+  String get mapRouteWatchLimit => 'Alert when someone is farther than';
+
+  @override
+  String get mapRouteWatchWho => 'Watch';
+
+  @override
+  String get mapRouteWatchHint =>
+      'Each watched person who has been on the route alerts once when they go past the limit, and again only after coming back. The alert keeps working after the route\'s waypoints expire. One route at a time.';
+
+  @override
+  String get mapRouteWatchStart => 'Watch';
+
+  @override
+  String get mapRouteWatchStop => 'Stop';
+
+  @override
+  String mapRouteWatching(String name, String distance) {
+    return 'Watching $name • alert past $distance';
+  }
 }

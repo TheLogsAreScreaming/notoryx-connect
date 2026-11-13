@@ -2879,5 +2879,22 @@
         "type": "int"
       }
     }
+  },
+  "mapRouteWatchTitle": "Off-route alert",
+  "mapRouteWatchLimit": "Alert when someone is farther than",
+  "mapRouteWatchWho": "Watch",
+  "mapRouteWatchHint": "Each watched person who has been on the route alerts once when they go past the limit, and again only after coming back. The alert keeps working after the route's waypoints expire. One route at a time.",
+  "mapRouteWatchStart": "Watch",
+  "mapRouteWatchStop": "Stop",
+  "mapRouteWatching": "Watching {name} • alert past {distance}",
+  "@mapRouteWatching": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
   }
 }

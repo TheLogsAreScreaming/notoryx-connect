@@ -112,6 +112,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       notifyListeners();
     }));
     unawaited(_geofenceStore.load().then((_) => notifyListeners()));
+    unawaited(_routeWatchStore.load().then((_) => notifyListeners()));
     unawaited(_chatMarks.load().then((_) => notifyListeners()));
     unawaited(_nodeKeys.load().then((_) => notifyListeners()));
   }
@@ -152,6 +153,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   void _startFieldAlerts(int localNode) {
     _fieldAlerts.startSession(localNode);
     _geofenceEngine.startSession();
+    _routeWatchEngine.startSession();
     for (final t in _deviceTelemetry.values) {
       _raise(_fieldAlerts.battery(t.from, t.batteryLevel, _nodeName(t.from),
           favorite: _isFavorite(t.from), settings: _alertSettings));
@@ -219,6 +221,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _silenceTimer = null;
     _fieldAlerts.endSession();
     _geofenceEngine.endSession();
+    _routeWatchEngine.endSession();
   }
 
   final BastionNodeKeys _nodeKeys = BastionNodeKeys();
@@ -278,6 +281,18 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   bool mentionsMe(String text) => BastionMentions.mentions(text, ownNames);
 
   final BastionGeofenceStore _geofenceStore = BastionGeofenceStore();
+  final BastionRouteWatchStore _routeWatchStore = BastionRouteWatchStore();
+  final BastionRouteWatchEngine _routeWatchEngine = BastionRouteWatchEngine();
+
+  /// The shared route watched for people wandering off it, if any.
+  BastionRouteWatch? get routeWatch => _routeWatchStore.watch;
+
+  /// Starts watching [route], or stops when null. Returns a problem, or null.
+  Future<String?> setRouteWatch(BastionRouteWatch? route) async {
+    final problem = await _routeWatchStore.set(route);
+    notifyListeners();
+    return problem;
+  }
   final BastionGeofenceEngine _geofenceEngine = BastionGeofenceEngine();
 
   /// Map zones that alert when watched nodes arrive or leave.
@@ -303,18 +318,24 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   /// own position never alerts.
   void _checkGeofences(List<MeshtasticNode> nodes) {
     final zones = _geofenceStore.zones;
-    if (zones.isEmpty) return;
+    final route = _routeWatchStore.watch;
+    if (zones.isEmpty && route == null) return;
     final favorites = favoriteNums;
     final everyone = {for (final n in nodes) n.num};
-    _geofenceEngine.check(zones, [
-      for (final n in nodes)
-        if (n.hasPosition && n.num != _localNodeNum)
-          (num: n.num, name: n.displayName, latitude: n.latitude!, longitude: n.longitude!),
-    ], (watch) => switch (watch) {
+    Set<int> watched(GeofenceWatch watch) => switch (watch) {
       GeofenceWatch.tripContacts => trip.plan.members.toSet(),
       GeofenceWatch.favorites => favorites,
       GeofenceWatch.allNodes => everyone,
-    }).forEach(_raise);
+    };
+    final positions = [
+      for (final n in nodes)
+        if (n.hasPosition && n.num != _localNodeNum)
+          (num: n.num, name: n.displayName, latitude: n.latitude!, longitude: n.longitude!),
+    ];
+    _geofenceEngine.check(zones, positions, watched).forEach(_raise);
+    if (route != null) {
+      _routeWatchEngine.check(route, positions, watched(route.watch)).forEach(_raise);
+    }
   }
 
   final MeshtasticConnectionController connection =

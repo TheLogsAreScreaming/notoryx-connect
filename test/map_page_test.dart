@@ -38,6 +38,28 @@ void main() {
     expect(find.text('Oídos en la última hora'), findsOneWidget);
   });
 
+  testWidgets('a watched route shows in the routes sheet and can be stopped', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.binding.setSurfaceSize(const Size(1000, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await radio.setRouteWatch(const BastionRouteWatch(
+      name: 'Ridge',
+      points: [(latitude: 0, longitude: 0), (latitude: 0, longitude: 0.02)],
+    ));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: Scaffold(body: MapPage(radio: radio))));
+    await tester.pump();
+    await tester.tap(find.byTooltip('Rally points & routes'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('route-watching')), findsOneWidget);
+    expect(find.textContaining('Watching Ridge'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('route-watch-stop')));
+    await tester.pumpAndSettle();
+    expect(radio.routeWatch, isNull);
+    expect(find.byKey(const ValueKey('route-watching')), findsNothing);
+  });
+
   testWidgets('favorites only leaves just your radio and starred nodes', (tester) async {
     SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
     await BastionPreferences.instance.update(favorites: false);
