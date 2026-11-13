@@ -1131,5 +1131,12 @@
   "psKindOnline": "Lugar",
   "mapFindPlace": "Buscar un lugar",
   "mapFoundPin": "Encontrado: {name}",
-  "pvSent8": "Lo que escribes en Buscar un lugar, al servicio Nominatim de OpenStreetMap, solo cuando pulsas Buscar en línea; ve tu dirección IP"
+  "pvSent8": "Lo que escribes en Buscar un lugar, al servicio Nominatim de OpenStreetMap, solo cuando pulsas Buscar en línea; ve tu dirección IP",
+  "mapRouteWatchTitle": "Alerta de salida de ruta",
+  "mapRouteWatchLimit": "Avisar cuando alguien esté a más de",
+  "mapRouteWatchWho": "Vigilar",
+  "mapRouteWatchHint": "Cada persona vigilada que haya estado en la ruta avisa una vez al pasar el límite, y de nuevo solo tras volver. La alerta sigue funcionando aunque caduquen los puntos de la ruta. Una ruta a la vez.",
+  "mapRouteWatchStart": "Vigilar",
+  "mapRouteWatchStop": "Detener",
+  "mapRouteWatching": "Vigilando {name} • aviso a más de {distance}"
 }

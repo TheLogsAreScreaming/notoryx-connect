@@ -4131,4 +4131,28 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get pvSent8 =>
       'Lo que escribes en Buscar un lugar, al servicio Nominatim de OpenStreetMap, solo cuando pulsas Buscar en línea; ve tu dirección IP';
+
+  @override
+  String get mapRouteWatchTitle => 'Alerta de salida de ruta';
+
+  @override
+  String get mapRouteWatchLimit => 'Avisar cuando alguien esté a más de';
+
+  @override
+  String get mapRouteWatchWho => 'Vigilar';
+
+  @override
+  String get mapRouteWatchHint =>
+      'Cada persona vigilada que haya estado en la ruta avisa una vez al pasar el límite, y de nuevo solo tras volver. La alerta sigue funcionando aunque caduquen los puntos de la ruta. Una ruta a la vez.';
+
+  @override
+  String get mapRouteWatchStart => 'Vigilar';
+
+  @override
+  String get mapRouteWatchStop => 'Detener';
+
+  @override
+  String mapRouteWatching(String name, String distance) {
+    return 'Vigilando $name • aviso a más de $distance';
+  }
 }

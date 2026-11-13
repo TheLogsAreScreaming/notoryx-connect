@@ -6902,6 +6902,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What you type into Find a place, to OpenStreetMap\'s Nominatim service, only when you press Search online; it sees your IP address'**
   String get pvSent8;
+
+  /// No description provided for @mapRouteWatchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Off-route alert'**
+  String get mapRouteWatchTitle;
+
+  /// No description provided for @mapRouteWatchLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert when someone is farther than'**
+  String get mapRouteWatchLimit;
+
+  /// No description provided for @mapRouteWatchWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch'**
+  String get mapRouteWatchWho;
+
+  /// No description provided for @mapRouteWatchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Each watched person who has been on the route alerts once when they go past the limit, and again only after coming back. The alert keeps working after the route\'s waypoints expire. One route at a time.'**
+  String get mapRouteWatchHint;
+
+  /// No description provided for @mapRouteWatchStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch'**
+  String get mapRouteWatchStart;
+
+  /// No description provided for @mapRouteWatchStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get mapRouteWatchStop;
+
+  /// No description provided for @mapRouteWatching.
+  ///
+  /// In en, this message translates to:
+  /// **'Watching {name} • alert past {distance}'**
+  String mapRouteWatching(String name, String distance);
 }
 
 class _AppLocalizationsDelegate

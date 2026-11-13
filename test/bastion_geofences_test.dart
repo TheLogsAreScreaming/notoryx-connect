@@ -14,6 +14,61 @@ GeofencePosition at(double metersNorth, {int num = 7}) =>
 Set<int> Function(GeofenceWatch) watching(Set<int> nodes) => (_) => nodes;
 
 void main() {
+  group('off-route alerts', () {
+    // A route east along the equator, about 2.2 km long.
+    const line = [(latitude: 0.0, longitude: 0.0), (latitude: 0.0, longitude: 0.02)];
+    const route = BastionRouteWatch(name: 'Ridge', points: line, limitMeters: 100);
+    GeofencePosition at(double lat, {int num = 7}) =>
+        (num: num, name: 'Ann', latitude: lat, longitude: 0.01);
+
+    test('distance is to the nearest segment', () {
+      expect(BastionRouteWatch.metersFrom(0.001, 0.01, line), closeTo(111, 1));
+      expect(BastionRouteWatch.metersFrom(0, 0.021, line), closeTo(111, 1));
+    });
+
+    test('alerts once on leaving, rearms after coming back, only for watched nodes', () {
+      final engine = BastionRouteWatchEngine()..startSession();
+      expect(engine.check(route, [at(0)], {7}), isEmpty);
+      final off = engine.check(route, [at(0.0015)], {7});
+      expect(off.single.kind, BastionAlertKind.offRoute);
+      expect(off.single.body, 'Ann is 167 m from Ridge.');
+      expect(engine.check(route, [at(0.002)], {7}), isEmpty);
+      expect(engine.check(route, [at(0.0008)], {7}), isEmpty, reason: 'not back until within 70 m');
+      expect(engine.check(route, [at(0.0002)], {7}), isEmpty);
+      expect(engine.check(route, [at(0.0015)], {7}), hasLength(1));
+      expect(engine.check(route, [at(0), at(0.01, num: 8)], {7}), isEmpty);
+      expect(engine.check(route, [at(0.01, num: 8)], {7}), isEmpty);
+    });
+
+    test('nothing alerts outside a session, or for someone first seen off the route', () {
+      final engine = BastionRouteWatchEngine();
+      expect(engine.check(route, [at(0)], {7}), isEmpty);
+      expect(engine.check(route, [at(0.01)], {7}), isEmpty);
+      engine.startSession();
+      expect(engine.check(route, [at(0.01)], {7}), isEmpty);
+      expect(engine.check(route, [at(0.02)], {7}), isEmpty);
+    });
+
+    test('the watch survives a restart and junk is ignored', () async {
+      SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
+      final store = BastionRouteWatchStore();
+      expect(await store.set(const BastionRouteWatch(
+        name: 'Ridge', points: line, limitMeters: 200, watch: GeofenceWatch.favorites)), isNull);
+      final again = BastionRouteWatchStore();
+      await again.load();
+      expect(again.watch!.name, 'Ridge');
+      expect(again.watch!.limitMeters, 200);
+      expect(again.watch!.watch, GeofenceWatch.favorites);
+      expect(again.watch!.points, hasLength(2));
+      await again.set(null);
+      final gone = BastionRouteWatchStore();
+      await gone.load();
+      expect(gone.watch, isNull);
+      expect(BastionRouteWatch.fromJson({'name': 'x', 'limit': 5, 'points': [[1, 2]]}), isNull,
+          reason: 'a route needs two points');
+    });
+  });
+
   late BastionGeofenceEngine engine;
   setUp(() => engine = BastionGeofenceEngine()..startSession());
 
