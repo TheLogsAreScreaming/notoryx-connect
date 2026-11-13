@@ -1,0 +1,1 @@
+Connection doctor and Trip readiness now follow the phone language (English or Spanish), so every screen in the app is translated.
