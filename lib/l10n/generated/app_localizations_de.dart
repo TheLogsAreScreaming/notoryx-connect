@@ -192,6 +192,92 @@ class AppLocalizationsDe extends AppLocalizations {
       'Verbinden Sie ein Funkgerät, um Routen zu verfolgen';
 
   @override
+  String get tcOpen => 'Routenkarte';
+
+  @override
+  String get tcTitle => 'Routenkarte';
+
+  @override
+  String tcFrom(String name) {
+    return 'Von $name';
+  }
+
+  @override
+  String tcTo(String name) {
+    return 'Nach $name';
+  }
+
+  @override
+  String tcSentAt(String time) {
+    return 'Gesendet $time';
+  }
+
+  @override
+  String tcRoundTrip(String seconds) {
+    return 'Hin und zurück $seconds s';
+  }
+
+  @override
+  String tcRelays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Weiterleitungen',
+      one: '$count Weiterleitung',
+      zero: 'Direkt, ohne Weiterleitung',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tcDistance(String distance) {
+    return 'Etwa $distance laut Skizze';
+  }
+
+  @override
+  String tcWeakest(String snr) {
+    return 'Schwächste Verbindung $snr';
+  }
+
+  @override
+  String get tcThere => 'Hinweg';
+
+  @override
+  String get tcBack => 'Rückweg';
+
+  @override
+  String get tcBackUnknown => 'Von dieser Firmware nicht gemeldet';
+
+  @override
+  String get tcStart => 'Start';
+
+  @override
+  String get tcSnrUnknown => 'SNR unbekannt';
+
+  @override
+  String get tcNoMap =>
+      'Zu wenige Positionen, um die Route zu zeichnen. Mindestens zwei Knoten brauchen eine bekannte Position.';
+
+  @override
+  String tcMapLabel(String sender, String stops) {
+    return 'Skizze der Runde von $sender über $stops';
+  }
+
+  @override
+  String tcUnplaced(String names) {
+    return 'Keine Position für $names, daher führt die Linie direkt vorbei.';
+  }
+
+  @override
+  String get tcShareImage => 'Bild teilen';
+
+  @override
+  String get tcShareText => 'Text teilen';
+
+  @override
+  String get tcShareFailed => 'Das Teilen-Menü ließ sich nicht öffnen.';
+
+  @override
   String get toolsBeaconsSub =>
       'Mesh-Einladungen in der Nähe hören und eigene senden';
 

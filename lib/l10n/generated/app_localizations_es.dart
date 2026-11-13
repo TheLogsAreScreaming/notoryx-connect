@@ -190,6 +190,92 @@ class AppLocalizationsEs extends AppLocalizations {
   String get toolsTraceOff => 'Conecta una radio para trazar rutas';
 
   @override
+  String get tcOpen => 'Tarjeta de traza';
+
+  @override
+  String get tcTitle => 'Tarjeta de traza';
+
+  @override
+  String tcFrom(String name) {
+    return 'Desde $name';
+  }
+
+  @override
+  String tcTo(String name) {
+    return 'Hasta $name';
+  }
+
+  @override
+  String tcSentAt(String time) {
+    return 'Enviada $time';
+  }
+
+  @override
+  String tcRoundTrip(String seconds) {
+    return 'Ida y vuelta $seconds s';
+  }
+
+  @override
+  String tcRelays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count repetidores',
+      one: '$count repetidor',
+      zero: 'Directa, sin repetidores',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tcDistance(String distance) {
+    return 'Unos $distance según el dibujo';
+  }
+
+  @override
+  String tcWeakest(String snr) {
+    return 'Enlace más débil $snr';
+  }
+
+  @override
+  String get tcThere => 'Ruta de ida';
+
+  @override
+  String get tcBack => 'Ruta de vuelta';
+
+  @override
+  String get tcBackUnknown => 'Este firmware no la informa';
+
+  @override
+  String get tcStart => 'Inicio';
+
+  @override
+  String get tcSnrUnknown => 'SNR desconocida';
+
+  @override
+  String get tcNoMap =>
+      'No hay posiciones suficientes para dibujar la ruta. Al menos dos nodos deben tener posición conocida.';
+
+  @override
+  String tcMapLabel(String sender, String stops) {
+    return 'Esquema del recorrido de ida y vuelta desde $sender por $stops';
+  }
+
+  @override
+  String tcUnplaced(String names) {
+    return 'Sin posición para $names, así que la línea pasa de largo.';
+  }
+
+  @override
+  String get tcShareImage => 'Compartir imagen';
+
+  @override
+  String get tcShareText => 'Compartir texto';
+
+  @override
+  String get tcShareFailed => 'No se pudo abrir el menú para compartir.';
+
+  @override
   String get toolsBeaconsSub =>
       'Escucha invitaciones de mallas cercanas y envía la tuya';
 

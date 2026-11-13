@@ -86,6 +86,92 @@
   },
   "toolsTraceReady": "Show the relay path to a node and back",
   "toolsTraceOff": "Connect to a radio to trace routes",
+  "tcOpen": "Trace card",
+  "tcTitle": "Trace card",
+  "tcFrom": "From {name}",
+  "@tcFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tcTo": "To {name}",
+  "@tcTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tcSentAt": "Sent {time}",
+  "@tcSentAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tcRoundTrip": "Round trip {seconds} s",
+  "@tcRoundTrip": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "tcRelays": "{count, plural, =0{Direct, no relays} one{{count} relay} other{{count} relays}}",
+  "@tcRelays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tcDistance": "About {distance} as drawn",
+  "@tcDistance": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "tcWeakest": "Weakest link {snr}",
+  "@tcWeakest": {
+    "placeholders": {
+      "snr": {
+        "type": "String"
+      }
+    }
+  },
+  "tcThere": "Route there",
+  "tcBack": "Route back",
+  "tcBackUnknown": "Not reported by this firmware",
+  "tcStart": "Start",
+  "tcSnrUnknown": "SNR unknown",
+  "tcNoMap": "Not enough positions to draw the route. At least two nodes on it need a known position.",
+  "tcMapLabel": "Sketch of the round trip from {sender} through {stops}",
+  "@tcMapLabel": {
+    "placeholders": {
+      "sender": {
+        "type": "String"
+      },
+      "stops": {
+        "type": "String"
+      }
+    }
+  },
+  "tcUnplaced": "No position for {names}, so the line goes straight past.",
+  "@tcUnplaced": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "tcShareImage": "Share image",
+  "tcShareText": "Share text",
+  "tcShareFailed": "Couldn't open the share sheet.",
   "toolsBeaconsSub": "Hear mesh invitations nearby and send your own",
   "toolsBeaconsHeard": "{count} heard • send your own",
   "@toolsBeaconsHeard": {

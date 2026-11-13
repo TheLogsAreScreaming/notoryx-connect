@@ -188,6 +188,92 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolsTraceOff => 'Connect to a radio to trace routes';
 
   @override
+  String get tcOpen => 'Trace card';
+
+  @override
+  String get tcTitle => 'Trace card';
+
+  @override
+  String tcFrom(String name) {
+    return 'From $name';
+  }
+
+  @override
+  String tcTo(String name) {
+    return 'To $name';
+  }
+
+  @override
+  String tcSentAt(String time) {
+    return 'Sent $time';
+  }
+
+  @override
+  String tcRoundTrip(String seconds) {
+    return 'Round trip $seconds s';
+  }
+
+  @override
+  String tcRelays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relays',
+      one: '$count relay',
+      zero: 'Direct, no relays',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tcDistance(String distance) {
+    return 'About $distance as drawn';
+  }
+
+  @override
+  String tcWeakest(String snr) {
+    return 'Weakest link $snr';
+  }
+
+  @override
+  String get tcThere => 'Route there';
+
+  @override
+  String get tcBack => 'Route back';
+
+  @override
+  String get tcBackUnknown => 'Not reported by this firmware';
+
+  @override
+  String get tcStart => 'Start';
+
+  @override
+  String get tcSnrUnknown => 'SNR unknown';
+
+  @override
+  String get tcNoMap =>
+      'Not enough positions to draw the route. At least two nodes on it need a known position.';
+
+  @override
+  String tcMapLabel(String sender, String stops) {
+    return 'Sketch of the round trip from $sender through $stops';
+  }
+
+  @override
+  String tcUnplaced(String names) {
+    return 'No position for $names, so the line goes straight past.';
+  }
+
+  @override
+  String get tcShareImage => 'Share image';
+
+  @override
+  String get tcShareText => 'Share text';
+
+  @override
+  String get tcShareFailed => 'Couldn\'t open the share sheet.';
+
+  @override
   String get toolsBeaconsSub =>
       'Hear mesh invitations nearby and send your own';
 
