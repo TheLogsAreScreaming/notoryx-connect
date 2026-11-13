@@ -5,9 +5,9 @@ _Effective: [DATE OF FIRST PUBLIC RELEASE]_
 NOTORYX Connect ("the app") is an independent Android app for talking to LoRa mesh radios that run Meshtastic® firmware. It is published by [PUBLISHER NAME]. This policy explains what the app stores, what it sends, and the choices you have.
 
 ## The short version
-- There is **no account**, **no analytics**, **no advertising**, and **no server** run by us. We do not receive, collect or sell any of your data.
+- There is **no account**, **no analytics** and **no advertising**. We do not sell any of your data. The only data we ever receive is what you choose to send through the optional **Community moderation** feature, which is off by default.
 - What the app keeps stays in its private storage on your phone.
-- The app only sends data off your phone when you use a feature that needs to: messaging through your radio, sharing your location if you turn that on, loading map images, looking up terrain heights in the link planner, and carrying MQTT for your radio if you turn that on.
+- The app only sends data off your phone when you use a feature that needs to: messaging through your radio, sharing your location if you turn that on, loading map images, looking up terrain heights in the link planner, carrying MQTT for your radio if you turn that on, and Community moderation if you turn that on.
 
 ## What is stored on your phone
 Stored in the app's private storage, which other apps cannot read. Uninstalling the app deletes it.
@@ -23,6 +23,7 @@ Stored in the app's private storage, which other apps cannot read. Uninstalling 
 - **Your phone's location** is sent to your radio **only if you turn on "Share phone location"**. Your radio then broadcasts it to the mesh. You can choose to round it to about 360 m, 1.5 km or 6 km on your phone before it is sent. It is off by default.
 - **Requests you start** (position, telemetry, traceroute, Store & Forward history) are sent through your radio to other nodes.
 - **Map images** are downloaded from OpenStreetMap's tile servers when you view the map. Like any website, those servers see your IP address and the map area requested. See the [OpenStreetMap Foundation privacy policy](https://osmfoundation.org/wiki/Privacy_Policy).
+- **Community moderation** is off unless you turn it on (Tools → Community moderation). While it is on, the app downloads the moderators' advisory ban list (node IDs and case numbers only) from sentinel-relay.meshmayhem.org every few hours. When you report a node, it sends that node's ID and name, the reason you pick, your optional note and, if you leave it ticked, the one message you reported (at most 280 characters). An appeal sends the case number, your statement and any contact you give. NOTORYX moderators read reports and appeals; your own name, node ID and location are not sent with a report, but the relay sees your IP address. Turning the feature off deletes the downloaded list and any unsent reports.
 - **Backups** you create are encrypted with your password and saved wherever you choose (for example Files or Drive). We never receive them.
 
 ## Permissions
