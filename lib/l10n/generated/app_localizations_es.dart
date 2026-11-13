@@ -1754,8 +1754,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get takTitle => 'Envío a ATAK';
 
   @override
-  String get toolsTakSub =>
-      'Mostrar nodos de la malla en ATAK en este teléfono';
+  String get toolsTakSub => 'Intercambia posiciones con ATAK en este teléfono';
 
   @override
   String get takIntro =>
@@ -4131,4 +4130,70 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get pvSent8 =>
       'Lo que escribes en Buscar un lugar, al servicio Nominatim de OpenStreetMap, solo cuando pulsas Buscar en línea; ve tu dirección IP';
+
+  @override
+  String get takReceiveTitle => 'Desde ATAK';
+
+  @override
+  String get takReceiveIntro =>
+      'Muestra en el mapa de esta aplicación los marcadores que comparte ATAK en este teléfono, como miembros del equipo y puntos del mapa. Se quedan en este teléfono y nunca se envían por la malla.';
+
+  @override
+  String get takReceiveSwitch => 'Mostrar marcadores de ATAK en el mapa';
+
+  @override
+  String get takReceivePort => 'Puerto UDP de escucha';
+
+  @override
+  String takReceiveStatus(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Mostrando $count marcadores',
+      one: 'Mostrando $count marcador',
+      zero: 'Escuchando. Aún no hay marcadores.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String takReceiveProblem(String error) {
+    return 'No se pudo escuchar: $error';
+  }
+
+  @override
+  String get takReceiveHowTo =>
+      'En ATAK, abre Ajustes, luego Preferencias de red, luego Gestionar salidas, y añade una salida UDP a 127.0.0.1 en este puerto. Los marcadores desaparecen cuando ATAK indica que están caducados.';
+
+  @override
+  String get takClear => 'Borrar marcadores';
+
+  @override
+  String get takFriendly => 'Aliado';
+
+  @override
+  String get takHostile => 'Hostil';
+
+  @override
+  String get takNeutral => 'Neutral';
+
+  @override
+  String get takUnknown => 'Desconocido';
+
+  @override
+  String get takPoint => 'Punto del mapa';
+
+  @override
+  String mapTakPin(String kind, String callsign) {
+    return 'ATAK $kind: $callsign';
+  }
+
+  @override
+  String mapTakUpdated(String time, String stale) {
+    return 'Desde ATAK, actualizado a las $time. Visible hasta las $stale.';
+  }
+
+  @override
+  String get takSamePort =>
+      'Usa un puerto distinto del que recibe las posiciones enviadas.';
 }
