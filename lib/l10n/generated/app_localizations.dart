@@ -5,8 +5,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
 
 // ignore_for_file: type=lint
 
@@ -94,8 +96,10 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
     Locale('en'),
     Locale('es'),
+    Locale('fr'),
   ];
 
   /// No description provided for @tabHome.
@@ -2963,7 +2967,7 @@ abstract class AppLocalizations {
   /// No description provided for @toolsTakSub.
   ///
   /// In en, this message translates to:
-  /// **'Show mesh nodes in ATAK on this phone'**
+  /// **'Swap positions with ATAK on this phone'**
   String get toolsTakSub;
 
   /// No description provided for @takIntro.
@@ -6903,6 +6907,168 @@ abstract class AppLocalizations {
   /// **'What you type into Find a place, to OpenStreetMap\'s Nominatim service, only when you press Search online; it sees your IP address'**
   String get pvSent8;
 
+  /// No description provided for @takReceiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'From ATAK'**
+  String get takReceiveTitle;
+
+  /// No description provided for @takReceiveIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows markers that ATAK on this phone shares, such as team members and map points, on this app\'s map. They stay on this phone and are never sent over the mesh.'**
+  String get takReceiveIntro;
+
+  /// No description provided for @takReceiveSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Show ATAK markers on the map'**
+  String get takReceiveSwitch;
+
+  /// No description provided for @takReceivePort.
+  ///
+  /// In en, this message translates to:
+  /// **'UDP port to listen on'**
+  String get takReceivePort;
+
+  /// No description provided for @takReceiveStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Listening. No markers yet.} one{Showing {count} marker} other{Showing {count} markers}}'**
+  String takReceiveStatus(int count);
+
+  /// No description provided for @takReceiveProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not listen: {error}'**
+  String takReceiveProblem(String error);
+
+  /// No description provided for @takReceiveHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'In ATAK, open Settings, then Network Preferences, then Manage Outputs, and add a UDP output to 127.0.0.1 on this port. Markers disappear when ATAK says they are stale.'**
+  String get takReceiveHowTo;
+
+  /// No description provided for @takClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear markers'**
+  String get takClear;
+
+  /// No description provided for @takFriendly.
+  ///
+  /// In en, this message translates to:
+  /// **'Friendly'**
+  String get takFriendly;
+
+  /// No description provided for @takHostile.
+  ///
+  /// In en, this message translates to:
+  /// **'Hostile'**
+  String get takHostile;
+
+  /// No description provided for @takNeutral.
+  ///
+  /// In en, this message translates to:
+  /// **'Neutral'**
+  String get takNeutral;
+
+  /// No description provided for @takUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get takUnknown;
+
+  /// No description provided for @takPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Map point'**
+  String get takPoint;
+
+  /// No description provided for @mapTakPin.
+  ///
+  /// In en, this message translates to:
+  /// **'ATAK {kind}: {callsign}'**
+  String mapTakPin(String kind, String callsign);
+
+  /// No description provided for @mapTakUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'From ATAK, updated {time}. Shown until {stale}.'**
+  String mapTakUpdated(String time, String stale);
+
+  /// No description provided for @takSamePort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a different port from the one positions are sent to.'**
+  String get takSamePort;
+
+  /// No description provided for @nodesFavoritesOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites only'**
+  String get nodesFavoritesOnly;
+
+  /// No description provided for @nodesNoFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites yet'**
+  String get nodesNoFavorites;
+
+  /// No description provided for @nodesNoFavoritesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Open a node and tap its star to trust it. Favorites only then shows just the people you trust.'**
+  String get nodesNoFavoritesHint;
+
+  /// No description provided for @mapShowAllNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all nodes'**
+  String get mapShowAllNodes;
+
+  /// No description provided for @topologyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Network diagram'**
+  String get topologyTitle;
+
+  /// No description provided for @topologyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to draw yet. Nodes appear once your radio knows how many hops away they are, or a node sends Neighbor Info.'**
+  String get topologyEmpty;
+
+  /// No description provided for @topologyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio is in the middle and each ring is one more hop. Lines are links from Neighbor Info reports (bolder = better signal) and nodes your radio hears directly. Tap a dot to open the node.'**
+  String get topologyHint;
+
+  /// No description provided for @topologyNoReports.
+  ///
+  /// In en, this message translates to:
+  /// **'No Neighbor Info reports yet, so only nodes heard directly have lines. Turn on the Neighbor Info module on your radios to see more links.'**
+  String get topologyNoReports;
+
+  /// No description provided for @topologyRing.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Heard directly} =1{1 hop away} other{{count} hops away}}'**
+  String topologyRing(int count);
+
+  /// No description provided for @topologyLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 link} other{{count} links}}'**
+  String topologyLinks(int count);
+
+  /// No description provided for @topologySemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Network diagram: {count} nodes on {rings} rings around your radio.'**
+  String topologySemantics(int count, int rings);
+
   /// No description provided for @mapRouteWatchTitle.
   ///
   /// In en, this message translates to:
@@ -6957,7 +7123,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'es'].contains(locale.languageCode);
+      <String>['de', 'en', 'es', 'fr'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -6966,10 +7132,14 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
   }
 
   throw FlutterError(

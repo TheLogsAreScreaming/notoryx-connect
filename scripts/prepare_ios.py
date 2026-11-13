@@ -23,6 +23,9 @@ with (RUNNER / 'Info.plist').open('rb') as f:
 plist.update({
     'CFBundleDisplayName': 'NOTORYX Connect',
     'CFBundleName': 'NOTORYX Connect',
+    # Languages the app is translated into. Without this list iOS and macOS
+    # tell the app the phone is in English whatever its language.
+    'CFBundleLocalizations': ['en', 'es', 'fr', 'de'],
     'NSBluetoothAlwaysUsageDescription':
         'NOTORYX Connect uses Bluetooth to connect to your LoRa mesh radio.',
     'NSFaceIDUsageDescription':

@@ -1,5 +1,7 @@
 import 'package:bastion/map_page.dart';
+import 'package:bastion/services/bastion_demo_radio.dart';
 import 'package:bastion/services/bastion_geofences.dart';
+import 'package:bastion/services/bastion_preferences.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +58,30 @@ void main() {
     await tester.pumpAndSettle();
     expect(radio.routeWatch, isNull);
     expect(find.byKey(const ValueKey('route-watching')), findsNothing);
+  });
+
+  testWidgets('favorites only leaves just your radio and starred nodes', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
+    await BastionPreferences.instance.update(favorites: false);
+    final radio = BastionDemoRadio();
+    addTearDown(radio.dispose);
+    await tester.binding.setSurfaceSize(const Size(1000, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: Scaffold(body: MapPage(radio: radio))));
+    await tester.pump();
+    final pins = find.byWidgetPredicate((w) => w.runtimeType.toString() == '_NodePin');
+    final all = tester.widgetList(pins).length;
+    expect(all, radio.nodes.length);
+
+    await tester.tap(find.byKey(const ValueKey('map-favorites-only')));
+    await tester.pump();
+    expect(BastionPreferences.instance.favoritesOnly, isTrue);
+    expect(tester.widgetList(pins).length, 1 + radio.favoriteNums.length,
+        reason: 'your own radio always shows');
+
+    await tester.tap(find.byKey(const ValueKey('map-favorites-only')));
+    await tester.pump();
+    expect(tester.widgetList(pins).length, all);
   });
 
   testWidgets('a zone added from the map is saved and drawn', (tester) async {

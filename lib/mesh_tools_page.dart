@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/generated/app_localizations.dart';
 import 'local_mesh_discovery_page.dart';
+import 'network_diagram_page.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_units.dart';
 import 'services/bastion_geo.dart';
@@ -20,7 +22,7 @@ class MeshToolsPage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Mesh tools'),
-            actions: [IconButton(tooltip: 'Local mesh discovery', icon: const Icon(Icons.radar), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LocalMeshDiscoveryPage(radio: radio))))],
+            actions: [IconButton(key: const ValueKey('open-network-diagram'), tooltip: AppLocalizations.of(context).topologyTitle, icon: const Icon(Icons.hub_outlined), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => NetworkDiagramPage(radio: radio)))), IconButton(tooltip: 'Local mesh discovery', icon: const Icon(Icons.radar), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LocalMeshDiscoveryPage(radio: radio))))],
             bottom: const TabBar(tabs: [Tab(text: 'Range test'), Tab(text: 'Store & forward')]),
           ),
           body: SafeArea(top: false, child: AnimatedBuilder(

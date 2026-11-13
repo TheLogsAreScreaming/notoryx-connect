@@ -125,7 +125,7 @@ void main() {
       home: TakBridgePage(bridge: bridge),
     ));
     await tester.enterText(find.byKey(const ValueKey('tak-port')), '80');
-    await tester.tap(find.text('Save'));
+    await tester.tap(find.text('Save').first);
     await tester.pump();
     expect(find.textContaining('1024'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('tak-enabled')));

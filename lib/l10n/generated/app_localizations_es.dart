@@ -1754,8 +1754,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get takTitle => 'Envío a ATAK';
 
   @override
-  String get toolsTakSub =>
-      'Mostrar nodos de la malla en ATAK en este teléfono';
+  String get toolsTakSub => 'Intercambia posiciones con ATAK en este teléfono';
 
   @override
   String get takIntro =>
@@ -4131,6 +4130,128 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get pvSent8 =>
       'Lo que escribes en Buscar un lugar, al servicio Nominatim de OpenStreetMap, solo cuando pulsas Buscar en línea; ve tu dirección IP';
+
+  @override
+  String get takReceiveTitle => 'Desde ATAK';
+
+  @override
+  String get takReceiveIntro =>
+      'Muestra en el mapa de esta aplicación los marcadores que comparte ATAK en este teléfono, como miembros del equipo y puntos del mapa. Se quedan en este teléfono y nunca se envían por la malla.';
+
+  @override
+  String get takReceiveSwitch => 'Mostrar marcadores de ATAK en el mapa';
+
+  @override
+  String get takReceivePort => 'Puerto UDP de escucha';
+
+  @override
+  String takReceiveStatus(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Mostrando $count marcadores',
+      one: 'Mostrando $count marcador',
+      zero: 'Escuchando. Aún no hay marcadores.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String takReceiveProblem(String error) {
+    return 'No se pudo escuchar: $error';
+  }
+
+  @override
+  String get takReceiveHowTo =>
+      'En ATAK, abre Ajustes, luego Preferencias de red, luego Gestionar salidas, y añade una salida UDP a 127.0.0.1 en este puerto. Los marcadores desaparecen cuando ATAK indica que están caducados.';
+
+  @override
+  String get takClear => 'Borrar marcadores';
+
+  @override
+  String get takFriendly => 'Aliado';
+
+  @override
+  String get takHostile => 'Hostil';
+
+  @override
+  String get takNeutral => 'Neutral';
+
+  @override
+  String get takUnknown => 'Desconocido';
+
+  @override
+  String get takPoint => 'Punto del mapa';
+
+  @override
+  String mapTakPin(String kind, String callsign) {
+    return 'ATAK $kind: $callsign';
+  }
+
+  @override
+  String mapTakUpdated(String time, String stale) {
+    return 'Desde ATAK, actualizado a las $time. Visible hasta las $stale.';
+  }
+
+  @override
+  String get takSamePort =>
+      'Usa un puerto distinto del que recibe las posiciones enviadas.';
+
+  @override
+  String get nodesFavoritesOnly => 'Solo favoritos';
+
+  @override
+  String get nodesNoFavorites => 'Aún no hay favoritos';
+
+  @override
+  String get nodesNoFavoritesHint =>
+      'Abre un nodo y toca su estrella para confiar en él. Solo favoritos mostrará únicamente a las personas de confianza.';
+
+  @override
+  String get mapShowAllNodes => 'Mostrar todos los nodos';
+
+  @override
+  String get topologyTitle => 'Diagrama de red';
+
+  @override
+  String get topologyEmpty =>
+      'Aún no hay nada que dibujar. Los nodos aparecen cuando tu radio sabe a cuántos saltos están o cuando un nodo envía Neighbor Info.';
+
+  @override
+  String get topologyHint =>
+      'Tu radio está en el centro y cada anillo es un salto más. Las líneas son enlaces de los informes Neighbor Info (más gruesas = mejor señal) y nodos que tu radio oye directamente. Toca un punto para abrir el nodo.';
+
+  @override
+  String get topologyNoReports =>
+      'Aún no hay informes Neighbor Info, así que solo tienen líneas los nodos oídos directamente. Activa el módulo Neighbor Info en tus radios para ver más enlaces.';
+
+  @override
+  String topologyRing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'A $count saltos',
+      one: 'A 1 salto',
+      zero: 'Oídos directamente',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String topologyLinks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count enlaces',
+      one: '1 enlace',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String topologySemantics(int count, int rings) {
+    return 'Diagrama de red: $count nodos en $rings anillos alrededor de tu radio.';
+  }
 
   @override
   String get mapRouteWatchTitle => 'Alerta de salida de ruta';

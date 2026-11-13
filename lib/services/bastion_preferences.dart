@@ -28,6 +28,8 @@ class BastionPreferences extends ChangeNotifier {
   bool mqttProxy = false;
   /// Hide nodes on Nodes and Map not heard within this window.
   BastionHeardWithin heardWithin = BastionHeardWithin.any;
+  /// Show only favourite (trusted) nodes on Nodes and Map.
+  bool favoritesOnly = false;
 
   /// The theme id to show for the device's light/dark [platform] setting.
   String activeTheme(Brightness platform) => activeThemeId(
@@ -75,6 +77,7 @@ class BastionPreferences extends ChangeNotifier {
       storeForwardCatchUp = await p.getBool('bastion.store_forward_catch_up') ?? false;
       mqttProxy = await p.getBool('bastion.mqtt_proxy') ?? false;
       heardWithin = BastionHeardWithin.fromName(await p.getString('bastion.nodes.heard_within'));
+      favoritesOnly = await p.getBool('bastion.nodes.favorites_only') ?? false;
       statistics = await p.getBool('bastion.dashboard.statistics') ?? true;
       meshHealth = await p.getBool('bastion.dashboard.health') ?? true;
       encounters = await p.getBool('bastion.dashboard.encounters') ?? true;
@@ -89,11 +92,12 @@ class BastionPreferences extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> update({bool? catchUp, bool? proxyMqtt, BastionHeardWithin? heard, String? theme, String? darkTheme, String? season, bool? holidays, bool? stats, bool? health, bool? saved,
+  Future<void> update({bool? catchUp, bool? proxyMqtt, BastionHeardWithin? heard, bool? favorites, String? theme, String? darkTheme, String? season, bool? holidays, bool? stats, bool? health, bool? saved,
       int? retentionDays, bool? speak, BastionUnits? unitSystem, int? keepMessages}) async {
     storeForwardCatchUp = catchUp ?? storeForwardCatchUp;
     mqttProxy = proxyMqtt ?? mqttProxy;
     heardWithin = heard ?? heardWithin;
+    favoritesOnly = favorites ?? favoritesOnly;
     appTheme = theme ?? appTheme;
     darkModeTheme = darkTheme ?? darkModeTheme;
     seasonalOverride = season ?? seasonalOverride;
@@ -116,6 +120,7 @@ class BastionPreferences extends ChangeNotifier {
       await p.setBool('bastion.store_forward_catch_up', storeForwardCatchUp);
       await p.setBool('bastion.mqtt_proxy', mqttProxy);
       await p.setString('bastion.nodes.heard_within', heardWithin.name);
+      await p.setBool('bastion.nodes.favorites_only', favoritesOnly);
       await p.setBool('bastion.dashboard.statistics', statistics);
       await p.setBool('bastion.dashboard.health', meshHealth);
       await p.setBool('bastion.dashboard.encounters', encounters);
