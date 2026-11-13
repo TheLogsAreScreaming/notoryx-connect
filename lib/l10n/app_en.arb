@@ -2467,5 +2467,206 @@
         "type": "String"
       }
     }
-  }
+  },
+  "rdBattery": "Radio battery",
+  "rdNotReported": "Not reported yet.",
+  "rdExternal": "On external power.",
+  "rdChargeNow": "{level}%. Charge the radio before you leave.",
+  "@rdChargeNow": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "rdChargeSoon": "{level}%. Consider charging or bringing a power bank.",
+  "@rdChargeSoon": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "rdLevel": "{level}%.",
+  "@rdLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "rdFirmware": "Firmware",
+  "rdConnectToCheck": "Connect your radio to check.",
+  "rdTooOld": "Too old.",
+  "rdUpdateRecommended": "Update recommended.",
+  "rdVersionUnknown": "Version not reported.",
+  "rdSupported": "Supported.",
+  "rdChannels": "Channels",
+  "rdNoChannels": "No channels on this radio.",
+  "rdSosChannelGone": "SOS channel {channel} no longer exists. Pick another in your trip plan.",
+  "@rdSosChannelGone": {
+    "placeholders": {
+      "channel": {
+        "type": "int"
+      }
+    }
+  },
+  "rdChannelsSet": "{count, plural, one{{count} channel set up.} other{{count} channels set up.}}",
+  "@rdChannelsSet": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rdContacts": "Trip contacts",
+  "rdChooseContacts": "Choose who gets your check-ins and SOS.",
+  "rdNoRoute": "No route to {names}.",
+  "@rdNoRoute": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "rdNotHeard": "Not heard in the last 2 hours: {names}. Run a route test, or check they're on.",
+  "@rdNotHeard": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "rdAllHeard": "All {count} heard recently.",
+  "@rdAllHeard": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rdPosition": "Position",
+  "rdRecentPosition": "Your radio has a recent position.",
+  "rdWaitingPhone": "Waiting for a position from this phone. Check location is on.",
+  "rdNoPosition": "No recent position, so others can't see where you are. Turn on the radio's GPS or share this phone's location.",
+  "rdBackground": "Background",
+  "rdBackgroundRestricted": "Battery optimisation can cut the link with the screen off. Set NOTORYX Connect to \"Unrestricted\".",
+  "rdBackgroundOk": "The app can stay connected with the screen off.",
+  "rdCouldntCheck": "Couldn't check.",
+  "rpTitle": "Readiness check",
+  "rpReady": "Ready to go",
+  "rpCheck": "Check these before you leave",
+  "rpNotReady": "Not ready yet",
+  "rpNeedRadio": "Some checks need your radio",
+  "rpNotReceived": "Sent or queued does not mean received. Agree a backup plan.",
+  "rpTestRoute": "Test a route",
+  "rpTestHint": "Sends one route request to that contact. Use sparingly on busy meshes.",
+  "rpRouteFound": "Route found",
+  "rpNoRoute": "No route found",
+  "rpNotTested": "Not tested",
+  "rpTest": "Test",
+  "rpStatusReady": "Ready",
+  "rpStatusCheck": "Check",
+  "rpStatusFix": "Fix first",
+  "rpStatusUnknown": "Unknown",
+  "cdFixBluetooth": "Turn on Bluetooth",
+  "cdFixPermission": "Allow Bluetooth access",
+  "cdFixBattery": "Open battery settings",
+  "cdFixRetry": "Try again",
+  "cdFixScan": "Scan for radios",
+  "cdFixFirmware": "How to update",
+  "cdTheRadio": "the radio",
+  "cdYourRadio": "your radio",
+  "cdBluetoothOffDetail": "Bluetooth is off. Turn it on and the app reconnects by itself.",
+  "cdPermissionDetail": "The app isn't allowed to use Bluetooth. Allow \"Nearby devices\" when asked, or in Android Settings → Apps → NOTORYX Connect → Permissions.",
+  "cdPairedDetail": "{name} may be connected to another phone or app. A radio talks to one phone at a time: close the other app or turn off Bluetooth on the other phone, then try again. If it keeps failing, forget the radio in Android Bluetooth settings and pair again.",
+  "@cdPairedDetail": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cdTimeoutDetail": "{name} didn't answer in time. Move closer, check it's switched on, or restart it, then try again.",
+  "@cdTimeoutDetail": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cdNetworkDetail": "Couldn't reach the radio over the network. Check the phone and radio are on the same Wi-Fi, and that the address and port (usually 4403) are right.",
+  "cdUsbDetail": "The USB link failed. Unplug and plug the cable back in, and allow USB access when Android asks.",
+  "cdGaveUpDetail": "The link dropped and reconnecting didn't work. Check {name} is on and in range, then try again.",
+  "@cdGaveUpDetail": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cdNotMeshtasticDetail": "The device answered but doesn't look like a Meshtastic radio, or its firmware is too old.",
+  "cdUnknownProblem": "Unknown problem.",
+  "cdBluetooth": "Bluetooth",
+  "cdOn": "On.",
+  "cdBluetoothOff": "Bluetooth is off.",
+  "cdCouldntCheck": "Couldn't check.",
+  "cdAccess": "Bluetooth access",
+  "cdAllowed": "Allowed.",
+  "cdNotAllowed": "The app isn't allowed to find and connect to radios.",
+  "cdLink": "Radio link",
+  "cdConnectedTo": "Connected to {name}.",
+  "@cdConnectedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cdConnectingTo": "Connecting to {name}…",
+  "@cdConnectingTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cdNoneFound": "No radios found. Check the radio is on and within a few metres, that Bluetooth is enabled in its settings, and that it isn't connected to another phone.",
+  "cdNotConnected": "Not connected.",
+  "cdBackground": "Background",
+  "cdBatteryOptimised": "Battery optimisation can cut the radio link when the screen is off. Set NOTORYX Connect to \"Unrestricted\".",
+  "cdBackgroundOk": "The link can stay open with the screen off.",
+  "cdFirmware": "Firmware",
+  "cdFirmwareTooOld": "Firmware too old.",
+  "cdSupported": "Supported.",
+  "cpFlasherCopied": "Copied flasher.meshtastic.org. Open it on a computer with the radio plugged in.",
+  "cpFixFailed": "That didn't work: {error}",
+  "@cpFixFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cpReportCopied": "Report copied. It holds connection details only: no messages, keys or positions.",
+  "cpTitle": "Connection doctor",
+  "cpChecking": "Checking…",
+  "cpNoProblems": "No problems found",
+  "cpProblems": "{count, plural, =1{1 problem found} other{{count} problems found}}",
+  "@cpProblems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cpStillFails": "If the radio still won't connect, copy the report below and share it.",
+  "cpFixFirst": "Fix the first problem, then check again.",
+  "cpCheckAgain": "Check again",
+  "cpCopyReport": "Copy report",
+  "cpRecentEvents": "Recent connection events",
+  "cpNoEvents": "Nothing yet. Events appear here as the app connects.",
+  "cpOk": "OK",
+  "cpProblem": "Problem",
+  "cpUnknown": "Unknown"
 }

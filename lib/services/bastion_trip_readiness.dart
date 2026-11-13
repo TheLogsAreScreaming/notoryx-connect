@@ -1,3 +1,4 @@
+import '../l10n/bastion_text.dart';
 import 'bastion_firmware.dart';
 
 enum ReadinessStatus { ready, warning, blocked, unknown }
@@ -83,74 +84,78 @@ abstract final class BastionTripReadiness {
   }
 
   static ReadinessItem _battery(ReadinessFacts f) {
-    const t = 'Radio battery';
+    final l = BastionText.l;
+    final t = l.rdBattery;
     final b = f.batteryPercent;
-    if (!f.radioReady || b == null) return const ReadinessItem('battery', t, ReadinessStatus.unknown, 'Not reported yet.');
-    if (b > 100) return const ReadinessItem('battery', t, ReadinessStatus.ready, 'On external power.');
-    if (b < lowBattery) return ReadinessItem('battery', t, ReadinessStatus.blocked, '$b%. Charge the radio before you leave.');
-    if (b < okBattery) return ReadinessItem('battery', t, ReadinessStatus.warning, '$b%. Consider charging or bringing a power bank.');
-    return ReadinessItem('battery', t, ReadinessStatus.ready, '$b%.');
+    if (!f.radioReady || b == null) return ReadinessItem('battery', t, ReadinessStatus.unknown, l.rdNotReported);
+    if (b > 100) return ReadinessItem('battery', t, ReadinessStatus.ready, l.rdExternal);
+    if (b < lowBattery) return ReadinessItem('battery', t, ReadinessStatus.blocked, l.rdChargeNow(b));
+    if (b < okBattery) return ReadinessItem('battery', t, ReadinessStatus.warning, l.rdChargeSoon(b));
+    return ReadinessItem('battery', t, ReadinessStatus.ready, l.rdLevel(b));
   }
 
   static ReadinessItem _firmware(ReadinessFacts f) {
-    const t = 'Firmware';
-    if (!f.radioReady) return const ReadinessItem('firmware', t, ReadinessStatus.unknown, 'Connect your radio to check.');
+    final l = BastionText.l;
+    final t = l.rdFirmware;
+    if (!f.radioReady) return ReadinessItem('firmware', t, ReadinessStatus.unknown, l.rdConnectToCheck);
     final advice = BastionFirmware.advice(f.firmwareVersion);
     return switch (BastionFirmware.supportOf(f.firmwareVersion)) {
-      FirmwareSupport.unsupported => ReadinessItem('firmware', t, ReadinessStatus.blocked, advice ?? 'Too old.'),
-      FirmwareSupport.outdated => ReadinessItem('firmware', t, ReadinessStatus.warning, advice ?? 'Update recommended.'),
-      FirmwareSupport.unknown => const ReadinessItem('firmware', t, ReadinessStatus.unknown, 'Version not reported.'),
-      FirmwareSupport.supported => ReadinessItem('firmware', t, ReadinessStatus.ready, f.firmwareVersion ?? 'Supported.'),
+      FirmwareSupport.unsupported => ReadinessItem('firmware', t, ReadinessStatus.blocked, advice ?? l.rdTooOld),
+      FirmwareSupport.outdated => ReadinessItem('firmware', t, ReadinessStatus.warning, advice ?? l.rdUpdateRecommended),
+      FirmwareSupport.unknown => ReadinessItem('firmware', t, ReadinessStatus.unknown, l.rdVersionUnknown),
+      FirmwareSupport.supported => ReadinessItem('firmware', t, ReadinessStatus.ready, f.firmwareVersion ?? l.rdSupported),
     };
   }
 
   static ReadinessItem _channel(ReadinessFacts f) {
-    const t = 'Channels';
-    if (!f.radioReady) return const ReadinessItem('channel', t, ReadinessStatus.unknown, 'Connect your radio to check.');
-    if (f.channelCount == 0) return const ReadinessItem('channel', t, ReadinessStatus.blocked, 'No channels on this radio.');
+    final l = BastionText.l;
+    final t = l.rdChannels;
+    if (!f.radioReady) return ReadinessItem('channel', t, ReadinessStatus.unknown, l.rdConnectToCheck);
+    if (f.channelCount == 0) return ReadinessItem('channel', t, ReadinessStatus.blocked, l.rdNoChannels);
     if (f.sosChannel >= 0 && !f.sosChannelExists) {
-      return ReadinessItem('channel', t, ReadinessStatus.blocked, 'SOS channel ${f.sosChannel} no longer exists. Pick another in your trip plan.');
+      return ReadinessItem('channel', t, ReadinessStatus.blocked, l.rdSosChannelGone(f.sosChannel));
     }
-    return ReadinessItem('channel', t, ReadinessStatus.ready, '${f.channelCount} channel${f.channelCount == 1 ? '' : 's'} set up.');
+    return ReadinessItem('channel', t, ReadinessStatus.ready, l.rdChannelsSet(f.channelCount));
   }
 
   static ReadinessItem _contacts(ReadinessFacts f) {
-    const t = 'Trip contacts';
-    if (f.contacts.isEmpty) return const ReadinessItem('contacts', t, ReadinessStatus.blocked, 'Choose who gets your check-ins and SOS.');
+    final l = BastionText.l;
+    final t = l.rdContacts;
+    if (f.contacts.isEmpty) return ReadinessItem('contacts', t, ReadinessStatus.blocked, l.rdChooseContacts);
     bool reachable(ReadinessContact c) =>
         c.testReached ?? (c.lastHeard != null && f.now.difference(c.lastHeard!) <= contactFresh);
     final failed = f.contacts.where((c) => c.testReached == false).toList();
     if (failed.isNotEmpty) {
-      return ReadinessItem('contacts', t, ReadinessStatus.warning, 'No route to ${failed.map((c) => c.name).join(', ')}.');
+      return ReadinessItem('contacts', t, ReadinessStatus.warning, l.rdNoRoute(failed.map((c) => c.name).join(', ')));
     }
     final quiet = f.contacts.where((c) => !reachable(c)).toList();
     if (quiet.isNotEmpty) {
       return ReadinessItem('contacts', t, ReadinessStatus.warning,
-          'Not heard in the last 2 hours: ${quiet.map((c) => c.name).join(', ')}. Run a route test, or check they\'re on.');
+          l.rdNotHeard(quiet.map((c) => c.name).join(', ')));
     }
-    return ReadinessItem('contacts', t, ReadinessStatus.ready, 'All ${f.contacts.length} heard recently.');
+    return ReadinessItem('contacts', t, ReadinessStatus.ready, l.rdAllHeard(f.contacts.length));
   }
 
   static ReadinessItem _position(ReadinessFacts f) {
-    const t = 'Position';
+    final l = BastionText.l;
+    final t = l.rdPosition;
     final p = f.positionTime;
     if (p != null && f.now.difference(p) <= positionFresh) {
-      return const ReadinessItem('position', t, ReadinessStatus.ready, 'Your radio has a recent position.');
+      return ReadinessItem('position', t, ReadinessStatus.ready, l.rdRecentPosition);
     }
     if (f.sharesPhoneLocation) {
-      return const ReadinessItem('position', t, ReadinessStatus.warning, 'Waiting for a position from this phone. Check location is on.');
+      return ReadinessItem('position', t, ReadinessStatus.warning, l.rdWaitingPhone);
     }
-    return const ReadinessItem('position', t, ReadinessStatus.warning,
-        'No recent position, so others can\'t see where you are. Turn on the radio\'s GPS or share this phone\'s location.');
+    return ReadinessItem('position', t, ReadinessStatus.warning, l.rdNoPosition);
   }
 
   static ReadinessItem _background(ReadinessFacts f) {
-    const t = 'Background';
+    final l = BastionText.l;
+    final t = l.rdBackground;
     return switch (f.backgroundRestricted) {
-      true => const ReadinessItem('background', t, ReadinessStatus.warning,
-          'Battery optimisation can cut the link with the screen off. Set NOTORYX Connect to "Unrestricted".'),
-      false => const ReadinessItem('background', t, ReadinessStatus.ready, 'The app can stay connected with the screen off.'),
-      null => const ReadinessItem('background', t, ReadinessStatus.unknown, 'Couldn\'t check.'),
+      true => ReadinessItem('background', t, ReadinessStatus.warning, l.rdBackgroundRestricted),
+      false => ReadinessItem('background', t, ReadinessStatus.ready, l.rdBackgroundOk),
+      null => ReadinessItem('background', t, ReadinessStatus.unknown, l.rdCouldntCheck),
     };
   }
 }

@@ -3531,4 +3531,352 @@ class AppLocalizationsEn extends AppLocalizations {
   String cpWithin(String distance) {
     return 'Within about $distance';
   }
+
+  @override
+  String get rdBattery => 'Radio battery';
+
+  @override
+  String get rdNotReported => 'Not reported yet.';
+
+  @override
+  String get rdExternal => 'On external power.';
+
+  @override
+  String rdChargeNow(int level) {
+    return '$level%. Charge the radio before you leave.';
+  }
+
+  @override
+  String rdChargeSoon(int level) {
+    return '$level%. Consider charging or bringing a power bank.';
+  }
+
+  @override
+  String rdLevel(int level) {
+    return '$level%.';
+  }
+
+  @override
+  String get rdFirmware => 'Firmware';
+
+  @override
+  String get rdConnectToCheck => 'Connect your radio to check.';
+
+  @override
+  String get rdTooOld => 'Too old.';
+
+  @override
+  String get rdUpdateRecommended => 'Update recommended.';
+
+  @override
+  String get rdVersionUnknown => 'Version not reported.';
+
+  @override
+  String get rdSupported => 'Supported.';
+
+  @override
+  String get rdChannels => 'Channels';
+
+  @override
+  String get rdNoChannels => 'No channels on this radio.';
+
+  @override
+  String rdSosChannelGone(int channel) {
+    return 'SOS channel $channel no longer exists. Pick another in your trip plan.';
+  }
+
+  @override
+  String rdChannelsSet(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count channels set up.',
+      one: '$count channel set up.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get rdContacts => 'Trip contacts';
+
+  @override
+  String get rdChooseContacts => 'Choose who gets your check-ins and SOS.';
+
+  @override
+  String rdNoRoute(String names) {
+    return 'No route to $names.';
+  }
+
+  @override
+  String rdNotHeard(String names) {
+    return 'Not heard in the last 2 hours: $names. Run a route test, or check they\'re on.';
+  }
+
+  @override
+  String rdAllHeard(int count) {
+    return 'All $count heard recently.';
+  }
+
+  @override
+  String get rdPosition => 'Position';
+
+  @override
+  String get rdRecentPosition => 'Your radio has a recent position.';
+
+  @override
+  String get rdWaitingPhone =>
+      'Waiting for a position from this phone. Check location is on.';
+
+  @override
+  String get rdNoPosition =>
+      'No recent position, so others can\'t see where you are. Turn on the radio\'s GPS or share this phone\'s location.';
+
+  @override
+  String get rdBackground => 'Background';
+
+  @override
+  String get rdBackgroundRestricted =>
+      'Battery optimisation can cut the link with the screen off. Set NOTORYX Connect to \"Unrestricted\".';
+
+  @override
+  String get rdBackgroundOk =>
+      'The app can stay connected with the screen off.';
+
+  @override
+  String get rdCouldntCheck => 'Couldn\'t check.';
+
+  @override
+  String get rpTitle => 'Readiness check';
+
+  @override
+  String get rpReady => 'Ready to go';
+
+  @override
+  String get rpCheck => 'Check these before you leave';
+
+  @override
+  String get rpNotReady => 'Not ready yet';
+
+  @override
+  String get rpNeedRadio => 'Some checks need your radio';
+
+  @override
+  String get rpNotReceived =>
+      'Sent or queued does not mean received. Agree a backup plan.';
+
+  @override
+  String get rpTestRoute => 'Test a route';
+
+  @override
+  String get rpTestHint =>
+      'Sends one route request to that contact. Use sparingly on busy meshes.';
+
+  @override
+  String get rpRouteFound => 'Route found';
+
+  @override
+  String get rpNoRoute => 'No route found';
+
+  @override
+  String get rpNotTested => 'Not tested';
+
+  @override
+  String get rpTest => 'Test';
+
+  @override
+  String get rpStatusReady => 'Ready';
+
+  @override
+  String get rpStatusCheck => 'Check';
+
+  @override
+  String get rpStatusFix => 'Fix first';
+
+  @override
+  String get rpStatusUnknown => 'Unknown';
+
+  @override
+  String get cdFixBluetooth => 'Turn on Bluetooth';
+
+  @override
+  String get cdFixPermission => 'Allow Bluetooth access';
+
+  @override
+  String get cdFixBattery => 'Open battery settings';
+
+  @override
+  String get cdFixRetry => 'Try again';
+
+  @override
+  String get cdFixScan => 'Scan for radios';
+
+  @override
+  String get cdFixFirmware => 'How to update';
+
+  @override
+  String get cdTheRadio => 'the radio';
+
+  @override
+  String get cdYourRadio => 'your radio';
+
+  @override
+  String get cdBluetoothOffDetail =>
+      'Bluetooth is off. Turn it on and the app reconnects by itself.';
+
+  @override
+  String get cdPermissionDetail =>
+      'The app isn\'t allowed to use Bluetooth. Allow \"Nearby devices\" when asked, or in Android Settings → Apps → NOTORYX Connect → Permissions.';
+
+  @override
+  String cdPairedDetail(String name) {
+    return '$name may be connected to another phone or app. A radio talks to one phone at a time: close the other app or turn off Bluetooth on the other phone, then try again. If it keeps failing, forget the radio in Android Bluetooth settings and pair again.';
+  }
+
+  @override
+  String cdTimeoutDetail(String name) {
+    return '$name didn\'t answer in time. Move closer, check it\'s switched on, or restart it, then try again.';
+  }
+
+  @override
+  String get cdNetworkDetail =>
+      'Couldn\'t reach the radio over the network. Check the phone and radio are on the same Wi-Fi, and that the address and port (usually 4403) are right.';
+
+  @override
+  String get cdUsbDetail =>
+      'The USB link failed. Unplug and plug the cable back in, and allow USB access when Android asks.';
+
+  @override
+  String cdGaveUpDetail(String name) {
+    return 'The link dropped and reconnecting didn\'t work. Check $name is on and in range, then try again.';
+  }
+
+  @override
+  String get cdNotMeshtasticDetail =>
+      'The device answered but doesn\'t look like a Meshtastic radio, or its firmware is too old.';
+
+  @override
+  String get cdUnknownProblem => 'Unknown problem.';
+
+  @override
+  String get cdBluetooth => 'Bluetooth';
+
+  @override
+  String get cdOn => 'On.';
+
+  @override
+  String get cdBluetoothOff => 'Bluetooth is off.';
+
+  @override
+  String get cdCouldntCheck => 'Couldn\'t check.';
+
+  @override
+  String get cdAccess => 'Bluetooth access';
+
+  @override
+  String get cdAllowed => 'Allowed.';
+
+  @override
+  String get cdNotAllowed =>
+      'The app isn\'t allowed to find and connect to radios.';
+
+  @override
+  String get cdLink => 'Radio link';
+
+  @override
+  String cdConnectedTo(String name) {
+    return 'Connected to $name.';
+  }
+
+  @override
+  String cdConnectingTo(String name) {
+    return 'Connecting to $name…';
+  }
+
+  @override
+  String get cdNoneFound =>
+      'No radios found. Check the radio is on and within a few metres, that Bluetooth is enabled in its settings, and that it isn\'t connected to another phone.';
+
+  @override
+  String get cdNotConnected => 'Not connected.';
+
+  @override
+  String get cdBackground => 'Background';
+
+  @override
+  String get cdBatteryOptimised =>
+      'Battery optimisation can cut the radio link when the screen is off. Set NOTORYX Connect to \"Unrestricted\".';
+
+  @override
+  String get cdBackgroundOk => 'The link can stay open with the screen off.';
+
+  @override
+  String get cdFirmware => 'Firmware';
+
+  @override
+  String get cdFirmwareTooOld => 'Firmware too old.';
+
+  @override
+  String get cdSupported => 'Supported.';
+
+  @override
+  String get cpFlasherCopied =>
+      'Copied flasher.meshtastic.org. Open it on a computer with the radio plugged in.';
+
+  @override
+  String cpFixFailed(String error) {
+    return 'That didn\'t work: $error';
+  }
+
+  @override
+  String get cpReportCopied =>
+      'Report copied. It holds connection details only: no messages, keys or positions.';
+
+  @override
+  String get cpTitle => 'Connection doctor';
+
+  @override
+  String get cpChecking => 'Checking…';
+
+  @override
+  String get cpNoProblems => 'No problems found';
+
+  @override
+  String cpProblems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count problems found',
+      one: '1 problem found',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cpStillFails =>
+      'If the radio still won\'t connect, copy the report below and share it.';
+
+  @override
+  String get cpFixFirst => 'Fix the first problem, then check again.';
+
+  @override
+  String get cpCheckAgain => 'Check again';
+
+  @override
+  String get cpCopyReport => 'Copy report';
+
+  @override
+  String get cpRecentEvents => 'Recent connection events';
+
+  @override
+  String get cpNoEvents =>
+      'Nothing yet. Events appear here as the app connects.';
+
+  @override
+  String get cpOk => 'OK';
+
+  @override
+  String get cpProblem => 'Problem';
+
+  @override
+  String get cpUnknown => 'Unknown';
 }

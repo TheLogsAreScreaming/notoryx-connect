@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:universal_ble/universal_ble.dart';
 
 import 'app_version.dart';
+import 'l10n/generated/app_localizations.dart';
 import 'services/bastion_background_service.dart';
 import 'services/bastion_bluetooth_state.dart';
 import 'services/bastion_connection_doctor.dart';
@@ -86,10 +87,10 @@ class _ConnectionDoctorPageState extends State<ConnectionDoctorPage> {
       link: !r.hasLastRadio
           ? DoctorLink.none
           : r.usesUsbLink
-              ? DoctorLink.usb
-              : r.usesNetworkLink
-                  ? DoctorLink.network
-                  : DoctorLink.bluetooth,
+          ? DoctorLink.usb
+          : r.usesNetworkLink
+          ? DoctorLink.network
+          : DoctorLink.bluetooth,
       radioName: r.connection.deviceName ?? r.linkName,
       error: r.connection.error,
       bluetoothOn: _bluetoothOn,
@@ -105,6 +106,7 @@ class _ConnectionDoctorPageState extends State<ConnectionDoctorPage> {
 
   Future<void> _fix(DoctorFix fix) async {
     final messenger = ScaffoldMessenger.of(context);
+    final l = AppLocalizations.of(context);
     try {
       switch (fix) {
         case DoctorFix.turnOnBluetooth:
@@ -123,13 +125,12 @@ class _ConnectionDoctorPageState extends State<ConnectionDoctorPage> {
           await widget.discovery.scan();
         case DoctorFix.updateFirmware:
           await Clipboard.setData(const ClipboardData(text: 'https://flasher.meshtastic.org'));
-          messenger.showSnackBar(const SnackBar(
-              content: Text('Copied flasher.meshtastic.org. Open it on a computer with the radio plugged in.')));
+          messenger.showSnackBar(SnackBar(content: Text(l.cpFlasherCopied)));
         case DoctorFix.none:
           break;
       }
     } catch (error) {
-      messenger.showSnackBar(SnackBar(content: Text('That didn\'t work: $error')));
+      messenger.showSnackBar(SnackBar(content: Text(l.cpFixFailed('$error'))));
     }
     await _check();
   }
@@ -141,65 +142,83 @@ class _ConnectionDoctorPageState extends State<ConnectionDoctorPage> {
       log: widget.radio.connectionLog.entries,
       appVersion: bastionAppVersion,
     );
+    final l = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
     await Clipboard.setData(ClipboardData(text: text));
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Report copied. It holds connection details only: no messages, keys or positions.')));
+      messenger.showSnackBar(SnackBar(content: Text(l.cpReportCopied)));
     }
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Connection doctor')),
-        body: ListenableBuilder(
-          listenable: Listenable.merge([widget.radio, widget.discovery, widget.radio.connectionLog]),
-          builder: (context, _) {
-            final facts = _facts();
-            final checks = BastionConnectionDoctor.diagnose(facts);
-            final problems = checks.where((c) => c.status == DoctorStatus.problem).length;
-            final log = widget.radio.connectionLog.entries;
-            return ListView(padding: NxSpace.page, children: [
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Scaffold(
+      appBar: AppBar(title: Text(l.cpTitle)),
+      body: ListenableBuilder(
+        listenable: Listenable.merge([widget.radio, widget.discovery, widget.radio.connectionLog]),
+        builder: (context, _) {
+          final facts = _facts();
+          final checks = BastionConnectionDoctor.diagnose(facts);
+          final problems = checks.where((c) => c.status == DoctorStatus.problem).length;
+          final log = widget.radio.connectionLog.entries;
+          return ListView(
+            padding: NxSpace.page,
+            children: [
               NxBanner(
-                tone: _checking ? NxTone.neutral : problems == 0 ? NxTone.success : NxTone.warning,
-                title: _checking
-                    ? 'Checking…'
+                tone: _checking
+                    ? NxTone.neutral
                     : problems == 0
-                        ? 'No problems found'
-                        : '$problems problem${problems == 1 ? '' : 's'} found',
-                message: problems == 0
-                    ? 'If the radio still won\'t connect, copy the report below and share it.'
-                    : 'Fix the first problem, then check again.',
+                    ? NxTone.success
+                    : NxTone.warning,
+                title: _checking
+                    ? l.cpChecking
+                    : problems == 0
+                    ? l.cpNoProblems
+                    : l.cpProblems(problems),
+                message: problems == 0 ? l.cpStillFails : l.cpFixFirst,
               ),
               for (final c in checks) _CheckTile(check: c, onFix: () => _fix(c.fix)),
               const SizedBox(height: NxSpace.sm),
-              Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
-                FilledButton.icon(
-                  onPressed: _checking ? null : _check,
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('Check again'),
-                ),
-                OutlinedButton.icon(
-                  key: const ValueKey('copy-report'),
-                  onPressed: () => _copyReport(checks, facts),
-                  icon: const Icon(Icons.copy),
-                  label: const Text('Copy report'),
-                ),
-              ]),
-              const NxSectionLabel('Recent connection events'),
-              if (log.isEmpty)
-                const Text('Nothing yet. Events appear here as the app connects.')
-              else
-                Card(child: Padding(
-                  padding: const EdgeInsets.all(NxSpace.md),
-                  child: SelectableText(
-                    log.reversed.take(30).map((e) => '${TimeOfDay.fromDateTime(e.time).format(context)}  ${e.text}').join('\n'),
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
+              Wrap(
+                spacing: NxSpace.xs,
+                runSpacing: NxSpace.xs,
+                children: [
+                  FilledButton.icon(
+                    onPressed: _checking ? null : _check,
+                    icon: const Icon(Icons.refresh),
+                    label: Text(l.cpCheckAgain),
                   ),
-                )),
-            ]);
-          },
-        ),
-      );
+                  OutlinedButton.icon(
+                    key: const ValueKey('copy-report'),
+                    onPressed: () => _copyReport(checks, facts),
+                    icon: const Icon(Icons.copy),
+                    label: Text(l.cpCopyReport),
+                  ),
+                ],
+              ),
+              NxSectionLabel(l.cpRecentEvents),
+              if (log.isEmpty)
+                Text(l.cpNoEvents)
+              else
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(NxSpace.md),
+                    child: SelectableText(
+                      log.reversed
+                          .take(30)
+                          .map((e) => '${TimeOfDay.fromDateTime(e.time).format(context)}  ${e.text}')
+                          .join('\n'),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
 }
 
 class _CheckTile extends StatelessWidget {
@@ -211,28 +230,37 @@ class _CheckTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final status = NxStatusColors.of(context);
+    final l = AppLocalizations.of(context);
     final (icon, tone, word) = switch (check.status) {
-      DoctorStatus.ok => (Icons.check_circle_outline, NxTone.success, 'OK'),
-      DoctorStatus.problem => (Icons.error_outline, NxTone.danger, 'Problem'),
-      DoctorStatus.unknown => (Icons.help_outline, NxTone.neutral, 'Unknown'),
+      DoctorStatus.ok => (Icons.check_circle_outline, NxTone.success, l.cpOk),
+      DoctorStatus.problem => (Icons.error_outline, NxTone.danger, l.cpProblem),
+      DoctorStatus.unknown => (Icons.help_outline, NxTone.neutral, l.cpUnknown),
     };
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(NxSpace.md),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: [
-            Icon(icon, color: status.strong(tone, scheme), semanticLabel: word),
-            const SizedBox(width: NxSpace.sm),
-            Expanded(child: Text(check.title, style: Theme.of(context).textTheme.titleSmall)),
-            Text(word, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: status.strong(tone, scheme))),
-          ]),
-          const SizedBox(height: NxSpace.xxs),
-          Text(check.detail),
-          if (check.fix != DoctorFix.none && check.status != DoctorStatus.ok) ...[
-            const SizedBox(height: NxSpace.xs),
-            OutlinedButton(key: ValueKey('fix-${check.id}'), onPressed: onFix, child: Text(check.fix.label)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, color: status.strong(tone, scheme), semanticLabel: word),
+                const SizedBox(width: NxSpace.sm),
+                Expanded(child: Text(check.title, style: Theme.of(context).textTheme.titleSmall)),
+                Text(
+                  word,
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(color: status.strong(tone, scheme)),
+                ),
+              ],
+            ),
+            const SizedBox(height: NxSpace.xxs),
+            Text(check.detail),
+            if (check.fix != DoctorFix.none && check.status != DoctorStatus.ok) ...[
+              const SizedBox(height: NxSpace.xs),
+              OutlinedButton(key: ValueKey('fix-${check.id}'), onPressed: onFix, child: Text(check.fix.label)),
+            ],
           ],
-        ]),
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/connection_doctor_page.dart';
 import 'package:bastion/main.dart';
 import 'package:bastion/services/bastion_bluetooth_state.dart';
@@ -45,28 +46,32 @@ void main() {
 
   group('diagnose', () {
     test('a healthy connection has no problems', () {
-      final checks = BastionConnectionDoctor.diagnose(const DoctorFacts(
-        state: MeshtasticConnectionState.ready,
-        link: DoctorLink.bluetooth,
-        radioName: 'T1000',
-        bluetoothOn: true,
-        permissionsGranted: true,
-        batteryOptimized: false,
-        firmwareVersion: '2.7.15.abc',
-      ));
+      final checks = BastionConnectionDoctor.diagnose(
+        const DoctorFacts(
+          state: MeshtasticConnectionState.ready,
+          link: DoctorLink.bluetooth,
+          radioName: 'T1000',
+          bluetoothOn: true,
+          permissionsGranted: true,
+          batteryOptimized: false,
+          firmwareVersion: '2.7.15.abc',
+        ),
+      );
       expect(checks.where((c) => c.status == DoctorStatus.problem), isEmpty);
       expect(checkOf(checks, 'link')!.detail, contains('T1000'));
     });
 
     test('each problem comes with its own fix', () {
-      final checks = BastionConnectionDoctor.diagnose(const DoctorFacts(
-        state: MeshtasticConnectionState.error,
-        link: DoctorLink.bluetooth,
-        error: 'GATT 133',
-        bluetoothOn: false,
-        permissionsGranted: false,
-        batteryOptimized: true,
-      ));
+      final checks = BastionConnectionDoctor.diagnose(
+        const DoctorFacts(
+          state: MeshtasticConnectionState.error,
+          link: DoctorLink.bluetooth,
+          error: 'GATT 133',
+          bluetoothOn: false,
+          permissionsGranted: false,
+          batteryOptimized: true,
+        ),
+      );
       expect(checkOf(checks, 'bluetooth')!.fix, DoctorFix.turnOnBluetooth);
       expect(checkOf(checks, 'permission')!.fix, DoctorFix.grantPermission);
       expect(checkOf(checks, 'link')!.detail, contains('another phone'));
@@ -76,14 +81,17 @@ void main() {
 
     test('no radios found after a scan', () {
       final checks = BastionConnectionDoctor.diagnose(
-          const DoctorFacts(state: MeshtasticConnectionState.disconnected, scanned: true, bluetoothOn: true));
+        const DoctorFacts(state: MeshtasticConnectionState.disconnected, scanned: true, bluetoothOn: true),
+      );
       expect(checkOf(checks, 'link')!.status, DoctorStatus.problem);
       expect(checkOf(checks, 'link')!.fix, DoctorFix.scan);
     });
 
     test('Wi-Fi and USB links skip the Bluetooth checks', () {
       for (final link in [DoctorLink.network, DoctorLink.usb]) {
-        final checks = BastionConnectionDoctor.diagnose(DoctorFacts(state: MeshtasticConnectionState.ready, link: link));
+        final checks = BastionConnectionDoctor.diagnose(
+          DoctorFacts(state: MeshtasticConnectionState.ready, link: link),
+        );
         expect(checkOf(checks, 'bluetooth'), isNull);
         expect(checkOf(checks, 'permission'), isNull);
       }
@@ -91,7 +99,8 @@ void main() {
 
     test('old firmware is flagged with how to update', () {
       final checks = BastionConnectionDoctor.diagnose(
-          const DoctorFacts(state: MeshtasticConnectionState.ready, link: DoctorLink.usb, firmwareVersion: '2.3.0'));
+        const DoctorFacts(state: MeshtasticConnectionState.ready, link: DoctorLink.usb, firmwareVersion: '2.3.0'),
+      );
       expect(checkOf(checks, 'firmware')!.status, DoctorStatus.problem);
       expect(checkOf(checks, 'firmware')!.fix, DoctorFix.updateFirmware);
     });
@@ -124,37 +133,48 @@ void main() {
       SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
       final cache = Directory.systemTemp.createTempSync('bastion-doctor-');
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
-          const MethodChannel('plugins.flutter.io/path_provider'), (_) async => cache.path);
+        const MethodChannel('plugins.flutter.io/path_provider'),
+        (_) async => cache.path,
+      );
     });
 
     testWidgets('shows the problem, logs it and copies a report', (tester) async {
       String? copied;
-      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform,
-          (call) async {
-        if (call.method == 'Clipboard.setData') copied = (call.arguments as Map)['text'] as String;
-        return null;
-      });
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        (call) async {
+          if (call.method == 'Clipboard.setData') copied = (call.arguments as Map)['text'] as String;
+          return null;
+        },
+      );
       final radio = MeshtasticRadioCoordinator();
       addTearDown(radio.dispose);
       final discovery = MeshtasticBleDiscovery();
       radio.connection.beginConnect('Trail T1000');
       radio.connection.fail(StateError('TimeoutException after 0:00:20'));
-      await tester.pumpWidget(MaterialApp(
-        theme: BastionApp.appearance(Brightness.dark),
-        home: ConnectionDoctorPage(
-          radio: radio,
-          discovery: discovery,
-          bluetooth: _Bluetooth(true),
-          permissions: () async => true,
-          batteryOptimized: () async => true,
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: BastionApp.appearance(Brightness.dark),
+          home: ConnectionDoctorPage(
+            radio: radio,
+            discovery: discovery,
+            bluetooth: _Bluetooth(true),
+            permissions: () async => true,
+            batteryOptimized: () async => true,
+          ),
         ),
-      ));
+      );
       await tester.pumpAndSettle();
       expect(find.text('2 problems found'), findsOneWidget);
       expect(find.textContaining('didn\'t answer in time'), findsOneWidget);
       expect(radio.connectionLog.entries.map((e) => e.text), contains(contains('TimeoutException')));
-      await tester.scrollUntilVisible(find.byKey(const ValueKey('copy-report')), 200,
-          scrollable: find.byType(Scrollable).first);
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('copy-report')),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       await tester.tap(find.byKey(const ValueKey('copy-report')));
       await tester.pumpAndSettle();
       expect(copied, contains('[problem] Radio link'));

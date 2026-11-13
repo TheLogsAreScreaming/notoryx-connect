@@ -1,3 +1,4 @@
+import '../l10n/bastion_text.dart';
 import 'bastion_firmware.dart';
 import 'meshtastic_connection_controller.dart';
 
@@ -6,16 +7,27 @@ enum DoctorLink { none, bluetooth, usb, network }
 
 /// One fix the doctor can offer.
 enum DoctorFix {
-  turnOnBluetooth('Turn on Bluetooth'),
-  grantPermission('Allow Bluetooth access'),
-  batterySettings('Open battery settings'),
-  reconnect('Try again'),
-  scan('Scan for radios'),
-  updateFirmware('How to update'),
-  none('');
+  turnOnBluetooth,
+  grantPermission,
+  batterySettings,
+  reconnect,
+  scan,
+  updateFirmware,
+  none;
 
-  const DoctorFix(this.label);
-  final String label;
+  /// The button text, in the phone's language.
+  String get label {
+    final l = BastionText.l;
+    return switch (this) {
+      turnOnBluetooth => l.cdFixBluetooth,
+      grantPermission => l.cdFixPermission,
+      batterySettings => l.cdFixBattery,
+      reconnect => l.cdFixRetry,
+      scan => l.cdFixScan,
+      updateFirmware => l.cdFixFirmware,
+      none => '',
+    };
+  }
 }
 
 enum DoctorStatus { ok, problem, unknown }
@@ -90,96 +102,114 @@ abstract final class BastionConnectionDoctor {
   }
 
   static ({String detail, DoctorFix fix}) _explain(FailureCause cause, DoctorFacts f) {
-    final name = f.radioName ?? 'the radio';
+    final l = BastionText.l;
+    final name = f.radioName ?? l.cdTheRadio;
     return switch (cause) {
-      FailureCause.bluetoothOff => (detail: 'Bluetooth is off. Turn it on and the app reconnects by itself.', fix: DoctorFix.turnOnBluetooth),
-      FailureCause.permission => (
-          detail: 'The app isn\'t allowed to use Bluetooth. Allow "Nearby devices" when asked, or in Android '
-              'Settings → Apps → NOTORYX Connect → Permissions.',
-          fix: DoctorFix.grantPermission),
-      FailureCause.pairedElsewhere => (
-          detail: '$name may be connected to another phone or app. A radio talks to one phone at a time: close '
-              'the other app or turn off Bluetooth on the other phone, then try again. If it keeps failing, '
-              'forget the radio in Android Bluetooth settings and pair again.',
-          fix: DoctorFix.reconnect),
-      FailureCause.timeout => (
-          detail: '$name didn\'t answer in time. Move closer, check it\'s switched on, or restart it, then try again.',
-          fix: DoctorFix.reconnect),
-      FailureCause.network => (
-          detail: 'Couldn\'t reach the radio over the network. Check the phone and radio are on the same Wi-Fi, '
-              'and that the address and port (usually 4403) are right.',
-          fix: DoctorFix.reconnect),
-      FailureCause.usb => (
-          detail: 'The USB link failed. Unplug and plug the cable back in, and allow USB access when Android asks.',
-          fix: DoctorFix.reconnect),
-      FailureCause.gaveUp => (
-          detail: 'The link dropped and reconnecting didn\'t work. Check $name is on and in range, then try again.',
-          fix: DoctorFix.reconnect),
-      FailureCause.notMeshtastic => (
-          detail: 'The device answered but doesn\'t look like a Meshtastic radio, or its firmware is too old.',
-          fix: DoctorFix.scan),
-      FailureCause.unknown => (detail: f.error ?? 'Unknown problem.', fix: DoctorFix.reconnect),
+      FailureCause.bluetoothOff => (detail: l.cdBluetoothOffDetail, fix: DoctorFix.turnOnBluetooth),
+      FailureCause.permission => (detail: l.cdPermissionDetail, fix: DoctorFix.grantPermission),
+      FailureCause.pairedElsewhere => (detail: l.cdPairedDetail(name), fix: DoctorFix.reconnect),
+      FailureCause.timeout => (detail: l.cdTimeoutDetail(name), fix: DoctorFix.reconnect),
+      FailureCause.network => (detail: l.cdNetworkDetail, fix: DoctorFix.reconnect),
+      FailureCause.usb => (detail: l.cdUsbDetail, fix: DoctorFix.reconnect),
+      FailureCause.gaveUp => (detail: l.cdGaveUpDetail(name), fix: DoctorFix.reconnect),
+      FailureCause.notMeshtastic => (detail: l.cdNotMeshtasticDetail, fix: DoctorFix.scan),
+      FailureCause.unknown => (detail: f.error ?? l.cdUnknownProblem, fix: DoctorFix.reconnect),
     };
   }
 
   static List<DoctorCheck> diagnose(DoctorFacts f) {
+    final l = BastionText.l;
     final checks = <DoctorCheck>[];
 
     if (f.usesBluetooth) {
       checks.add(switch (f.bluetoothOn) {
-        true => const DoctorCheck('bluetooth', 'Bluetooth', DoctorStatus.ok, 'On.'),
-        false => const DoctorCheck('bluetooth', 'Bluetooth', DoctorStatus.problem,
-            'Bluetooth is off.', DoctorFix.turnOnBluetooth),
-        null => const DoctorCheck('bluetooth', 'Bluetooth', DoctorStatus.unknown, 'Couldn\'t check.'),
+        true => DoctorCheck('bluetooth', l.cdBluetooth, DoctorStatus.ok, l.cdOn),
+        false => DoctorCheck(
+          'bluetooth',
+          l.cdBluetooth,
+          DoctorStatus.problem,
+          l.cdBluetoothOff,
+          DoctorFix.turnOnBluetooth,
+        ),
+        null => DoctorCheck('bluetooth', l.cdBluetooth, DoctorStatus.unknown, l.cdCouldntCheck),
       });
       checks.add(switch (f.permissionsGranted) {
-        true => const DoctorCheck('permission', 'Bluetooth access', DoctorStatus.ok, 'Allowed.'),
-        false => const DoctorCheck('permission', 'Bluetooth access', DoctorStatus.problem,
-            'The app isn\'t allowed to find and connect to radios.', DoctorFix.grantPermission),
-        null => const DoctorCheck('permission', 'Bluetooth access', DoctorStatus.unknown, 'Couldn\'t check.'),
+        true => DoctorCheck('permission', l.cdAccess, DoctorStatus.ok, l.cdAllowed),
+        false => DoctorCheck('permission', l.cdAccess, DoctorStatus.problem, l.cdNotAllowed, DoctorFix.grantPermission),
+        null => DoctorCheck('permission', l.cdAccess, DoctorStatus.unknown, l.cdCouldntCheck),
       });
     }
 
     final linkCheck = switch (f.state) {
-      MeshtasticConnectionState.ready =>
-        DoctorCheck('link', 'Radio link', DoctorStatus.ok, 'Connected to ${f.radioName ?? 'your radio'}.'),
-      MeshtasticConnectionState.connecting || MeshtasticConnectionState.connected || MeshtasticConnectionState.synchronizing =>
-        DoctorCheck('link', 'Radio link', DoctorStatus.unknown, 'Connecting to ${f.radioName ?? 'your radio'}…'),
+      MeshtasticConnectionState.ready => DoctorCheck(
+        'link',
+        l.cdLink,
+        DoctorStatus.ok,
+        l.cdConnectedTo(f.radioName ?? l.cdYourRadio),
+      ),
+      MeshtasticConnectionState.connecting ||
+      MeshtasticConnectionState.connected ||
+      MeshtasticConnectionState.synchronizing => DoctorCheck(
+        'link',
+        l.cdLink,
+        DoctorStatus.unknown,
+        l.cdConnectingTo(f.radioName ?? l.cdYourRadio),
+      ),
       MeshtasticConnectionState.error => () {
-          final e = _explain(classify(f.error), f);
-          return DoctorCheck('link', 'Radio link', DoctorStatus.problem, e.detail, e.fix);
-        }(),
-      _ when f.scanError != null => DoctorCheck('link', 'Radio link', DoctorStatus.problem,
-          _explain(classify(f.scanError), f).detail, _explain(classify(f.scanError), f).fix),
-      _ when f.scanned && f.radiosFound == 0 => const DoctorCheck('link', 'Radio link', DoctorStatus.problem,
-          'No radios found. Check the radio is on and within a few metres, that Bluetooth is enabled in its '
-              'settings, and that it isn\'t connected to another phone.',
-          DoctorFix.scan),
-      _ => const DoctorCheck('link', 'Radio link', DoctorStatus.unknown, 'Not connected.', DoctorFix.scan),
+        final e = _explain(classify(f.error), f);
+        return DoctorCheck('link', l.cdLink, DoctorStatus.problem, e.detail, e.fix);
+      }(),
+      _ when f.scanError != null => DoctorCheck(
+        'link',
+        l.cdLink,
+        DoctorStatus.problem,
+        _explain(classify(f.scanError), f).detail,
+        _explain(classify(f.scanError), f).fix,
+      ),
+      _ when f.scanned && f.radiosFound == 0 => DoctorCheck(
+        'link',
+        l.cdLink,
+        DoctorStatus.problem,
+        l.cdNoneFound,
+        DoctorFix.scan,
+      ),
+      _ => DoctorCheck('link', l.cdLink, DoctorStatus.unknown, l.cdNotConnected, DoctorFix.scan),
     };
     checks.add(linkCheck);
 
     if (f.batteryOptimized == true) {
-      checks.add(const DoctorCheck('background', 'Background', DoctorStatus.problem,
-          'Battery optimisation can cut the radio link when the screen is off. Set NOTORYX Connect to '
-              '"Unrestricted".',
-          DoctorFix.batterySettings));
+      checks.add(
+        DoctorCheck(
+          'background',
+          l.cdBackground,
+          DoctorStatus.problem,
+          l.cdBatteryOptimised,
+          DoctorFix.batterySettings,
+        ),
+      );
     } else if (f.backgroundProblem != null) {
-      checks.add(DoctorCheck('background', 'Background', DoctorStatus.problem, f.backgroundProblem!));
+      checks.add(DoctorCheck('background', l.cdBackground, DoctorStatus.problem, f.backgroundProblem!));
     } else if (f.batteryOptimized == false) {
-      checks.add(const DoctorCheck('background', 'Background', DoctorStatus.ok, 'The link can stay open with the screen off.'));
+      checks.add(DoctorCheck('background', l.cdBackground, DoctorStatus.ok, l.cdBackgroundOk));
     }
 
     if (f.ready) {
       final support = BastionFirmware.supportOf(f.firmwareVersion);
       final advice = BastionFirmware.advice(f.firmwareVersion);
       if (support == FirmwareSupport.unsupported) {
-        checks.add(DoctorCheck('firmware', 'Firmware', DoctorStatus.problem, advice ?? 'Firmware too old.',
-            DoctorFix.updateFirmware));
+        checks.add(
+          DoctorCheck(
+            'firmware',
+            l.cdFirmware,
+            DoctorStatus.problem,
+            advice ?? l.cdFirmwareTooOld,
+            DoctorFix.updateFirmware,
+          ),
+        );
       } else if (advice != null) {
-        checks.add(DoctorCheck('firmware', 'Firmware', DoctorStatus.unknown, advice, DoctorFix.updateFirmware));
+        checks.add(DoctorCheck('firmware', l.cdFirmware, DoctorStatus.unknown, advice, DoctorFix.updateFirmware));
       } else {
-        checks.add(DoctorCheck('firmware', 'Firmware', DoctorStatus.ok, f.firmwareVersion ?? 'Supported.'));
+        checks.add(DoctorCheck('firmware', l.cdFirmware, DoctorStatus.ok, f.firmwareVersion ?? l.cdSupported));
       }
     }
     return checks;
@@ -198,8 +228,10 @@ abstract final class BastionConnectionDoctor {
       ..writeln('NOTORYX Connect $appVersion connection report')
       ..writeln('Time: ${(now ?? DateTime.now()).toIso8601String()}')
       ..writeln('State: ${facts.state.name}  Link: ${facts.link.name}  Radio: ${facts.radioName ?? '-'}')
-      ..writeln('Firmware: ${facts.firmwareVersion ?? '-'}  Bluetooth on: ${facts.bluetoothOn ?? '?'}  '
-          'Permission: ${facts.permissionsGranted ?? '?'}  Battery optimised: ${facts.batteryOptimized ?? '?'}')
+      ..writeln(
+        'Firmware: ${facts.firmwareVersion ?? '-'}  Bluetooth on: ${facts.bluetoothOn ?? '?'}  '
+        'Permission: ${facts.permissionsGranted ?? '?'}  Battery optimised: ${facts.batteryOptimized ?? '?'}',
+      )
       ..writeln('Last error: ${facts.error ?? '-'}')
       ..writeln()
       ..writeln('Checks:');

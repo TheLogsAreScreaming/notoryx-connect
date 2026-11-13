@@ -3559,4 +3559,353 @@ class AppLocalizationsEs extends AppLocalizations {
   String cpWithin(String distance) {
     return 'A unos $distance';
   }
+
+  @override
+  String get rdBattery => 'Batería de la radio';
+
+  @override
+  String get rdNotReported => 'Aún no informado.';
+
+  @override
+  String get rdExternal => 'Con alimentación externa.';
+
+  @override
+  String rdChargeNow(int level) {
+    return '$level%. Carga la radio antes de salir.';
+  }
+
+  @override
+  String rdChargeSoon(int level) {
+    return '$level%. Plantéate cargarla o llevar una batería externa.';
+  }
+
+  @override
+  String rdLevel(int level) {
+    return '$level%.';
+  }
+
+  @override
+  String get rdFirmware => 'Firmware';
+
+  @override
+  String get rdConnectToCheck => 'Conecta tu radio para comprobarlo.';
+
+  @override
+  String get rdTooOld => 'Demasiado antiguo.';
+
+  @override
+  String get rdUpdateRecommended => 'Se recomienda actualizar.';
+
+  @override
+  String get rdVersionUnknown => 'Versión no informada.';
+
+  @override
+  String get rdSupported => 'Compatible.';
+
+  @override
+  String get rdChannels => 'Canales';
+
+  @override
+  String get rdNoChannels => 'Esta radio no tiene canales.';
+
+  @override
+  String rdSosChannelGone(int channel) {
+    return 'El canal de SOS $channel ya no existe. Elige otro en tu plan de viaje.';
+  }
+
+  @override
+  String rdChannelsSet(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count canales configurados.',
+      one: '$count canal configurado.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get rdContacts => 'Contactos del viaje';
+
+  @override
+  String get rdChooseContacts => 'Elige quién recibe tus reportes y tu SOS.';
+
+  @override
+  String rdNoRoute(String names) {
+    return 'No hay ruta hasta $names.';
+  }
+
+  @override
+  String rdNotHeard(String names) {
+    return 'Sin oír en las últimas 2 horas: $names. Haz una prueba de ruta o comprueba que estén encendidos.';
+  }
+
+  @override
+  String rdAllHeard(int count) {
+    return 'Los $count se oyeron hace poco.';
+  }
+
+  @override
+  String get rdPosition => 'Posición';
+
+  @override
+  String get rdRecentPosition => 'Tu radio tiene una posición reciente.';
+
+  @override
+  String get rdWaitingPhone =>
+      'Esperando una posición de este teléfono. Comprueba que la ubicación esté activada.';
+
+  @override
+  String get rdNoPosition =>
+      'No hay una posición reciente, así que los demás no ven dónde estás. Activa el GPS de la radio o comparte la ubicación de este teléfono.';
+
+  @override
+  String get rdBackground => 'Segundo plano';
+
+  @override
+  String get rdBackgroundRestricted =>
+      'La optimización de batería puede cortar la conexión con la pantalla apagada. Configura NOTORYX Connect como \"Sin restricciones\".';
+
+  @override
+  String get rdBackgroundOk =>
+      'La aplicación puede seguir conectada con la pantalla apagada.';
+
+  @override
+  String get rdCouldntCheck => 'No se pudo comprobar.';
+
+  @override
+  String get rpTitle => 'Comprobación previa';
+
+  @override
+  String get rpReady => 'Listo para salir';
+
+  @override
+  String get rpCheck => 'Revisa esto antes de salir';
+
+  @override
+  String get rpNotReady => 'Aún no está listo';
+
+  @override
+  String get rpNeedRadio => 'Algunas comprobaciones necesitan tu radio';
+
+  @override
+  String get rpNotReceived =>
+      'Enviado o en cola no significa recibido. Acordad un plan alternativo.';
+
+  @override
+  String get rpTestRoute => 'Probar una ruta';
+
+  @override
+  String get rpTestHint =>
+      'Envía una petición de ruta a ese contacto. Úsalo con moderación en mallas con mucho tráfico.';
+
+  @override
+  String get rpRouteFound => 'Ruta encontrada';
+
+  @override
+  String get rpNoRoute => 'No se encontró ruta';
+
+  @override
+  String get rpNotTested => 'Sin probar';
+
+  @override
+  String get rpTest => 'Probar';
+
+  @override
+  String get rpStatusReady => 'Listo';
+
+  @override
+  String get rpStatusCheck => 'Revisar';
+
+  @override
+  String get rpStatusFix => 'Corregir antes';
+
+  @override
+  String get rpStatusUnknown => 'Desconocido';
+
+  @override
+  String get cdFixBluetooth => 'Activar Bluetooth';
+
+  @override
+  String get cdFixPermission => 'Permitir el acceso a Bluetooth';
+
+  @override
+  String get cdFixBattery => 'Abrir ajustes de batería';
+
+  @override
+  String get cdFixRetry => 'Reintentar';
+
+  @override
+  String get cdFixScan => 'Buscar radios';
+
+  @override
+  String get cdFixFirmware => 'Cómo actualizar';
+
+  @override
+  String get cdTheRadio => 'la radio';
+
+  @override
+  String get cdYourRadio => 'tu radio';
+
+  @override
+  String get cdBluetoothOffDetail =>
+      'El Bluetooth está apagado. Actívalo y la aplicación se volverá a conectar sola.';
+
+  @override
+  String get cdPermissionDetail =>
+      'La aplicación no tiene permiso para usar Bluetooth. Permite \"Dispositivos cercanos\" cuando se te pida, o en Ajustes de Android → Aplicaciones → NOTORYX Connect → Permisos.';
+
+  @override
+  String cdPairedDetail(String name) {
+    return 'Puede que $name esté conectada a otro teléfono o aplicación. Una radio solo habla con un teléfono a la vez: cierra la otra aplicación o apaga el Bluetooth del otro teléfono y vuelve a intentarlo. Si sigue fallando, olvida la radio en los ajustes de Bluetooth de Android y vuelve a emparejarla.';
+  }
+
+  @override
+  String cdTimeoutDetail(String name) {
+    return '$name no respondió a tiempo. Acércate, comprueba que esté encendida o reiníciala y vuelve a intentarlo.';
+  }
+
+  @override
+  String get cdNetworkDetail =>
+      'No se pudo contactar con la radio por la red. Comprueba que el teléfono y la radio estén en la misma Wi-Fi y que la dirección y el puerto (normalmente 4403) sean correctos.';
+
+  @override
+  String get cdUsbDetail =>
+      'Falló la conexión USB. Desconecta y vuelve a conectar el cable, y permite el acceso USB cuando Android lo pida.';
+
+  @override
+  String cdGaveUpDetail(String name) {
+    return 'La conexión se cortó y no se pudo reconectar. Comprueba que $name esté encendida y al alcance y vuelve a intentarlo.';
+  }
+
+  @override
+  String get cdNotMeshtasticDetail =>
+      'El dispositivo respondió, pero no parece una radio Meshtastic o su firmware es demasiado antiguo.';
+
+  @override
+  String get cdUnknownProblem => 'Problema desconocido.';
+
+  @override
+  String get cdBluetooth => 'Bluetooth';
+
+  @override
+  String get cdOn => 'Activado.';
+
+  @override
+  String get cdBluetoothOff => 'El Bluetooth está apagado.';
+
+  @override
+  String get cdCouldntCheck => 'No se pudo comprobar.';
+
+  @override
+  String get cdAccess => 'Acceso a Bluetooth';
+
+  @override
+  String get cdAllowed => 'Permitido.';
+
+  @override
+  String get cdNotAllowed =>
+      'La aplicación no tiene permiso para buscar radios y conectarse a ellas.';
+
+  @override
+  String get cdLink => 'Conexión con la radio';
+
+  @override
+  String cdConnectedTo(String name) {
+    return 'Conectado a $name.';
+  }
+
+  @override
+  String cdConnectingTo(String name) {
+    return 'Conectando con $name…';
+  }
+
+  @override
+  String get cdNoneFound =>
+      'No se encontraron radios. Comprueba que la radio esté encendida y a pocos metros, que tenga el Bluetooth activado en sus ajustes y que no esté conectada a otro teléfono.';
+
+  @override
+  String get cdNotConnected => 'Sin conexión.';
+
+  @override
+  String get cdBackground => 'Segundo plano';
+
+  @override
+  String get cdBatteryOptimised =>
+      'La optimización de batería puede cortar la conexión con la radio cuando la pantalla está apagada. Configura NOTORYX Connect como \"Sin restricciones\".';
+
+  @override
+  String get cdBackgroundOk =>
+      'La conexión puede seguir abierta con la pantalla apagada.';
+
+  @override
+  String get cdFirmware => 'Firmware';
+
+  @override
+  String get cdFirmwareTooOld => 'Firmware demasiado antiguo.';
+
+  @override
+  String get cdSupported => 'Compatible.';
+
+  @override
+  String get cpFlasherCopied =>
+      'Se copió flasher.meshtastic.org. Ábrelo en un ordenador con la radio conectada.';
+
+  @override
+  String cpFixFailed(String error) {
+    return 'No funcionó: $error';
+  }
+
+  @override
+  String get cpReportCopied =>
+      'Informe copiado. Solo contiene datos de conexión: ni mensajes, ni claves, ni posiciones.';
+
+  @override
+  String get cpTitle => 'Diagnóstico de conexión';
+
+  @override
+  String get cpChecking => 'Comprobando…';
+
+  @override
+  String get cpNoProblems => 'No se encontraron problemas';
+
+  @override
+  String cpProblems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Se encontraron $count problemas',
+      one: 'Se encontró 1 problema',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cpStillFails =>
+      'Si la radio sigue sin conectarse, copia el informe de abajo y compártelo.';
+
+  @override
+  String get cpFixFirst => 'Soluciona el primer problema y vuelve a comprobar.';
+
+  @override
+  String get cpCheckAgain => 'Volver a comprobar';
+
+  @override
+  String get cpCopyReport => 'Copiar informe';
+
+  @override
+  String get cpRecentEvents => 'Eventos de conexión recientes';
+
+  @override
+  String get cpNoEvents =>
+      'Nada todavía. Los eventos aparecen aquí a medida que la aplicación se conecta.';
+
+  @override
+  String get cpOk => 'Correcto';
+
+  @override
+  String get cpProblem => 'Problema';
+
+  @override
+  String get cpUnknown => 'Desconocido';
 }

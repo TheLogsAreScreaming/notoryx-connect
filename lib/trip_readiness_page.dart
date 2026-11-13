@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/generated/app_localizations.dart';
+
 import 'services/bastion_background_service.dart';
 import 'services/bastion_trip_readiness.dart';
 import 'services/meshtastic_radio_coordinator.dart';
@@ -76,7 +78,7 @@ class _TripReadinessPageState extends State<TripReadinessPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Readiness check')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).rpTitle)),
         body: SafeArea(
           top: false,
           child: ListenableBuilder(
@@ -86,17 +88,17 @@ class _TripReadinessPageState extends State<TripReadinessPage> {
               final items = BastionTripReadiness.check(facts);
               final overall = BastionTripReadiness.overall(items);
               final (tone, title) = switch (overall) {
-                ReadinessStatus.ready => (NxTone.success, 'Ready to go'),
-                ReadinessStatus.warning => (NxTone.warning, 'Check these before you leave'),
-                ReadinessStatus.blocked => (NxTone.danger, 'Not ready yet'),
-                ReadinessStatus.unknown => (NxTone.neutral, 'Some checks need your radio'),
+                ReadinessStatus.ready => (NxTone.success, AppLocalizations.of(context).rpReady),
+                ReadinessStatus.warning => (NxTone.warning, AppLocalizations.of(context).rpCheck),
+                ReadinessStatus.blocked => (NxTone.danger, AppLocalizations.of(context).rpNotReady),
+                ReadinessStatus.unknown => (NxTone.neutral, AppLocalizations.of(context).rpNeedRadio),
               };
               return ListView(padding: NxSpace.page, children: [
-                NxBanner(tone: tone, title: title, message: 'Sent or queued does not mean received. Agree a backup plan.'),
+                NxBanner(tone: tone, title: title, message: AppLocalizations.of(context).rpNotReceived),
                 for (final item in items) _ItemCard(item: item),
                 if (facts.contacts.isNotEmpty && widget.radio.isReady) ...[
-                  const NxSectionLabel('Test a route'),
-                  const Text('Sends one route request to that contact. Use sparingly on busy meshes.'),
+                  NxSectionLabel(AppLocalizations.of(context).rpTestRoute),
+                  Text(AppLocalizations.of(context).rpTestHint),
                   const SizedBox(height: NxSpace.xs),
                   Card(
                     child: Column(children: [
@@ -104,16 +106,16 @@ class _TripReadinessPageState extends State<TripReadinessPage> {
                         ListTile(
                           title: Text(c.name),
                           subtitle: Text(switch (c.testReached) {
-                            true => 'Route found',
-                            false => 'No route found',
-                            null => 'Not tested',
+                            true => AppLocalizations.of(context).rpRouteFound,
+                            false => AppLocalizations.of(context).rpNoRoute,
+                            null => AppLocalizations.of(context).rpNotTested,
                           }),
                           trailing: _testing.contains(c.num)
                               ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2.5))
                               : OutlinedButton(
                                   key: ValueKey('test-${c.num}'),
                                   onPressed: _testing.isEmpty ? () => _test(c.num) : null,
-                                  child: const Text('Test'),
+                                  child: Text(AppLocalizations.of(context).rpTest),
                                 ),
                         ),
                     ]),
@@ -133,10 +135,10 @@ class _ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (icon, tone, word) = switch (item.status) {
-      ReadinessStatus.ready => (Icons.check_circle_outline, NxTone.success, 'Ready'),
-      ReadinessStatus.warning => (Icons.warning_amber_rounded, NxTone.warning, 'Check'),
-      ReadinessStatus.blocked => (Icons.error_outline, NxTone.danger, 'Fix first'),
-      ReadinessStatus.unknown => (Icons.help_outline, NxTone.neutral, 'Unknown'),
+      ReadinessStatus.ready => (Icons.check_circle_outline, NxTone.success, AppLocalizations.of(context).rpStatusReady),
+      ReadinessStatus.warning => (Icons.warning_amber_rounded, NxTone.warning, AppLocalizations.of(context).rpStatusCheck),
+      ReadinessStatus.blocked => (Icons.error_outline, NxTone.danger, AppLocalizations.of(context).rpStatusFix),
+      ReadinessStatus.unknown => (Icons.help_outline, NxTone.neutral, AppLocalizations.of(context).rpStatusUnknown),
     };
     final color = NxStatusColors.of(context).strong(tone, Theme.of(context).colorScheme);
     final type = Theme.of(context).textTheme;
