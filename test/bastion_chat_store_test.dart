@@ -63,13 +63,13 @@ void main() {
     await prefs.setString(a, _archive([1, 2]));
     await prefs.setString(legacy, _archive([3]));
     await prefs.setString('bastion.comms.last_radio_name', 'kept');
-    await prefs.setString('bastion.nodedex.v2.radio.00000001', '[]');
+    await prefs.setString('bastion.nodevault.v2.radio.00000001', '[]');
 
     expect(await store.migrateFrom(prefs), isNull);
     expect(await prefs.getString(a), isNull);
     expect(await prefs.getString(legacy), isNull);
     expect(await prefs.getString('bastion.comms.last_radio_name'), 'kept', reason: 'only archives move');
-    expect(await prefs.getString('bastion.nodedex.v2.radio.00000001'), '[]');
+    expect(await prefs.getString('bastion.nodevault.v2.radio.00000001'), '[]');
     expect(jsonDecode((await store.read(a))!), jsonDecode(_archive([1, 2])));
 
     // A second launch finds nothing left to move.

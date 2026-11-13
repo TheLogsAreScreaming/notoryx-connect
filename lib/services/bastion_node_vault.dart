@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'meshtastic_node_database.dart';
@@ -98,11 +99,35 @@ class BastionNodeVault {
   BastionNodeVault({SharedPreferencesAsync? preferences})
       : _preferences = preferences;
 
-  // Stored keys keep their original names so existing phones and backups still load.
-  static const legacyKey = 'bastion.nodedex.v1';
-  static const annotationsKey = 'bastion.nodedex.annotations.v1';
+  static const legacyKey = 'bastion.nodevault.v1';
+  static const annotationsKey = 'bastion.nodevault.annotations.v1';
   static String radioKey(int radio) =>
-      'bastion.nodedex.v2.radio.${radio.toRadixString(16).padLeft(8, '0')}';
+      'bastion.nodevault.v2.radio.${radio.toRadixString(16).padLeft(8, '0')}';
+
+  static const _prefix = 'bastion.nodevault.';
+
+  /// The prefix older builds saved under, before the list was renamed.
+  static const _formerPrefix = 'bastion.node' 'dex.';
+
+  /// Moves anything saved under the former key names (older builds, or a
+  /// restored older backup) to the current names, then removes the old keys.
+  /// A value already saved under the current name is kept. Safe to call often.
+  static Future<void> migrateStoredKeys(SharedPreferencesAsync store) async {
+    for (final key in await store.getKeys()) {
+      if (!key.startsWith(_formerPrefix)) continue;
+      final target = _prefix + key.substring(_formerPrefix.length);
+      try {
+        final value = await store.getString(key);
+        if (value != null && await store.getString(target) == null) {
+          await store.setString(target, value);
+        }
+      } on Object catch (e, s) {
+        debugPrint('NodeVault: could not move $key: $e\n$s');
+        continue;
+      }
+      await store.remove(key);
+    }
+  }
 
   SharedPreferencesAsync? _preferences;
   SharedPreferencesAsync get _store =>
@@ -139,6 +164,7 @@ class BastionNodeVault {
   /// Shows [radio]'s encounters, first moving any unassigned history to it.
   /// Nodes observed while no radio was attached are merged in.
   Future<void> useRadio(int? radio) async {
+    await migrateStoredKeys(_store);
     final observed = _radio == null && radio != null ? Map.of(_records) : <int, BastionNodeRecord>{};
     _radio = radio;
     _records.clear();

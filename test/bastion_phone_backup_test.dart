@@ -43,7 +43,7 @@ void main() {
   Future<void> seed() async {
     await prefs.setString(BastionMessageArchive.radioKey(0xA1), jsonEncode({
       'messages': [{'text': 'a'}, {'text': 'b'}], 'pending': []}));
-    await prefs.setString('bastion.nodedex.annotations.v1', '{"7":{"favorite":true,"note":"gate"}}');
+    await prefs.setString('bastion.nodevault.annotations.v1', '{"7":{"favorite":true,"note":"gate"}}');
     await prefs.setInt('bastion.comms.last_radio', 0xA1);
     await prefs.setBool('bastion.low_power_mode', true);
     await prefs.setString('other.app.key', 'not ours');
