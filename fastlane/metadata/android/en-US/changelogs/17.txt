@@ -1,0 +1,1 @@
+New: NodeVault (renamed node list) with favorites-only filter, node journal with notes and tags, network diagram, off-route alerts, day replay of team positions, offline checklists, place search, two-way ATAK with map markers, French and German.
