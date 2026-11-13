@@ -3136,6 +3136,274 @@
   },
   "clTitle": "Checklists",
   "clToolSub": "Reusable checklists that work offline, with saved records",
+  "auTitle": "Automations",
+  "auToolSub": "Rules that send, alert or change channel when something happens",
+  "auSubtitle": "Rules run on this phone while a radio is connected. Messages they send start with [auto] so other automations ignore them. Each rule waits its cooldown, and all rules together run at most 30 times an hour.",
+  "auNotReady": "Rules run only while a radio is connected and ready.",
+  "auStorageProblem": "Saved automations couldn't be read or saved.",
+  "auWebhooks": "Allow web requests",
+  "auWebhooksSub": "Needs internet. Webhook actions send what happened to the address you give. Off until you turn it on.",
+  "auRules": "Rules",
+  "auEmpty": "No automations yet.",
+  "auNew": "New automation",
+  "auEdit": "Edit automation",
+  "auToggle": "{name} on",
+  "@auToggle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "auWhenAny": "When any: {list}",
+  "@auWhenAny": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "auWhenAll": "When all: {list}",
+  "@auWhenAll": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "auThen": "Then: {list}",
+  "@auThen": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "auNeedsInternet": "Needs internet",
+  "auWebOffNote": "Needs internet. Web requests are off, so this won't run until you allow them.",
+  "auActivity": "Recent activity",
+  "auNoActivity": "Nothing has run yet.",
+  "auRunOk": "{rule}: {action}",
+  "@auRunOk": {
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      },
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "auRunFailed": "{rule}: {action} (didn't run: {problem})",
+  "@auRunFailed": {
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      },
+      "action": {
+        "type": "String"
+      },
+      "problem": {
+        "type": "String"
+      }
+    }
+  },
+  "auProblemNotConnected": "radio not connected",
+  "auProblemWebOff": "web requests are off",
+  "auProblemHttp": "server answered {status}",
+  "@auProblemHttp": {
+    "placeholders": {
+      "status": {
+        "type": "int"
+      }
+    }
+  },
+  "auProblemFailed": "failed",
+  "auName": "Name",
+  "auNeedAll": "Give it a name, at least one trigger and at least one action.",
+  "auMatch": "Run when",
+  "auMatchAny": "Any trigger (OR)",
+  "auMatchAll": "All triggers (AND)",
+  "auTriggers": "Triggers",
+  "auActions": "Actions",
+  "auAddTrigger": "Add trigger",
+  "auAddAction": "Add action",
+  "auRemove": "Remove",
+  "auCooldown": "Wait at least this long between runs",
+  "auMinutes": "{count, plural, one{{count} minute} other{{count} minutes}}",
+  "@auMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "auSave": "Save",
+  "auDelete": "Delete automation",
+  "auCancel": "Cancel",
+  "auAdd": "Add",
+  "auKindBattery": "Battery low",
+  "auKindTime": "Time of day",
+  "auKindZone": "Geofence zone",
+  "auKindMessage": "Message received",
+  "auKindPresence": "Node online or offline",
+  "auKindSend": "Send message",
+  "auKindAlert": "Show alert",
+  "auKindChannel": "Change channel (add from link)",
+  "auKindSound": "Play alert sound",
+  "auKindWebhook": "Webhook (needs internet)",
+  "auTrigBattery": "{node} battery below {percent}%",
+  "@auTrigBattery": {
+    "placeholders": {
+      "node": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "auTrigTime": "Every day at {time}",
+  "@auTrigTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "auTrigTimeDays": "At {time} on {days}",
+  "@auTrigTimeDays": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "auTrigZoneEnter": "{who} enters {zone}",
+  "@auTrigZoneEnter": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "auTrigZoneLeave": "{who} leaves {zone}",
+  "@auTrigZoneLeave": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "auZoneMissing": "a deleted zone",
+  "auAnyNode": "Any node",
+  "auTrigMessageAny": "Any message received",
+  "auTrigMessageHas": "Message containing “{text}”",
+  "@auTrigMessageHas": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "auTrigOnline": "{node} back after {minutes} min quiet",
+  "@auTrigOnline": {
+    "placeholders": {
+      "node": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "auTrigOffline": "{node} quiet for {minutes} min",
+  "@auTrigOffline": {
+    "placeholders": {
+      "node": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "auActSend": "Send to {target}: {text}",
+  "@auActSend": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "auActAlert": "Alert: {text}",
+  "@auActAlert": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "auActWebhook": "Web request to {host}",
+  "@auActWebhook": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "auNode": "Node",
+  "auBelow": "Below",
+  "auTime": "Time",
+  "auDays": "Days (none picked means every day)",
+  "auZone": "Zone",
+  "auNoZones": "No zones yet. Add a geofence zone on the map first.",
+  "auEnters": "Enters",
+  "auLeaves": "Leaves",
+  "auContains": "Containing (optional)",
+  "auDirect": "Direct messages only",
+  "auChannel": "Channel",
+  "auChannelN": "Channel {index}",
+  "@auChannelN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auAnywhere": "Any channel",
+  "auGoesQuiet": "Goes quiet",
+  "auComesBack": "Comes back",
+  "auAfter": "After",
+  "auEveryone": "Everyone on a channel",
+  "auOneNode": "One node",
+  "auMessage": "Message",
+  "auAlertText": "Alert text",
+  "auPlaceholders": "You can use {list}.",
+  "@auPlaceholders": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "auLink": "Channel share link",
+  "auLinkHint": "Adds the link's channels to the radio and keeps the ones already there.",
+  "auBadLink": "That isn't a channel share link.",
+  "auUrl": "Web address (https://…)",
+  "auBadUrl": "Enter a full http or https address.",
   "clSubtitle": "Everything stays on this phone. Each finished run is kept with its times and can be exported.",
   "clStorageProblem": "Saved checklists couldn't be read. Changes are kept until the app closes and nothing stored is overwritten.",
   "clInProgress": "In progress",

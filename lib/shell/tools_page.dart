@@ -56,6 +56,15 @@ class _ToolsPageState extends State<_ToolsPage> {
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(ChecklistsPage(store: BastionChecklists.instance)),
       )),
+      if (BastionAutomations.instance case final automations?)
+        Card(child: ListTile(
+          key: const ValueKey('tools-automations'),
+          leading: const Icon(Icons.bolt_outlined),
+          title: Text(l.auTitle),
+          subtitle: Text(l.auToolSub),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(AutomationsPage(engine: automations, radio: radio)),
+        )),
       Card(child: ExpansionTile(
         initiallyExpanded: true,
         leading: const Icon(Icons.checklist),

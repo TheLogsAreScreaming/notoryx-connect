@@ -45,6 +45,8 @@ import 'node_journal_page.dart';
 import 'radio_settings_page.dart';
 import 'services/bastion_tile_cache.dart';
 import 'traceroute_page.dart';
+import 'automations_page.dart';
+import 'services/bastion_automations.dart';
 import 'services/bastion_node_vault.dart';
 import 'services/meshtastic_ble_discovery.dart';
 import 'services/meshtastic_connection_controller.dart';
@@ -229,6 +231,10 @@ class _BastionShellState extends State<BastionShell> {
     unawaited(SentinelService.instance.start());
     // The real radio only: demo nodes must never reach ATAK.
     BastionTakBridge.instance.attach(() => _realRadio.nodes);
+    // Automations act on the real radio only, never the demo.
+    final automations = BastionAutomations.instance = AutomationEngine(hooks: coordinatorAutomationHooks(_realRadio));
+    unawaited(automations.load());
+    automations.attach(CoordinatorAutomationSource(_realRadio));
     _setUpShortcuts();
     // The widget follows the real radio, never the demo.
     if (BastionHomeWidget.supported) {
@@ -263,6 +269,8 @@ class _BastionShellState extends State<BastionShell> {
     ble.dispose();
     _homeWidget?.dispose();
     BastionTakBridge.instance.detach();
+    BastionAutomations.instance?.dispose();
+    BastionAutomations.instance = null;
     _realRadio.dispose();
     _demo?.dispose();
     super.dispose();

@@ -152,6 +152,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     if (alert != null && !filters.isSilenced(alert.nodeNum)) unawaited(_alerts.showFieldAlert(alert));
   }
 
+  /// Shows [alert] as a local notification, e.g. for an automation. Nothing
+  /// is transmitted.
+  Future<void> showLocalAlert(BastionFieldAlert alert) => _alerts.showFieldAlert(alert);
+
   void _startFieldAlerts(int localNode) {
     _fieldAlerts.startSession(localNode);
     _geofenceEngine.startSession();

@@ -4541,6 +4541,338 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wiederverwendbare Checklisten, offline, mit gespeicherten Protokollen';
 
   @override
+  String get auTitle => 'Automatisierungen';
+
+  @override
+  String get auToolSub =>
+      'Regeln, die senden, warnen oder den Kanal wechseln, wenn etwas passiert';
+
+  @override
+  String get auSubtitle =>
+      'Regeln laufen auf diesem Telefon, solange ein Funkgerät verbunden ist. Ihre Nachrichten beginnen mit [auto], damit andere Automatisierungen sie ignorieren. Jede Regel hält ihre Wartezeit ein, und alle zusammen laufen höchstens 30-mal pro Stunde.';
+
+  @override
+  String get auNotReady =>
+      'Regeln laufen nur, wenn ein Funkgerät verbunden und bereit ist.';
+
+  @override
+  String get auStorageProblem =>
+      'Gespeicherte Automatisierungen konnten nicht gelesen oder gespeichert werden.';
+
+  @override
+  String get auWebhooks => 'Webanfragen erlauben';
+
+  @override
+  String get auWebhooksSub =>
+      'Braucht Internet. Webhook-Aktionen senden das Ereignis an die angegebene Adresse. Aus, bis Sie es einschalten.';
+
+  @override
+  String get auRules => 'Regeln';
+
+  @override
+  String get auEmpty => 'Noch keine Automatisierungen.';
+
+  @override
+  String get auNew => 'Neue Automatisierung';
+
+  @override
+  String get auEdit => 'Automatisierung bearbeiten';
+
+  @override
+  String auToggle(String name) {
+    return '$name aktiv';
+  }
+
+  @override
+  String auWhenAny(String list) {
+    return 'Wenn eines eintritt: $list';
+  }
+
+  @override
+  String auWhenAll(String list) {
+    return 'Wenn alle zutreffen: $list';
+  }
+
+  @override
+  String auThen(String list) {
+    return 'Dann: $list';
+  }
+
+  @override
+  String get auNeedsInternet => 'Braucht Internet';
+
+  @override
+  String get auWebOffNote =>
+      'Braucht Internet. Webanfragen sind aus, daher läuft dies erst, wenn Sie sie erlauben.';
+
+  @override
+  String get auActivity => 'Letzte Aktivität';
+
+  @override
+  String get auNoActivity => 'Bisher ist nichts gelaufen.';
+
+  @override
+  String auRunOk(String rule, String action) {
+    return '$rule: $action';
+  }
+
+  @override
+  String auRunFailed(String rule, String action, String problem) {
+    return '$rule: $action (nicht ausgeführt: $problem)';
+  }
+
+  @override
+  String get auProblemNotConnected => 'Funkgerät nicht verbunden';
+
+  @override
+  String get auProblemWebOff => 'Webanfragen sind aus';
+
+  @override
+  String auProblemHttp(int status) {
+    return 'Server antwortete $status';
+  }
+
+  @override
+  String get auProblemFailed => 'fehlgeschlagen';
+
+  @override
+  String get auName => 'Name';
+
+  @override
+  String get auNeedAll =>
+      'Geben Sie einen Namen, mindestens einen Auslöser und mindestens eine Aktion an.';
+
+  @override
+  String get auMatch => 'Ausführen, wenn';
+
+  @override
+  String get auMatchAny => 'Ein Auslöser (ODER)';
+
+  @override
+  String get auMatchAll => 'Alle Auslöser (UND)';
+
+  @override
+  String get auTriggers => 'Auslöser';
+
+  @override
+  String get auActions => 'Aktionen';
+
+  @override
+  String get auAddTrigger => 'Auslöser hinzufügen';
+
+  @override
+  String get auAddAction => 'Aktion hinzufügen';
+
+  @override
+  String get auRemove => 'Entfernen';
+
+  @override
+  String get auCooldown =>
+      'Mindestens so lange zwischen zwei Ausführungen warten';
+
+  @override
+  String auMinutes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Minuten',
+      one: '$count Minute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get auSave => 'Speichern';
+
+  @override
+  String get auDelete => 'Automatisierung löschen';
+
+  @override
+  String get auCancel => 'Abbrechen';
+
+  @override
+  String get auAdd => 'Hinzufügen';
+
+  @override
+  String get auKindBattery => 'Akku schwach';
+
+  @override
+  String get auKindTime => 'Uhrzeit';
+
+  @override
+  String get auKindZone => 'Geofence-Zone';
+
+  @override
+  String get auKindMessage => 'Nachricht empfangen';
+
+  @override
+  String get auKindPresence => 'Knoten online oder offline';
+
+  @override
+  String get auKindSend => 'Nachricht senden';
+
+  @override
+  String get auKindAlert => 'Warnung anzeigen';
+
+  @override
+  String get auKindChannel => 'Kanal wechseln (aus Link hinzufügen)';
+
+  @override
+  String get auKindSound => 'Warnton abspielen';
+
+  @override
+  String get auKindWebhook => 'Webhook (braucht Internet)';
+
+  @override
+  String auTrigBattery(String node, int percent) {
+    return 'Akku von $node unter $percent %';
+  }
+
+  @override
+  String auTrigTime(String time) {
+    return 'Täglich um $time';
+  }
+
+  @override
+  String auTrigTimeDays(String time, String days) {
+    return 'Um $time am $days';
+  }
+
+  @override
+  String auTrigZoneEnter(String who, String zone) {
+    return '$who betritt $zone';
+  }
+
+  @override
+  String auTrigZoneLeave(String who, String zone) {
+    return '$who verlässt $zone';
+  }
+
+  @override
+  String get auZoneMissing => 'eine gelöschte Zone';
+
+  @override
+  String get auAnyNode => 'Beliebiger Knoten';
+
+  @override
+  String get auTrigMessageAny => 'Jede empfangene Nachricht';
+
+  @override
+  String auTrigMessageHas(String text) {
+    return 'Nachricht mit „$text“';
+  }
+
+  @override
+  String auTrigOnline(String node, int minutes) {
+    return '$node wieder da nach $minutes Min. Stille';
+  }
+
+  @override
+  String auTrigOffline(String node, int minutes) {
+    return '$node seit $minutes Min. still';
+  }
+
+  @override
+  String auActSend(String target, String text) {
+    return 'An $target senden: $text';
+  }
+
+  @override
+  String auActAlert(String text) {
+    return 'Warnung: $text';
+  }
+
+  @override
+  String auActWebhook(String host) {
+    return 'Webanfrage an $host';
+  }
+
+  @override
+  String get auNode => 'Knoten';
+
+  @override
+  String get auBelow => 'Unter';
+
+  @override
+  String get auTime => 'Uhrzeit';
+
+  @override
+  String get auDays => 'Tage (keiner gewählt = jeden Tag)';
+
+  @override
+  String get auZone => 'Zone';
+
+  @override
+  String get auNoZones =>
+      'Noch keine Zonen. Legen Sie zuerst auf der Karte eine Geofence-Zone an.';
+
+  @override
+  String get auEnters => 'Betritt';
+
+  @override
+  String get auLeaves => 'Verlässt';
+
+  @override
+  String get auContains => 'Enthält (optional)';
+
+  @override
+  String get auDirect => 'Nur Direktnachrichten';
+
+  @override
+  String get auChannel => 'Kanal';
+
+  @override
+  String auChannelN(int index) {
+    return 'Kanal $index';
+  }
+
+  @override
+  String get auAnywhere => 'Beliebiger Kanal';
+
+  @override
+  String get auGoesQuiet => 'Wird still';
+
+  @override
+  String get auComesBack => 'Kommt zurück';
+
+  @override
+  String get auAfter => 'Nach';
+
+  @override
+  String get auEveryone => 'Alle im Kanal';
+
+  @override
+  String get auOneNode => 'Ein Knoten';
+
+  @override
+  String get auMessage => 'Nachricht';
+
+  @override
+  String get auAlertText => 'Warntext';
+
+  @override
+  String auPlaceholders(String list) {
+    return 'Sie können $list verwenden.';
+  }
+
+  @override
+  String get auLink => 'Kanal-Freigabelink';
+
+  @override
+  String get auLinkHint =>
+      'Fügt die Kanäle aus dem Link zum Funkgerät hinzu und behält die vorhandenen.';
+
+  @override
+  String get auBadLink => 'Das ist kein Kanal-Freigabelink.';
+
+  @override
+  String get auUrl => 'Webadresse (https://…)';
+
+  @override
+  String get auBadUrl =>
+      'Geben Sie eine vollständige http- oder https-Adresse ein.';
+
+  @override
   String get clSubtitle =>
       'Alles bleibt auf diesem Telefon. Jeder abgeschlossene Durchgang wird mit Zeiten gespeichert und kann exportiert werden.';
 

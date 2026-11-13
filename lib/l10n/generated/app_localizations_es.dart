@@ -4523,6 +4523,336 @@ class AppLocalizationsEs extends AppLocalizations {
       'Listas reutilizables que funcionan sin conexión, con registros guardados';
 
   @override
+  String get auTitle => 'Automatizaciones';
+
+  @override
+  String get auToolSub =>
+      'Reglas que envían, avisan o cambian de canal cuando pasa algo';
+
+  @override
+  String get auSubtitle =>
+      'Las reglas se ejecutan en este teléfono mientras hay una radio conectada. Los mensajes que envían empiezan por [auto] para que otras automatizaciones los ignoren. Cada regla respeta su espera y, entre todas, se ejecutan como mucho 30 veces por hora.';
+
+  @override
+  String get auNotReady =>
+      'Las reglas solo se ejecutan con una radio conectada y lista.';
+
+  @override
+  String get auStorageProblem =>
+      'No se pudieron leer o guardar las automatizaciones.';
+
+  @override
+  String get auWebhooks => 'Permitir solicitudes web';
+
+  @override
+  String get auWebhooksSub =>
+      'Necesita internet. Las acciones de webhook envían lo ocurrido a la dirección que indiques. Desactivado hasta que lo actives.';
+
+  @override
+  String get auRules => 'Reglas';
+
+  @override
+  String get auEmpty => 'Aún no hay automatizaciones.';
+
+  @override
+  String get auNew => 'Nueva automatización';
+
+  @override
+  String get auEdit => 'Editar automatización';
+
+  @override
+  String auToggle(String name) {
+    return '$name activada';
+  }
+
+  @override
+  String auWhenAny(String list) {
+    return 'Cuando ocurra alguno: $list';
+  }
+
+  @override
+  String auWhenAll(String list) {
+    return 'Cuando se cumplan todos: $list';
+  }
+
+  @override
+  String auThen(String list) {
+    return 'Entonces: $list';
+  }
+
+  @override
+  String get auNeedsInternet => 'Necesita internet';
+
+  @override
+  String get auWebOffNote =>
+      'Necesita internet. Las solicitudes web están desactivadas, así que no se ejecutará hasta que las permitas.';
+
+  @override
+  String get auActivity => 'Actividad reciente';
+
+  @override
+  String get auNoActivity => 'Aún no se ha ejecutado nada.';
+
+  @override
+  String auRunOk(String rule, String action) {
+    return '$rule: $action';
+  }
+
+  @override
+  String auRunFailed(String rule, String action, String problem) {
+    return '$rule: $action (no se ejecutó: $problem)';
+  }
+
+  @override
+  String get auProblemNotConnected => 'radio no conectada';
+
+  @override
+  String get auProblemWebOff => 'solicitudes web desactivadas';
+
+  @override
+  String auProblemHttp(int status) {
+    return 'el servidor respondió $status';
+  }
+
+  @override
+  String get auProblemFailed => 'falló';
+
+  @override
+  String get auName => 'Nombre';
+
+  @override
+  String get auNeedAll =>
+      'Ponle un nombre, al menos un disparador y al menos una acción.';
+
+  @override
+  String get auMatch => 'Ejecutar cuando';
+
+  @override
+  String get auMatchAny => 'Cualquiera (O)';
+
+  @override
+  String get auMatchAll => 'Todos (Y)';
+
+  @override
+  String get auTriggers => 'Disparadores';
+
+  @override
+  String get auActions => 'Acciones';
+
+  @override
+  String get auAddTrigger => 'Añadir disparador';
+
+  @override
+  String get auAddAction => 'Añadir acción';
+
+  @override
+  String get auRemove => 'Quitar';
+
+  @override
+  String get auCooldown => 'Esperar al menos esto entre ejecuciones';
+
+  @override
+  String auMinutes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count minutos',
+      one: '$count minuto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get auSave => 'Guardar';
+
+  @override
+  String get auDelete => 'Eliminar automatización';
+
+  @override
+  String get auCancel => 'Cancelar';
+
+  @override
+  String get auAdd => 'Añadir';
+
+  @override
+  String get auKindBattery => 'Batería baja';
+
+  @override
+  String get auKindTime => 'Hora del día';
+
+  @override
+  String get auKindZone => 'Zona de geovalla';
+
+  @override
+  String get auKindMessage => 'Mensaje recibido';
+
+  @override
+  String get auKindPresence => 'Nodo en línea o desconectado';
+
+  @override
+  String get auKindSend => 'Enviar mensaje';
+
+  @override
+  String get auKindAlert => 'Mostrar aviso';
+
+  @override
+  String get auKindChannel => 'Cambiar canal (añadir desde enlace)';
+
+  @override
+  String get auKindSound => 'Reproducir sonido de aviso';
+
+  @override
+  String get auKindWebhook => 'Webhook (necesita internet)';
+
+  @override
+  String auTrigBattery(String node, int percent) {
+    return 'Batería de $node por debajo del $percent %';
+  }
+
+  @override
+  String auTrigTime(String time) {
+    return 'Cada día a las $time';
+  }
+
+  @override
+  String auTrigTimeDays(String time, String days) {
+    return 'A las $time los $days';
+  }
+
+  @override
+  String auTrigZoneEnter(String who, String zone) {
+    return '$who entra en $zone';
+  }
+
+  @override
+  String auTrigZoneLeave(String who, String zone) {
+    return '$who sale de $zone';
+  }
+
+  @override
+  String get auZoneMissing => 'una zona eliminada';
+
+  @override
+  String get auAnyNode => 'Cualquier nodo';
+
+  @override
+  String get auTrigMessageAny => 'Cualquier mensaje recibido';
+
+  @override
+  String auTrigMessageHas(String text) {
+    return 'Mensaje que contiene «$text»';
+  }
+
+  @override
+  String auTrigOnline(String node, int minutes) {
+    return '$node vuelve tras $minutes min en silencio';
+  }
+
+  @override
+  String auTrigOffline(String node, int minutes) {
+    return '$node en silencio $minutes min';
+  }
+
+  @override
+  String auActSend(String target, String text) {
+    return 'Enviar a $target: $text';
+  }
+
+  @override
+  String auActAlert(String text) {
+    return 'Aviso: $text';
+  }
+
+  @override
+  String auActWebhook(String host) {
+    return 'Solicitud web a $host';
+  }
+
+  @override
+  String get auNode => 'Nodo';
+
+  @override
+  String get auBelow => 'Por debajo de';
+
+  @override
+  String get auTime => 'Hora';
+
+  @override
+  String get auDays => 'Días (ninguno significa todos los días)';
+
+  @override
+  String get auZone => 'Zona';
+
+  @override
+  String get auNoZones =>
+      'Aún no hay zonas. Primero añade una geovalla en el mapa.';
+
+  @override
+  String get auEnters => 'Entra';
+
+  @override
+  String get auLeaves => 'Sale';
+
+  @override
+  String get auContains => 'Que contenga (opcional)';
+
+  @override
+  String get auDirect => 'Solo mensajes directos';
+
+  @override
+  String get auChannel => 'Canal';
+
+  @override
+  String auChannelN(int index) {
+    return 'Canal $index';
+  }
+
+  @override
+  String get auAnywhere => 'Cualquier canal';
+
+  @override
+  String get auGoesQuiet => 'Se queda en silencio';
+
+  @override
+  String get auComesBack => 'Vuelve';
+
+  @override
+  String get auAfter => 'Tras';
+
+  @override
+  String get auEveryone => 'Todos en un canal';
+
+  @override
+  String get auOneNode => 'Un nodo';
+
+  @override
+  String get auMessage => 'Mensaje';
+
+  @override
+  String get auAlertText => 'Texto del aviso';
+
+  @override
+  String auPlaceholders(String list) {
+    return 'Puedes usar $list.';
+  }
+
+  @override
+  String get auLink => 'Enlace para compartir canal';
+
+  @override
+  String get auLinkHint =>
+      'Añade los canales del enlace a la radio y conserva los que ya tiene.';
+
+  @override
+  String get auBadLink => 'Eso no es un enlace para compartir canal.';
+
+  @override
+  String get auUrl => 'Dirección web (https://…)';
+
+  @override
+  String get auBadUrl => 'Escribe una dirección http o https completa.';
+
+  @override
   String get clSubtitle =>
       'Todo queda en este teléfono. Cada recorrido terminado se guarda con sus horas y se puede exportar.';
 
