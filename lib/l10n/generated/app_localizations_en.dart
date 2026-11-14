@@ -5732,4 +5732,177 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatsDeleteQueued => 'Delete without sending';
+
+  @override
+  String get chatsReplayed => 'from history';
+
+  @override
+  String get chatsReplayedFull =>
+      'Replayed from a store-and-forward router\'s history: sent earlier, not just now.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Received $time.';
+  }
+
+  @override
+  String get deliveryProven => 'Delivered • receipt proven';
+
+  @override
+  String get deliveryUnproven => 'Delivered • receipt not proven';
+
+  @override
+  String get deliveryNoKey =>
+      'Delivered • receipt couldn\'t be checked (no key)';
+
+  @override
+  String get deliveryForged => 'a receipt failed its check and was ignored';
+
+  @override
+  String get chatsSigned => 'Sender\'s signature checked by your radio';
+
+  @override
+  String get chatsPkiEncrypted => 'Encrypted to you only';
+
+  @override
+  String get gateExcluded => 'Left out of this radio\'s firmware build';
+
+  @override
+  String get gateNoHardware => 'This radio doesn\'t have the hardware for this';
+
+  @override
+  String formNewerValue(String value) {
+    return 'Set by newer firmware (value $value). Left unchanged.';
+  }
+
+  @override
+  String omArea(String area) {
+    return 'Covers $area (dashed outline on the map). Outside it there are no offline tiles.';
+  }
+
+  @override
+  String omDamaged(int count) {
+    return '$count tiles in this file are damaged and will show blank.';
+  }
+
+  @override
+  String get ikTitle => 'Identity key (separate backup)';
+
+  @override
+  String get ikIntro =>
+      'The private key makes this radio the same node to everyone. Back it up to move your identity to a replacement radio. Keep it secret, and never put it on two radios that are on the air at once. Uses the password above.';
+
+  @override
+  String get ikBackup => 'Back up identity key';
+
+  @override
+  String get ikRestore => 'Put identity key on this radio';
+
+  @override
+  String get ikText => 'Encrypted identity key';
+
+  @override
+  String get ikNeedsLock =>
+      'Set a screen lock on this phone first. The key is only shown or replaced after the phone confirms it\'s you.';
+
+  @override
+  String get ikAuthReason =>
+      'Confirm it\'s you to use the radio\'s identity key';
+
+  @override
+  String get ikAuthFailed => 'Not confirmed. Nothing was read or changed.';
+
+  @override
+  String ikReady(String fingerprint) {
+    return 'Identity key backed up (fingerprint $fingerprint). Copy the text and keep it somewhere safe.';
+  }
+
+  @override
+  String ikRestored(String fingerprint) {
+    return 'Identity key put on this radio and confirmed by reading it back (fingerprint $fingerprint). Contacts may need to see a new announcement before direct messages work.';
+  }
+
+  @override
+  String get ikConfirmQ => 'Replace this radio\'s identity?';
+
+  @override
+  String ikConfirmBody(String fingerprint, String from, String to) {
+    return 'Key $fingerprint, backed up from $from, will replace the key on $to. The old key on this radio is lost unless you backed it up.';
+  }
+
+  @override
+  String ikDuplicate(String nodes) {
+    return 'Warning: $nodes on the mesh already uses this key. Turn that radio off for good first, or two radios will share one identity.';
+  }
+
+  @override
+  String get ikNoKey =>
+      'This radio has no key pair to back up. Its firmware may be too old or have public keys turned off.';
+
+  @override
+  String get ikMismatch =>
+      'The private and public keys don\'t belong together, so nothing was changed. The backup may be damaged.';
+
+  @override
+  String get ikNotApplied =>
+      'The radio didn\'t report the restored key afterwards. Check its security settings before relying on it.';
+
+  @override
+  String get ikBadFormat => 'That isn\'t an identity key backup.';
+
+  @override
+  String get mlTitle => 'Map as a list';
+
+  @override
+  String get mlIntro =>
+      'Everything on the map in words, nearest first. Directions are from your radio\'s last position.';
+
+  @override
+  String get mlNodes => 'Nodes';
+
+  @override
+  String get mlWaypoints => 'Waypoints';
+
+  @override
+  String get mlWeakAreas => 'Weak coverage areas';
+
+  @override
+  String get mlWeakArea => 'Weak signal area';
+
+  @override
+  String get mlNone => 'None';
+
+  @override
+  String get mlNoOwnPosition => 'Distance unknown: your radio has no position';
+
+  @override
+  String mlDistanceDir(String distance, String dir) {
+    String _temp0 = intl.Intl.selectLogic(dir, {
+      'n': 'north',
+      'ne': 'north-east',
+      'e': 'east',
+      'se': 'south-east',
+      's': 'south',
+      'sw': 'south-west',
+      'w': 'west',
+      'nw': 'north-west',
+      'other': '',
+    });
+    return '$distance $_temp0';
+  }
+
+  @override
+  String mlHeard(String ago) {
+    return 'heard $ago';
+  }
+
+  @override
+  String mlPositionAge(String ago) {
+    return 'position from $ago';
+  }
+
+  @override
+  String mlReadings(int count, String snr) {
+    return '$count readings, average SNR $snr dB';
+  }
 }

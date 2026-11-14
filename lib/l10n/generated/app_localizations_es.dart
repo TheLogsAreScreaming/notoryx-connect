@@ -5772,4 +5772,178 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chatsDeleteQueued => 'Eliminar sin enviar';
+
+  @override
+  String get chatsReplayed => 'del historial';
+
+  @override
+  String get chatsReplayedFull =>
+      'Reenviado desde el historial de un router de almacenamiento y reenvío: se envió antes, no ahora.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Recibido a las $time.';
+  }
+
+  @override
+  String get deliveryProven => 'Entregado • recibo verificado';
+
+  @override
+  String get deliveryUnproven => 'Entregado • recibo sin verificar';
+
+  @override
+  String get deliveryNoKey =>
+      'Entregado • no se pudo comprobar el recibo (sin clave)';
+
+  @override
+  String get deliveryForged => 'un recibo no pasó la comprobación y se ignoró';
+
+  @override
+  String get chatsSigned => 'Tu radio comprobó la firma del remitente';
+
+  @override
+  String get chatsPkiEncrypted => 'Cifrado solo para ti';
+
+  @override
+  String get gateExcluded => 'No incluido en el firmware de esta radio';
+
+  @override
+  String get gateNoHardware => 'Esta radio no tiene el hardware para esto';
+
+  @override
+  String formNewerValue(String value) {
+    return 'Definido por un firmware más nuevo (valor $value). Se deja sin cambios.';
+  }
+
+  @override
+  String omArea(String area) {
+    return 'Cubre $area (contorno discontinuo en el mapa). Fuera de él no hay teselas sin conexión.';
+  }
+
+  @override
+  String omDamaged(int count) {
+    return '$count teselas de este archivo están dañadas y se verán en blanco.';
+  }
+
+  @override
+  String get ikTitle => 'Clave de identidad (copia aparte)';
+
+  @override
+  String get ikIntro =>
+      'La clave privada hace que esta radio sea el mismo nodo para todos. Haz una copia para llevar tu identidad a una radio de reemplazo. Mantenla en secreto y nunca la pongas en dos radios activas a la vez. Usa la contraseña de arriba.';
+
+  @override
+  String get ikBackup => 'Copiar la clave de identidad';
+
+  @override
+  String get ikRestore => 'Poner la clave de identidad en esta radio';
+
+  @override
+  String get ikText => 'Clave de identidad cifrada';
+
+  @override
+  String get ikNeedsLock =>
+      'Primero configura un bloqueo de pantalla. La clave solo se muestra o reemplaza cuando el teléfono confirma que eres tú.';
+
+  @override
+  String get ikAuthReason =>
+      'Confirma que eres tú para usar la clave de identidad de la radio';
+
+  @override
+  String get ikAuthFailed => 'No confirmado. No se leyó ni cambió nada.';
+
+  @override
+  String ikReady(String fingerprint) {
+    return 'Clave de identidad copiada (huella $fingerprint). Copia el texto y guárdalo en un lugar seguro.';
+  }
+
+  @override
+  String ikRestored(String fingerprint) {
+    return 'Clave de identidad puesta en esta radio y confirmada al leerla (huella $fingerprint). Puede que los contactos necesiten un nuevo anuncio antes de que funcionen los mensajes directos.';
+  }
+
+  @override
+  String get ikConfirmQ => '¿Reemplazar la identidad de esta radio?';
+
+  @override
+  String ikConfirmBody(String fingerprint, String from, String to) {
+    return 'La clave $fingerprint, copiada de $from, reemplazará la clave de $to. La clave anterior se pierde si no hiciste copia.';
+  }
+
+  @override
+  String ikDuplicate(String nodes) {
+    return 'Aviso: $nodes en la malla ya usa esta clave. Apaga esa radio definitivamente primero, o dos radios compartirán una identidad.';
+  }
+
+  @override
+  String get ikNoKey =>
+      'Esta radio no tiene un par de claves que copiar. Su firmware puede ser demasiado antiguo o tener las claves públicas desactivadas.';
+
+  @override
+  String get ikMismatch =>
+      'Las claves privada y pública no se corresponden, así que no se cambió nada. La copia puede estar dañada.';
+
+  @override
+  String get ikNotApplied =>
+      'La radio no informó la clave restaurada después. Revisa su configuración de seguridad antes de confiar en ella.';
+
+  @override
+  String get ikBadFormat => 'Eso no es una copia de la clave de identidad.';
+
+  @override
+  String get mlTitle => 'Mapa como lista';
+
+  @override
+  String get mlIntro =>
+      'Todo lo del mapa en palabras, lo más cercano primero. Las direcciones son desde la última posición de tu radio.';
+
+  @override
+  String get mlNodes => 'Nodos';
+
+  @override
+  String get mlWaypoints => 'Puntos de ruta';
+
+  @override
+  String get mlWeakAreas => 'Zonas de cobertura débil';
+
+  @override
+  String get mlWeakArea => 'Zona de señal débil';
+
+  @override
+  String get mlNone => 'Ninguno';
+
+  @override
+  String get mlNoOwnPosition =>
+      'Distancia desconocida: tu radio no tiene posición';
+
+  @override
+  String mlDistanceDir(String distance, String dir) {
+    String _temp0 = intl.Intl.selectLogic(dir, {
+      'n': 'norte',
+      'ne': 'noreste',
+      'e': 'este',
+      'se': 'sureste',
+      's': 'sur',
+      'sw': 'suroeste',
+      'w': 'oeste',
+      'nw': 'noroeste',
+      'other': '',
+    });
+    return '$distance al $_temp0';
+  }
+
+  @override
+  String mlHeard(String ago) {
+    return 'escuchado $ago';
+  }
+
+  @override
+  String mlPositionAge(String ago) {
+    return 'posición de $ago';
+  }
+
+  @override
+  String mlReadings(int count, String snr) {
+    return '$count lecturas, SNR medio $snr dB';
+  }
 }

@@ -5794,4 +5794,180 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get chatsDeleteQueued => 'Supprimer sans envoyer';
+
+  @override
+  String get chatsReplayed => 'de l\'historique';
+
+  @override
+  String get chatsReplayedFull =>
+      'Rejoué depuis l\'historique d\'un routeur store-and-forward : envoyé plus tôt, pas à l\'instant.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Reçu à $time.';
+  }
+
+  @override
+  String get deliveryProven => 'Remis • accusé vérifié';
+
+  @override
+  String get deliveryUnproven => 'Remis • accusé non vérifié';
+
+  @override
+  String get deliveryNoKey =>
+      'Remis • accusé impossible à vérifier (pas de clé)';
+
+  @override
+  String get deliveryForged =>
+      'un accusé a échoué à la vérification et a été ignoré';
+
+  @override
+  String get chatsSigned =>
+      'Signature de l\'expéditeur vérifiée par votre radio';
+
+  @override
+  String get chatsPkiEncrypted => 'Chiffré pour vous seul';
+
+  @override
+  String get gateExcluded => 'Absent du firmware de cette radio';
+
+  @override
+  String get gateNoHardware => 'Cette radio n\'a pas le matériel pour cela';
+
+  @override
+  String formNewerValue(String value) {
+    return 'Défini par un firmware plus récent (valeur $value). Laissé tel quel.';
+  }
+
+  @override
+  String omArea(String area) {
+    return 'Couvre $area (contour en pointillés sur la carte). En dehors, il n\'y a pas de tuiles hors ligne.';
+  }
+
+  @override
+  String omDamaged(int count) {
+    return '$count tuiles de ce fichier sont endommagées et resteront vides.';
+  }
+
+  @override
+  String get ikTitle => 'Clé d\'identité (sauvegarde séparée)';
+
+  @override
+  String get ikIntro =>
+      'La clé privée fait de cette radio le même nœud pour tous. Sauvegardez-la pour transférer votre identité vers une radio de remplacement. Gardez-la secrète et ne la mettez jamais sur deux radios actives en même temps. Utilise le mot de passe ci-dessus.';
+
+  @override
+  String get ikBackup => 'Sauvegarder la clé d\'identité';
+
+  @override
+  String get ikRestore => 'Mettre la clé d\'identité sur cette radio';
+
+  @override
+  String get ikText => 'Clé d\'identité chiffrée';
+
+  @override
+  String get ikNeedsLock =>
+      'Configurez d\'abord un verrouillage d\'écran. La clé n\'est affichée ou remplacée qu\'après confirmation de votre identité par le téléphone.';
+
+  @override
+  String get ikAuthReason =>
+      'Confirmez votre identité pour utiliser la clé d\'identité de la radio';
+
+  @override
+  String get ikAuthFailed => 'Non confirmé. Rien n\'a été lu ni modifié.';
+
+  @override
+  String ikReady(String fingerprint) {
+    return 'Clé d\'identité sauvegardée (empreinte $fingerprint). Copiez le texte et gardez-le en lieu sûr.';
+  }
+
+  @override
+  String ikRestored(String fingerprint) {
+    return 'Clé d\'identité mise sur cette radio et confirmée par relecture (empreinte $fingerprint). Les contacts devront peut-être recevoir une nouvelle annonce avant que les messages directs fonctionnent.';
+  }
+
+  @override
+  String get ikConfirmQ => 'Remplacer l\'identité de cette radio ?';
+
+  @override
+  String ikConfirmBody(String fingerprint, String from, String to) {
+    return 'La clé $fingerprint, sauvegardée depuis $from, remplacera la clé de $to. L\'ancienne clé est perdue si vous ne l\'avez pas sauvegardée.';
+  }
+
+  @override
+  String ikDuplicate(String nodes) {
+    return 'Attention : $nodes sur le maillage utilise déjà cette clé. Éteignez d\'abord définitivement cette radio, sinon deux radios partageront une identité.';
+  }
+
+  @override
+  String get ikNoKey =>
+      'Cette radio n\'a pas de paire de clés à sauvegarder. Son firmware est peut-être trop ancien ou a les clés publiques désactivées.';
+
+  @override
+  String get ikMismatch =>
+      'Les clés privée et publique ne correspondent pas, rien n\'a donc été modifié. La sauvegarde est peut-être endommagée.';
+
+  @override
+  String get ikNotApplied =>
+      'La radio n\'a pas indiqué la clé restaurée ensuite. Vérifiez ses réglages de sécurité avant de vous y fier.';
+
+  @override
+  String get ikBadFormat => 'Ce n\'est pas une sauvegarde de clé d\'identité.';
+
+  @override
+  String get mlTitle => 'Carte sous forme de liste';
+
+  @override
+  String get mlIntro =>
+      'Tout ce qui est sur la carte en mots, le plus proche d\'abord. Les directions partent de la dernière position de votre radio.';
+
+  @override
+  String get mlNodes => 'Nœuds';
+
+  @override
+  String get mlWaypoints => 'Points de passage';
+
+  @override
+  String get mlWeakAreas => 'Zones de couverture faible';
+
+  @override
+  String get mlWeakArea => 'Zone de signal faible';
+
+  @override
+  String get mlNone => 'Aucun';
+
+  @override
+  String get mlNoOwnPosition =>
+      'Distance inconnue : votre radio n\'a pas de position';
+
+  @override
+  String mlDistanceDir(String distance, String dir) {
+    String _temp0 = intl.Intl.selectLogic(dir, {
+      'n': 'nord',
+      'ne': 'nord-est',
+      'e': 'est',
+      'se': 'sud-est',
+      's': 'sud',
+      'sw': 'sud-ouest',
+      'w': 'ouest',
+      'nw': 'nord-ouest',
+      'other': '',
+    });
+    return '$distance au $_temp0';
+  }
+
+  @override
+  String mlHeard(String ago) {
+    return 'entendu $ago';
+  }
+
+  @override
+  String mlPositionAge(String ago) {
+    return 'position de $ago';
+  }
+
+  @override
+  String mlReadings(int count, String snr) {
+    return '$count relevés, SNR moyen $snr dB';
+  }
 }

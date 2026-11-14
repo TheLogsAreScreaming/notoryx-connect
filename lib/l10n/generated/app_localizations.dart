@@ -9486,6 +9486,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete without sending'**
   String get chatsDeleteQueued;
+
+  /// No description provided for @chatsReplayed.
+  ///
+  /// In en, this message translates to:
+  /// **'from history'**
+  String get chatsReplayed;
+
+  /// No description provided for @chatsReplayedFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Replayed from a store-and-forward router\'s history: sent earlier, not just now.'**
+  String get chatsReplayedFull;
+
+  /// No description provided for @chatsReplayedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Received {time}.'**
+  String chatsReplayedAt(String time);
+
+  /// No description provided for @deliveryProven.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered • receipt proven'**
+  String get deliveryProven;
+
+  /// No description provided for @deliveryUnproven.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered • receipt not proven'**
+  String get deliveryUnproven;
+
+  /// No description provided for @deliveryNoKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered • receipt couldn\'t be checked (no key)'**
+  String get deliveryNoKey;
+
+  /// No description provided for @deliveryForged.
+  ///
+  /// In en, this message translates to:
+  /// **'a receipt failed its check and was ignored'**
+  String get deliveryForged;
+
+  /// No description provided for @chatsSigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Sender\'s signature checked by your radio'**
+  String get chatsSigned;
+
+  /// No description provided for @chatsPkiEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted to you only'**
+  String get chatsPkiEncrypted;
+
+  /// No description provided for @gateExcluded.
+  ///
+  /// In en, this message translates to:
+  /// **'Left out of this radio\'s firmware build'**
+  String get gateExcluded;
+
+  /// No description provided for @gateNoHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'This radio doesn\'t have the hardware for this'**
+  String get gateNoHardware;
+
+  /// No description provided for @formNewerValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Set by newer firmware (value {value}). Left unchanged.'**
+  String formNewerValue(String value);
+
+  /// No description provided for @omArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Covers {area} (dashed outline on the map). Outside it there are no offline tiles.'**
+  String omArea(String area);
+
+  /// No description provided for @omDamaged.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tiles in this file are damaged and will show blank.'**
+  String omDamaged(int count);
+
+  /// No description provided for @ikTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity key (separate backup)'**
+  String get ikTitle;
+
+  /// No description provided for @ikIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'The private key makes this radio the same node to everyone. Back it up to move your identity to a replacement radio. Keep it secret, and never put it on two radios that are on the air at once. Uses the password above.'**
+  String get ikIntro;
+
+  /// No description provided for @ikBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up identity key'**
+  String get ikBackup;
+
+  /// No description provided for @ikRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Put identity key on this radio'**
+  String get ikRestore;
+
+  /// No description provided for @ikText.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted identity key'**
+  String get ikText;
+
+  /// No description provided for @ikNeedsLock.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a screen lock on this phone first. The key is only shown or replaced after the phone confirms it\'s you.'**
+  String get ikNeedsLock;
+
+  /// No description provided for @ikAuthReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm it\'s you to use the radio\'s identity key'**
+  String get ikAuthReason;
+
+  /// No description provided for @ikAuthFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not confirmed. Nothing was read or changed.'**
+  String get ikAuthFailed;
+
+  /// No description provided for @ikReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity key backed up (fingerprint {fingerprint}). Copy the text and keep it somewhere safe.'**
+  String ikReady(String fingerprint);
+
+  /// No description provided for @ikRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity key put on this radio and confirmed by reading it back (fingerprint {fingerprint}). Contacts may need to see a new announcement before direct messages work.'**
+  String ikRestored(String fingerprint);
+
+  /// No description provided for @ikConfirmQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace this radio\'s identity?'**
+  String get ikConfirmQ;
+
+  /// No description provided for @ikConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Key {fingerprint}, backed up from {from}, will replace the key on {to}. The old key on this radio is lost unless you backed it up.'**
+  String ikConfirmBody(String fingerprint, String from, String to);
+
+  /// No description provided for @ikDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning: {nodes} on the mesh already uses this key. Turn that radio off for good first, or two radios will share one identity.'**
+  String ikDuplicate(String nodes);
+
+  /// No description provided for @ikNoKey.
+  ///
+  /// In en, this message translates to:
+  /// **'This radio has no key pair to back up. Its firmware may be too old or have public keys turned off.'**
+  String get ikNoKey;
+
+  /// No description provided for @ikMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The private and public keys don\'t belong together, so nothing was changed. The backup may be damaged.'**
+  String get ikMismatch;
+
+  /// No description provided for @ikNotApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'The radio didn\'t report the restored key afterwards. Check its security settings before relying on it.'**
+  String get ikNotApplied;
+
+  /// No description provided for @ikBadFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'That isn\'t an identity key backup.'**
+  String get ikBadFormat;
+
+  /// No description provided for @mlTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Map as a list'**
+  String get mlTitle;
+
+  /// No description provided for @mlIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything on the map in words, nearest first. Directions are from your radio\'s last position.'**
+  String get mlIntro;
+
+  /// No description provided for @mlNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get mlNodes;
+
+  /// No description provided for @mlWaypoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoints'**
+  String get mlWaypoints;
+
+  /// No description provided for @mlWeakAreas.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak coverage areas'**
+  String get mlWeakAreas;
+
+  /// No description provided for @mlWeakArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak signal area'**
+  String get mlWeakArea;
+
+  /// No description provided for @mlNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get mlNone;
+
+  /// No description provided for @mlNoOwnPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance unknown: your radio has no position'**
+  String get mlNoOwnPosition;
+
+  /// No description provided for @mlDistanceDir.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} {dir, select, n{north} ne{north-east} e{east} se{south-east} s{south} sw{south-west} w{west} nw{north-west} other{}}'**
+  String mlDistanceDir(String distance, String dir);
+
+  /// No description provided for @mlHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'heard {ago}'**
+  String mlHeard(String ago);
+
+  /// No description provided for @mlPositionAge.
+  ///
+  /// In en, this message translates to:
+  /// **'position from {ago}'**
+  String mlPositionAge(String ago);
+
+  /// No description provided for @mlReadings.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} readings, average SNR {snr} dB'**
+  String mlReadings(int count, String snr);
 }
 
 class _AppLocalizationsDelegate

@@ -282,9 +282,29 @@ class _ChatsPageState extends State<BastionChatsPage> {
   static const _reportAction = '\u0000report';
   static const _reactionChoices = ['👍', '❤️', '😂', '😮', '😢', '✅', '🙏'];
 
+  /// The delivery state, plus what the radio said about the receipt.
+  String _receiptLabel(BuildContext context, BastionChatMessage m) {
+    final base = _deliveryLabel(context, m.deliveryState);
+    if (m.deliveryState != BastionDeliveryState.delivered &&
+        m.ackProof != BastionAckProof.forged) {
+      return base;
+    }
+    return switch (m.ackProof) {
+      BastionAckProof.proven => l.deliveryProven,
+      BastionAckProof.noKey => l.deliveryNoKey,
+      BastionAckProof.unproven => l.deliveryUnproven,
+      BastionAckProof.forged => '$base • ${l.deliveryForged}',
+      null => base,
+    };
+  }
+
   /// How an incoming message got here: over the internet, directly, or
   /// through relays, naming the last relay when it can be worked out.
   String _pathSummary(BastionChatMessage m) {
+    if (m.replayed) {
+      final got = m.receivedAt;
+      return got == null ? l.chatsReplayedFull : '${l.chatsReplayedFull} ${l.chatsReplayedAt(_clock(got))}';
+    }
     if (m.viaMqtt) return l.chatsViaMqttFull;
     final hops = m.hops;
     if (hops == null) return l.chatsPathUnknown;
@@ -319,6 +339,16 @@ class _ChatsPageState extends State<BastionChatsPage> {
               ),
           ]),
           const Divider(),
+          if (message.direction == BastionMessageDirection.incoming &&
+              (message.signed || message.pkiEncrypted))
+            ListTile(
+              key: const ValueKey('chat-security'),
+              leading: const Icon(Icons.verified_user_outlined),
+              title: Text([
+                if (message.pkiEncrypted) l.chatsPkiEncrypted,
+                if (message.signed) l.chatsSigned,
+              ].join(' • ')),
+            ),
           if (message.deliveryState == BastionDeliveryState.held) ...[
             ListTile(
               key: const ValueKey('chat-held-explain'),
@@ -496,7 +526,8 @@ class _ChatsPageState extends State<BastionChatsPage> {
                   [
                     '$sender → $route',
                     // Heard over the internet, not over the air.
-                    if (message.viaMqtt) l.chatsViaMqtt
+                    if (message.replayed) l.chatsReplayed
+                    else if (message.viaMqtt) l.chatsViaMqtt
                     else if (_hopsLabel(context, message.hops) case final hops?) hops,
                   ].join(' • '),
                   style: type.labelMedium?.copyWith(color: mentioned ? scheme.onPrimaryContainer : scheme.onSurfaceVariant),
@@ -538,9 +569,21 @@ class _ChatsPageState extends State<BastionChatsPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: NxSpace.xxs),
                   child: Row(mainAxisSize: MainAxisSize.min, children: [
-                    Icon(_deliveryIcon(message.deliveryState), size: 14, color: statusColor),
+                    Icon(
+                      message.ackProof == BastionAckProof.forged
+                          ? Icons.gpp_bad_outlined
+                          : message.ackProof == BastionAckProof.proven
+                              ? Icons.verified_outlined
+                              : _deliveryIcon(message.deliveryState),
+                      size: 14,
+                      color: message.ackProof == BastionAckProof.forged ? scheme.error : statusColor,
+                    ),
                     const SizedBox(width: 4),
-                    Text(_deliveryLabel(context, message.deliveryState), style: type.labelMedium?.copyWith(color: statusColor)),
+                    Flexible(child: Text(
+                      _receiptLabel(context, message),
+                      style: type.labelMedium?.copyWith(
+                          color: message.ackProof == BastionAckProof.forged ? scheme.error : statusColor),
+                    )),
                   ]),
                 ),
             ])),

@@ -5794,4 +5794,183 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get chatsDeleteQueued => 'Löschen, ohne zu senden';
+
+  @override
+  String get chatsReplayed => 'aus dem Verlauf';
+
+  @override
+  String get chatsReplayedFull =>
+      'Aus dem Verlauf eines Store-and-Forward-Routers erneut gesendet: früher geschickt, nicht gerade eben.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Empfangen um $time.';
+  }
+
+  @override
+  String get deliveryProven => 'Zugestellt • Empfang bestätigt';
+
+  @override
+  String get deliveryUnproven => 'Zugestellt • Empfang nicht nachgewiesen';
+
+  @override
+  String get deliveryNoKey =>
+      'Zugestellt • Empfang nicht prüfbar (kein Schlüssel)';
+
+  @override
+  String get deliveryForged =>
+      'eine Empfangsbestätigung hat die Prüfung nicht bestanden und wurde ignoriert';
+
+  @override
+  String get chatsSigned =>
+      'Signatur des Absenders von deinem Funkgerät geprüft';
+
+  @override
+  String get chatsPkiEncrypted => 'Nur für dich verschlüsselt';
+
+  @override
+  String get gateExcluded =>
+      'In der Firmware dieses Funkgeräts nicht enthalten';
+
+  @override
+  String get gateNoHardware => 'Diesem Funkgerät fehlt die Hardware dafür';
+
+  @override
+  String formNewerValue(String value) {
+    return 'Von neuerer Firmware gesetzt (Wert $value). Bleibt unverändert.';
+  }
+
+  @override
+  String omArea(String area) {
+    return 'Deckt $area ab (gestrichelte Linie auf der Karte). Außerhalb gibt es keine Offline-Kacheln.';
+  }
+
+  @override
+  String omDamaged(int count) {
+    return '$count Kacheln in dieser Datei sind beschädigt und bleiben leer.';
+  }
+
+  @override
+  String get ikTitle => 'Identitätsschlüssel (eigene Sicherung)';
+
+  @override
+  String get ikIntro =>
+      'Der private Schlüssel macht dieses Funkgerät für alle zum selben Knoten. Sichere ihn, um deine Identität auf ein Ersatzgerät zu übertragen. Halte ihn geheim und nutze ihn nie auf zwei Funkgeräten gleichzeitig. Verwendet das Passwort oben.';
+
+  @override
+  String get ikBackup => 'Identitätsschlüssel sichern';
+
+  @override
+  String get ikRestore => 'Identitätsschlüssel auf dieses Funkgerät übertragen';
+
+  @override
+  String get ikText => 'Verschlüsselter Identitätsschlüssel';
+
+  @override
+  String get ikNeedsLock =>
+      'Richte zuerst eine Bildschirmsperre ein. Der Schlüssel wird nur gezeigt oder ersetzt, wenn das Telefon bestätigt, dass du es bist.';
+
+  @override
+  String get ikAuthReason =>
+      'Bestätige, dass du es bist, um den Identitätsschlüssel zu verwenden';
+
+  @override
+  String get ikAuthFailed =>
+      'Nicht bestätigt. Nichts wurde gelesen oder geändert.';
+
+  @override
+  String ikReady(String fingerprint) {
+    return 'Identitätsschlüssel gesichert (Fingerabdruck $fingerprint). Kopiere den Text und bewahre ihn sicher auf.';
+  }
+
+  @override
+  String ikRestored(String fingerprint) {
+    return 'Identitätsschlüssel übertragen und durch Zurücklesen bestätigt (Fingerabdruck $fingerprint). Kontakte brauchen eventuell eine neue Ankündigung, bevor Direktnachrichten funktionieren.';
+  }
+
+  @override
+  String get ikConfirmQ => 'Identität dieses Funkgeräts ersetzen?';
+
+  @override
+  String ikConfirmBody(String fingerprint, String from, String to) {
+    return 'Schlüssel $fingerprint, gesichert von $from, ersetzt den Schlüssel auf $to. Der alte Schlüssel geht verloren, wenn du ihn nicht gesichert hast.';
+  }
+
+  @override
+  String ikDuplicate(String nodes) {
+    return 'Warnung: $nodes im Mesh nutzt diesen Schlüssel bereits. Schalte dieses Funkgerät zuerst dauerhaft ab, sonst teilen sich zwei Geräte eine Identität.';
+  }
+
+  @override
+  String get ikNoKey =>
+      'Dieses Funkgerät hat kein Schlüsselpaar zum Sichern. Die Firmware ist vielleicht zu alt oder hat öffentliche Schlüssel abgeschaltet.';
+
+  @override
+  String get ikMismatch =>
+      'Privater und öffentlicher Schlüssel passen nicht zusammen, daher wurde nichts geändert. Die Sicherung ist vielleicht beschädigt.';
+
+  @override
+  String get ikNotApplied =>
+      'Das Funkgerät meldete danach nicht den wiederhergestellten Schlüssel. Prüfe die Sicherheitseinstellungen, bevor du dich darauf verlässt.';
+
+  @override
+  String get ikBadFormat =>
+      'Das ist keine Sicherung eines Identitätsschlüssels.';
+
+  @override
+  String get mlTitle => 'Karte als Liste';
+
+  @override
+  String get mlIntro =>
+      'Alles auf der Karte in Worten, das Nächste zuerst. Richtungen gelten ab der letzten Position deines Funkgeräts.';
+
+  @override
+  String get mlNodes => 'Knoten';
+
+  @override
+  String get mlWaypoints => 'Wegpunkte';
+
+  @override
+  String get mlWeakAreas => 'Bereiche mit schwachem Empfang';
+
+  @override
+  String get mlWeakArea => 'Bereich mit schwachem Signal';
+
+  @override
+  String get mlNone => 'Keine';
+
+  @override
+  String get mlNoOwnPosition =>
+      'Entfernung unbekannt: dein Funkgerät hat keine Position';
+
+  @override
+  String mlDistanceDir(String distance, String dir) {
+    String _temp0 = intl.Intl.selectLogic(dir, {
+      'n': 'Norden',
+      'ne': 'Nordosten',
+      'e': 'Osten',
+      'se': 'Südosten',
+      's': 'Süden',
+      'sw': 'Südwesten',
+      'w': 'Westen',
+      'nw': 'Nordwesten',
+      'other': '',
+    });
+    return '$distance $_temp0';
+  }
+
+  @override
+  String mlHeard(String ago) {
+    return 'gehört $ago';
+  }
+
+  @override
+  String mlPositionAge(String ago) {
+    return 'Position von $ago';
+  }
+
+  @override
+  String mlReadings(int count, String snr) {
+    return '$count Messungen, mittleres SNR $snr dB';
+  }
 }
