@@ -3854,6 +3854,145 @@
       }
     }
   },
+  "ldTitle": "Local mesh discovery",
+  "ldPlanOnly": "Plan only — scanning is not enabled. No radio settings are changed and no packets are transmitted.",
+  "ldPresets": "LoRa presets",
+  "ldListenPer": "Listen per preset: {minutes} minutes",
+  "@ldListenPer": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "ldSelectPreset": "Select at least one preset.",
+  "ldEstimate": "Estimated listening time: {minutes} minutes",
+  "@ldEstimate": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "ldStartScan": "Start scan (not yet available)",
+  "ldAlreadyHeard": "Already heard on connected radio",
+  "ldObserved": "{count} observed nodes — existing radio data only; no scan has started.",
+  "@ldObserved": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ldLastHeard": "Last heard: {date} {time}",
+  "@ldLastHeard": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "lpHeightRange": "Antenna heights must be between 0 and 300 m.",
+  "lpTerrainFailed": "Could not get terrain heights. Check your internet connection. ({error})",
+  "@lpTerrainFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "lpTitle": "Link planner",
+  "lpIntro": "Check whether two nodes can reach each other over the hills between them.",
+  "lpNeedPositions": "At least two nodes need a known position. Positions come from the mesh once a radio is connected.",
+  "lpLink": "Link",
+  "lpFrom": "From",
+  "lpTo": "To",
+  "lpFromAntenna": "From antenna (m above ground)",
+  "lpToAntenna": "To antenna (m above ground)",
+  "lpBand": "Frequency band",
+  "lpChecking": "Checking terrain…",
+  "lpCheck": "Check line of sight",
+  "lpPrivacy": "Terrain heights come from the Open-Meteo elevation service, which receives the points along this line. Needs internet.",
+  "lpResult": "Result",
+  "lpClearTitle": "Clear line of sight",
+  "lpMarginalTitle": "Line of sight, but close to the ground",
+  "lpBlockedTitle": "Blocked by terrain",
+  "lpClearBody": "The path clears the terrain with room to spare. This link should work if both radios are in range.",
+  "lpMarginalBody": "The ground comes close to the path, which weakens the signal. Raising an antenna a few metres may help.",
+  "lpBlockedBody": "Terrain is in the way about {distance} from the start. A relay on high ground or taller antennas may get around it.",
+  "@lpBlockedBody": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "lpDistance": "Distance",
+  "lpPathLoss": "Path loss",
+  "lpBlockedBy": "Blocked by",
+  "lpLowestClearance": "Lowest clearance",
+  "lpProfile": "Height profile",
+  "lpProfileLabel": "Height profile. Ground from {low} to {high} metres.",
+  "@lpProfileLabel": {
+    "placeholders": {
+      "low": {
+        "type": "int"
+      },
+      "high": {
+        "type": "int"
+      }
+    }
+  },
+  "lpProfileLegend": "Shaded: ground, including the curve of the earth. Line: the direct path between antennas.",
+  "lpEstimateNote": "This is an estimate from 90 m terrain data. Trees and buildings are not included.",
+  "mhGood": "Good",
+  "mhBusy": "Busy",
+  "mhOverloaded": "Overloaded",
+  "mhNotReported": "Not reported",
+  "mhTitle": "Mesh health",
+  "mhConnect": "Connect to a radio to see live readings. Figures below may be out of date.",
+  "mhNeedsRoom": "The mesh needs some room",
+  "mhPlentyRoom": "The channel has plenty of room. Messages should get through normally.",
+  "mhAirtime": "Airtime",
+  "mhChannelBusy": "Channel busy",
+  "mhChannelBusyHelp": "How much of the time anyone is transmitting, as your radio hears it.",
+  "mhYourTx": "Your transmit time",
+  "mhYourTxHelp": "Share of the last hour your radio spent sending. Many regions allow about 10%.",
+  "mhTraffic": "Traffic",
+  "mhMsgsHour": "Messages, last hour",
+  "mhMsgsDay": "Messages, last day",
+  "mhNodes": "Nodes",
+  "mhHeard2h": "Heard in last 2 h",
+  "mhQuiet": "Quiet longer",
+  "mhHopDistance": "Distance in hops",
+  "mhHopUnknown": "Unknown",
+  "mhHopDirect": "Direct",
+  "mhHops": "{count, plural, =1{1 hop} other{{count} hops}}",
+  "@mhHops": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mhLastSignal": "Signal of last packet",
+  "mhBusiest": "Busiest transmitters",
+  "mhYourRadio": "Your radio",
+  "mhFootnote": "Figures come from device telemetry that nodes send every so often, so they can lag a few minutes behind.",
+  "mhMarks": "Marks at {busy}% busy and {limit}% limit",
+  "@mhMarks": {
+    "placeholders": {
+      "busy": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "mtTitle": "Mesh tools",
   "mtLocalDiscovery": "Local mesh discovery",
   "mtRangeTest": "Range test",

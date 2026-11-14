@@ -1,3 +1,4 @@
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/link_planner_page.dart';
 import 'package:bastion/services/bastion_link_planner.dart';
 import 'package:bastion/services/meshtastic_node_database.dart';
@@ -77,7 +78,7 @@ void main() {
     tester.view.physicalSize = const Size(420, 1800);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(MaterialApp(home: LinkPlannerPage(radio: radio, elevation: elevation)));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: LinkPlannerPage(radio: radio, elevation: elevation)));
     await tester.pumpAndSettle();
     expect(find.text('No GPS'), findsNothing, reason: 'only nodes with a position can be picked');
     await tester.tap(find.text('To'));

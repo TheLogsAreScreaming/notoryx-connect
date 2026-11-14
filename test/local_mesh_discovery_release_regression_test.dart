@@ -1,10 +1,11 @@
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bastion/local_mesh_discovery_page.dart';
 
 void main() {
   testWidgets('discovery shows empty observed state without a radio', (tester) async {
-    await tester.pumpWidget(const MaterialApp(home: LocalMeshDiscoveryPage()));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: const LocalMeshDiscoveryPage()));
     await tester.scrollUntilVisible(
       find.text('Already heard on connected radio'), 200,
     );
@@ -16,7 +17,7 @@ void main() {
   });
 
   testWidgets('scan stays disabled after changing dwell time', (tester) async {
-    await tester.pumpWidget(const MaterialApp(home: LocalMeshDiscoveryPage()));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: const LocalMeshDiscoveryPage()));
     await tester.scrollUntilVisible(find.byType(Slider), 200);
     await tester.drag(find.byType(Slider), const Offset(100, 0));
     await tester.pump();

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/generated/app_localizations.dart';
+
 import 'services/bastion_mesh_health.dart';
 import 'services/bastion_telemetry_history.dart';
 import 'services/meshtastic_radio_coordinator.dart';
@@ -22,19 +24,20 @@ class MeshHealthPage extends StatelessWidget {
         HealthLevel.unknown => NxTone.neutral,
       };
 
-  static String wordOf(HealthLevel level) => switch (level) {
-        HealthLevel.good => 'Good',
-        HealthLevel.busy => 'Busy',
-        HealthLevel.overloaded => 'Overloaded',
-        HealthLevel.unknown => 'Not reported',
+  static String wordOf(AppLocalizations l, HealthLevel level) => switch (level) {
+        HealthLevel.good => l.mhGood,
+        HealthLevel.busy => l.mhBusy,
+        HealthLevel.overloaded => l.mhOverloaded,
+        HealthLevel.unknown => l.mhNotReported,
       };
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Mesh health')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).mhTitle)),
         body: AnimatedBuilder(
           animation: radio,
           builder: (context, _) {
+            final l = AppLocalizations.of(context);
             final h = MeshHealthSummary.of(
               nodes: radio.nodes,
               telemetry: radio.deviceTelemetry,
@@ -52,29 +55,29 @@ class MeshHealthPage extends StatelessWidget {
             final others = h.activeNodes + h.quietNodes;
             return ListView(padding: NxSpace.page, children: [
               if (!radio.isReady)
-                const NxBanner(message: 'Connect to a radio to see live readings. Figures below may be out of date.'),
+                NxBanner(message: l.mhConnect),
               if (h.advice case final advice?)
                 NxBanner(
                   tone: h.channelLevel == HealthLevel.overloaded || h.airtimeLevel == HealthLevel.overloaded
                       ? NxTone.danger
                       : NxTone.warning,
-                  title: 'The mesh needs some room',
+                  title: l.mhNeedsRoom,
                   message: advice,
                 )
               else if (h.channelLevel == HealthLevel.good)
-                const NxBanner(tone: NxTone.success, message: 'The channel has plenty of room. Messages should get through normally.'),
-              const NxSectionLabel('Airtime'),
+                NxBanner(tone: NxTone.success, message: l.mhPlentyRoom),
+              NxSectionLabel(l.mhAirtime),
               _Gauge(
-                label: 'Channel busy',
-                detail: 'How much of the time anyone is transmitting, as your radio hears it.',
+                label: l.mhChannelBusy,
+                detail: l.mhChannelBusyHelp,
                 value: h.channelUtilization,
                 level: h.channelLevel,
                 busy: MeshHealthSummary.busyChannel,
                 limit: MeshHealthSummary.overloadedChannel,
               ),
               _Gauge(
-                label: 'Your transmit time',
-                detail: 'Share of the last hour your radio spent sending. Many regions allow about 10%.',
+                label: l.mhYourTx,
+                detail: l.mhYourTxHelp,
                 value: h.airUtilTx,
                 level: h.airtimeLevel,
                 busy: MeshHealthSummary.busyAirtime,
@@ -85,31 +88,31 @@ class MeshHealthPage extends StatelessWidget {
                   metrics: airMetrics,
                   series: (m) => radio.telemetrySeries(local!, m),
                 ),
-              const NxSectionLabel('Traffic'),
+              NxSectionLabel(l.mhTraffic),
               NxStatRow(children: [
-                NxStatTile(label: 'Messages, last hour', value: '${h.messagesLastHour}'),
-                NxStatTile(label: 'Messages, last day', value: '${h.messagesLastDay}'),
+                NxStatTile(label: l.mhMsgsHour, value: '${h.messagesLastHour}'),
+                NxStatTile(label: l.mhMsgsDay, value: '${h.messagesLastDay}'),
               ]),
-              const NxSectionLabel('Nodes'),
+              NxSectionLabel(l.mhNodes),
               NxStatRow(children: [
-                NxStatTile(label: 'Heard in last 2 h', value: '${h.activeNodes}', tone: NxTone.success),
-                NxStatTile(label: 'Quiet longer', value: '${h.quietNodes}'),
+                NxStatTile(label: l.mhHeard2h, value: '${h.activeNodes}', tone: NxTone.success),
+                NxStatTile(label: l.mhQuiet, value: '${h.quietNodes}'),
               ]),
               if (others > 0) ...[
                 const SizedBox(height: NxSpace.xs),
                 Card(child: Padding(
                   padding: const EdgeInsets.all(NxSpace.md),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('Distance in hops', style: Theme.of(context).textTheme.titleSmall),
+                    Text(l.mhHopDistance, style: Theme.of(context).textTheme.titleSmall),
                     const SizedBox(height: NxSpace.xs),
                     for (final hop in (h.hops.keys.toList()..sort((a, b) => (a < 0 ? 99 : a).compareTo(b < 0 ? 99 : b))))
                       _Bar(
-                        label: hop < 0 ? 'Unknown' : hop == 0 ? 'Direct' : '$hop hop${hop == 1 ? '' : 's'}',
+                        label: hop < 0 ? l.mhHopUnknown : hop == 0 ? l.mhHopDirect : l.mhHops(hop),
                         count: h.hops[hop]!,
                         total: others,
                       ),
                     const SizedBox(height: NxSpace.sm),
-                    Text('Signal of last packet', style: Theme.of(context).textTheme.titleSmall),
+                    Text(l.mhLastSignal, style: Theme.of(context).textTheme.titleSmall),
                     const SizedBox(height: NxSpace.xs),
                     for (final b in SignalBucket.values)
                       if (h.signal[b] case final count?)
@@ -118,12 +121,12 @@ class MeshHealthPage extends StatelessWidget {
                 )),
               ],
               if (h.busiest.isNotEmpty) ...[
-                const NxSectionLabel('Busiest transmitters'),
+                NxSectionLabel(l.mhBusiest),
                 Card(child: Column(children: [
                   for (final (i, b) in h.busiest.indexed) ...[
                     if (i > 0) const Divider(indent: NxSpace.md),
                     ListTile(
-                      title: Text(b.node == local ? 'Your radio' : radio.nodeName(b.node)),
+                      title: Text(b.node == local ? l.mhYourRadio : radio.nodeName(b.node)),
                       trailing: Text('${b.airUtilTx.toStringAsFixed(1)}%',
                         style: Theme.of(context).textTheme.titleSmall),
                     ),
@@ -131,8 +134,7 @@ class MeshHealthPage extends StatelessWidget {
                 ])),
               ],
               const SizedBox(height: NxSpace.sm),
-              Text('Figures come from device telemetry that nodes send every so often, '
-                  'so they can lag a few minutes behind.', style: Theme.of(context).textTheme.bodySmall),
+              Text(l.mhFootnote, style: Theme.of(context).textTheme.bodySmall),
             ]);
           },
         ),
@@ -162,11 +164,12 @@ class _Gauge extends StatelessWidget {
     final tone = MeshHealthPage.toneOf(level);
     final color = NxStatusColors.of(context).strong(tone, scheme);
     final scale = limit * 1.5;
-    final shown = value == null ? 'Not reported' : '${value!.toStringAsFixed(1)}%';
+    final l = AppLocalizations.of(context);
+    final shown = value == null ? l.mhNotReported : '${value!.toStringAsFixed(1)}%';
     return Card(child: Padding(
       padding: const EdgeInsets.all(NxSpace.md),
       child: Semantics(
-        label: '$label: $shown, ${MeshHealthPage.wordOf(level)}',
+        label: '$label: $shown, ${MeshHealthPage.wordOf(l, level)}',
         excludeSemantics: true,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Wrap(alignment: WrapAlignment.spaceBetween, spacing: NxSpace.sm, children: [
@@ -191,9 +194,9 @@ class _Gauge extends StatelessWidget {
             Row(mainAxisSize: MainAxisSize.min, children: [
               Icon(NxBanner.iconFor(tone), size: 16, color: color),
               const SizedBox(width: NxSpace.xxs),
-              Text(MeshHealthPage.wordOf(level), style: type.labelMedium?.copyWith(color: color)),
+              Text(MeshHealthPage.wordOf(l, level), style: type.labelMedium?.copyWith(color: color)),
             ]),
-            Text('Marks at ${busy.toStringAsFixed(0)}% busy and ${limit.toStringAsFixed(0)}% limit',
+            Text(l.mhMarks(busy.toStringAsFixed(0), limit.toStringAsFixed(0)),
               style: type.bodySmall),
           ]),
           const SizedBox(height: NxSpace.xxs),
