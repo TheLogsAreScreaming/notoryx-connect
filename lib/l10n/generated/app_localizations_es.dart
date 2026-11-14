@@ -5774,6 +5774,37 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chatsDeleteQueued => 'Eliminar sin enviar';
 
   @override
+  String get chatsReplayed => 'del historial';
+
+  @override
+  String get chatsReplayedFull =>
+      'Reenviado desde el historial de un router de almacenamiento y reenvío: se envió antes, no ahora.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Recibido a las $time.';
+  }
+
+  @override
+  String get deliveryProven => 'Entregado • recibo verificado';
+
+  @override
+  String get deliveryUnproven => 'Entregado • recibo sin verificar';
+
+  @override
+  String get deliveryNoKey =>
+      'Entregado • no se pudo comprobar el recibo (sin clave)';
+
+  @override
+  String get deliveryForged => 'un recibo no pasó la comprobación y se ignoró';
+
+  @override
+  String get chatsSigned => 'Tu radio comprobó la firma del remitente';
+
+  @override
+  String get chatsPkiEncrypted => 'Cifrado solo para ti';
+
+  @override
   String get gateExcluded => 'No incluido en el firmware de esta radio';
 
   @override

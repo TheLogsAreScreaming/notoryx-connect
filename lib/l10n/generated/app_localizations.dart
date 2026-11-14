@@ -9487,6 +9487,60 @@ abstract class AppLocalizations {
   /// **'Delete without sending'**
   String get chatsDeleteQueued;
 
+  /// No description provided for @chatsReplayed.
+  ///
+  /// In en, this message translates to:
+  /// **'from history'**
+  String get chatsReplayed;
+
+  /// No description provided for @chatsReplayedFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Replayed from a store-and-forward router\'s history: sent earlier, not just now.'**
+  String get chatsReplayedFull;
+
+  /// No description provided for @chatsReplayedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Received {time}.'**
+  String chatsReplayedAt(String time);
+
+  /// No description provided for @deliveryProven.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered • receipt proven'**
+  String get deliveryProven;
+
+  /// No description provided for @deliveryUnproven.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered • receipt not proven'**
+  String get deliveryUnproven;
+
+  /// No description provided for @deliveryNoKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered • receipt couldn\'t be checked (no key)'**
+  String get deliveryNoKey;
+
+  /// No description provided for @deliveryForged.
+  ///
+  /// In en, this message translates to:
+  /// **'a receipt failed its check and was ignored'**
+  String get deliveryForged;
+
+  /// No description provided for @chatsSigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Sender\'s signature checked by your radio'**
+  String get chatsSigned;
+
+  /// No description provided for @chatsPkiEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted to you only'**
+  String get chatsPkiEncrypted;
+
   /// No description provided for @gateExcluded.
   ///
   /// In en, this message translates to:

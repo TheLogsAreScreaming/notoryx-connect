@@ -1812,6 +1812,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   void _alertIncoming(MeshtasticTextMessage message) {
+    // A replay from a store-and-forward router is history: it shows in the
+    // chat marked as such, but never alerts, speaks or relays by SMS, so an
+    // old SOS can't look like a new emergency.
+    if (message.replayed) return;
     if (filters.isSilenced(message.from) || filters.matchesWord(message.text)) return;
     if (BastionSmsRelay.available && !message.isReaction) unawaited(_relaySms(message));
     String sender = '!${message.from.toRadixString(16).padLeft(8, '0')}';

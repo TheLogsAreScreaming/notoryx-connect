@@ -5734,6 +5734,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatsDeleteQueued => 'Delete without sending';
 
   @override
+  String get chatsReplayed => 'from history';
+
+  @override
+  String get chatsReplayedFull =>
+      'Replayed from a store-and-forward router\'s history: sent earlier, not just now.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Received $time.';
+  }
+
+  @override
+  String get deliveryProven => 'Delivered • receipt proven';
+
+  @override
+  String get deliveryUnproven => 'Delivered • receipt not proven';
+
+  @override
+  String get deliveryNoKey =>
+      'Delivered • receipt couldn\'t be checked (no key)';
+
+  @override
+  String get deliveryForged => 'a receipt failed its check and was ignored';
+
+  @override
+  String get chatsSigned => 'Sender\'s signature checked by your radio';
+
+  @override
+  String get chatsPkiEncrypted => 'Encrypted to you only';
+
+  @override
   String get gateExcluded => 'Left out of this radio\'s firmware build';
 
   @override
