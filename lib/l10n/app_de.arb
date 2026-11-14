@@ -216,6 +216,7 @@
   "nodesRadio": "Funkgerät",
   "nodesOverUsb": "Über USB",
   "nodesOverWifi": "Über WLAN",
+  "nodesOverBluetooth": "Über Bluetooth",
   "nodesConnectWifi": "Über WLAN verbinden",
   "nodesConnectUsb": "Über USB verbinden",
   "nodesNoRadios": "Noch keine Funkgeräte gefunden",

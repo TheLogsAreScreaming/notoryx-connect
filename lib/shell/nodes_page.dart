@@ -171,12 +171,17 @@ class _NodesPage extends StatelessWidget {
             label: Text(l.toolsScan),
           ),
         const SizedBox(height: NxSpace.xs),
-        if ((radio.usesNetworkLink || radio.usesUsbLink) && (radio.isReady || radio.isReconnecting || radio.busy))
-          Card(child: ListTile(
-            leading: Icon(radio.usesUsbLink ? Icons.usb : Icons.wifi),
-            title: Text((radio.usesUsbLink ? radio.linkName : radio.networkHost) ?? l.nodesRadio),
-            subtitle: Text('${radio.usesUsbLink ? l.nodesOverUsb : l.nodesOverWifi} • ${_connectionLabel(context, radio.connection.state)}'),
+        // Every link type (Bluetooth too) gets a connected-radio card with a
+        // Disconnect button, so it never depends on the radio showing up in
+        // the scan list (it doesn't after an auto-reconnect at launch).
+        if ((radio.usesNetworkLink || radio.usesUsbLink || radio.connection.deviceName != null) &&
+            (radio.isReady || radio.isReconnecting || radio.busy))
+          Card(key: const ValueKey('connected-radio-card'), child: ListTile(
+            leading: Icon(radio.usesUsbLink ? Icons.usb : radio.usesNetworkLink ? Icons.wifi : Icons.bluetooth_connected),
+            title: Text((radio.usesUsbLink ? radio.linkName : radio.usesNetworkLink ? radio.networkHost : radio.connection.deviceName) ?? l.nodesRadio),
+            subtitle: Text('${radio.usesUsbLink ? l.nodesOverUsb : radio.usesNetworkLink ? l.nodesOverWifi : l.nodesOverBluetooth} • ${_connectionLabel(context, radio.connection.state)}'),
             trailing: OutlinedButton(
+              key: const ValueKey('disconnect-radio'),
               onPressed: radio.busy ? null : radio.disconnect,
               child: Text(l.commonDisconnect, maxLines: 1, softWrap: false),
             ),

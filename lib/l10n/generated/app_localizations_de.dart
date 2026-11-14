@@ -826,6 +826,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get nodesOverWifi => 'Über WLAN';
 
   @override
+  String get nodesOverBluetooth => 'Über Bluetooth';
+
+  @override
   String get nodesConnectWifi => 'Über WLAN verbinden';
 
   @override

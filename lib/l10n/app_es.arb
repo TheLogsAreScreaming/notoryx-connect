@@ -216,6 +216,7 @@
   "nodesRadio": "Radio",
   "nodesOverUsb": "Por USB",
   "nodesOverWifi": "Por Wi-Fi",
+  "nodesOverBluetooth": "Por Bluetooth",
   "nodesConnectWifi": "Conectar por Wi-Fi",
   "nodesConnectUsb": "Conectar por USB",
   "nodesNoRadios": "Aún no se han encontrado radios",
