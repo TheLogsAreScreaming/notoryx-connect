@@ -4768,4 +4768,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Teilen konnte nicht geöffnet werden.';
+
+  @override
+  String nodesLookalike(String name) {
+    return 'Name ähnelt $name';
+  }
+
+  @override
+  String chatsLookalikeBody(String name, String trusted) {
+    return '$name ist ein anderes Funkgerät als $trusted, aber der Name sieht fast gleich aus. Jeder kann jeden Namen wählen, also frag beim Besitzer von $trusted nach, bevor du ihm vertraust.';
+  }
 }

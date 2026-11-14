@@ -4713,4 +4713,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Couldn\'t open the share sheet.';
+
+  @override
+  String nodesLookalike(String name) {
+    return 'Name looks like $name';
+  }
+
+  @override
+  String chatsLookalikeBody(String name, String trusted) {
+    return '$name is a different radio from $trusted, but its name looks almost the same. Anyone can pick any name, so check with $trusted\'s owner before trusting it.';
+  }
 }

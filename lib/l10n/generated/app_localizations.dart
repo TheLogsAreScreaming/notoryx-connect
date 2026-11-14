@@ -7842,6 +7842,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t open the share sheet.'**
   String get clExportFailed;
+
+  /// No description provided for @nodesLookalike.
+  ///
+  /// In en, this message translates to:
+  /// **'Name looks like {name}'**
+  String nodesLookalike(String name);
+
+  /// No description provided for @chatsLookalikeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is a different radio from {trusted}, but its name looks almost the same. Anyone can pick any name, so check with {trusted}\'s owner before trusting it.'**
+  String chatsLookalikeBody(String name, String trusted);
 }
 
 class _AppLocalizationsDelegate

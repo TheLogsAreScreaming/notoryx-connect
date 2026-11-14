@@ -601,6 +601,14 @@ class _ChatsPageState extends State<BastionChatsPage> {
               title: l.chatsKeyChanged,
               message: l.chatsKeyChangedBody(_nodeName(destination)),
             ),
+          if (destination != 0xffffffff)
+            if (widget.radio.lookalikeOf(destination) case final like?)
+              NxBanner(
+                tone: NxTone.warning,
+                icon: Icons.content_copy_outlined,
+                title: l.nodesLookalike(_nodeName(like)),
+                message: l.chatsLookalikeBody(_nodeName(destination), _nodeName(like)),
+              ),
           Card(child: Padding(
             padding: const EdgeInsets.all(NxSpace.md),
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

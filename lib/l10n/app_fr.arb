@@ -1287,5 +1287,7 @@
   "clExport": "Exporter l'historique",
   "clExportCsv": "Tableur (CSV)",
   "clExportJson": "Fichier de données (JSON)",
-  "clExportFailed": "Impossible d'ouvrir le partage."
+  "clExportFailed": "Impossible d'ouvrir le partage.",
+  "nodesLookalike": "Nom proche de {name}",
+  "chatsLookalikeBody": "{name} est une autre radio que {trusted}, mais son nom est presque identique. N'importe qui peut choisir n'importe quel nom : vérifiez auprès du propriétaire de {trusted} avant de lui faire confiance."
 }

@@ -1287,5 +1287,7 @@
   "clExport": "Exportar registro",
   "clExportCsv": "Hoja de cálculo (CSV)",
   "clExportJson": "Archivo de datos (JSON)",
-  "clExportFailed": "No se pudo abrir el menú de compartir."
+  "clExportFailed": "No se pudo abrir el menú de compartir.",
+  "nodesLookalike": "Nombre parecido a {name}",
+  "chatsLookalikeBody": "{name} es una radio distinta de {trusted}, pero su nombre es casi igual. Cualquiera puede elegir cualquier nombre, así que consulta con el dueño de {trusted} antes de confiar."
 }
