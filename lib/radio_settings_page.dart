@@ -155,8 +155,15 @@ class RadioSettingsPage extends StatelessWidget {
     FeatureGate gate = FeatureGate.unknown,
   }) => Card(
     child: ListTile(
-      leading: Icon(icon),
-      title: Text(title),
+      // The app theme sets list colours, so a disabled tile would otherwise
+      // look the same as one that opens: soften the icon and name, and show
+      // a "not available" mark instead of the arrow.
+      leading: Icon(icon,
+          color: gate.unavailable ? Theme.of(context).colorScheme.onSurfaceVariant : null),
+      title: Text(title,
+          style: gate.unavailable
+              ? TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)
+              : null),
       // A section the radio said it can't use is shown with the reason
       // and can't be opened, so its settings are never written.
       subtitle: Text(switch (gate.reason) {
@@ -166,7 +173,9 @@ class RadioSettingsPage extends StatelessWidget {
           _l(context).gateNoHardware,
         _ => detail,
       }),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: gate.unavailable
+          ? Icon(Icons.block, color: Theme.of(context).colorScheme.onSurfaceVariant)
+          : const Icon(Icons.chevron_right),
       enabled: radio.canAdminister && !gate.unavailable,
       onTap: () =>
           Navigator.of(context)
