@@ -5772,4 +5772,69 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chatsDeleteQueued => 'Eliminar sin enviar';
+
+  @override
+  String get ikTitle => 'Clave de identidad (copia aparte)';
+
+  @override
+  String get ikIntro =>
+      'La clave privada hace que esta radio sea el mismo nodo para todos. Haz una copia para llevar tu identidad a una radio de reemplazo. Mantenla en secreto y nunca la pongas en dos radios activas a la vez. Usa la contraseña de arriba.';
+
+  @override
+  String get ikBackup => 'Copiar la clave de identidad';
+
+  @override
+  String get ikRestore => 'Poner la clave de identidad en esta radio';
+
+  @override
+  String get ikText => 'Clave de identidad cifrada';
+
+  @override
+  String get ikNeedsLock =>
+      'Primero configura un bloqueo de pantalla. La clave solo se muestra o reemplaza cuando el teléfono confirma que eres tú.';
+
+  @override
+  String get ikAuthReason =>
+      'Confirma que eres tú para usar la clave de identidad de la radio';
+
+  @override
+  String get ikAuthFailed => 'No confirmado. No se leyó ni cambió nada.';
+
+  @override
+  String ikReady(String fingerprint) {
+    return 'Clave de identidad copiada (huella $fingerprint). Copia el texto y guárdalo en un lugar seguro.';
+  }
+
+  @override
+  String ikRestored(String fingerprint) {
+    return 'Clave de identidad puesta en esta radio y confirmada al leerla (huella $fingerprint). Puede que los contactos necesiten un nuevo anuncio antes de que funcionen los mensajes directos.';
+  }
+
+  @override
+  String get ikConfirmQ => '¿Reemplazar la identidad de esta radio?';
+
+  @override
+  String ikConfirmBody(String fingerprint, String from, String to) {
+    return 'La clave $fingerprint, copiada de $from, reemplazará la clave de $to. La clave anterior se pierde si no hiciste copia.';
+  }
+
+  @override
+  String ikDuplicate(String nodes) {
+    return 'Aviso: $nodes en la malla ya usa esta clave. Apaga esa radio definitivamente primero, o dos radios compartirán una identidad.';
+  }
+
+  @override
+  String get ikNoKey =>
+      'Esta radio no tiene un par de claves que copiar. Su firmware puede ser demasiado antiguo o tener las claves públicas desactivadas.';
+
+  @override
+  String get ikMismatch =>
+      'Las claves privada y pública no se corresponden, así que no se cambió nada. La copia puede estar dañada.';
+
+  @override
+  String get ikNotApplied =>
+      'La radio no informó la clave restaurada después. Revisa su configuración de seguridad antes de confiar en ella.';
+
+  @override
+  String get ikBadFormat => 'Eso no es una copia de la clave de identidad.';
 }
