@@ -60,7 +60,9 @@ class MqttProxyConfig {
     final isDefault = mqtt.address.trim().isEmpty;
     final address = isDefault ? defaultHost : mqtt.address.trim();
     final colon = address.lastIndexOf(':');
-    final parsedPort = colon > 0 ? int.tryParse(address.substring(colon + 1)) : null;
+    final parsedPort = colon > 0
+        ? int.tryParse(address.substring(colon + 1))
+        : null;
     final tls = mqtt.tlsEnabled;
     final root = mqtt.root.trim().isEmpty ? 'msh' : mqtt.root.trim();
     return MqttProxyConfig(
@@ -69,17 +71,23 @@ class MqttProxyConfig {
       tls: tls,
       root: root,
       // The firmware's public defaults, used only for its default broker.
-      username: mqtt.username.isNotEmpty ? mqtt.username : (isDefault ? 'meshdev' : null),
-      password: mqtt.password.isNotEmpty ? mqtt.password : (isDefault ? 'large4cats' : null),
+      username: mqtt.username.isNotEmpty
+          ? mqtt.username
+          : (isDefault ? 'meshdev' : null),
+      password: mqtt.password.isNotEmpty
+          ? mqtt.password
+          : (isDefault ? 'large4cats' : null),
       topics: [
         for (final c in channels)
-          if (c.downlinkEnabled) '$root/2/e/${c.name.isEmpty ? presetName : c.name}/+',
+          if (c.downlinkEnabled)
+            '$root/2/e/${c.name.isEmpty ? presetName : c.name}/+',
       ],
     );
   }
 
   /// A modem preset's channel name, such as "LongFast".
-  static String presetChannelName(Config_LoRaConfig_ModemPreset preset) => switch (preset) {
+  static String presetChannelName(Config_LoRaConfig_ModemPreset preset) =>
+      switch (preset) {
         Config_LoRaConfig_ModemPreset.LONG_SLOW => 'LongSlow',
         Config_LoRaConfig_ModemPreset.VERY_LONG_SLOW => 'VLongSlow',
         Config_LoRaConfig_ModemPreset.MEDIUM_SLOW => 'MediumSlow',
@@ -100,7 +108,8 @@ enum MqttProxyState { off, connecting, connected, error }
 /// and the app's own setting are on. Credentials come from the radio and
 /// are held only in memory.
 class BastionMqttProxy extends ChangeNotifier {
-  BastionMqttProxy({required this.sendToRadio, MqttLink Function()? link}) : _newLink = link ?? ServerMqttLink.new;
+  BastionMqttProxy({required this.sendToRadio, MqttLink Function()? link})
+    : _newLink = link ?? ServerMqttLink.new;
 
   final Future<void> Function(Uint8List toRadio) sendToRadio;
   final MqttLink Function() _newLink;
@@ -139,7 +148,7 @@ class BastionMqttProxy extends ChangeNotifier {
     try {
       await link.connect(config, clientId);
       if (_link != link) return;
-      _subscription = link.messages.listen(_fromBroker);
+      _subscription = link.messages.listen(_fromBroker, onError: _linkError);
       for (final topic in config.topics) {
         link.subscribe(topic);
       }
@@ -175,7 +184,9 @@ class BastionMqttProxy extends ChangeNotifier {
     if (link == null || _state != MqttProxyState.connected) return;
     try {
       final m = pb.MqttClientProxyMessage.fromBuffer(payload);
-      final data = m.hasText() ? Uint8List.fromList(utf8.encode(m.text)) : Uint8List.fromList(m.data);
+      final data = m.hasText()
+          ? Uint8List.fromList(utf8.encode(m.text))
+          : Uint8List.fromList(m.data);
       link.publish(m.topic, data, retained: m.retained);
       _up++;
       _bytes += data.length;
@@ -186,17 +197,31 @@ class BastionMqttProxy extends ChangeNotifier {
     }
   }
 
+  /// The broker connection hit a problem after it was up; the client keeps
+  /// reconnecting on its own, so this only reports it.
+  void _linkError(Object error) {
+    if (_link == null) return;
+    _error = 'Connection to $_host dropped: $error';
+    notifyListeners();
+  }
+
   void _fromBroker(MqttIncoming m) {
     _down++;
     _bytes += m.data.length;
     notifyListeners();
     final envelope = pb.ToRadio(
-      mqttClientProxyMessage: pb.MqttClientProxyMessage(topic: m.topic, data: m.data, retained: m.retained),
+      mqttClientProxyMessage: pb.MqttClientProxyMessage(
+        topic: m.topic,
+        data: m.data,
+        retained: m.retained,
+      ),
     ).writeToBuffer();
-    unawaited(sendToRadio(Uint8List.fromList(envelope)).catchError((Object error) {
-      _error = 'A message couldn\'t be passed to the radio: $error';
-      notifyListeners();
-    }));
+    unawaited(
+      sendToRadio(Uint8List.fromList(envelope)).catchError((Object error) {
+        _error = 'A message couldn\'t be passed to the radio: $error';
+        notifyListeners();
+      }),
+    );
   }
 
   @override
@@ -216,14 +241,39 @@ class ServerMqttLink implements MqttLink {
   Stream<MqttIncoming> get messages => _incoming.stream;
 
   @override
-  Future<void> connect(MqttProxyConfig config, String clientId) async {
+  Future<void> connect(MqttProxyConfig config, String clientId) {
+    // The client keeps its socket and auto-reconnect work in the zone it was
+    // connected from. Errors there (a dropped socket, "Software caused
+    // connection abort") have no caller to land on, so this zone catches them:
+    // they fail the connect while it is pending, and later reach listeners of
+    // [messages] as stream errors instead of crashing as unhandled.
+    final done = Completer<void>();
+    runZonedGuarded(
+      () async {
+        await _connect(config, clientId);
+        if (!done.isCompleted) done.complete();
+      },
+      (error, stack) {
+        if (!done.isCompleted) {
+          done.completeError(error, stack);
+        } else if (!_incoming.isClosed) {
+          _incoming.addError(error, stack);
+        }
+      },
+    );
+    return done.future;
+  }
+
+  Future<void> _connect(MqttProxyConfig config, String clientId) async {
     final client = MqttServerClient.withPort(config.host, clientId, config.port)
       ..secure = config.tls
       ..keepAlivePeriod = 30
       ..autoReconnect = true
       ..logging(on: false)
       ..setProtocolV311()
-      ..connectionMessage = MqttConnectMessage().withClientIdentifier(clientId).startClean();
+      ..connectionMessage = MqttConnectMessage()
+          .withClientIdentifier(clientId)
+          .startClean();
     _client = client;
     final status = await client.connect(config.username, config.password);
     if (status?.state != MqttConnectionState.connected) {
@@ -245,12 +295,18 @@ class ServerMqttLink implements MqttLink {
   }
 
   @override
-  void subscribe(String topic) => _client?.subscribe(topic, MqttQos.atLeastOnce);
+  void subscribe(String topic) =>
+      _client?.subscribe(topic, MqttQos.atLeastOnce);
 
   @override
   void publish(String topic, Uint8List data, {required bool retained}) {
     final buffer = Uint8Buffer()..addAll(data);
-    _client?.publishMessage(topic, MqttQos.atLeastOnce, buffer, retain: retained);
+    _client?.publishMessage(
+      topic,
+      MqttQos.atLeastOnce,
+      buffer,
+      retain: retained,
+    );
   }
 
   @override
@@ -258,6 +314,6 @@ class ServerMqttLink implements MqttLink {
     await _updates?.cancel();
     _client?.disconnect();
     _client = null;
-    await _incoming.close();
+    if (!_incoming.isClosed) await _incoming.close();
   }
 }
