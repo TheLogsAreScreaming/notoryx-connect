@@ -127,6 +127,7 @@
   "chatsMessageChannel": "Mensaje al canal {n}",
   "chatsMessageNode": "Mensaje para {name}",
   "chatsSend": "Enviar",
+  "chatsAirtime": "{used}/{max} · ≈{seconds} s en el aire",
   "chatsQuickReplies": "Respuestas rápidas",
   "chatsMessages": "Mensajes",
   "chatsHoldHint": "Mantén pulsado un mensaje para ver más",

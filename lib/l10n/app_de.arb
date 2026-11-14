@@ -127,6 +127,7 @@
   "chatsMessageChannel": "Nachricht an Kanal {n}",
   "chatsMessageNode": "Nachricht an {name}",
   "chatsSend": "Senden",
+  "chatsAirtime": "{used}/{max} · ≈{seconds} s Sendezeit",
   "chatsQuickReplies": "Schnellantworten",
   "chatsMessages": "Nachrichten",
   "chatsHoldHint": "Nachricht gedrückt halten für mehr",

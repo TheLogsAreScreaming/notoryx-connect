@@ -328,6 +328,21 @@
     }
   },
   "chatsSend": "Send",
+  "chatsAirtime": "{used}/{max} · ≈{seconds} s on air",
+  "@chatsAirtime": {
+    "description": "Counter under the message box: bytes used, the limit, and the estimated transmit time.",
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
   "chatsQuickReplies": "Quick replies",
   "chatsMessages": "Messages",
   "chatsHoldHint": "Hold a message for more",
