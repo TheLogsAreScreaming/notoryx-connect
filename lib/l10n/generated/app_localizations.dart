@@ -1398,6 +1398,12 @@ abstract class AppLocalizations {
   /// **'Over Wi-Fi'**
   String get nodesOverWifi;
 
+  /// No description provided for @nodesOverBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Over Bluetooth'**
+  String get nodesOverBluetooth;
+
   /// No description provided for @nodesConnectWifi.
   ///
   /// In en, this message translates to:
