@@ -283,7 +283,13 @@ class _NodesPage extends StatelessWidget {
                 trailing: radio.nodeKeys.hasChanged(node.num)
                     ? Tooltip(message: l.chatsKeyChanged,
                         child: Icon(Icons.gpp_maybe_outlined, color: scheme.error, semanticLabel: l.chatsKeyChanged))
-                    : const Icon(Icons.chevron_right),
+                    : switch (radio.lookalikeOf(node.num)) {
+                        final like? => Tooltip(
+                            message: l.nodesLookalike(radio.nodeName(like)),
+                            child: Icon(Icons.content_copy_outlined, color: scheme.error,
+                                semanticLabel: l.nodesLookalike(radio.nodeName(like)))),
+                        null => const Icon(Icons.chevron_right),
+                      },
                 onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
                   builder: (_) => NodeDetailPage(radio: radio, nodeNum: node.num),
                 )),

@@ -492,6 +492,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get chatsSend => 'Senden';
 
   @override
+  String chatsAirtime(int used, int max, String seconds) {
+    return '$used/$max · ≈$seconds s Sendezeit';
+  }
+
+  @override
   String get chatsQuickReplies => 'Schnellantworten';
 
   @override
@@ -1384,6 +1389,48 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mapZones => 'Zonen';
+
+  @override
+  String get mapLayers => 'Kartenebenen';
+
+  @override
+  String get mapLayersHelp =>
+      'Routen, Tracks und Orte aus GPX-, KML- oder GeoJSON-Dateien. Sie bleiben auf diesem Telefon und werden nie über das Mesh gesendet.';
+
+  @override
+  String get mapLayersEmpty => 'Noch keine Kartendateien importiert.';
+
+  @override
+  String get mapLayerImport => 'GPX, KML oder GeoJSON importieren';
+
+  @override
+  String get mapLayerUnreadable =>
+      'Diese Datei enthält keine lesbaren Punkte oder Linien.';
+
+  @override
+  String mapLayerCounts(int points, int lines) {
+    return '$points Orte, $lines Linien';
+  }
+
+  @override
+  String mapLayerRemove(String name) {
+    return '$name entfernen';
+  }
+
+  @override
+  String mapLayerAdded(String name, int points, int lines) {
+    return '$name hinzugefügt: $points Orte, $lines Linien';
+  }
+
+  @override
+  String mapLayerTooMany(int max) {
+    return 'Du kannst bis zu $max Kartenebenen behalten. Entferne zuerst eine.';
+  }
+
+  @override
+  String mapLayerFrom(String name) {
+    return 'Aus $name';
+  }
 
   @override
   String get mapExportGpx => 'Als GPX exportieren';
@@ -4721,6 +4768,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Teilen konnte nicht geöffnet werden.';
+
+  @override
+  String nodesLookalike(String name) {
+    return 'Name ähnelt $name';
+  }
+
+  @override
+  String chatsLookalikeBody(String name, String trusted) {
+    return '$name ist ein anderes Funkgerät als $trusted, aber der Name sieht fast gleich aus. Jeder kann jeden Namen wählen, also frag beim Besitzer von $trusted nach, bevor du ihm vertraust.';
+  }
 
   @override
   String get ldTitle => 'Lokale Mesh-Suche';

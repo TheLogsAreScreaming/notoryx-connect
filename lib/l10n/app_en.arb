@@ -328,6 +328,21 @@
     }
   },
   "chatsSend": "Send",
+  "chatsAirtime": "{used}/{max} · ≈{seconds} s on air",
+  "@chatsAirtime": {
+    "description": "Counter under the message box: bytes used, the limit, and the estimated transmit time.",
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
   "chatsQuickReplies": "Quick replies",
   "chatsMessages": "Messages",
   "chatsHoldHint": "Hold a message for more",
@@ -919,6 +934,60 @@
   "mapRallyRoutes": "Rally points & routes",
   "mapTeam": "Team",
   "mapZones": "Zones",
+  "mapLayers": "Map layers",
+  "mapLayersHelp": "Routes, tracks and places from GPX, KML or GeoJSON files. They stay on this phone and are never sent over the mesh.",
+  "mapLayersEmpty": "No map files imported yet.",
+  "mapLayerImport": "Import GPX, KML or GeoJSON",
+  "mapLayerUnreadable": "That file has no points or lines the app can read.",
+  "mapLayerCounts": "{points} places, {lines} lines",
+  "@mapLayerCounts": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      },
+      "lines": {
+        "type": "int"
+      }
+    }
+  },
+  "mapLayerRemove": "Remove {name}",
+  "@mapLayerRemove": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mapLayerAdded": "Added {name}: {points} places, {lines} lines",
+  "@mapLayerAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "points": {
+        "type": "int"
+      },
+      "lines": {
+        "type": "int"
+      }
+    }
+  },
+  "mapLayerTooMany": "You can keep up to {max} map layers. Remove one first.",
+  "@mapLayerTooMany": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "mapLayerFrom": "From {name}",
+  "@mapLayerFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "mapExportGpx": "Export GPX",
   "mapHideTrails": "Hide trails",
   "mapShowTrails": "Show trails",
@@ -3270,6 +3339,25 @@
   "clExportCsv": "Spreadsheet (CSV)",
   "clExportJson": "Data file (JSON)",
   "clExportFailed": "Couldn't open the share sheet.",
+  "nodesLookalike": "Name looks like {name}",
+  "@nodesLookalike": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsLookalikeBody": "{name} is a different radio from {trusted}, but its name looks almost the same. Anyone can pick any name, so check with {trusted}'s owner before trusting it.",
+  "@chatsLookalikeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "trusted": {
+        "type": "String"
+      }
+    }
+  },
   "ldTitle": "Local mesh discovery",
   "ldPlanOnly": "Plan only — scanning is not enabled. No radio settings are changed and no packets are transmitted.",
   "ldPresets": "LoRa presets",

@@ -221,6 +221,24 @@ class _ChatsPageState extends State<BastionChatsPage> {
 
   static const _draftsKey = 'bastion.drafts.v1';
 
+  Widget? _airtimeCounter(BuildContext context, int length, int max) {
+    if (length == 0) return null;
+    final l = AppLocalizations.of(context);
+    final style = Theme.of(context).textTheme.bodySmall?.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        );
+    final lora = widget.radio.loraConfig;
+    final params = lora == null ? null : BastionAirtime.fromConfig(lora);
+    if (params == null) return Text('$length/$max', style: style);
+    final bytes = utf8.encode(composer.text).length;
+    final seconds = BastionAirtime.textMessage(bytes, params).inMicroseconds / 1e6;
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    return Text(
+      l.chatsAirtime(length, max, NumberFormat('0.0', locale).format(seconds)),
+      style: style,
+    );
+  }
+
   void _saveDraft() {
     final text = composer.text;
     if (text.trim().isEmpty) {
@@ -583,6 +601,14 @@ class _ChatsPageState extends State<BastionChatsPage> {
               title: l.chatsKeyChanged,
               message: l.chatsKeyChangedBody(_nodeName(destination)),
             ),
+          if (destination != 0xffffffff)
+            if (widget.radio.lookalikeOf(destination) case final like?)
+              NxBanner(
+                tone: NxTone.warning,
+                icon: Icons.content_copy_outlined,
+                title: l.nodesLookalike(_nodeName(like)),
+                message: l.chatsLookalikeBody(_nodeName(destination), _nodeName(like)),
+              ),
           Card(child: Padding(
             padding: const EdgeInsets.all(NxSpace.md),
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -627,6 +653,8 @@ class _ChatsPageState extends State<BastionChatsPage> {
               TextField(
                 controller: composer,
                 maxLength: 228,
+                buildCounter: (context, {required currentLength, required isFocused, maxLength}) =>
+                    _airtimeCounter(context, currentLength, maxLength ?? 228),
                 minLines: 1,
                 maxLines: 4,
                 textCapitalization: TextCapitalization.sentences,
