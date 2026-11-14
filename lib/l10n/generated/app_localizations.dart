@@ -7776,6 +7776,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t open the share sheet.'**
   String get clExportFailed;
+
+  /// No description provided for @tsShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share trip plan'**
+  String get tsShare;
+
+  /// No description provided for @tsReturnPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'When do you expect to be back? (optional)'**
+  String get tsReturnPrompt;
+
+  /// No description provided for @tsMyRadioUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'My radio: not connected when this was made'**
+  String get tsMyRadioUnknown;
+
+  /// No description provided for @tsNotStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip not started yet'**
+  String get tsNotStarted;
+
+  /// No description provided for @tsContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'People with me (trip contacts) and their radios:'**
+  String get tsContacts;
+
+  /// No description provided for @tsNoContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'none set'**
+  String get tsNoContacts;
+
+  /// No description provided for @tsIfNoContact.
+  ///
+  /// In en, this message translates to:
+  /// **'If you haven\'t heard from me by the time I expect to be back, try to reach me and the people above. If you still can\'t, call the local emergency number and give them this plan.'**
+  String get tsIfNoContact;
+
+  /// No description provided for @tsFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Made with NOTORYX Connect. Off-grid radios can be out of range for hours; silence alone doesn\'t mean something is wrong.'**
+  String get tsFooter;
+
+  /// No description provided for @tsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip plan: {name}'**
+  String tsTitle(String name);
+
+  /// No description provided for @tsMyRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'My radio: {name} ({id})'**
+  String tsMyRadio(String name, String id);
+
+  /// No description provided for @tsStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip started: {time}'**
+  String tsStarted(String time);
+
+  /// No description provided for @tsReturnBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected back: {when}'**
+  String tsReturnBy(String when);
+
+  /// No description provided for @tsLastCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Last check-in: {label} at {time}'**
+  String tsLastCheckIn(String label, String time);
+
+  /// No description provided for @tsLastPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Last known position: {coords}'**
+  String tsLastPosition(String coords);
+
+  /// No description provided for @tsOverdueRule.
+  ///
+  /// In en, this message translates to:
+  /// **'My app warns our group if anyone is silent for {minutes} minutes.'**
+  String tsOverdueRule(int minutes);
 }
 
 class _AppLocalizationsDelegate

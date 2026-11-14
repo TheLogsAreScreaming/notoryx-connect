@@ -1276,5 +1276,20 @@
   "clExport": "Protokoll exportieren",
   "clExportCsv": "Tabelle (CSV)",
   "clExportJson": "Datendatei (JSON)",
-  "clExportFailed": "Teilen konnte nicht geöffnet werden."
+  "clExportFailed": "Teilen konnte nicht geöffnet werden.",
+  "tsShare": "Tourplan teilen",
+  "tsReturnPrompt": "Wann bist du voraussichtlich zurück? (optional)",
+  "tsMyRadioUnknown": "Mein Funkgerät: beim Erstellen nicht verbunden",
+  "tsNotStarted": "Tour noch nicht gestartet",
+  "tsContacts": "Personen bei mir (Tourkontakte) und ihre Funkgeräte:",
+  "tsNoContacts": "keine festgelegt",
+  "tsIfNoContact": "Wenn du bis zu meiner erwarteten Rückkehr nichts von mir gehört hast, versuche mich und die oben genannten Personen zu erreichen. Klappt das nicht, ruf den örtlichen Notruf an und gib diesen Plan weiter.",
+  "tsFooter": "Erstellt mit NOTORYX Connect. Funkgeräte ohne Netz können stundenlang außer Reichweite sein; Stille allein heißt nicht, dass etwas passiert ist.",
+  "tsTitle": "Tourplan: {name}",
+  "tsMyRadio": "Mein Funkgerät: {name} ({id})",
+  "tsStarted": "Tour gestartet: {time}",
+  "tsReturnBy": "Voraussichtlich zurück: {when}",
+  "tsLastCheckIn": "Letzter Check-in: {label} um {time}",
+  "tsLastPosition": "Letzte bekannte Position: {coords}",
+  "tsOverdueRule": "Meine App warnt unsere Gruppe, wenn jemand {minutes} Minuten still ist."
 }

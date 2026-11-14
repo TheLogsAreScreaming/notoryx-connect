@@ -1276,5 +1276,20 @@
   "clExport": "Exportar registro",
   "clExportCsv": "Hoja de cálculo (CSV)",
   "clExportJson": "Archivo de datos (JSON)",
-  "clExportFailed": "No se pudo abrir el menú de compartir."
+  "clExportFailed": "No se pudo abrir el menú de compartir.",
+  "tsShare": "Compartir plan de salida",
+  "tsReturnPrompt": "¿Cuándo esperas volver? (opcional)",
+  "tsMyRadioUnknown": "Mi radio: no conectada al crear esto",
+  "tsNotStarted": "Salida aún no iniciada",
+  "tsContacts": "Personas conmigo (contactos de salida) y sus radios:",
+  "tsNoContacts": "ninguno",
+  "tsIfNoContact": "Si no sabes de mí a la hora prevista de regreso, intenta contactarme a mí y a las personas de arriba. Si no lo logras, llama al número de emergencias local y entrégales este plan.",
+  "tsFooter": "Hecho con NOTORYX Connect. Las radios sin red pueden estar fuera de alcance durante horas; el silencio por sí solo no significa que algo vaya mal.",
+  "tsTitle": "Plan de salida: {name}",
+  "tsMyRadio": "Mi radio: {name} ({id})",
+  "tsStarted": "Salida iniciada: {time}",
+  "tsReturnBy": "Regreso previsto: {when}",
+  "tsLastCheckIn": "Último aviso: {label} a las {time}",
+  "tsLastPosition": "Última posición conocida: {coords}",
+  "tsOverdueRule": "Mi app avisa al grupo si alguien está en silencio {minutes} minutos."
 }

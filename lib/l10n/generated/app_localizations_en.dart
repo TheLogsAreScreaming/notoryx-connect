@@ -4666,4 +4666,65 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Couldn\'t open the share sheet.';
+
+  @override
+  String get tsShare => 'Share trip plan';
+
+  @override
+  String get tsReturnPrompt => 'When do you expect to be back? (optional)';
+
+  @override
+  String get tsMyRadioUnknown => 'My radio: not connected when this was made';
+
+  @override
+  String get tsNotStarted => 'Trip not started yet';
+
+  @override
+  String get tsContacts => 'People with me (trip contacts) and their radios:';
+
+  @override
+  String get tsNoContacts => 'none set';
+
+  @override
+  String get tsIfNoContact =>
+      'If you haven\'t heard from me by the time I expect to be back, try to reach me and the people above. If you still can\'t, call the local emergency number and give them this plan.';
+
+  @override
+  String get tsFooter =>
+      'Made with NOTORYX Connect. Off-grid radios can be out of range for hours; silence alone doesn\'t mean something is wrong.';
+
+  @override
+  String tsTitle(String name) {
+    return 'Trip plan: $name';
+  }
+
+  @override
+  String tsMyRadio(String name, String id) {
+    return 'My radio: $name ($id)';
+  }
+
+  @override
+  String tsStarted(String time) {
+    return 'Trip started: $time';
+  }
+
+  @override
+  String tsReturnBy(String when) {
+    return 'Expected back: $when';
+  }
+
+  @override
+  String tsLastCheckIn(String label, String time) {
+    return 'Last check-in: $label at $time';
+  }
+
+  @override
+  String tsLastPosition(String coords) {
+    return 'Last known position: $coords';
+  }
+
+  @override
+  String tsOverdueRule(int minutes) {
+    return 'My app warns our group if anyone is silent for $minutes minutes.';
+  }
 }

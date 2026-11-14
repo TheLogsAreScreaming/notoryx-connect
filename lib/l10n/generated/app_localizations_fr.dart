@@ -4725,4 +4725,66 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Impossible d\'ouvrir le partage.';
+
+  @override
+  String get tsShare => 'Partager le plan de sortie';
+
+  @override
+  String get tsReturnPrompt => 'Quand pensez-vous rentrer ? (facultatif)';
+
+  @override
+  String get tsMyRadioUnknown => 'Ma radio : non connectée lors de la création';
+
+  @override
+  String get tsNotStarted => 'Sortie pas encore commencée';
+
+  @override
+  String get tsContacts =>
+      'Personnes avec moi (contacts de sortie) et leurs radios :';
+
+  @override
+  String get tsNoContacts => 'aucun';
+
+  @override
+  String get tsIfNoContact =>
+      'Si vous n\'avez pas de nouvelles à l\'heure prévue de mon retour, essayez de me joindre ainsi que les personnes ci-dessus. Sinon, appelez le numéro d\'urgence local et transmettez ce plan.';
+
+  @override
+  String get tsFooter =>
+      'Créé avec NOTORYX Connect. Les radios hors réseau peuvent rester hors de portée pendant des heures ; un silence ne signifie pas forcément un problème.';
+
+  @override
+  String tsTitle(String name) {
+    return 'Plan de sortie : $name';
+  }
+
+  @override
+  String tsMyRadio(String name, String id) {
+    return 'Ma radio : $name ($id)';
+  }
+
+  @override
+  String tsStarted(String time) {
+    return 'Sortie commencée : $time';
+  }
+
+  @override
+  String tsReturnBy(String when) {
+    return 'Retour prévu : $when';
+  }
+
+  @override
+  String tsLastCheckIn(String label, String time) {
+    return 'Dernier point : $label à $time';
+  }
+
+  @override
+  String tsLastPosition(String coords) {
+    return 'Dernière position connue : $coords';
+  }
+
+  @override
+  String tsOverdueRule(int minutes) {
+    return 'Mon app prévient le groupe si quelqu\'un reste silencieux $minutes minutes.';
+  }
 }
