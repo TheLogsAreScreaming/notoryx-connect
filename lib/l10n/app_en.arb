@@ -4146,5 +4146,9 @@
   "gateExcluded": "Left out of this radio's firmware build",
   "gateNoHardware": "This radio doesn't have the hardware for this",
   "formNewerValue": "Set by newer firmware (value {value}). Left unchanged.",
-  "@formNewerValue": {"placeholders": {"value": {"type": "String"}}}
+  "@formNewerValue": {"placeholders": {"value": {"type": "String"}}},
+  "omArea": "Covers {area} (dashed outline on the map). Outside it there are no offline tiles.",
+  "@omArea": {"placeholders": {"area": {"type": "String"}}},
+  "omDamaged": "{count} tiles in this file are damaged and will show blank.",
+  "@omDamaged": {"placeholders": {"count": {"type": "int"}}}
 }

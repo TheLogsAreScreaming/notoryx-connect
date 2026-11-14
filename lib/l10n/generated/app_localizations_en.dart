@@ -5774,4 +5774,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String formNewerValue(String value) {
     return 'Set by newer firmware (value $value). Left unchanged.';
   }
+
+  @override
+  String omArea(String area) {
+    return 'Covers $area (dashed outline on the map). Outside it there are no offline tiles.';
+  }
+
+  @override
+  String omDamaged(int count) {
+    return '$count tiles in this file are damaged and will show blank.';
+  }
 }

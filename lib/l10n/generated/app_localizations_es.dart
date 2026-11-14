@@ -5814,4 +5814,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String formNewerValue(String value) {
     return 'Definido por un firmware más nuevo (valor $value). Se deja sin cambios.';
   }
+
+  @override
+  String omArea(String area) {
+    return 'Cubre $area (contorno discontinuo en el mapa). Fuera de él no hay teselas sin conexión.';
+  }
+
+  @override
+  String omDamaged(int count) {
+    return '$count teselas de este archivo están dañadas y se verán en blanco.';
+  }
 }

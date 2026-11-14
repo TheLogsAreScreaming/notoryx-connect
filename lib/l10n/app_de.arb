@@ -1573,5 +1573,7 @@
   "chatsPkiEncrypted": "Nur für dich verschlüsselt",
   "gateExcluded": "In der Firmware dieses Funkgeräts nicht enthalten",
   "gateNoHardware": "Diesem Funkgerät fehlt die Hardware dafür",
-  "formNewerValue": "Von neuerer Firmware gesetzt (Wert {value}). Bleibt unverändert."
+  "formNewerValue": "Von neuerer Firmware gesetzt (Wert {value}). Bleibt unverändert.",
+  "omArea": "Deckt {area} ab (gestrichelte Linie auf der Karte). Außerhalb gibt es keine Offline-Kacheln.",
+  "omDamaged": "{count} Kacheln in dieser Datei sind beschädigt und bleiben leer."
 }

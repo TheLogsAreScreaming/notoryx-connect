@@ -1573,5 +1573,7 @@
   "chatsPkiEncrypted": "Cifrado solo para ti",
   "gateExcluded": "No incluido en el firmware de esta radio",
   "gateNoHardware": "Esta radio no tiene el hardware para esto",
-  "formNewerValue": "Definido por un firmware más nuevo (valor {value}). Se deja sin cambios."
+  "formNewerValue": "Definido por un firmware más nuevo (valor {value}). Se deja sin cambios.",
+  "omArea": "Cubre {area} (contorno discontinuo en el mapa). Fuera de él no hay teselas sin conexión.",
+  "omDamaged": "{count} teselas de este archivo están dañadas y se verán en blanco."
 }

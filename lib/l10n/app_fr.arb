@@ -1573,5 +1573,7 @@
   "chatsPkiEncrypted": "Chiffré pour vous seul",
   "gateExcluded": "Absent du firmware de cette radio",
   "gateNoHardware": "Cette radio n'a pas le matériel pour cela",
-  "formNewerValue": "Défini par un firmware plus récent (valeur {value}). Laissé tel quel."
+  "formNewerValue": "Défini par un firmware plus récent (valeur {value}). Laissé tel quel.",
+  "omArea": "Couvre {area} (contour en pointillés sur la carte). En dehors, il n'y a pas de tuiles hors ligne.",
+  "omDamaged": "{count} tuiles de ce fichier sont endommagées et resteront vides."
 }
