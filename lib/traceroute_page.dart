@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/generated/app_localizations.dart';
+
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'services/bastion_route_map.dart';
-import 'l10n/generated/app_localizations.dart';
 import 'services/bastion_trace_card.dart';
 import 'services/meshtastic_traceroute.dart';
 import 'trace_card_page.dart';
@@ -65,7 +66,7 @@ class _TraceroutePageState extends State<TraceroutePage> {
   }
 
   String _name(int num) {
-    if (num == widget.radio.localNodeNum) return 'This radio';
+    if (num == widget.radio.localNodeNum) return AppLocalizations.of(context).trcThisRadio;
     for (final node in widget.radio.nodes) {
       if (node.num == num) return node.displayName;
     }
@@ -87,10 +88,11 @@ class _TraceroutePageState extends State<TraceroutePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Traceroute')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).trcTitle)),
         body: AnimatedBuilder(
           animation: widget.radio,
           builder: (context, _) {
+            final l = AppLocalizations.of(context);
             final local = widget.radio.localNodeNum;
             final nodes = widget.radio.nodes.where((n) => n.num != local).toList()
               ..sort((a, b) => a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()));
@@ -100,7 +102,7 @@ class _TraceroutePageState extends State<TraceroutePage> {
                 DropdownButtonFormField<int>(
                   initialValue: _target,
                   isExpanded: true,
-                  decoration: const InputDecoration(labelText: 'Destination node'),
+                  decoration: InputDecoration(labelText: l.trcDestination),
                   items: [
                     for (final MeshtasticNode node in nodes)
                       DropdownMenuItem(value: node.num, child: Text(node.displayName)),
@@ -113,23 +115,22 @@ class _TraceroutePageState extends State<TraceroutePage> {
                   icon: _running
                       ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
                       : const Icon(Icons.route),
-                  label: Text(_running ? 'Tracing… up to 60 s' : 'Run traceroute'),
+                  label: Text(_running ? l.trcRunning : l.trcRun),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Firmware limits how often traceroutes can run. Each one uses '
-                  'airtime on every relay, so avoid repeating them quickly.',
+                  l.trcHelp,
                   style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                 ),
                 if (!widget.radio.canTraceroute && !_running)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 12),
-                    child: Text('Connect to a radio and wait for READY.'),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Text(l.trcConnectFirst),
                   ),
                 if (nodes.isEmpty && widget.radio.isReady)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 12),
-                    child: Text('No other nodes heard yet.'),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Text(l.trcNoNodes),
                   ),
                 if (_error != null)
                   Padding(
@@ -140,8 +141,8 @@ class _TraceroutePageState extends State<TraceroutePage> {
                   const SizedBox(height: 16),
                   Text(
                     result.intermediateHops == 0
-                        ? 'Direct — no relays'
-                        : '${result.intermediateHops} relay${result.intermediateHops == 1 ? '' : 's'}',
+                        ? l.trcDirect
+                        : l.trcRelays(result.intermediateHops),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   if (local != null && _sentAt != null && _roundTrip != null)
@@ -155,23 +156,23 @@ class _TraceroutePageState extends State<TraceroutePage> {
                       ),
                     ),
                   _RouteCard(
-                    title: 'Route there',
-                    start: 'This radio',
+                    title: l.trcRouteThere,
+                    start: l.trcThisRadio,
                     hops: result.towards,
                     name: _name,
                   ),
                   if (result.back.isNotEmpty)
                     _RouteCard(
-                      title: 'Route back',
+                      title: l.trcRouteBack,
                       start: _name(_target!),
                       hops: result.back,
                       name: _name,
                     )
                   else
-                    const Card(
+                    Card(
                       child: ListTile(
-                        title: Text('Route back'),
-                        subtitle: Text('Not reported by this firmware'),
+                        title: Text(l.trcRouteBack),
+                        subtitle: Text(l.trcNoRouteBack),
                       ),
                     ),
                   if (local != null) ...[
@@ -179,10 +180,10 @@ class _TraceroutePageState extends State<TraceroutePage> {
                         hasPosition: _hasPosition) case final path when path.drawable)
                       TracerouteMap(path: path, nodes: widget.radio.nodes, name: _name)
                     else
-                      const Card(child: ListTile(
-                        leading: Icon(Icons.location_off_outlined),
-                        title: Text('Not enough positions to map'),
-                        subtitle: Text('At least two nodes on the route need a known position.'),
+                      Card(child: ListTile(
+                        leading: const Icon(Icons.location_off_outlined),
+                        title: Text(l.trcNoMap),
+                        subtitle: Text(l.trcNoMapHelp),
                       )),
                   ],
                 ],
@@ -220,7 +221,7 @@ class _RouteCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Text(
-                    '↓ ${hop.snrDb == null ? 'SNR unknown' : '${hop.snrDb!.toStringAsFixed(1)} dB'}\n'
+                    '↓ ${hop.snrDb == null ? AppLocalizations.of(context).trcSnrUnknown : '${hop.snrDb!.toStringAsFixed(1)} dB'}\n'
                     '${name(hop.nodeNum)}',
                   ),
                 ),
