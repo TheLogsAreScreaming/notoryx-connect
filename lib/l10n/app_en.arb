@@ -4132,5 +4132,21 @@
   "deliveryHeld": "Held: check before sending",
   "chatsHeldExplain": "This wasn't sent by itself. It's over a day old, or sending was cut off and it may already have gone out.",
   "chatsSendHeld": "Send now",
-  "chatsDeleteQueued": "Delete without sending"
+  "chatsDeleteQueued": "Delete without sending",
+  "mlTitle": "Map as a list",
+  "mlIntro": "Everything on the map in words, nearest first. Directions are from your radio's last position.",
+  "mlNodes": "Nodes",
+  "mlWaypoints": "Waypoints",
+  "mlWeakAreas": "Weak coverage areas",
+  "mlWeakArea": "Weak signal area",
+  "mlNone": "None",
+  "mlNoOwnPosition": "Distance unknown: your radio has no position",
+  "mlDistanceDir": "{distance} {dir, select, n{north} ne{north-east} e{east} se{south-east} s{south} sw{south-west} w{west} nw{north-west} other{}}",
+  "@mlDistanceDir": {"placeholders": {"distance": {"type": "String"}, "dir": {"type": "String"}}},
+  "mlHeard": "heard {ago}",
+  "@mlHeard": {"placeholders": {"ago": {"type": "String"}}},
+  "mlPositionAge": "position from {ago}",
+  "@mlPositionAge": {"placeholders": {"ago": {"type": "String"}}},
+  "mlReadings": "{count} readings, average SNR {snr} dB",
+  "@mlReadings": {"placeholders": {"count": {"type": "int"}, "snr": {"type": "String"}}}
 }

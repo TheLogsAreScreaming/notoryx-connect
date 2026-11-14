@@ -1561,5 +1561,17 @@
   "deliveryHeld": "En attente : vérifiez avant d'envoyer",
   "chatsHeldExplain": "Il n'a pas été envoyé automatiquement. Il a plus d'un jour, ou l'envoi a été interrompu et il est peut-être déjà parti.",
   "chatsSendHeld": "Envoyer maintenant",
-  "chatsDeleteQueued": "Supprimer sans envoyer"
+  "chatsDeleteQueued": "Supprimer sans envoyer",
+  "mlTitle": "Carte sous forme de liste",
+  "mlIntro": "Tout ce qui est sur la carte en mots, le plus proche d'abord. Les directions partent de la dernière position de votre radio.",
+  "mlNodes": "Nœuds",
+  "mlWaypoints": "Points de passage",
+  "mlWeakAreas": "Zones de couverture faible",
+  "mlWeakArea": "Zone de signal faible",
+  "mlNone": "Aucun",
+  "mlNoOwnPosition": "Distance inconnue : votre radio n'a pas de position",
+  "mlDistanceDir": "{distance} au {dir, select, n{nord} ne{nord-est} e{est} se{sud-est} s{sud} sw{sud-ouest} w{ouest} nw{nord-ouest} other{}}",
+  "mlHeard": "entendu {ago}",
+  "mlPositionAge": "position de {ago}",
+  "mlReadings": "{count} relevés, SNR moyen {snr} dB"
 }

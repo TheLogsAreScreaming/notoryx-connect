@@ -12,6 +12,7 @@ import 'l10n/generated/app_localizations.dart';
 import 'link_planner_page.dart';
 import 'node_detail_page.dart';
 import 'place_search_page.dart';
+import 'map_list_page.dart';
 import 'network_diagram_page.dart';
 import 'services/bastion_coverage_grid.dart';
 import 'services/bastion_field_log.dart';
@@ -707,6 +708,21 @@ class _MapPageState extends State<MapPage> {
                             icon: Icon(_showLinks ? Icons.hub : Icons.hub_outlined),
                             onPressed: () => setState(() => _showLinks = !_showLinks),
                           ),
+                        IconButton(
+                          key: const ValueKey('map-as-list'),
+                          tooltip: l.mlTitle,
+                          icon: const Icon(Icons.format_list_bulleted),
+                          onPressed: () {
+                            final me = widget.radio.localNode;
+                            Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => MapListPage(
+                              me: me != null && me.hasPosition ? (me.latitude!, me.longitude!) : null,
+                              selfNum: widget.radio.localNodeNum,
+                              nodes: widget.radio.nodes,
+                              waypoints: widget.radio.waypoints,
+                              cells: _coverage,
+                            )));
+                          },
+                        ),
                         IconButton(
                           key: const ValueKey('map-heatmap'),
                           tooltip: _showHeatmap ? l.mapHideHeatmap : l.mapShowHeatmap,

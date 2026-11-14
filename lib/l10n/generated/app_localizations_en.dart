@@ -5732,4 +5732,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatsDeleteQueued => 'Delete without sending';
+
+  @override
+  String get mlTitle => 'Map as a list';
+
+  @override
+  String get mlIntro =>
+      'Everything on the map in words, nearest first. Directions are from your radio\'s last position.';
+
+  @override
+  String get mlNodes => 'Nodes';
+
+  @override
+  String get mlWaypoints => 'Waypoints';
+
+  @override
+  String get mlWeakAreas => 'Weak coverage areas';
+
+  @override
+  String get mlWeakArea => 'Weak signal area';
+
+  @override
+  String get mlNone => 'None';
+
+  @override
+  String get mlNoOwnPosition => 'Distance unknown: your radio has no position';
+
+  @override
+  String mlDistanceDir(String distance, String dir) {
+    String _temp0 = intl.Intl.selectLogic(dir, {
+      'n': 'north',
+      'ne': 'north-east',
+      'e': 'east',
+      'se': 'south-east',
+      's': 'south',
+      'sw': 'south-west',
+      'w': 'west',
+      'nw': 'north-west',
+      'other': '',
+    });
+    return '$distance $_temp0';
+  }
+
+  @override
+  String mlHeard(String ago) {
+    return 'heard $ago';
+  }
+
+  @override
+  String mlPositionAge(String ago) {
+    return 'position from $ago';
+  }
+
+  @override
+  String mlReadings(int count, String snr) {
+    return '$count readings, average SNR $snr dB';
+  }
 }

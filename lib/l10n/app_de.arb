@@ -1561,5 +1561,17 @@
   "deliveryHeld": "Angehalten: vor dem Senden prüfen",
   "chatsHeldExplain": "Diese Nachricht wurde nicht automatisch gesendet. Sie ist älter als einen Tag, oder das Senden wurde unterbrochen und sie ist vielleicht schon raus.",
   "chatsSendHeld": "Jetzt senden",
-  "chatsDeleteQueued": "Löschen, ohne zu senden"
+  "chatsDeleteQueued": "Löschen, ohne zu senden",
+  "mlTitle": "Karte als Liste",
+  "mlIntro": "Alles auf der Karte in Worten, das Nächste zuerst. Richtungen gelten ab der letzten Position deines Funkgeräts.",
+  "mlNodes": "Knoten",
+  "mlWaypoints": "Wegpunkte",
+  "mlWeakAreas": "Bereiche mit schwachem Empfang",
+  "mlWeakArea": "Bereich mit schwachem Signal",
+  "mlNone": "Keine",
+  "mlNoOwnPosition": "Entfernung unbekannt: dein Funkgerät hat keine Position",
+  "mlDistanceDir": "{distance} {dir, select, n{Norden} ne{Nordosten} e{Osten} se{Südosten} s{Süden} sw{Südwesten} w{Westen} nw{Nordwesten} other{}}",
+  "mlHeard": "gehört {ago}",
+  "mlPositionAge": "Position von {ago}",
+  "mlReadings": "{count} Messungen, mittleres SNR {snr} dB"
 }
