@@ -1,0 +1,1 @@
+New: ask before sharing positions with ATAK, ATAK markers no longer clash with ATAK's own port, reconnects to your radio when reopened, stays connected in the background, MQTT drop errors handled, connected radio listed once.
