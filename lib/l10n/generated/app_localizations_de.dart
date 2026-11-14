@@ -5781,4 +5781,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String omUnreadable(String reason) {
     return 'Datei nicht nutzbar: $reason';
   }
+
+  @override
+  String get deliveryHeld => 'Angehalten: vor dem Senden prüfen';
+
+  @override
+  String get chatsHeldExplain =>
+      'Diese Nachricht wurde nicht automatisch gesendet. Sie ist älter als einen Tag, oder das Senden wurde unterbrochen und sie ist vielleicht schon raus.';
+
+  @override
+  String get chatsSendHeld => 'Jetzt senden';
+
+  @override
+  String get chatsDeleteQueued => 'Löschen, ohne zu senden';
 }

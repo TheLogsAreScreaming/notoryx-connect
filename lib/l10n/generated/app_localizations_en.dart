@@ -5719,4 +5719,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String omUnreadable(String reason) {
     return 'Couldn\'t use that file: $reason';
   }
+
+  @override
+  String get deliveryHeld => 'Held: check before sending';
+
+  @override
+  String get chatsHeldExplain =>
+      'This wasn\'t sent by itself. It\'s over a day old, or sending was cut off and it may already have gone out.';
+
+  @override
+  String get chatsSendHeld => 'Send now';
+
+  @override
+  String get chatsDeleteQueued => 'Delete without sending';
 }
