@@ -1561,5 +1561,8 @@
   "deliveryHeld": "En attente : vérifiez avant d'envoyer",
   "chatsHeldExplain": "Il n'a pas été envoyé automatiquement. Il a plus d'un jour, ou l'envoi a été interrompu et il est peut-être déjà parti.",
   "chatsSendHeld": "Envoyer maintenant",
-  "chatsDeleteQueued": "Supprimer sans envoyer"
+  "chatsDeleteQueued": "Supprimer sans envoyer",
+  "chatsReplayed": "de l'historique",
+  "chatsReplayedFull": "Rejoué depuis l'historique d'un routeur store-and-forward : envoyé plus tôt, pas à l'instant.",
+  "chatsReplayedAt": "Reçu à {time}."
 }

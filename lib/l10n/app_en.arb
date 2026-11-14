@@ -4132,5 +4132,9 @@
   "deliveryHeld": "Held: check before sending",
   "chatsHeldExplain": "This wasn't sent by itself. It's over a day old, or sending was cut off and it may already have gone out.",
   "chatsSendHeld": "Send now",
-  "chatsDeleteQueued": "Delete without sending"
+  "chatsDeleteQueued": "Delete without sending",
+  "chatsReplayed": "from history",
+  "chatsReplayedFull": "Replayed from a store-and-forward router's history: sent earlier, not just now.",
+  "chatsReplayedAt": "Received {time}.",
+  "@chatsReplayedAt": {"placeholders": {"time": {"type": "String"}}}
 }

@@ -5732,4 +5732,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatsDeleteQueued => 'Delete without sending';
+
+  @override
+  String get chatsReplayed => 'from history';
+
+  @override
+  String get chatsReplayedFull =>
+      'Replayed from a store-and-forward router\'s history: sent earlier, not just now.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Received $time.';
+  }
 }

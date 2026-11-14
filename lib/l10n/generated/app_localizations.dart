@@ -9486,6 +9486,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete without sending'**
   String get chatsDeleteQueued;
+
+  /// No description provided for @chatsReplayed.
+  ///
+  /// In en, this message translates to:
+  /// **'from history'**
+  String get chatsReplayed;
+
+  /// No description provided for @chatsReplayedFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Replayed from a store-and-forward router\'s history: sent earlier, not just now.'**
+  String get chatsReplayedFull;
+
+  /// No description provided for @chatsReplayedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Received {time}.'**
+  String chatsReplayedAt(String time);
 }
 
 class _AppLocalizationsDelegate

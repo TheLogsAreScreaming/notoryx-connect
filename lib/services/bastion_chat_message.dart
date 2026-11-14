@@ -22,6 +22,8 @@ class BastionChatMessage {
     this.hops,
     this.rxRssi,
     this.relayNode,
+    this.replayed = false,
+    this.receivedAt,
   });
 
   final int packetId;
@@ -52,6 +54,13 @@ class BastionChatMessage {
   /// Last byte of the node number of the final relay.
   final int? relayNode;
 
+  /// Came from a store-and-forward router's history, not live.
+  final bool replayed;
+
+  /// When this phone got it, when that differs from [timestamp] (the time
+  /// the packet says it was first heard). Set for replays.
+  final DateTime? receivedAt;
+
   bool get isBroadcast => to == MeshtasticTextCodec.broadcastNode;
 
   BastionChatMessage copyWith({BastionDeliveryState? deliveryState}) =>
@@ -71,6 +80,8 @@ class BastionChatMessage {
         hops: hops,
         rxRssi: rxRssi,
         relayNode: relayNode,
+        replayed: replayed,
+        receivedAt: receivedAt,
       );
 
   Map<String, Object?> toJson() => {
@@ -89,6 +100,8 @@ class BastionChatMessage {
     if (hops != null) 'hops': hops,
     if (rxRssi != null) 'rxRssi': rxRssi,
     if (relayNode != null) 'relay': relayNode,
+    if (replayed) 'replayed': true,
+    if (receivedAt != null) 'receivedAt': receivedAt!.toUtc().toIso8601String(),
   };
 
   static BastionChatMessage fromJson(Map<String, Object?> json) {
@@ -112,6 +125,10 @@ class BastionChatMessage {
       hops: json['hops'] as int?,
       rxRssi: json['rxRssi'] as int?,
       relayNode: json['relay'] as int?,
+      replayed: json['replayed'] as bool? ?? false,
+      receivedAt: json['receivedAt'] is String
+          ? DateTime.tryParse(json['receivedAt']! as String)?.toLocal()
+          : null,
     );
   }
 }

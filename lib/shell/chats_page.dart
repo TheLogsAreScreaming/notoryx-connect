@@ -285,6 +285,10 @@ class _ChatsPageState extends State<BastionChatsPage> {
   /// How an incoming message got here: over the internet, directly, or
   /// through relays, naming the last relay when it can be worked out.
   String _pathSummary(BastionChatMessage m) {
+    if (m.replayed) {
+      final got = m.receivedAt;
+      return got == null ? l.chatsReplayedFull : '${l.chatsReplayedFull} ${l.chatsReplayedAt(_clock(got))}';
+    }
     if (m.viaMqtt) return l.chatsViaMqttFull;
     final hops = m.hops;
     if (hops == null) return l.chatsPathUnknown;
@@ -496,7 +500,8 @@ class _ChatsPageState extends State<BastionChatsPage> {
                   [
                     '$sender → $route',
                     // Heard over the internet, not over the air.
-                    if (message.viaMqtt) l.chatsViaMqtt
+                    if (message.replayed) l.chatsReplayed
+                    else if (message.viaMqtt) l.chatsViaMqtt
                     else if (_hopsLabel(context, message.hops) case final hops?) hops,
                   ].join(' • '),
                   style: type.labelMedium?.copyWith(color: mentioned ? scheme.onPrimaryContainer : scheme.onSurfaceVariant),
