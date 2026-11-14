@@ -71,6 +71,7 @@ import 'meshtastic_stream_transport.dart';
 import 'meshtastic_usb_transport.dart';
 import 'meshtastic_text_codec.dart';
 import 'meshtastic_traceroute.dart';
+import 'bastion_lookalike.dart';
 
 /// Owns one verified Meshtastic radio session and exposes it to the UI.
 class MeshtasticRadioCoordinator extends ChangeNotifier
@@ -147,6 +148,19 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   bool _isFavorite(int num) => _nodeVault.records.any((r) => r.num == num && r.favorite);
+
+  /// The favourite or trip contact whose name [num]'s name imitates, or
+  /// null. A hint to check with the owner, not proof of anything.
+  int? lookalikeOf(int num) {
+    final node = _nodes.where((n) => n.num == num).firstOrNull;
+    if (node == null) return null;
+    final trusted = <int, String>{
+      for (final r in _nodeVault.records)
+        if (r.favorite) r.num: _nodeName(r.num),
+      for (final m in trip.plan.members) m: _nodeName(m),
+    };
+    return BastionLookalike.imitates(num, node.displayName, trusted);
+  }
 
   void _raise(BastionFieldAlert? alert) {
     if (alert != null && !filters.isSilenced(alert.nodeNum)) unawaited(_alerts.showFieldAlert(alert));
@@ -777,6 +791,20 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     final sorted = bySlot.values.toList()
       ..sort((a, b) => a.index.compareTo(b.index));
     return List.unmodifiable(sorted);
+  }
+
+  /// The radio's current LoRa settings, from the latest config it sent.
+  Config_LoRaConfig? get loraConfig {
+    Config_LoRaConfig? latest;
+    for (final bytes in _radioConfigSnapshots) {
+      try {
+        final c = Config.fromBuffer(bytes);
+        if (c.hasLora()) latest = c.lora;
+      } catch (_) {
+        // Ignore malformed configuration frames.
+      }
+    }
+    return latest;
   }
 
   int get radioConfigCount => _radioConfigSnapshots.length;
