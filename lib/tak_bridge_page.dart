@@ -13,7 +13,9 @@ class TakBridgePage extends StatefulWidget {
 
 class _TakBridgePageState extends State<TakBridgePage> {
   late final _port = TextEditingController(text: '${widget.bridge.port}');
-  late final _receivePort = TextEditingController(text: '${widget.bridge.receivePort}');
+  late final _receivePort = TextEditingController(
+    text: '${widget.bridge.receivePort}',
+  );
   bool _badPort = false;
   String? _receivePortError;
 
@@ -34,6 +36,31 @@ class _TakBridgePageState extends State<TakBridgePage> {
         : null;
     setState(() => _receivePortError = error);
     if (error == null) widget.bridge.configure(receivePort: port);
+  }
+
+  /// Asks before anything is shared; nothing is sent unless the user accepts.
+  Future<bool> _confirmSharing() async {
+    final l = AppLocalizations.of(context);
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        key: const ValueKey('tak-consent'),
+        title: Text(l.takConsentTitle),
+        content: Text(l.takConsentBody(widget.bridge.port)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(l.commonCancel),
+          ),
+          FilledButton(
+            key: const ValueKey('tak-consent-accept'),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(l.takConsentAccept),
+          ),
+        ],
+      ),
+    );
+    return ok == true && mounted;
   }
 
   void _savePort() {
@@ -62,28 +89,47 @@ class _TakBridgePageState extends State<TakBridgePage> {
                 contentPadding: EdgeInsets.zero,
                 title: Text(l.takSwitch),
                 value: bridge.enabled,
-                onChanged: (v) => bridge.configure(enabled: v),
+                onChanged: (v) async {
+                  if (v && !await _confirmSharing()) return;
+                  await bridge.configure(enabled: v);
+                },
               ),
               TextField(
                 key: const ValueKey('tak-port'),
                 controller: _port,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: l.takPort, errorText: _badPort ? l.takBadPort : null),
+                decoration: InputDecoration(
+                  labelText: l.takPort,
+                  errorText: _badPort ? l.takBadPort : null,
+                ),
                 onSubmitted: (_) => _savePort(),
               ),
               Align(
                 alignment: AlignmentDirectional.centerStart,
-                child: TextButton(onPressed: _savePort, child: Text(l.commonSave)),
+                child: TextButton(
+                  onPressed: _savePort,
+                  child: Text(l.commonSave),
+                ),
               ),
               if (bridge.enabled)
                 Semantics(
                   liveRegion: true,
-                  child: Text(bridge.problem == null ? l.takStatus(bridge.lastCount) : l.takProblem(bridge.problem!)),
+                  child: Text(
+                    bridge.problem == null
+                        ? l.takStatus(bridge.lastCount)
+                        : l.takProblem(bridge.problem!),
+                  ),
                 ),
               const SizedBox(height: 16),
               Text(l.takHowTo),
               const Divider(height: 32),
-              Semantics(header: true, child: Text(l.takReceiveTitle, style: Theme.of(context).textTheme.titleMedium)),
+              Semantics(
+                header: true,
+                child: Text(
+                  l.takReceiveTitle,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
               const SizedBox(height: 8),
               Text(l.takReceiveIntro),
               SwitchListTile(
@@ -97,12 +143,18 @@ class _TakBridgePageState extends State<TakBridgePage> {
                 key: const ValueKey('tak-receive-port'),
                 controller: _receivePort,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: l.takReceivePort, errorText: _receivePortError),
+                decoration: InputDecoration(
+                  labelText: l.takReceivePort,
+                  errorText: _receivePortError,
+                ),
                 onSubmitted: (_) => _saveReceivePort(),
               ),
               Align(
                 alignment: AlignmentDirectional.centerStart,
-                child: TextButton(onPressed: _saveReceivePort, child: Text(l.commonSave)),
+                child: TextButton(
+                  onPressed: _saveReceivePort,
+                  child: Text(l.commonSave),
+                ),
               ),
               if (bridge.receive)
                 Semantics(

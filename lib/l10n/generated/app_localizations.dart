@@ -3282,6 +3282,24 @@ abstract class AppLocalizations {
   /// **'Send mesh positions to ATAK'**
   String get takSwitch;
 
+  /// No description provided for @takConsentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share mesh positions with ATAK?'**
+  String get takConsentTitle;
+
+  /// No description provided for @takConsentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The name and last position of every mesh node you can see are sent to UDP port {port} on this phone every 30 seconds, until you turn this off. ATAK picks them up, but any other app on this phone listening on that port can read them too. Nothing is sent over the mesh or off the phone.'**
+  String takConsentBody(int port);
+
+  /// No description provided for @takConsentAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Share with ATAK'**
+  String get takConsentAccept;
+
   /// No description provided for @takPort.
   ///
   /// In en, this message translates to:
