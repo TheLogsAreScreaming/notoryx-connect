@@ -864,6 +864,12 @@ abstract class AppLocalizations {
   /// **'Send'**
   String get chatsSend;
 
+  /// Counter under the message box: bytes used, the limit, and the estimated transmit time.
+  ///
+  /// In en, this message translates to:
+  /// **'{used}/{max} · ≈{seconds} s on air'**
+  String chatsAirtime(int used, int max, String seconds);
+
   /// No description provided for @chatsQuickReplies.
   ///
   /// In en, this message translates to:

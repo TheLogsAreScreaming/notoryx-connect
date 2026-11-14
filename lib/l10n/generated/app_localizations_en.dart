@@ -484,6 +484,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatsSend => 'Send';
 
   @override
+  String chatsAirtime(int used, int max, String seconds) {
+    return '$used/$max · ≈$seconds s on air';
+  }
+
+  @override
   String get chatsQuickReplies => 'Quick replies';
 
   @override

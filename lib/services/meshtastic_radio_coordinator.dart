@@ -779,6 +779,20 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     return List.unmodifiable(sorted);
   }
 
+  /// The radio's current LoRa settings, from the latest config it sent.
+  Config_LoRaConfig? get loraConfig {
+    Config_LoRaConfig? latest;
+    for (final bytes in _radioConfigSnapshots) {
+      try {
+        final c = Config.fromBuffer(bytes);
+        if (c.hasLora()) latest = c.lora;
+      } catch (_) {
+        // Ignore malformed configuration frames.
+      }
+    }
+    return latest;
+  }
+
   int get radioConfigCount => _radioConfigSnapshots.length;
   int get channelConfigCount => _channelSnapshots.length;
   int get moduleConfigCount => _moduleConfigSnapshots.length;

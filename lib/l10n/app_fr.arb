@@ -127,6 +127,7 @@
   "chatsMessageChannel": "Écrire sur le canal {n}",
   "chatsMessageNode": "Écrire à {name}",
   "chatsSend": "Envoyer",
+  "chatsAirtime": "{used}/{max} · ≈{seconds} s d'émission",
   "chatsQuickReplies": "Réponses rapides",
   "chatsMessages": "Messages",
   "chatsHoldHint": "Maintenez un message pour plus d'options",
