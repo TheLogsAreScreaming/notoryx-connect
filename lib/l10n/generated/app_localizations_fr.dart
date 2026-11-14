@@ -5783,6 +5783,19 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get deliveryHeld => 'En attente : vérifiez avant d\'envoyer';
+
+  @override
+  String get chatsHeldExplain =>
+      'Il n\'a pas été envoyé automatiquement. Il a plus d\'un jour, ou l\'envoi a été interrompu et il est peut-être déjà parti.';
+
+  @override
+  String get chatsSendHeld => 'Envoyer maintenant';
+
+  @override
+  String get chatsDeleteQueued => 'Supprimer sans envoyer';
+
+  @override
   String get chatsReplayed => 'de l\'historique';
 
   @override

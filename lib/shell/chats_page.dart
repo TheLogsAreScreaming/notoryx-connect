@@ -276,6 +276,8 @@ class _ChatsPageState extends State<BastionChatsPage> {
 
   static const _pinAction = '\u0000pin';
   static const _copyAction = '\u0000copy';
+  static const _sendHeldAction = '\u0000sendHeld';
+  static const _deleteQueuedAction = '\u0000deleteQueued';
   static const _forwardAction = '\u0000forward';
   static const _reportAction = '\u0000report';
   static const _reactionChoices = ['👍', '❤️', '😂', '😮', '😢', '✅', '🙏'];
@@ -321,6 +323,27 @@ class _ChatsPageState extends State<BastionChatsPage> {
               ),
           ]),
           const Divider(),
+          if (message.deliveryState == BastionDeliveryState.held) ...[
+            ListTile(
+              key: const ValueKey('chat-held-explain'),
+              leading: const Icon(Icons.pause_circle_outline),
+              title: Text(l.chatsHeldExplain),
+            ),
+            ListTile(
+              key: const ValueKey('chat-send-held'),
+              leading: const Icon(Icons.send),
+              title: Text(l.chatsSendHeld),
+              onTap: () => Navigator.pop(context, _sendHeldAction),
+            ),
+          ],
+          if (message.deliveryState == BastionDeliveryState.held ||
+              message.deliveryState == BastionDeliveryState.queued)
+            ListTile(
+              key: const ValueKey('chat-delete-queued'),
+              leading: const Icon(Icons.delete_outline),
+              title: Text(l.chatsDeleteQueued),
+              onTap: () => Navigator.pop(context, _deleteQueuedAction),
+            ),
           if (message.direction == BastionMessageDirection.incoming)
             ListTile(
               leading: const Icon(Icons.alt_route),
@@ -357,6 +380,8 @@ class _ChatsPageState extends State<BastionChatsPage> {
       )),
     );
     if (emoji == null || !mounted) return;
+    if (emoji == _sendHeldAction) return widget.radio.sendHeld(message.packetId);
+    if (emoji == _deleteQueuedAction) return widget.radio.deleteQueued(message.packetId);
     if (emoji == _pinAction) return _togglePin(message);
     if (emoji == _forwardAction) return _forward(message);
     if (emoji == _reportAction) {

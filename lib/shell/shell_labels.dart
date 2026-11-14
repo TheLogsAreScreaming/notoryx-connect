@@ -37,6 +37,7 @@ IconData _deliveryIcon(BastionDeliveryState state) => switch (state) {
   BastionDeliveryState.sent => Icons.check,
   BastionDeliveryState.delivered => Icons.done_all,
   BastionDeliveryState.failed => Icons.error_outline,
+  BastionDeliveryState.held => Icons.pause_circle_outline,
 };
 
 String _deliveryLabel(BuildContext context, BastionDeliveryState state) {
@@ -47,6 +48,7 @@ String _deliveryLabel(BuildContext context, BastionDeliveryState state) {
     BastionDeliveryState.sent => l.deliverySent,
     BastionDeliveryState.delivered => l.deliveryDelivered,
     BastionDeliveryState.failed => l.deliveryFailed,
+    BastionDeliveryState.held => l.deliveryHeld,
   };
 }
 

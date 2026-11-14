@@ -9463,6 +9463,30 @@ abstract class AppLocalizations {
   /// **'Couldn\'t use that file: {reason}'**
   String omUnreadable(String reason);
 
+  /// No description provided for @deliveryHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'Held: check before sending'**
+  String get deliveryHeld;
+
+  /// No description provided for @chatsHeldExplain.
+  ///
+  /// In en, this message translates to:
+  /// **'This wasn\'t sent by itself. It\'s over a day old, or sending was cut off and it may already have gone out.'**
+  String get chatsHeldExplain;
+
+  /// No description provided for @chatsSendHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'Send now'**
+  String get chatsSendHeld;
+
+  /// No description provided for @chatsDeleteQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete without sending'**
+  String get chatsDeleteQueued;
+
   /// No description provided for @chatsReplayed.
   ///
   /// In en, this message translates to:
