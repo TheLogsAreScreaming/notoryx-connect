@@ -1,0 +1,1 @@
+New: delivery receipts show whether the radio proved them, store-and-forward replays never alert, settings the radio can't use are greyed out with the reason, offline map outline and damaged-tile handling, identity key backup, map as a list for screen readers.
