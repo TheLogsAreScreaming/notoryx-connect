@@ -1557,5 +1557,8 @@
   "omReplace": "Sustituir por otro archivo",
   "omZooms": "Zoom {min} a {max}",
   "omAdded": "Mapa sin conexión listo: {name}, zoom {min} a {max}",
-  "omUnreadable": "No se pudo usar ese archivo: {reason}"
+  "omUnreadable": "No se pudo usar ese archivo: {reason}",
+  "gateExcluded": "No incluido en el firmware de esta radio",
+  "gateNoHardware": "Esta radio no tiene el hardware para esto",
+  "formNewerValue": "Definido por un firmware más nuevo (valor {value}). Se deja sin cambios."
 }

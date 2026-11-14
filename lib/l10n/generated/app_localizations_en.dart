@@ -5719,4 +5719,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String omUnreadable(String reason) {
     return 'Couldn\'t use that file: $reason';
   }
+
+  @override
+  String get gateExcluded => 'Left out of this radio\'s firmware build';
+
+  @override
+  String get gateNoHardware => 'This radio doesn\'t have the hardware for this';
+
+  @override
+  String formNewerValue(String value) {
+    return 'Set by newer firmware (value $value). Left unchanged.';
+  }
 }

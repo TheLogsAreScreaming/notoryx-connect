@@ -5781,4 +5781,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String omUnreadable(String reason) {
     return 'Datei nicht nutzbar: $reason';
   }
+
+  @override
+  String get gateExcluded =>
+      'In der Firmware dieses Funkgeräts nicht enthalten';
+
+  @override
+  String get gateNoHardware => 'Diesem Funkgerät fehlt die Hardware dafür';
+
+  @override
+  String formNewerValue(String value) {
+    return 'Von neuerer Firmware gesetzt (Wert $value). Bleibt unverändert.';
+  }
 }

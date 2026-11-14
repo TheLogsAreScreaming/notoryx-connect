@@ -1557,5 +1557,8 @@
   "omReplace": "Remplacer par un autre fichier",
   "omZooms": "Zoom {min} à {max}",
   "omAdded": "Carte hors ligne prête : {name}, zoom {min} à {max}",
-  "omUnreadable": "Fichier inutilisable : {reason}"
+  "omUnreadable": "Fichier inutilisable : {reason}",
+  "gateExcluded": "Absent du firmware de cette radio",
+  "gateNoHardware": "Cette radio n'a pas le matériel pour cela",
+  "formNewerValue": "Défini par un firmware plus récent (valeur {value}). Laissé tel quel."
 }

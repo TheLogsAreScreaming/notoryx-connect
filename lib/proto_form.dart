@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:protobuf/protobuf.dart';
 
 import 'generated/meshtastic/config.pb.dart';
+import 'l10n/generated/app_localizations.dart';
 import 'services/bastion_radio_policy.dart';
 
 /// Renders an editable form for any generated protobuf message.
@@ -74,7 +75,13 @@ class ProtoFieldList extends StatelessWidget {
       .join(' ');
 
   void _set(int tag, Object value) {
-    writable().setField(tag, value);
+    final target = writable();
+    // A value this build can't read is kept in unknownFields and written
+    // after the known fields, so it would silently win over the edit.
+    if (target.unknownFields.hasField(tag)) {
+      target.unknownFields.clearField(tag);
+    }
+    target.setField(tag, value);
     changed();
   }
 
@@ -148,6 +155,18 @@ class ProtoFieldList extends StatelessWidget {
             changed: changed,
           ),
         ],
+      );
+    }
+    if (field.isEnum && message.unknownFields.hasField(tag)) {
+      // Newer firmware set a value this app doesn't know. Showing the
+      // default instead would mislead, so it is shown and left alone.
+      final raw = message.unknownFields.getField(tag)?.varints.lastOrNull;
+      return ListTile(
+        key: ValueKey('proto-newer-$tag'),
+        contentPadding: EdgeInsets.zero,
+        title: Text(name),
+        subtitle: Text(AppLocalizations.of(context).formNewerValue('${raw ?? '?'}')),
+        enabled: false,
       );
     }
     if (field.isEnum) {

@@ -9462,6 +9462,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t use that file: {reason}'**
   String omUnreadable(String reason);
+
+  /// No description provided for @gateExcluded.
+  ///
+  /// In en, this message translates to:
+  /// **'Left out of this radio\'s firmware build'**
+  String get gateExcluded;
+
+  /// No description provided for @gateNoHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'This radio doesn\'t have the hardware for this'**
+  String get gateNoHardware;
+
+  /// No description provided for @formNewerValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Set by newer firmware (value {value}). Left unchanged.'**
+  String formNewerValue(String value);
 }
 
 class _AppLocalizationsDelegate
