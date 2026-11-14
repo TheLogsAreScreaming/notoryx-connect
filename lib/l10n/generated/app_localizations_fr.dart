@@ -2127,7 +2127,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ndAddNote => 'Touchez pour ajouter une note';
 
   @override
-  String get ndDirectMessages => 'MESSAGES DIRECTS';
+  String get ndDirectMessages => 'Messages directs';
 
   @override
   String get ndNoDirect => 'Aucun message direct avec ce nœud pour l\'instant.';
@@ -2139,7 +2139,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ndSend => 'Envoyer';
 
   @override
-  String get ndRadioLinks => 'LIAISONS RADIO DIRECTES';
+  String get ndRadioLinks => 'Liaisons radio directes';
 
   @override
   String get ndNoNeighbors =>
@@ -2573,10 +2573,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Intervalle de diffusion, mode GPS, position intelligente';
 
   @override
-  String get rsAllSettings => 'TOUS LES RÉGLAGES DE LA RADIO';
+  String get rsAllSettings => 'Tous les réglages de la radio';
 
   @override
-  String get rsModules => 'MODULES';
+  String get rsModules => 'Modules';
 
   @override
   String get rsRadioChanged =>

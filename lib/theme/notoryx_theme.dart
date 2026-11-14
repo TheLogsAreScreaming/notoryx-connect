@@ -95,11 +95,13 @@ abstract final class NotoryxTheme {
   /// One type scale for the whole app: sentence case, weight for hierarchy.
   static TextTheme _type(ColorScheme c) {
     // Start from Material's full type geometry (sizes, baselines, spacing).
-    final base = ThemeData(useMaterial3: true, brightness: c.brightness).textTheme
-        .apply(bodyColor: c.onSurface, displayColor: c.onSurface);
+    // Inter throughout, the same type as NOTORYX Core.
+    final base = ThemeData(useMaterial3: true, brightness: c.brightness).textTheme.apply(
+        bodyColor: c.onSurface, displayColor: c.onSurface,
+        fontFamily: NxFonts.sans, fontFamilyFallback: NxFonts.sansFallback);
     return base.copyWith(
-      headlineSmall: base.headlineSmall?.copyWith(fontSize: 24, fontWeight: FontWeight.w700, height: 1.25),
-      titleLarge: base.titleLarge?.copyWith(fontSize: 20, fontWeight: FontWeight.w700, height: 1.3),
+      headlineSmall: base.headlineSmall?.copyWith(fontSize: 26, fontWeight: FontWeight.w700, height: 1.2, letterSpacing: -.5),
+      titleLarge: base.titleLarge?.copyWith(fontSize: 20, fontWeight: FontWeight.w600, height: 1.3, letterSpacing: -.2),
       titleMedium: base.titleMedium?.copyWith(fontSize: 16, fontWeight: FontWeight.w600, height: 1.35),
       titleSmall: base.titleSmall?.copyWith(fontSize: 14, fontWeight: FontWeight.w600, height: 1.35),
       bodyLarge: base.bodyLarge?.copyWith(fontSize: 16, height: 1.45),
@@ -107,7 +109,9 @@ abstract final class NotoryxTheme {
       bodySmall: base.bodySmall?.copyWith(fontSize: 12.5, height: 1.4, color: c.onSurfaceVariant),
       labelLarge: base.labelLarge?.copyWith(fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: .1),
       labelMedium: base.labelMedium?.copyWith(fontSize: 12.5, fontWeight: FontWeight.w600),
-      labelSmall: base.labelSmall?.copyWith(fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .9,
+      // Section titles: sentence case and quiet, never the accent colour,
+      // so the accent stays free for actions and live status.
+      labelSmall: base.labelSmall?.copyWith(fontSize: 13.5, fontWeight: FontWeight.w600, letterSpacing: .1,
           color: c.onSurfaceVariant),
     );
   }
@@ -178,9 +182,10 @@ abstract final class NotoryxTheme {
 
   static ThemeData _compose(ColorScheme c, NxStatusColors status) {
     final brightness = c.brightness;
-    final dark = brightness == Brightness.dark;
     final type = _type(c);
-    final rounded = RoundedRectangleBorder(borderRadius: BorderRadius.circular(NxRadius.md));
+    // Squared-off controls and hairline cards: the NOTORYX Core look.
+    final rounded = RoundedRectangleBorder(borderRadius: BorderRadius.circular(NxRadius.xs));
+    final soft = RoundedRectangleBorder(borderRadius: BorderRadius.circular(NxRadius.md));
     const buttonSize = Size(64, NxTouch.min);
     const buttonPadding = EdgeInsets.symmetric(horizontal: 20, vertical: 12);
     Color? disabledFg(Set<WidgetState> s) => s.contains(WidgetState.disabled) ? c.onSurfaceVariant : null;
@@ -190,7 +195,10 @@ abstract final class NotoryxTheme {
       brightness: brightness,
       colorScheme: c,
       textTheme: type,
+      fontFamily: NxFonts.sans,
+      fontFamilyFallback: NxFonts.sansFallback,
       extensions: [status],
+      splashFactory: InkSparkle.splashFactory,
       scaffoldBackgroundColor: c.surface,
       canvasColor: c.surface,
       disabledColor: c.onSurfaceVariant,
@@ -206,15 +214,18 @@ abstract final class NotoryxTheme {
         titleTextStyle: type.titleLarge,
         foregroundColor: c.onSurface,
       ),
+      // Field-instrument cards: no fill, a hairline outline, squared off.
+      // Painted with the page colour, so it reads as unfilled but text
+      // contrast is still measured against a real surface.
       cardTheme: CardThemeData(
-        color: c.surfaceContainerLow,
+        color: c.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         margin: const EdgeInsets.symmetric(vertical: NxSpace.xxs + 2),
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(NxRadius.lg),
-          side: BorderSide(color: c.outlineVariant.withValues(alpha: dark ? .7 : 1)),
+          borderRadius: BorderRadius.circular(NxRadius.xs),
+          side: BorderSide(color: c.outlineVariant),
         ),
       ),
       listTileTheme: ListTileThemeData(
@@ -224,7 +235,7 @@ abstract final class NotoryxTheme {
         subtitleTextStyle: type.bodyMedium?.copyWith(color: c.onSurfaceVariant),
         minVerticalPadding: NxSpace.sm,
         contentPadding: const EdgeInsets.symmetric(horizontal: NxSpace.md),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(NxRadius.lg)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(NxRadius.xs)),
       ),
       expansionTileTheme: ExpansionTileThemeData(
         shape: const RoundedRectangleBorder(side: BorderSide.none),
@@ -268,10 +279,17 @@ abstract final class NotoryxTheme {
       segmentedButtonTheme: SegmentedButtonThemeData(style: ButtonStyle(
         minimumSize: const WidgetStatePropertyAll(Size(48, NxTouch.min)),
         textStyle: WidgetStatePropertyAll(type.labelLarge),
+        shape: WidgetStatePropertyAll(rounded),
+        side: WidgetStatePropertyAll(BorderSide(color: c.outlineVariant)),
+        backgroundColor: WidgetStateProperty.resolveWith((s) =>
+            s.contains(WidgetState.selected) ? c.primary.withValues(alpha: .16) : null),
+        foregroundColor: WidgetStateProperty.resolveWith((s) =>
+            s.contains(WidgetState.disabled) ? c.onSurfaceVariant
+                : s.contains(WidgetState.selected) ? c.onSurface : null),
       )),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: c.surfaceContainer,
+        fillColor: c.surfaceContainerHigh,
         contentPadding: const EdgeInsets.symmetric(horizontal: NxSpace.md, vertical: 14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(NxRadius.md),
@@ -294,11 +312,11 @@ abstract final class NotoryxTheme {
         prefixIconColor: c.onSurfaceVariant,
       ),
       chipTheme: ChipThemeData(
-        backgroundColor: c.surfaceContainer,
+        backgroundColor: c.surfaceContainerLow,
         selectedColor: c.primaryContainer,
         side: BorderSide(color: c.outlineVariant),
         labelStyle: type.labelMedium?.copyWith(color: c.onSurface),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(NxRadius.sm)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(NxRadius.xs)),
         padding: const EdgeInsets.symmetric(horizontal: NxSpace.xxs, vertical: NxSpace.xxs),
       ),
       switchTheme: SwitchThemeData(
@@ -306,23 +324,26 @@ abstract final class NotoryxTheme {
         trackColor: WidgetStateProperty.resolveWith((s) => s.contains(WidgetState.selected) ? c.primary : c.surfaceContainerHighest),
         trackOutlineColor: WidgetStateProperty.resolveWith((s) => s.contains(WidgetState.selected) ? c.primary : c.outline),
       ),
+      // Solid accent block behind the chosen tab, as in NOTORYX Core.
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: c.surfaceContainerLow,
+        backgroundColor: c.surface,
         surfaceTintColor: Colors.transparent,
-        indicatorColor: c.primaryContainer,
+        indicatorColor: c.primary,
+        indicatorShape: soft,
         elevation: 0,
         height: 72,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        iconTheme: WidgetStateProperty.resolveWith((s) => IconThemeData(
-            color: s.contains(WidgetState.selected) ? c.onPrimaryContainer : c.onSurfaceVariant)),
+        iconTheme: WidgetStateProperty.resolveWith((s) => IconThemeData(size: 22,
+            color: s.contains(WidgetState.selected) ? c.onPrimary : c.onSurfaceVariant)),
         labelTextStyle: WidgetStateProperty.resolveWith((s) => type.labelMedium?.copyWith(
             color: s.contains(WidgetState.selected) ? c.onSurface : c.onSurfaceVariant,
             fontWeight: s.contains(WidgetState.selected) ? FontWeight.w700 : FontWeight.w500)),
       ),
       navigationRailTheme: NavigationRailThemeData(
-        backgroundColor: c.surfaceContainerLow,
-        indicatorColor: c.primaryContainer,
-        selectedIconTheme: IconThemeData(color: c.onPrimaryContainer),
+        backgroundColor: c.surface,
+        indicatorColor: c.primary,
+        indicatorShape: soft,
+        selectedIconTheme: IconThemeData(color: c.onPrimary),
         unselectedIconTheme: IconThemeData(color: c.onSurfaceVariant),
         selectedLabelTextStyle: type.labelMedium?.copyWith(color: c.onSurface, fontWeight: FontWeight.w700),
         unselectedLabelTextStyle: type.labelMedium?.copyWith(color: c.onSurfaceVariant),
@@ -338,29 +359,56 @@ abstract final class NotoryxTheme {
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: c.inverseSurface,
-        contentTextStyle: type.bodyMedium?.copyWith(color: c.onInverseSurface),
-        actionTextColor: c.inversePrimary,
-        shape: rounded,
+        backgroundColor: c.surfaceContainerHigh,
+        contentTextStyle: type.bodyMedium?.copyWith(color: c.onSurface),
+        actionTextColor: c.primary,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(NxRadius.md), side: BorderSide(color: c.outlineVariant)),
       ),
       dialogTheme: DialogThemeData(
-        backgroundColor: c.surfaceContainerHigh,
+        backgroundColor: c.surfaceContainerLow,
         surfaceTintColor: Colors.transparent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(NxRadius.xl)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(NxRadius.lg), side: BorderSide(color: c.outlineVariant)),
         titleTextStyle: type.titleLarge,
         contentTextStyle: type.bodyMedium?.copyWith(color: c.onSurfaceVariant),
       ),
       bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: c.surfaceContainerHigh,
+        backgroundColor: c.surfaceContainerLow,
+        modalBackgroundColor: c.surfaceContainerLow,
         surfaceTintColor: Colors.transparent,
         showDragHandle: true,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(NxRadius.xl))),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(NxRadius.lg))),
       ),
-      progressIndicatorTheme: ProgressIndicatorThemeData(color: c.primary, linearTrackColor: c.surfaceContainerHighest),
+      popupMenuTheme: PopupMenuThemeData(
+        color: c.surfaceContainerHigh,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(NxRadius.md), side: BorderSide(color: c.outlineVariant)),
+      ),
+      sliderTheme: SliderThemeData(
+        activeTrackColor: c.primary,
+        inactiveTrackColor: c.surfaceContainerHighest,
+        thumbColor: c.primary,
+        trackHeight: 3,
+        valueIndicatorColor: c.surfaceContainerHighest,
+        valueIndicatorTextStyle: NxFonts.monoStyle(fontSize: 12, color: c.onSurface),
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: c.primary,
+        foregroundColor: c.onPrimary,
+        elevation: 0, focusElevation: 0, hoverElevation: 0, highlightElevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(NxRadius.sm)),
+      ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: c.primary, linearTrackColor: c.surfaceContainerHigh, circularTrackColor: Colors.transparent),
       tooltipTheme: TooltipThemeData(
-        decoration: BoxDecoration(color: c.inverseSurface, borderRadius: BorderRadius.circular(NxRadius.sm)),
-        textStyle: type.bodySmall?.copyWith(color: c.onInverseSurface),
+        decoration: BoxDecoration(
+            color: c.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(NxRadius.sm),
+            border: Border.all(color: c.outline)),
+        textStyle: type.bodySmall?.copyWith(color: c.onSurface),
       ),
       // Wide enough to grab with a finger; wider still while dragged.
       scrollbarTheme: ScrollbarThemeData(
@@ -372,6 +420,10 @@ abstract final class NotoryxTheme {
       ),
       pageTransitionsTheme: const PageTransitionsTheme(builders: {
         TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+        TargetPlatform.iOS: FadeForwardsPageTransitionsBuilder(),
+        TargetPlatform.macOS: FadeForwardsPageTransitionsBuilder(),
+        TargetPlatform.windows: FadeForwardsPageTransitionsBuilder(),
+        TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
       }),
     );
   }

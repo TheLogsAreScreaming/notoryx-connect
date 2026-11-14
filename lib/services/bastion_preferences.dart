@@ -149,16 +149,21 @@ class BastionAppearanceCard extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Units'),
-            subtitle: const Text('Distances and altitudes'),
-            trailing: SegmentedButton<BastionUnits>(
-              segments: const [
-                ButtonSegment(value: BastionUnits.metric, label: Text('km, m')),
-                ButtonSegment(value: BastionUnits.imperial, label: Text('mi, ft')),
-              ],
-              selected: {p.units},
-              showSelectedIcon: false,
-              onSelectionChanged: (v) => p.update(unitSystem: v.single),
-            ),
+            // The choice sits under the description, so it never runs out of
+            // room on a narrow screen with large text.
+            subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('Distances and altitudes'),
+              const SizedBox(height: 8),
+              SegmentedButton<BastionUnits>(
+                segments: const [
+                  ButtonSegment(value: BastionUnits.metric, label: Text('km, m')),
+                  ButtonSegment(value: BastionUnits.imperial, label: Text('mi, ft')),
+                ],
+                selected: {p.units},
+                showSelectedIcon: false,
+                onSelectionChanged: (v) => p.update(unitSystem: v.single),
+              ),
+            ]),
           ),
           SwitchListTile(title: const Text('Dashboard statistics'), value: p.statistics,
             onChanged: (v) => p.update(stats: v)),

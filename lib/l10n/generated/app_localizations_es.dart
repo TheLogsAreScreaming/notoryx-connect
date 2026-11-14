@@ -2115,7 +2115,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ndAddNote => 'Toca para añadir una nota';
 
   @override
-  String get ndDirectMessages => 'MENSAJES DIRECTOS';
+  String get ndDirectMessages => 'Mensajes directos';
 
   @override
   String get ndNoDirect => 'Aún no hay mensajes directos con este nodo.';
@@ -2127,7 +2127,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ndSend => 'Enviar';
 
   @override
-  String get ndRadioLinks => 'ENLACES DE RADIO DIRECTOS';
+  String get ndRadioLinks => 'Enlaces de radio directos';
 
   @override
   String get ndNoNeighbors =>
@@ -2560,10 +2560,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Intervalo de emisión, modo GPS, posición inteligente';
 
   @override
-  String get rsAllSettings => 'TODOS LOS AJUSTES DE LA RADIO';
+  String get rsAllSettings => 'Todos los ajustes de la radio';
 
   @override
-  String get rsModules => 'MÓDULOS';
+  String get rsModules => 'Módulos';
 
   @override
   String get rsRadioChanged =>

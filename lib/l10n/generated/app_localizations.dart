@@ -3525,7 +3525,7 @@ abstract class AppLocalizations {
   /// No description provided for @ndDirectMessages.
   ///
   /// In en, this message translates to:
-  /// **'DIRECT MESSAGES'**
+  /// **'Direct messages'**
   String get ndDirectMessages;
 
   /// No description provided for @ndNoDirect.
@@ -3549,7 +3549,7 @@ abstract class AppLocalizations {
   /// No description provided for @ndRadioLinks.
   ///
   /// In en, this message translates to:
-  /// **'DIRECT RADIO LINKS'**
+  /// **'Direct radio links'**
   String get ndRadioLinks;
 
   /// No description provided for @ndNoNeighbors.
@@ -4263,13 +4263,13 @@ abstract class AppLocalizations {
   /// No description provided for @rsAllSettings.
   ///
   /// In en, this message translates to:
-  /// **'ALL RADIO SETTINGS'**
+  /// **'All radio settings'**
   String get rsAllSettings;
 
   /// No description provided for @rsModules.
   ///
   /// In en, this message translates to:
-  /// **'MODULES'**
+  /// **'Modules'**
   String get rsModules;
 
   /// No description provided for @rsRadioChanged.

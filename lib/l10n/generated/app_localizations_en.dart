@@ -2096,7 +2096,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ndAddNote => 'Tap to add a note';
 
   @override
-  String get ndDirectMessages => 'DIRECT MESSAGES';
+  String get ndDirectMessages => 'Direct messages';
 
   @override
   String get ndNoDirect => 'No direct messages with this node yet.';
@@ -2108,7 +2108,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ndSend => 'Send';
 
   @override
-  String get ndRadioLinks => 'DIRECT RADIO LINKS';
+  String get ndRadioLinks => 'Direct radio links';
 
   @override
   String get ndNoNeighbors =>
@@ -2538,10 +2538,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rsPositionSub => 'Broadcast interval, GPS mode, smart position';
 
   @override
-  String get rsAllSettings => 'ALL RADIO SETTINGS';
+  String get rsAllSettings => 'All radio settings';
 
   @override
-  String get rsModules => 'MODULES';
+  String get rsModules => 'Modules';
 
   @override
   String get rsRadioChanged =>

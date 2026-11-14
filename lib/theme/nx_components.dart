@@ -41,7 +41,7 @@ class NxSectionLabel extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(NxSpace.xxs, NxSpace.md, NxSpace.xxs, NxSpace.xs),
         child: Row(children: [
           Expanded(child: Semantics(header: true,
-              child: Text(text.toUpperCase(), style: Theme.of(context).textTheme.labelSmall))),
+              child: Text(text, style: Theme.of(context).textTheme.labelSmall))),
           ?trailing,
         ]),
       );
@@ -66,14 +66,15 @@ class NxStatTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: NxSpace.sm, horizontal: NxSpace.sm),
         decoration: BoxDecoration(
-          color: scheme.surfaceContainerLow,
-          borderRadius: BorderRadius.circular(NxRadius.md),
-          border: Border.all(color: scheme.outlineVariant.withValues(alpha: .7)),
+          borderRadius: BorderRadius.circular(NxRadius.xs),
+          border: Border.all(color: scheme.outlineVariant),
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
             if (icon != null) ...[Icon(icon, size: 18, color: color), const SizedBox(width: NxSpace.xxs)],
-            Flexible(child: Text(value, style: type.titleMedium?.copyWith(color: color, fontWeight: FontWeight.w700))),
+            // Readings in mono with even-width digits, as in NOTORYX Core.
+            Flexible(child: Text(value, style: NxFonts.monoStyle(
+                fontSize: type.titleMedium?.fontSize, fontWeight: FontWeight.w600, color: color))),
           ]),
           const SizedBox(height: 2),
           Text(label, style: type.bodySmall),
@@ -129,6 +130,7 @@ class NxBanner extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final type = Theme.of(context).textTheme;
     final (bg, fg) = NxStatusColors.of(context).container(tone, scheme);
+    final edge = tone == NxTone.neutral ? scheme.outlineVariant : NxStatusColors.of(context).strong(tone, scheme);
     return Semantics(
       container: true,
       // Problems are spoken when they appear, without moving focus.
@@ -136,7 +138,11 @@ class NxBanner extends StatelessWidget {
       child: Container(
       margin: const EdgeInsets.symmetric(vertical: NxSpace.xxs + 2),
       padding: const EdgeInsets.all(NxSpace.sm + 2),
-      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(NxRadius.md)),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(NxRadius.xs),
+        border: Border.all(color: edge.withValues(alpha: .55)),
+      ),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Icon(icon ?? iconFor(tone), size: 20, color: fg),
         const SizedBox(width: NxSpace.sm),
@@ -171,7 +177,10 @@ class NxEmptyState extends StatelessWidget {
       child: Column(children: [
         Container(
           width: 56, height: 56,
-          decoration: BoxDecoration(color: scheme.surfaceContainerHigh, shape: BoxShape.circle),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(NxRadius.sm),
+            border: Border.all(color: scheme.outlineVariant),
+          ),
           child: Icon(icon, size: 28, color: scheme.onSurfaceVariant),
         ),
         const SizedBox(height: NxSpace.sm),
@@ -184,7 +193,7 @@ class NxEmptyState extends StatelessWidget {
   }
 }
 
-/// A rounded status chip with a coloured dot and words, e.g. "Connected".
+/// A squared status chip with a coloured dot and words, e.g. "Connected".
 class NxStatusPill extends StatelessWidget {
   const NxStatusPill({super.key, required this.label, required this.tone, this.icon, this.busy = false});
   final String label;
@@ -205,9 +214,9 @@ class NxStatusPill extends StatelessWidget {
         constraints: const BoxConstraints(minHeight: 32),
         padding: const EdgeInsets.symmetric(horizontal: NxSpace.sm, vertical: NxSpace.xxs),
         decoration: BoxDecoration(
-          color: scheme.surfaceContainerHigh,
-          borderRadius: BorderRadius.circular(NxRadius.pill),
-          border: Border.all(color: color.withValues(alpha: .45)),
+          color: color.withValues(alpha: .10),
+          borderRadius: BorderRadius.circular(NxRadius.xs),
+          border: Border.all(color: color.withValues(alpha: .55)),
         ),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           if (busy)

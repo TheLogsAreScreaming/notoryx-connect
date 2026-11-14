@@ -118,7 +118,7 @@ void main() {
     expect(find.text('1'), findsWidgets, reason: 'unread badge on Chats');
     await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
     await tester.pumpAndSettle();
-    expect(find.text('PINNED'), findsOneWidget);
+    expect(find.text('Pinned'), findsOneWidget);
     expect(find.text('Today'), findsOneWidget);
     expect(find.text('Yesterday'), findsWidgets);
     expect(find.bySemanticsLabel('New messages above'), findsOneWidget);
@@ -127,7 +127,7 @@ void main() {
     // Unpin from the pinned section.
     await tester.tap(find.byTooltip('Unpin'));
     await tester.pumpAndSettle();
-    expect(find.text('PINNED'), findsNothing);
+    expect(find.text('Pinned'), findsNothing);
 
     // Pin from the long-press sheet.
     await tester.longPress(find.text('fresh news'));
@@ -135,7 +135,7 @@ void main() {
     expect(find.text('Copy text'), findsOneWidget);
     await tester.tap(find.text('Pin'));
     await tester.pumpAndSettle();
-    expect(find.text('PINNED'), findsOneWidget);
+    expect(find.text('Pinned'), findsOneWidget);
     expect(find.byIcon(Icons.push_pin), findsNWidgets(2), reason: 'pinned section and pin mark on the card');
   });
 

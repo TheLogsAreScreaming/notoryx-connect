@@ -91,16 +91,21 @@ class _SettingsPage extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.blur_on),
           title: Text(l.setPrecision),
-          subtitle: Text(l.setPrecisionSub),
-          trailing: DropdownButton<int>(
-            value: radio.locationPrecision,
-            underline: const SizedBox.shrink(),
-            items: [for (final e in BastionPhonePositionSharer.precisionChoices.entries)
-              DropdownMenuItem(value: e.key, child: Text(e.value == 0
-                  ? l.setPrecise
-                  : l.setAbout2(BastionUnitFormat.distance(e.value.toDouble(), BastionPreferences.instance.units))))],
-            onChanged: (v) { if (v != null) radio.setLocationPrecision(v); },
-          ),
+          // The choice sits under the description, so it never runs out of
+          // room on a narrow screen with large text.
+          subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(l.setPrecisionSub),
+            DropdownButton<int>(
+              value: radio.locationPrecision,
+              isExpanded: true,
+              underline: const SizedBox.shrink(),
+              items: [for (final e in BastionPhonePositionSharer.precisionChoices.entries)
+                DropdownMenuItem(value: e.key, child: Text(e.value == 0
+                    ? l.setPrecise
+                    : l.setAbout2(BastionUnitFormat.distance(e.value.toDouble(), BastionPreferences.instance.units))))],
+              onChanged: (v) { if (v != null) radio.setLocationPrecision(v); },
+            ),
+          ]),
         ),
       ])),
       _BackgroundCard(radio: radio),

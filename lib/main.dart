@@ -83,6 +83,12 @@ Future<void> main() async {
     final text = await rootBundle.loadString('licenses/meshtastic-protobufs-GPL-3.0.txt');
     yield LicenseEntryWithLineBreaks(['Meshtastic protobufs'], text);
   });
+  LicenseRegistry.addLicense(() async* {
+    for (final (name, file) in [('Inter', 'Inter-OFL.txt'), ('JetBrains Mono', 'JetBrainsMono-OFL.txt')]) {
+      final text = await rootBundle.loadString('assets/fonts/$file');
+      yield LicenseEntryWithLineBreaks([name], text);
+    }
+  });
   await BastionTileCache.initialize();
   await BastionPreferences.instance.load();
   // Chat history lives in its own database; older saves move over once.

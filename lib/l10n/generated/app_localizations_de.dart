@@ -2124,7 +2124,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get ndAddNote => 'Tippen, um eine Notiz hinzuzufügen';
 
   @override
-  String get ndDirectMessages => 'DIREKTNACHRICHTEN';
+  String get ndDirectMessages => 'Direktnachrichten';
 
   @override
   String get ndNoDirect => 'Noch keine Direktnachrichten mit diesem Knoten.';
@@ -2136,7 +2136,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get ndSend => 'Senden';
 
   @override
-  String get ndRadioLinks => 'DIREKTE FUNKVERBINDUNGEN';
+  String get ndRadioLinks => 'Direkte Funkverbindungen';
 
   @override
   String get ndNoNeighbors =>
@@ -2569,10 +2569,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sendeintervall, GPS-Modus, intelligente Position';
 
   @override
-  String get rsAllSettings => 'ALLE FUNKGERÄTEEINSTELLUNGEN';
+  String get rsAllSettings => 'Alle Funkgeräteeinstellungen';
 
   @override
-  String get rsModules => 'MODULE';
+  String get rsModules => 'Module';
 
   @override
   String get rsRadioChanged =>
