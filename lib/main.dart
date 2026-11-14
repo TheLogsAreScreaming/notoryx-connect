@@ -41,12 +41,16 @@ import 'mesh_health_page.dart';
 import 'mesh_tools_page.dart';
 import 'node_detail_page.dart';
 import 'checklists_page.dart';
+import 'automations_page.dart';
+import 'services/bastion_automations.dart';
 import 'services/bastion_checklists.dart';
 import 'day_replay_page.dart';
 import 'node_journal_page.dart';
 import 'radio_settings_page.dart';
 import 'services/bastion_tile_cache.dart';
 import 'traceroute_page.dart';
+import 'timeline_page.dart';
+import 'services/bastion_timeline.dart';
 import 'services/bastion_node_vault.dart';
 import 'services/meshtastic_ble_discovery.dart';
 import 'services/meshtastic_connection_controller.dart';
@@ -228,9 +232,15 @@ class _BastionShellState extends State<BastionShell> {
   void initState() {
     super.initState();
     unawaited(_realRadio.prepareAlerts());
+    // Automations act on the real radio only, never the demo.
+    final automations = BastionAutomations.instance = AutomationEngine(hooks: coordinatorAutomationHooks(_realRadio));
+    unawaited(automations.load());
+    automations.attach(CoordinatorAutomationSource(_realRadio));
     unawaited(SentinelService.instance.start());
     // The real radio only: demo nodes must never reach ATAK.
     BastionTakBridge.instance.attach(() => _realRadio.nodes);
+    // The timeline records the real radio only, never the demo.
+    BastionTimeline.instance.attach(CoordinatorTimelineSource(_realRadio));
     _setUpShortcuts();
     // The widget follows the real radio, never the demo.
     if (BastionHomeWidget.supported) {
@@ -263,8 +273,11 @@ class _BastionShellState extends State<BastionShell> {
   @override
   void dispose() {
     ble.dispose();
+    BastionAutomations.instance?.dispose();
+    BastionAutomations.instance = null;
     _homeWidget?.dispose();
     BastionTakBridge.instance.detach();
+    BastionTimeline.instance.detach();
     _realRadio.dispose();
     _demo?.dispose();
     super.dispose();

@@ -262,6 +262,8 @@ void main() {
     await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Herramientas')));
     await tester.pumpAndSettle();
     expect(find.text('Doctor de conexión'), findsOneWidget);
+    // More tools sit above the checklist than fit on a small phone.
+    await tester.scrollUntilVisible(find.text('Radio cargada'), 200, scrollable: find.byType(Scrollable).first);
     expect(find.text('Radio cargada'), findsOneWidget);
     expect(find.text('Connection doctor'), findsNothing);
   });
