@@ -1547,5 +1547,14 @@
   "trcNoRouteBack": "Este firmware no lo informa",
   "trcNoMap": "No hay posiciones suficientes para el mapa",
   "trcNoMapHelp": "Al menos dos nodos de la ruta necesitan una posición conocida.",
-  "trcSnrUnknown": "SNR desconocido"
+  "trcSnrUnknown": "SNR desconocido",
+  "omTitle": "Mapa sin conexión",
+  "omHelp": "Importa un archivo de mapa MBTiles ráster (por ejemplo, exportado de una app de mapas que tengas derecho a usar). Se dibuja sobre el mapa en línea y funciona sin internet. Los archivos vectoriales (pbf) no son compatibles.",
+  "omNone": "No hay mapa sin conexión importado.",
+  "omRemove": "Quitar mapa sin conexión",
+  "omImport": "Importar archivo MBTiles",
+  "omReplace": "Sustituir por otro archivo",
+  "omZooms": "Zoom {min} a {max}",
+  "omAdded": "Mapa sin conexión listo: {name}, zoom {min} a {max}",
+  "omUnreadable": "No se pudo usar ese archivo: {reason}"
 }

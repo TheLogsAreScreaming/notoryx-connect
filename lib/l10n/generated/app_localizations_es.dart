@@ -5722,4 +5722,38 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get trcSnrUnknown => 'SNR desconocido';
+
+  @override
+  String get omTitle => 'Mapa sin conexión';
+
+  @override
+  String get omHelp =>
+      'Importa un archivo de mapa MBTiles ráster (por ejemplo, exportado de una app de mapas que tengas derecho a usar). Se dibuja sobre el mapa en línea y funciona sin internet. Los archivos vectoriales (pbf) no son compatibles.';
+
+  @override
+  String get omNone => 'No hay mapa sin conexión importado.';
+
+  @override
+  String get omRemove => 'Quitar mapa sin conexión';
+
+  @override
+  String get omImport => 'Importar archivo MBTiles';
+
+  @override
+  String get omReplace => 'Sustituir por otro archivo';
+
+  @override
+  String omZooms(int min, int max) {
+    return 'Zoom $min a $max';
+  }
+
+  @override
+  String omAdded(String name, int min, int max) {
+    return 'Mapa sin conexión listo: $name, zoom $min a $max';
+  }
+
+  @override
+  String omUnreadable(String reason) {
+    return 'No se pudo usar ese archivo: $reason';
+  }
 }

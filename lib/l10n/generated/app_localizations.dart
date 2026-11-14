@@ -9402,6 +9402,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SNR unknown'**
   String get trcSnrUnknown;
+
+  /// No description provided for @omTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline map'**
+  String get omTitle;
+
+  /// No description provided for @omHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Import a raster MBTiles map file (for example one exported from a mapping app you\'re licensed to use). It\'s drawn over the online map and works with no internet. Vector (pbf) files aren\'t supported.'**
+  String get omHelp;
+
+  /// No description provided for @omNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No offline map imported.'**
+  String get omNone;
+
+  /// No description provided for @omRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove offline map'**
+  String get omRemove;
+
+  /// No description provided for @omImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Import MBTiles file'**
+  String get omImport;
+
+  /// No description provided for @omReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace with another file'**
+  String get omReplace;
+
+  /// No description provided for @omZooms.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom {min} to {max}'**
+  String omZooms(int min, int max);
+
+  /// No description provided for @omAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline map ready: {name}, zoom {min} to {max}'**
+  String omAdded(String name, int min, int max);
+
+  /// No description provided for @omUnreadable.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t use that file: {reason}'**
+  String omUnreadable(String reason);
 }
 
 class _AppLocalizationsDelegate

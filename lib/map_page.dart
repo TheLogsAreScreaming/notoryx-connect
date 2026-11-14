@@ -19,6 +19,7 @@ import 'services/bastion_geo.dart';
 import 'services/bastion_geofences.dart';
 import 'services/bastion_gpx.dart';
 import 'services/bastion_map_layers.dart';
+import 'services/bastion_offline_map.dart';
 import 'services/bastion_heard_filter.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_routes.dart';
@@ -37,7 +38,7 @@ import 'theme/notoryx_theme.dart';
 /// Tiles load from tile.openstreetmap.org and need internet access; node
 /// positions come only from the radio.
 class MapPage extends StatefulWidget {
-  const MapPage({super.key, required this.radio, this.shareFile = _shareFile, this.tak, this.mapLayers});
+  const MapPage({super.key, required this.radio, this.shareFile = _shareFile, this.tak, this.mapLayers, this.offlineMap});
 
   final MeshtasticRadioCoordinator radio;
 
@@ -46,6 +47,9 @@ class MapPage extends StatefulWidget {
 
   /// Imported map files; the app-wide store when null.
   final BastionMapLayers? mapLayers;
+
+  /// The imported offline map file; the app-wide one when null.
+  final BastionOfflineMap? offlineMap;
 
   /// Hands an exported file to the system share sheet; replaced in tests.
   final Future<void> Function(String fileName, String text) shareFile;
@@ -164,18 +168,80 @@ class _MapPageState extends State<MapPage> {
     if (mounted) setState(() {});
   }
 
+  BastionOfflineMap get _offline => widget.offlineMap ?? BastionOfflineMap.instance;
+
   @override
   void initState() {
     super.initState();
     _layers.addListener(_onLayers);
     unawaited(_layers.load());
+    _offline.addListener(_onLayers);
+    unawaited(_offline.load());
   }
 
   @override
   void dispose() {
     _layers.removeListener(_onLayers);
+    _offline.removeListener(_onLayers);
     _map.dispose();
     super.dispose();
+  }
+
+  /// Offline map: import a raster MBTiles file, switch it on or off, or remove it.
+  void _showOfflineMap(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheet) => ListenableBuilder(
+        listenable: _offline,
+        builder: (sheet, _) {
+          final info = _offline.info;
+          return SafeArea(child: ListView(shrinkWrap: true, padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), children: [
+            Text(l.omTitle, style: Theme.of(sheet).textTheme.titleMedium),
+            const SizedBox(height: 4),
+            Text(l.omHelp, style: Theme.of(sheet).textTheme.bodySmall),
+            const SizedBox(height: 8),
+            if (info == null)
+              Text(l.omNone)
+            else
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                value: _offline.active,
+                onChanged: _offline.setActive,
+                title: Text(info.name),
+                subtitle: Text(l.omZooms(info.minZoom, info.maxZoom)),
+                secondary: IconButton(
+                  tooltip: l.omRemove,
+                  icon: const Icon(Icons.delete_outline),
+                  onPressed: _offline.remove,
+                ),
+              ),
+            const SizedBox(height: 8),
+            FilledButton.icon(
+              onPressed: () => _importOfflineMap(sheet),
+              icon: const Icon(Icons.file_open_outlined),
+              label: Text(info == null ? l.omImport : l.omReplace),
+            ),
+          ]));
+        },
+      ),
+    );
+  }
+
+  Future<void> _importOfflineMap(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final file = await openFile(acceptedTypeGroups: const [
+        XTypeGroup(label: 'MBTiles', extensions: ['mbtiles'], uniformTypeIdentifiers: ['public.data']),
+      ]);
+      if (file == null) return;
+      final info = await _offline.import(file);
+      messenger.showSnackBar(SnackBar(content: Text(l.omAdded(info.name, info.minZoom, info.maxZoom))));
+    } on FormatException catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text(l.omUnreadable(e.message))));
+    } catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text(l.omUnreadable('$e'))));
+    }
   }
 
   /// Lines and outlines from imported map files that are switched on.
@@ -359,6 +425,13 @@ class _MapPageState extends State<MapPage> {
                     userAgentPackageName: 'com.bastionmesh.connect',
                     maxNativeZoom: _topo ? 17 : 19,
                   ),
+                  if (_offline.info case final info? when _offline.active)
+                    TileLayer(
+                      key: const ValueKey('offline-map'),
+                      tileProvider: _offline.tileProvider,
+                      minNativeZoom: info.minZoom,
+                      maxNativeZoom: info.maxZoom,
+                    ),
                   if (_showHeatmap) _heatmapLayer(context),
                   if (widget.radio.geofences.isNotEmpty)
                     CircleLayer(circles: [
@@ -594,6 +667,11 @@ class _MapPageState extends State<MapPage> {
                             child: const Icon(Icons.layers_outlined),
                           ),
                           onPressed: () => _showLayers(context),
+                        ),
+                        IconButton(
+                          tooltip: l.omTitle,
+                          icon: Icon(_offline.active ? Icons.map : Icons.map_outlined),
+                          onPressed: () => _showOfflineMap(context),
                         ),
                         IconButton(
                           tooltip: l.mapZones,

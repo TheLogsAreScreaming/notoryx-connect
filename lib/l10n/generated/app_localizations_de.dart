@@ -5744,4 +5744,38 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get trcSnrUnknown => 'SNR unbekannt';
+
+  @override
+  String get omTitle => 'Offline-Karte';
+
+  @override
+  String get omHelp =>
+      'Importiere eine Raster-MBTiles-Kartendatei (zum Beispiel aus einer Karten-App exportiert, die du nutzen darfst). Sie wird über der Online-Karte gezeigt und funktioniert ohne Internet. Vektordateien (pbf) werden nicht unterstützt.';
+
+  @override
+  String get omNone => 'Keine Offline-Karte importiert.';
+
+  @override
+  String get omRemove => 'Offline-Karte entfernen';
+
+  @override
+  String get omImport => 'MBTiles-Datei importieren';
+
+  @override
+  String get omReplace => 'Durch andere Datei ersetzen';
+
+  @override
+  String omZooms(int min, int max) {
+    return 'Zoom $min bis $max';
+  }
+
+  @override
+  String omAdded(String name, int min, int max) {
+    return 'Offline-Karte bereit: $name, Zoom $min bis $max';
+  }
+
+  @override
+  String omUnreadable(String reason) {
+    return 'Datei nicht nutzbar: $reason';
+  }
 }

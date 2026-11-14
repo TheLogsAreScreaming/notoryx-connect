@@ -4088,5 +4088,44 @@
   "trcNoRouteBack": "Not reported by this firmware",
   "trcNoMap": "Not enough positions to map",
   "trcNoMapHelp": "At least two nodes on the route need a known position.",
-  "trcSnrUnknown": "SNR unknown"
+  "trcSnrUnknown": "SNR unknown",
+  "omTitle": "Offline map",
+  "omHelp": "Import a raster MBTiles map file (for example one exported from a mapping app you're licensed to use). It's drawn over the online map and works with no internet. Vector (pbf) files aren't supported.",
+  "omNone": "No offline map imported.",
+  "omRemove": "Remove offline map",
+  "omImport": "Import MBTiles file",
+  "omReplace": "Replace with another file",
+  "omZooms": "Zoom {min} to {max}",
+  "@omZooms": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "omAdded": "Offline map ready: {name}, zoom {min} to {max}",
+  "@omAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "omUnreadable": "Couldn't use that file: {reason}",
+  "@omUnreadable": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  }
 }

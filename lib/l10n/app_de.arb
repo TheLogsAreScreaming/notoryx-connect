@@ -1547,5 +1547,14 @@
   "trcNoRouteBack": "Von dieser Firmware nicht gemeldet",
   "trcNoMap": "Zu wenige Positionen für eine Karte",
   "trcNoMapHelp": "Mindestens zwei Knoten auf der Route brauchen eine bekannte Position.",
-  "trcSnrUnknown": "SNR unbekannt"
+  "trcSnrUnknown": "SNR unbekannt",
+  "omTitle": "Offline-Karte",
+  "omHelp": "Importiere eine Raster-MBTiles-Kartendatei (zum Beispiel aus einer Karten-App exportiert, die du nutzen darfst). Sie wird über der Online-Karte gezeigt und funktioniert ohne Internet. Vektordateien (pbf) werden nicht unterstützt.",
+  "omNone": "Keine Offline-Karte importiert.",
+  "omRemove": "Offline-Karte entfernen",
+  "omImport": "MBTiles-Datei importieren",
+  "omReplace": "Durch andere Datei ersetzen",
+  "omZooms": "Zoom {min} bis {max}",
+  "omAdded": "Offline-Karte bereit: {name}, Zoom {min} bis {max}",
+  "omUnreadable": "Datei nicht nutzbar: {reason}"
 }
