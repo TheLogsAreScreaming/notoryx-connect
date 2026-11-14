@@ -18,6 +18,7 @@ import 'services/bastion_field_log.dart';
 import 'services/bastion_geo.dart';
 import 'services/bastion_geofences.dart';
 import 'services/bastion_gpx.dart';
+import 'services/bastion_map_layers.dart';
 import 'services/bastion_offline_map.dart';
 import 'services/bastion_heard_filter.dart';
 import 'services/bastion_preferences.dart';
@@ -37,12 +38,15 @@ import 'theme/notoryx_theme.dart';
 /// Tiles load from tile.openstreetmap.org and need internet access; node
 /// positions come only from the radio.
 class MapPage extends StatefulWidget {
-  const MapPage({super.key, required this.radio, this.shareFile = _shareFile, this.tak, this.offlineMap});
+  const MapPage({super.key, required this.radio, this.shareFile = _shareFile, this.tak, this.mapLayers, this.offlineMap});
 
   final MeshtasticRadioCoordinator radio;
 
   /// Markers from ATAK; the app-wide bridge when null.
   final BastionTakBridge? tak;
+
+  /// Imported map files; the app-wide store when null.
+  final BastionMapLayers? mapLayers;
 
   /// The imported offline map file; the app-wide one when null.
   final BastionOfflineMap? offlineMap;
@@ -158,22 +162,27 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  BastionOfflineMap get _offline => widget.offlineMap ?? BastionOfflineMap.instance;
+  BastionMapLayers get _layers => widget.mapLayers ?? BastionMapLayers.instance;
 
-  void _onOffline() {
+  void _onLayers() {
     if (mounted) setState(() {});
   }
+
+  BastionOfflineMap get _offline => widget.offlineMap ?? BastionOfflineMap.instance;
 
   @override
   void initState() {
     super.initState();
-    _offline.addListener(_onOffline);
+    _layers.addListener(_onLayers);
+    unawaited(_layers.load());
+    _offline.addListener(_onLayers);
     unawaited(_offline.load());
   }
 
   @override
   void dispose() {
-    _offline.removeListener(_onOffline);
+    _layers.removeListener(_onLayers);
+    _offline.removeListener(_onLayers);
     _map.dispose();
     super.dispose();
   }
@@ -232,6 +241,118 @@ class _MapPageState extends State<MapPage> {
       messenger.showSnackBar(SnackBar(content: Text(l.omUnreadable(e.message))));
     } catch (e) {
       messenger.showSnackBar(SnackBar(content: Text(l.omUnreadable('$e'))));
+    }
+  }
+
+  /// Lines and outlines from imported map files that are switched on.
+  List<Polyline> _layerLines(Color color) => [
+        for (final layer in _layers.layers)
+          if (layer.visible)
+            for (final line in layer.lines)
+              Polyline(
+                points: [for (final (a, o) in line.points) LatLng(a, o)],
+                strokeWidth: 3,
+                color: color,
+                pattern: StrokePattern.dashed(segments: const [8, 5]),
+              ),
+      ];
+
+  List<Marker> _layerMarkers(BuildContext context, Color color) => [
+        for (final layer in _layers.layers)
+          if (layer.visible)
+            for (final p in layer.points)
+              Marker(
+                point: LatLng(p.latitude, p.longitude),
+                width: 44,
+                height: 44,
+                child: IconButton(
+                  tooltip: p.name,
+                  icon: Icon(Icons.place_outlined, color: color),
+                  onPressed: () => _showLayerPoint(context, layer, p),
+                ),
+              ),
+      ];
+
+  void _showLayerPoint(BuildContext context, MapLayer layer, LayerPoint p) {
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheet) => SafeArea(
+        child: ListTile(
+          leading: const Icon(Icons.place_outlined),
+          title: Text(p.name),
+          subtitle: Text([
+            if (p.note.isNotEmpty) p.note,
+            '${p.latitude.toStringAsFixed(5)}, ${p.longitude.toStringAsFixed(5)}',
+            l.mapLayerFrom(layer.name),
+          ].join('\n')),
+        ),
+      ),
+    );
+  }
+
+  /// Lists imported map files, with switches to show or hide each.
+  void _showLayers(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheet) => ListenableBuilder(
+        listenable: _layers,
+        builder: (sheet, _) {
+          final layers = _layers.layers;
+          return SafeArea(
+            child: ListView(shrinkWrap: true, padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), children: [
+              Text(l.mapLayers, style: Theme.of(sheet).textTheme.titleMedium),
+              const SizedBox(height: 4),
+              Text(l.mapLayersHelp, style: Theme.of(sheet).textTheme.bodySmall),
+              const SizedBox(height: 8),
+              if (layers.isEmpty) Text(l.mapLayersEmpty),
+              for (final layer in layers)
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  value: layer.visible,
+                  onChanged: (v) => _layers.setVisible(layer.id, v),
+                  title: Text(layer.name),
+                  subtitle: Text(l.mapLayerCounts(layer.points.length, layer.lines.length)),
+                  secondary: IconButton(
+                    tooltip: l.mapLayerRemove(layer.name),
+                    icon: const Icon(Icons.delete_outline),
+                    onPressed: () => _layers.remove(layer.id),
+                  ),
+                ),
+              const SizedBox(height: 8),
+              FilledButton.icon(
+                onPressed: () => _importLayer(sheet),
+                icon: const Icon(Icons.file_open_outlined),
+                label: Text(l.mapLayerImport),
+              ),
+            ]),
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> _importLayer(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final file = await openFile(acceptedTypeGroups: const [
+        XTypeGroup(
+          label: 'GPX, KML, GeoJSON',
+          extensions: ['gpx', 'kml', 'geojson', 'json'],
+          uniformTypeIdentifiers: ['com.topografix.gpx', 'com.google.earth.kml', 'public.geojson', 'public.json', 'public.xml'],
+        ),
+      ]);
+      if (file == null) return;
+      final text = await file.readAsString();
+      final name = file.name.replaceFirst(RegExp(r'\.(gpx|kml|geojson|json)$', caseSensitive: false), '');
+      final layer = await _layers.import(name.isEmpty ? file.name : name, text);
+      messenger.showSnackBar(SnackBar(content: Text(l.mapLayerAdded(layer.name, layer.points.length, layer.lines.length))));
+    } on StateError {
+      messenger.showSnackBar(SnackBar(content: Text(l.mapLayerTooMany(BastionMapLayers.maxLayers))));
+    } catch (_) {
+      messenger.showSnackBar(SnackBar(content: Text(l.mapLayerUnreadable)));
     }
   }
 
@@ -337,6 +458,10 @@ class _MapPageState extends State<MapPage> {
                             pattern: StrokePattern.dashed(segments: const [12, 6]),
                           ),
                     ]),
+                  if (_layerLines(Theme.of(context).colorScheme.secondary) case final lines when lines.isNotEmpty)
+                    PolylineLayer(polylines: lines),
+                  if (_layerMarkers(context, Theme.of(context).colorScheme.secondary) case final marks when marks.isNotEmpty)
+                    MarkerLayer(markers: marks),
                   if (_planning case final plan? when plan.isNotEmpty) ...[
                     PolylineLayer(polylines: [
                       if (plan.length >= 2)
@@ -533,6 +658,15 @@ class _MapPageState extends State<MapPage> {
                             child: const Icon(Icons.groups_outlined),
                           ),
                           onPressed: () => _showTeam(context),
+                        ),
+                        IconButton(
+                          tooltip: l.mapLayers,
+                          icon: Badge(
+                            isLabelVisible: _layers.layers.isNotEmpty,
+                            label: Text('${_layers.layers.length}'),
+                            child: const Icon(Icons.layers_outlined),
+                          ),
+                          onPressed: () => _showLayers(context),
                         ),
                         IconButton(
                           tooltip: l.omTitle,

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="status_widget_description">Radio status, unread messages and SOS at a glance</string>
+    <string name="radio_tile_label">NOTORYX</string>
+    <string name="radio_tile_no_radio">No radio connected</string>
 </resources>

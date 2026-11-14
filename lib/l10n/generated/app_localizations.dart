@@ -864,6 +864,12 @@ abstract class AppLocalizations {
   /// **'Send'**
   String get chatsSend;
 
+  /// Counter under the message box: bytes used, the limit, and the estimated transmit time.
+  ///
+  /// In en, this message translates to:
+  /// **'{used}/{max} · ≈{seconds} s on air'**
+  String chatsAirtime(int used, int max, String seconds);
+
   /// No description provided for @chatsQuickReplies.
   ///
   /// In en, this message translates to:
@@ -2339,6 +2345,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zones'**
   String get mapZones;
+
+  /// No description provided for @mapLayers.
+  ///
+  /// In en, this message translates to:
+  /// **'Map layers'**
+  String get mapLayers;
+
+  /// No description provided for @mapLayersHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Routes, tracks and places from GPX, KML or GeoJSON files. They stay on this phone and are never sent over the mesh.'**
+  String get mapLayersHelp;
+
+  /// No description provided for @mapLayersEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No map files imported yet.'**
+  String get mapLayersEmpty;
+
+  /// No description provided for @mapLayerImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Import GPX, KML or GeoJSON'**
+  String get mapLayerImport;
+
+  /// No description provided for @mapLayerUnreadable.
+  ///
+  /// In en, this message translates to:
+  /// **'That file has no points or lines the app can read.'**
+  String get mapLayerUnreadable;
+
+  /// No description provided for @mapLayerCounts.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} places, {lines} lines'**
+  String mapLayerCounts(int points, int lines);
+
+  /// No description provided for @mapLayerRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}'**
+  String mapLayerRemove(String name);
+
+  /// No description provided for @mapLayerAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {name}: {points} places, {lines} lines'**
+  String mapLayerAdded(String name, int points, int lines);
+
+  /// No description provided for @mapLayerTooMany.
+  ///
+  /// In en, this message translates to:
+  /// **'You can keep up to {max} map layers. Remove one first.'**
+  String mapLayerTooMany(int max);
+
+  /// No description provided for @mapLayerFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From {name}'**
+  String mapLayerFrom(String name);
 
   /// No description provided for @mapExportGpx.
   ///

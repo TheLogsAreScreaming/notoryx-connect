@@ -32,5 +32,6 @@ class StatusWidgetProvider : HomeWidgetProvider() {
             }
             appWidgetManager.updateAppWidget(id, views)
         }
+        RadioTileService.requestRefresh(context)
     }
 }
