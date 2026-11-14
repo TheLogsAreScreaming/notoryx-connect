@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/generated/app_localizations.dart';
+
 import 'services/bastion_sms_relay.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 
@@ -29,11 +31,11 @@ class _SmsRelayPageState extends State<SmsRelayPage> {
       try {
         if (!await widget.relay.gateway.hasPermission()) {
           await widget.relay.gateway.requestPermission();
-          if (mounted) setState(() => _status = 'Allow SMS when asked, then turn the relay on again.');
+          if (mounted) setState(() => _status = AppLocalizations.of(context).smsAllowFirst);
           return;
         }
       } catch (_) {
-        if (mounted) setState(() => _status = 'This phone cannot send SMS.');
+        if (mounted) setState(() => _status = AppLocalizations.of(context).smsUnsupported);
         return;
       }
     }
@@ -43,7 +45,7 @@ class _SmsRelayPageState extends State<SmsRelayPage> {
   Future<void> _add() async {
     final saved = await widget.relay.saveContact(_alias.text, _number.text);
     if (!mounted) return;
-    setState(() => _status = saved ? null : 'Use a short name (letters, numbers, - or _) and a phone number.');
+    setState(() => _status = saved ? null : AppLocalizations.of(context).smsBadContact);
     if (saved) {
       _alias.clear();
       _number.clear();
@@ -52,31 +54,30 @@ class _SmsRelayPageState extends State<SmsRelayPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final relay = widget.relay;
     return Scaffold(
-      appBar: AppBar(title: const Text('SMS relay')),
+      appBar: AppBar(title: Text(l.smsTitle)),
       body: SafeArea(top: false, child: AnimatedBuilder(
         animation: Listenable.merge([relay, widget.radio]),
         builder: (context, _) {
           final nodes = [for (final n in widget.radio.nodes) if (n.num != widget.radio.localNodeNum) n];
           return ListView(padding: const EdgeInsets.all(16), children: [
-            const Text('Lets the nodes you choose send a text message through this phone. They send a direct '
-                'message like "SMS base: on our way". Your carrier\'s normal SMS charges apply. '
-                'This is not an emergency service, and only hand-off to the phone network is confirmed.'),
+            Text(l.smsHelp),
             if (_status != null) Semantics(liveRegion: true, child: Padding(padding: const EdgeInsets.only(top: 8), child: Text(_status!))),
             SwitchListTile(key: const ValueKey('sms-enabled'), contentPadding: EdgeInsets.zero,
-              title: const Text('Relay messages by SMS'), value: relay.enabled, onChanged: _toggle),
-            Text('Contacts', style: Theme.of(context).textTheme.titleMedium),
+              title: Text(l.smsEnable), value: relay.enabled, onChanged: _toggle),
+            Text(l.smsContacts, style: Theme.of(context).textTheme.titleMedium),
             for (final c in relay.contacts.entries)
               ListTile(contentPadding: EdgeInsets.zero, title: Text(c.key), subtitle: Text(c.value),
-                trailing: IconButton(tooltip: 'Remove ${c.key}', icon: const Icon(Icons.delete_outline),
+                trailing: IconButton(tooltip: l.smsRemove(c.key), icon: const Icon(Icons.delete_outline),
                   onPressed: () => relay.removeContact(c.key))),
-            TextField(key: const ValueKey('sms-alias'), controller: _alias, decoration: const InputDecoration(labelText: 'Short name, e.g. base')),
+            TextField(key: const ValueKey('sms-alias'), controller: _alias, decoration: InputDecoration(labelText: l.smsAlias)),
             TextField(key: const ValueKey('sms-number'), controller: _number, keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(labelText: 'Phone number')),
-            Align(alignment: AlignmentDirectional.centerStart, child: TextButton(onPressed: _add, child: const Text('Add contact'))),
-            Text('Nodes allowed to send', style: Theme.of(context).textTheme.titleMedium),
-            if (nodes.isEmpty) const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Text('No nodes heard yet.')),
+              decoration: InputDecoration(labelText: l.smsNumber)),
+            Align(alignment: AlignmentDirectional.centerStart, child: TextButton(onPressed: _add, child: Text(l.smsAdd))),
+            Text(l.smsAllowedNodes, style: Theme.of(context).textTheme.titleMedium),
+            if (nodes.isEmpty) Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: Text(l.smsNoNodes)),
             for (final n in nodes)
               CheckboxListTile(contentPadding: EdgeInsets.zero, title: Text(n.displayName), value: relay.allowedNodes.contains(n.num),
                 onChanged: (v) => relay.setNodeAllowed(n.num, v ?? false)),

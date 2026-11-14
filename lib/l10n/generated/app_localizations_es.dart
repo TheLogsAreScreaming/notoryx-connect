@@ -5552,4 +5552,174 @@ class AppLocalizationsEs extends AppLocalizations {
   String mhMarks(String busy, String limit) {
     return 'Marcas en $busy % ocupado y $limit % de límite';
   }
+
+  @override
+  String get mtTitle => 'Herramientas de malla';
+
+  @override
+  String get mtLocalDiscovery => 'Descubrimiento de malla local';
+
+  @override
+  String get mtRangeTest => 'Prueba de alcance';
+
+  @override
+  String get mtStoreForward => 'Almacenar y reenviar';
+
+  @override
+  String get mtRangeHelp =>
+      'Configura una radio como emisora de la prueba de alcance (Ajustes → Cambiar ajustes de radio → Rangetest: activado, intervalo de envío). Aléjate con esta radio; cada paquete recibido aparece aquí con señal y distancia. Los saltos en el número de secuencia son paquetes perdidos.';
+
+  @override
+  String mtPacketsHeard(int count) {
+    return '$count paquetes recibidos';
+  }
+
+  @override
+  String get mtClear => 'Borrar';
+
+  @override
+  String mtLastMinutes(int n) {
+    return 'Últimos $n minutos';
+  }
+
+  @override
+  String mtLastHours(int n) {
+    return 'Últimas $n horas';
+  }
+
+  @override
+  String get mtStoreForwardHelp =>
+      'Un enrutador de almacenar y reenviar guarda los mensajes recientes y puede reenviar los que te perdiste fuera de alcance. Aparecen en Chats.';
+
+  @override
+  String get mtCatchUp => 'Ponerse al día automáticamente';
+
+  @override
+  String get mtCatchUpHelp =>
+      'Tras 15 minutos o más sin conexión, pedir una vez por conexión a un enrutador lo que te perdiste';
+
+  @override
+  String get mtReplayFrom => 'Reenviar mensajes desde';
+
+  @override
+  String get mtNoRouters =>
+      'Aún no se oye ningún enrutador de almacenar y reenviar. Se anuncian cada pocos minutos si tienen el latido activado.';
+
+  @override
+  String mtHeardAt(String time) {
+    return 'Oído a las $time';
+  }
+
+  @override
+  String get mtHistoryRequested => 'Historial solicitado.';
+
+  @override
+  String mtRequestFailed(String error) {
+    return 'La solicitud falló: $error';
+  }
+
+  @override
+  String get mtReplay => 'Reenviar';
+
+  @override
+  String get smsTitle => 'Relé de SMS';
+
+  @override
+  String get smsAllowFirst =>
+      'Permite los SMS cuando se pida y vuelve a activar el relé.';
+
+  @override
+  String get smsUnsupported => 'Este teléfono no puede enviar SMS.';
+
+  @override
+  String get smsBadContact =>
+      'Usa un nombre corto (letras, números, - o _) y un número de teléfono.';
+
+  @override
+  String get smsHelp =>
+      'Permite que los nodos que elijas envíen un SMS a través de este teléfono. Envían un mensaje directo como \"SMS base: on our way\". Se aplican las tarifas normales de SMS de tu operador. No es un servicio de emergencia, y solo se confirma la entrega a la red telefónica.';
+
+  @override
+  String get smsEnable => 'Reenviar mensajes por SMS';
+
+  @override
+  String get smsContacts => 'Contactos';
+
+  @override
+  String smsRemove(String name) {
+    return 'Quitar $name';
+  }
+
+  @override
+  String get smsAlias => 'Nombre corto, p. ej. base';
+
+  @override
+  String get smsNumber => 'Número de teléfono';
+
+  @override
+  String get smsAdd => 'Añadir contacto';
+
+  @override
+  String get smsAllowedNodes => 'Nodos con permiso para enviar';
+
+  @override
+  String get smsNoNodes => 'Aún no se ha oído ningún nodo.';
+
+  @override
+  String get trcTitle => 'Traza de ruta';
+
+  @override
+  String get trcThisRadio => 'Esta radio';
+
+  @override
+  String get trcDestination => 'Nodo de destino';
+
+  @override
+  String get trcRunning => 'Trazando… hasta 60 s';
+
+  @override
+  String get trcRun => 'Trazar ruta';
+
+  @override
+  String get trcHelp =>
+      'El firmware limita la frecuencia de las trazas. Cada una usa tiempo de aire en cada relé, así que evita repetirlas seguido.';
+
+  @override
+  String get trcConnectFirst => 'Conecta una radio y espera a READY.';
+
+  @override
+  String get trcNoNodes => 'Aún no se ha oído ningún otro nodo.';
+
+  @override
+  String get trcDirect => 'Directo, sin relés';
+
+  @override
+  String trcRelays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relés',
+      one: '1 relé',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trcRouteThere => 'Ida';
+
+  @override
+  String get trcRouteBack => 'Vuelta';
+
+  @override
+  String get trcNoRouteBack => 'Este firmware no lo informa';
+
+  @override
+  String get trcNoMap => 'No hay posiciones suficientes para el mapa';
+
+  @override
+  String get trcNoMapHelp =>
+      'Al menos dos nodos de la ruta necesitan una posición conocida.';
+
+  @override
+  String get trcSnrUnknown => 'SNR desconocido';
 }

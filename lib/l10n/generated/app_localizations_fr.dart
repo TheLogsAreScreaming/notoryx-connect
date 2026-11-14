@@ -5574,4 +5574,174 @@ class AppLocalizationsFr extends AppLocalizations {
   String mhMarks(String busy, String limit) {
     return 'Repères à $busy % chargé et $limit % limite';
   }
+
+  @override
+  String get mtTitle => 'Outils mesh';
+
+  @override
+  String get mtLocalDiscovery => 'Découverte du mesh local';
+
+  @override
+  String get mtRangeTest => 'Test de portée';
+
+  @override
+  String get mtStoreForward => 'Stockage et relais';
+
+  @override
+  String get mtRangeHelp =>
+      'Réglez une radio comme émetteur du test de portée (Réglages → Modifier les réglages radio → Rangetest : activé, intervalle d\'envoi). Éloignez-vous avec cette radio ; chaque paquet reçu s\'affiche ici avec le signal et la distance. Les trous dans la numérotation sont des paquets perdus.';
+
+  @override
+  String mtPacketsHeard(int count) {
+    return '$count paquets reçus';
+  }
+
+  @override
+  String get mtClear => 'Effacer';
+
+  @override
+  String mtLastMinutes(int n) {
+    return '$n dernières minutes';
+  }
+
+  @override
+  String mtLastHours(int n) {
+    return '$n dernières heures';
+  }
+
+  @override
+  String get mtStoreForwardHelp =>
+      'Un routeur de stockage et relais garde les messages récents et peut renvoyer ceux manqués hors de portée. Ils apparaissent dans Discussions.';
+
+  @override
+  String get mtCatchUp => 'Rattraper automatiquement';
+
+  @override
+  String get mtCatchUpHelp =>
+      'Après 15 minutes ou plus hors ligne, demander une fois par connexion à un routeur ce que vous avez manqué';
+
+  @override
+  String get mtReplayFrom => 'Renvoyer les messages depuis';
+
+  @override
+  String get mtNoRouters =>
+      'Aucun routeur de stockage et relais reçu. Les routeurs s\'annoncent toutes les quelques minutes si leur battement de cœur est activé.';
+
+  @override
+  String mtHeardAt(String time) {
+    return 'Reçu à $time';
+  }
+
+  @override
+  String get mtHistoryRequested => 'Historique demandé.';
+
+  @override
+  String mtRequestFailed(String error) {
+    return 'Échec de la demande : $error';
+  }
+
+  @override
+  String get mtReplay => 'Renvoyer';
+
+  @override
+  String get smsTitle => 'Relais SMS';
+
+  @override
+  String get smsAllowFirst =>
+      'Autorisez les SMS quand on vous le demande, puis réactivez le relais.';
+
+  @override
+  String get smsUnsupported => 'Ce téléphone ne peut pas envoyer de SMS.';
+
+  @override
+  String get smsBadContact =>
+      'Utilisez un nom court (lettres, chiffres, - ou _) et un numéro de téléphone.';
+
+  @override
+  String get smsHelp =>
+      'Permet aux nœuds choisis d\'envoyer un SMS via ce téléphone. Ils envoient un message direct comme \"SMS base: on our way\". Les frais SMS habituels de votre opérateur s\'appliquent. Ce n\'est pas un service d\'urgence, et seule la remise au réseau téléphonique est confirmée.';
+
+  @override
+  String get smsEnable => 'Relayer les messages par SMS';
+
+  @override
+  String get smsContacts => 'Contacts';
+
+  @override
+  String smsRemove(String name) {
+    return 'Supprimer $name';
+  }
+
+  @override
+  String get smsAlias => 'Nom court, ex. base';
+
+  @override
+  String get smsNumber => 'Numéro de téléphone';
+
+  @override
+  String get smsAdd => 'Ajouter un contact';
+
+  @override
+  String get smsAllowedNodes => 'Nœuds autorisés à envoyer';
+
+  @override
+  String get smsNoNodes => 'Aucun nœud reçu pour l\'instant.';
+
+  @override
+  String get trcTitle => 'Traceroute';
+
+  @override
+  String get trcThisRadio => 'Cette radio';
+
+  @override
+  String get trcDestination => 'Nœud de destination';
+
+  @override
+  String get trcRunning => 'Traçage… jusqu\'à 60 s';
+
+  @override
+  String get trcRun => 'Lancer le traceroute';
+
+  @override
+  String get trcHelp =>
+      'Le firmware limite la fréquence des traceroutes. Chacun utilise du temps d\'antenne sur chaque relais : évitez de les répéter trop vite.';
+
+  @override
+  String get trcConnectFirst => 'Connectez une radio et attendez READY.';
+
+  @override
+  String get trcNoNodes => 'Aucun autre nœud reçu pour l\'instant.';
+
+  @override
+  String get trcDirect => 'Direct, sans relais';
+
+  @override
+  String trcRelays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relais',
+      one: '1 relais',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trcRouteThere => 'Aller';
+
+  @override
+  String get trcRouteBack => 'Retour';
+
+  @override
+  String get trcNoRouteBack => 'Non indiqué par ce firmware';
+
+  @override
+  String get trcNoMap => 'Pas assez de positions pour la carte';
+
+  @override
+  String get trcNoMapHelp =>
+      'Au moins deux nœuds de la route doivent avoir une position connue.';
+
+  @override
+  String get trcSnrUnknown => 'SNR inconnu';
 }

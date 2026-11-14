@@ -21,9 +21,9 @@ class MeshToolsPage extends StatelessWidget {
         initialIndex: initialTab,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Mesh tools'),
-            actions: [IconButton(key: const ValueKey('open-network-diagram'), tooltip: AppLocalizations.of(context).topologyTitle, icon: const Icon(Icons.hub_outlined), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => NetworkDiagramPage(radio: radio)))), IconButton(tooltip: 'Local mesh discovery', icon: const Icon(Icons.radar), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LocalMeshDiscoveryPage(radio: radio))))],
-            bottom: const TabBar(tabs: [Tab(text: 'Range test'), Tab(text: 'Store & forward')]),
+            title: Text(AppLocalizations.of(context).mtTitle),
+            actions: [IconButton(key: const ValueKey('open-network-diagram'), tooltip: AppLocalizations.of(context).topologyTitle, icon: const Icon(Icons.hub_outlined), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => NetworkDiagramPage(radio: radio)))), IconButton(tooltip: AppLocalizations.of(context).mtLocalDiscovery, icon: const Icon(Icons.radar), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LocalMeshDiscoveryPage(radio: radio))))],
+            bottom: TabBar(tabs: [Tab(text: AppLocalizations.of(context).mtRangeTest), Tab(text: AppLocalizations.of(context).mtStoreForward)]),
           ),
           body: SafeArea(top: false, child: AnimatedBuilder(
             animation: radio,
@@ -61,22 +61,20 @@ class _RangeTestTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final entries = radio.rangeTest.reversed.toList();
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         Text(
-          'Set one radio as the Range Test sender (Settings → Change radio settings → '
-          'Rangetest: enabled, sender interval). Carry this radio away from it; each '
-          'packet heard appears here with signal and distance. Gaps in the sequence '
-          'number are lost packets.',
+          l.mtRangeHelp,
           style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
         const SizedBox(height: 12),
         Row(
           children: [
-            Expanded(child: Text('${entries.length} packets heard', style: const TextStyle(fontWeight: FontWeight.bold))),
-            TextButton(onPressed: entries.isEmpty ? null : radio.clearRangeTest, child: const Text('Clear')),
+            Expanded(child: Text(l.mtPacketsHeard(entries.length), style: const TextStyle(fontWeight: FontWeight.bold))),
+            TextButton(onPressed: entries.isEmpty ? null : radio.clearRangeTest, child: Text(l.mtClear)),
           ],
         ),
         for (final e in entries)
@@ -109,23 +107,23 @@ class _StoreForwardTab extends StatefulWidget {
 class _StoreForwardTabState extends State<_StoreForwardTab> {
   Duration _window = const Duration(hours: 2);
 
-  static const _windows = <(String, Duration)>[
-    ('Last 30 minutes', Duration(minutes: 30)),
-    ('Last 2 hours', Duration(hours: 2)),
-    ('Last 8 hours', Duration(hours: 8)),
-    ('Last 24 hours', Duration(hours: 24)),
+  static List<(String, Duration)> _windows(AppLocalizations l) => [
+    (l.mtLastMinutes(30), const Duration(minutes: 30)),
+    (l.mtLastHours(2), const Duration(hours: 2)),
+    (l.mtLastHours(8), const Duration(hours: 8)),
+    (l.mtLastHours(24), const Duration(hours: 24)),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final radio = widget.radio;
     final routers = radio.storeForwardRouters;
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         Text(
-          'A Store & Forward router keeps recent messages and can replay the ones '
-          'you missed while out of range. Replayed messages appear in Chats.',
+          l.mtStoreForwardHelp,
           style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
         ListenableBuilder(
@@ -133,8 +131,8 @@ class _StoreForwardTabState extends State<_StoreForwardTab> {
           builder: (context, _) => SwitchListTile(
             key: const ValueKey('sf-catch-up'),
             contentPadding: EdgeInsets.zero,
-            title: const Text('Catch up automatically'),
-            subtitle: const Text('After 15 minutes or more offline, ask a router once per connection for what you missed'),
+            title: Text(l.mtCatchUp),
+            subtitle: Text(l.mtCatchUpHelp),
             value: BastionPreferences.instance.storeForwardCatchUp,
             onChanged: (v) => BastionPreferences.instance.update(catchUp: v),
           ),
@@ -142,8 +140,8 @@ class _StoreForwardTabState extends State<_StoreForwardTab> {
         const SizedBox(height: 12),
         DropdownButtonFormField<Duration>(
           initialValue: _window,
-          decoration: const InputDecoration(labelText: 'Replay messages from'),
-          items: [for (final (label, d) in _windows) DropdownMenuItem(value: d, child: Text(label))],
+          decoration: InputDecoration(labelText: l.mtReplayFrom),
+          items: [for (final (label, d) in _windows(l)) DropdownMenuItem(value: d, child: Text(label))],
           onChanged: (v) => setState(() => _window = v ?? _window),
         ),
         const SizedBox(height: 12),
@@ -151,8 +149,7 @@ class _StoreForwardTabState extends State<_StoreForwardTab> {
           Card(child: ListTile(leading: const Icon(Icons.info_outline), title: Text(radio.lastStoreForwardReply!))),
         if (routers.isEmpty)
           Text(
-            'No Store & Forward router heard yet. Routers announce themselves with a '
-            'heartbeat every few minutes, if heartbeats are enabled on them.',
+            l.mtNoRouters,
             style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
         for (final router in routers)
@@ -160,20 +157,20 @@ class _StoreForwardTabState extends State<_StoreForwardTab> {
             child: ListTile(
               leading: const Icon(Icons.inventory_2_outlined),
               title: Text(_nameOf(radio, router.nodeNum)),
-              subtitle: Text('Heard ${router.lastHeard.toLocal().toString().substring(11, 16)}'),
+              subtitle: Text(l.mtHeardAt(TimeOfDay.fromDateTime(router.lastHeard.toLocal()).format(context))),
               trailing: FilledButton.tonal(
                 onPressed: radio.isReady
                     ? () async {
                         final messenger = ScaffoldMessenger.of(context);
                         try {
                           await radio.requestStoredMessages(router.nodeNum, _window);
-                          messenger.showSnackBar(const SnackBar(content: Text('History requested.')));
+                          messenger.showSnackBar(SnackBar(content: Text(l.mtHistoryRequested)));
                         } catch (error) {
-                          messenger.showSnackBar(SnackBar(content: Text('Request failed: $error')));
+                          messenger.showSnackBar(SnackBar(content: Text(l.mtRequestFailed('$error'))));
                         }
                       }
                     : null,
-                child: const Text('Replay'),
+                child: Text(l.mtReplay),
               ),
             ),
           ),

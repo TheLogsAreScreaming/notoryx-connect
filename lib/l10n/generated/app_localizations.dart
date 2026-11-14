@@ -9120,6 +9120,288 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Marks at {busy}% busy and {limit}% limit'**
   String mhMarks(String busy, String limit);
+
+  /// No description provided for @mtTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh tools'**
+  String get mtTitle;
+
+  /// No description provided for @mtLocalDiscovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Local mesh discovery'**
+  String get mtLocalDiscovery;
+
+  /// No description provided for @mtRangeTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Range test'**
+  String get mtRangeTest;
+
+  /// No description provided for @mtStoreForward.
+  ///
+  /// In en, this message translates to:
+  /// **'Store & forward'**
+  String get mtStoreForward;
+
+  /// No description provided for @mtRangeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Set one radio as the Range Test sender (Settings → Change radio settings → Rangetest: enabled, sender interval). Carry this radio away from it; each packet heard appears here with signal and distance. Gaps in the sequence number are lost packets.'**
+  String get mtRangeHelp;
+
+  /// No description provided for @mtPacketsHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} packets heard'**
+  String mtPacketsHeard(int count);
+
+  /// No description provided for @mtClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get mtClear;
+
+  /// No description provided for @mtLastMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Last {n} minutes'**
+  String mtLastMinutes(int n);
+
+  /// No description provided for @mtLastHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Last {n} hours'**
+  String mtLastHours(int n);
+
+  /// No description provided for @mtStoreForwardHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'A Store & Forward router keeps recent messages and can replay the ones you missed while out of range. Replayed messages appear in Chats.'**
+  String get mtStoreForwardHelp;
+
+  /// No description provided for @mtCatchUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Catch up automatically'**
+  String get mtCatchUp;
+
+  /// No description provided for @mtCatchUpHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'After 15 minutes or more offline, ask a router once per connection for what you missed'**
+  String get mtCatchUpHelp;
+
+  /// No description provided for @mtReplayFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay messages from'**
+  String get mtReplayFrom;
+
+  /// No description provided for @mtNoRouters.
+  ///
+  /// In en, this message translates to:
+  /// **'No Store & Forward router heard yet. Routers announce themselves with a heartbeat every few minutes, if heartbeats are enabled on them.'**
+  String get mtNoRouters;
+
+  /// No description provided for @mtHeardAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard {time}'**
+  String mtHeardAt(String time);
+
+  /// No description provided for @mtHistoryRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'History requested.'**
+  String get mtHistoryRequested;
+
+  /// No description provided for @mtRequestFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Request failed: {error}'**
+  String mtRequestFailed(String error);
+
+  /// No description provided for @mtReplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay'**
+  String get mtReplay;
+
+  /// No description provided for @smsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS relay'**
+  String get smsTitle;
+
+  /// No description provided for @smsAllowFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow SMS when asked, then turn the relay on again.'**
+  String get smsAllowFirst;
+
+  /// No description provided for @smsUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone cannot send SMS.'**
+  String get smsUnsupported;
+
+  /// No description provided for @smsBadContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a short name (letters, numbers, - or _) and a phone number.'**
+  String get smsBadContact;
+
+  /// No description provided for @smsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Lets the nodes you choose send a text message through this phone. They send a direct message like \"SMS base: on our way\". Your carrier\'s normal SMS charges apply. This is not an emergency service, and only hand-off to the phone network is confirmed.'**
+  String get smsHelp;
+
+  /// No description provided for @smsEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Relay messages by SMS'**
+  String get smsEnable;
+
+  /// No description provided for @smsContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts'**
+  String get smsContacts;
+
+  /// No description provided for @smsRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}'**
+  String smsRemove(String name);
+
+  /// No description provided for @smsAlias.
+  ///
+  /// In en, this message translates to:
+  /// **'Short name, e.g. base'**
+  String get smsAlias;
+
+  /// No description provided for @smsNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get smsNumber;
+
+  /// No description provided for @smsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add contact'**
+  String get smsAdd;
+
+  /// No description provided for @smsAllowedNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes allowed to send'**
+  String get smsAllowedNodes;
+
+  /// No description provided for @smsNoNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes heard yet.'**
+  String get smsNoNodes;
+
+  /// No description provided for @trcTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute'**
+  String get trcTitle;
+
+  /// No description provided for @trcThisRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'This radio'**
+  String get trcThisRadio;
+
+  /// No description provided for @trcDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination node'**
+  String get trcDestination;
+
+  /// No description provided for @trcRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracing… up to 60 s'**
+  String get trcRunning;
+
+  /// No description provided for @trcRun.
+  ///
+  /// In en, this message translates to:
+  /// **'Run traceroute'**
+  String get trcRun;
+
+  /// No description provided for @trcHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware limits how often traceroutes can run. Each one uses airtime on every relay, so avoid repeating them quickly.'**
+  String get trcHelp;
+
+  /// No description provided for @trcConnectFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio and wait for READY.'**
+  String get trcConnectFirst;
+
+  /// No description provided for @trcNoNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'No other nodes heard yet.'**
+  String get trcNoNodes;
+
+  /// No description provided for @trcDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct — no relays'**
+  String get trcDirect;
+
+  /// No description provided for @trcRelays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 relay} other{{count} relays}}'**
+  String trcRelays(int count);
+
+  /// No description provided for @trcRouteThere.
+  ///
+  /// In en, this message translates to:
+  /// **'Route there'**
+  String get trcRouteThere;
+
+  /// No description provided for @trcRouteBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Route back'**
+  String get trcRouteBack;
+
+  /// No description provided for @trcNoRouteBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Not reported by this firmware'**
+  String get trcNoRouteBack;
+
+  /// No description provided for @trcNoMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough positions to map'**
+  String get trcNoMap;
+
+  /// No description provided for @trcNoMapHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'At least two nodes on the route need a known position.'**
+  String get trcNoMapHelp;
+
+  /// No description provided for @trcSnrUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'SNR unknown'**
+  String get trcSnrUnknown;
 }
 
 class _AppLocalizationsDelegate

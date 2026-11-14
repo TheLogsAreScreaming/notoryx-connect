@@ -5574,4 +5574,174 @@ class AppLocalizationsDe extends AppLocalizations {
   String mhMarks(String busy, String limit) {
     return 'Markierungen bei $busy % ausgelastet und $limit % Grenze';
   }
+
+  @override
+  String get mtTitle => 'Mesh-Werkzeuge';
+
+  @override
+  String get mtLocalDiscovery => 'Lokale Mesh-Suche';
+
+  @override
+  String get mtRangeTest => 'Reichweitentest';
+
+  @override
+  String get mtStoreForward => 'Store & Forward';
+
+  @override
+  String get mtRangeHelp =>
+      'Stelle ein Funkgerät als Reichweitentest-Sender ein (Einstellungen → Funkeinstellungen ändern → Rangetest: aktiviert, Sendeintervall). Entferne dich mit diesem Funkgerät davon; jedes empfangene Paket erscheint hier mit Signal und Entfernung. Lücken in der Folgenummer sind verlorene Pakete.';
+
+  @override
+  String mtPacketsHeard(int count) {
+    return '$count Pakete empfangen';
+  }
+
+  @override
+  String get mtClear => 'Leeren';
+
+  @override
+  String mtLastMinutes(int n) {
+    return 'Letzte $n Minuten';
+  }
+
+  @override
+  String mtLastHours(int n) {
+    return 'Letzte $n Stunden';
+  }
+
+  @override
+  String get mtStoreForwardHelp =>
+      'Ein Store-&-Forward-Router speichert neue Nachrichten und kann die erneut senden, die du außer Reichweite verpasst hast. Sie erscheinen in den Chats.';
+
+  @override
+  String get mtCatchUp => 'Automatisch nachholen';
+
+  @override
+  String get mtCatchUpHelp =>
+      'Nach 15 Minuten oder mehr offline einmal pro Verbindung einen Router nach Verpasstem fragen';
+
+  @override
+  String get mtReplayFrom => 'Nachrichten erneut senden ab';
+
+  @override
+  String get mtNoRouters =>
+      'Noch kein Store-&-Forward-Router empfangen. Router melden sich alle paar Minuten mit einem Heartbeat, wenn dieser aktiviert ist.';
+
+  @override
+  String mtHeardAt(String time) {
+    return 'Empfangen $time';
+  }
+
+  @override
+  String get mtHistoryRequested => 'Verlauf angefordert.';
+
+  @override
+  String mtRequestFailed(String error) {
+    return 'Anfrage fehlgeschlagen: $error';
+  }
+
+  @override
+  String get mtReplay => 'Erneut senden';
+
+  @override
+  String get smsTitle => 'SMS-Weiterleitung';
+
+  @override
+  String get smsAllowFirst =>
+      'Erlaube SMS, wenn gefragt, und schalte die Weiterleitung dann erneut ein.';
+
+  @override
+  String get smsUnsupported => 'Dieses Telefon kann keine SMS senden.';
+
+  @override
+  String get smsBadContact =>
+      'Nutze einen kurzen Namen (Buchstaben, Zahlen, - oder _) und eine Telefonnummer.';
+
+  @override
+  String get smsHelp =>
+      'Lässt die gewählten Knoten über dieses Telefon eine SMS senden. Sie schicken eine Direktnachricht wie \"SMS base: on our way\". Es gelten die normalen SMS-Kosten deines Anbieters. Das ist kein Notdienst, und bestätigt wird nur die Übergabe an das Telefonnetz.';
+
+  @override
+  String get smsEnable => 'Nachrichten per SMS weiterleiten';
+
+  @override
+  String get smsContacts => 'Kontakte';
+
+  @override
+  String smsRemove(String name) {
+    return '$name entfernen';
+  }
+
+  @override
+  String get smsAlias => 'Kurzname, z. B. base';
+
+  @override
+  String get smsNumber => 'Telefonnummer';
+
+  @override
+  String get smsAdd => 'Kontakt hinzufügen';
+
+  @override
+  String get smsAllowedNodes => 'Knoten, die senden dürfen';
+
+  @override
+  String get smsNoNodes => 'Noch keine Knoten empfangen.';
+
+  @override
+  String get trcTitle => 'Routenverfolgung';
+
+  @override
+  String get trcThisRadio => 'Dieses Funkgerät';
+
+  @override
+  String get trcDestination => 'Zielknoten';
+
+  @override
+  String get trcRunning => 'Verfolge… bis zu 60 s';
+
+  @override
+  String get trcRun => 'Route verfolgen';
+
+  @override
+  String get trcHelp =>
+      'Die Firmware begrenzt, wie oft Routen verfolgt werden können. Jede Verfolgung belegt Sendezeit auf jedem Relais, also nicht schnell wiederholen.';
+
+  @override
+  String get trcConnectFirst => 'Verbinde ein Funkgerät und warte auf READY.';
+
+  @override
+  String get trcNoNodes => 'Noch keine anderen Knoten empfangen.';
+
+  @override
+  String get trcDirect => 'Direkt – keine Relais';
+
+  @override
+  String trcRelays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Relais',
+      one: '1 Relais',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trcRouteThere => 'Hinweg';
+
+  @override
+  String get trcRouteBack => 'Rückweg';
+
+  @override
+  String get trcNoRouteBack => 'Von dieser Firmware nicht gemeldet';
+
+  @override
+  String get trcNoMap => 'Zu wenige Positionen für eine Karte';
+
+  @override
+  String get trcNoMapHelp =>
+      'Mindestens zwei Knoten auf der Route brauchen eine bekannte Position.';
+
+  @override
+  String get trcSnrUnknown => 'SNR unbekannt';
 }
