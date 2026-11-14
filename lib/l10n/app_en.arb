@@ -3269,5 +3269,101 @@
   "clExport": "Export record",
   "clExportCsv": "Spreadsheet (CSV)",
   "clExportJson": "Data file (JSON)",
-  "clExportFailed": "Couldn't open the share sheet."
+  "clExportFailed": "Couldn't open the share sheet.",
+  "mtTitle": "Mesh tools",
+  "mtLocalDiscovery": "Local mesh discovery",
+  "mtRangeTest": "Range test",
+  "mtStoreForward": "Store & forward",
+  "mtRangeHelp": "Set one radio as the Range Test sender (Settings → Change radio settings → Rangetest: enabled, sender interval). Carry this radio away from it; each packet heard appears here with signal and distance. Gaps in the sequence number are lost packets.",
+  "mtPacketsHeard": "{count} packets heard",
+  "@mtPacketsHeard": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mtClear": "Clear",
+  "mtLastMinutes": "Last {n} minutes",
+  "@mtLastMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "mtLastHours": "Last {n} hours",
+  "@mtLastHours": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "mtStoreForwardHelp": "A Store & Forward router keeps recent messages and can replay the ones you missed while out of range. Replayed messages appear in Chats.",
+  "mtCatchUp": "Catch up automatically",
+  "mtCatchUpHelp": "After 15 minutes or more offline, ask a router once per connection for what you missed",
+  "mtReplayFrom": "Replay messages from",
+  "mtNoRouters": "No Store & Forward router heard yet. Routers announce themselves with a heartbeat every few minutes, if heartbeats are enabled on them.",
+  "mtHeardAt": "Heard {time}",
+  "@mtHeardAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "mtHistoryRequested": "History requested.",
+  "mtRequestFailed": "Request failed: {error}",
+  "@mtRequestFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "mtReplay": "Replay",
+  "smsTitle": "SMS relay",
+  "smsAllowFirst": "Allow SMS when asked, then turn the relay on again.",
+  "smsUnsupported": "This phone cannot send SMS.",
+  "smsBadContact": "Use a short name (letters, numbers, - or _) and a phone number.",
+  "smsHelp": "Lets the nodes you choose send a text message through this phone. They send a direct message like \"SMS base: on our way\". Your carrier's normal SMS charges apply. This is not an emergency service, and only hand-off to the phone network is confirmed.",
+  "smsEnable": "Relay messages by SMS",
+  "smsContacts": "Contacts",
+  "smsRemove": "Remove {name}",
+  "@smsRemove": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "smsAlias": "Short name, e.g. base",
+  "smsNumber": "Phone number",
+  "smsAdd": "Add contact",
+  "smsAllowedNodes": "Nodes allowed to send",
+  "smsNoNodes": "No nodes heard yet.",
+  "trcTitle": "Traceroute",
+  "trcThisRadio": "This radio",
+  "trcDestination": "Destination node",
+  "trcRunning": "Tracing… up to 60 s",
+  "trcRun": "Run traceroute",
+  "trcHelp": "Firmware limits how often traceroutes can run. Each one uses airtime on every relay, so avoid repeating them quickly.",
+  "trcConnectFirst": "Connect to a radio and wait for READY.",
+  "trcNoNodes": "No other nodes heard yet.",
+  "trcDirect": "Direct — no relays",
+  "trcRelays": "{count, plural, =1{1 relay} other{{count} relays}}",
+  "@trcRelays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "trcRouteThere": "Route there",
+  "trcRouteBack": "Route back",
+  "trcNoRouteBack": "Not reported by this firmware",
+  "trcNoMap": "Not enough positions to map",
+  "trcNoMapHelp": "At least two nodes on the route need a known position.",
+  "trcSnrUnknown": "SNR unknown"
 }

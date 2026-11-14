@@ -4666,4 +4666,174 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Couldn\'t open the share sheet.';
+
+  @override
+  String get mtTitle => 'Mesh tools';
+
+  @override
+  String get mtLocalDiscovery => 'Local mesh discovery';
+
+  @override
+  String get mtRangeTest => 'Range test';
+
+  @override
+  String get mtStoreForward => 'Store & forward';
+
+  @override
+  String get mtRangeHelp =>
+      'Set one radio as the Range Test sender (Settings → Change radio settings → Rangetest: enabled, sender interval). Carry this radio away from it; each packet heard appears here with signal and distance. Gaps in the sequence number are lost packets.';
+
+  @override
+  String mtPacketsHeard(int count) {
+    return '$count packets heard';
+  }
+
+  @override
+  String get mtClear => 'Clear';
+
+  @override
+  String mtLastMinutes(int n) {
+    return 'Last $n minutes';
+  }
+
+  @override
+  String mtLastHours(int n) {
+    return 'Last $n hours';
+  }
+
+  @override
+  String get mtStoreForwardHelp =>
+      'A Store & Forward router keeps recent messages and can replay the ones you missed while out of range. Replayed messages appear in Chats.';
+
+  @override
+  String get mtCatchUp => 'Catch up automatically';
+
+  @override
+  String get mtCatchUpHelp =>
+      'After 15 minutes or more offline, ask a router once per connection for what you missed';
+
+  @override
+  String get mtReplayFrom => 'Replay messages from';
+
+  @override
+  String get mtNoRouters =>
+      'No Store & Forward router heard yet. Routers announce themselves with a heartbeat every few minutes, if heartbeats are enabled on them.';
+
+  @override
+  String mtHeardAt(String time) {
+    return 'Heard $time';
+  }
+
+  @override
+  String get mtHistoryRequested => 'History requested.';
+
+  @override
+  String mtRequestFailed(String error) {
+    return 'Request failed: $error';
+  }
+
+  @override
+  String get mtReplay => 'Replay';
+
+  @override
+  String get smsTitle => 'SMS relay';
+
+  @override
+  String get smsAllowFirst =>
+      'Allow SMS when asked, then turn the relay on again.';
+
+  @override
+  String get smsUnsupported => 'This phone cannot send SMS.';
+
+  @override
+  String get smsBadContact =>
+      'Use a short name (letters, numbers, - or _) and a phone number.';
+
+  @override
+  String get smsHelp =>
+      'Lets the nodes you choose send a text message through this phone. They send a direct message like \"SMS base: on our way\". Your carrier\'s normal SMS charges apply. This is not an emergency service, and only hand-off to the phone network is confirmed.';
+
+  @override
+  String get smsEnable => 'Relay messages by SMS';
+
+  @override
+  String get smsContacts => 'Contacts';
+
+  @override
+  String smsRemove(String name) {
+    return 'Remove $name';
+  }
+
+  @override
+  String get smsAlias => 'Short name, e.g. base';
+
+  @override
+  String get smsNumber => 'Phone number';
+
+  @override
+  String get smsAdd => 'Add contact';
+
+  @override
+  String get smsAllowedNodes => 'Nodes allowed to send';
+
+  @override
+  String get smsNoNodes => 'No nodes heard yet.';
+
+  @override
+  String get trcTitle => 'Traceroute';
+
+  @override
+  String get trcThisRadio => 'This radio';
+
+  @override
+  String get trcDestination => 'Destination node';
+
+  @override
+  String get trcRunning => 'Tracing… up to 60 s';
+
+  @override
+  String get trcRun => 'Run traceroute';
+
+  @override
+  String get trcHelp =>
+      'Firmware limits how often traceroutes can run. Each one uses airtime on every relay, so avoid repeating them quickly.';
+
+  @override
+  String get trcConnectFirst => 'Connect to a radio and wait for READY.';
+
+  @override
+  String get trcNoNodes => 'No other nodes heard yet.';
+
+  @override
+  String get trcDirect => 'Direct — no relays';
+
+  @override
+  String trcRelays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relays',
+      one: '1 relay',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trcRouteThere => 'Route there';
+
+  @override
+  String get trcRouteBack => 'Route back';
+
+  @override
+  String get trcNoRouteBack => 'Not reported by this firmware';
+
+  @override
+  String get trcNoMap => 'Not enough positions to map';
+
+  @override
+  String get trcNoMapHelp =>
+      'At least two nodes on the route need a known position.';
+
+  @override
+  String get trcSnrUnknown => 'SNR unknown';
 }
