@@ -5,7 +5,6 @@ import 'l10n/generated/app_localizations.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'services/bastion_route_map.dart';
-import 'l10n/generated/app_localizations.dart';
 import 'services/bastion_trace_card.dart';
 import 'services/meshtastic_traceroute.dart';
 import 'trace_card_page.dart';
