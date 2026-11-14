@@ -53,7 +53,7 @@ void main() {
     await tester.pump();
     expect(find.text('Silenciar notificaciones'), findsOneWidget);
     expect(find.text('Clave de seguridad'), findsOneWidget);
-    expect(find.text('MENSAJES DIRECTOS'), findsOneWidget);
+    expect(find.text('Mensajes directos'), findsOneWidget);
   });
 
   testWidgets('Home is translated, but check-in words stay as sent on air', (tester) async {
@@ -301,9 +301,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Nodos')));
     await tester.pumpAndSettle();
-    expect(find.text('RADIOS CERCANAS'), findsOneWidget);
+    expect(find.text('Radios cercanas'), findsOneWidget);
     expect(find.text('Conectar por Wi-Fi'), findsOneWidget);
-    expect(find.text('RADIOS NEARBY'), findsNothing);
+    expect(find.text('Radios nearby'), findsNothing);
   });
 
   testWidgets('Settings is translated, but the legal notice stays English', (tester) async {

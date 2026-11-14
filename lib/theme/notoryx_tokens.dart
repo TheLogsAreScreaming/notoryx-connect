@@ -13,13 +13,35 @@ abstract final class NxSpace {
   static const page = EdgeInsets.fromLTRB(md, sm, md, lg);
 }
 
-/// Corner radii.
+/// Corner radii, the same steps NOTORYX Core uses. Cards, buttons and
+/// chips take [xs]: squared-off, like a field instrument.
 abstract final class NxRadius {
-  static const double sm = 8;
-  static const double md = 12;
-  static const double lg = 16;
+  static const double xs = 6;
+  static const double sm = 10;
+  static const double md = 14;
+  static const double lg = 18;
   static const double xl = 24;
   static const double pill = 999;
+}
+
+/// Bundled font families (see pubspec.yaml), shared with NOTORYX Core.
+abstract final class NxFonts {
+  static const sans = 'Inter';
+  static const mono = 'JetBrains Mono';
+  static const sansFallback = ['system-ui', '-apple-system', 'Roboto', 'Noto Sans', 'sans-serif'];
+  static const monoFallback = ['SF Mono', 'Menlo', 'Consolas', 'Roboto Mono', 'monospace'];
+
+  /// Numbers and readings (SNR, battery, IDs): monospace with even-width
+  /// digits so columns line up and values don't jitter as they change.
+  static TextStyle monoStyle({double? fontSize, FontWeight? fontWeight, Color? color}) => TextStyle(
+        fontFamily: mono,
+        fontFamilyFallback: monoFallback,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        color: color,
+        letterSpacing: .2,
+        fontFeatures: const [FontFeature.tabularFigures()],
+      );
 }
 
 /// The smallest comfortable touch target, in logical pixels.
