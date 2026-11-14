@@ -4132,5 +4132,9 @@
   "deliveryHeld": "Held: check before sending",
   "chatsHeldExplain": "This wasn't sent by itself. It's over a day old, or sending was cut off and it may already have gone out.",
   "chatsSendHeld": "Send now",
-  "chatsDeleteQueued": "Delete without sending"
+  "chatsDeleteQueued": "Delete without sending",
+  "omArea": "Covers {area} (dashed outline on the map). Outside it there are no offline tiles.",
+  "@omArea": {"placeholders": {"area": {"type": "String"}}},
+  "omDamaged": "{count} tiles in this file are damaged and will show blank.",
+  "@omDamaged": {"placeholders": {"count": {"type": "int"}}}
 }

@@ -5732,4 +5732,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatsDeleteQueued => 'Delete without sending';
+
+  @override
+  String omArea(String area) {
+    return 'Covers $area (dashed outline on the map). Outside it there are no offline tiles.';
+  }
+
+  @override
+  String omDamaged(int count) {
+    return '$count tiles in this file are damaged and will show blank.';
+  }
 }

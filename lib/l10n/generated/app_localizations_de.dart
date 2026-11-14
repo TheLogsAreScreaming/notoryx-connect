@@ -5794,4 +5794,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get chatsDeleteQueued => 'Löschen, ohne zu senden';
+
+  @override
+  String omArea(String area) {
+    return 'Deckt $area ab (gestrichelte Linie auf der Karte). Außerhalb gibt es keine Offline-Kacheln.';
+  }
+
+  @override
+  String omDamaged(int count) {
+    return '$count Kacheln in dieser Datei sind beschädigt und bleiben leer.';
+  }
 }

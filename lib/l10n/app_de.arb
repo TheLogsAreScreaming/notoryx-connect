@@ -1561,5 +1561,7 @@
   "deliveryHeld": "Angehalten: vor dem Senden prüfen",
   "chatsHeldExplain": "Diese Nachricht wurde nicht automatisch gesendet. Sie ist älter als einen Tag, oder das Senden wurde unterbrochen und sie ist vielleicht schon raus.",
   "chatsSendHeld": "Jetzt senden",
-  "chatsDeleteQueued": "Löschen, ohne zu senden"
+  "chatsDeleteQueued": "Löschen, ohne zu senden",
+  "omArea": "Deckt {area} ab (gestrichelte Linie auf der Karte). Außerhalb gibt es keine Offline-Kacheln.",
+  "omDamaged": "{count} Kacheln in dieser Datei sind beschädigt und bleiben leer."
 }

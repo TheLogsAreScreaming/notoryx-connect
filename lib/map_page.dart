@@ -209,7 +209,13 @@ class _MapPageState extends State<MapPage> {
                 value: _offline.active,
                 onChanged: _offline.setActive,
                 title: Text(info.name),
-                subtitle: Text(l.omZooms(info.minZoom, info.maxZoom)),
+                subtitle: Text([
+                  l.omZooms(info.minZoom, info.maxZoom),
+                  if (info.bounds case final b?)
+                    l.omArea('${b.$2.toStringAsFixed(3)}, ${b.$1.toStringAsFixed(3)} → '
+                        '${b.$4.toStringAsFixed(3)}, ${b.$3.toStringAsFixed(3)}'),
+                  if (info.damagedTiles > 0) l.omDamaged(info.damagedTiles),
+                ].join('\n')),
                 secondary: IconButton(
                   tooltip: l.omRemove,
                   icon: const Icon(Icons.delete_outline),
@@ -432,6 +438,22 @@ class _MapPageState extends State<MapPage> {
                       minNativeZoom: info.minZoom,
                       maxNativeZoom: info.maxZoom,
                     ),
+                  // Outside this outline the offline file has no tiles.
+                  if (_offline.info?.bounds case final b? when _offline.active)
+                    PolylineLayer(polylines: [
+                      Polyline(
+                        points: [
+                          LatLng(b.$4, b.$1),
+                          LatLng(b.$4, b.$3),
+                          LatLng(b.$2, b.$3),
+                          LatLng(b.$2, b.$1),
+                          LatLng(b.$4, b.$1),
+                        ],
+                        strokeWidth: 2,
+                        color: MapPage.accent,
+                        pattern: StrokePattern.dashed(segments: const [8, 6]),
+                      ),
+                    ]),
                   if (_showHeatmap) _heatmapLayer(context),
                   if (widget.radio.geofences.isNotEmpty)
                     CircleLayer(circles: [

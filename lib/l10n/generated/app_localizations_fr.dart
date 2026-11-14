@@ -5794,4 +5794,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get chatsDeleteQueued => 'Supprimer sans envoyer';
+
+  @override
+  String omArea(String area) {
+    return 'Couvre $area (contour en pointillés sur la carte). En dehors, il n\'y a pas de tuiles hors ligne.';
+  }
+
+  @override
+  String omDamaged(int count) {
+    return '$count tuiles de ce fichier sont endommagées et resteront vides.';
+  }
 }

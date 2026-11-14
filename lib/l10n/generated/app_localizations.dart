@@ -9486,6 +9486,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete without sending'**
   String get chatsDeleteQueued;
+
+  /// No description provided for @omArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Covers {area} (dashed outline on the map). Outside it there are no offline tiles.'**
+  String omArea(String area);
+
+  /// No description provided for @omDamaged.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tiles in this file are damaged and will show blank.'**
+  String omDamaged(int count);
 }
 
 class _AppLocalizationsDelegate

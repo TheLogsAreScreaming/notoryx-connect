@@ -1561,5 +1561,7 @@
   "deliveryHeld": "Retenido: revísalo antes de enviar",
   "chatsHeldExplain": "No se envió automáticamente. Tiene más de un día, o el envío se interrumpió y puede que ya haya salido.",
   "chatsSendHeld": "Enviar ahora",
-  "chatsDeleteQueued": "Eliminar sin enviar"
+  "chatsDeleteQueued": "Eliminar sin enviar",
+  "omArea": "Cubre {area} (contorno discontinuo en el mapa). Fuera de él no hay teselas sin conexión.",
+  "omDamaged": "{count} teselas de este archivo están dañadas y se verán en blanco."
 }
