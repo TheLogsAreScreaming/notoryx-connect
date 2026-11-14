@@ -101,9 +101,14 @@ void main() {
     await tester.tap(find.byIcon(Icons.settings_outlined).last);
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.text('Field alerts'), 250, scrollable: find.byType(Scrollable).first);
+    // Built is not the same as on screen: bring the row fully into view first.
+    await tester.ensureVisible(find.text('Field alerts'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Field alerts'));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.text('New node'), 100, scrollable: find.byType(Scrollable).first);
+    await tester.ensureVisible(find.text('New node'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('New node'));
     await tester.pumpAndSettle();
     expect((await BastionAlertSettings.load()).newNode, isTrue);
