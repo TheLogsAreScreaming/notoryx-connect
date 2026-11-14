@@ -4666,4 +4666,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Couldn\'t open the share sheet.';
+
+  @override
+  String get omTitle => 'Offline map';
+
+  @override
+  String get omHelp =>
+      'Import a raster MBTiles map file (for example one exported from a mapping app you\'re licensed to use). It\'s drawn over the online map and works with no internet. Vector (pbf) files aren\'t supported.';
+
+  @override
+  String get omNone => 'No offline map imported.';
+
+  @override
+  String get omRemove => 'Remove offline map';
+
+  @override
+  String get omImport => 'Import MBTiles file';
+
+  @override
+  String get omReplace => 'Replace with another file';
+
+  @override
+  String omZooms(int min, int max) {
+    return 'Zoom $min to $max';
+  }
+
+  @override
+  String omAdded(String name, int min, int max) {
+    return 'Offline map ready: $name, zoom $min to $max';
+  }
+
+  @override
+  String omUnreadable(String reason) {
+    return 'Couldn\'t use that file: $reason';
+  }
 }

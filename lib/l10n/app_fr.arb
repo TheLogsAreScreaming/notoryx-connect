@@ -1276,5 +1276,14 @@
   "clExport": "Exporter l'historique",
   "clExportCsv": "Tableur (CSV)",
   "clExportJson": "Fichier de données (JSON)",
-  "clExportFailed": "Impossible d'ouvrir le partage."
+  "clExportFailed": "Impossible d'ouvrir le partage.",
+  "omTitle": "Carte hors ligne",
+  "omHelp": "Importez un fichier carte MBTiles raster (par exemple exporté d'une app de cartes que vous avez le droit d'utiliser). Il s'affiche par-dessus la carte en ligne et fonctionne sans internet. Les fichiers vectoriels (pbf) ne sont pas pris en charge.",
+  "omNone": "Aucune carte hors ligne importée.",
+  "omRemove": "Supprimer la carte hors ligne",
+  "omImport": "Importer un fichier MBTiles",
+  "omReplace": "Remplacer par un autre fichier",
+  "omZooms": "Zoom {min} à {max}",
+  "omAdded": "Carte hors ligne prête : {name}, zoom {min} à {max}",
+  "omUnreadable": "Fichier inutilisable : {reason}"
 }

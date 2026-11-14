@@ -4725,4 +4725,38 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Impossible d\'ouvrir le partage.';
+
+  @override
+  String get omTitle => 'Carte hors ligne';
+
+  @override
+  String get omHelp =>
+      'Importez un fichier carte MBTiles raster (par exemple exporté d\'une app de cartes que vous avez le droit d\'utiliser). Il s\'affiche par-dessus la carte en ligne et fonctionne sans internet. Les fichiers vectoriels (pbf) ne sont pas pris en charge.';
+
+  @override
+  String get omNone => 'Aucune carte hors ligne importée.';
+
+  @override
+  String get omRemove => 'Supprimer la carte hors ligne';
+
+  @override
+  String get omImport => 'Importer un fichier MBTiles';
+
+  @override
+  String get omReplace => 'Remplacer par un autre fichier';
+
+  @override
+  String omZooms(int min, int max) {
+    return 'Zoom $min à $max';
+  }
+
+  @override
+  String omAdded(String name, int min, int max) {
+    return 'Carte hors ligne prête : $name, zoom $min à $max';
+  }
+
+  @override
+  String omUnreadable(String reason) {
+    return 'Fichier inutilisable : $reason';
+  }
 }
