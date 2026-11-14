@@ -215,8 +215,10 @@ abstract final class NotoryxTheme {
         foregroundColor: c.onSurface,
       ),
       // Field-instrument cards: no fill, a hairline outline, squared off.
+      // Painted with the page colour, so it reads as unfilled but text
+      // contrast is still measured against a real surface.
       cardTheme: CardThemeData(
-        color: Colors.transparent,
+        color: c.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         margin: const EdgeInsets.symmetric(vertical: NxSpace.xxs + 2),
