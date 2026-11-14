@@ -33,6 +33,78 @@
   "toolsSubtitle": "Utilities for planning, testing and running a deployment.",
   "toolsDoctor": "Connection doctor",
   "toolsDoctorSub": "Find out why a radio won't connect or keeps dropping",
+  "tlTitle": "Timeline",
+  "tlToolSub": "Messages, new nodes, signal changes and waypoints in one feed",
+  "tlSubtitle": "Kept on this phone for each radio. A signal change is a direct link moving by 6 dB or more.",
+  "tlSearch": "Search the timeline",
+  "tlClearSearch": "Clear search",
+  "tlKindMessages": "Messages",
+  "tlKindNodes": "New nodes",
+  "tlKindSignal": "Signal changes",
+  "tlKindWaypoints": "Waypoints",
+  "tlShowing": "{count, plural, one{{count} entry} other{{count} entries}}",
+  "@tlShowing": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tlEmpty": "Nothing yet. Connect a radio and the timeline fills in as the mesh is heard.",
+  "tlNoMatch": "Nothing matches these filters.",
+  "tlYouSent": "You sent a message",
+  "tlMessageFrom": "Message from {name}",
+  "@tlMessageFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tlNodeJoined": "New node: {name}",
+  "@tlNodeJoined": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tlSignalUp": "Signal up: {name}, {from} → {to} dB",
+  "@tlSignalUp": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "tlSignalDown": "Signal down: {name}, {from} → {to} dB",
+  "@tlSignalDown": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "tlWaypoint": "Waypoint: {name}",
+  "@tlWaypoint": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "toolsBeforeYouGo": "Before you go",
   "toolsChecklist": "Deployment checklist",
   "toolsBattery": "Battery runtime",
@@ -86,6 +158,92 @@
   },
   "toolsTraceReady": "Show the relay path to a node and back",
   "toolsTraceOff": "Connect to a radio to trace routes",
+  "tcOpen": "Trace card",
+  "tcTitle": "Trace card",
+  "tcFrom": "From {name}",
+  "@tcFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tcTo": "To {name}",
+  "@tcTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tcSentAt": "Sent {time}",
+  "@tcSentAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tcRoundTrip": "Round trip {seconds} s",
+  "@tcRoundTrip": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "tcRelays": "{count, plural, =0{Direct, no relays} one{{count} relay} other{{count} relays}}",
+  "@tcRelays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tcDistance": "About {distance} as drawn",
+  "@tcDistance": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "tcWeakest": "Weakest link {snr}",
+  "@tcWeakest": {
+    "placeholders": {
+      "snr": {
+        "type": "String"
+      }
+    }
+  },
+  "tcThere": "Route there",
+  "tcBack": "Route back",
+  "tcBackUnknown": "Not reported by this firmware",
+  "tcStart": "Start",
+  "tcSnrUnknown": "SNR unknown",
+  "tcNoMap": "Not enough positions to draw the route. At least two nodes on it need a known position.",
+  "tcMapLabel": "Sketch of the round trip from {sender} through {stops}",
+  "@tcMapLabel": {
+    "placeholders": {
+      "sender": {
+        "type": "String"
+      },
+      "stops": {
+        "type": "String"
+      }
+    }
+  },
+  "tcUnplaced": "No position for {names}, so the line goes straight past.",
+  "@tcUnplaced": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "tcShareImage": "Share image",
+  "tcShareText": "Share text",
+  "tcShareFailed": "Couldn't open the share sheet.",
   "toolsBeaconsSub": "Hear mesh invitations nearby and send your own",
   "toolsBeaconsHeard": "{count} heard • send your own",
   "@toolsBeaconsHeard": {
@@ -3205,6 +3363,274 @@
   },
   "clTitle": "Checklists",
   "clToolSub": "Reusable checklists that work offline, with saved records",
+  "auTitle": "Automations",
+  "auToolSub": "Rules that send, alert or change channel when something happens",
+  "auSubtitle": "Rules run on this phone while a radio is connected. Messages they send start with [auto] so other automations ignore them. Each rule waits its cooldown, and all rules together run at most 30 times an hour.",
+  "auNotReady": "Rules run only while a radio is connected and ready.",
+  "auStorageProblem": "Saved automations couldn't be read or saved.",
+  "auWebhooks": "Allow web requests",
+  "auWebhooksSub": "Needs internet. Webhook actions send what happened to the address you give. Off until you turn it on.",
+  "auRules": "Rules",
+  "auEmpty": "No automations yet.",
+  "auNew": "New automation",
+  "auEdit": "Edit automation",
+  "auToggle": "{name} on",
+  "@auToggle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "auWhenAny": "When any: {list}",
+  "@auWhenAny": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "auWhenAll": "When all: {list}",
+  "@auWhenAll": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "auThen": "Then: {list}",
+  "@auThen": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "auNeedsInternet": "Needs internet",
+  "auWebOffNote": "Needs internet. Web requests are off, so this won't run until you allow them.",
+  "auActivity": "Recent activity",
+  "auNoActivity": "Nothing has run yet.",
+  "auRunOk": "{rule}: {action}",
+  "@auRunOk": {
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      },
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "auRunFailed": "{rule}: {action} (didn't run: {problem})",
+  "@auRunFailed": {
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      },
+      "action": {
+        "type": "String"
+      },
+      "problem": {
+        "type": "String"
+      }
+    }
+  },
+  "auProblemNotConnected": "radio not connected",
+  "auProblemWebOff": "web requests are off",
+  "auProblemHttp": "server answered {status}",
+  "@auProblemHttp": {
+    "placeholders": {
+      "status": {
+        "type": "int"
+      }
+    }
+  },
+  "auProblemFailed": "failed",
+  "auName": "Name",
+  "auNeedAll": "Give it a name, at least one trigger and at least one action.",
+  "auMatch": "Run when",
+  "auMatchAny": "Any trigger (OR)",
+  "auMatchAll": "All triggers (AND)",
+  "auTriggers": "Triggers",
+  "auActions": "Actions",
+  "auAddTrigger": "Add trigger",
+  "auAddAction": "Add action",
+  "auRemove": "Remove",
+  "auCooldown": "Wait at least this long between runs",
+  "auMinutes": "{count, plural, one{{count} minute} other{{count} minutes}}",
+  "@auMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "auSave": "Save",
+  "auDelete": "Delete automation",
+  "auCancel": "Cancel",
+  "auAdd": "Add",
+  "auKindBattery": "Battery low",
+  "auKindTime": "Time of day",
+  "auKindZone": "Geofence zone",
+  "auKindMessage": "Message received",
+  "auKindPresence": "Node online or offline",
+  "auKindSend": "Send message",
+  "auKindAlert": "Show alert",
+  "auKindChannel": "Change channel (add from link)",
+  "auKindSound": "Play alert sound",
+  "auKindWebhook": "Webhook (needs internet)",
+  "auTrigBattery": "{node} battery below {percent}%",
+  "@auTrigBattery": {
+    "placeholders": {
+      "node": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "auTrigTime": "Every day at {time}",
+  "@auTrigTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "auTrigTimeDays": "At {time} on {days}",
+  "@auTrigTimeDays": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "auTrigZoneEnter": "{who} enters {zone}",
+  "@auTrigZoneEnter": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "auTrigZoneLeave": "{who} leaves {zone}",
+  "@auTrigZoneLeave": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "auZoneMissing": "a deleted zone",
+  "auAnyNode": "Any node",
+  "auTrigMessageAny": "Any message received",
+  "auTrigMessageHas": "Message containing “{text}”",
+  "@auTrigMessageHas": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "auTrigOnline": "{node} back after {minutes} min quiet",
+  "@auTrigOnline": {
+    "placeholders": {
+      "node": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "auTrigOffline": "{node} quiet for {minutes} min",
+  "@auTrigOffline": {
+    "placeholders": {
+      "node": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "auActSend": "Send to {target}: {text}",
+  "@auActSend": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "auActAlert": "Alert: {text}",
+  "@auActAlert": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "auActWebhook": "Web request to {host}",
+  "@auActWebhook": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "auNode": "Node",
+  "auBelow": "Below",
+  "auTime": "Time",
+  "auDays": "Days (none picked means every day)",
+  "auZone": "Zone",
+  "auNoZones": "No zones yet. Add a geofence zone on the map first.",
+  "auEnters": "Enters",
+  "auLeaves": "Leaves",
+  "auContains": "Containing (optional)",
+  "auDirect": "Direct messages only",
+  "auChannel": "Channel",
+  "auChannelN": "Channel {index}",
+  "@auChannelN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auAnywhere": "Any channel",
+  "auGoesQuiet": "Goes quiet",
+  "auComesBack": "Comes back",
+  "auAfter": "After",
+  "auEveryone": "Everyone on a channel",
+  "auOneNode": "One node",
+  "auMessage": "Message",
+  "auAlertText": "Alert text",
+  "auPlaceholders": "You can use {list}.",
+  "@auPlaceholders": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "auLink": "Channel share link",
+  "auLinkHint": "Adds the link's channels to the radio and keeps the ones already there.",
+  "auBadLink": "That isn't a channel share link.",
+  "auUrl": "Web address (https://…)",
+  "auBadUrl": "Enter a full http or https address.",
   "clSubtitle": "Everything stays on this phone. Each finished run is kept with its times and can be exported.",
   "clStorageProblem": "Saved checklists couldn't be read. Changes are kept until the app closes and nothing stored is overwritten.",
   "clInProgress": "In progress",
@@ -3355,6 +3781,76 @@
       },
       "trusted": {
         "type": "String"
+      }
+    }
+  },
+  "tsShare": "Share trip plan",
+  "tsReturnPrompt": "When do you expect to be back? (optional)",
+  "tsMyRadioUnknown": "My radio: not connected when this was made",
+  "tsNotStarted": "Trip not started yet",
+  "tsContacts": "People with me (trip contacts) and their radios:",
+  "tsNoContacts": "none set",
+  "tsIfNoContact": "If you haven't heard from me by the time I expect to be back, try to reach me and the people above. If you still can't, call the local emergency number and give them this plan.",
+  "tsFooter": "Made with NOTORYX Connect. Off-grid radios can be out of range for hours; silence alone doesn't mean something is wrong.",
+  "tsTitle": "Trip plan: {name}",
+  "@tsTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tsMyRadio": "My radio: {name} ({id})",
+  "@tsMyRadio": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "tsStarted": "Trip started: {time}",
+  "@tsStarted": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tsReturnBy": "Expected back: {when}",
+  "@tsReturnBy": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "tsLastCheckIn": "Last check-in: {label} at {time}",
+  "@tsLastCheckIn": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tsLastPosition": "Last known position: {coords}",
+  "@tsLastPosition": {
+    "placeholders": {
+      "coords": {
+        "type": "String"
+      }
+    }
+  },
+  "tsOverdueRule": "My app warns our group if anyone is silent for {minutes} minutes.",
+  "@tsOverdueRule": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
       }
     }
   },

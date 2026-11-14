@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'l10n/generated/app_localizations.dart';
 
 import 'services/bastion_trip.dart';
+import 'services/bastion_trip_sheet.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'trip_readiness_page.dart';
 
 /// Plan your trip: who gets check-ins and SOS, and when to warn.
 class TripPage extends StatefulWidget {
-  const TripPage({super.key, required this.radio});
+  const TripPage({super.key, required this.radio, this.shareText = _shareText});
   final MeshtasticRadioCoordinator radio;
+
+  /// Hands the trip plan to the system share sheet; replaced in tests.
+  final Future<void> Function(String subject, String text) shareText;
+
+  static Future<void> _shareText(String subject, String text) async {
+    await SharePlus.instance.share(ShareParams(text: text, subject: subject));
+  }
   @override
   State<TripPage> createState() => _TripPageState();
 }
@@ -38,6 +47,54 @@ class _TripPageState extends State<TripPage> {
     }
   }
 
+  /// Asks for an optional return time, then shares a plain-text plan for
+  /// someone who stays home. Nothing is sent over the mesh.
+  Future<void> _sharePlan() async {
+    final back = TextEditingController();
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (dialog) => AlertDialog(
+        title: Text(l.tsShare),
+        content: TextField(
+          key: const ValueKey('trip-share-return'),
+          controller: back,
+          decoration: InputDecoration(labelText: l.tsReturnPrompt),
+          textCapitalization: TextCapitalization.sentences,
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(dialog, false),
+              child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel)),
+          FilledButton(onPressed: () => Navigator.pop(dialog, true), child: Text(l.tsShare)),
+        ],
+      ),
+    );
+    final returnBy = back.text;
+    back.dispose();
+    if (ok != true || !mounted) return;
+    final m = MaterialLocalizations.of(context);
+    String time(DateTime t) {
+      final local = t.toLocal();
+      return '${m.formatShortDate(local)} ${m.formatTimeOfDay(TimeOfDay.fromDateTime(local))}';
+    }
+
+    final plan = _trip.plan;
+    final me = widget.radio.localNodeNum;
+    final local = widget.radio.localNode;
+    final text = BastionTripSheet.build(
+      l: l,
+      plan: plan,
+      myName: me == null ? '' : widget.radio.nodeName(me),
+      myNum: me,
+      contacts: [for (final n in plan.members) (num: n, name: widget.radio.nodeName(n))],
+      formatTime: time,
+      lastCheckIn: _trip.lastCheckIn,
+      latitude: local?.latitude,
+      longitude: local?.longitude,
+      returnBy: returnBy,
+    );
+    await widget.shareText(l.tsTitle(plan.name), text);
+  }
+
   /// Trip contact candidates: nodes heard now plus saved favorites.
   List<({int num, String name})> _candidates() {
     final me = widget.radio.localNodeNum;
@@ -56,7 +113,14 @@ class _TripPageState extends State<TripPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(l.trTitle)),
+    appBar: AppBar(title: Text(l.trTitle), actions: [
+      IconButton(
+        key: const ValueKey('trip-share'),
+        tooltip: l.tsShare,
+        icon: const Icon(Icons.ios_share),
+        onPressed: _sharePlan,
+      ),
+    ]),
     body: SafeArea(top: false, child: AnimatedBuilder(
       animation: widget.radio,
       builder: (context, _) {

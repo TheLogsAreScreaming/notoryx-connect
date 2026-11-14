@@ -5,7 +5,10 @@ import 'l10n/generated/app_localizations.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'services/bastion_route_map.dart';
+import 'l10n/generated/app_localizations.dart';
+import 'services/bastion_trace_card.dart';
 import 'services/meshtastic_traceroute.dart';
+import 'trace_card_page.dart';
 import 'traceroute_map.dart';
 
 /// Picks a mesh node and shows the route to it and back with per-hop SNR.
@@ -24,6 +27,8 @@ class TraceroutePage extends StatefulWidget {
 class _TraceroutePageState extends State<TraceroutePage> {
   late int? _target = widget.initialTarget;
   TracerouteResult? _result;
+  DateTime? _sentAt;
+  Duration? _roundTrip;
   Object? _error;
   bool _running = false;
 
@@ -35,9 +40,18 @@ class _TraceroutePageState extends State<TraceroutePage> {
       _result = null;
       _error = null;
     });
+    final sentAt = DateTime.now();
+    final clock = Stopwatch()..start();
     try {
       final result = await widget.radio.traceroute(target);
-      if (mounted) setState(() => _result = result);
+      clock.stop();
+      if (mounted) {
+        setState(() {
+          _result = result;
+          _sentAt = sentAt;
+          _roundTrip = clock.elapsed;
+        });
+      }
     } catch (error) {
       if (mounted) setState(() => _error = error);
     } finally {
@@ -58,6 +72,19 @@ class _TraceroutePageState extends State<TraceroutePage> {
       if (node.num == num) return node.displayName;
     }
     return '!${num.toRadixString(16).padLeft(8, '0')}';
+  }
+
+  void _openCard(TracerouteResult result, int local) {
+    final card = TraceCard.from(
+      result,
+      local: local,
+      destination: _target!,
+      nodes: widget.radio.nodes,
+      name: _name,
+      sentAt: _sentAt!,
+      roundTrip: _roundTrip!,
+    );
+    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => TraceCardPage(card: card)));
   }
 
   @override
@@ -119,6 +146,16 @@ class _TraceroutePageState extends State<TraceroutePage> {
                         : l.trcRelays(result.intermediateHops),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
+                  if (local != null && _sentAt != null && _roundTrip != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: FilledButton.tonalIcon(
+                        key: const ValueKey('traceroute-open-card'),
+                        onPressed: () => _openCard(result, local),
+                        icon: const Icon(Icons.ios_share),
+                        label: Text(AppLocalizations.of(context).tcOpen),
+                      ),
+                    ),
                   _RouteCard(
                     title: l.trcRouteThere,
                     start: l.trcThisRadio,

@@ -167,6 +167,27 @@ void main() {
       expect(reloaded.records.single.favorite, isTrue);
     });
 
+    test('data saved under the former key names moves to the current ones', () async {
+      const former = 'bastion.node' 'dex.';
+      final now = DateTime.utc(2026, 10, 1).toIso8601String();
+      final records = jsonEncode([
+        {'num': 9, 'longName': 'Summit', 'firstSeen': now, 'lastSeen': now, 'encounters': 3},
+      ]);
+      final hex = radioA.toRadixString(16).padLeft(8, '0');
+      final prefs = SharedPreferencesAsync();
+      await prefs.setString('${former}v2.radio.$hex', records);
+      await prefs.setString('${former}annotations.v1', jsonEncode({'9': {'favorite': true, 'note': 'peak'}}));
+
+      final vault = BastionNodeVault();
+      await vault.useRadio(radioA);
+      expect(vault.records.single.num, 9);
+      expect(vault.records.single.favorite, isTrue);
+      expect(vault.records.single.note, 'peak');
+      expect(await prefs.getString(BastionNodeVault.radioKey(radioA)), records);
+      final keys = await prefs.getKeys();
+      expect(keys.where((k) => k.startsWith(former)), isEmpty);
+    });
+
     test('pre-split NodeVault moves to the first radio, keeping favorites', () async {
       final now = DateTime.utc(2026, 10, 1).toIso8601String();
       final legacy = jsonEncode([
