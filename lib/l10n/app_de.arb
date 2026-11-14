@@ -1418,5 +1418,20 @@
   "clExportJson": "Datendatei (JSON)",
   "clExportFailed": "Teilen konnte nicht geöffnet werden.",
   "nodesLookalike": "Name ähnelt {name}",
-  "chatsLookalikeBody": "{name} ist ein anderes Funkgerät als {trusted}, aber der Name sieht fast gleich aus. Jeder kann jeden Namen wählen, also frag beim Besitzer von {trusted} nach, bevor du ihm vertraust."
+  "chatsLookalikeBody": "{name} ist ein anderes Funkgerät als {trusted}, aber der Name sieht fast gleich aus. Jeder kann jeden Namen wählen, also frag beim Besitzer von {trusted} nach, bevor du ihm vertraust.",
+  "tsShare": "Tourplan teilen",
+  "tsReturnPrompt": "Wann bist du voraussichtlich zurück? (optional)",
+  "tsMyRadioUnknown": "Mein Funkgerät: beim Erstellen nicht verbunden",
+  "tsNotStarted": "Tour noch nicht gestartet",
+  "tsContacts": "Personen bei mir (Tourkontakte) und ihre Funkgeräte:",
+  "tsNoContacts": "keine festgelegt",
+  "tsIfNoContact": "Wenn du bis zu meiner erwarteten Rückkehr nichts von mir gehört hast, versuche mich und die oben genannten Personen zu erreichen. Klappt das nicht, ruf den örtlichen Notruf an und gib diesen Plan weiter.",
+  "tsFooter": "Erstellt mit NOTORYX Connect. Funkgeräte ohne Netz können stundenlang außer Reichweite sein; Stille allein heißt nicht, dass etwas passiert ist.",
+  "tsTitle": "Tourplan: {name}",
+  "tsMyRadio": "Mein Funkgerät: {name} ({id})",
+  "tsStarted": "Tour gestartet: {time}",
+  "tsReturnBy": "Voraussichtlich zurück: {when}",
+  "tsLastCheckIn": "Letzter Check-in: {label} um {time}",
+  "tsLastPosition": "Letzte bekannte Position: {coords}",
+  "tsOverdueRule": "Meine App warnt unsere Gruppe, wenn jemand {minutes} Minuten still ist."
 }

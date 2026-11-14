@@ -5271,4 +5271,68 @@ class AppLocalizationsDe extends AppLocalizations {
   String chatsLookalikeBody(String name, String trusted) {
     return '$name ist ein anderes Funkgerät als $trusted, aber der Name sieht fast gleich aus. Jeder kann jeden Namen wählen, also frag beim Besitzer von $trusted nach, bevor du ihm vertraust.';
   }
+
+  @override
+  String get tsShare => 'Tourplan teilen';
+
+  @override
+  String get tsReturnPrompt =>
+      'Wann bist du voraussichtlich zurück? (optional)';
+
+  @override
+  String get tsMyRadioUnknown =>
+      'Mein Funkgerät: beim Erstellen nicht verbunden';
+
+  @override
+  String get tsNotStarted => 'Tour noch nicht gestartet';
+
+  @override
+  String get tsContacts =>
+      'Personen bei mir (Tourkontakte) und ihre Funkgeräte:';
+
+  @override
+  String get tsNoContacts => 'keine festgelegt';
+
+  @override
+  String get tsIfNoContact =>
+      'Wenn du bis zu meiner erwarteten Rückkehr nichts von mir gehört hast, versuche mich und die oben genannten Personen zu erreichen. Klappt das nicht, ruf den örtlichen Notruf an und gib diesen Plan weiter.';
+
+  @override
+  String get tsFooter =>
+      'Erstellt mit NOTORYX Connect. Funkgeräte ohne Netz können stundenlang außer Reichweite sein; Stille allein heißt nicht, dass etwas passiert ist.';
+
+  @override
+  String tsTitle(String name) {
+    return 'Tourplan: $name';
+  }
+
+  @override
+  String tsMyRadio(String name, String id) {
+    return 'Mein Funkgerät: $name ($id)';
+  }
+
+  @override
+  String tsStarted(String time) {
+    return 'Tour gestartet: $time';
+  }
+
+  @override
+  String tsReturnBy(String when) {
+    return 'Voraussichtlich zurück: $when';
+  }
+
+  @override
+  String tsLastCheckIn(String label, String time) {
+    return 'Letzter Check-in: $label um $time';
+  }
+
+  @override
+  String tsLastPosition(String coords) {
+    return 'Letzte bekannte Position: $coords';
+  }
+
+  @override
+  String tsOverdueRule(int minutes) {
+    return 'Meine App warnt unsere Gruppe, wenn jemand $minutes Minuten still ist.';
+  }
 }
