@@ -16,16 +16,25 @@ abstract final class BastionCot {
   static const maxAge = Duration(hours: 1);
   static const _unknown = '9999999.0';
 
-  static String uid(int node) => 'NOTORYX-${node.toRadixString(16).padLeft(8, '0')}';
+  static String uid(int node) =>
+      'NOTORYX-${node.toRadixString(16).padLeft(8, '0')}';
 
-  static String _time(DateTime t) => t.toUtc().toIso8601String().replaceFirst(RegExp(r'\.\d+Z$'), 'Z');
-  static String _escape(String v) => const HtmlEscape(HtmlEscapeMode.attribute).convert(v);
+  static String _time(DateTime t) =>
+      t.toUtc().toIso8601String().replaceFirst(RegExp(r'\.\d+Z$'), 'Z');
+  static String _escape(String v) =>
+      const HtmlEscape(HtmlEscapeMode.attribute).convert(v);
 
   /// The event for [node], or null when it has no recent, usable position.
   static String? event(MeshtasticNode node, DateTime now) {
     final lat = node.latitude, lon = node.longitude, at = node.positionTime;
-    if (lat == null || lon == null || at == null || !lat.isFinite || !lon.isFinite) return null;
-    if (lat.abs() > 90 || lon.abs() > 180 || now.difference(at) > maxAge) return null;
+    if (lat == null ||
+        lon == null ||
+        at == null ||
+        !lat.isFinite ||
+        !lon.isFinite)
+      return null;
+    if (lat.abs() > 90 || lon.abs() > 180 || now.difference(at) > maxAge)
+      return null;
     final hae = node.altitudeMeters?.toString() ?? _unknown;
     return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
         '<event version="2.0" uid="${uid(node.num)}" type="a-f-G-U-C" how="m-g" '
@@ -88,10 +97,13 @@ abstract final class BastionCotReader {
   static final _event = RegExp(r'<event\b([^>]*)>', dotAll: true);
   static final _point = RegExp(r'<point\b([^>]*)/?>', dotAll: true);
   static final _contact = RegExp(r'<contact\b([^>]*)/?>', dotAll: true);
-  static final _attr = RegExp(r'''([A-Za-z_][\w.-]*)\s*=\s*("([^"]*)"|'([^']*)')''');
+  static final _attr = RegExp(
+    r'''([A-Za-z_][\w.-]*)\s*=\s*("([^"]*)"|'([^']*)')''',
+  );
 
   static Map<String, String> _attrs(String s) => {
-    for (final m in _attr.allMatches(s)) m.group(1)!: _unescape(m.group(3) ?? m.group(4) ?? ''),
+    for (final m in _attr.allMatches(s))
+      m.group(1)!: _unescape(m.group(3) ?? m.group(4) ?? ''),
   };
 
   static String _unescape(String v) => v
@@ -112,17 +124,23 @@ abstract final class BastionCotReader {
     final p = _attrs(point.group(1)!);
     final uid = e['uid']?.trim() ?? '';
     final type = e['type']?.trim() ?? '';
-    if (uid.isEmpty || uid.length > 200 || uid.startsWith('NOTORYX-')) return null;
+    if (uid.isEmpty || uid.length > 200 || uid.startsWith('NOTORYX-'))
+      return null;
     if (!(type.startsWith('a-') || type.startsWith('b-m-p'))) return null;
     final lat = double.tryParse(p['lat'] ?? '');
     final lon = double.tryParse(p['lon'] ?? '');
-    if (lat == null || lon == null || !lat.isFinite || !lon.isFinite) return null;
-    if (lat.abs() > 90 || lon.abs() > 180 || (lat == 0 && lon == 0)) return null;
-    var stale = DateTime.tryParse(e['stale'] ?? '') ?? now.add(BastionCot.staleAfter);
+    if (lat == null || lon == null || !lat.isFinite || !lon.isFinite)
+      return null;
+    if (lat.abs() > 90 || lon.abs() > 180 || (lat == 0 && lon == 0))
+      return null;
+    var stale =
+        DateTime.tryParse(e['stale'] ?? '') ?? now.add(BastionCot.staleAfter);
     if (!stale.isAfter(now)) return null;
     if (stale.difference(now) > maxStale) stale = now.add(maxStale);
     final contact = _contact.firstMatch(xml);
-    var callsign = contact == null ? '' : (_attrs(contact.group(1)!)['callsign'] ?? '').trim();
+    var callsign = contact == null
+        ? ''
+        : (_attrs(contact.group(1)!)['callsign'] ?? '').trim();
     if (callsign.isEmpty) callsign = uid;
     if (callsign.length > 60) callsign = callsign.substring(0, 60);
     return TakMarker(
@@ -150,7 +168,10 @@ class BastionLoopbackTakReceiver implements BastionTakReceiver {
   @override
   Future<Stream<String>> listen(int port) async {
     close();
-    final socket = _socket = await RawDatagramSocket.bind(InternetAddress.loopbackIPv4, port);
+    final socket = _socket = await RawDatagramSocket.bind(
+      InternetAddress.loopbackIPv4,
+      port,
+    );
     return socket.where((e) => e == RawSocketEvent.read).expand((_) sync* {
       final d = socket.receive();
       if (d != null && d.data.length <= BastionCotReader.maxBytes) {
@@ -180,7 +201,10 @@ class BastionLoopbackTakSender implements BastionTakSender {
 
   @override
   Future<void> send(String xml) async {
-    final socket = _socket ??= await RawDatagramSocket.bind(InternetAddress.loopbackIPv4, 0);
+    final socket = _socket ??= await RawDatagramSocket.bind(
+      InternetAddress.loopbackIPv4,
+      0,
+    );
     socket.send(utf8.encode(xml), InternetAddress.loopbackIPv4, port);
   }
 
@@ -204,8 +228,14 @@ class BastionTakBridge extends ChangeNotifier {
   static final instance = BastionTakBridge();
   static const defaultPort = 4242;
 
-  /// Where ATAK's output is sent; separate from the port ATAK itself listens on.
-  static const defaultReceivePort = 4243;
+  /// Where ATAK's output is sent; separate from the ports ATAK itself listens on.
+  ///
+  /// ATAK 5.6 opens 4242 and 4243 for itself, so a listener on 4243 fails with
+  /// "address already in use" on any phone that runs ATAK.
+  static const defaultReceivePort = 4250;
+
+  /// The old default, which clashes with ATAK; saved settings using it move on.
+  static const legacyReceivePort = 4243;
 
   /// More markers than this and the oldest are dropped.
   static const maxMarkers = 200;
@@ -243,7 +273,8 @@ class BastionTakBridge extends ChangeNotifier {
   List<TakMarker> get markers {
     final now = _now();
     _markers.removeWhere((_, m) => !m.stale.isAfter(now));
-    return _markers.values.toList()..sort((a, b) => b.received.compareTo(a.received));
+    return _markers.values.toList()
+      ..sort((a, b) => b.received.compareTo(a.received));
   }
 
   /// Handles one datagram from ATAK. Public for tests.
@@ -303,7 +334,12 @@ class BastionTakBridge extends ChangeNotifier {
       _port = port is int && validPort(port) ? port : defaultPort;
       _receive = json['receive'] == true;
       final receivePort = json['receivePort'];
-      _receivePort = receivePort is int && validPort(receivePort) ? receivePort : defaultReceivePort;
+      _receivePort =
+          receivePort is int &&
+              validPort(receivePort) &&
+              receivePort != legacyReceivePort
+          ? receivePort
+          : defaultReceivePort;
     } catch (_) {
       _enabled = false;
       _receive = false;
@@ -326,11 +362,17 @@ class BastionTakBridge extends ChangeNotifier {
     _stop();
   }
 
-  Future<void> configure({bool? enabled, int? port, bool? receive, int? receivePort}) async {
+  Future<void> configure({
+    bool? enabled,
+    int? port,
+    bool? receive,
+    int? receivePort,
+  }) async {
     if (port != null && !validPort(port)) return;
     if (receivePort != null && !validPort(receivePort)) return;
     final receiveChanged =
-        (receive != null && receive != _receive) || (receivePort != null && receivePort != _receivePort);
+        (receive != null && receive != _receive) ||
+        (receivePort != null && receivePort != _receivePort);
     _enabled = enabled ?? _enabled;
     _port = port ?? _port;
     _receive = receive ?? _receive;
@@ -346,7 +388,12 @@ class BastionTakBridge extends ChangeNotifier {
     notifyListeners();
     await SharedPreferencesAsync().setString(
       _settingsName,
-      jsonEncode({'enabled': _enabled, 'port': _port, 'receive': _receive, 'receivePort': _receivePort}),
+      jsonEncode({
+        'enabled': _enabled,
+        'port': _port,
+        'receive': _receive,
+        'receivePort': _receivePort,
+      }),
     );
   }
 
