@@ -13,6 +13,7 @@ import 'generated/meshtastic/mesh.pb.dart' show User;
 import 'generated/meshtastic/module_config.pb.dart';
 import 'proto_form.dart';
 import 'services/bastion_channel_precision.dart';
+import 'services/bastion_feature_gates.dart';
 import 'services/bastion_channel_validation.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_units.dart';
@@ -108,6 +109,7 @@ class RadioSettingsPage extends StatelessWidget {
                 Icons.tune,
                 _sectionName(type),
                 radio.availability('config:${type.value}'),
+                gate: radio.configGate(type.name),
                 () => _OneofEditor(
                   radio: radio,
                   title: _sectionName(type),
@@ -129,6 +131,7 @@ class RadioSettingsPage extends StatelessWidget {
               Icons.extension_outlined,
               _sectionName(type),
               radio.availability('module:${type.value}'),
+              gate: radio.moduleGate(type.name),
               () => _OneofEditor(
                 radio: radio,
                 title: _sectionName(type),
@@ -148,14 +151,23 @@ class RadioSettingsPage extends StatelessWidget {
     IconData icon,
     String title,
     String detail,
-    Widget Function() page,
-  ) => Card(
+    Widget Function() page, {
+    FeatureGate gate = FeatureGate.unknown,
+  }) => Card(
     child: ListTile(
       leading: Icon(icon),
       title: Text(title),
-      subtitle: Text(detail),
+      // A section the radio said it can't use is shown with the reason
+      // and can't be opened, so its settings are never written.
+      subtitle: Text(switch (gate.reason) {
+        GateReason.excludedFromBuild when gate.unavailable =>
+          _l(context).gateExcluded,
+        GateReason.noHardware when gate.unavailable =>
+          _l(context).gateNoHardware,
+        _ => detail,
+      }),
       trailing: const Icon(Icons.chevron_right),
-      enabled: radio.canAdminister,
+      enabled: radio.canAdminister && !gate.unavailable,
       onTap: () =>
           Navigator.of(context)
               .push(MaterialPageRoute<void>(builder: (_) => page())),

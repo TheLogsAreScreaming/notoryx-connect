@@ -35,6 +35,7 @@ import 'bastion_radio_data.dart';
 import 'bastion_chat_marks.dart';
 import 'bastion_chat_store.dart';
 import 'bastion_connection_log.dart';
+import 'bastion_feature_gates.dart';
 import 'bastion_firmware.dart';
 import 'bastion_mqtt_proxy.dart';
 import 'bastion_geofences.dart';
@@ -481,6 +482,16 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   void cancelSettingsCheck() { _cancelSettingsCheck = true; notifyListeners(); }
 
   String availability(String key) => settingsAvailability[key] ?? 'Not checked';
+
+  /// What the radio reported about itself at connect; null until then.
+  pb.DeviceMetadata? get deviceMetadata => _deviceMetadata;
+  pb.DeviceMetadata? _deviceMetadata;
+
+  /// Whether a settings section is offered, from the radio's device info.
+  FeatureGate configGate(String name) =>
+      BastionFeatureGates.config(name, _deviceMetadata);
+  FeatureGate moduleGate(String name) =>
+      BastionFeatureGates.module(name, _deviceMetadata);
 
   Future<T> _readSection<T>(String key, Future<T> Function() read) async {
     final admin = _admin;
@@ -960,6 +971,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       _receivedTextPackets = 0;
       _deviceTelemetry.clear();
       _firmwareVersion = null;
+    _deviceMetadata = null;
       _connectedAt = DateTime.now();
       settingsAvailability.clear();
     _radioConfigSnapshots.clear();
@@ -1030,8 +1042,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         if (envelope.kind == FromRadioPayloadKind.metadata &&
             envelope.payload != null) {
           try {
-            _firmwareVersion = pb.DeviceMetadata.fromBuffer(envelope.payload!)
-                .firmwareVersion;
+            _deviceMetadata = pb.DeviceMetadata.fromBuffer(envelope.payload!);
+            _firmwareVersion = _deviceMetadata!.firmwareVersion;
             if (BastionRadioPolicy.firmwareAtLeast28(_firmwareVersion)) {
               _deviceTelemetry.removeWhere(
                 (_, value) => !value.batteryIsFreshSince(_connectedAt),
@@ -1831,6 +1843,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   void _alertIncoming(MeshtasticTextMessage message) {
+    // A replay from a store-and-forward router is history: it shows in the
+    // chat marked as such, but never alerts, speaks or relays by SMS, so an
+    // old SOS can't look like a new emergency.
+    if (message.replayed) return;
     if (filters.isSilenced(message.from) || filters.matchesWord(message.text)) return;
     if (BastionSmsRelay.available && !message.isReaction) unawaited(_relaySms(message));
     String sender = '!${message.from.toRadixString(16).padLeft(8, '0')}';
@@ -2017,6 +2033,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _moduleConfigSnapshots.clear();
     _localNodeNum = null;
     _firmwareVersion = null;
+    _deviceMetadata = null;
     if (resetConnection) connection.disconnect();
   }
 
