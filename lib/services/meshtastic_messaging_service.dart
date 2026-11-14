@@ -366,9 +366,14 @@ class MeshtasticMessagingService {
             m.to == ack.from &&
             m.deliveryState == BastionDeliveryState.sent);
         if (matches.isNotEmpty) {
-          _setDelivery(ack.requestId, ack.errorReason == 0
-              ? BastionDeliveryState.delivered
-              : BastionDeliveryState.failed);
+          // A receipt whose proof failed is a forgery attempt, not a
+          // delivery: the message stays "sent", with the verdict kept.
+          final state = ack.errorReason != 0
+              ? BastionDeliveryState.failed
+              : ack.proof == BastionAckProof.forged
+                  ? BastionDeliveryState.sent
+                  : BastionDeliveryState.delivered;
+          _setDelivery(ack.requestId, state, proof: ack.proof);
         }
         return;
       }
@@ -410,6 +415,8 @@ class MeshtasticMessagingService {
         hops: message.hops,
         rxRssi: message.rxRssi,
         relayNode: message.relayNode,
+        pkiEncrypted: message.pkiEncrypted,
+        signed: message.signed,
         replayed: message.replayed,
         receivedAt: message.replayed ? _clock() : null,
       ));
@@ -458,12 +465,14 @@ class MeshtasticMessagingService {
     if (connection.isReady) unawaited(flush());
   }
 
-  void _setDelivery(int packetId, BastionDeliveryState state) {
+  void _setDelivery(int packetId, BastionDeliveryState state,
+      {BastionAckProof? proof}) {
     final index = _messages.lastIndexWhere((m) =>
         m.packetId == packetId &&
         m.direction == BastionMessageDirection.outgoing);
     if (index >= 0) {
-      _messages[index] = _messages[index].copyWith(deliveryState: state);
+      _messages[index] =
+          _messages[index].copyWith(deliveryState: state, ackProof: proof);
     }
     _notify();
   }

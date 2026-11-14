@@ -5744,4 +5744,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String chatsReplayedAt(String time) {
     return 'Received $time.';
   }
+
+  @override
+  String get deliveryProven => 'Delivered • receipt proven';
+
+  @override
+  String get deliveryUnproven => 'Delivered • receipt not proven';
+
+  @override
+  String get deliveryNoKey =>
+      'Delivered • receipt couldn\'t be checked (no key)';
+
+  @override
+  String get deliveryForged => 'a receipt failed its check and was ignored';
+
+  @override
+  String get chatsSigned => 'Sender\'s signature checked by your radio';
+
+  @override
+  String get chatsPkiEncrypted => 'Encrypted to you only';
 }

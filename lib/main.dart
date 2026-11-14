@@ -61,6 +61,7 @@ import 'services/bastion_home_widget.dart';
 import 'services/bastion_firmware.dart';
 import 'services/bastion_phone_position.dart';
 import 'services/meshtastic_messaging_service.dart';
+import 'services/meshtastic_text_codec.dart' show BastionAckProof;
 import 'services/meshtastic_radio_coordinator.dart';
 import 'services/meshtastic_usb_transport.dart';
 import 'theme/notoryx_theme.dart';

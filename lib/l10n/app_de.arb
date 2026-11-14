@@ -1564,5 +1564,11 @@
   "chatsDeleteQueued": "Löschen, ohne zu senden",
   "chatsReplayed": "aus dem Verlauf",
   "chatsReplayedFull": "Aus dem Verlauf eines Store-and-Forward-Routers erneut gesendet: früher geschickt, nicht gerade eben.",
-  "chatsReplayedAt": "Empfangen um {time}."
+  "chatsReplayedAt": "Empfangen um {time}.",
+  "deliveryProven": "Zugestellt • Empfang bestätigt",
+  "deliveryUnproven": "Zugestellt • Empfang nicht nachgewiesen",
+  "deliveryNoKey": "Zugestellt • Empfang nicht prüfbar (kein Schlüssel)",
+  "deliveryForged": "eine Empfangsbestätigung hat die Prüfung nicht bestanden und wurde ignoriert",
+  "chatsSigned": "Signatur des Absenders von deinem Funkgerät geprüft",
+  "chatsPkiEncrypted": "Nur für dich verschlüsselt"
 }

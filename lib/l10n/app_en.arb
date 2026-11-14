@@ -4136,5 +4136,11 @@
   "chatsReplayed": "from history",
   "chatsReplayedFull": "Replayed from a store-and-forward router's history: sent earlier, not just now.",
   "chatsReplayedAt": "Received {time}.",
-  "@chatsReplayedAt": {"placeholders": {"time": {"type": "String"}}}
+  "@chatsReplayedAt": {"placeholders": {"time": {"type": "String"}}},
+  "deliveryProven": "Delivered • receipt proven",
+  "deliveryUnproven": "Delivered • receipt not proven",
+  "deliveryNoKey": "Delivered • receipt couldn't be checked (no key)",
+  "deliveryForged": "a receipt failed its check and was ignored",
+  "chatsSigned": "Sender's signature checked by your radio",
+  "chatsPkiEncrypted": "Encrypted to you only"
 }

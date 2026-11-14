@@ -1564,5 +1564,11 @@
   "chatsDeleteQueued": "Eliminar sin enviar",
   "chatsReplayed": "del historial",
   "chatsReplayedFull": "Reenviado desde el historial de un router de almacenamiento y reenvío: se envió antes, no ahora.",
-  "chatsReplayedAt": "Recibido a las {time}."
+  "chatsReplayedAt": "Recibido a las {time}.",
+  "deliveryProven": "Entregado • recibo verificado",
+  "deliveryUnproven": "Entregado • recibo sin verificar",
+  "deliveryNoKey": "Entregado • no se pudo comprobar el recibo (sin clave)",
+  "deliveryForged": "un recibo no pasó la comprobación y se ignoró",
+  "chatsSigned": "Tu radio comprobó la firma del remitente",
+  "chatsPkiEncrypted": "Cifrado solo para ti"
 }

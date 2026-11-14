@@ -1564,5 +1564,11 @@
   "chatsDeleteQueued": "Supprimer sans envoyer",
   "chatsReplayed": "de l'historique",
   "chatsReplayedFull": "Rejoué depuis l'historique d'un routeur store-and-forward : envoyé plus tôt, pas à l'instant.",
-  "chatsReplayedAt": "Reçu à {time}."
+  "chatsReplayedAt": "Reçu à {time}.",
+  "deliveryProven": "Remis • accusé vérifié",
+  "deliveryUnproven": "Remis • accusé non vérifié",
+  "deliveryNoKey": "Remis • accusé impossible à vérifier (pas de clé)",
+  "deliveryForged": "un accusé a échoué à la vérification et a été ignoré",
+  "chatsSigned": "Signature de l'expéditeur vérifiée par votre radio",
+  "chatsPkiEncrypted": "Chiffré pour vous seul"
 }
