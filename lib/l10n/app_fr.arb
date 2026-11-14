@@ -1592,5 +1592,17 @@
   "ikNoKey": "Cette radio n'a pas de paire de clés à sauvegarder. Son firmware est peut-être trop ancien ou a les clés publiques désactivées.",
   "ikMismatch": "Les clés privée et publique ne correspondent pas, rien n'a donc été modifié. La sauvegarde est peut-être endommagée.",
   "ikNotApplied": "La radio n'a pas indiqué la clé restaurée ensuite. Vérifiez ses réglages de sécurité avant de vous y fier.",
-  "ikBadFormat": "Ce n'est pas une sauvegarde de clé d'identité."
+  "ikBadFormat": "Ce n'est pas une sauvegarde de clé d'identité.",
+  "mlTitle": "Carte sous forme de liste",
+  "mlIntro": "Tout ce qui est sur la carte en mots, le plus proche d'abord. Les directions partent de la dernière position de votre radio.",
+  "mlNodes": "Nœuds",
+  "mlWaypoints": "Points de passage",
+  "mlWeakAreas": "Zones de couverture faible",
+  "mlWeakArea": "Zone de signal faible",
+  "mlNone": "Aucun",
+  "mlNoOwnPosition": "Distance inconnue : votre radio n'a pas de position",
+  "mlDistanceDir": "{distance} au {dir, select, n{nord} ne{nord-est} e{est} se{sud-est} s{sud} sw{sud-ouest} w{ouest} nw{nord-ouest} other{}}",
+  "mlHeard": "entendu {ago}",
+  "mlPositionAge": "position de {ago}",
+  "mlReadings": "{count} relevés, SNR moyen {snr} dB"
 }

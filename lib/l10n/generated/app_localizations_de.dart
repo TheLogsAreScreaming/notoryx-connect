@@ -5916,4 +5916,61 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get ikBadFormat =>
       'Das ist keine Sicherung eines Identitätsschlüssels.';
+
+  @override
+  String get mlTitle => 'Karte als Liste';
+
+  @override
+  String get mlIntro =>
+      'Alles auf der Karte in Worten, das Nächste zuerst. Richtungen gelten ab der letzten Position deines Funkgeräts.';
+
+  @override
+  String get mlNodes => 'Knoten';
+
+  @override
+  String get mlWaypoints => 'Wegpunkte';
+
+  @override
+  String get mlWeakAreas => 'Bereiche mit schwachem Empfang';
+
+  @override
+  String get mlWeakArea => 'Bereich mit schwachem Signal';
+
+  @override
+  String get mlNone => 'Keine';
+
+  @override
+  String get mlNoOwnPosition =>
+      'Entfernung unbekannt: dein Funkgerät hat keine Position';
+
+  @override
+  String mlDistanceDir(String distance, String dir) {
+    String _temp0 = intl.Intl.selectLogic(dir, {
+      'n': 'Norden',
+      'ne': 'Nordosten',
+      'e': 'Osten',
+      'se': 'Südosten',
+      's': 'Süden',
+      'sw': 'Südwesten',
+      'w': 'Westen',
+      'nw': 'Nordwesten',
+      'other': '',
+    });
+    return '$distance $_temp0';
+  }
+
+  @override
+  String mlHeard(String ago) {
+    return 'gehört $ago';
+  }
+
+  @override
+  String mlPositionAge(String ago) {
+    return 'Position von $ago';
+  }
+
+  @override
+  String mlReadings(int count, String snr) {
+    return '$count Messungen, mittleres SNR $snr dB';
+  }
 }

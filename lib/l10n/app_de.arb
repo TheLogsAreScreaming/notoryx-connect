@@ -1592,5 +1592,17 @@
   "ikNoKey": "Dieses Funkgerät hat kein Schlüsselpaar zum Sichern. Die Firmware ist vielleicht zu alt oder hat öffentliche Schlüssel abgeschaltet.",
   "ikMismatch": "Privater und öffentlicher Schlüssel passen nicht zusammen, daher wurde nichts geändert. Die Sicherung ist vielleicht beschädigt.",
   "ikNotApplied": "Das Funkgerät meldete danach nicht den wiederhergestellten Schlüssel. Prüfe die Sicherheitseinstellungen, bevor du dich darauf verlässt.",
-  "ikBadFormat": "Das ist keine Sicherung eines Identitätsschlüssels."
+  "ikBadFormat": "Das ist keine Sicherung eines Identitätsschlüssels.",
+  "mlTitle": "Karte als Liste",
+  "mlIntro": "Alles auf der Karte in Worten, das Nächste zuerst. Richtungen gelten ab der letzten Position deines Funkgeräts.",
+  "mlNodes": "Knoten",
+  "mlWaypoints": "Wegpunkte",
+  "mlWeakAreas": "Bereiche mit schwachem Empfang",
+  "mlWeakArea": "Bereich mit schwachem Signal",
+  "mlNone": "Keine",
+  "mlNoOwnPosition": "Entfernung unbekannt: dein Funkgerät hat keine Position",
+  "mlDistanceDir": "{distance} {dir, select, n{Norden} ne{Nordosten} e{Osten} se{Südosten} s{Süden} sw{Südwesten} w{Westen} nw{Nordwesten} other{}}",
+  "mlHeard": "gehört {ago}",
+  "mlPositionAge": "Position von {ago}",
+  "mlReadings": "{count} Messungen, mittleres SNR {snr} dB"
 }

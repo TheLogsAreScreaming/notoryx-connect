@@ -4171,5 +4171,21 @@
   "ikNoKey": "This radio has no key pair to back up. Its firmware may be too old or have public keys turned off.",
   "ikMismatch": "The private and public keys don't belong together, so nothing was changed. The backup may be damaged.",
   "ikNotApplied": "The radio didn't report the restored key afterwards. Check its security settings before relying on it.",
-  "ikBadFormat": "That isn't an identity key backup."
+  "ikBadFormat": "That isn't an identity key backup.",
+  "mlTitle": "Map as a list",
+  "mlIntro": "Everything on the map in words, nearest first. Directions are from your radio's last position.",
+  "mlNodes": "Nodes",
+  "mlWaypoints": "Waypoints",
+  "mlWeakAreas": "Weak coverage areas",
+  "mlWeakArea": "Weak signal area",
+  "mlNone": "None",
+  "mlNoOwnPosition": "Distance unknown: your radio has no position",
+  "mlDistanceDir": "{distance} {dir, select, n{north} ne{north-east} e{east} se{south-east} s{south} sw{south-west} w{west} nw{north-west} other{}}",
+  "@mlDistanceDir": {"placeholders": {"distance": {"type": "String"}, "dir": {"type": "String"}}},
+  "mlHeard": "heard {ago}",
+  "@mlHeard": {"placeholders": {"ago": {"type": "String"}}},
+  "mlPositionAge": "position from {ago}",
+  "@mlPositionAge": {"placeholders": {"ago": {"type": "String"}}},
+  "mlReadings": "{count} readings, average SNR {snr} dB",
+  "@mlReadings": {"placeholders": {"count": {"type": "int"}, "snr": {"type": "String"}}}
 }

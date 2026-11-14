@@ -9672,6 +9672,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That isn\'t an identity key backup.'**
   String get ikBadFormat;
+
+  /// No description provided for @mlTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Map as a list'**
+  String get mlTitle;
+
+  /// No description provided for @mlIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything on the map in words, nearest first. Directions are from your radio\'s last position.'**
+  String get mlIntro;
+
+  /// No description provided for @mlNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get mlNodes;
+
+  /// No description provided for @mlWaypoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoints'**
+  String get mlWaypoints;
+
+  /// No description provided for @mlWeakAreas.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak coverage areas'**
+  String get mlWeakAreas;
+
+  /// No description provided for @mlWeakArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak signal area'**
+  String get mlWeakArea;
+
+  /// No description provided for @mlNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get mlNone;
+
+  /// No description provided for @mlNoOwnPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance unknown: your radio has no position'**
+  String get mlNoOwnPosition;
+
+  /// No description provided for @mlDistanceDir.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} {dir, select, n{north} ne{north-east} e{east} se{south-east} s{south} sw{south-west} w{west} nw{north-west} other{}}'**
+  String mlDistanceDir(String distance, String dir);
+
+  /// No description provided for @mlHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'heard {ago}'**
+  String mlHeard(String ago);
+
+  /// No description provided for @mlPositionAge.
+  ///
+  /// In en, this message translates to:
+  /// **'position from {ago}'**
+  String mlPositionAge(String ago);
+
+  /// No description provided for @mlReadings.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} readings, average SNR {snr} dB'**
+  String mlReadings(int count, String snr);
 }
 
 class _AppLocalizationsDelegate

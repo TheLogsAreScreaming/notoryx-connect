@@ -5913,4 +5913,61 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ikBadFormat => 'Ce n\'est pas une sauvegarde de clé d\'identité.';
+
+  @override
+  String get mlTitle => 'Carte sous forme de liste';
+
+  @override
+  String get mlIntro =>
+      'Tout ce qui est sur la carte en mots, le plus proche d\'abord. Les directions partent de la dernière position de votre radio.';
+
+  @override
+  String get mlNodes => 'Nœuds';
+
+  @override
+  String get mlWaypoints => 'Points de passage';
+
+  @override
+  String get mlWeakAreas => 'Zones de couverture faible';
+
+  @override
+  String get mlWeakArea => 'Zone de signal faible';
+
+  @override
+  String get mlNone => 'Aucun';
+
+  @override
+  String get mlNoOwnPosition =>
+      'Distance inconnue : votre radio n\'a pas de position';
+
+  @override
+  String mlDistanceDir(String distance, String dir) {
+    String _temp0 = intl.Intl.selectLogic(dir, {
+      'n': 'nord',
+      'ne': 'nord-est',
+      'e': 'est',
+      'se': 'sud-est',
+      's': 'sud',
+      'sw': 'sud-ouest',
+      'w': 'ouest',
+      'nw': 'nord-ouest',
+      'other': '',
+    });
+    return '$distance au $_temp0';
+  }
+
+  @override
+  String mlHeard(String ago) {
+    return 'entendu $ago';
+  }
+
+  @override
+  String mlPositionAge(String ago) {
+    return 'position de $ago';
+  }
+
+  @override
+  String mlReadings(int count, String snr) {
+    return '$count relevés, SNR moyen $snr dB';
+  }
 }
