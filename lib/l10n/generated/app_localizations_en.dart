@@ -5721,6 +5721,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get deliveryHeld => 'Held: check before sending';
+
+  @override
+  String get chatsHeldExplain =>
+      'This wasn\'t sent by itself. It\'s over a day old, or sending was cut off and it may already have gone out.';
+
+  @override
+  String get chatsSendHeld => 'Send now';
+
+  @override
+  String get chatsDeleteQueued => 'Delete without sending';
+
+  @override
   String get gateExcluded => 'Left out of this radio\'s firmware build';
 
   @override

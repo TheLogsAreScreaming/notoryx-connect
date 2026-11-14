@@ -1705,6 +1705,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       destination: destination,
       channel: channel,
       packetId: packetId,
+      queuedAt: DateTime.now(),
     );
     await _archiveLoaded;
     _archivedPending = [..._archivedPending, pending];
@@ -1728,6 +1729,58 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     await _archive.save(messages: _archivedMessages, pending: _archivedPending);
     notifyListeners();
     return packetId;
+  }
+
+  /// Sends a held queued message now (see [BastionDeliveryState.held]).
+  /// With no radio connected it goes back in the queue as new.
+  Future<void> sendHeld(int packetId) async {
+    final messaging = _messaging;
+    if (messaging != null && messaging.archive != null) {
+      await messaging.sendHeld(packetId);
+      _syncMessageSnapshot(messaging);
+      notifyListeners();
+      return;
+    }
+    await _archiveLoaded;
+    _archivedPending = [
+      for (final m in _archivedPending)
+        m.packetId == packetId
+            ? m.copyWith(held: false, handoff: false, queuedAt: DateTime.now())
+            : m,
+    ];
+    _archivedMessages = [
+      for (final m in _archivedMessages)
+        m.packetId == packetId && m.deliveryState == BastionDeliveryState.held
+            ? m.copyWith(deliveryState: BastionDeliveryState.queued)
+            : m,
+    ];
+    await _archive.save(messages: _archivedMessages, pending: _archivedPending);
+    notifyListeners();
+  }
+
+  /// Deletes a queued or held message without sending it.
+  Future<void> deleteQueued(int packetId) async {
+    final messaging = _messaging;
+    if (messaging != null && messaging.archive != null) {
+      messaging.deleteQueued(packetId);
+      _syncMessageSnapshot(messaging);
+      notifyListeners();
+      return;
+    }
+    await _archiveLoaded;
+    if (!_archivedPending.any((m) => m.packetId == packetId)) return;
+    _archivedPending = [
+      for (final m in _archivedPending)
+        if (m.packetId != packetId) m,
+    ];
+    _archivedMessages = [
+      for (final m in _archivedMessages)
+        if (m.packetId != packetId ||
+            m.direction != BastionMessageDirection.outgoing)
+          m,
+    ];
+    await _archive.save(messages: _archivedMessages, pending: _archivedPending);
+    notifyListeners();
   }
 
   /// Notifies about a message that arrives while the app is backgrounded.

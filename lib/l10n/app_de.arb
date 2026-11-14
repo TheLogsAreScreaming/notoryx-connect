@@ -1558,6 +1558,10 @@
   "omZooms": "Zoom {min} bis {max}",
   "omAdded": "Offline-Karte bereit: {name}, Zoom {min} bis {max}",
   "omUnreadable": "Datei nicht nutzbar: {reason}",
+  "deliveryHeld": "Angehalten: vor dem Senden prüfen",
+  "chatsHeldExplain": "Diese Nachricht wurde nicht automatisch gesendet. Sie ist älter als einen Tag, oder das Senden wurde unterbrochen und sie ist vielleicht schon raus.",
+  "chatsSendHeld": "Jetzt senden",
+  "chatsDeleteQueued": "Löschen, ohne zu senden",
   "gateExcluded": "In der Firmware dieses Funkgeräts nicht enthalten",
   "gateNoHardware": "Diesem Funkgerät fehlt die Hardware dafür",
   "formNewerValue": "Von neuerer Firmware gesetzt (Wert {value}). Bleibt unverändert."

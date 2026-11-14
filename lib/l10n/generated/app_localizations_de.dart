@@ -5783,6 +5783,19 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get deliveryHeld => 'Angehalten: vor dem Senden prüfen';
+
+  @override
+  String get chatsHeldExplain =>
+      'Diese Nachricht wurde nicht automatisch gesendet. Sie ist älter als einen Tag, oder das Senden wurde unterbrochen und sie ist vielleicht schon raus.';
+
+  @override
+  String get chatsSendHeld => 'Jetzt senden';
+
+  @override
+  String get chatsDeleteQueued => 'Löschen, ohne zu senden';
+
+  @override
   String get gateExcluded =>
       'In der Firmware dieses Funkgeräts nicht enthalten';
 

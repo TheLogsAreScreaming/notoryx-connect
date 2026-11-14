@@ -5761,6 +5761,19 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get deliveryHeld => 'Retenido: revísalo antes de enviar';
+
+  @override
+  String get chatsHeldExplain =>
+      'No se envió automáticamente. Tiene más de un día, o el envío se interrumpió y puede que ya haya salido.';
+
+  @override
+  String get chatsSendHeld => 'Enviar ahora';
+
+  @override
+  String get chatsDeleteQueued => 'Eliminar sin enviar';
+
+  @override
   String get gateExcluded => 'No incluido en el firmware de esta radio';
 
   @override
