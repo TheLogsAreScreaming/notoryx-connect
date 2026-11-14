@@ -1575,7 +1575,7 @@
   "gateNoHardware": "Diesem Funkgerät fehlt die Hardware dafür",
   "formNewerValue": "Von neuerer Firmware gesetzt (Wert {value}). Bleibt unverändert.",
   "omArea": "Deckt {area} ab (gestrichelte Linie auf der Karte). Außerhalb gibt es keine Offline-Kacheln.",
-  "omDamaged": "{count} Kacheln in dieser Datei sind beschädigt und bleiben leer.",
+  "omDamaged": "{count, plural, =1{1 Kachel in dieser Datei ist beschädigt und bleibt leer.} other{{count} Kacheln in dieser Datei sind beschädigt und bleiben leer.}}",
   "ikTitle": "Identitätsschlüssel (eigene Sicherung)",
   "ikIntro": "Der private Schlüssel macht dieses Funkgerät für alle zum selben Knoten. Sichere ihn, um deine Identität auf ein Ersatzgerät zu übertragen. Halte ihn geheim und nutze ihn nie auf zwei Funkgeräten gleichzeitig. Verwendet das Passwort oben.",
   "ikBackup": "Identitätsschlüssel sichern",

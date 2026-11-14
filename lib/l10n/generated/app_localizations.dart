@@ -9568,7 +9568,7 @@ abstract class AppLocalizations {
   /// No description provided for @omDamaged.
   ///
   /// In en, this message translates to:
-  /// **'{count} tiles in this file are damaged and will show blank.'**
+  /// **'{count, plural, =1{1 tile in this file is damaged and will show blank.} other{{count} tiles in this file are damaged and will show blank.}}'**
   String omDamaged(int count);
 
   /// No description provided for @ikTitle.

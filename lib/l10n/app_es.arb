@@ -1575,7 +1575,7 @@
   "gateNoHardware": "Esta radio no tiene el hardware para esto",
   "formNewerValue": "Definido por un firmware más nuevo (valor {value}). Se deja sin cambios.",
   "omArea": "Cubre {area} (contorno discontinuo en el mapa). Fuera de él no hay teselas sin conexión.",
-  "omDamaged": "{count} teselas de este archivo están dañadas y se verán en blanco.",
+  "omDamaged": "{count, plural, =1{1 tesela de este archivo está dañada y se verá en blanco.} other{{count} teselas de este archivo están dañadas y se verán en blanco.}}",
   "ikTitle": "Clave de identidad (copia aparte)",
   "ikIntro": "La clave privada hace que esta radio sea el mismo nodo para todos. Haz una copia para llevar tu identidad a una radio de reemplazo. Mantenla en secreto y nunca la pongas en dos radios activas a la vez. Usa la contraseña de arriba.",
   "ikBackup": "Copiar la clave de identidad",
