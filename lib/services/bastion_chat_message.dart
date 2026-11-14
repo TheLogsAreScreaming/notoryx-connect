@@ -22,6 +22,11 @@ class BastionChatMessage {
     this.hops,
     this.rxRssi,
     this.relayNode,
+    this.ackProof,
+    this.pkiEncrypted = false,
+    this.signed = false,
+    this.replayed = false,
+    this.receivedAt,
   });
 
   final int packetId;
@@ -52,9 +57,28 @@ class BastionChatMessage {
   /// Last byte of the node number of the final relay.
   final int? relayNode;
 
+  /// For an outgoing direct message: what the firmware said about its
+  /// delivery receipt. Null until a receipt arrives.
+  final BastionAckProof? ackProof;
+
+  /// Incoming: decrypted with this node's private key.
+  final bool pkiEncrypted;
+
+  /// Incoming: the firmware verified the sender's signature.
+  final bool signed;
+  /// Came from a store-and-forward router's history, not live.
+  final bool replayed;
+
+  /// When this phone got it, when that differs from [timestamp] (the time
+  /// the packet says it was first heard). Set for replays.
+  final DateTime? receivedAt;
+
   bool get isBroadcast => to == MeshtasticTextCodec.broadcastNode;
 
-  BastionChatMessage copyWith({BastionDeliveryState? deliveryState}) =>
+  BastionChatMessage copyWith({
+    BastionDeliveryState? deliveryState,
+    BastionAckProof? ackProof,
+  }) =>
       BastionChatMessage(
         packetId: packetId,
         from: from,
@@ -71,6 +95,11 @@ class BastionChatMessage {
         hops: hops,
         rxRssi: rxRssi,
         relayNode: relayNode,
+        ackProof: ackProof ?? this.ackProof,
+        pkiEncrypted: pkiEncrypted,
+        signed: signed,
+        replayed: replayed,
+        receivedAt: receivedAt,
       );
 
   Map<String, Object?> toJson() => {
@@ -89,6 +118,11 @@ class BastionChatMessage {
     if (hops != null) 'hops': hops,
     if (rxRssi != null) 'rxRssi': rxRssi,
     if (relayNode != null) 'relay': relayNode,
+    if (ackProof != null) 'ackProof': ackProof!.name,
+    if (pkiEncrypted) 'pki': true,
+    if (signed) 'signed': true,
+    if (replayed) 'replayed': true,
+    if (receivedAt != null) 'receivedAt': receivedAt!.toUtc().toIso8601String(),
   };
 
   static BastionChatMessage fromJson(Map<String, Object?> json) {
@@ -112,6 +146,17 @@ class BastionChatMessage {
       hops: json['hops'] as int?,
       rxRssi: json['rxRssi'] as int?,
       relayNode: json['relay'] as int?,
+      // An unknown value from a newer build reads as not proven.
+      ackProof: json['ackProof'] is String
+          ? BastionAckProof.values.asNameMap()[json['ackProof']] ??
+              BastionAckProof.unproven
+          : null,
+      pkiEncrypted: json['pki'] as bool? ?? false,
+      signed: json['signed'] as bool? ?? false,
+      replayed: json['replayed'] as bool? ?? false,
+      receivedAt: json['receivedAt'] is String
+          ? DateTime.tryParse(json['receivedAt']! as String)?.toLocal()
+          : null,
     );
   }
 }

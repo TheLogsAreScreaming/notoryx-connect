@@ -1562,6 +1562,18 @@
   "chatsHeldExplain": "Diese Nachricht wurde nicht automatisch gesendet. Sie ist älter als einen Tag, oder das Senden wurde unterbrochen und sie ist vielleicht schon raus.",
   "chatsSendHeld": "Jetzt senden",
   "chatsDeleteQueued": "Löschen, ohne zu senden",
+  "chatsReplayed": "aus dem Verlauf",
+  "chatsReplayedFull": "Aus dem Verlauf eines Store-and-Forward-Routers erneut gesendet: früher geschickt, nicht gerade eben.",
+  "chatsReplayedAt": "Empfangen um {time}.",
+  "deliveryProven": "Zugestellt • Empfang bestätigt",
+  "deliveryUnproven": "Zugestellt • Empfang nicht nachgewiesen",
+  "deliveryNoKey": "Zugestellt • Empfang nicht prüfbar (kein Schlüssel)",
+  "deliveryForged": "eine Empfangsbestätigung hat die Prüfung nicht bestanden und wurde ignoriert",
+  "chatsSigned": "Signatur des Absenders von deinem Funkgerät geprüft",
+  "chatsPkiEncrypted": "Nur für dich verschlüsselt",
+  "gateExcluded": "In der Firmware dieses Funkgeräts nicht enthalten",
+  "gateNoHardware": "Diesem Funkgerät fehlt die Hardware dafür",
+  "formNewerValue": "Von neuerer Firmware gesetzt (Wert {value}). Bleibt unverändert.",
   "omArea": "Deckt {area} ab (gestrichelte Linie auf der Karte). Außerhalb gibt es keine Offline-Kacheln.",
   "omDamaged": "{count} Kacheln in dieser Datei sind beschädigt und bleiben leer."
 }

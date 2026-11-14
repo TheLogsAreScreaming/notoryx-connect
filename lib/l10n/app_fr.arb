@@ -1562,6 +1562,18 @@
   "chatsHeldExplain": "Il n'a pas été envoyé automatiquement. Il a plus d'un jour, ou l'envoi a été interrompu et il est peut-être déjà parti.",
   "chatsSendHeld": "Envoyer maintenant",
   "chatsDeleteQueued": "Supprimer sans envoyer",
+  "chatsReplayed": "de l'historique",
+  "chatsReplayedFull": "Rejoué depuis l'historique d'un routeur store-and-forward : envoyé plus tôt, pas à l'instant.",
+  "chatsReplayedAt": "Reçu à {time}.",
+  "deliveryProven": "Remis • accusé vérifié",
+  "deliveryUnproven": "Remis • accusé non vérifié",
+  "deliveryNoKey": "Remis • accusé impossible à vérifier (pas de clé)",
+  "deliveryForged": "un accusé a échoué à la vérification et a été ignoré",
+  "chatsSigned": "Signature de l'expéditeur vérifiée par votre radio",
+  "chatsPkiEncrypted": "Chiffré pour vous seul",
+  "gateExcluded": "Absent du firmware de cette radio",
+  "gateNoHardware": "Cette radio n'a pas le matériel pour cela",
+  "formNewerValue": "Défini par un firmware plus récent (valeur {value}). Laissé tel quel.",
   "omArea": "Couvre {area} (contour en pointillés sur la carte). En dehors, il n'y a pas de tuiles hors ligne.",
   "omDamaged": "{count} tuiles de ce fichier sont endommagées et resteront vides."
 }
