@@ -1,0 +1,1 @@
+New: airtime estimate while typing, Quick Settings tile, GPX/KML/GeoJSON map layers, offline map from an MBTiles file, shareable trip plan, lookalike-name warning, Disconnect for Bluetooth radios, NOTORYX Core look, more screens translated.
