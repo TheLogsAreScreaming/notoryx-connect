@@ -1,6 +1,26 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+/// What the radio's firmware says about a delivery receipt (ACK).
+///
+/// Only [proven] means the node the message was addressed to received it.
+/// The firmware sets this; the app never works it out for itself.
+enum BastionAckProof {
+  /// The receipt carried a proof that checked out against the recipient's key.
+  proven,
+
+  /// The receipt carried a proof that did not check out: someone answered
+  /// for the recipient without its key. Treated as not delivered.
+  forged,
+
+  /// A proof came, but the radio had no key to check it against.
+  noKey,
+
+  /// No proof: older firmware, a build without PKI, or a relay settled it
+  /// first. Delivered, but not proven to be by the recipient.
+  unproven,
+}
+
 /// Minimal Meshtastic MeshPacket/Data codec for UTF-8 text messaging.
 ///
 /// Field numbers mirror the official Meshtastic protobuf schema. Keeping this
@@ -20,6 +40,7 @@ abstract final class MeshtasticTextCodec {
     var viaMqtt = false;
     var hopLimit = 0, hopStart = 0, relayNode = 0;
     int? rxRssi;
+    var pkiEncrypted = false, signed = false;
     Uint8List? decoded;
 
     while (offset < bytes.length) {
@@ -56,6 +77,11 @@ abstract final class MeshtasticTextCodec {
         final v = _readVarint(bytes, offset);
         viaMqtt = v.value != 0;
         offset = v.next;
+      } else if ((field == 17 || field == 22) && wire == 0) {
+        final v = _readVarint(bytes, offset);
+        offset = v.next;
+        if (field == 17) pkiEncrypted = v.value != 0;
+        if (field == 22) signed = v.value != 0;
       } else if ((field == 9 || field == 12 || field == 15 || field == 19) && wire == 0) {
         final v = _readVarint(bytes, offset);
         offset = v.next;
@@ -93,15 +119,18 @@ abstract final class MeshtasticTextCodec {
       hops: hopStart > 0 && hopStart >= hopLimit ? hopStart - hopLimit : null,
       rxRssi: rxRssi,
       relayNode: relayNode == 0 ? null : relayNode & 0xff,
+      pkiEncrypted: pkiEncrypted,
+      signed: signed,
     );
   }
 
   /// Parse a routing response correlated with an outgoing direct-message ID.
   /// Routing error 0 means an ACK; nonzero values are delivery failures.
-  static ({int requestId, int from, int errorReason})? decodeRoutingAck(
-      Uint8List bytes) {
+  static ({int requestId, int from, int errorReason, BastionAckProof proof})?
+      decodeRoutingAck(Uint8List bytes) {
     var offset = 0;
     var from = 0;
+    var proofStatus = 0;
     Uint8List? decoded;
     while (offset < bytes.length) {
       final tag = _readVarint(bytes, offset);
@@ -114,6 +143,11 @@ abstract final class MeshtasticTextCodec {
       } else if (field == 4 && wire == 2) {
         final value = _readBytes(bytes, offset);
         decoded = value.bytes;
+        offset = value.next;
+      } else if (field == 23 && wire == 0) {
+        // MeshPacket.ack_proof_status, set by the firmware (2.8+).
+        final value = _readVarint(bytes, offset);
+        proofStatus = value.value;
         offset = value.next;
       } else {
         offset = _skip(bytes, offset, wire);
@@ -159,7 +193,14 @@ abstract final class MeshtasticTextCodec {
       }
     }
     if (errorReason == null) return null;
-    return (requestId: requestId, from: from, errorReason: errorReason);
+    final proof = switch (proofStatus) {
+      1 => BastionAckProof.proven,
+      2 => BastionAckProof.forged,
+      3 => BastionAckProof.noKey,
+      // 0 (absent) and any value newer firmware adds: not proven.
+      _ => BastionAckProof.unproven,
+    };
+    return (requestId: requestId, from: from, errorReason: errorReason, proof: proof);
   }
 
   static Uint8List toRadioText({
@@ -313,6 +354,8 @@ class MeshtasticTextMessage {
     this.hops,
     this.rxRssi,
     this.relayNode,
+    this.pkiEncrypted = false,
+    this.signed = false,
   });
 
   final int packetId;
@@ -341,6 +384,14 @@ class MeshtasticTextMessage {
 
   /// Last byte of the node number of the radio that relayed it last.
   final int? relayNode;
+
+  /// The firmware decrypted it with this node's private key (a PKI direct
+  /// message), so only this node could read it.
+  final bool pkiEncrypted;
+
+  /// The firmware checked the sender's signature and it was valid. False
+  /// also when the sender didn't sign or the firmware doesn't report it.
+  final bool signed;
 
   bool get isBroadcast => to == MeshtasticTextCodec.broadcastNode;
 }

@@ -5781,4 +5781,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String omUnreadable(String reason) {
     return 'Fichier inutilisable : $reason';
   }
+
+  @override
+  String get deliveryProven => 'Remis • accusé vérifié';
+
+  @override
+  String get deliveryUnproven => 'Remis • accusé non vérifié';
+
+  @override
+  String get deliveryNoKey =>
+      'Remis • accusé impossible à vérifier (pas de clé)';
+
+  @override
+  String get deliveryForged =>
+      'un accusé a échoué à la vérification et a été ignoré';
+
+  @override
+  String get chatsSigned =>
+      'Signature de l\'expéditeur vérifiée par votre radio';
+
+  @override
+  String get chatsPkiEncrypted => 'Chiffré pour vous seul';
 }

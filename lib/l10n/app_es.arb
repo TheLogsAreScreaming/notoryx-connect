@@ -1557,5 +1557,11 @@
   "omReplace": "Sustituir por otro archivo",
   "omZooms": "Zoom {min} a {max}",
   "omAdded": "Mapa sin conexión listo: {name}, zoom {min} a {max}",
-  "omUnreadable": "No se pudo usar ese archivo: {reason}"
+  "omUnreadable": "No se pudo usar ese archivo: {reason}",
+  "deliveryProven": "Entregado • recibo verificado",
+  "deliveryUnproven": "Entregado • recibo sin verificar",
+  "deliveryNoKey": "Entregado • no se pudo comprobar el recibo (sin clave)",
+  "deliveryForged": "un recibo no pasó la comprobación y se ignoró",
+  "chatsSigned": "Tu radio comprobó la firma del remitente",
+  "chatsPkiEncrypted": "Cifrado solo para ti"
 }

@@ -1557,5 +1557,11 @@
   "omReplace": "Remplacer par un autre fichier",
   "omZooms": "Zoom {min} à {max}",
   "omAdded": "Carte hors ligne prête : {name}, zoom {min} à {max}",
-  "omUnreadable": "Fichier inutilisable : {reason}"
+  "omUnreadable": "Fichier inutilisable : {reason}",
+  "deliveryProven": "Remis • accusé vérifié",
+  "deliveryUnproven": "Remis • accusé non vérifié",
+  "deliveryNoKey": "Remis • accusé impossible à vérifier (pas de clé)",
+  "deliveryForged": "un accusé a échoué à la vérification et a été ignoré",
+  "chatsSigned": "Signature de l'expéditeur vérifiée par votre radio",
+  "chatsPkiEncrypted": "Chiffré pour vous seul"
 }

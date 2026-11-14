@@ -9462,6 +9462,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t use that file: {reason}'**
   String omUnreadable(String reason);
+
+  /// No description provided for @deliveryProven.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered • receipt proven'**
+  String get deliveryProven;
+
+  /// No description provided for @deliveryUnproven.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered • receipt not proven'**
+  String get deliveryUnproven;
+
+  /// No description provided for @deliveryNoKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered • receipt couldn\'t be checked (no key)'**
+  String get deliveryNoKey;
+
+  /// No description provided for @deliveryForged.
+  ///
+  /// In en, this message translates to:
+  /// **'a receipt failed its check and was ignored'**
+  String get deliveryForged;
+
+  /// No description provided for @chatsSigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Sender\'s signature checked by your radio'**
+  String get chatsSigned;
+
+  /// No description provided for @chatsPkiEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted to you only'**
+  String get chatsPkiEncrypted;
 }
 
 class _AppLocalizationsDelegate

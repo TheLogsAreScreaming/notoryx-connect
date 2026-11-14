@@ -5759,4 +5759,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String omUnreadable(String reason) {
     return 'No se pudo usar ese archivo: $reason';
   }
+
+  @override
+  String get deliveryProven => 'Entregado • recibo verificado';
+
+  @override
+  String get deliveryUnproven => 'Entregado • recibo sin verificar';
+
+  @override
+  String get deliveryNoKey =>
+      'Entregado • no se pudo comprobar el recibo (sin clave)';
+
+  @override
+  String get deliveryForged => 'un recibo no pasó la comprobación y se ignoró';
+
+  @override
+  String get chatsSigned => 'Tu radio comprobó la firma del remitente';
+
+  @override
+  String get chatsPkiEncrypted => 'Cifrado solo para ti';
 }

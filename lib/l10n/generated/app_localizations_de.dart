@@ -5781,4 +5781,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String omUnreadable(String reason) {
     return 'Datei nicht nutzbar: $reason';
   }
+
+  @override
+  String get deliveryProven => 'Zugestellt • Empfang bestätigt';
+
+  @override
+  String get deliveryUnproven => 'Zugestellt • Empfang nicht nachgewiesen';
+
+  @override
+  String get deliveryNoKey =>
+      'Zugestellt • Empfang nicht prüfbar (kein Schlüssel)';
+
+  @override
+  String get deliveryForged =>
+      'eine Empfangsbestätigung hat die Prüfung nicht bestanden und wurde ignoriert';
+
+  @override
+  String get chatsSigned =>
+      'Signatur des Absenders von deinem Funkgerät geprüft';
+
+  @override
+  String get chatsPkiEncrypted => 'Nur für dich verschlüsselt';
 }
