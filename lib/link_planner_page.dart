@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/generated/app_localizations.dart';
+
 import 'services/bastion_link_planner.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_units.dart';
@@ -63,7 +65,7 @@ class _LinkPlannerPageState extends State<LinkPlannerPage> {
     final ha = double.tryParse(_fromHeight.text.trim()), hb = double.tryParse(_toHeight.text.trim());
     if (a == null || b == null) return;
     if (ha == null || hb == null || ha < 0 || hb < 0 || ha > 300 || hb > 300) {
-      setState(() => _error = 'Antenna heights must be between 0 and 300 m.');
+      setState(() => _error = AppLocalizations.of(context).lpHeightRange);
       return;
     }
     setState(() {
@@ -83,7 +85,7 @@ class _LinkPlannerPageState extends State<LinkPlannerPage> {
       );
       if (mounted) setState(() => _result = result);
     } catch (error) {
-      if (mounted) setState(() => _error = 'Could not get terrain heights. Check your internet connection. ($error)');
+      if (mounted) setState(() => _error = AppLocalizations.of(context).lpTerrainFailed('$error'));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -91,40 +93,41 @@ class _LinkPlannerPageState extends State<LinkPlannerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final placed = _placed;
     final units = BastionPreferences.instance.units;
     final type = Theme.of(context).textTheme;
     final ready = _from != null && _to != null && _from != _to && !_busy;
     return Scaffold(
-      appBar: AppBar(title: const Text('Link planner')),
+      appBar: AppBar(title: Text(l.lpTitle)),
       body: ListView(padding: NxSpace.page, children: [
-        Text('Check whether two nodes can reach each other over the hills between them.',
+        Text(l.lpIntro,
           style: type.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant)),
         if (placed.length < 2)
-          const NxBanner(tone: NxTone.warning,
-            message: 'At least two nodes need a known position. Positions come from the mesh once a radio is connected.'),
-        const NxSectionLabel('Link'),
+          NxBanner(tone: NxTone.warning,
+            message: l.lpNeedPositions),
+        NxSectionLabel(l.lpLink),
         Card(child: Padding(
           padding: const EdgeInsets.all(NxSpace.md),
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            _NodePicker(label: 'From', value: _from, nodes: placed,
+            _NodePicker(label: l.lpFrom, value: _from, nodes: placed,
               onChanged: (v) => setState(() { _from = v; _result = null; })),
             const SizedBox(height: NxSpace.sm),
-            _NodePicker(label: 'To', value: _to, nodes: placed,
+            _NodePicker(label: l.lpTo, value: _to, nodes: placed,
               onChanged: (v) => setState(() { _to = v; _result = null; })),
             const SizedBox(height: NxSpace.sm),
             Row(children: [
               Expanded(child: TextField(controller: _fromHeight, keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration(labelText: 'From antenna (m above ground)'))),
+                decoration: InputDecoration(labelText: l.lpFromAntenna))),
               const SizedBox(width: NxSpace.sm),
               Expanded(child: TextField(controller: _toHeight, keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration(labelText: 'To antenna (m above ground)'))),
+                decoration: InputDecoration(labelText: l.lpToAntenna))),
             ]),
             const SizedBox(height: NxSpace.sm),
             DropdownButtonFormField<double>(
               initialValue: _mhz,
               isExpanded: true,
-              decoration: const InputDecoration(labelText: 'Frequency band'),
+              decoration: InputDecoration(labelText: l.lpBand),
               items: [for (final (mhz, label) in BastionLinkPlanner.bands) DropdownMenuItem(value: mhz, child: Text(label))],
               onChanged: (v) => setState(() { if (v != null) _mhz = v; _result = null; }),
             ),
@@ -134,16 +137,15 @@ class _LinkPlannerPageState extends State<LinkPlannerPage> {
               icon: _busy
                   ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
                   : const Icon(Icons.terrain),
-              label: Text(_busy ? 'Checking terrain…' : 'Check line of sight'),
+              label: Text(_busy ? l.lpChecking : l.lpCheck),
             ),
             const SizedBox(height: NxSpace.xs),
-            Text('Terrain heights come from the Open-Meteo elevation service, which receives '
-                'the points along this line. Needs internet.', style: type.bodySmall),
+            Text(l.lpPrivacy, style: type.bodySmall),
           ]),
         )),
         if (_error case final e?) NxBanner(tone: NxTone.danger, message: e),
         if (_result case final r?) ...[
-          const NxSectionLabel('Result'),
+          NxSectionLabel(l.lpResult),
           NxBanner(
             tone: switch (r.verdict) {
               LinkVerdict.clear => NxTone.success,
@@ -151,22 +153,21 @@ class _LinkPlannerPageState extends State<LinkPlannerPage> {
               LinkVerdict.blocked => NxTone.danger,
             },
             title: switch (r.verdict) {
-              LinkVerdict.clear => 'Clear line of sight',
-              LinkVerdict.marginal => 'Line of sight, but close to the ground',
-              LinkVerdict.blocked => 'Blocked by terrain',
+              LinkVerdict.clear => l.lpClearTitle,
+              LinkVerdict.marginal => l.lpMarginalTitle,
+              LinkVerdict.blocked => l.lpBlockedTitle,
             },
             message: switch (r.verdict) {
-              LinkVerdict.clear => 'The path clears the terrain with room to spare. This link should work if both radios are in range.',
-              LinkVerdict.marginal => 'The ground comes close to the path, which weakens the signal. Raising an antenna a few metres may help.',
-              LinkVerdict.blocked => 'Terrain is in the way about ${BastionUnitFormat.distance(r.worstAtMeters, units)} from the start. '
-                  'A relay on high ground or taller antennas may get around it.',
+              LinkVerdict.clear => l.lpClearBody,
+              LinkVerdict.marginal => l.lpMarginalBody,
+              LinkVerdict.blocked => l.lpBlockedBody(BastionUnitFormat.distance(r.worstAtMeters, units)),
             },
           ),
           NxStatRow(children: [
-            NxStatTile(label: 'Distance', value: BastionUnitFormat.distance(r.distanceMeters, units)),
-            NxStatTile(label: 'Path loss', value: '${r.pathLossDb.toStringAsFixed(0)} dB'),
+            NxStatTile(label: l.lpDistance, value: BastionUnitFormat.distance(r.distanceMeters, units)),
+            NxStatTile(label: l.lpPathLoss, value: '${r.pathLossDb.toStringAsFixed(0)} dB'),
             NxStatTile(
-              label: r.worstClearanceMeters < 0 ? 'Blocked by' : 'Lowest clearance',
+              label: r.worstClearanceMeters < 0 ? l.lpBlockedBy : l.lpLowestClearance,
               value: '${r.worstClearanceMeters.abs().toStringAsFixed(0)} m',
             ),
           ]),
@@ -174,11 +175,11 @@ class _LinkPlannerPageState extends State<LinkPlannerPage> {
           Card(child: Padding(
             padding: const EdgeInsets.all(NxSpace.md),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('Height profile', style: type.titleSmall),
+              Text(l.lpProfile, style: type.titleSmall),
               const SizedBox(height: NxSpace.xs),
               Semantics(
-                label: 'Height profile. Ground from ${r.profile.map((p) => p.groundMeters).reduce((a, b) => a < b ? a : b).round()} '
-                    'to ${r.profile.map((p) => p.groundMeters).reduce((a, b) => a > b ? a : b).round()} metres.',
+                label: l.lpProfileLabel(r.profile.map((p) => p.groundMeters).reduce((a, b) => a < b ? a : b).round(),
+                    r.profile.map((p) => p.groundMeters).reduce((a, b) => a > b ? a : b).round()),
                 excludeSemantics: true,
                 child: SizedBox(height: 160, child: CustomPaint(
                   size: Size.infinite,
@@ -189,12 +190,12 @@ class _LinkPlannerPageState extends State<LinkPlannerPage> {
                 )),
               ),
               const SizedBox(height: NxSpace.xs),
-              Text('Shaded: ground, including the curve of the earth. Line: the direct path between antennas.',
+              Text(l.lpProfileLegend,
                 style: type.bodySmall),
             ]),
           )),
           const SizedBox(height: NxSpace.xs),
-          Text('This is an estimate from 90 m terrain data. Trees and buildings are not included.',
+          Text(l.lpEstimateNote,
             style: type.bodySmall),
         ],
       ]),

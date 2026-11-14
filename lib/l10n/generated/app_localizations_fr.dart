@@ -4725,4 +4725,243 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Impossible d\'ouvrir le partage.';
+
+  @override
+  String get ldTitle => 'Découverte du mesh local';
+
+  @override
+  String get ldPlanOnly =>
+      'Planification seulement : le balayage n\'est pas activé. Aucun réglage radio n\'est modifié et aucun paquet n\'est émis.';
+
+  @override
+  String get ldPresets => 'Préréglages LoRa';
+
+  @override
+  String ldListenPer(int minutes) {
+    return 'Écoute par préréglage : $minutes minutes';
+  }
+
+  @override
+  String get ldSelectPreset => 'Choisissez au moins un préréglage.';
+
+  @override
+  String ldEstimate(int minutes) {
+    return 'Durée d\'écoute estimée : $minutes minutes';
+  }
+
+  @override
+  String get ldStartScan => 'Lancer le balayage (pas encore disponible)';
+
+  @override
+  String get ldAlreadyHeard => 'Déjà reçus par la radio connectée';
+
+  @override
+  String ldObserved(int count) {
+    return '$count nœuds observés : données radio existantes seulement, aucun balayage lancé.';
+  }
+
+  @override
+  String ldLastHeard(String date, String time) {
+    return 'Dernière réception : $date $time';
+  }
+
+  @override
+  String get lpHeightRange =>
+      'Les hauteurs d\'antenne doivent être entre 0 et 300 m.';
+
+  @override
+  String lpTerrainFailed(String error) {
+    return 'Impossible d\'obtenir les altitudes du terrain. Vérifiez votre connexion internet. ($error)';
+  }
+
+  @override
+  String get lpTitle => 'Planificateur de liaison';
+
+  @override
+  String get lpIntro =>
+      'Vérifiez si deux nœuds peuvent se joindre malgré le relief entre eux.';
+
+  @override
+  String get lpNeedPositions =>
+      'Au moins deux nœuds doivent avoir une position connue. Les positions arrivent du mesh une fois une radio connectée.';
+
+  @override
+  String get lpLink => 'Liaison';
+
+  @override
+  String get lpFrom => 'De';
+
+  @override
+  String get lpTo => 'À';
+
+  @override
+  String get lpFromAntenna => 'Antenne de départ (m au-dessus du sol)';
+
+  @override
+  String get lpToAntenna => 'Antenne d\'arrivée (m au-dessus du sol)';
+
+  @override
+  String get lpBand => 'Bande de fréquence';
+
+  @override
+  String get lpChecking => 'Vérification du terrain…';
+
+  @override
+  String get lpCheck => 'Vérifier la visibilité directe';
+
+  @override
+  String get lpPrivacy =>
+      'Les altitudes viennent du service d\'altitude Open-Meteo, qui reçoit les points de cette ligne. Nécessite internet.';
+
+  @override
+  String get lpResult => 'Résultat';
+
+  @override
+  String get lpClearTitle => 'Visibilité directe dégagée';
+
+  @override
+  String get lpMarginalTitle => 'Visibilité directe, mais proche du sol';
+
+  @override
+  String get lpBlockedTitle => 'Bloqué par le relief';
+
+  @override
+  String get lpClearBody =>
+      'Le trajet passe largement au-dessus du relief. La liaison devrait fonctionner si les deux radios sont à portée.';
+
+  @override
+  String get lpMarginalBody =>
+      'Le sol s\'approche du trajet, ce qui affaiblit le signal. Monter une antenne de quelques mètres peut aider.';
+
+  @override
+  String lpBlockedBody(String distance) {
+    return 'Le relief gêne à environ $distance du départ. Un relais en hauteur ou des antennes plus hautes peuvent le contourner.';
+  }
+
+  @override
+  String get lpDistance => 'Distance';
+
+  @override
+  String get lpPathLoss => 'Affaiblissement';
+
+  @override
+  String get lpBlockedBy => 'Bloqué de';
+
+  @override
+  String get lpLowestClearance => 'Dégagement minimal';
+
+  @override
+  String get lpProfile => 'Profil d\'altitude';
+
+  @override
+  String lpProfileLabel(int low, int high) {
+    return 'Profil d\'altitude. Sol de $low à $high mètres.';
+  }
+
+  @override
+  String get lpProfileLegend =>
+      'Zone grisée : le sol, courbure de la Terre comprise. Ligne : le trajet direct entre les antennes.';
+
+  @override
+  String get lpEstimateNote =>
+      'Il s\'agit d\'une estimation à partir de données de terrain à 90 m. Arbres et bâtiments non inclus.';
+
+  @override
+  String get mhGood => 'Bon';
+
+  @override
+  String get mhBusy => 'Chargé';
+
+  @override
+  String get mhOverloaded => 'Saturé';
+
+  @override
+  String get mhNotReported => 'Non indiqué';
+
+  @override
+  String get mhTitle => 'Santé du mesh';
+
+  @override
+  String get mhConnect =>
+      'Connectez une radio pour voir les valeurs en direct. Les chiffres ci-dessous peuvent être anciens.';
+
+  @override
+  String get mhNeedsRoom => 'Le mesh a besoin de place';
+
+  @override
+  String get mhPlentyRoom =>
+      'Le canal a beaucoup de place. Les messages devraient passer normalement.';
+
+  @override
+  String get mhAirtime => 'Temps d\'antenne';
+
+  @override
+  String get mhChannelBusy => 'Canal occupé';
+
+  @override
+  String get mhChannelBusyHelp =>
+      'Part du temps où quelqu\'un émet, selon ce qu\'entend votre radio.';
+
+  @override
+  String get mhYourTx => 'Votre temps d\'émission';
+
+  @override
+  String get mhYourTxHelp =>
+      'Part de la dernière heure passée par votre radio à émettre. Beaucoup de régions autorisent environ 10 %.';
+
+  @override
+  String get mhTraffic => 'Trafic';
+
+  @override
+  String get mhMsgsHour => 'Messages, dernière heure';
+
+  @override
+  String get mhMsgsDay => 'Messages, dernier jour';
+
+  @override
+  String get mhNodes => 'Nœuds';
+
+  @override
+  String get mhHeard2h => 'Reçus ces 2 h';
+
+  @override
+  String get mhQuiet => 'Silencieux plus longtemps';
+
+  @override
+  String get mhHopDistance => 'Distance en sauts';
+
+  @override
+  String get mhHopUnknown => 'Inconnu';
+
+  @override
+  String get mhHopDirect => 'Direct';
+
+  @override
+  String mhHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sauts',
+      one: '1 saut',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mhLastSignal => 'Signal du dernier paquet';
+
+  @override
+  String get mhBusiest => 'Émetteurs les plus actifs';
+
+  @override
+  String get mhYourRadio => 'Votre radio';
+
+  @override
+  String get mhFootnote =>
+      'Les chiffres viennent de la télémétrie envoyée de temps en temps par les nœuds ; ils peuvent avoir quelques minutes de retard.';
+
+  @override
+  String mhMarks(String busy, String limit) {
+    return 'Repères à $busy % chargé et $limit % limite';
+  }
 }

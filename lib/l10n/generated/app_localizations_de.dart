@@ -4721,4 +4721,243 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Teilen konnte nicht geöffnet werden.';
+
+  @override
+  String get ldTitle => 'Lokale Mesh-Suche';
+
+  @override
+  String get ldPlanOnly =>
+      'Nur Planung – die Suche ist nicht aktiviert. Es werden keine Funkeinstellungen geändert und keine Pakete gesendet.';
+
+  @override
+  String get ldPresets => 'LoRa-Voreinstellungen';
+
+  @override
+  String ldListenPer(int minutes) {
+    return 'Hören pro Voreinstellung: $minutes Minuten';
+  }
+
+  @override
+  String get ldSelectPreset => 'Wähle mindestens eine Voreinstellung.';
+
+  @override
+  String ldEstimate(int minutes) {
+    return 'Geschätzte Hörzeit: $minutes Minuten';
+  }
+
+  @override
+  String get ldStartScan => 'Suche starten (noch nicht verfügbar)';
+
+  @override
+  String get ldAlreadyHeard => 'Bereits vom verbundenen Funkgerät empfangen';
+
+  @override
+  String ldObserved(int count) {
+    return '$count beobachtete Knoten – nur vorhandene Funkdaten, keine Suche gestartet.';
+  }
+
+  @override
+  String ldLastHeard(String date, String time) {
+    return 'Zuletzt empfangen: $date $time';
+  }
+
+  @override
+  String get lpHeightRange =>
+      'Antennenhöhen müssen zwischen 0 und 300 m liegen.';
+
+  @override
+  String lpTerrainFailed(String error) {
+    return 'Geländehöhen konnten nicht geladen werden. Prüfe deine Internetverbindung. ($error)';
+  }
+
+  @override
+  String get lpTitle => 'Verbindungsplaner';
+
+  @override
+  String get lpIntro =>
+      'Prüfe, ob sich zwei Knoten über das Gelände dazwischen erreichen können.';
+
+  @override
+  String get lpNeedPositions =>
+      'Mindestens zwei Knoten brauchen eine bekannte Position. Positionen kommen aus dem Mesh, sobald ein Funkgerät verbunden ist.';
+
+  @override
+  String get lpLink => 'Verbindung';
+
+  @override
+  String get lpFrom => 'Von';
+
+  @override
+  String get lpTo => 'Nach';
+
+  @override
+  String get lpFromAntenna => 'Antenne Start (m über Boden)';
+
+  @override
+  String get lpToAntenna => 'Antenne Ziel (m über Boden)';
+
+  @override
+  String get lpBand => 'Frequenzband';
+
+  @override
+  String get lpChecking => 'Prüfe Gelände…';
+
+  @override
+  String get lpCheck => 'Sichtlinie prüfen';
+
+  @override
+  String get lpPrivacy =>
+      'Geländehöhen kommen vom Open-Meteo-Höhendienst, der die Punkte entlang dieser Linie erhält. Braucht Internet.';
+
+  @override
+  String get lpResult => 'Ergebnis';
+
+  @override
+  String get lpClearTitle => 'Freie Sichtlinie';
+
+  @override
+  String get lpMarginalTitle => 'Sichtlinie, aber nah am Boden';
+
+  @override
+  String get lpBlockedTitle => 'Vom Gelände blockiert';
+
+  @override
+  String get lpClearBody =>
+      'Der Weg liegt deutlich über dem Gelände. Die Verbindung sollte funktionieren, wenn beide Funkgeräte in Reichweite sind.';
+
+  @override
+  String get lpMarginalBody =>
+      'Der Boden kommt dem Weg nahe, das schwächt das Signal. Eine Antenne ein paar Meter höher kann helfen.';
+
+  @override
+  String lpBlockedBody(String distance) {
+    return 'Etwa $distance vom Start ist Gelände im Weg. Ein Relais auf einer Anhöhe oder höhere Antennen können helfen.';
+  }
+
+  @override
+  String get lpDistance => 'Entfernung';
+
+  @override
+  String get lpPathLoss => 'Streckendämpfung';
+
+  @override
+  String get lpBlockedBy => 'Blockiert um';
+
+  @override
+  String get lpLowestClearance => 'Geringster Abstand';
+
+  @override
+  String get lpProfile => 'Höhenprofil';
+
+  @override
+  String lpProfileLabel(int low, int high) {
+    return 'Höhenprofil. Boden von $low bis $high Metern.';
+  }
+
+  @override
+  String get lpProfileLegend =>
+      'Schattiert: Boden, einschließlich Erdkrümmung. Linie: der direkte Weg zwischen den Antennen.';
+
+  @override
+  String get lpEstimateNote =>
+      'Das ist eine Schätzung aus 90-m-Geländedaten. Bäume und Gebäude sind nicht enthalten.';
+
+  @override
+  String get mhGood => 'Gut';
+
+  @override
+  String get mhBusy => 'Ausgelastet';
+
+  @override
+  String get mhOverloaded => 'Überlastet';
+
+  @override
+  String get mhNotReported => 'Nicht gemeldet';
+
+  @override
+  String get mhTitle => 'Mesh-Zustand';
+
+  @override
+  String get mhConnect =>
+      'Verbinde ein Funkgerät für aktuelle Werte. Die Zahlen unten können veraltet sein.';
+
+  @override
+  String get mhNeedsRoom => 'Das Mesh braucht etwas Luft';
+
+  @override
+  String get mhPlentyRoom =>
+      'Der Kanal hat viel Platz. Nachrichten sollten normal durchkommen.';
+
+  @override
+  String get mhAirtime => 'Sendezeit';
+
+  @override
+  String get mhChannelBusy => 'Kanal belegt';
+
+  @override
+  String get mhChannelBusyHelp =>
+      'Wie oft irgendjemand sendet, so wie dein Funkgerät es hört.';
+
+  @override
+  String get mhYourTx => 'Deine Sendezeit';
+
+  @override
+  String get mhYourTxHelp =>
+      'Anteil der letzten Stunde, in dem dein Funkgerät gesendet hat. Viele Regionen erlauben etwa 10 %.';
+
+  @override
+  String get mhTraffic => 'Verkehr';
+
+  @override
+  String get mhMsgsHour => 'Nachrichten, letzte Stunde';
+
+  @override
+  String get mhMsgsDay => 'Nachrichten, letzter Tag';
+
+  @override
+  String get mhNodes => 'Knoten';
+
+  @override
+  String get mhHeard2h => 'In den letzten 2 h gehört';
+
+  @override
+  String get mhQuiet => 'Länger still';
+
+  @override
+  String get mhHopDistance => 'Entfernung in Hops';
+
+  @override
+  String get mhHopUnknown => 'Unbekannt';
+
+  @override
+  String get mhHopDirect => 'Direkt';
+
+  @override
+  String mhHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Hops',
+      one: '1 Hop',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mhLastSignal => 'Signal des letzten Pakets';
+
+  @override
+  String get mhBusiest => 'Aktivste Sender';
+
+  @override
+  String get mhYourRadio => 'Dein Funkgerät';
+
+  @override
+  String get mhFootnote =>
+      'Die Zahlen stammen aus Gerätetelemetrie, die Knoten gelegentlich senden, und können einige Minuten hinterherhinken.';
+
+  @override
+  String mhMarks(String busy, String limit) {
+    return 'Markierungen bei $busy % ausgelastet und $limit % Grenze';
+  }
 }

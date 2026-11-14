@@ -1,3 +1,4 @@
+import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/mesh_health_page.dart';
 import 'package:bastion/services/bastion_chat_message.dart';
 import 'package:bastion/services/bastion_mesh_health.dart';
@@ -80,7 +81,7 @@ void main() {
     tester.platformDispatcher.textScaleFactorTestValue = 1.6;
     addTearDown(tester.view.reset);
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-    await tester.pumpWidget(MaterialApp(home: MeshHealthPage(radio: radio, clock: () => _now)));
+    await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: MeshHealthPage(radio: radio, clock: () => _now)));
     await tester.pumpAndSettle();
     expect(find.textContaining('Connect to a radio to see live readings'), findsOneWidget);
     expect(find.text('Channel busy'), findsOneWidget);
