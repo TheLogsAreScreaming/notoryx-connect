@@ -1390,6 +1390,48 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mapZones => 'Zones';
 
   @override
+  String get mapLayers => 'Calques';
+
+  @override
+  String get mapLayersHelp =>
+      'Itinéraires, traces et lieux issus de fichiers GPX, KML ou GeoJSON. Ils restent sur ce téléphone et ne sont jamais envoyés sur le mesh.';
+
+  @override
+  String get mapLayersEmpty => 'Aucun fichier carte importé.';
+
+  @override
+  String get mapLayerImport => 'Importer GPX, KML ou GeoJSON';
+
+  @override
+  String get mapLayerUnreadable =>
+      'Ce fichier ne contient aucun point ni ligne lisible.';
+
+  @override
+  String mapLayerCounts(int points, int lines) {
+    return '$points lieux, $lines lignes';
+  }
+
+  @override
+  String mapLayerRemove(String name) {
+    return 'Supprimer $name';
+  }
+
+  @override
+  String mapLayerAdded(String name, int points, int lines) {
+    return '$name ajouté : $points lieux, $lines lignes';
+  }
+
+  @override
+  String mapLayerTooMany(int max) {
+    return 'Vous pouvez garder jusqu\'à $max calques. Supprimez-en un d\'abord.';
+  }
+
+  @override
+  String mapLayerFrom(String name) {
+    return 'Depuis $name';
+  }
+
+  @override
   String get mapExportGpx => 'Exporter en GPX';
 
   @override

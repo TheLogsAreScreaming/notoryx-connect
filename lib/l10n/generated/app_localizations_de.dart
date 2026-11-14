@@ -1386,6 +1386,48 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mapZones => 'Zonen';
 
   @override
+  String get mapLayers => 'Kartenebenen';
+
+  @override
+  String get mapLayersHelp =>
+      'Routen, Tracks und Orte aus GPX-, KML- oder GeoJSON-Dateien. Sie bleiben auf diesem Telefon und werden nie über das Mesh gesendet.';
+
+  @override
+  String get mapLayersEmpty => 'Noch keine Kartendateien importiert.';
+
+  @override
+  String get mapLayerImport => 'GPX, KML oder GeoJSON importieren';
+
+  @override
+  String get mapLayerUnreadable =>
+      'Diese Datei enthält keine lesbaren Punkte oder Linien.';
+
+  @override
+  String mapLayerCounts(int points, int lines) {
+    return '$points Orte, $lines Linien';
+  }
+
+  @override
+  String mapLayerRemove(String name) {
+    return '$name entfernen';
+  }
+
+  @override
+  String mapLayerAdded(String name, int points, int lines) {
+    return '$name hinzugefügt: $points Orte, $lines Linien';
+  }
+
+  @override
+  String mapLayerTooMany(int max) {
+    return 'Du kannst bis zu $max Kartenebenen behalten. Entferne zuerst eine.';
+  }
+
+  @override
+  String mapLayerFrom(String name) {
+    return 'Aus $name';
+  }
+
+  @override
   String get mapExportGpx => 'Als GPX exportieren';
 
   @override
