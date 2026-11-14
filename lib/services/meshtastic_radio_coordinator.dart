@@ -17,6 +17,7 @@ import '../generated/meshtastic/mesh_beacon.pb.dart';
 import '../generated/meshtastic/module_config.pb.dart';
 import '../generated/meshtastic/portnums.pbenum.dart';
 import '../generated/meshtastic/telemetry.pb.dart';
+import 'bastion_identity_key.dart';
 import 'bastion_admin_packet_codec.dart';
 import 'bastion_radio_backup.dart';
 import 'bastion_background_service.dart';
@@ -76,7 +77,7 @@ import 'bastion_lookalike.dart';
 
 /// Owns one verified Meshtastic radio session and exposes it to the UI.
 class MeshtasticRadioCoordinator extends ChangeNotifier
-    implements RadioBackupGateway, ChannelImportGateway {
+    implements RadioBackupGateway, ChannelImportGateway, IdentityKeyGateway {
   MeshtasticRadioCoordinator({
     BastionBackgroundKeeper? background,
     BastionMessageAlerts? alerts,
@@ -469,6 +470,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   int? _localNodeNum;
   String? _firmwareVersion;
   DateTime _connectedAt = DateTime.now();
+  @override
   String? get firmwareVersion => _firmwareVersion;
   final List<double> _snrHistory = [];
   int _receivedTextPackets = 0;
@@ -1298,6 +1300,35 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   @override
   Future<void> waitForBackupRadio(int nodeNum) => waitForSettingsRadio(nodeNum);
+
+  @override
+  int get identityNodeNum => backupNodeNum;
+
+  /// Read straight from the radio and not added to the settings snapshots,
+  /// so the private key isn't kept in memory or in exports.
+  @override
+  Future<Config_SecurityConfig> readSecurity() async =>
+      (await _requireAdmin().getConfig(AdminMessage_ConfigType.SECURITY_CONFIG)).security;
+
+  @override
+  Future<void> writeSecurity(Config_SecurityConfig security) =>
+      _requireAdmin().setConfig(Config(security: security));
+
+  @override
+  Future<void> waitForIdentityRadio(int nodeNum) => waitForSettingsRadio(nodeNum);
+
+  @override
+  Iterable<int> nodesUsing(Uint8List publicKey) sync* {
+    for (final n in _nodes) {
+      final key = n.publicKey;
+      if (key == null || key.length != publicKey.length) continue;
+      var same = true;
+      for (var i = 0; same && i < key.length; i++) {
+        same = key[i] == publicKey[i];
+      }
+      if (same) yield n.num;
+    }
+  }
 
   /// Waits for the same local radio before a fresh settings read.
   Future<void> waitForSettingsRadio(int nodeNum) async {

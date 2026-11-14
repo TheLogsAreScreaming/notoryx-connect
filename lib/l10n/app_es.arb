@@ -1575,5 +1575,22 @@
   "gateNoHardware": "Esta radio no tiene el hardware para esto",
   "formNewerValue": "Definido por un firmware más nuevo (valor {value}). Se deja sin cambios.",
   "omArea": "Cubre {area} (contorno discontinuo en el mapa). Fuera de él no hay teselas sin conexión.",
-  "omDamaged": "{count} teselas de este archivo están dañadas y se verán en blanco."
+  "omDamaged": "{count} teselas de este archivo están dañadas y se verán en blanco.",
+  "ikTitle": "Clave de identidad (copia aparte)",
+  "ikIntro": "La clave privada hace que esta radio sea el mismo nodo para todos. Haz una copia para llevar tu identidad a una radio de reemplazo. Mantenla en secreto y nunca la pongas en dos radios activas a la vez. Usa la contraseña de arriba.",
+  "ikBackup": "Copiar la clave de identidad",
+  "ikRestore": "Poner la clave de identidad en esta radio",
+  "ikText": "Clave de identidad cifrada",
+  "ikNeedsLock": "Primero configura un bloqueo de pantalla. La clave solo se muestra o reemplaza cuando el teléfono confirma que eres tú.",
+  "ikAuthReason": "Confirma que eres tú para usar la clave de identidad de la radio",
+  "ikAuthFailed": "No confirmado. No se leyó ni cambió nada.",
+  "ikReady": "Clave de identidad copiada (huella {fingerprint}). Copia el texto y guárdalo en un lugar seguro.",
+  "ikRestored": "Clave de identidad puesta en esta radio y confirmada al leerla (huella {fingerprint}). Puede que los contactos necesiten un nuevo anuncio antes de que funcionen los mensajes directos.",
+  "ikConfirmQ": "¿Reemplazar la identidad de esta radio?",
+  "ikConfirmBody": "La clave {fingerprint}, copiada de {from}, reemplazará la clave de {to}. La clave anterior se pierde si no hiciste copia.",
+  "ikDuplicate": "Aviso: {nodes} en la malla ya usa esta clave. Apaga esa radio definitivamente primero, o dos radios compartirán una identidad.",
+  "ikNoKey": "Esta radio no tiene un par de claves que copiar. Su firmware puede ser demasiado antiguo o tener las claves públicas desactivadas.",
+  "ikMismatch": "Las claves privada y pública no se corresponden, así que no se cambió nada. La copia puede estar dañada.",
+  "ikNotApplied": "La radio no informó la clave restaurada después. Revisa su configuración de seguridad antes de confiar en ella.",
+  "ikBadFormat": "Eso no es una copia de la clave de identidad."
 }

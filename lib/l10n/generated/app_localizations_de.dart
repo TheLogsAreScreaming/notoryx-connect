@@ -5849,4 +5849,71 @@ class AppLocalizationsDe extends AppLocalizations {
   String omDamaged(int count) {
     return '$count Kacheln in dieser Datei sind beschädigt und bleiben leer.';
   }
+
+  @override
+  String get ikTitle => 'Identitätsschlüssel (eigene Sicherung)';
+
+  @override
+  String get ikIntro =>
+      'Der private Schlüssel macht dieses Funkgerät für alle zum selben Knoten. Sichere ihn, um deine Identität auf ein Ersatzgerät zu übertragen. Halte ihn geheim und nutze ihn nie auf zwei Funkgeräten gleichzeitig. Verwendet das Passwort oben.';
+
+  @override
+  String get ikBackup => 'Identitätsschlüssel sichern';
+
+  @override
+  String get ikRestore => 'Identitätsschlüssel auf dieses Funkgerät übertragen';
+
+  @override
+  String get ikText => 'Verschlüsselter Identitätsschlüssel';
+
+  @override
+  String get ikNeedsLock =>
+      'Richte zuerst eine Bildschirmsperre ein. Der Schlüssel wird nur gezeigt oder ersetzt, wenn das Telefon bestätigt, dass du es bist.';
+
+  @override
+  String get ikAuthReason =>
+      'Bestätige, dass du es bist, um den Identitätsschlüssel zu verwenden';
+
+  @override
+  String get ikAuthFailed =>
+      'Nicht bestätigt. Nichts wurde gelesen oder geändert.';
+
+  @override
+  String ikReady(String fingerprint) {
+    return 'Identitätsschlüssel gesichert (Fingerabdruck $fingerprint). Kopiere den Text und bewahre ihn sicher auf.';
+  }
+
+  @override
+  String ikRestored(String fingerprint) {
+    return 'Identitätsschlüssel übertragen und durch Zurücklesen bestätigt (Fingerabdruck $fingerprint). Kontakte brauchen eventuell eine neue Ankündigung, bevor Direktnachrichten funktionieren.';
+  }
+
+  @override
+  String get ikConfirmQ => 'Identität dieses Funkgeräts ersetzen?';
+
+  @override
+  String ikConfirmBody(String fingerprint, String from, String to) {
+    return 'Schlüssel $fingerprint, gesichert von $from, ersetzt den Schlüssel auf $to. Der alte Schlüssel geht verloren, wenn du ihn nicht gesichert hast.';
+  }
+
+  @override
+  String ikDuplicate(String nodes) {
+    return 'Warnung: $nodes im Mesh nutzt diesen Schlüssel bereits. Schalte dieses Funkgerät zuerst dauerhaft ab, sonst teilen sich zwei Geräte eine Identität.';
+  }
+
+  @override
+  String get ikNoKey =>
+      'Dieses Funkgerät hat kein Schlüsselpaar zum Sichern. Die Firmware ist vielleicht zu alt oder hat öffentliche Schlüssel abgeschaltet.';
+
+  @override
+  String get ikMismatch =>
+      'Privater und öffentlicher Schlüssel passen nicht zusammen, daher wurde nichts geändert. Die Sicherung ist vielleicht beschädigt.';
+
+  @override
+  String get ikNotApplied =>
+      'Das Funkgerät meldete danach nicht den wiederhergestellten Schlüssel. Prüfe die Sicherheitseinstellungen, bevor du dich darauf verlässt.';
+
+  @override
+  String get ikBadFormat =>
+      'Das ist keine Sicherung eines Identitätsschlüssels.';
 }

@@ -9570,6 +9570,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} tiles in this file are damaged and will show blank.'**
   String omDamaged(int count);
+
+  /// No description provided for @ikTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity key (separate backup)'**
+  String get ikTitle;
+
+  /// No description provided for @ikIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'The private key makes this radio the same node to everyone. Back it up to move your identity to a replacement radio. Keep it secret, and never put it on two radios that are on the air at once. Uses the password above.'**
+  String get ikIntro;
+
+  /// No description provided for @ikBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up identity key'**
+  String get ikBackup;
+
+  /// No description provided for @ikRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Put identity key on this radio'**
+  String get ikRestore;
+
+  /// No description provided for @ikText.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted identity key'**
+  String get ikText;
+
+  /// No description provided for @ikNeedsLock.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a screen lock on this phone first. The key is only shown or replaced after the phone confirms it\'s you.'**
+  String get ikNeedsLock;
+
+  /// No description provided for @ikAuthReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm it\'s you to use the radio\'s identity key'**
+  String get ikAuthReason;
+
+  /// No description provided for @ikAuthFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not confirmed. Nothing was read or changed.'**
+  String get ikAuthFailed;
+
+  /// No description provided for @ikReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity key backed up (fingerprint {fingerprint}). Copy the text and keep it somewhere safe.'**
+  String ikReady(String fingerprint);
+
+  /// No description provided for @ikRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity key put on this radio and confirmed by reading it back (fingerprint {fingerprint}). Contacts may need to see a new announcement before direct messages work.'**
+  String ikRestored(String fingerprint);
+
+  /// No description provided for @ikConfirmQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace this radio\'s identity?'**
+  String get ikConfirmQ;
+
+  /// No description provided for @ikConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Key {fingerprint}, backed up from {from}, will replace the key on {to}. The old key on this radio is lost unless you backed it up.'**
+  String ikConfirmBody(String fingerprint, String from, String to);
+
+  /// No description provided for @ikDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning: {nodes} on the mesh already uses this key. Turn that radio off for good first, or two radios will share one identity.'**
+  String ikDuplicate(String nodes);
+
+  /// No description provided for @ikNoKey.
+  ///
+  /// In en, this message translates to:
+  /// **'This radio has no key pair to back up. Its firmware may be too old or have public keys turned off.'**
+  String get ikNoKey;
+
+  /// No description provided for @ikMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The private and public keys don\'t belong together, so nothing was changed. The backup may be damaged.'**
+  String get ikMismatch;
+
+  /// No description provided for @ikNotApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'The radio didn\'t report the restored key afterwards. Check its security settings before relying on it.'**
+  String get ikNotApplied;
+
+  /// No description provided for @ikBadFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'That isn\'t an identity key backup.'**
+  String get ikBadFormat;
 }
 
 class _AppLocalizationsDelegate
