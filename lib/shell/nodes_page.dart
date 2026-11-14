@@ -132,6 +132,7 @@ class _NodesPage extends StatelessWidget {
             NxStatTile(label: l.nodesRadiosFound, value: '${discovery.results.length}'),
             NxStatTile(label: l.nodesMeshNodes, value: '${radio.nodes.length}'),
             NxStatTile(
+              flex: 2,
               label: l.nodesStatus,
               value: _connectionLabel(context, radio.connection.state),
               tone: _connectionTone(radio.connection.state),
