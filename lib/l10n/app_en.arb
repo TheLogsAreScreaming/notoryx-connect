@@ -4128,5 +4128,9 @@
         "type": "String"
       }
     }
-  }
+  },
+  "chatsReplayed": "from history",
+  "chatsReplayedFull": "Replayed from a store-and-forward router's history: sent earlier, not just now.",
+  "chatsReplayedAt": "Received {time}.",
+  "@chatsReplayedAt": {"placeholders": {"time": {"type": "String"}}}
 }

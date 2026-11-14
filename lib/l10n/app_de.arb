@@ -1557,5 +1557,8 @@
   "omReplace": "Durch andere Datei ersetzen",
   "omZooms": "Zoom {min} bis {max}",
   "omAdded": "Offline-Karte bereit: {name}, Zoom {min} bis {max}",
-  "omUnreadable": "Datei nicht nutzbar: {reason}"
+  "omUnreadable": "Datei nicht nutzbar: {reason}",
+  "chatsReplayed": "aus dem Verlauf",
+  "chatsReplayedFull": "Aus dem Verlauf eines Store-and-Forward-Routers erneut gesendet: früher geschickt, nicht gerade eben.",
+  "chatsReplayedAt": "Empfangen um {time}."
 }

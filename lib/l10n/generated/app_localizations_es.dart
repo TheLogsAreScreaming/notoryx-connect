@@ -5759,4 +5759,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String omUnreadable(String reason) {
     return 'No se pudo usar ese archivo: $reason';
   }
+
+  @override
+  String get chatsReplayed => 'del historial';
+
+  @override
+  String get chatsReplayedFull =>
+      'Reenviado desde el historial de un router de almacenamiento y reenvío: se envió antes, no ahora.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Recibido a las $time.';
+  }
 }

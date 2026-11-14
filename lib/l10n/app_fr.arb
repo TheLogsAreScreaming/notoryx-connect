@@ -1557,5 +1557,8 @@
   "omReplace": "Remplacer par un autre fichier",
   "omZooms": "Zoom {min} à {max}",
   "omAdded": "Carte hors ligne prête : {name}, zoom {min} à {max}",
-  "omUnreadable": "Fichier inutilisable : {reason}"
+  "omUnreadable": "Fichier inutilisable : {reason}",
+  "chatsReplayed": "de l'historique",
+  "chatsReplayedFull": "Rejoué depuis l'historique d'un routeur store-and-forward : envoyé plus tôt, pas à l'instant.",
+  "chatsReplayedAt": "Reçu à {time}."
 }

@@ -313,6 +313,7 @@ class MeshtasticTextMessage {
     this.hops,
     this.rxRssi,
     this.relayNode,
+    this.replayed = false,
   });
 
   final int packetId;
@@ -341,6 +342,9 @@ class MeshtasticTextMessage {
 
   /// Last byte of the node number of the radio that relayed it last.
   final int? relayNode;
+
+  /// Replayed from a store-and-forward router's history: old, not new.
+  final bool replayed;
 
   bool get isBroadcast => to == MeshtasticTextCodec.broadcastNode;
 }

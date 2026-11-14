@@ -5781,4 +5781,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String omUnreadable(String reason) {
     return 'Fichier inutilisable : $reason';
   }
+
+  @override
+  String get chatsReplayed => 'de l\'historique';
+
+  @override
+  String get chatsReplayedFull =>
+      'Rejoué depuis l\'historique d\'un routeur store-and-forward : envoyé plus tôt, pas à l\'instant.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Reçu à $time.';
+  }
 }
