@@ -5276,6 +5276,244 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get ldTitle => 'Local mesh discovery';
+
+  @override
+  String get ldPlanOnly =>
+      'Plan only — scanning is not enabled. No radio settings are changed and no packets are transmitted.';
+
+  @override
+  String get ldPresets => 'LoRa presets';
+
+  @override
+  String ldListenPer(int minutes) {
+    return 'Listen per preset: $minutes minutes';
+  }
+
+  @override
+  String get ldSelectPreset => 'Select at least one preset.';
+
+  @override
+  String ldEstimate(int minutes) {
+    return 'Estimated listening time: $minutes minutes';
+  }
+
+  @override
+  String get ldStartScan => 'Start scan (not yet available)';
+
+  @override
+  String get ldAlreadyHeard => 'Already heard on connected radio';
+
+  @override
+  String ldObserved(int count) {
+    return '$count observed nodes — existing radio data only; no scan has started.';
+  }
+
+  @override
+  String ldLastHeard(String date, String time) {
+    return 'Last heard: $date $time';
+  }
+
+  @override
+  String get lpHeightRange => 'Antenna heights must be between 0 and 300 m.';
+
+  @override
+  String lpTerrainFailed(String error) {
+    return 'Could not get terrain heights. Check your internet connection. ($error)';
+  }
+
+  @override
+  String get lpTitle => 'Link planner';
+
+  @override
+  String get lpIntro =>
+      'Check whether two nodes can reach each other over the hills between them.';
+
+  @override
+  String get lpNeedPositions =>
+      'At least two nodes need a known position. Positions come from the mesh once a radio is connected.';
+
+  @override
+  String get lpLink => 'Link';
+
+  @override
+  String get lpFrom => 'From';
+
+  @override
+  String get lpTo => 'To';
+
+  @override
+  String get lpFromAntenna => 'From antenna (m above ground)';
+
+  @override
+  String get lpToAntenna => 'To antenna (m above ground)';
+
+  @override
+  String get lpBand => 'Frequency band';
+
+  @override
+  String get lpChecking => 'Checking terrain…';
+
+  @override
+  String get lpCheck => 'Check line of sight';
+
+  @override
+  String get lpPrivacy =>
+      'Terrain heights come from the Open-Meteo elevation service, which receives the points along this line. Needs internet.';
+
+  @override
+  String get lpResult => 'Result';
+
+  @override
+  String get lpClearTitle => 'Clear line of sight';
+
+  @override
+  String get lpMarginalTitle => 'Line of sight, but close to the ground';
+
+  @override
+  String get lpBlockedTitle => 'Blocked by terrain';
+
+  @override
+  String get lpClearBody =>
+      'The path clears the terrain with room to spare. This link should work if both radios are in range.';
+
+  @override
+  String get lpMarginalBody =>
+      'The ground comes close to the path, which weakens the signal. Raising an antenna a few metres may help.';
+
+  @override
+  String lpBlockedBody(String distance) {
+    return 'Terrain is in the way about $distance from the start. A relay on high ground or taller antennas may get around it.';
+  }
+
+  @override
+  String get lpDistance => 'Distance';
+
+  @override
+  String get lpPathLoss => 'Path loss';
+
+  @override
+  String get lpBlockedBy => 'Blocked by';
+
+  @override
+  String get lpLowestClearance => 'Lowest clearance';
+
+  @override
+  String get lpProfile => 'Height profile';
+
+  @override
+  String lpProfileLabel(int low, int high) {
+    return 'Height profile. Ground from $low to $high metres.';
+  }
+
+  @override
+  String get lpProfileLegend =>
+      'Shaded: ground, including the curve of the earth. Line: the direct path between antennas.';
+
+  @override
+  String get lpEstimateNote =>
+      'This is an estimate from 90 m terrain data. Trees and buildings are not included.';
+
+  @override
+  String get mhGood => 'Good';
+
+  @override
+  String get mhBusy => 'Busy';
+
+  @override
+  String get mhOverloaded => 'Overloaded';
+
+  @override
+  String get mhNotReported => 'Not reported';
+
+  @override
+  String get mhTitle => 'Mesh health';
+
+  @override
+  String get mhConnect =>
+      'Connect to a radio to see live readings. Figures below may be out of date.';
+
+  @override
+  String get mhNeedsRoom => 'The mesh needs some room';
+
+  @override
+  String get mhPlentyRoom =>
+      'The channel has plenty of room. Messages should get through normally.';
+
+  @override
+  String get mhAirtime => 'Airtime';
+
+  @override
+  String get mhChannelBusy => 'Channel busy';
+
+  @override
+  String get mhChannelBusyHelp =>
+      'How much of the time anyone is transmitting, as your radio hears it.';
+
+  @override
+  String get mhYourTx => 'Your transmit time';
+
+  @override
+  String get mhYourTxHelp =>
+      'Share of the last hour your radio spent sending. Many regions allow about 10%.';
+
+  @override
+  String get mhTraffic => 'Traffic';
+
+  @override
+  String get mhMsgsHour => 'Messages, last hour';
+
+  @override
+  String get mhMsgsDay => 'Messages, last day';
+
+  @override
+  String get mhNodes => 'Nodes';
+
+  @override
+  String get mhHeard2h => 'Heard in last 2 h';
+
+  @override
+  String get mhQuiet => 'Quiet longer';
+
+  @override
+  String get mhHopDistance => 'Distance in hops';
+
+  @override
+  String get mhHopUnknown => 'Unknown';
+
+  @override
+  String get mhHopDirect => 'Direct';
+
+  @override
+  String mhHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hops',
+      one: '1 hop',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mhLastSignal => 'Signal of last packet';
+
+  @override
+  String get mhBusiest => 'Busiest transmitters';
+
+  @override
+  String get mhYourRadio => 'Your radio';
+
+  @override
+  String get mhFootnote =>
+      'Figures come from device telemetry that nodes send every so often, so they can lag a few minutes behind.';
+
+  @override
+  String mhMarks(String busy, String limit) {
+    return 'Marks at $busy% busy and $limit% limit';
+  }
+
+  @override
   String get omTitle => 'Offline map';
 
   @override

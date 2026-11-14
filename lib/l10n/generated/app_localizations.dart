@@ -8719,6 +8719,408 @@ abstract class AppLocalizations {
   /// **'My app warns our group if anyone is silent for {minutes} minutes.'**
   String tsOverdueRule(int minutes);
 
+  /// No description provided for @ldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local mesh discovery'**
+  String get ldTitle;
+
+  /// No description provided for @ldPlanOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan only — scanning is not enabled. No radio settings are changed and no packets are transmitted.'**
+  String get ldPlanOnly;
+
+  /// No description provided for @ldPresets.
+  ///
+  /// In en, this message translates to:
+  /// **'LoRa presets'**
+  String get ldPresets;
+
+  /// No description provided for @ldListenPer.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen per preset: {minutes} minutes'**
+  String ldListenPer(int minutes);
+
+  /// No description provided for @ldSelectPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one preset.'**
+  String get ldSelectPreset;
+
+  /// No description provided for @ldEstimate.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated listening time: {minutes} minutes'**
+  String ldEstimate(int minutes);
+
+  /// No description provided for @ldStartScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Start scan (not yet available)'**
+  String get ldStartScan;
+
+  /// No description provided for @ldAlreadyHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Already heard on connected radio'**
+  String get ldAlreadyHeard;
+
+  /// No description provided for @ldObserved.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} observed nodes — existing radio data only; no scan has started.'**
+  String ldObserved(int count);
+
+  /// No description provided for @ldLastHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Last heard: {date} {time}'**
+  String ldLastHeard(String date, String time);
+
+  /// No description provided for @lpHeightRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Antenna heights must be between 0 and 300 m.'**
+  String get lpHeightRange;
+
+  /// No description provided for @lpTerrainFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not get terrain heights. Check your internet connection. ({error})'**
+  String lpTerrainFailed(String error);
+
+  /// No description provided for @lpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Link planner'**
+  String get lpTitle;
+
+  /// No description provided for @lpIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Check whether two nodes can reach each other over the hills between them.'**
+  String get lpIntro;
+
+  /// No description provided for @lpNeedPositions.
+  ///
+  /// In en, this message translates to:
+  /// **'At least two nodes need a known position. Positions come from the mesh once a radio is connected.'**
+  String get lpNeedPositions;
+
+  /// No description provided for @lpLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get lpLink;
+
+  /// No description provided for @lpFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get lpFrom;
+
+  /// No description provided for @lpTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get lpTo;
+
+  /// No description provided for @lpFromAntenna.
+  ///
+  /// In en, this message translates to:
+  /// **'From antenna (m above ground)'**
+  String get lpFromAntenna;
+
+  /// No description provided for @lpToAntenna.
+  ///
+  /// In en, this message translates to:
+  /// **'To antenna (m above ground)'**
+  String get lpToAntenna;
+
+  /// No description provided for @lpBand.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency band'**
+  String get lpBand;
+
+  /// No description provided for @lpChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking terrain…'**
+  String get lpChecking;
+
+  /// No description provided for @lpCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Check line of sight'**
+  String get lpCheck;
+
+  /// No description provided for @lpPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Terrain heights come from the Open-Meteo elevation service, which receives the points along this line. Needs internet.'**
+  String get lpPrivacy;
+
+  /// No description provided for @lpResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Result'**
+  String get lpResult;
+
+  /// No description provided for @lpClearTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear line of sight'**
+  String get lpClearTitle;
+
+  /// No description provided for @lpMarginalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Line of sight, but close to the ground'**
+  String get lpMarginalTitle;
+
+  /// No description provided for @lpBlockedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked by terrain'**
+  String get lpBlockedTitle;
+
+  /// No description provided for @lpClearBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The path clears the terrain with room to spare. This link should work if both radios are in range.'**
+  String get lpClearBody;
+
+  /// No description provided for @lpMarginalBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The ground comes close to the path, which weakens the signal. Raising an antenna a few metres may help.'**
+  String get lpMarginalBody;
+
+  /// No description provided for @lpBlockedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Terrain is in the way about {distance} from the start. A relay on high ground or taller antennas may get around it.'**
+  String lpBlockedBody(String distance);
+
+  /// No description provided for @lpDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get lpDistance;
+
+  /// No description provided for @lpPathLoss.
+  ///
+  /// In en, this message translates to:
+  /// **'Path loss'**
+  String get lpPathLoss;
+
+  /// No description provided for @lpBlockedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked by'**
+  String get lpBlockedBy;
+
+  /// No description provided for @lpLowestClearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest clearance'**
+  String get lpLowestClearance;
+
+  /// No description provided for @lpProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Height profile'**
+  String get lpProfile;
+
+  /// No description provided for @lpProfileLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Height profile. Ground from {low} to {high} metres.'**
+  String lpProfileLabel(int low, int high);
+
+  /// No description provided for @lpProfileLegend.
+  ///
+  /// In en, this message translates to:
+  /// **'Shaded: ground, including the curve of the earth. Line: the direct path between antennas.'**
+  String get lpProfileLegend;
+
+  /// No description provided for @lpEstimateNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This is an estimate from 90 m terrain data. Trees and buildings are not included.'**
+  String get lpEstimateNote;
+
+  /// No description provided for @mhGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get mhGood;
+
+  /// No description provided for @mhBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Busy'**
+  String get mhBusy;
+
+  /// No description provided for @mhOverloaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Overloaded'**
+  String get mhOverloaded;
+
+  /// No description provided for @mhNotReported.
+  ///
+  /// In en, this message translates to:
+  /// **'Not reported'**
+  String get mhNotReported;
+
+  /// No description provided for @mhTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh health'**
+  String get mhTitle;
+
+  /// No description provided for @mhConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio to see live readings. Figures below may be out of date.'**
+  String get mhConnect;
+
+  /// No description provided for @mhNeedsRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'The mesh needs some room'**
+  String get mhNeedsRoom;
+
+  /// No description provided for @mhPlentyRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'The channel has plenty of room. Messages should get through normally.'**
+  String get mhPlentyRoom;
+
+  /// No description provided for @mhAirtime.
+  ///
+  /// In en, this message translates to:
+  /// **'Airtime'**
+  String get mhAirtime;
+
+  /// No description provided for @mhChannelBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel busy'**
+  String get mhChannelBusy;
+
+  /// No description provided for @mhChannelBusyHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'How much of the time anyone is transmitting, as your radio hears it.'**
+  String get mhChannelBusyHelp;
+
+  /// No description provided for @mhYourTx.
+  ///
+  /// In en, this message translates to:
+  /// **'Your transmit time'**
+  String get mhYourTx;
+
+  /// No description provided for @mhYourTxHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Share of the last hour your radio spent sending. Many regions allow about 10%.'**
+  String get mhYourTxHelp;
+
+  /// No description provided for @mhTraffic.
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic'**
+  String get mhTraffic;
+
+  /// No description provided for @mhMsgsHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages, last hour'**
+  String get mhMsgsHour;
+
+  /// No description provided for @mhMsgsDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages, last day'**
+  String get mhMsgsDay;
+
+  /// No description provided for @mhNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get mhNodes;
+
+  /// No description provided for @mhHeard2h.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard in last 2 h'**
+  String get mhHeard2h;
+
+  /// No description provided for @mhQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet longer'**
+  String get mhQuiet;
+
+  /// No description provided for @mhHopDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance in hops'**
+  String get mhHopDistance;
+
+  /// No description provided for @mhHopUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get mhHopUnknown;
+
+  /// No description provided for @mhHopDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct'**
+  String get mhHopDirect;
+
+  /// No description provided for @mhHops.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 hop} other{{count} hops}}'**
+  String mhHops(int count);
+
+  /// No description provided for @mhLastSignal.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal of last packet'**
+  String get mhLastSignal;
+
+  /// No description provided for @mhBusiest.
+  ///
+  /// In en, this message translates to:
+  /// **'Busiest transmitters'**
+  String get mhBusiest;
+
+  /// No description provided for @mhYourRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio'**
+  String get mhYourRadio;
+
+  /// No description provided for @mhFootnote.
+  ///
+  /// In en, this message translates to:
+  /// **'Figures come from device telemetry that nodes send every so often, so they can lag a few minutes behind.'**
+  String get mhFootnote;
+
+  /// No description provided for @mhMarks.
+  ///
+  /// In en, this message translates to:
+  /// **'Marks at {busy}% busy and {limit}% limit'**
+  String mhMarks(String busy, String limit);
+
   /// No description provided for @omTitle.
   ///
   /// In en, this message translates to:
