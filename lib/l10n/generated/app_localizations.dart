@@ -432,6 +432,126 @@ abstract class AppLocalizations {
   /// **'Connect to a radio to trace routes'**
   String get toolsTraceOff;
 
+  /// No description provided for @tcOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Trace card'**
+  String get tcOpen;
+
+  /// No description provided for @tcTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trace card'**
+  String get tcTitle;
+
+  /// No description provided for @tcFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From {name}'**
+  String tcFrom(String name);
+
+  /// No description provided for @tcTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To {name}'**
+  String tcTo(String name);
+
+  /// No description provided for @tcSentAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent {time}'**
+  String tcSentAt(String time);
+
+  /// No description provided for @tcRoundTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Round trip {seconds} s'**
+  String tcRoundTrip(String seconds);
+
+  /// No description provided for @tcRelays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Direct, no relays} one{{count} relay} other{{count} relays}}'**
+  String tcRelays(int count);
+
+  /// No description provided for @tcDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'About {distance} as drawn'**
+  String tcDistance(String distance);
+
+  /// No description provided for @tcWeakest.
+  ///
+  /// In en, this message translates to:
+  /// **'Weakest link {snr}'**
+  String tcWeakest(String snr);
+
+  /// No description provided for @tcThere.
+  ///
+  /// In en, this message translates to:
+  /// **'Route there'**
+  String get tcThere;
+
+  /// No description provided for @tcBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Route back'**
+  String get tcBack;
+
+  /// No description provided for @tcBackUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Not reported by this firmware'**
+  String get tcBackUnknown;
+
+  /// No description provided for @tcStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get tcStart;
+
+  /// No description provided for @tcSnrUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'SNR unknown'**
+  String get tcSnrUnknown;
+
+  /// No description provided for @tcNoMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough positions to draw the route. At least two nodes on it need a known position.'**
+  String get tcNoMap;
+
+  /// No description provided for @tcMapLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sketch of the round trip from {sender} through {stops}'**
+  String tcMapLabel(String sender, String stops);
+
+  /// No description provided for @tcUnplaced.
+  ///
+  /// In en, this message translates to:
+  /// **'No position for {names}, so the line goes straight past.'**
+  String tcUnplaced(String names);
+
+  /// No description provided for @tcShareImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Share image'**
+  String get tcShareImage;
+
+  /// No description provided for @tcShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Share text'**
+  String get tcShareText;
+
+  /// No description provided for @tcShareFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the share sheet.'**
+  String get tcShareFailed;
+
   /// No description provided for @toolsBeaconsSub.
   ///
   /// In en, this message translates to:

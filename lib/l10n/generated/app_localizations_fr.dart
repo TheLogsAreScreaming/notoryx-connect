@@ -191,6 +191,92 @@ class AppLocalizationsFr extends AppLocalizations {
   String get toolsTraceOff => 'Connectez une radio pour tracer des routes';
 
   @override
+  String get tcOpen => 'Carte du tracé';
+
+  @override
+  String get tcTitle => 'Carte du tracé';
+
+  @override
+  String tcFrom(String name) {
+    return 'De $name';
+  }
+
+  @override
+  String tcTo(String name) {
+    return 'Vers $name';
+  }
+
+  @override
+  String tcSentAt(String time) {
+    return 'Envoyée le $time';
+  }
+
+  @override
+  String tcRoundTrip(String seconds) {
+    return 'Aller-retour $seconds s';
+  }
+
+  @override
+  String tcRelays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relais',
+      one: '$count relais',
+      zero: 'Direct, sans relais',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tcDistance(String distance) {
+    return 'Environ $distance sur le tracé';
+  }
+
+  @override
+  String tcWeakest(String snr) {
+    return 'Lien le plus faible $snr';
+  }
+
+  @override
+  String get tcThere => 'Aller';
+
+  @override
+  String get tcBack => 'Retour';
+
+  @override
+  String get tcBackUnknown => 'Non indiqué par ce micrologiciel';
+
+  @override
+  String get tcStart => 'Départ';
+
+  @override
+  String get tcSnrUnknown => 'SNR inconnu';
+
+  @override
+  String get tcNoMap =>
+      'Pas assez de positions pour dessiner l\'itinéraire. Au moins deux nœuds doivent avoir une position connue.';
+
+  @override
+  String tcMapLabel(String sender, String stops) {
+    return 'Croquis de l\'aller-retour depuis $sender via $stops';
+  }
+
+  @override
+  String tcUnplaced(String names) {
+    return 'Pas de position pour $names, la ligne passe donc tout droit.';
+  }
+
+  @override
+  String get tcShareImage => 'Partager l\'image';
+
+  @override
+  String get tcShareText => 'Partager le texte';
+
+  @override
+  String get tcShareFailed => 'Impossible d\'ouvrir le menu de partage.';
+
+  @override
   String get toolsBeaconsSub =>
       'Entendre les invitations du maillage à proximité et envoyer la vôtre';
 
