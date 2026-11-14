@@ -1557,5 +1557,9 @@
   "omReplace": "Durch andere Datei ersetzen",
   "omZooms": "Zoom {min} bis {max}",
   "omAdded": "Offline-Karte bereit: {name}, Zoom {min} bis {max}",
-  "omUnreadable": "Datei nicht nutzbar: {reason}"
+  "omUnreadable": "Datei nicht nutzbar: {reason}",
+  "deliveryHeld": "Angehalten: vor dem Senden prüfen",
+  "chatsHeldExplain": "Diese Nachricht wurde nicht automatisch gesendet. Sie ist älter als einen Tag, oder das Senden wurde unterbrochen und sie ist vielleicht schon raus.",
+  "chatsSendHeld": "Jetzt senden",
+  "chatsDeleteQueued": "Löschen, ohne zu senden"
 }

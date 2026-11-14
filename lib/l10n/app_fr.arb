@@ -1557,5 +1557,9 @@
   "omReplace": "Remplacer par un autre fichier",
   "omZooms": "Zoom {min} à {max}",
   "omAdded": "Carte hors ligne prête : {name}, zoom {min} à {max}",
-  "omUnreadable": "Fichier inutilisable : {reason}"
+  "omUnreadable": "Fichier inutilisable : {reason}",
+  "deliveryHeld": "En attente : vérifiez avant d'envoyer",
+  "chatsHeldExplain": "Il n'a pas été envoyé automatiquement. Il a plus d'un jour, ou l'envoi a été interrompu et il est peut-être déjà parti.",
+  "chatsSendHeld": "Envoyer maintenant",
+  "chatsDeleteQueued": "Supprimer sans envoyer"
 }

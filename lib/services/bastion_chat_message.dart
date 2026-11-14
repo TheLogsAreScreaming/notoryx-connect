@@ -1,7 +1,9 @@
 import 'meshtastic_text_codec.dart';
 
 enum BastionMessageDirection { incoming, outgoing }
-enum BastionDeliveryState { received, queued, sent, delivered, failed }
+/// Where a message is. [held] means queued but not sent by itself: it is too
+/// old to send unasked, or its send was cut off and it may already be out.
+enum BastionDeliveryState { received, queued, sent, delivered, failed, held }
 
 class BastionChatMessage {
   const BastionChatMessage({
@@ -122,6 +124,9 @@ class PendingTextMessage {
     required this.packetId,
     this.replyId,
     this.isReaction = false,
+    this.queuedAt,
+    this.handoff = false,
+    this.held = false,
   });
 
   final String text;
@@ -131,6 +136,31 @@ class PendingTextMessage {
   final int? replyId;
   final bool isReaction;
 
+  /// When it was queued; null for messages saved by older builds, whose age
+  /// is unknown, so they are held for review rather than sent.
+  final DateTime? queuedAt;
+
+  /// Saved true just before it is handed to the radio and cleared once the
+  /// radio has taken it. Still true after a restart means nobody knows
+  /// whether it went out.
+  final bool handoff;
+
+  /// Waiting for the user to send or delete it; never sent by itself.
+  final bool held;
+
+  PendingTextMessage copyWith({bool? handoff, bool? held, DateTime? queuedAt}) =>
+      PendingTextMessage(
+        text: text,
+        destination: destination,
+        channel: channel,
+        packetId: packetId,
+        replyId: replyId,
+        isReaction: isReaction,
+        queuedAt: queuedAt ?? this.queuedAt,
+        handoff: handoff ?? this.handoff,
+        held: held ?? this.held,
+      );
+
   Map<String, Object?> toJson() => {
     'text': text,
     'destination': destination,
@@ -138,6 +168,9 @@ class PendingTextMessage {
     'packetId': packetId,
     if (replyId != null) 'replyId': replyId,
     if (isReaction) 'reaction': true,
+    if (queuedAt != null) 'queuedAt': queuedAt!.millisecondsSinceEpoch,
+    if (handoff) 'handoff': true,
+    if (held) 'held': true,
   };
 
   static PendingTextMessage fromJson(Map<String, Object?> json) =>
@@ -148,5 +181,10 @@ class PendingTextMessage {
         packetId: json['packetId']! as int,
         replyId: json['replyId'] as int?,
         isReaction: json['reaction'] as bool? ?? false,
+        queuedAt: json['queuedAt'] is int
+            ? DateTime.fromMillisecondsSinceEpoch(json['queuedAt']! as int)
+            : null,
+        handoff: json['handoff'] as bool? ?? false,
+        held: json['held'] as bool? ?? false,
       );
 }

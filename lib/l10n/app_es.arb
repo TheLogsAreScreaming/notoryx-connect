@@ -1557,5 +1557,9 @@
   "omReplace": "Sustituir por otro archivo",
   "omZooms": "Zoom {min} a {max}",
   "omAdded": "Mapa sin conexión listo: {name}, zoom {min} a {max}",
-  "omUnreadable": "No se pudo usar ese archivo: {reason}"
+  "omUnreadable": "No se pudo usar ese archivo: {reason}",
+  "deliveryHeld": "Retenido: revísalo antes de enviar",
+  "chatsHeldExplain": "No se envió automáticamente. Tiene más de un día, o el envío se interrumpió y puede que ya haya salido.",
+  "chatsSendHeld": "Enviar ahora",
+  "chatsDeleteQueued": "Eliminar sin enviar"
 }
