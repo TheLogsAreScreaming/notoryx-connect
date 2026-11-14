@@ -3339,6 +3339,25 @@
   "clExportCsv": "Spreadsheet (CSV)",
   "clExportJson": "Data file (JSON)",
   "clExportFailed": "Couldn't open the share sheet.",
+  "nodesLookalike": "Name looks like {name}",
+  "@nodesLookalike": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsLookalikeBody": "{name} is a different radio from {trusted}, but its name looks almost the same. Anyone can pick any name, so check with {trusted}'s owner before trusting it.",
+  "@chatsLookalikeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "trusted": {
+        "type": "String"
+      }
+    }
+  },
   "omTitle": "Offline map",
   "omHelp": "Import a raster MBTiles map file (for example one exported from a mapping app you're licensed to use). It's drawn over the online map and works with no internet. Vector (pbf) files aren't supported.",
   "omNone": "No offline map imported.",

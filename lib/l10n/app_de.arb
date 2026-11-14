@@ -1288,6 +1288,8 @@
   "clExportCsv": "Tabelle (CSV)",
   "clExportJson": "Datendatei (JSON)",
   "clExportFailed": "Teilen konnte nicht geöffnet werden.",
+  "nodesLookalike": "Name ähnelt {name}",
+  "chatsLookalikeBody": "{name} ist ein anderes Funkgerät als {trusted}, aber der Name sieht fast gleich aus. Jeder kann jeden Namen wählen, also frag beim Besitzer von {trusted} nach, bevor du ihm vertraust.",
   "omTitle": "Offline-Karte",
   "omHelp": "Importiere eine Raster-MBTiles-Kartendatei (zum Beispiel aus einer Karten-App exportiert, die du nutzen darfst). Sie wird über der Online-Karte gezeigt und funktioniert ohne Internet. Vektordateien (pbf) werden nicht unterstützt.",
   "omNone": "Keine Offline-Karte importiert.",

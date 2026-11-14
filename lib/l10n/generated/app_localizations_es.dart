@@ -4752,6 +4752,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get clExportFailed => 'No se pudo abrir el menú de compartir.';
 
   @override
+  String nodesLookalike(String name) {
+    return 'Nombre parecido a $name';
+  }
+
+  @override
+  String chatsLookalikeBody(String name, String trusted) {
+    return '$name es una radio distinta de $trusted, pero su nombre es casi igual. Cualquiera puede elegir cualquier nombre, así que consulta con el dueño de $trusted antes de confiar.';
+  }
+
+  @override
   String get omTitle => 'Mapa sin conexión';
 
   @override

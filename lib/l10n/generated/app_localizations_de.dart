@@ -4770,6 +4770,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get clExportFailed => 'Teilen konnte nicht geöffnet werden.';
 
   @override
+  String nodesLookalike(String name) {
+    return 'Name ähnelt $name';
+  }
+
+  @override
+  String chatsLookalikeBody(String name, String trusted) {
+    return '$name ist ein anderes Funkgerät als $trusted, aber der Name sieht fast gleich aus. Jeder kann jeden Namen wählen, also frag beim Besitzer von $trusted nach, bevor du ihm vertraust.';
+  }
+
+  @override
   String get omTitle => 'Offline-Karte';
 
   @override
