@@ -1987,6 +1987,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get takSwitch => 'Envoyer les positions du maillage à ATAK';
 
   @override
+  String get takConsentTitle =>
+      'Partager les positions du maillage avec ATAK ?';
+
+  @override
+  String takConsentBody(int port) {
+    return 'Le nom et la dernière position de chaque nœud du maillage visible sont envoyés au port UDP $port de ce téléphone toutes les 30 secondes, jusqu\'à ce que vous désactiviez ceci. ATAK les reçoit, mais toute autre app de ce téléphone qui écoute ce port peut aussi les lire. Rien n\'est envoyé sur le maillage ni hors du téléphone.';
+  }
+
+  @override
+  String get takConsentAccept => 'Partager avec ATAK';
+
+  @override
   String get takPort => 'Port UDP';
 
   @override

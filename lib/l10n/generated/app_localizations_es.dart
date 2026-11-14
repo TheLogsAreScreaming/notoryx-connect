@@ -1975,6 +1975,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get takSwitch => 'Enviar posiciones de la malla a ATAK';
 
   @override
+  String get takConsentTitle => '¿Compartir posiciones de la malla con ATAK?';
+
+  @override
+  String takConsentBody(int port) {
+    return 'El nombre y la última posición de cada nodo de la malla que ves se envían al puerto UDP $port de este teléfono cada 30 segundos, hasta que lo desactives. ATAK los recibe, pero cualquier otra app de este teléfono que escuche en ese puerto también puede leerlos. No se envía nada por la malla ni fuera del teléfono.';
+  }
+
+  @override
+  String get takConsentAccept => 'Compartir con ATAK';
+
+  @override
   String get takPort => 'Puerto UDP';
 
   @override

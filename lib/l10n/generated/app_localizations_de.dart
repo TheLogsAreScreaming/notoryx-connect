@@ -1984,6 +1984,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get takSwitch => 'Mesh-Positionen an ATAK senden';
 
   @override
+  String get takConsentTitle => 'Mesh-Positionen mit ATAK teilen?';
+
+  @override
+  String takConsentBody(int port) {
+    return 'Name und letzte Position jedes sichtbaren Mesh-Knotens werden alle 30 Sekunden an UDP-Port $port auf diesem Telefon gesendet, bis du das ausschaltest. ATAK empfängt sie, aber jede andere App auf diesem Telefon, die auf diesem Port lauscht, kann sie ebenfalls lesen. Nichts wird über das Mesh oder aus dem Telefon hinaus gesendet.';
+  }
+
+  @override
+  String get takConsentAccept => 'Mit ATAK teilen';
+
+  @override
   String get takPort => 'UDP-Port';
 
   @override
