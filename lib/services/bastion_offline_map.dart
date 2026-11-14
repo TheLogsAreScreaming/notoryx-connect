@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:file_selector/file_selector.dart' show XFile;
@@ -14,9 +15,25 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart' show databaseFactoryFfi, sq
 /// What an MBTiles file says about itself.
 @immutable
 class OfflineMapInfo {
-  const OfflineMapInfo({required this.name, required this.format, required this.minZoom, required this.maxZoom});
+  const OfflineMapInfo({
+    required this.name,
+    required this.format,
+    required this.minZoom,
+    required this.maxZoom,
+    this.bounds,
+    this.damagedTiles = 0,
+  });
 
   final String name;
+
+  /// The area the file covers as (west, south, east, north) in degrees;
+  /// null when neither the file nor its tiles say. Outside it the map has
+  /// no offline tiles, and the map page outlines it so that's visible.
+  final (double, double, double, double)? bounds;
+
+  /// Tiles in the file that are empty, cut short or not images. They draw
+  /// blank instead of failing.
+  final int damagedTiles;
 
   /// png, jpg or webp.
   final String format;
@@ -25,7 +42,12 @@ class OfflineMapInfo {
 
   /// Reads the MBTiles `metadata` table. Throws [FormatException] for vector
   /// tiles (pbf), which this map can't draw, or missing zoom information.
-  static OfflineMapInfo fromMetadata(Map<String, String> m, {required String fallbackName, int? minFromTiles, int? maxFromTiles}) {
+  static OfflineMapInfo fromMetadata(Map<String, String> m,
+      {required String fallbackName,
+      int? minFromTiles,
+      int? maxFromTiles,
+      (double, double, double, double)? boundsFromTiles,
+      int damagedTiles = 0}) {
     final format = (m['format'] ?? 'png').toLowerCase();
     if (format == 'pbf' || format == 'mvt') {
       throw const FormatException('Vector tiles (pbf) are not supported; use a raster MBTiles file');
@@ -39,16 +61,49 @@ class OfflineMapInfo {
       throw const FormatException('The file has no usable zoom levels');
     }
     final name = (m['name'] ?? '').trim();
-    return OfflineMapInfo(name: name.isEmpty ? fallbackName : name, format: format, minZoom: minZoom, maxZoom: maxZoom);
+    return OfflineMapInfo(
+      name: name.isEmpty ? fallbackName : name,
+      format: format,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      bounds: parseBounds(m['bounds']) ?? boundsFromTiles,
+      damagedTiles: damagedTiles,
+    );
   }
 
-  Map<String, Object?> toJson() => {'name': name, 'format': format, 'min': minZoom, 'max': maxZoom};
+  /// MBTiles `bounds`: "west,south,east,north"; null if unusable.
+  static (double, double, double, double)? parseBounds(String? raw) {
+    final parts = raw?.split(',').map((p) => double.tryParse(p.trim())).toList();
+    if (parts == null || parts.length != 4 || parts.contains(null)) return null;
+    final (w, s, e, n) = (parts[0]!, parts[1]!, parts[2]!, parts[3]!);
+    if (s >= n || w >= e || s < -90 || n > 90 || w < -180 || e > 180) return null;
+    return (w, s, e, n);
+  }
+
+  Map<String, Object?> toJson() => {
+        'name': name,
+        'format': format,
+        'min': minZoom,
+        'max': maxZoom,
+        if (bounds case final b?) 'bounds': [b.$1, b.$2, b.$3, b.$4],
+        if (damagedTiles > 0) 'damaged': damagedTiles,
+      };
 
   static OfflineMapInfo? fromJson(Object? j) {
     if (j is! Map) return null;
     final name = j['name'], format = j['format'], min = j['min'], max = j['max'];
     if (name is! String || format is! String || min is! int || max is! int) return null;
-    return OfflineMapInfo(name: name, format: format, minZoom: min, maxZoom: max);
+    final b = j['bounds'];
+    return OfflineMapInfo(
+      name: name,
+      format: format,
+      minZoom: min,
+      maxZoom: max,
+      bounds: b is List && b.length == 4 && b.every((v) => v is num)
+          ? ((b[0] as num).toDouble(), (b[1] as num).toDouble(), (b[2] as num).toDouble(), (b[3] as num).toDouble())
+          : null,
+      damagedTiles: j['damaged'] as int? ?? 0,
+    );
   }
 }
 
@@ -157,7 +212,45 @@ class BastionOfflineMap extends ChangeNotifier {
       throw const FormatException('Not an MBTiles file');
     }
     if (min == null) throw const FormatException('The file has no tiles');
-    return OfflineMapInfo.fromMetadata(meta, fallbackName: fallbackName, minFromTiles: min, maxFromTiles: max);
+    return OfflineMapInfo.fromMetadata(meta,
+        fallbackName: fallbackName,
+        minFromTiles: min,
+        maxFromTiles: max,
+        boundsFromTiles: await _tileBounds(db, max!),
+        damagedTiles: await countDamaged(db));
+  }
+
+  /// The area the tiles at [zoom] cover, from their row and column range.
+  static Future<(double, double, double, double)?> _tileBounds(Database db, int zoom) async {
+    final r = await db.rawQuery(
+        'SELECT MIN(tile_column) AS x0, MAX(tile_column) AS x1, MIN(tile_row) AS r0, MAX(tile_row) AS r1 '
+        'FROM tiles WHERE zoom_level = ?',
+        [zoom]);
+    final x0 = r.first['x0'] as int?, x1 = r.first['x1'] as int?;
+    final r0 = r.first['r0'] as int?, r1 = r.first['r1'] as int?;
+    if (x0 == null || x1 == null || r0 == null || r1 == null) return null;
+    final n = 1 << zoom;
+    double lon(int x) => x / n * 360 - 180;
+    double lat(int y) {
+      final t = math.pi * (1 - 2 * y / n);
+      return math.atan((math.exp(t) - math.exp(-t)) / 2) * 180 / math.pi;
+    }
+
+    // Rows are TMS (from the bottom); convert to map rows (from the top).
+    final yTop = tmsRow(zoom, r1), yBottom = tmsRow(zoom, r0);
+    return (lon(x0), lat(yBottom + 1), lon(x1 + 1), lat(yTop));
+  }
+
+  /// Tiles whose bytes aren't a whole PNG, JPEG or WebP, counted in one
+  /// query so even large files are checked at import.
+  static Future<int> countDamaged(Database db) async {
+    final r = await db.rawQuery('''
+      SELECT COUNT(*) AS bad FROM tiles WHERE tile_data IS NULL OR length(tile_data) < 12 OR NOT (
+        (hex(substr(tile_data, 1, 8)) = '89504E470D0A1A0A' AND hex(substr(tile_data, -8)) = '49454E44AE426082')
+        OR (hex(substr(tile_data, 1, 3)) = 'FFD8FF' AND hex(substr(tile_data, -2)) = 'FFD9')
+        OR (hex(substr(tile_data, 1, 4)) = '52494646' AND hex(substr(tile_data, 9, 4)) = '57454250')
+      )''');
+    return (r.first['bad'] as int?) ?? 0;
   }
 
   Future<void> setActive(bool value) async {
@@ -249,6 +342,15 @@ class MbTilesImage extends ImageProvider<MbTilesImage> {
 
   Future<ImageInfo> _load(ImageDecoderCallback decode) async {
     final bytes = await map.tile(z, x, y) ?? _empty;
+    try {
+      return await _decode(bytes, decode);
+    } catch (_) {
+      // A damaged tile in the file draws blank rather than as an error.
+      return _decode(_empty, decode);
+    }
+  }
+
+  static Future<ImageInfo> _decode(Uint8List bytes, ImageDecoderCallback decode) async {
     final codec = await decode(await ui.ImmutableBuffer.fromUint8List(bytes));
     final frame = await codec.getNextFrame();
     return ImageInfo(image: frame.image);

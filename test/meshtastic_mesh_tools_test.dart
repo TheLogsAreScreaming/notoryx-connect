@@ -30,6 +30,7 @@ void main() {
       expect(message.to, 0x1);
       expect(message.packetId, 4242, reason: 'dedupes against the original');
       expect(message.text, 'meet at the gate');
+      expect(message.replayed, isTrue);
     });
 
     test('broadcast replay becomes a channel message', () {
