@@ -438,6 +438,12 @@ class _MapPageState extends State<MapPage> {
                       tileProvider: _offline.tileProvider,
                       minNativeZoom: info.minZoom,
                       maxNativeZoom: info.maxZoom,
+                      // Without these the layer asks the file for every tile
+                      // of the visible world at its lowest zoom (hundreds of
+                      // thousands of lookups on a zoomed-out map), which
+                      // froze the app.
+                      minZoom: offlineLayerMinZoom(info),
+                      tileBounds: offlineLayerBounds(info),
                     ),
                   // Outside this outline the offline file has no tiles.
                   if (_offline.info?.bounds case final b? when _offline.active)
@@ -1826,3 +1832,17 @@ class _RouteNameDialogState extends State<_RouteNameDialog> {
         ],
       );
 }
+
+/// The lowest map zoom at which the offline file is drawn: a few levels
+/// below its own lowest zoom when its area is known (the tiles shrink but
+/// stay few), one level otherwise.
+@visibleForTesting
+double offlineLayerMinZoom(OfflineMapInfo info) =>
+    (info.minZoom - (info.bounds == null ? 1 : 3)).clamp(0, 30).toDouble();
+
+/// The file's area, so the map only asks it for tiles it can have.
+@visibleForTesting
+LatLngBounds? offlineLayerBounds(OfflineMapInfo info) => switch (info.bounds) {
+      (final w, final s, final e, final n) => LatLngBounds(LatLng(s, w), LatLng(n, e)),
+      null => null,
+    };

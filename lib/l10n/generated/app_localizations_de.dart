@@ -5847,7 +5847,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String omDamaged(int count) {
-    return '$count Kacheln in dieser Datei sind beschädigt und bleiben leer.';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Kacheln in dieser Datei sind beschädigt und bleiben leer.',
+      one: '1 Kachel in dieser Datei ist beschädigt und bleibt leer.',
+    );
+    return '$_temp0';
   }
 
   @override

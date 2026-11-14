@@ -5782,7 +5782,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String omDamaged(int count) {
-    return '$count tiles in this file are damaged and will show blank.';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tiles in this file are damaged and will show blank.',
+      one: '1 tile in this file is damaged and will show blank.',
+    );
+    return '$_temp0';
   }
 
   @override

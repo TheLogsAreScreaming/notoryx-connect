@@ -5846,7 +5846,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String omDamaged(int count) {
-    return '$count tuiles de ce fichier sont endommagées et resteront vides.';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tuiles de ce fichier sont endommagées et resteront vides.',
+      one: '1 tuile de ce fichier est endommagée et restera vide.',
+    );
+    return '$_temp0';
   }
 
   @override

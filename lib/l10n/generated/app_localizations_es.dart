@@ -5822,7 +5822,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String omDamaged(int count) {
-    return '$count teselas de este archivo están dañadas y se verán en blanco.';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count teselas de este archivo están dañadas y se verán en blanco.',
+      one: '1 tesela de este archivo está dañada y se verá en blanco.',
+    );
+    return '$_temp0';
   }
 
   @override

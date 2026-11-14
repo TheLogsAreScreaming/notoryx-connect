@@ -1575,7 +1575,7 @@
   "gateNoHardware": "Cette radio n'a pas le matériel pour cela",
   "formNewerValue": "Défini par un firmware plus récent (valeur {value}). Laissé tel quel.",
   "omArea": "Couvre {area} (contour en pointillés sur la carte). En dehors, il n'y a pas de tuiles hors ligne.",
-  "omDamaged": "{count} tuiles de ce fichier sont endommagées et resteront vides.",
+  "omDamaged": "{count, plural, =1{1 tuile de ce fichier est endommagée et restera vide.} other{{count} tuiles de ce fichier sont endommagées et resteront vides.}}",
   "ikTitle": "Clé d'identité (sauvegarde séparée)",
   "ikIntro": "La clé privée fait de cette radio le même nœud pour tous. Sauvegardez-la pour transférer votre identité vers une radio de remplacement. Gardez-la secrète et ne la mettez jamais sur deux radios actives en même temps. Utilise le mot de passe ci-dessus.",
   "ikBackup": "Sauvegarder la clé d'identité",

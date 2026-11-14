@@ -4149,7 +4149,7 @@
   "@formNewerValue": {"placeholders": {"value": {"type": "String"}}},
   "omArea": "Covers {area} (dashed outline on the map). Outside it there are no offline tiles.",
   "@omArea": {"placeholders": {"area": {"type": "String"}}},
-  "omDamaged": "{count} tiles in this file are damaged and will show blank.",
+  "omDamaged": "{count, plural, =1{1 tile in this file is damaged and will show blank.} other{{count} tiles in this file are damaged and will show blank.}}",
   "@omDamaged": {"placeholders": {"count": {"type": "int"}}},
   "ikTitle": "Identity key (separate backup)",
   "ikIntro": "The private key makes this radio the same node to everyone. Back it up to move your identity to a replacement radio. Keep it secret, and never put it on two radios that are on the air at once. Uses the password above.",
