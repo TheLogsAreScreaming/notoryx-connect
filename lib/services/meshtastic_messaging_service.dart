@@ -26,8 +26,19 @@ class MeshtasticMessagingService {
     required this.connection,
     BastionMessageArchive? archive,
     int Function()? packetIdFactory,
+    DateTime Function()? clock,
+    this.spacing = const Duration(seconds: 2),
   }) : _archive = archive,
-       _packetIdFactory = packetIdFactory ?? _defaultPacketId;
+       _packetIdFactory = packetIdFactory ?? _defaultPacketId,
+       _clock = clock ?? DateTime.now;
+
+  /// Queued messages older than this are held for the user instead of
+  /// going out by themselves: an old "on my way" must not send unasked.
+  static const maxQueueAge = Duration(hours: 24);
+
+  /// Pause between queued sends, so a backlog doesn't flood the mesh.
+  final Duration spacing;
+  final DateTime Function() _clock;
 
   final MeshtasticRadioSession session;
   final MeshtasticConnectionController connection;
@@ -95,6 +106,7 @@ class MeshtasticMessagingService {
       final snapshot = await archive.load();
       _messages.addAll(snapshot.messages);
       _pending.addAll(snapshot.pending);
+      _holdInterrupted();
       _trimHistory();
     }
     await _subscription?.cancel();
@@ -133,6 +145,7 @@ class MeshtasticMessagingService {
       packetId: packetId,
       replyId: replyId,
       isReaction: reaction,
+      queuedAt: _clock(),
     );
 
     _messages.add(BastionChatMessage(
@@ -154,6 +167,8 @@ class MeshtasticMessagingService {
     if (!connection.isReady) {
       _pending.add(pending);
       _notify();
+      // Saved before returning, so a crash right after queueing keeps it.
+      await _archive?.save(messages: _messages, pending: _pending);
       return packetId;
     }
 
@@ -179,6 +194,7 @@ class MeshtasticMessagingService {
     final pending = BastionRadioHistory.mergePending(snapshot.pending, _pending);
     _messages..clear()..addAll(messages);
     _pending..clear()..addAll(pending);
+    _holdInterrupted();
     _trimHistory();
     _notify();
     if (connection.isReady) unawaited(flush());
@@ -200,25 +216,94 @@ class MeshtasticMessagingService {
     return archive.save(messages: _messages, pending: _pending);
   }
 
+  /// Messages waiting for the user to send or delete them.
+  List<PendingTextMessage> get held =>
+      List.unmodifiable(_pending.where((m) => m.held));
+
+  /// Sends queued messages oldest first, one every [spacing].
+  ///
+  /// Each one is saved as "handing off" before it goes to the radio and
+  /// removed once the radio has taken it. If the send throws, or the app
+  /// stops in between, nobody knows whether it went out, so it is held for
+  /// the user instead of being sent again. Anything older than
+  /// [maxQueueAge], or of unknown age, is held too.
   Future<void> flush() async {
     await _attaching;
     if (_flushing || !connection.isReady) return;
     _flushing = true;
     try {
-      while (_pending.isNotEmpty && connection.isReady) {
-        final message = _pending.first;
-        try {
-          await _send(message);
-          _pending.removeAt(0);
-          _setDelivery(message.packetId, BastionDeliveryState.sent);
-        } catch (_) {
-          _setDelivery(message.packetId, BastionDeliveryState.failed);
-          break;
+      var first = true;
+      while (connection.isReady) {
+        final index = _pending.indexWhere((m) => !m.held);
+        if (index < 0) break;
+        final message = _pending[index];
+        final queuedAt = message.queuedAt;
+        if (message.handoff ||
+            queuedAt == null ||
+            _clock().difference(queuedAt) > maxQueueAge) {
+          _hold(message);
+          continue;
         }
+        if (!first && spacing > Duration.zero) {
+          await Future<void>.delayed(spacing);
+          if (!connection.isReady) break;
+          if (!_pending.contains(message)) continue; // deleted meanwhile
+        }
+        first = false;
+        final handingOff = message.copyWith(handoff: true);
+        _pending[index] = handingOff;
+        await _archive?.save(messages: _messages, pending: _pending);
+        try {
+          await _send(handingOff);
+        } catch (_) {
+          _hold(handingOff);
+          continue;
+        }
+        _pending.remove(handingOff);
+        _setDelivery(message.packetId, BastionDeliveryState.sent);
       }
     } finally {
       _flushing = false;
       _notify();
+    }
+  }
+
+  /// Sends a held message now, as the user asked. It counts as freshly
+  /// queued, so it is not held again for its age.
+  Future<void> sendHeld(int packetId) async {
+    final index = _pending.indexWhere((m) => m.packetId == packetId && m.held);
+    if (index < 0) return;
+    _pending[index] = _pending[index].copyWith(
+      held: false,
+      handoff: false,
+      queuedAt: _clock(),
+    );
+    _setDelivery(packetId, BastionDeliveryState.queued);
+    await flush();
+  }
+
+  /// Deletes a queued or held message without sending it.
+  void deleteQueued(int packetId) {
+    final before = _pending.length;
+    _pending.removeWhere((m) => m.packetId == packetId);
+    if (_pending.length == before) return;
+    _messages.removeWhere((m) =>
+        m.packetId == packetId &&
+        m.direction == BastionMessageDirection.outgoing);
+    _notify();
+  }
+
+  void _hold(PendingTextMessage message) {
+    final index = _pending.indexOf(message);
+    if (index < 0) return;
+    _pending[index] = message.copyWith(held: true);
+    _setDelivery(message.packetId, BastionDeliveryState.held);
+  }
+
+  /// After a restart, anything left "handing off" may already be out.
+  void _holdInterrupted() {
+    for (final m in _pending.where((m) => m.handoff && !m.held).toList()) {
+      _hold(m);
     }
   }
 

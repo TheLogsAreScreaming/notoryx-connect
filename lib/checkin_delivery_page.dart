@@ -15,6 +15,7 @@ import 'theme/nx_components.dart';
       BastionDeliveryState.delivered => (word: 'Delivered', icon: Icons.check_circle, tone: NxTone.success),
       BastionDeliveryState.failed => (word: 'Not delivered', icon: Icons.cancel, tone: NxTone.danger),
       BastionDeliveryState.sent => (word: 'Sent, no reply yet', icon: Icons.schedule, tone: NxTone.warning),
+      BastionDeliveryState.held => (word: 'Held: check before sending', icon: Icons.pause_circle_outline, tone: NxTone.warning),
       _ => (word: 'Waiting to send', icon: Icons.hourglass_empty, tone: NxTone.neutral),
     };
 

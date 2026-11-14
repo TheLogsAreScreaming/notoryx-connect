@@ -4129,6 +4129,10 @@
       }
     }
   },
+  "deliveryHeld": "Held: check before sending",
+  "chatsHeldExplain": "This wasn't sent by itself. It's over a day old, or sending was cut off and it may already have gone out.",
+  "chatsSendHeld": "Send now",
+  "chatsDeleteQueued": "Delete without sending",
   "deliveryProven": "Delivered • receipt proven",
   "deliveryUnproven": "Delivered • receipt not proven",
   "deliveryNoKey": "Delivered • receipt couldn't be checked (no key)",
