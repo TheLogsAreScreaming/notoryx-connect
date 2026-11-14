@@ -752,6 +752,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   /// Name of the last radio, for USB and network links.
   String? get linkName => _lastDevice?.name;
 
+  /// Id of the radio last connected to (a Bluetooth address, "tcp:…" or "usb:…").
+  String? get linkId => _lastDevice?.id;
+
   /// Host of the network radio, when [usesNetworkLink].
   String? get networkHost => _lastDevice?.networkAddress?.host;
   bool get bluetoothOn => _bluetoothOn;
