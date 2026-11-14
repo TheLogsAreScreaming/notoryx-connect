@@ -1570,5 +1570,8 @@
   "deliveryNoKey": "Entregado • no se pudo comprobar el recibo (sin clave)",
   "deliveryForged": "un recibo no pasó la comprobación y se ignoró",
   "chatsSigned": "Tu radio comprobó la firma del remitente",
-  "chatsPkiEncrypted": "Cifrado solo para ti"
+  "chatsPkiEncrypted": "Cifrado solo para ti",
+  "gateExcluded": "No incluido en el firmware de esta radio",
+  "gateNoHardware": "Esta radio no tiene el hardware para esto",
+  "formNewerValue": "Definido por un firmware más nuevo (valor {value}). Se deja sin cambios."
 }

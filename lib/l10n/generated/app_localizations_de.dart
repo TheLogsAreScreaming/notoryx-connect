@@ -5827,4 +5827,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get chatsPkiEncrypted => 'Nur für dich verschlüsselt';
+
+  @override
+  String get gateExcluded =>
+      'In der Firmware dieses Funkgeräts nicht enthalten';
+
+  @override
+  String get gateNoHardware => 'Diesem Funkgerät fehlt die Hardware dafür';
+
+  @override
+  String formNewerValue(String value) {
+    return 'Von neuerer Firmware gesetzt (Wert $value). Bleibt unverändert.';
+  }
 }

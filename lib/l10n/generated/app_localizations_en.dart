@@ -5763,4 +5763,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatsPkiEncrypted => 'Encrypted to you only';
+
+  @override
+  String get gateExcluded => 'Left out of this radio\'s firmware build';
+
+  @override
+  String get gateNoHardware => 'This radio doesn\'t have the hardware for this';
+
+  @override
+  String formNewerValue(String value) {
+    return 'Set by newer firmware (value $value). Left unchanged.';
+  }
 }

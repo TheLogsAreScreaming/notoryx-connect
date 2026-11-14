@@ -4142,5 +4142,9 @@
   "deliveryNoKey": "Delivered • receipt couldn't be checked (no key)",
   "deliveryForged": "a receipt failed its check and was ignored",
   "chatsSigned": "Sender's signature checked by your radio",
-  "chatsPkiEncrypted": "Encrypted to you only"
+  "chatsPkiEncrypted": "Encrypted to you only",
+  "gateExcluded": "Left out of this radio's firmware build",
+  "gateNoHardware": "This radio doesn't have the hardware for this",
+  "formNewerValue": "Set by newer firmware (value {value}). Left unchanged.",
+  "@formNewerValue": {"placeholders": {"value": {"type": "String"}}}
 }

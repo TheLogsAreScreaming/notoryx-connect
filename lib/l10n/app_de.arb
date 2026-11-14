@@ -1570,5 +1570,8 @@
   "deliveryNoKey": "Zugestellt • Empfang nicht prüfbar (kein Schlüssel)",
   "deliveryForged": "eine Empfangsbestätigung hat die Prüfung nicht bestanden und wurde ignoriert",
   "chatsSigned": "Signatur des Absenders von deinem Funkgerät geprüft",
-  "chatsPkiEncrypted": "Nur für dich verschlüsselt"
+  "chatsPkiEncrypted": "Nur für dich verschlüsselt",
+  "gateExcluded": "In der Firmware dieses Funkgeräts nicht enthalten",
+  "gateNoHardware": "Diesem Funkgerät fehlt die Hardware dafür",
+  "formNewerValue": "Von neuerer Firmware gesetzt (Wert {value}). Bleibt unverändert."
 }

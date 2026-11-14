@@ -5827,4 +5827,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get chatsPkiEncrypted => 'Chiffré pour vous seul';
+
+  @override
+  String get gateExcluded => 'Absent du firmware de cette radio';
+
+  @override
+  String get gateNoHardware => 'Cette radio n\'a pas le matériel pour cela';
+
+  @override
+  String formNewerValue(String value) {
+    return 'Défini par un firmware plus récent (valeur $value). Laissé tel quel.';
+  }
 }
