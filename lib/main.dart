@@ -81,11 +81,16 @@ part 'shell/shell_labels.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LicenseRegistry.addLicense(() async* {
-    final text = await rootBundle.loadString('licenses/meshtastic-protobufs-GPL-3.0.txt');
+    final text = await rootBundle.loadString(
+      'licenses/meshtastic-protobufs-GPL-3.0.txt',
+    );
     yield LicenseEntryWithLineBreaks(['Meshtastic protobufs'], text);
   });
   LicenseRegistry.addLicense(() async* {
-    for (final (name, file) in [('Inter', 'Inter-OFL.txt'), ('JetBrains Mono', 'JetBrainsMono-OFL.txt')]) {
+    for (final (name, file) in [
+      ('Inter', 'Inter-OFL.txt'),
+      ('JetBrains Mono', 'JetBrainsMono-OFL.txt'),
+    ]) {
       final text = await rootBundle.loadString('assets/fonts/$file');
       yield LicenseEntryWithLineBreaks([name], text);
     }
@@ -106,6 +111,7 @@ Future<void> main() async {
 
 class BastionApp extends StatefulWidget {
   const BastionApp({super.key});
+
   /// NOTORYX orange from the app icon.
   static const signal = NxPalette.signal;
 
@@ -114,10 +120,12 @@ class BastionApp extends StatefulWidget {
   static const panel = NxPalette.ink1;
 
   /// The accent for the current theme.
-  static Color accentOf(BuildContext context) => Theme.of(context).colorScheme.primary;
+  static Color accentOf(BuildContext context) =>
+      Theme.of(context).colorScheme.primary;
 
   /// The built-in look for [brightness] (Blaze dark, Bare Beauty light).
-  static ThemeData appearance(Brightness brightness) => NotoryxTheme.build(brightness);
+  static ThemeData appearance(Brightness brightness) =>
+      NotoryxTheme.build(brightness);
 
   @override
   State<BastionApp> createState() => _BastionAppState();
@@ -145,7 +153,8 @@ class _BastionAppState extends State<BastionApp> with WidgetsBindingObserver {
   // Seasonal follows the date, so check it again when the app comes back.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused) BastionAppLock.instance.onBackground();
+    if (state == AppLifecycleState.paused)
+      BastionAppLock.instance.onBackground();
     if (state == AppLifecycleState.resumed) {
       BastionAppLock.instance.onForeground();
       setState(() {});
@@ -156,18 +165,27 @@ class _BastionAppState extends State<BastionApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) => AnimatedBuilder(
     animation: BastionPreferences.instance,
     builder: (context, _) {
-      final platform = WidgetsBinding.instance.platformDispatcher.platformBrightness;
-      final theme = NotoryxTheme.fromPalette(BastionPreferences.instance.palette(platform));
+      final platform =
+          WidgetsBinding.instance.platformDispatcher.platformBrightness;
+      final theme = NotoryxTheme.fromPalette(
+        BastionPreferences.instance.palette(platform),
+      );
       return MaterialApp(
-        title: 'NOTORYX Connect', debugShowCheckedModeBanner: false,
-        theme: theme, darkTheme: theme, themeMode: ThemeMode.light,
+        title: 'NOTORYX Connect',
+        debugShowCheckedModeBanner: false,
+        theme: theme,
+        darkTheme: theme,
+        themeMode: ThemeMode.light,
         scrollBehavior: const BastionScrollBehavior(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         builder: (context, child) {
           // Services and notifications follow the phone's language too.
           BastionText.use(Localizations.localeOf(context));
-          return BastionAppLockGate(lock: BastionAppLock.instance, child: child!);
+          return BastionAppLockGate(
+            lock: BastionAppLock.instance,
+            child: child!,
+          );
         },
         home: const BastionShell(),
       );
@@ -181,9 +199,17 @@ class BastionScrollBehavior extends MaterialScrollBehavior {
   const BastionScrollBehavior();
 
   @override
-  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildScrollbar(
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
     if (axisDirectionToAxis(details.direction) != Axis.vertical) return child;
-    return Scrollbar(controller: details.controller, interactive: true, child: child);
+    return Scrollbar(
+      controller: details.controller,
+      interactive: true,
+      child: child,
+    );
   }
 }
 
@@ -213,19 +239,33 @@ class _BastionShellState extends State<BastionShell> {
       index = 0;
     });
     // Let the screens stop listening before the old demo radio goes away.
-    if (old != null) WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
+    if (old != null)
+      WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
     if (on) radio.configureBot(enabled: botMode, reply: awayReply);
   }
+
   bool botMode = false;
   String awayReply = MeshtasticMessagingService.defaultAwayReply;
 
   List<String> _labels(BuildContext context) {
     final l = AppLocalizations.of(context);
-    return [l.tabHome, l.tabNodes, l.tabChats, l.tabMap, l.tabTools, l.tabSettings];
+    return [
+      l.tabHome,
+      l.tabNodes,
+      l.tabChats,
+      l.tabMap,
+      l.tabTools,
+      l.tabSettings,
+    ];
   }
+
   static const icons = [
-    Icons.shield_outlined, Icons.hub_outlined, Icons.chat_bubble_outline, Icons.map_outlined,
-    Icons.build_outlined, Icons.settings_outlined,
+    Icons.shield_outlined,
+    Icons.hub_outlined,
+    Icons.chat_bubble_outline,
+    Icons.map_outlined,
+    Icons.build_outlined,
+    Icons.settings_outlined,
   ];
 
   /// Wider than this, the tabs move to a rail on the left.
@@ -239,8 +279,12 @@ class _BastionShellState extends State<BastionShell> {
   void initState() {
     super.initState();
     unawaited(_realRadio.prepareAlerts());
+    // Pick up the radio from last time, e.g. after Android closed the app.
+    unawaited(_realRadio.reconnectAtLaunch());
     // Automations act on the real radio only, never the demo.
-    final automations = BastionAutomations.instance = AutomationEngine(hooks: coordinatorAutomationHooks(_realRadio));
+    final automations = BastionAutomations.instance = AutomationEngine(
+      hooks: coordinatorAutomationHooks(_realRadio),
+    );
     unawaited(automations.load());
     automations.attach(CoordinatorAutomationSource(_realRadio));
     unawaited(SentinelService.instance.start());
@@ -266,12 +310,14 @@ class _BastionShellState extends State<BastionShell> {
         final tab = tabs[type];
         if (tab != null && mounted) setState(() => index = tab);
       });
-      actions.setShortcutItems(const [
-        ShortcutItem(type: 'home', localizedTitle: 'Check in / SOS'),
-        ShortcutItem(type: 'chats', localizedTitle: 'Chats'),
-        ShortcutItem(type: 'nodes', localizedTitle: 'Nodes'),
-        ShortcutItem(type: 'map', localizedTitle: 'Map'),
-      ]).catchError((Object _) {});
+      actions
+          .setShortcutItems(const [
+            ShortcutItem(type: 'home', localizedTitle: 'Check in / SOS'),
+            ShortcutItem(type: 'chats', localizedTitle: 'Chats'),
+            ShortcutItem(type: 'nodes', localizedTitle: 'Nodes'),
+            ShortcutItem(type: 'map', localizedTitle: 'Map'),
+          ])
+          .catchError((Object _) {});
     } catch (_) {
       // Shortcuts are a convenience; the app works without them.
     }
@@ -292,28 +338,42 @@ class _BastionShellState extends State<BastionShell> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = PrimaryScrollController.none(child: IndexedStack(key: ValueKey(_inDemo), index: index, children: [
-      HomePage(radio: radio, onConnect: () => _go(1), onTryDemo: _inDemo ? null : () => _setDemo(true)),
-      _NodesPage(discovery: ble, radio: radio, onOpenTools: () => _go(4),
-        onTryDemo: _inDemo ? null : () => _setDemo(true)),
-      BastionChatsPage(
-        radio: radio,
-        visible: index == 2,
-        botMode: botMode,
-        awayReply: awayReply,
-        onBotModeChanged: (value) {
-          setState(() => botMode = value);
-          radio.configureBot(enabled: value, reply: awayReply);
-        },
-        onAwayReplyChanged: (value) {
-          setState(() => awayReply = value);
-          radio.configureBot(enabled: botMode, reply: value);
-        },
+    final pages = PrimaryScrollController.none(
+      child: IndexedStack(
+        key: ValueKey(_inDemo),
+        index: index,
+        children: [
+          HomePage(
+            radio: radio,
+            onConnect: () => _go(1),
+            onTryDemo: _inDemo ? null : () => _setDemo(true),
+          ),
+          _NodesPage(
+            discovery: ble,
+            radio: radio,
+            onOpenTools: () => _go(4),
+            onTryDemo: _inDemo ? null : () => _setDemo(true),
+          ),
+          BastionChatsPage(
+            radio: radio,
+            visible: index == 2,
+            botMode: botMode,
+            awayReply: awayReply,
+            onBotModeChanged: (value) {
+              setState(() => botMode = value);
+              radio.configureBot(enabled: value, reply: awayReply);
+            },
+            onAwayReplyChanged: (value) {
+              setState(() => awayReply = value);
+              radio.configureBot(enabled: botMode, reply: value);
+            },
+          ),
+          MapPage(radio: radio),
+          _ToolsPage(discovery: ble, radio: radio),
+          _SettingsPage(radio: radio, demo: _inDemo, onDemoChanged: _setDemo),
+        ],
       ),
-      MapPage(radio: radio),
-      _ToolsPage(discovery: ble, radio: radio),
-      _SettingsPage(radio: radio, demo: _inDemo, onDemoChanged: _setDemo),
-    ]));
+    );
     final wide = MediaQuery.sizeOf(context).width >= railBreakpoint;
     final scheme = Theme.of(context).colorScheme;
     return Scaffold(
@@ -323,12 +383,31 @@ class _BastionShellState extends State<BastionShell> {
         title: Semantics(
           label: 'NOTORYX Connect',
           excludeSemantics: true,
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-            Text('NOTORYX', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20,
-              color: scheme.primary, letterSpacing: 2.4, height: 1.1)),
-            Text('CONNECT', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600,
-              letterSpacing: 3, color: scheme.onSurfaceVariant)),
-          ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'NOTORYX',
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 20,
+                  color: scheme.primary,
+                  letterSpacing: 2.4,
+                  height: 1.1,
+                ),
+              ),
+              Text(
+                'CONNECT',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 3,
+                  color: scheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
         ),
         actions: [
           Padding(
@@ -343,22 +422,31 @@ class _BastionShellState extends State<BastionShell> {
                   button: true,
                   // Announces a lost or restored radio without moving focus.
                   liveRegion: true,
-                  label: AppLocalizations.of(context).radioStatus(_connectionLabel(context, state)),
+                  label: AppLocalizations.of(
+                    context,
+                  ).radioStatus(_connectionLabel(context, state)),
                   onTapHint: AppLocalizations.of(context).radioStatusHint,
                   onTap: () => _go(1),
                   excludeSemantics: true,
                   child: Tooltip(
-                    message: AppLocalizations.of(context).radioStatusTip(_connectionLabel(context, state)),
+                    message: AppLocalizations.of(
+                      context,
+                    ).radioStatusTip(_connectionLabel(context, state)),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(NxRadius.pill),
                       onTap: () => _go(1),
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(minHeight: NxTouch.min),
-                        child: Center(child: NxStatusPill(
-                          label: _connectionLabel(context, state),
-                          tone: _connectionTone(state),
-                          busy: _connectionBusy(state) || radio.isReconnecting,
-                        )),
+                        constraints: const BoxConstraints(
+                          minHeight: NxTouch.min,
+                        ),
+                        child: Center(
+                          child: NxStatusPill(
+                            label: _connectionLabel(context, state),
+                            tone: _connectionTone(state),
+                            busy:
+                                _connectionBusy(state) || radio.isReconnecting,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -369,50 +457,76 @@ class _BastionShellState extends State<BastionShell> {
         ],
       ),
       // Each tab keeps its own scroll position, so each scroll bar follows one list.
-      body: SafeArea(child: Column(children: [
-        if (_inDemo) _DemoBanner(onExit: () => _setDemo(false)),
-        Expanded(child: wide
-          ? Row(children: [
-              NavigationRail(
-                selectedIndex: index,
-                onDestinationSelected: _go,
-                destinations: [
-                  for (final (i, label) in _labels(context).indexed)
-                    NavigationRailDestination(icon: _tabIcon(i), label: Text(label)),
-                ],
-              ),
-              const VerticalDivider(width: 1),
-              Expanded(child: Align(alignment: Alignment.topCenter,
-                child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 840), child: pages))),
-            ])
-          : pages),
-      ])),
-      bottomNavigationBar: wide ? null : NavigationBar(
-        selectedIndex: index,
-        onDestinationSelected: _go,
-        destinations: [
-          for (final (i, label) in _labels(context).indexed)
-            NavigationDestination(icon: _tabIcon(i), label: label, tooltip: label),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            if (_inDemo) _DemoBanner(onExit: () => _setDemo(false)),
+            Expanded(
+              child: wide
+                  ? Row(
+                      children: [
+                        NavigationRail(
+                          selectedIndex: index,
+                          onDestinationSelected: _go,
+                          destinations: [
+                            for (final (i, label) in _labels(context).indexed)
+                              NavigationRailDestination(
+                                icon: _tabIcon(i),
+                                label: Text(label),
+                              ),
+                          ],
+                        ),
+                        const VerticalDivider(width: 1),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 840),
+                              child: pages,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : pages,
+            ),
+          ],
+        ),
       ),
+      bottomNavigationBar: wide
+          ? null
+          : NavigationBar(
+              selectedIndex: index,
+              onDestinationSelected: _go,
+              destinations: [
+                for (final (i, label) in _labels(context).indexed)
+                  NavigationDestination(
+                    icon: _tabIcon(i),
+                    label: label,
+                    tooltip: label,
+                  ),
+              ],
+            ),
     );
   }
 
   /// A tab's icon; Chats carries a badge with the unread count.
-  Widget _tabIcon(int i) => i != 2 ? Icon(icons[i]) : AnimatedBuilder(
-    animation: radio,
-    builder: (context, _) {
-      final unread = index == 2 ? 0 : radio.unreadCount;
-      return Semantics(
-        label: unread == 0 ? null : '$unread unread',
-        child: Badge(
-          isLabelVisible: unread > 0,
-          label: Text(unread > 99 ? '99+' : '$unread'),
-          child: Icon(icons[i]),
-        ),
-      );
-    },
-  );
+  Widget _tabIcon(int i) => i != 2
+      ? Icon(icons[i])
+      : AnimatedBuilder(
+          animation: radio,
+          builder: (context, _) {
+            final unread = index == 2 ? 0 : radio.unreadCount;
+            return Semantics(
+              label: unread == 0 ? null : '$unread unread',
+              child: Badge(
+                isLabelVisible: unread > 0,
+                label: Text(unread > 99 ? '99+' : '$unread'),
+                child: Icon(icons[i]),
+              ),
+            );
+          },
+        );
 }
 
 /// Shown on every screen while demo mode is on, so it is never mistaken for
@@ -424,25 +538,41 @@ class _DemoBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = NxStatusColors.of(context);
-    final (bg, fg) = status.container(NxTone.info, Theme.of(context).colorScheme);
+    final (bg, fg) = status.container(
+      NxTone.info,
+      Theme.of(context).colorScheme,
+    );
     return Semantics(
       container: true,
       liveRegion: true,
       child: Material(
         color: bg,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(NxSpace.md, NxSpace.xxs, NxSpace.xs, NxSpace.xxs),
-          child: Row(children: [
-            Icon(Icons.play_circle_outline, color: fg, size: 20),
-            const SizedBox(width: NxSpace.xs),
-            Expanded(child: Text('Demo mode: pretend radio and messages. Nothing is sent.',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: fg))),
-            TextButton(
-              onPressed: onExit,
-              style: TextButton.styleFrom(foregroundColor: fg),
-              child: const Text('Exit demo'),
-            ),
-          ]),
+          padding: const EdgeInsets.fromLTRB(
+            NxSpace.md,
+            NxSpace.xxs,
+            NxSpace.xs,
+            NxSpace.xxs,
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.play_circle_outline, color: fg, size: 20),
+              const SizedBox(width: NxSpace.xs),
+              Expanded(
+                child: Text(
+                  'Demo mode: pretend radio and messages. Nothing is sent.',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(color: fg),
+                ),
+              ),
+              TextButton(
+                onPressed: onExit,
+                style: TextButton.styleFrom(foregroundColor: fg),
+                child: const Text('Exit demo'),
+              ),
+            ],
+          ),
         ),
       ),
     );

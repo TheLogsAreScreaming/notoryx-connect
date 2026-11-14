@@ -50,6 +50,7 @@ import 'bastion_owner_readback.dart';
 import 'bastion_history_limit.dart';
 import 'bastion_message_archive.dart';
 import 'bastion_radio_config_codec.dart';
+import 'bastion_last_link.dart';
 import 'bastion_radio_history.dart';
 import 'bastion_reconnect_policy.dart';
 import 'bastion_reconnect_supervisor.dart';
@@ -84,7 +85,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     PhoneLocationSource? location,
     BluetoothAvailability? bluetooth,
     BastionSpeaker? speaker,
+    BastionLastLink? lastLink,
   }) : _speaker = speaker ?? TtsSpeaker(),
+       _lastLink = lastLink ?? BastionLastLink(),
        _background = background ?? BastionForegroundService(),
        _bluetooth = bluetooth ?? UniversalBleAvailability(),
        _alerts = alerts ?? BastionLocalMessageAlerts(),
@@ -112,10 +115,12 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     }
     _archive.addListener(notifyListeners);
     _archiveLoaded = _loadArchive();
-    unawaited(BastionAlertSettings.load().then((s) {
-      _alertSettings = s;
-      notifyListeners();
-    }));
+    unawaited(
+      BastionAlertSettings.load().then((s) {
+        _alertSettings = s;
+        notifyListeners();
+      }),
+    );
     unawaited(_geofenceStore.load().then((_) => notifyListeners()));
     unawaited(_routeWatchStore.load().then((_) => notifyListeners()));
     unawaited(_chatMarks.load().then((_) => notifyListeners()));
@@ -149,7 +154,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     return '!${num.toRadixString(16).padLeft(8, '0')}';
   }
 
-  bool _isFavorite(int num) => _nodeVault.records.any((r) => r.num == num && r.favorite);
+  bool _isFavorite(int num) =>
+      _nodeVault.records.any((r) => r.num == num && r.favorite);
 
   /// The favourite or trip contact whose name [num]'s name imitates, or
   /// null. A hint to check with the owner, not proof of anything.
@@ -165,20 +171,29 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   void _raise(BastionFieldAlert? alert) {
-    if (alert != null && !filters.isSilenced(alert.nodeNum)) unawaited(_alerts.showFieldAlert(alert));
+    if (alert != null && !filters.isSilenced(alert.nodeNum))
+      unawaited(_alerts.showFieldAlert(alert));
   }
 
   /// Shows [alert] as a local notification, e.g. for an automation. Nothing
   /// is transmitted.
-  Future<void> showLocalAlert(BastionFieldAlert alert) => _alerts.showFieldAlert(alert);
+  Future<void> showLocalAlert(BastionFieldAlert alert) =>
+      _alerts.showFieldAlert(alert);
 
   void _startFieldAlerts(int localNode) {
     _fieldAlerts.startSession(localNode);
     _geofenceEngine.startSession();
     _routeWatchEngine.startSession();
     for (final t in _deviceTelemetry.values) {
-      _raise(_fieldAlerts.battery(t.from, t.batteryLevel, _nodeName(t.from),
-          favorite: _isFavorite(t.from), settings: _alertSettings));
+      _raise(
+        _fieldAlerts.battery(
+          t.from,
+          t.batteryLevel,
+          _nodeName(t.from),
+          favorite: _isFavorite(t.from),
+          settings: _alertSettings,
+        ),
+      );
     }
     _silenceTimer?.cancel();
     _silenceTimer = Timer.periodic(const Duration(minutes: 1), (_) {
@@ -186,12 +201,22 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       final favorites = [
         for (final r in _nodeVault.records)
           if (r.favorite)
-            (num: r.num, name: _nodeName(r.num),
-              lastHeard: _nodes.where((n) => n.num == r.num).firstOrNull?.lastHeard),
+            (
+              num: r.num,
+              name: _nodeName(r.num),
+              lastHeard: _nodes
+                  .where((n) => n.num == r.num)
+                  .firstOrNull
+                  ?.lastHeard,
+            ),
       ];
       _fieldAlerts.checkSilence(favorites, _alertSettings).forEach(_raise);
-      _raise(_fieldAlerts.checkMeshDrop(
-          _nodes.where((n) => n.num != _localNodeNum).map((n) => n.lastHeard), _alertSettings));
+      _raise(
+        _fieldAlerts.checkMeshDrop(
+          _nodes.where((n) => n.num != _localNodeNum).map((n) => n.lastHeard),
+          _alertSettings,
+        ),
+      );
       if (++_onlineTicks % 5 == 0) unawaited(_saveLastOnline());
     });
     _catchUpAsked = false;
@@ -216,7 +241,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   Future<void> _saveLastOnline() async {
     try {
-      await SharedPreferencesAsync().setInt(_lastOnlineKey, DateTime.now().millisecondsSinceEpoch);
+      await SharedPreferencesAsync().setInt(
+        _lastOnlineKey,
+        DateTime.now().millisecondsSinceEpoch,
+      );
     } catch (_) {
       // Best effort.
     }
@@ -225,16 +253,26 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   /// Once per session, asks the most recently heard router for what was
   /// missed. Runs only with the setting on and a known offline gap.
   void _maybeCatchUp() {
-    if (_catchUpAsked || !BastionPreferences.instance.storeForwardCatchUp || !isReady) return;
+    if (_catchUpAsked ||
+        !BastionPreferences.instance.storeForwardCatchUp ||
+        !isReady)
+      return;
     final routers = _meshTools.routers;
     if (routers.isEmpty) return;
-    final window = BastionStoreForwardCatchUp.windowFor(_lastOnline, DateTime.now());
+    final window = BastionStoreForwardCatchUp.windowFor(
+      _lastOnline,
+      DateTime.now(),
+    );
     if (window == null) return;
     _catchUpAsked = true;
-    final router = routers.reduce((a, b) => a.lastHeard.isAfter(b.lastHeard) ? a : b);
-    unawaited(requestStoredMessages(router.nodeNum, window).catchError((Object _) {
-      _catchUpAsked = false;
-    }));
+    final router = routers.reduce(
+      (a, b) => a.lastHeard.isAfter(b.lastHeard) ? a : b,
+    );
+    unawaited(
+      requestStoredMessages(router.nodeNum, window).catchError((Object _) {
+        _catchUpAsked = false;
+      }),
+    );
   }
 
   void _stopFieldAlerts() {
@@ -262,10 +300,16 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     final key = node.publicKey;
     if (key == null || node.num == _localNodeNum) return;
     final wasChanged = _nodeKeys.hasChanged(node.num);
-    if (await _nodeKeys.check(node.num, key) == KeyCheck.changed && !wasChanged) {
-      _raise(BastionFieldAlert(BastionAlertKind.keyChanged, node.num,
+    if (await _nodeKeys.check(node.num, key) == KeyCheck.changed &&
+        !wasChanged) {
+      _raise(
+        BastionFieldAlert(
+          BastionAlertKind.keyChanged,
+          node.num,
           'Security key changed: ${node.displayName}',
-          'This node now uses a different key. Check with its owner before trusting it with direct messages.'));
+          'This node now uses a different key. Check with its owner before trusting it with direct messages.',
+        ),
+      );
     }
     notifyListeners();
   }
@@ -315,6 +359,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     notifyListeners();
     return problem;
   }
+
   final BastionGeofenceEngine _geofenceEngine = BastionGeofenceEngine();
 
   /// Map zones that alert when watched nodes arrive or leave.
@@ -334,7 +379,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   /// Nodes starred as favourites.
-  Set<int> get favoriteNums => {for (final r in _nodeVault.records) if (r.favorite) r.num};
+  Set<int> get favoriteNums => {
+    for (final r in _nodeVault.records)
+      if (r.favorite) r.num,
+  };
 
   /// Phone alerts for watched nodes crossing a zone's edge. This radio's
   /// own position never alerts.
@@ -352,11 +400,18 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     final positions = [
       for (final n in nodes)
         if (n.hasPosition && n.num != _localNodeNum)
-          (num: n.num, name: n.displayName, latitude: n.latitude!, longitude: n.longitude!),
+          (
+            num: n.num,
+            name: n.displayName,
+            latitude: n.latitude!,
+            longitude: n.longitude!,
+          ),
     ];
     _geofenceEngine.check(zones, positions, watched).forEach(_raise);
     if (route != null) {
-      _routeWatchEngine.check(route, positions, watched(route.watch)).forEach(_raise);
+      _routeWatchEngine
+          .check(route, positions, watched(route.watch))
+          .forEach(_raise);
     }
   }
 
@@ -375,7 +430,11 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _loggedError = error;
     final via = _lastDevice == null
         ? ''
-        : ' (${_lastDevice!.isUsb ? 'USB' : _lastDevice!.isNetwork ? 'Wi-Fi' : 'Bluetooth'})';
+        : ' (${_lastDevice!.isUsb
+              ? 'USB'
+              : _lastDevice!.isNetwork
+              ? 'Wi-Fi'
+              : 'Bluetooth'})';
     connectionLog.add('${state.name}$via${error == null ? '' : ': $error'}');
   }
 
@@ -388,7 +447,28 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     if (device == null || _busy) return;
     await connect(device);
   }
+
   final BastionRadioHistory _history = BastionRadioHistory();
+  final BastionLastLink _lastLink;
+
+  /// Reconnects to the radio from the last session, if the user didn't
+  /// disconnect from it. Waits for Bluetooth and retries like a dropped link.
+  /// Returns whether a reconnect was started.
+  Future<bool> reconnectAtLaunch() async {
+    if (_disposed || _busy || _session != null || _lastDevice != null)
+      return false;
+    final saved = await _lastLink.load();
+    if (saved == null ||
+        _disposed ||
+        _busy ||
+        _session != null ||
+        _lastDevice != null)
+      return false;
+    _lastDevice = saved;
+    _userDisconnected = false;
+    unawaited(_recoverLink(saved));
+    return true;
+  }
 
   /// History of the connected radio, or of the last one while disconnected.
   BastionMessageArchive _archive = BastionMessageArchive();
@@ -398,7 +478,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   late final Future<void> _archiveLoaded;
 
   /// Why chat history or the offline queue may not be stored; null when fine.
-  String? get messageStorageProblem => _archive.problem ?? BastionChatStorage.migrationProblem;
+  String? get messageStorageProblem =>
+      _archive.problem ?? BastionChatStorage.migrationProblem;
 
   /// Why the background connection service is not running; null when fine.
   String? get backgroundProblem => switch (_background) {
@@ -420,7 +501,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   final BastionBeaconLog _beacons = BastionBeaconLog();
 
   /// Trip contacts, check-ins, SOS, reminders and overdue alerts.
-  late final BastionTripController trip = BastionTripController(radio: _CoordinatorTripRadio(this));
+  late final BastionTripController trip = BastionTripController(
+    radio: _CoordinatorTripRadio(this),
+  );
   final MeshtasticMeshTools _meshTools = MeshtasticMeshTools();
   StreamSubscription<Uint8List>? _meshToolsSubscription;
   StreamSubscription<Uint8List>? _waypointSubscription;
@@ -442,7 +525,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         BastionReconnectPolicy.shouldReconnect(
           userDisconnected: _userDisconnected,
           // Network and USB radios don't need Bluetooth.
-          bluetoothEnabled: _bluetoothOn || !(_lastDevice?.usesBluetooth ?? true),
+          bluetoothEnabled:
+              _bluetoothOn || !(_lastDevice?.usesBluetooth ?? true),
         ),
   );
 
@@ -475,11 +559,15 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   final List<double> _snrHistory = [];
   int _receivedTextPackets = 0;
   final Map<int, BastionDeviceTelemetry> _deviceTelemetry = {};
+
   /// Evidence belongs to this connection, never to a hardware name/version.
   final Map<String, String> settingsAvailability = {};
   bool checkingSettings = false;
   bool _cancelSettingsCheck = false;
-  void cancelSettingsCheck() { _cancelSettingsCheck = true; notifyListeners(); }
+  void cancelSettingsCheck() {
+    _cancelSettingsCheck = true;
+    notifyListeners();
+  }
 
   String availability(String key) => settingsAvailability[key] ?? 'Not checked';
 
@@ -500,7 +588,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       if (admin == _admin) settingsAvailability[key] = 'Available';
       return value;
     } on MeshtasticSettingsUnavailable {
-      if (admin == _admin) settingsAvailability[key] = 'Not returned by this radio';
+      if (admin == _admin)
+        settingsAvailability[key] = 'Not returned by this radio';
       rethrow;
     } catch (_) {
       if (admin == _admin) settingsAvailability[key] = 'Read failed — retry';
@@ -520,11 +609,19 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       for (final type in AdminMessage_ConfigType.values) {
         if (_cancelSettingsCheck || admin != _admin || !canAdminister) break;
         if (type == AdminMessage_ConfigType.SESSIONKEY_CONFIG) continue;
-        try { await readConfig(type); } catch (_) { /* Recorded by _readSection. */ }
+        try {
+          await readConfig(type);
+        } catch (_) {
+          /* Recorded by _readSection. */
+        }
       }
       for (final type in AdminMessage_ModuleConfigType.values) {
         if (_cancelSettingsCheck || admin != _admin || !canAdminister) break;
-        try { await readModuleConfig(type); } catch (_) { /* Recorded by _readSection. */ }
+        try {
+          await readModuleConfig(type);
+        } catch (_) {
+          /* Recorded by _readSection. */
+        }
       }
     } finally {
       checkingSettings = false;
@@ -545,18 +642,30 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     coverageProblem = null;
     if (enabled) {
       final session = _session;
-      if (!isReady || _localNodeNum == null) throw StateError('Connect to a radio first.');
+      if (!isReady || _localNodeNum == null)
+        throw StateError('Connect to a radio first.');
       final problem = await _location.ensureAccess();
-      if (session != _session || !isReady) throw StateError('Radio disconnected while requesting location.');
-      if (problem != null) { coverageProblem = problem; notifyListeners(); throw StateError(problem); }
+      if (session != _session || !isReady)
+        throw StateError('Radio disconnected while requesting location.');
+      if (problem != null) {
+        coverageProblem = problem;
+        notifyListeners();
+        throw StateError(problem);
+      }
       BastionFieldLog.instance.start(_localNodeNum!);
       try {
-      _coverageLocation = _location.watch().listen((fix) => _coverageFix = fix,
-        onError: (Object error) {
-          BastionFieldLog.instance.stop();
-          coverageProblem = 'Location stopped: $error';
-          notifyListeners();
-        }, onDone: () { BastionFieldLog.instance.stop(); notifyListeners(); });
+        _coverageLocation = _location.watch().listen(
+          (fix) => _coverageFix = fix,
+          onError: (Object error) {
+            BastionFieldLog.instance.stop();
+            coverageProblem = 'Location stopped: $error';
+            notifyListeners();
+          },
+          onDone: () {
+            BastionFieldLog.instance.stop();
+            notifyListeners();
+          },
+        );
       } catch (error) {
         BastionFieldLog.instance.stop();
         coverageProblem = 'Location could not start: $error';
@@ -575,8 +684,12 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   final BastionFilters filters = BastionFilters();
 
   /// Nodes to show: every known node except ignored ones.
-  List<MeshtasticNode> get nodes =>
-      filters.ignored.isEmpty ? _nodes : [for (final n in _nodes) if (!filters.isIgnored(n.num)) n];
+  List<MeshtasticNode> get nodes => filters.ignored.isEmpty
+      ? _nodes
+      : [
+          for (final n in _nodes)
+            if (!filters.isIgnored(n.num)) n,
+        ];
 
   /// Every known node, including ignored ones (for unignoring and safety logic).
   List<MeshtasticNode> get allNodes => _nodes;
@@ -584,17 +697,26 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   /// The connected radio's history, without messages from ignored nodes and,
   /// unless shown, incoming messages that contain a filtered word. Until the
   /// radio identifies itself, the last radio's history plus anything new.
-  List<BastionChatMessage> get messages =>
-      [for (final m in _allMessages) if (!_hidden(m, includeWords: !filters.showFiltered)) m];
+  List<BastionChatMessage> get messages => [
+    for (final m in _allMessages)
+      if (!_hidden(m, includeWords: !filters.showFiltered)) m,
+  ];
 
   /// Incoming messages currently hidden only by word filters.
   int get filteredMessageCount => filters.words.isEmpty
       ? 0
-      : _allMessages.where((m) => !_hidden(m, includeWords: false) && _hidden(m, includeWords: true)).length;
+      : _allMessages
+            .where(
+              (m) =>
+                  !_hidden(m, includeWords: false) &&
+                  _hidden(m, includeWords: true),
+            )
+            .length;
 
   bool _hidden(BastionChatMessage m, {required bool includeWords}) =>
       m.direction == BastionMessageDirection.incoming &&
-      (filters.isIgnored(m.from) || (includeWords && filters.matchesWord(m.text)));
+      (filters.isIgnored(m.from) ||
+          (includeWords && filters.matchesWord(m.text)));
 
   /// Every message, including hidden ones (for trip and SOS safety logic).
   List<BastionChatMessage> get allMessages => _allMessages;
@@ -603,7 +725,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     final messaging = _messaging;
     if (messaging == null) return _archivedMessages;
     if (messaging.archive != null) return messaging.messages;
-    return BastionRadioHistory.mergeMessages(_archivedMessages, messaging.messages);
+    return BastionRadioHistory.mergeMessages(
+      _archivedMessages,
+      messaging.messages,
+    );
   }
 
   String? get botProblem => _messaging?.botProblem;
@@ -613,6 +738,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     if (messaging.archive != null) return messaging.pending.length;
     return _archivedPending.length + messaging.pending.length;
   }
+
   bool get busy => _busy;
   bool get isReady => connection.isReady;
   bool get isReconnecting => _reconnect.isRunning || _waitingForBluetooth;
@@ -633,10 +759,14 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   /// Whether radio settings can be read and written right now.
   bool get canAdminister =>
-      !_busy && connection.isReady && _admin != null && firmwareSupport != FirmwareSupport.unsupported;
+      !_busy &&
+      connection.isReady &&
+      _admin != null &&
+      firmwareSupport != FirmwareSupport.unsupported;
 
   /// How well the radio's firmware suits the app; unknown until it reports.
-  FirmwareSupport get firmwareSupport => BastionFirmware.supportOf(_firmwareVersion);
+  FirmwareSupport get firmwareSupport =>
+      BastionFirmware.supportOf(_firmwareVersion);
 
   /// Whether the phone's location is sent to the radio for broadcasting.
   bool get sharePhoneLocation => _sharePhoneLocation;
@@ -673,7 +803,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   int get locationPrecision => _locationPrecision;
 
   Future<void> setLocationPrecision(int bits) async {
-    if (!BastionPhonePositionSharer.precisionChoices.containsKey(bits) || bits == _locationPrecision) return;
+    if (!BastionPhonePositionSharer.precisionChoices.containsKey(bits) ||
+        bits == _locationPrecision)
+      return;
     _locationPrecision = bits;
     notifyListeners();
     try {
@@ -852,7 +984,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   final BastionTelemetryHistory _telemetryHistory = BastionTelemetryHistory();
 
   /// Metrics with saved readings for [num], for charts.
-  List<TelemetryMetric> telemetryMetricsOf(int num) => _telemetryHistory.metricsOf(num);
+  List<TelemetryMetric> telemetryMetricsOf(int num) =>
+      _telemetryHistory.metricsOf(num);
 
   /// Saved readings of [metric] from [num], oldest first.
   List<TelemetryPoint> telemetrySeries(int num, TelemetryMetric metric) =>
@@ -871,7 +1004,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   Future<String?> moveRadioData(int from) async {
     final messaging = _messaging;
     final to = _localNodeNum;
-    if (!isReady || messaging == null || to == null || messaging.archive?.radio != to) {
+    if (!isReady ||
+        messaging == null ||
+        to == null ||
+        messaging.archive?.radio != to) {
       return 'Connect to the new radio first.';
     }
     if (from == to) return 'That is the connected radio.';
@@ -887,7 +1023,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     }
     final messagesSaved = await messaging.importHistory(snapshot);
     final nodesSaved = await _nodeVault.importRadio(from);
-    final trailsSaved = await _trails.importRadio(from) &&
+    final trailsSaved =
+        await _trails.importRadio(from) &&
         await _telemetryHistory.importRadio(from);
     _syncMessageSnapshot(messaging);
     notifyListeners();
@@ -922,7 +1059,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   /// Switches chat history, the offline queue and NodeVault to the radio that
   /// just identified itself, moving unassigned history to radios first.
-  Future<void> _useRadioHistory(MeshtasticMessagingService messaging, int nodeNum) async {
+  Future<void> _useRadioHistory(
+    MeshtasticMessagingService messaging,
+    int nodeNum,
+  ) async {
     await _archiveLoaded;
     if (_messaging != messaging || messaging.archive?.radio == nodeNum) return;
     final archive = await _history.open(nodeNum);
@@ -958,6 +1098,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       await _background.release();
       rethrow;
     }
+    if (!_userDisconnected) unawaited(_lastLink.save(device));
   }
 
   Future<void> _open(MeshtasticBleDevice device) async {
@@ -971,15 +1112,21 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       _receivedTextPackets = 0;
       _deviceTelemetry.clear();
       _firmwareVersion = null;
-    _deviceMetadata = null;
+      _deviceMetadata = null;
       _connectedAt = DateTime.now();
       settingsAvailability.clear();
-    _radioConfigSnapshots.clear();
+      _radioConfigSnapshots.clear();
       _channelSnapshots.clear();
       _moduleConfigSnapshots.clear();
 
-      final MeshtasticLinkTransport transport = switch ((device.networkAddress, device.usbDeviceId)) {
-        (final address?, _) => MeshtasticTcpTransport(host: address.host, port: address.port),
+      final MeshtasticLinkTransport transport = switch ((
+        device.networkAddress,
+        device.usbDeviceId,
+      )) {
+        (final address?, _) => MeshtasticTcpTransport(
+          host: address.host,
+          port: address.port,
+        ),
         (_, final usb?) => MeshtasticUsbTransport(deviceId: usb),
         _ => MeshtasticUniversalBleTransport(deviceId: device.id),
       };
@@ -989,13 +1136,11 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       );
       final nodeDatabase = MeshtasticNodeDatabase(session);
       // History is attached once the radio reports its node number.
-      final messaging = MeshtasticMessagingService(
-        session: session,
-        connection: connection,
-      )
-        ..channelMessageMaxAge = _channelMaxAge
-        ..historyLimit = BastionPreferences.instance.historyLimit
-        ..isIgnoredSender = filters.isIgnored;
+      final messaging =
+          MeshtasticMessagingService(session: session, connection: connection)
+            ..channelMessageMaxAge = _channelMaxAge
+            ..historyLimit = BastionPreferences.instance.historyLimit
+            ..isIgnoredSender = filters.isIgnored;
       _nodeVault.detach();
       final handshake = MeshtasticHandshake(
         session: session,
@@ -1014,10 +1159,18 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           try {
             final envelope = pb.FromRadio.fromBuffer(bytes);
             if (envelope.hasPacket()) {
-              unawaited(BastionFieldLog.instance.observe(envelope.packet, _coverageFix, DateTime.now())
-                .catchError((Object _) { coverageProblem = BastionFieldLog.instance.error; notifyListeners(); }));
+              unawaited(
+                BastionFieldLog.instance
+                    .observe(envelope.packet, _coverageFix, DateTime.now())
+                    .catchError((Object _) {
+                      coverageProblem = BastionFieldLog.instance.error;
+                      notifyListeners();
+                    }),
+              );
             }
-          } on InvalidProtocolBufferException { /* Ignore malformed frames. */ }
+          } on InvalidProtocolBufferException {
+            /* Ignore malformed frames. */
+          }
         }
         if (_meshTools.handleEnvelope(bytes)) {
           _maybeCatchUp();
@@ -1063,14 +1216,19 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           };
           if (target != null) {
             target.add(Uint8List.fromList(envelope.payload!));
-            if (envelope.kind == FromRadioPayloadKind.config || envelope.kind == FromRadioPayloadKind.moduleConfig) {
-              final key = BastionSettingsEvidence.advertisedKey(envelope.payload!, module: envelope.kind == FromRadioPayloadKind.moduleConfig);
+            if (envelope.kind == FromRadioPayloadKind.config ||
+                envelope.kind == FromRadioPayloadKind.moduleConfig) {
+              final key = BastionSettingsEvidence.advertisedKey(
+                envelope.payload!,
+                module: envelope.kind == FromRadioPayloadKind.moduleConfig,
+              );
               if (key != null) settingsAvailability[key] = 'Available';
             }
             notifyListeners();
           }
         }
-        if (envelope.kind == FromRadioPayloadKind.mqttClientProxyMessage && envelope.payload != null) {
+        if (envelope.kind == FromRadioPayloadKind.mqttClientProxyMessage &&
+            envelope.payload != null) {
           mqttProxy.fromRadio(envelope.payload!);
         }
         if (envelope.kind == FromRadioPayloadKind.packet &&
@@ -1083,14 +1241,26 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
                 (!BastionRadioPolicy.firmwareAtLeast28(_firmwareVersion) ||
                     telemetry.batteryIsFreshSince(_connectedAt))) {
               _deviceTelemetry[telemetry.from] = telemetry;
-              _raise(_fieldAlerts.battery(telemetry.from, telemetry.batteryLevel,
-                  _nodeName(telemetry.from), favorite: _isFavorite(telemetry.from),
-                  settings: _alertSettings));
+              _raise(
+                _fieldAlerts.battery(
+                  telemetry.from,
+                  telemetry.batteryLevel,
+                  _nodeName(telemetry.from),
+                  favorite: _isFavorite(telemetry.from),
+                  settings: _alertSettings,
+                ),
+              );
               notifyListeners();
             }
-            final reading = BastionTelemetryCodec.decodeReadings(envelope.payload!);
+            final reading = BastionTelemetryCodec.decodeReadings(
+              envelope.payload!,
+            );
             if (reading != null) {
-              _telemetryHistory.record(reading.from, reading.readings, sampleTime: reading.time);
+              _telemetryHistory.record(
+                reading.from,
+                reading.readings,
+                sampleTime: reading.time,
+              );
               notifyListeners();
             }
             final packet = MeshtasticTextCodec.decodeMeshPacket(
@@ -1140,16 +1310,23 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           if (n.publicKey != null) unawaited(_checkNodeKey(n));
         }
         _trails.record(nodes, {...trip.plan.members, ?_localNodeNum});
-        unawaited(_dayTracks.record(nodes, {...trip.plan.members, ?_localNodeNum}));
+        unawaited(
+          _dayTracks.record(nodes, {...trip.plan.members, ?_localNodeNum}),
+        );
         _checkGeofences(nodes);
         unawaited(_nodeVault.rememberPositions(nodes));
         notifyListeners();
       });
       _nodeVaultSubscription = nodeDatabase.nodeUpdates.listen((node) {
         if (connection.isReady) {
-          _raise(_fieldAlerts.nodeHeard(node.num, node.displayName,
+          _raise(
+            _fieldAlerts.nodeHeard(
+              node.num,
+              node.displayName,
               knownBefore: _nodeVault.records.any((r) => r.num == node.num),
-              settings: _alertSettings));
+              settings: _alertSettings,
+            ),
+          );
         }
         unawaited(_nodeVault.observe(node).then((_) => notifyListeners()));
         unawaited(_journal.observe(node));
@@ -1273,28 +1450,48 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   @override
   int get backupNodeNum => canAdminister && _localNodeNum != null
-      ? _localNodeNum! : throw StateError('Connect to a ready radio first.');
+      ? _localNodeNum!
+      : throw StateError('Connect to a ready radio first.');
   @override
   String get backupFirmware => _firmwareVersion ?? 'unknown';
   @override
   List<AdminMessage_ConfigType> get backupConfigTypes => _radioConfigSnapshots
       .map(Config.fromBuffer)
-      .where((c) => !c.hasSecurity() && !c.hasSessionkey() && c.whichPayloadVariant() != Config_PayloadVariant.notSet)
-      .map(RadioBackupSnapshot.configType).toSet().toList();
+      .where(
+        (c) =>
+            !c.hasSecurity() &&
+            !c.hasSessionkey() &&
+            c.whichPayloadVariant() != Config_PayloadVariant.notSet,
+      )
+      .map(RadioBackupSnapshot.configType)
+      .toSet()
+      .toList();
   @override
-  List<AdminMessage_ModuleConfigType> get backupModuleTypes => _moduleConfigSnapshots
-      .map(ModuleConfig.fromBuffer)
-      .where((m) => m.whichPayloadVariant() != ModuleConfig_PayloadVariant.notSet)
-      .map(RadioBackupSnapshot.moduleType).toSet().toList();
+  List<AdminMessage_ModuleConfigType> get backupModuleTypes =>
+      _moduleConfigSnapshots
+          .map(ModuleConfig.fromBuffer)
+          .where(
+            (m) =>
+                m.whichPayloadVariant() != ModuleConfig_PayloadVariant.notSet,
+          )
+          .map(RadioBackupSnapshot.moduleType)
+          .toSet()
+          .toList();
 
   @override
   Future<void> writeBackup(RadioBackupSnapshot snapshot) async {
     final admin = _requireAdmin();
     await admin.editTransaction(() async {
       await admin.setOwner(snapshot.owner);
-      for (final c in snapshot.channels) { await admin.setChannel(c); }
-      for (final m in snapshot.modules) { await admin.setModuleConfig(m); }
-      for (final c in snapshot.configs) { await admin.setConfig(c); }
+      for (final c in snapshot.channels) {
+        await admin.setChannel(c);
+      }
+      for (final m in snapshot.modules) {
+        await admin.setModuleConfig(m);
+      }
+      for (final c in snapshot.configs) {
+        await admin.setConfig(c);
+      }
     });
   }
 
@@ -1308,14 +1505,17 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   /// so the private key isn't kept in memory or in exports.
   @override
   Future<Config_SecurityConfig> readSecurity() async =>
-      (await _requireAdmin().getConfig(AdminMessage_ConfigType.SECURITY_CONFIG)).security;
+      (await _requireAdmin().getConfig(
+        AdminMessage_ConfigType.SECURITY_CONFIG,
+      )).security;
 
   @override
   Future<void> writeSecurity(Config_SecurityConfig security) =>
       _requireAdmin().setConfig(Config(security: security));
 
   @override
-  Future<void> waitForIdentityRadio(int nodeNum) => waitForSettingsRadio(nodeNum);
+  Future<void> waitForIdentityRadio(int nodeNum) =>
+      waitForSettingsRadio(nodeNum);
 
   @override
   Iterable<int> nodesUsing(Uint8List publicKey) sync* {
@@ -1342,18 +1542,27 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       if (canAdminister && _localNodeNum == nodeNum) return;
       await Future<void>.delayed(const Duration(milliseconds: 500));
     }
-    throw TimeoutException('Reconnect to the same radio, then verify its settings.');
+    throw TimeoutException(
+      'Reconnect to the same radio, then verify its settings.',
+    );
   }
 
   Future<User> readOwner() => _requireAdmin().getOwner();
 
   Future<Config> readConfig(AdminMessage_ConfigType type) async {
     final admin = _requireAdmin();
-    final config = await _readSection('config:${type.value}', () => admin.getConfig(type));
+    final config = await _readSection(
+      'config:${type.value}',
+      () => admin.getConfig(type),
+    );
     if (_admin == admin) {
       _radioConfigSnapshots.removeWhere((bytes) {
-        try { return Config.fromBuffer(bytes).whichPayloadVariant() == config.whichPayloadVariant(); }
-        on InvalidProtocolBufferException { return false; }
+        try {
+          return Config.fromBuffer(bytes).whichPayloadVariant() ==
+              config.whichPayloadVariant();
+        } on InvalidProtocolBufferException {
+          return false;
+        }
       });
       _radioConfigSnapshots.add(config.writeToBuffer());
       notifyListeners();
@@ -1366,8 +1575,11 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     final channel = await admin.getChannel(index);
     if (_admin == admin) {
       _channelSnapshots.removeWhere((bytes) {
-        try { return BastionRadioConfigCodec.channelMetadata(bytes).index == index; }
-        on FormatException { return false; }
+        try {
+          return BastionRadioConfigCodec.channelMetadata(bytes).index == index;
+        } on FormatException {
+          return false;
+        }
       });
       _channelSnapshots.add(channel.writeToBuffer());
       notifyListeners();
@@ -1375,13 +1587,22 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     return channel;
   }
 
-  Future<ModuleConfig> readModuleConfig(AdminMessage_ModuleConfigType type) async {
+  Future<ModuleConfig> readModuleConfig(
+    AdminMessage_ModuleConfigType type,
+  ) async {
     final admin = _requireAdmin();
-    final config = await _readSection('module:${type.value}', () => admin.getModuleConfig(type));
+    final config = await _readSection(
+      'module:${type.value}',
+      () => admin.getModuleConfig(type),
+    );
     if (_admin == admin) {
       _moduleConfigSnapshots.removeWhere((bytes) {
-        try { return ModuleConfig.fromBuffer(bytes).whichPayloadVariant() == config.whichPayloadVariant(); }
-        on InvalidProtocolBufferException { return false; }
+        try {
+          return ModuleConfig.fromBuffer(bytes).whichPayloadVariant() ==
+              config.whichPayloadVariant();
+        } on InvalidProtocolBufferException {
+          return false;
+        }
       });
       _moduleConfigSnapshots.add(config.writeToBuffer());
       notifyListeners();
@@ -1411,8 +1632,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
             when channel.role != Channel_Role.DISABLED)
           channel.settings,
     ];
-    final lora = (await admin.getConfig(AdminMessage_ConfigType.LORA_CONFIG))
-        .lora;
+    final lora = (await admin.getConfig(
+      AdminMessage_ConfigType.LORA_CONFIG,
+    )).lora;
     return ChannelSet(settings: settings, loraConfig: lora);
   }
 
@@ -1537,10 +1759,12 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   /// Carries MQTT for a radio without Wi-Fi; see [BastionMqttProxy].
-  late final BastionMqttProxy mqttProxy = BastionMqttProxy(sendToRadio: (bytes) async {
-    final session = _session;
-    if (session != null) await session.send(bytes);
-  });
+  late final BastionMqttProxy mqttProxy = BastionMqttProxy(
+    sendToRadio: (bytes) async {
+      final session = _session;
+      if (session != null) await session.send(bytes);
+    },
+  );
 
   /// The radio's proxy settings, or null unless it asks for the proxy.
   MqttProxyConfig? get mqttProxyConfig {
@@ -1566,16 +1790,26 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         if (c.role != Channel_Role.DISABLED) channels[c.index] = c.settings;
       } catch (_) {}
     }
-    return MqttProxyConfig.from(mqtt,
-        channels: channels.values, presetName: MqttProxyConfig.presetChannelName(preset));
+    return MqttProxyConfig.from(
+      mqtt,
+      channels: channels.values,
+      presetName: MqttProxyConfig.presetChannelName(preset),
+    );
   }
 
   void _syncMqttProxy() {
-    final config = connection.isReady && BastionPreferences.instance.mqttProxy ? mqttProxyConfig : null;
+    final config = connection.isReady && BastionPreferences.instance.mqttProxy
+        ? mqttProxyConfig
+        : null;
     if (config == null) {
       if (mqttProxy.running) unawaited(mqttProxy.stop());
     } else if (!mqttProxy.running && mqttProxy.state != MqttProxyState.error) {
-      unawaited(mqttProxy.start(config, clientId: 'notoryx-${(_localNodeNum ?? 0).toRadixString(16)}'));
+      unawaited(
+        mqttProxy.start(
+          config,
+          clientId: 'notoryx-${(_localNodeNum ?? 0).toRadixString(16)}',
+        ),
+      );
     }
   }
 
@@ -1599,9 +1833,16 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     }
     final destination = target.isBroadcast
         ? MeshtasticTextCodec.broadcastNode
-        : target.direction == BastionMessageDirection.incoming ? target.from : target.to;
-    await messaging.sendText(text: emoji, destination: destination, channel: target.channel,
-        replyId: target.packetId, reaction: true);
+        : target.direction == BastionMessageDirection.incoming
+        ? target.from
+        : target.to;
+    await messaging.sendText(
+      text: emoji,
+      destination: destination,
+      channel: target.channel,
+      replyId: target.packetId,
+      reaction: true,
+    );
     _syncMessageSnapshot(messaging);
     notifyListeners();
   }
@@ -1622,11 +1863,16 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   /// also advertises the primary channel's name and key and this radio's
   /// region and modem preset, so listeners can join; that shares the key with
   /// anyone in range.
-  Future<void> sendBeacon(String message, {bool offerPrimaryChannel = false}) async {
+  Future<void> sendBeacon(
+    String message, {
+    bool offerPrimaryChannel = false,
+  }) async {
     BastionBeaconLog.checkMessage(message);
     if (_beacons.nextSendAllowed case final next?) {
-      throw StateError('Beacons are limited to one an hour; the next can be sent at '
-          '${next.toLocal().toString().substring(11, 16)}.');
+      throw StateError(
+        'Beacons are limited to one an hour; the next can be sent at '
+        '${next.toLocal().toString().substring(11, 16)}.',
+      );
     }
     final session = _session;
     if (_busy || !connection.isReady || session == null) {
@@ -1635,11 +1881,13 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     final beacon = MeshBeacon(message: message.trim());
     if (offerPrimaryChannel) {
       final set = await readChannelSet();
-      if (set.settings.isEmpty) throw StateError('This radio has no primary channel to offer.');
+      if (set.settings.isEmpty)
+        throw StateError('This radio has no primary channel to offer.');
       beacon
         ..offerChannel = set.settings.first
         ..offerRegion = set.loraConfig.region;
-      if (set.loraConfig.usePreset) beacon.offerPreset = set.loraConfig.modemPreset;
+      if (set.loraConfig.usePreset)
+        beacon.offerPreset = set.loraConfig.modemPreset;
     }
     await session.send(BastionBeaconLog.encode(beacon));
     await _beacons.recordSent();
@@ -1665,7 +1913,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   String? remoteAdminProblem(int nodeNum) {
     // canAdminister already rules out firmware older than 2.5 (no PKI admin).
     if (!canAdminister || _session == null) return 'Connect to a radio first.';
-    if (nodeNum == _localNodeNum) return 'This is your own radio. Use Radio settings.';
+    if (nodeNum == _localNodeNum)
+      return 'This is your own radio. Use Radio settings.';
     final node = nodes.where((n) => n.num == nodeNum).firstOrNull;
     if (node?.publicKey == null) {
       return 'This node hasn\'t shared its security key yet. Wait for it to send its node info.';
@@ -1815,9 +2064,16 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }
 
   /// Notifies about a message that arrives while the app is backgrounded.
-  Future<void> _sendNotificationReply(BastionLocalMessageAlerts alerts, BastionNotificationReply reply) async {
+  Future<void> _sendNotificationReply(
+    BastionLocalMessageAlerts alerts,
+    BastionNotificationReply reply,
+  ) async {
     try {
-      await sendText(text: reply.text, destination: reply.destination, channel: reply.channel);
+      await sendText(
+        text: reply.text,
+        destination: reply.destination,
+        channel: reply.channel,
+      );
     } catch (_) {
       await alerts.showReplyFailed(reply.text);
     }
@@ -1827,16 +2083,26 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   Future<void> prepareAlerts() async {
     final alerts = _alerts;
     if (alerts is! BastionLocalMessageAlerts) return;
-    alerts.listenForReplies((reply) => unawaited(_sendNotificationReply(alerts, reply)));
+    alerts.listenForReplies(
+      (reply) => unawaited(_sendNotificationReply(alerts, reply)),
+    );
     await alerts.prepare();
   }
 
   Future<void> _relaySms(MeshtasticTextMessage message) async {
     final reply = await BastionSmsRelay.instance.handle(
-        from: message.from, text: message.text, isBroadcast: message.isBroadcast, packetId: message.packetId);
+      from: message.from,
+      text: message.text,
+      isBroadcast: message.isBroadcast,
+      packetId: message.packetId,
+    );
     if (reply == null || !isReady) return;
     try {
-      await sendText(text: reply, destination: message.from, channel: message.channel);
+      await sendText(
+        text: reply,
+        destination: message.from,
+        channel: message.channel,
+      );
     } catch (_) {
       // The reply is a courtesy; the SMS itself has already been handled.
     }
@@ -1847,15 +2113,20 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     // chat marked as such, but never alerts, speaks or relays by SMS, so an
     // old SOS can't look like a new emergency.
     if (message.replayed) return;
-    if (filters.isSilenced(message.from) || filters.matchesWord(message.text)) return;
-    if (BastionSmsRelay.available && !message.isReaction) unawaited(_relaySms(message));
+    if (filters.isSilenced(message.from) || filters.matchesWord(message.text))
+      return;
+    if (BastionSmsRelay.available && !message.isReaction)
+      unawaited(_relaySms(message));
     String sender = '!${message.from.toRadixString(16).padLeft(8, '0')}';
     for (final node in _nodes) {
       if (node.num == message.from) sender = node.displayName;
     }
     if (BastionPreferences.instance.readAloud && !message.isReaction) {
-      unawaited(_speaker.speak(
-          '${message.isBroadcast ? 'Channel message' : 'Message'} from $sender. ${message.text}'));
+      unawaited(
+        _speaker.speak(
+          '${message.isBroadcast ? 'Channel message' : 'Message'} from $sender. ${message.text}',
+        ),
+      );
     }
     if (_inForeground) return;
     unawaited(
@@ -1866,7 +2137,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         // A mention gets the same urgent alert as a direct message.
         isDirect: !message.isBroadcast || mentionsMe(message.text),
         channel: message.channel,
-        replyDestination: message.isBroadcast ? MeshtasticTextCodec.broadcastNode : message.from,
+        replyDestination: message.isBroadcast
+            ? MeshtasticTextCodec.broadcastNode
+            : message.from,
       ),
     );
   }
@@ -1935,7 +2208,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     final recovery = _reconnect.recover();
     notifyListeners();
     final recovered = await recovery;
-    if (!recovered && !_bluetoothOn && device.usesBluetooth && !_userDisconnected) {
+    if (!recovered &&
+        !_bluetoothOn &&
+        device.usesBluetooth &&
+        !_userDisconnected) {
       // Bluetooth went off mid-recovery; wait for it instead of giving up.
       await _recoverLink(device);
       return;
@@ -1961,6 +2237,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   Future<void> disconnect() async {
     _userDisconnected = true;
+    unawaited(_lastLink.clear());
     _waitingForBluetooth = false;
     _reconnect.cancel();
     unawaited(_background.release());
@@ -2040,7 +2317,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   void _relayConnectionChange() => notifyListeners();
 
   @override
-  void notifyListeners() { if (!_disposed) super.notifyListeners(); }
+  void notifyListeners() {
+    if (!_disposed) super.notifyListeners();
+  }
 
   @override
   void dispose() {
@@ -2076,7 +2355,11 @@ class _CoordinatorTripRadio implements TripRadio {
   @override
   ({double? latitude, double? longitude, int? battery}) get localStatus {
     final node = _radio.localNode;
-    return (latitude: node?.latitude, longitude: node?.longitude, battery: node?.batteryLevel);
+    return (
+      latitude: node?.latitude,
+      longitude: node?.longitude,
+      battery: node?.batteryLevel,
+    );
   }
 
   @override
@@ -2084,7 +2367,8 @@ class _CoordinatorTripRadio implements TripRadio {
   List<BastionChatMessage> get messages => _radio.allMessages;
 
   @override
-  double? get channelUtilization => _radio.deviceTelemetry[_radio.localNodeNum]?.channelUtilization;
+  double? get channelUtilization =>
+      _radio.deviceTelemetry[_radio.localNodeNum]?.channelUtilization;
 
   @override
   DateTime? lastHeard(int node) {
@@ -2098,12 +2382,16 @@ class _CoordinatorTripRadio implements TripRadio {
   String nodeName(int node) => _radio.nodeName(node);
 
   @override
-  Future<int> sendText({required String text, required int destination, required int channel}) =>
-      _radio.sendText(text: text, destination: destination, channel: channel);
+  Future<int> sendText({
+    required String text,
+    required int destination,
+    required int channel,
+  }) => _radio.sendText(text: text, destination: destination, channel: channel);
 
   @override
   void alert(BastionFieldAlert alert) => _radio._raise(alert);
 }
 
 /// The trip's view of [radio], for a coordinator that keeps its own trip.
-TripRadio tripRadioFor(MeshtasticRadioCoordinator radio) => _CoordinatorTripRadio(radio);
+TripRadio tripRadioFor(MeshtasticRadioCoordinator radio) =>
+    _CoordinatorTripRadio(radio);
