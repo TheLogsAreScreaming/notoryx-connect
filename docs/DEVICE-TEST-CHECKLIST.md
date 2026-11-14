@@ -66,6 +66,24 @@ Tick each box when it behaves as described. If something doesn't, note what happ
 - [ ] Android font size at maximum: every tab is readable with nothing cut off.
 - [ ] Light and dark theme, and both gesture and 3-button navigation: nothing hidden behind the system bars.
 
+## 11. Beta 14 and later
+Needs **two radio families** (for example an nRF52 board and an ESP32 board) and, where marked, a second phone.
+- [ ] **Held messages:** queue a message, wait over 24 hours (or set the phone clock forward), reconnect: it shows ⏸ *Held* and does not send. Tap it → **Send now** sends it once; **Delete without sending** removes it.
+- [ ] **Interrupted send:** queue a message, reconnect and pull the radio's power at once: after reconnecting it is *Held*, not sent twice.
+- [ ] **Receipt proof (firmware 2.8+):** DM a node on 2.8 firmware: *Delivered • receipt proven*. To a node on older firmware: *Delivered • receipt not proven*.
+- [ ] **Signed / encrypted DM:** open the menu on a received DM: it says *Encrypted to you only* (and *signature checked* if the sender signs).
+- [ ] **Store-and-forward replay** (if a router is near): messages it replays show *from history* and make no notification or sound.
+- [ ] **Settings sections:** on a radio without Wi-Fi, *Network* settings say the radio lacks the hardware and won't open.
+- [ ] **Identity key:** back it up (asks for the screen lock), restore it to a spare radio with the original **switched off**, and a contact can still DM it. Never leave both on.
+- [ ] **Offline map file:** import an MBTiles file, airplane mode, restart: the area draws and a dashed outline shows where it ends.
+- [ ] **Map as a list** with TalkBack on: each row reads name, distance, direction and age.
+- [ ] **DM on a non-primary channel** arrives and replies go back on the same channel.
+- [ ] **Failed restore:** start a radio backup restore and turn the radio off midway: the app says it failed, and the radio still works afterwards.
+- [ ] **USB:** connect by USB, unplug the cable mid-use: the app says so and reconnects when plugged back in.
+- [ ] **GPS precision:** set a channel's position precision lower; another node sees the rounded position.
+- [ ] **Notification reply:** reply from the notification without opening the app; the reply arrives.
+- [ ] **App lock:** turn it on, leave the app for over a minute, come back: it asks to unlock; alerts still arrived meanwhile.
+
 ## Results
 | Section | Pass / fail | Notes |
 |---|---|---|
@@ -79,6 +97,7 @@ Tick each box when it behaves as described. If something doesn't, note what happ
 | 8 Backups | | |
 | 9 Privacy | | |
 | 10 Layout | | |
+| 11 Beta 14+ | | |
 
 Tester: `________`  Date: `________`
 
