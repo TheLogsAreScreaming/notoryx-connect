@@ -1276,5 +1276,7 @@
   "clExport": "Protokoll exportieren",
   "clExportCsv": "Tabelle (CSV)",
   "clExportJson": "Datendatei (JSON)",
-  "clExportFailed": "Teilen konnte nicht geöffnet werden."
+  "clExportFailed": "Teilen konnte nicht geöffnet werden.",
+  "nodesLookalike": "Name ähnelt {name}",
+  "chatsLookalikeBody": "{name} ist ein anderes Funkgerät als {trusted}, aber der Name sieht fast gleich aus. Jeder kann jeden Namen wählen, also frag beim Besitzer von {trusted} nach, bevor du ihm vertraust."
 }

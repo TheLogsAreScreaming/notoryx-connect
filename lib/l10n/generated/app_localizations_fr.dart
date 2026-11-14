@@ -4725,4 +4725,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get clExportFailed => 'Impossible d\'ouvrir le partage.';
+
+  @override
+  String nodesLookalike(String name) {
+    return 'Nom proche de $name';
+  }
+
+  @override
+  String chatsLookalikeBody(String name, String trusted) {
+    return '$name est une autre radio que $trusted, mais son nom est presque identique. N\'importe qui peut choisir n\'importe quel nom : vérifiez auprès du propriétaire de $trusted avant de lui faire confiance.';
+  }
 }
