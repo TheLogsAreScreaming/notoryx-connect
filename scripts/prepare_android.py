@@ -64,6 +64,20 @@ if 'StatusWidgetProvider' not in s:
         </receiver>
     </application>'''
     s=s.replace('    </application>', receiver, 1)
+# Quick Settings tile showing the radio link.
+if 'RadioTileService' not in s:
+    tile = '''        <service
+            android:name="com.bastionmesh.bastion.RadioTileService"
+            android:label="@string/radio_tile_label"
+            android:icon="@drawable/ic_radio_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+    </application>'''
+    s=s.replace('    </application>', tile, 1)
 p.write_text(s)
 
 # Native files the generated project doesn't have (the widget).
