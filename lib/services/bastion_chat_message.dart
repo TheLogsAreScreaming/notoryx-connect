@@ -25,6 +25,8 @@ class BastionChatMessage {
     this.ackProof,
     this.pkiEncrypted = false,
     this.signed = false,
+    this.replayed = false,
+    this.receivedAt,
   });
 
   final int packetId;
@@ -64,6 +66,12 @@ class BastionChatMessage {
 
   /// Incoming: the firmware verified the sender's signature.
   final bool signed;
+  /// Came from a store-and-forward router's history, not live.
+  final bool replayed;
+
+  /// When this phone got it, when that differs from [timestamp] (the time
+  /// the packet says it was first heard). Set for replays.
+  final DateTime? receivedAt;
 
   bool get isBroadcast => to == MeshtasticTextCodec.broadcastNode;
 
@@ -90,6 +98,8 @@ class BastionChatMessage {
         ackProof: ackProof ?? this.ackProof,
         pkiEncrypted: pkiEncrypted,
         signed: signed,
+        replayed: replayed,
+        receivedAt: receivedAt,
       );
 
   Map<String, Object?> toJson() => {
@@ -111,6 +121,8 @@ class BastionChatMessage {
     if (ackProof != null) 'ackProof': ackProof!.name,
     if (pkiEncrypted) 'pki': true,
     if (signed) 'signed': true,
+    if (replayed) 'replayed': true,
+    if (receivedAt != null) 'receivedAt': receivedAt!.toUtc().toIso8601String(),
   };
 
   static BastionChatMessage fromJson(Map<String, Object?> json) {
@@ -141,6 +153,10 @@ class BastionChatMessage {
           : null,
       pkiEncrypted: json['pki'] as bool? ?? false,
       signed: json['signed'] as bool? ?? false,
+      replayed: json['replayed'] as bool? ?? false,
+      receivedAt: json['receivedAt'] is String
+          ? DateTime.tryParse(json['receivedAt']! as String)?.toLocal()
+          : null,
     );
   }
 }

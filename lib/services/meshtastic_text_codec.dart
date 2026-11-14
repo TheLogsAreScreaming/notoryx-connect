@@ -356,6 +356,7 @@ class MeshtasticTextMessage {
     this.relayNode,
     this.pkiEncrypted = false,
     this.signed = false,
+    this.replayed = false,
   });
 
   final int packetId;
@@ -392,6 +393,8 @@ class MeshtasticTextMessage {
   /// The firmware checked the sender's signature and it was valid. False
   /// also when the sender didn't sign or the firmware doesn't report it.
   final bool signed;
+  /// Replayed from a store-and-forward router's history: old, not new.
+  final bool replayed;
 
   bool get isBroadcast => to == MeshtasticTextCodec.broadcastNode;
 }

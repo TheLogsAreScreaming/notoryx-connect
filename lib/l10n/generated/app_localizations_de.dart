@@ -5796,6 +5796,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get chatsDeleteQueued => 'Löschen, ohne zu senden';
 
   @override
+  String get chatsReplayed => 'aus dem Verlauf';
+
+  @override
+  String get chatsReplayedFull =>
+      'Aus dem Verlauf eines Store-and-Forward-Routers erneut gesendet: früher geschickt, nicht gerade eben.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Empfangen um $time.';
+  }
+
+  @override
   String get deliveryProven => 'Zugestellt • Empfang bestätigt';
 
   @override

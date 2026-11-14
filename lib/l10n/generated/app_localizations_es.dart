@@ -5774,6 +5774,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chatsDeleteQueued => 'Eliminar sin enviar';
 
   @override
+  String get chatsReplayed => 'del historial';
+
+  @override
+  String get chatsReplayedFull =>
+      'Reenviado desde el historial de un router de almacenamiento y reenvío: se envió antes, no ahora.';
+
+  @override
+  String chatsReplayedAt(String time) {
+    return 'Recibido a las $time.';
+  }
+
+  @override
   String get deliveryProven => 'Entregado • recibo verificado';
 
   @override

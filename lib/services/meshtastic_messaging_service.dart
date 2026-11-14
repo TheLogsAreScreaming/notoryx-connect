@@ -343,6 +343,7 @@ class MeshtasticMessagingService {
         text: utf8.decode(sf.text, allowMalformed: true),
         rxTime: packet.rxTime == 0 ? null : packet.rxTime,
         rxSnr: packet.rxSnr == 0 ? null : packet.rxSnr,
+        replayed: true,
       );
     } on InvalidProtocolBufferException {
       return null;
@@ -381,6 +382,14 @@ class MeshtasticMessagingService {
       if (message == null) return;
       final key = '${message.from}:${message.packetId}';
       if (!_seen.add(key)) return;
+      // Also check saved history: after a restart the seen list is empty,
+      // and a router may replay a message already in the chat.
+      if (_messages.any((m) =>
+          m.from == message.from &&
+          m.packetId == message.packetId &&
+          m.direction == BastionMessageDirection.incoming)) {
+        return;
+      }
       _seenOrder.add(key);
       if (_seenOrder.length > 2048) {
         _seen.remove(_seenOrder.removeAt(0));
@@ -408,6 +417,8 @@ class MeshtasticMessagingService {
         relayNode: message.relayNode,
         pkiEncrypted: message.pkiEncrypted,
         signed: message.signed,
+        replayed: message.replayed,
+        receivedAt: message.replayed ? _clock() : null,
       ));
       _trimHistory();
       _incoming.add(message);

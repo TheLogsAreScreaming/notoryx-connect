@@ -85,6 +85,19 @@ void main() {
     ]);
   });
 
+  test('a store-and-forward replay never alerts, even an old SOS', () {
+    radio.inForeground = false;
+    radio.alertIncomingForTest(const MeshtasticTextMessage(
+      packetId: 6,
+      from: 0xabcdef01,
+      to: 0x1234,
+      channel: 0,
+      text: 'SOS need help at the ridge',
+      replayed: true,
+    ));
+    expect(alerts.shown, isEmpty);
+  });
+
   test('local alerts are a no-op off Android', () async {
     await BastionLocalMessageAlerts().show(
       packetId: 1, sender: 'A', text: 'b', isDirect: true, channel: 0);
