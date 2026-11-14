@@ -1369,6 +1369,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapZones => 'Zones';
 
   @override
+  String get mapLayers => 'Map layers';
+
+  @override
+  String get mapLayersHelp =>
+      'Routes, tracks and places from GPX, KML or GeoJSON files. They stay on this phone and are never sent over the mesh.';
+
+  @override
+  String get mapLayersEmpty => 'No map files imported yet.';
+
+  @override
+  String get mapLayerImport => 'Import GPX, KML or GeoJSON';
+
+  @override
+  String get mapLayerUnreadable =>
+      'That file has no points or lines the app can read.';
+
+  @override
+  String mapLayerCounts(int points, int lines) {
+    return '$points places, $lines lines';
+  }
+
+  @override
+  String mapLayerRemove(String name) {
+    return 'Remove $name';
+  }
+
+  @override
+  String mapLayerAdded(String name, int points, int lines) {
+    return 'Added $name: $points places, $lines lines';
+  }
+
+  @override
+  String mapLayerTooMany(int max) {
+    return 'You can keep up to $max map layers. Remove one first.';
+  }
+
+  @override
+  String mapLayerFrom(String name) {
+    return 'From $name';
+  }
+
+  @override
   String get mapExportGpx => 'Export GPX';
 
   @override
