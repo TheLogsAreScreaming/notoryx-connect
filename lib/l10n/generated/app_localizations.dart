@@ -7789,6 +7789,552 @@ abstract class AppLocalizations {
   /// **'Reusable checklists that work offline, with saved records'**
   String get clToolSub;
 
+  /// No description provided for @auTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Automations'**
+  String get auTitle;
+
+  /// No description provided for @auToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Rules that send, alert or change channel when something happens'**
+  String get auToolSub;
+
+  /// No description provided for @auSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rules run on this phone while a radio is connected. Messages they send start with [auto] so other automations ignore them. Each rule waits its cooldown, and all rules together run at most 30 times an hour.'**
+  String get auSubtitle;
+
+  /// No description provided for @auNotReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Rules run only while a radio is connected and ready.'**
+  String get auNotReady;
+
+  /// No description provided for @auStorageProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved automations couldn\'t be read or saved.'**
+  String get auStorageProblem;
+
+  /// No description provided for @auWebhooks.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow web requests'**
+  String get auWebhooks;
+
+  /// No description provided for @auWebhooksSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs internet. Webhook actions send what happened to the address you give. Off until you turn it on.'**
+  String get auWebhooksSub;
+
+  /// No description provided for @auRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Rules'**
+  String get auRules;
+
+  /// No description provided for @auEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No automations yet.'**
+  String get auEmpty;
+
+  /// No description provided for @auNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New automation'**
+  String get auNew;
+
+  /// No description provided for @auEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit automation'**
+  String get auEdit;
+
+  /// No description provided for @auToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} on'**
+  String auToggle(String name);
+
+  /// No description provided for @auWhenAny.
+  ///
+  /// In en, this message translates to:
+  /// **'When any: {list}'**
+  String auWhenAny(String list);
+
+  /// No description provided for @auWhenAll.
+  ///
+  /// In en, this message translates to:
+  /// **'When all: {list}'**
+  String auWhenAll(String list);
+
+  /// No description provided for @auThen.
+  ///
+  /// In en, this message translates to:
+  /// **'Then: {list}'**
+  String auThen(String list);
+
+  /// No description provided for @auNeedsInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs internet'**
+  String get auNeedsInternet;
+
+  /// No description provided for @auWebOffNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs internet. Web requests are off, so this won\'t run until you allow them.'**
+  String get auWebOffNote;
+
+  /// No description provided for @auActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent activity'**
+  String get auActivity;
+
+  /// No description provided for @auNoActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing has run yet.'**
+  String get auNoActivity;
+
+  /// No description provided for @auRunOk.
+  ///
+  /// In en, this message translates to:
+  /// **'{rule}: {action}'**
+  String auRunOk(String rule, String action);
+
+  /// No description provided for @auRunFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'{rule}: {action} (didn\'t run: {problem})'**
+  String auRunFailed(String rule, String action, String problem);
+
+  /// No description provided for @auProblemNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'radio not connected'**
+  String get auProblemNotConnected;
+
+  /// No description provided for @auProblemWebOff.
+  ///
+  /// In en, this message translates to:
+  /// **'web requests are off'**
+  String get auProblemWebOff;
+
+  /// No description provided for @auProblemHttp.
+  ///
+  /// In en, this message translates to:
+  /// **'server answered {status}'**
+  String auProblemHttp(int status);
+
+  /// No description provided for @auProblemFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'failed'**
+  String get auProblemFailed;
+
+  /// No description provided for @auName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get auName;
+
+  /// No description provided for @auNeedAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Give it a name, at least one trigger and at least one action.'**
+  String get auNeedAll;
+
+  /// No description provided for @auMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Run when'**
+  String get auMatch;
+
+  /// No description provided for @auMatchAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Any trigger (OR)'**
+  String get auMatchAny;
+
+  /// No description provided for @auMatchAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All triggers (AND)'**
+  String get auMatchAll;
+
+  /// No description provided for @auTriggers.
+  ///
+  /// In en, this message translates to:
+  /// **'Triggers'**
+  String get auTriggers;
+
+  /// No description provided for @auActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get auActions;
+
+  /// No description provided for @auAddTrigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Add trigger'**
+  String get auAddTrigger;
+
+  /// No description provided for @auAddAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Add action'**
+  String get auAddAction;
+
+  /// No description provided for @auRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get auRemove;
+
+  /// No description provided for @auCooldown.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait at least this long between runs'**
+  String get auCooldown;
+
+  /// No description provided for @auMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} minute} other{{count} minutes}}'**
+  String auMinutes(int count);
+
+  /// No description provided for @auSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get auSave;
+
+  /// No description provided for @auDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete automation'**
+  String get auDelete;
+
+  /// No description provided for @auCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get auCancel;
+
+  /// No description provided for @auAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get auAdd;
+
+  /// No description provided for @auKindBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery low'**
+  String get auKindBattery;
+
+  /// No description provided for @auKindTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time of day'**
+  String get auKindTime;
+
+  /// No description provided for @auKindZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Geofence zone'**
+  String get auKindZone;
+
+  /// No description provided for @auKindMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message received'**
+  String get auKindMessage;
+
+  /// No description provided for @auKindPresence.
+  ///
+  /// In en, this message translates to:
+  /// **'Node online or offline'**
+  String get auKindPresence;
+
+  /// No description provided for @auKindSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send message'**
+  String get auKindSend;
+
+  /// No description provided for @auKindAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Show alert'**
+  String get auKindAlert;
+
+  /// No description provided for @auKindChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Change channel (add from link)'**
+  String get auKindChannel;
+
+  /// No description provided for @auKindSound.
+  ///
+  /// In en, this message translates to:
+  /// **'Play alert sound'**
+  String get auKindSound;
+
+  /// No description provided for @auKindWebhook.
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook (needs internet)'**
+  String get auKindWebhook;
+
+  /// No description provided for @auTrigBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'{node} battery below {percent}%'**
+  String auTrigBattery(String node, int percent);
+
+  /// No description provided for @auTrigTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day at {time}'**
+  String auTrigTime(String time);
+
+  /// No description provided for @auTrigTimeDays.
+  ///
+  /// In en, this message translates to:
+  /// **'At {time} on {days}'**
+  String auTrigTimeDays(String time, String days);
+
+  /// No description provided for @auTrigZoneEnter.
+  ///
+  /// In en, this message translates to:
+  /// **'{who} enters {zone}'**
+  String auTrigZoneEnter(String who, String zone);
+
+  /// No description provided for @auTrigZoneLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'{who} leaves {zone}'**
+  String auTrigZoneLeave(String who, String zone);
+
+  /// No description provided for @auZoneMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'a deleted zone'**
+  String get auZoneMissing;
+
+  /// No description provided for @auAnyNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Any node'**
+  String get auAnyNode;
+
+  /// No description provided for @auTrigMessageAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Any message received'**
+  String get auTrigMessageAny;
+
+  /// No description provided for @auTrigMessageHas.
+  ///
+  /// In en, this message translates to:
+  /// **'Message containing “{text}”'**
+  String auTrigMessageHas(String text);
+
+  /// No description provided for @auTrigOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'{node} back after {minutes} min quiet'**
+  String auTrigOnline(String node, int minutes);
+
+  /// No description provided for @auTrigOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'{node} quiet for {minutes} min'**
+  String auTrigOffline(String node, int minutes);
+
+  /// No description provided for @auActSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to {target}: {text}'**
+  String auActSend(String target, String text);
+
+  /// No description provided for @auActAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert: {text}'**
+  String auActAlert(String text);
+
+  /// No description provided for @auActWebhook.
+  ///
+  /// In en, this message translates to:
+  /// **'Web request to {host}'**
+  String auActWebhook(String host);
+
+  /// No description provided for @auNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Node'**
+  String get auNode;
+
+  /// No description provided for @auBelow.
+  ///
+  /// In en, this message translates to:
+  /// **'Below'**
+  String get auBelow;
+
+  /// No description provided for @auTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get auTime;
+
+  /// No description provided for @auDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Days (none picked means every day)'**
+  String get auDays;
+
+  /// No description provided for @auZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Zone'**
+  String get auZone;
+
+  /// No description provided for @auNoZones.
+  ///
+  /// In en, this message translates to:
+  /// **'No zones yet. Add a geofence zone on the map first.'**
+  String get auNoZones;
+
+  /// No description provided for @auEnters.
+  ///
+  /// In en, this message translates to:
+  /// **'Enters'**
+  String get auEnters;
+
+  /// No description provided for @auLeaves.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaves'**
+  String get auLeaves;
+
+  /// No description provided for @auContains.
+  ///
+  /// In en, this message translates to:
+  /// **'Containing (optional)'**
+  String get auContains;
+
+  /// No description provided for @auDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct messages only'**
+  String get auDirect;
+
+  /// No description provided for @auChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get auChannel;
+
+  /// No description provided for @auChannelN.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}'**
+  String auChannelN(int index);
+
+  /// No description provided for @auAnywhere.
+  ///
+  /// In en, this message translates to:
+  /// **'Any channel'**
+  String get auAnywhere;
+
+  /// No description provided for @auGoesQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Goes quiet'**
+  String get auGoesQuiet;
+
+  /// No description provided for @auComesBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Comes back'**
+  String get auComesBack;
+
+  /// No description provided for @auAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'After'**
+  String get auAfter;
+
+  /// No description provided for @auEveryone.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone on a channel'**
+  String get auEveryone;
+
+  /// No description provided for @auOneNode.
+  ///
+  /// In en, this message translates to:
+  /// **'One node'**
+  String get auOneNode;
+
+  /// No description provided for @auMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get auMessage;
+
+  /// No description provided for @auAlertText.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert text'**
+  String get auAlertText;
+
+  /// No description provided for @auPlaceholders.
+  ///
+  /// In en, this message translates to:
+  /// **'You can use {list}.'**
+  String auPlaceholders(String list);
+
+  /// No description provided for @auLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel share link'**
+  String get auLink;
+
+  /// No description provided for @auLinkHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Adds the link\'s channels to the radio and keeps the ones already there.'**
+  String get auLinkHint;
+
+  /// No description provided for @auBadLink.
+  ///
+  /// In en, this message translates to:
+  /// **'That isn\'t a channel share link.'**
+  String get auBadLink;
+
+  /// No description provided for @auUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Web address (https://…)'**
+  String get auUrl;
+
+  /// No description provided for @auBadUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a full http or https address.'**
+  String get auBadUrl;
+
   /// No description provided for @clSubtitle.
   ///
   /// In en, this message translates to:
