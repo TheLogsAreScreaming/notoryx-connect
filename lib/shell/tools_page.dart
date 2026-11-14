@@ -47,6 +47,14 @@ class _ToolsPageState extends State<_ToolsPage> {
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(ConnectionDoctorPage(radio: radio, discovery: widget.discovery)),
       )),
+      Card(child: ListTile(
+        key: const ValueKey('tools-timeline'),
+        leading: const Icon(Icons.timeline),
+        title: Text(l.tlTitle),
+        subtitle: Text(l.tlToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(TimelinePage(radio: radio, timeline: BastionTimeline.instance)),
+      )),
       NxSectionLabel(l.toolsBeforeYouGo),
       Card(child: ListTile(
         key: const ValueKey('tools-checklists'),

@@ -72,6 +72,81 @@ class AppLocalizationsDe extends AppLocalizations {
       'Herausfinden, warum ein Funkgerät keine Verbindung herstellt oder sie verliert';
 
   @override
+  String get tlTitle => 'Zeitleiste';
+
+  @override
+  String get tlToolSub =>
+      'Nachrichten, neue Knoten, Signaländerungen und Wegpunkte in einem Verlauf';
+
+  @override
+  String get tlSubtitle =>
+      'Wird auf diesem Telefon für jedes Funkgerät gespeichert. Eine Signaländerung ist eine direkte Verbindung, die sich um 6 dB oder mehr ändert.';
+
+  @override
+  String get tlSearch => 'Zeitleiste durchsuchen';
+
+  @override
+  String get tlClearSearch => 'Suche löschen';
+
+  @override
+  String get tlKindMessages => 'Nachrichten';
+
+  @override
+  String get tlKindNodes => 'Neue Knoten';
+
+  @override
+  String get tlKindSignal => 'Signaländerungen';
+
+  @override
+  String get tlKindWaypoints => 'Wegpunkte';
+
+  @override
+  String tlShowing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Einträge',
+      one: '$count Eintrag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tlEmpty =>
+      'Noch nichts. Verbinden Sie ein Funkgerät, dann füllt sich die Zeitleiste mit allem, was im Mesh zu hören ist.';
+
+  @override
+  String get tlNoMatch => 'Nichts passt zu diesen Filtern.';
+
+  @override
+  String get tlYouSent => 'Sie haben eine Nachricht gesendet';
+
+  @override
+  String tlMessageFrom(String name) {
+    return 'Nachricht von $name';
+  }
+
+  @override
+  String tlNodeJoined(String name) {
+    return 'Neuer Knoten: $name';
+  }
+
+  @override
+  String tlSignalUp(String name, String from, String to) {
+    return 'Signal besser: $name, $from → $to dB';
+  }
+
+  @override
+  String tlSignalDown(String name, String from, String to) {
+    return 'Signal schwächer: $name, $from → $to dB';
+  }
+
+  @override
+  String tlWaypoint(String name) {
+    return 'Wegpunkt: $name';
+  }
+
+  @override
   String get toolsBeforeYouGo => 'Vor dem Aufbruch';
 
   @override
