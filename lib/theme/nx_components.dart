@@ -49,8 +49,13 @@ class NxSectionLabel extends StatelessWidget {
 
 /// One number or word with a caption, for a row of at-a-glance stats.
 class NxStatTile extends StatelessWidget {
-  const NxStatTile({super.key, required this.label, required this.value, this.tone = NxTone.neutral, this.icon});
+  const NxStatTile({super.key, required this.label, required this.value, this.tone = NxTone.neutral, this.icon, this.flex = 1});
   final String label;
+
+  /// Share of the [NxStatRow]'s width. Give a tile whose value is a word
+  /// ("Connected") more room than the number tiles, so the word isn't
+  /// broken across lines on a phone.
+  final int flex;
   final String value;
   final NxTone tone;
   final IconData? icon;
@@ -94,7 +99,7 @@ class NxStatRow extends StatelessWidget {
         child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           for (final (i, child) in children.indexed) ...[
             if (i > 0) const SizedBox(width: NxSpace.xs),
-            Expanded(child: child),
+            Expanded(flex: child is NxStatTile ? child.flex : 1, child: child),
           ],
         ]),
       );
