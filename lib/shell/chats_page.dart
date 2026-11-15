@@ -725,6 +725,9 @@ class _ChatsPageState extends State<BastionChatsPage> {
                     _airtimeCounter(context, currentLength, maxLength ?? 228),
                 minLines: 1,
                 maxLines: 4,
+                // The keyboard's own Send key sends, since the Send button
+                // below sits under the keyboard on most phones.
+                textInputAction: TextInputAction.send,
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   labelText: destination == 0xffffffff

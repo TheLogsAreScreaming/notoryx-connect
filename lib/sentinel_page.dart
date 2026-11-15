@@ -128,9 +128,13 @@ class _ReportSheetState extends State<_ReportSheet> {
     final excerpt = widget.messageExcerpt?.trim();
     final hasExcerpt = excerpt != null && excerpt.isNotEmpty;
     final type = Theme.of(context).textTheme;
+    // The send button sits below the scrolling part so it stays above
+    // the keyboard while a note is typed.
     return SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 16, bottom: 12),
+      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Flexible(
+          child: SingleChildScrollView(
+        padding: const EdgeInsets.only(top: 16),
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -182,8 +186,11 @@ class _ReportSheetState extends State<_ReportSheet> {
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
             child: Text(l.sntSends, style: type.bodySmall),
           ),
+        ]),
+          ),
+        ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
             child: FilledButton.icon(
               key: const ValueKey('sentinel-send-report'),
               onPressed: _sending ? null : () => unawaited(_send()),
@@ -194,7 +201,6 @@ class _ReportSheetState extends State<_ReportSheet> {
             ),
           ),
         ]),
-      ),
     );
   }
 }
