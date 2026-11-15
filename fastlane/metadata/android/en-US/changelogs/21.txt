@@ -1,0 +1,1 @@
+Fixed: the report Send button stays above the keyboard while you type a note, and the chat keyboard has a Send key.
