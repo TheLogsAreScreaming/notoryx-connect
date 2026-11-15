@@ -259,7 +259,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(const BastionApp());
     await tester.pumpAndSettle();
-    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Herramientas')));
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Útiles')));
     await tester.pumpAndSettle();
     expect(find.text('Doctor de conexión'), findsOneWidget);
     // More tools sit above the checklist than fit on a small phone.

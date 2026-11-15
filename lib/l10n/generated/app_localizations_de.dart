@@ -21,10 +21,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tabMap => 'Karte';
 
   @override
-  String get tabTools => 'Werkzeuge';
+  String get tabTools => 'Tools';
 
   @override
-  String get tabSettings => 'Einstellungen';
+  String get tabSettings => 'Optionen';
 
   @override
   String get connOffline => 'Offline';

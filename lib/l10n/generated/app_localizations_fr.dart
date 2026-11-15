@@ -15,7 +15,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tabNodes => 'Nœuds';
 
   @override
-  String get tabChats => 'Discussions';
+  String get tabChats => 'Messages';
 
   @override
   String get tabMap => 'Carte';
