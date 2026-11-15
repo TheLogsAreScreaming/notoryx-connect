@@ -839,7 +839,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get nodesNoRadiosBody =>
-      'Schalten Sie Ihr Funkgerät ein, halten Sie es in der Nähe und tippen Sie dann auf Nach Funkgeräten suchen.';
+      'Schalten Sie Ihr Funkgerät ein, halten Sie es in der Nähe und tippen Sie dann auf „Nach Funkgeräten suchen“.';
 
   @override
   String get nodesTryDemo => 'Kein Funkgerät? Demo ausprobieren';
@@ -862,7 +862,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String nodesNoneHeard(String window) {
-    return 'Keine Knoten gehört in den letzten $window';
+    return 'Keine Knoten gehört (Zeitraum: $window)';
   }
 
   @override
@@ -947,7 +947,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get nodesHelpBanner =>
-      'Tippen Sie auf Nach Funkgeräten suchen und dann auf Verbinden. Die App prüft, ob es ein Meshtastic-Funkgerät ist, und lädt seine Knotenliste, bevor es bereit ist.';
+      'Tippen Sie auf „Nach Funkgeräten suchen“ und dann auf Verbinden. Die App prüft, ob es ein Meshtastic-Funkgerät ist, und lädt seine Knotenliste, bevor es bereit ist.';
 
   @override
   String get nodesHeardWithin =>
@@ -1328,7 +1328,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setMqttNoConfig =>
-      'Ihr Funkgerät ist dafür nicht eingerichtet. Schalten Sie in seinen Einstellungen MQTT und „Proxy to client\" ein.';
+      'Ihr Funkgerät ist dafür nicht eingerichtet. Schalten Sie in seinen Einstellungen MQTT und „Proxy to client“ ein.';
 
   @override
   String setMqttConnected(String host, int up, int down, String kb) {
@@ -1632,7 +1632,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mapRallyIntro =>
-      'Sammelpunkte sind die Orte, an denen sich alle treffen sollen. Setzen Sie einen mit langem Drücken und wählen Sie „Sammelpunkt\". Routen werden als nummerierte Wegpunkte geteilt, sodass auch andere Meshtastic-Apps die Stopps sehen.';
+      'Sammelpunkte sind die Orte, an denen sich alle treffen sollen. Setzen Sie einen mit langem Drücken und wählen Sie „Sammelpunkt“. Routen werden als nummerierte Wegpunkte geteilt, sodass auch andere Meshtastic-Apps die Stopps sehen.';
 
   @override
   String get mapRallyPoints => 'Sammelpunkte';
@@ -1763,7 +1763,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String mapWaypointShared(String name) {
-    return 'Wegpunkt „$name\" auf Kanal 0 geteilt.';
+    return 'Wegpunkt „$name“ auf Kanal 0 geteilt.';
   }
 
   @override
@@ -1792,7 +1792,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String mapDeleted(String name) {
-    return '„$name\" gelöscht.';
+    return '„$name“ gelöscht.';
   }
 
   @override
@@ -1916,7 +1916,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mapHeatmapEmpty =>
-      'Noch keine Abdeckungsmessungen. Schalten Sie in den Feldaufzeichnungen „Abdeckung aufzeichnen\" ein.';
+      'Noch keine Abdeckungsmessungen. Schalten Sie in den Feldaufzeichnungen „Abdeckung aufzeichnen“ ein.';
 
   @override
   String mapHeatmapSummary(int readings) {
@@ -2888,7 +2888,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String bcChannel(String name) {
-    return 'Kanal „$name\"';
+    return 'Kanal „$name“';
   }
 
   @override
@@ -3170,7 +3170,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get pvSent2 =>
-      'Ihr Telefonstandort, nur solange „Telefonstandort teilen\" an ist, in der gewählten Genauigkeit';
+      'Ihr Telefonstandort, nur solange „Telefonstandort teilen“ an ist, in der gewählten Genauigkeit';
 
   @override
   String get pvSent3 =>
@@ -3901,7 +3901,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get rdBackgroundRestricted =>
-      'Die Akkuoptimierung kann die Verbindung bei ausgeschaltetem Bildschirm trennen. Stellen Sie NOTORYX Connect auf „Uneingeschränkt\".';
+      'Die Akkuoptimierung kann die Verbindung bei ausgeschaltetem Bildschirm trennen. Stellen Sie NOTORYX Connect auf „Uneingeschränkt“.';
 
   @override
   String get rdBackgroundOk =>
@@ -3990,7 +3990,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get cdPermissionDetail =>
-      'Die App darf Bluetooth nicht verwenden. Erlauben Sie „Geräte in der Nähe\", wenn Sie gefragt werden, oder unter Android-Einstellungen → Apps → NOTORYX Connect → Berechtigungen.';
+      'Die App darf Bluetooth nicht verwenden. Erlauben Sie „Geräte in der Nähe“, wenn Sie gefragt werden, oder unter Android-Einstellungen → Apps → NOTORYX Connect → Berechtigungen.';
 
   @override
   String cdPairedDetail(String name) {
@@ -4069,7 +4069,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get cdBatteryOptimised =>
-      'Die Akkuoptimierung kann die Funkverbindung bei ausgeschaltetem Bildschirm trennen. Stellen Sie NOTORYX Connect auf „Uneingeschränkt\".';
+      'Die Akkuoptimierung kann die Funkverbindung bei ausgeschaltetem Bildschirm trennen. Stellen Sie NOTORYX Connect auf „Uneingeschränkt“.';
 
   @override
   String get cdBackgroundOk =>
@@ -4369,7 +4369,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get pvSent8 =>
-      'Was Sie in „Ort suchen\" eingeben, an den Nominatim-Dienst von OpenStreetMap, nur wenn Sie auf „Online suchen\" tippen; er sieht Ihre IP-Adresse';
+      'Was Sie in „Ort suchen“ eingeben, an den Nominatim-Dienst von OpenStreetMap, nur wenn Sie auf „Online suchen“ tippen; er sieht Ihre IP-Adresse';
 
   @override
   String get takReceiveTitle => 'Von ATAK';

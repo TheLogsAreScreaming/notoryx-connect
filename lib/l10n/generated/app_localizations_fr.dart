@@ -1563,7 +1563,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mapLayersHelp =>
-      'Itinéraires, traces et lieux issus de fichiers GPX, KML ou GeoJSON. Ils restent sur ce téléphone et ne sont jamais envoyés sur le mesh.';
+      'Itinéraires, traces et lieux issus de fichiers GPX, KML ou GeoJSON. Ils restent sur ce téléphone et ne sont jamais envoyés sur le maillage.';
 
   @override
   String get mapLayersEmpty => 'Aucun fichier carte importé.';
@@ -1873,7 +1873,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mapExpiresAfter => 'Expire après';
 
   @override
-  String get mapOnlyMe => 'Seul moi peux modifier ou supprimer';
+  String get mapOnlyMe => 'Moi seul peux modifier ou supprimer';
 
   @override
   String get mapSharedChannel0 => 'Partagé avec tout le monde sur le canal 0.';
@@ -5352,7 +5352,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get ldTitle => 'Découverte du mesh local';
+  String get ldTitle => 'Découverte du maillage local';
 
   @override
   String get ldPlanOnly =>
@@ -5408,7 +5408,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get lpNeedPositions =>
-      'Au moins deux nœuds doivent avoir une position connue. Les positions arrivent du mesh une fois une radio connectée.';
+      'Au moins deux nœuds doivent avoir une position connue. Les positions arrivent du maillage une fois une radio connectée.';
 
   @override
   String get lpLink => 'Liaison';
@@ -5504,14 +5504,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mhNotReported => 'Non indiqué';
 
   @override
-  String get mhTitle => 'Santé du mesh';
+  String get mhTitle => 'Santé du maillage';
 
   @override
   String get mhConnect =>
       'Connectez une radio pour voir les valeurs en direct. Les chiffres ci-dessous peuvent être anciens.';
 
   @override
-  String get mhNeedsRoom => 'Le mesh a besoin de place';
+  String get mhNeedsRoom => 'Le maillage a besoin de place';
 
   @override
   String get mhPlentyRoom =>
@@ -5591,10 +5591,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get mtTitle => 'Outils mesh';
+  String get mtTitle => 'Outils du maillage';
 
   @override
-  String get mtLocalDiscovery => 'Découverte du mesh local';
+  String get mtLocalDiscovery => 'Découverte du maillage local';
 
   @override
   String get mtRangeTest => 'Test de portée';
