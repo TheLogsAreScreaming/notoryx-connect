@@ -1,8 +1,8 @@
 name: NOTORYX iOS Build
 
-# Proves NOTORYX Connect compiles for iOS. The result is NOT signed and can't
-# be installed on a phone: that needs an Apple Developer account, a Team ID
-# and signing secrets.
+# Proves NOTORYX Connect compiles for iOS. The result is NOT signed. It is
+# saved as an unsigned .ipa that Sideloadly or AltStore can sign with a free
+# Apple ID for your own phone. App Store builds still need a developer account.
 on:
   workflow_dispatch:
   pull_request:
@@ -40,6 +40,18 @@ jobs:
           python3 scripts/prepare_ios.py
       - name: Build without signing
         run: flutter build ios --release --no-codesign
+      - name: Package unsigned .ipa for sideloading
+        # Unsigned: Sideloadly or AltStore signs it with your own Apple ID when installing.
+        run: |
+          rm -rf build/ipa && mkdir -p build/ipa/Payload
+          cp -R build/ios/iphoneos/Runner.app build/ipa/Payload/
+          cd build/ipa && zip -qry ../NOTORYX-Connect-unsigned.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NOTORYX-Connect-ios-unsigned-ipa
+          path: build/NOTORYX-Connect-unsigned.ipa
+          retention-days: 30
+          if-no-files-found: error
       - name: Check the app bundle
         run: |
           APP=build/ios/iphoneos/Runner.app
