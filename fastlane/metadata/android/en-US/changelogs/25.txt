@@ -1,0 +1,1 @@
+With a radio connected, the Nodes tab shows it under Your radio, without a Radios found count that read 0.
