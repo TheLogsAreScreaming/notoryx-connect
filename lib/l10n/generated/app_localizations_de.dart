@@ -6124,4 +6124,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get nodesFindAnother => 'Anderes Funkgerät suchen';
+
+  @override
+  String get nodesYourRadioHeading => 'Ihr Funkgerät';
 }
