@@ -1,0 +1,1 @@
+The radio scan lists only Meshtastic radios, with a switch to show every Bluetooth device if yours is missing. With a radio connected, the Scan button is replaced by a small Find another radio link.
