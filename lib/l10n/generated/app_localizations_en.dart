@@ -6031,4 +6031,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chAllUsed => 'All 8 channel slots are in use.';
+
+  @override
+  String get nodesShowAllBluetooth => 'Show all Bluetooth devices';
+
+  @override
+  String nodesHiddenDevices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count other devices nearby aren\'t Meshtastic radios, so they\'re hidden.',
+      one: '1 other device nearby isn\'t a Meshtastic radio, so it\'s hidden.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nodesShowAllOn =>
+      'Listing everything nearby. Only needed if your radio doesn\'t show up otherwise.';
+
+  @override
+  String get nodesFindAnother => 'Find another radio';
 }

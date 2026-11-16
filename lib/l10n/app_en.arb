@@ -4336,5 +4336,16 @@
       }
     }
   },
-  "chAllUsed": "All 8 channel slots are in use."
+  "chAllUsed": "All 8 channel slots are in use.",
+  "nodesShowAllBluetooth": "Show all Bluetooth devices",
+  "nodesHiddenDevices": "{count, plural, one{1 other device nearby isn't a Meshtastic radio, so it's hidden.} other{{count} other devices nearby aren't Meshtastic radios, so they're hidden.}}",
+  "@nodesHiddenDevices": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nodesShowAllOn": "Listing everything nearby. Only needed if your radio doesn't show up otherwise.",
+  "nodesFindAnother": "Find another radio"
 }

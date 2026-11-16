@@ -1634,5 +1634,9 @@
   "chJoin": "Per QR-Code oder Link beitreten",
   "chShare": "Meine Kanäle teilen",
   "chFreeSlots": "{count, plural, one{1 freier Platz} other{{count} freie Plätze}}",
-  "chAllUsed": "Alle 8 Kanalplätze sind belegt."
+  "chAllUsed": "Alle 8 Kanalplätze sind belegt.",
+  "nodesShowAllBluetooth": "Alle Bluetooth-Geräte anzeigen",
+  "nodesHiddenDevices": "{count, plural, one{1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.} other{{count} weitere Geräte in der Nähe sind keine Meshtastic-Funkgeräte und werden daher ausgeblendet.}}",
+  "nodesShowAllOn": "Alles in der Nähe wird angezeigt. Nur nötig, wenn Ihr Funkgerät sonst nicht erscheint.",
+  "nodesFindAnother": "Anderes Funkgerät suchen"
 }

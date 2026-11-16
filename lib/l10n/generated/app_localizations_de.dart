@@ -6101,4 +6101,27 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get chAllUsed => 'Alle 8 Kanalplätze sind belegt.';
+
+  @override
+  String get nodesShowAllBluetooth => 'Alle Bluetooth-Geräte anzeigen';
+
+  @override
+  String nodesHiddenDevices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count weitere Geräte in der Nähe sind keine Meshtastic-Funkgeräte und werden daher ausgeblendet.',
+      one:
+          '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nodesShowAllOn =>
+      'Alles in der Nähe wird angezeigt. Nur nötig, wenn Ihr Funkgerät sonst nicht erscheint.';
+
+  @override
+  String get nodesFindAnother => 'Anderes Funkgerät suchen';
 }
