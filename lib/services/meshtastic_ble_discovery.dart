@@ -48,6 +48,15 @@ class MeshtasticBleDevice {
   bool get advertisesMeshtastic => advertisedServices
       .map((value) => value.toLowerCase())
       .contains('6ba1b218-15a8-461f-9fa8-5dcae273eafd');
+
+  /// Meshtastic radios name themselves "<short name>_<last 4 hex of the node
+  /// ID>", for example "SQCH_49cb" or "Meshtastic_1a2b".
+  static final _radioName = RegExp(r'_[0-9a-fA-F]{4}$');
+
+  /// Whether this is probably a Meshtastic radio: it advertises the
+  /// Meshtastic service, or has a Meshtastic-style name (some radios only
+  /// put the service in a scan response the phone may not have read).
+  bool get looksLikeMeshtastic => advertisesMeshtastic || _radioName.hasMatch(name);
 }
 
 /// Discovers nearby BLE peripherals. Discovery alone never promotes a
@@ -60,11 +69,27 @@ class MeshtasticBleDiscovery extends ChangeNotifier {
 
   bool get scanning => _scanning;
   String? get error => _error;
+
+  /// Whether every Bluetooth device is listed, not only Meshtastic radios.
+  bool get showAll => _showAll;
+  bool _showAll = false;
+
+  set showAll(bool value) {
+    if (value == _showAll) return;
+    _showAll = value;
+    notifyListeners();
+  }
+
+  /// Bluetooth devices found that aren't listed because they don't look like
+  /// Meshtastic radios.
+  int get hiddenCount => _showAll ? 0 : _results.values.where((d) => !d.looksLikeMeshtastic).length;
+
+  /// Devices to offer: Meshtastic radios only, unless [showAll] is on.
   List<MeshtasticBleDevice> get results {
-    final values = _results.values.toList()
+    final values = _results.values.where((d) => _showAll || d.looksLikeMeshtastic).toList()
       ..sort((a, b) {
-        if (a.advertisesMeshtastic != b.advertisesMeshtastic) {
-          return a.advertisesMeshtastic ? -1 : 1;
+        if (a.looksLikeMeshtastic != b.looksLikeMeshtastic) {
+          return a.looksLikeMeshtastic ? -1 : 1;
         }
         return b.rssi.compareTo(a.rssi);
       });
