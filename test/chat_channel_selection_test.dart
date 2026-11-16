@@ -6,42 +6,90 @@ import 'package:flutter_test/flutter_test.dart';
 
 class ChannelRadio extends MeshtasticRadioCoordinator {
   int? sentChannel;
-  bool disconnected = false;
-  @override List<({int index, int role, String name})> get channelMetadata => disconnected ? [] : [
-    (index: 0, role: 1, name: 'Main'), (index: 2, role: 2, name: 'Field'),
-    (index: 3, role: 0, name: 'Disabled')];
-  @override Future<int> sendText({required String text, int destination = 0xffffffff, int channel = 0}) async {
+  int? sentTo;
+  @override
+  List<({int index, int role, String name})> get channelMetadata => [
+    (index: 0, role: 1, name: 'Main'),
+    (index: 2, role: 2, name: 'Field'),
+    (index: 3, role: 0, name: 'Disabled'),
+  ];
+  @override
+  Future<int> sendText({required String text, int destination = 0xffffffff, int channel = 0}) async {
     sentChannel = channel;
+    sentTo = destination;
     return 7;
   }
 }
+
 void main() {
-  testWidgets('selected secondary channel is used for a broadcast', (tester) async {
+  testWidgets('each active channel has its own row and sends on its own slot', (tester) async {
     final radio = ChannelRadio();
     addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: Scaffold(body: BastionChatsPage(
-      radio: radio, botMode: false, awayReply: '', onBotModeChanged: (_) {}, onAwayReplyChanged: (_) {}))));
-    await tester.tap(find.text('Channel 0 • Main'));
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: BastionChatsPage(
+            radio: radio,
+            botMode: false,
+            awayReply: '',
+            onBotModeChanged: (_) {},
+            onAwayReplyChanged: (_) {},
+          ),
+        ),
+      ),
+    );
+    expect(find.text('Main'), findsOneWidget);
+    expect(find.text('Field'), findsOneWidget);
+    expect(find.text('Disabled'), findsNothing, reason: 'unused slots are not chats');
+    await tester.tap(find.byKey(const ValueKey('conversation-ch2')));
     await tester.pumpAndSettle();
-    expect(find.text('Channel 3 • Disabled'), findsNothing);
-    await tester.tap(find.text('Channel 2 • Field').last);
+    await tester.enterText(find.byKey(const ValueKey('chat-composer')), 'secondary test');
+    await tester.tap(find.byKey(const ValueKey('chat-send')));
     await tester.pumpAndSettle();
-    await tester.enterText(find.widgetWithText(TextField, 'Message Channel 2'), 'secondary test');
-    await tester.ensureVisible(find.text('Send'));
+    expect((radio.sentChannel, radio.sentTo), (2, 0xffffffff));
+
+    // The header switches straight to another chat.
+    await tester.tap(find.byKey(const ValueKey('chat-switch')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Send'));
+    await tester.tap(find.text('Main').last);
     await tester.pumpAndSettle();
-    expect(radio.sentChannel, 2);
-    radio.disconnected = true;
-    radio.notifyListeners();
+    await tester.enterText(find.byKey(const ValueKey('chat-composer')), 'primary test');
+    await tester.tap(find.byKey(const ValueKey('chat-send')));
     await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(find.text('Channel 2 • Offline'), -200,
-        scrollable: find.byType(Scrollable).first);
-    await tester.pumpAndSettle();
+    expect(radio.sentChannel, 0);
     expect(tester.takeException(), isNull);
-    expect(find.text('Channel 2 • Offline'), findsOneWidget);
+  });
+
+  testWidgets('Manage channels opens from Chats with ways to add, join and share', (tester) async {
+    final radio = ChannelRadio();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: BastionChatsPage(
+            radio: radio,
+            botMode: false,
+            awayReply: '',
+            onBotModeChanged: (_) {},
+            onAwayReplyChanged: (_) {},
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.byKey(const ValueKey('chats-manage-channels')));
+    await tester.pumpAndSettle();
+    expect(find.text('Channels'), findsWidgets);
+    expect(find.byKey(const ValueKey('channel-new')), findsOneWidget);
+    expect(find.byKey(const ValueKey('channel-join')), findsOneWidget);
+    expect(find.byKey(const ValueKey('channel-share')), findsOneWidget);
+    expect(
+      find.text('Connect a radio to add or edit channels.'),
+      findsOneWidget,
+      reason: 'this test radio is not connected, so the slots cannot be read',
+    );
   });
 }

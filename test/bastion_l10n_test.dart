@@ -282,9 +282,13 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Chats')));
     await tester.pumpAndSettle();
-    expect(find.text('Enviar'), findsOneWidget);
-    expect(find.text('Send'), findsNothing);
-    expect(find.text('On my way'), findsOneWidget);
+    expect(find.text('Canales'), findsWidgets);
+    expect(find.text('Gestionar canales'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('conversation-ch0')));
+    await tester.pumpAndSettle();
+    expect(find.byTooltip('Enviar'), findsOneWidget);
+    expect(find.byTooltip('Send'), findsNothing);
+    expect(find.text('On my way'), findsOneWidget, reason: 'quick replies go on air as written');
   });
 
   testWidgets('the Nodes page is translated', (tester) async {

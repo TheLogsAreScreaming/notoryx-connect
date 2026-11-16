@@ -250,6 +250,9 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
   Future<void> markChatsRead() async {}
 
   @override
+  Future<void> markConversationRead(String conversation) async {}
+
+  @override
   Future<String?> saveGeofence(BastionGeofence zone) async => 'Zones are not saved in demo mode.';
   @override
   Future<String?> removeGeofence(String id) async => 'Zones are not saved in demo mode.';

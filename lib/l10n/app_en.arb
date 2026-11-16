@@ -1481,7 +1481,13 @@
   "takSwitch": "Send mesh positions to ATAK",
   "takConsentTitle": "Share mesh positions with ATAK?",
   "takConsentBody": "The name and last position of every mesh node you can see are sent to UDP port {port} on this phone every 30 seconds, until you turn this off. ATAK picks them up, but any other app on this phone listening on that port can read them too. Nothing is sent over the mesh or off the phone.",
-  "@takConsentBody": {"placeholders": {"port": {"type": "int"}}},
+  "@takConsentBody": {
+    "placeholders": {
+      "port": {
+        "type": "int"
+      }
+    }
+  },
   "takConsentAccept": "Share with ATAK",
   "takPort": "UDP port",
   "takBadPort": "Use a number from 1024 to 65535.",
@@ -4140,7 +4146,13 @@
   "chatsReplayed": "from history",
   "chatsReplayedFull": "Replayed from a store-and-forward router's history: sent earlier, not just now.",
   "chatsReplayedAt": "Received {time}.",
-  "@chatsReplayedAt": {"placeholders": {"time": {"type": "String"}}},
+  "@chatsReplayedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "deliveryProven": "Delivered • receipt proven",
   "deliveryUnproven": "Delivered • receipt not proven",
   "deliveryNoKey": "Delivered • receipt couldn't be checked (no key)",
@@ -4150,11 +4162,29 @@
   "gateExcluded": "Left out of this radio's firmware build",
   "gateNoHardware": "This radio doesn't have the hardware for this",
   "formNewerValue": "Set by newer firmware (value {value}). Left unchanged.",
-  "@formNewerValue": {"placeholders": {"value": {"type": "String"}}},
+  "@formNewerValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "omArea": "Covers {area} (dashed outline on the map). Outside it there are no offline tiles.",
-  "@omArea": {"placeholders": {"area": {"type": "String"}}},
+  "@omArea": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
   "omDamaged": "{count, plural, =1{1 tile in this file is damaged and will show blank.} other{{count} tiles in this file are damaged and will show blank.}}",
-  "@omDamaged": {"placeholders": {"count": {"type": "int"}}},
+  "@omDamaged": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "ikTitle": "Identity key (separate backup)",
   "ikIntro": "The private key makes this radio the same node to everyone. Back it up to move your identity to a replacement radio. Keep it secret, and never put it on two radios that are on the air at once. Uses the password above.",
   "ikBackup": "Back up identity key",
@@ -4164,14 +4194,44 @@
   "ikAuthReason": "Confirm it's you to use the radio's identity key",
   "ikAuthFailed": "Not confirmed. Nothing was read or changed.",
   "ikReady": "Identity key backed up (fingerprint {fingerprint}). Copy the text and keep it somewhere safe.",
-  "@ikReady": {"placeholders": {"fingerprint": {"type": "String"}}},
+  "@ikReady": {
+    "placeholders": {
+      "fingerprint": {
+        "type": "String"
+      }
+    }
+  },
   "ikRestored": "Identity key put on this radio and confirmed by reading it back (fingerprint {fingerprint}). Contacts may need to see a new announcement before direct messages work.",
-  "@ikRestored": {"placeholders": {"fingerprint": {"type": "String"}}},
+  "@ikRestored": {
+    "placeholders": {
+      "fingerprint": {
+        "type": "String"
+      }
+    }
+  },
   "ikConfirmQ": "Replace this radio's identity?",
   "ikConfirmBody": "Key {fingerprint}, backed up from {from}, will replace the key on {to}. The old key on this radio is lost unless you backed it up.",
-  "@ikConfirmBody": {"placeholders": {"fingerprint": {"type": "String"}, "from": {"type": "String"}, "to": {"type": "String"}}},
+  "@ikConfirmBody": {
+    "placeholders": {
+      "fingerprint": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "ikDuplicate": "Warning: {nodes} on the mesh already uses this key. Turn that radio off for good first, or two radios will share one identity.",
-  "@ikDuplicate": {"placeholders": {"nodes": {"type": "String"}}},
+  "@ikDuplicate": {
+    "placeholders": {
+      "nodes": {
+        "type": "String"
+      }
+    }
+  },
   "ikNoKey": "This radio has no key pair to back up. Its firmware may be too old or have public keys turned off.",
   "ikMismatch": "The private and public keys don't belong together, so nothing was changed. The backup may be damaged.",
   "ikNotApplied": "The radio didn't report the restored key afterwards. Check its security settings before relying on it.",
@@ -4185,11 +4245,96 @@
   "mlNone": "None",
   "mlNoOwnPosition": "Distance unknown: your radio has no position",
   "mlDistanceDir": "{distance} {dir, select, n{north} ne{north-east} e{east} se{south-east} s{south} sw{south-west} w{west} nw{north-west} other{}}",
-  "@mlDistanceDir": {"placeholders": {"distance": {"type": "String"}, "dir": {"type": "String"}}},
+  "@mlDistanceDir": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
   "mlHeard": "heard {ago}",
-  "@mlHeard": {"placeholders": {"ago": {"type": "String"}}},
+  "@mlHeard": {
+    "placeholders": {
+      "ago": {
+        "type": "String"
+      }
+    }
+  },
   "mlPositionAge": "position from {ago}",
-  "@mlPositionAge": {"placeholders": {"ago": {"type": "String"}}},
+  "@mlPositionAge": {
+    "placeholders": {
+      "ago": {
+        "type": "String"
+      }
+    }
+  },
   "mlReadings": "{count} readings, average SNR {snr} dB",
-  "@mlReadings": {"placeholders": {"count": {"type": "int"}, "snr": {"type": "String"}}}
+  "@mlReadings": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "snr": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsManageChannels": "Manage channels",
+  "chatsNewChat": "New chat",
+  "chatsChannelsSection": "Channels",
+  "chatsDirectSection": "Direct messages",
+  "chatsNoMessagesYet": "No messages yet",
+  "chatsYouPrefix": "You: {text}",
+  "@chatsYouPrefix": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsUnread": "{count, plural, one{1 unread} other{{count} unread}}",
+  "@chatsUnread": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatsDirectSub": "Direct message",
+  "chatsPrimaryChannel": "Primary channel",
+  "chatsNoChannels": "No channels yet. Connect a radio, or add one.",
+  "chatsNoDirect": "No direct messages yet",
+  "chatsNoDirectHint": "Start one with a node you can hear.",
+  "chatsSwitch": "Switch chat",
+  "chatsShareChannel": "Share channel",
+  "chatsEditChannel": "Edit channel",
+  "chatsNodeInfo": "Node details",
+  "chatsPinnedCount": "{count, plural, one{1 pinned message} other{{count} pinned messages}}",
+  "@chatsPinnedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatsThreadEmpty": "No messages here yet",
+  "chatsNewBelow": "New messages",
+  "chatsNeedRadioChannels": "Connect a radio to add or edit channels.",
+  "chatsScheduleTypeFirst": "Type a message first, then choose when to send it.",
+  "chChannelsTitle": "Channels",
+  "chNew": "New channel",
+  "chJoin": "Join with QR code or link",
+  "chShare": "Share my channels",
+  "chFreeSlots": "{count, plural, one{1 free slot} other{{count} free slots}}",
+  "@chFreeSlots": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chAllUsed": "All 8 channel slots are in use."
 }

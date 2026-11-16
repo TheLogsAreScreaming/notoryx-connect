@@ -5988,4 +5988,115 @@ class AppLocalizationsFr extends AppLocalizations {
   String mlReadings(int count, String snr) {
     return '$count relevés, SNR moyen $snr dB';
   }
+
+  @override
+  String get chatsManageChannels => 'Gérer les canaux';
+
+  @override
+  String get chatsNewChat => 'Nouvelle discussion';
+
+  @override
+  String get chatsChannelsSection => 'Canaux';
+
+  @override
+  String get chatsDirectSection => 'Messages directs';
+
+  @override
+  String get chatsNoMessagesYet => 'Aucun message pour l\'instant';
+
+  @override
+  String chatsYouPrefix(String text) {
+    return 'Vous : $text';
+  }
+
+  @override
+  String chatsUnread(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count non lus',
+      one: '1 non lu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatsDirectSub => 'Message direct';
+
+  @override
+  String get chatsPrimaryChannel => 'Canal principal';
+
+  @override
+  String get chatsNoChannels =>
+      'Aucun canal pour l\'instant. Connectez une radio ou ajoutez-en un.';
+
+  @override
+  String get chatsNoDirect => 'Aucun message direct pour l\'instant';
+
+  @override
+  String get chatsNoDirectHint =>
+      'Commencez-en un avec un nœud que vous entendez.';
+
+  @override
+  String get chatsSwitch => 'Changer de discussion';
+
+  @override
+  String get chatsShareChannel => 'Partager le canal';
+
+  @override
+  String get chatsEditChannel => 'Modifier le canal';
+
+  @override
+  String get chatsNodeInfo => 'Détails du nœud';
+
+  @override
+  String chatsPinnedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count messages épinglés',
+      one: '1 message épinglé',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatsThreadEmpty => 'Aucun message ici pour l\'instant';
+
+  @override
+  String get chatsNewBelow => 'Nouveaux messages';
+
+  @override
+  String get chatsNeedRadioChannels =>
+      'Connectez une radio pour ajouter ou modifier des canaux.';
+
+  @override
+  String get chatsScheduleTypeFirst =>
+      'Saisissez d\'abord un message, puis choisissez quand l\'envoyer.';
+
+  @override
+  String get chChannelsTitle => 'Canaux';
+
+  @override
+  String get chNew => 'Nouveau canal';
+
+  @override
+  String get chJoin => 'Rejoindre avec un QR code ou un lien';
+
+  @override
+  String get chShare => 'Partager mes canaux';
+
+  @override
+  String chFreeSlots(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count emplacements libres',
+      one: '1 emplacement libre',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chAllUsed => 'Les 8 emplacements de canal sont utilisés.';
 }

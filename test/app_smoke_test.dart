@@ -21,8 +21,8 @@ void main() {
     await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
     await tester.pumpAndSettle();
     expect(find.text('Chats'), findsWidgets);
-    expect(find.text('New message'), findsWidgets);
-    expect(find.text('Channel 0 • Broadcast'), findsOneWidget);
+    expect(find.text('Primary channel'), findsOneWidget);
+    expect(find.text('Manage channels'), findsOneWidget);
     expect(find.text('Queued'), findsOneWidget);
 
     await tester.scrollUntilVisible(
