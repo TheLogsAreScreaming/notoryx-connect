@@ -1,0 +1,10 @@
+# iPhone app icon, used by the NOTORYX iOS Build and TestFlight workflows:
+#   dart run flutter_launcher_icons -f tool/ios_launcher_icons.yaml
+# The iOS project is generated in CI, so without this step the app ships
+# with Flutter's blank placeholder icon.
+flutter_launcher_icons:
+  android: false
+  ios: true
+  # App Store icons must not have transparency.
+  remove_alpha_ios: true
+  image_path: branding/notoryx-icon.png
