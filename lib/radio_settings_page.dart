@@ -79,7 +79,7 @@ class RadioSettingsPage extends StatelessWidget {
             Icons.forum_outlined,
             _l(context).rsChannels,
             _l(context).rsChannelsSub,
-            () => _ChannelListPage(radio: radio),
+            () => ChannelListPage(radio: radio),
           ),
           _entry(
             context,
@@ -753,16 +753,17 @@ class _PositionEditor extends StatelessWidget {
   );
 }
 
-class _ChannelListPage extends StatefulWidget {
-  const _ChannelListPage({required this.radio});
+/// Every channel slot on the radio, with ways to add, join, edit and share them.
+class ChannelListPage extends StatefulWidget {
+  const ChannelListPage({super.key, required this.radio});
 
   final MeshtasticRadioCoordinator radio;
 
   @override
-  State<_ChannelListPage> createState() => _ChannelListPageState();
+  State<ChannelListPage> createState() => ChannelListPageState();
 }
 
-class _ChannelListPageState extends State<_ChannelListPage> {
+class ChannelListPageState extends State<ChannelListPage> {
   final List<Channel> _channels = [];
   Object? _error;
   bool _loading = true;
@@ -792,37 +793,37 @@ class _ChannelListPageState extends State<_ChannelListPage> {
     }
   }
 
+  int get _freeSlots => _channels.where((c) => c.role == Channel_Role.DISABLED).length;
+
+  /// Opens the editor on the first unused slot.
+  Future<void> _newChannel() async {
+    final slot = _channels.where((c) => c.role == Channel_Role.DISABLED).firstOrNull;
+    if (slot == null) return;
+    await Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => ChannelEditorPage(radio: widget.radio, index: slot.index),
+    ));
+    if (mounted) await _load();
+  }
+
+  /// Joins channels from a QR code or a pasted link.
+  Future<void> _join() async {
+    await Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => ChannelImportPage(radio: widget.radio),
+    ));
+    if (mounted) await _load();
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: Text(_l(context).rsChannels),
-      actions: [
-        IconButton(
-          tooltip: _l(context).rsShareQr,
-          icon: const Icon(Icons.qr_code),
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (_) => ChannelSharePage(radio: widget.radio),
-            ),
-          ),
-        ),
-        IconButton(
-          tooltip: _l(context).rsImportLink,
-          icon: const Icon(Icons.download),
-          onPressed: () async {
-            await Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (_) => ChannelImportPage(radio: widget.radio),
-              ),
-            );
-            if (mounted) await _load();
-          },
-        ),
-      ],
-    ),
+    appBar: AppBar(title: Text(_l(context).chChannelsTitle)),
     body: SafeArea(top: false, child: ListView(
       padding: const EdgeInsets.all(16),
       children: [
+        if (!widget.radio.isReady && _channels.isEmpty && !_loading)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Text(_l(context).chatsNeedRadioChannels),
+          ),
         for (final channel in _channels)
           Card(
             child: ListTile(
@@ -841,7 +842,7 @@ class _ChannelListPageState extends State<_ChannelListPage> {
               onTap: () async {
                 await Navigator.of(context).push(
                   MaterialPageRoute<void>(
-                    builder: (_) => _ChannelEditor(
+                    builder: (_) => ChannelEditorPage(
                       radio: widget.radio,
                       index: channel.index,
                     ),
@@ -856,6 +857,38 @@ class _ChannelListPageState extends State<_ChannelListPage> {
             padding: EdgeInsets.all(24),
             child: Center(child: CircularProgressIndicator()),
           ),
+        if (!_loading) ...[
+          if (_channels.length == 8)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                _freeSlots == 0 ? _l(context).chAllUsed : _l(context).chFreeSlots(_freeSlots),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+          FilledButton.icon(
+            key: const ValueKey('channel-new'),
+            onPressed: _channels.length == 8 && _freeSlots > 0 ? _newChannel : null,
+            icon: const Icon(Icons.add),
+            label: Text(_l(context).chNew),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            key: const ValueKey('channel-join'),
+            onPressed: _join,
+            icon: const Icon(Icons.qr_code_scanner),
+            label: Text(_l(context).chJoin),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            key: const ValueKey('channel-share'),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(builder: (_) => ChannelSharePage(radio: widget.radio)),
+            ),
+            icon: const Icon(Icons.qr_code),
+            label: Text(_l(context).chShare),
+          ),
+        ],
         if (_error != null) ...[
           Text(_l(context).rsChannelsFailed('$_error')),
           Align(
@@ -879,8 +912,9 @@ String _describeKey(AppLocalizations l, List<int> psk) => switch (psk.length) {
   _ => l.rsUnknownKey,
 };
 
-class _ChannelEditor extends StatelessWidget {
-  const _ChannelEditor({required this.radio, required this.index});
+/// Edits one channel slot: name, key, role and position sharing.
+class ChannelEditorPage extends StatelessWidget {
+  const ChannelEditorPage({super.key, required this.radio, required this.index});
 
   final MeshtasticRadioCoordinator radio;
   final int index;

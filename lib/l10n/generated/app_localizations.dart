@@ -9762,6 +9762,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} readings, average SNR {snr} dB'**
   String mlReadings(int count, String snr);
+
+  /// No description provided for @chatsManageChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage channels'**
+  String get chatsManageChannels;
+
+  /// No description provided for @chatsNewChat.
+  ///
+  /// In en, this message translates to:
+  /// **'New chat'**
+  String get chatsNewChat;
+
+  /// No description provided for @chatsChannelsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get chatsChannelsSection;
+
+  /// No description provided for @chatsDirectSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct messages'**
+  String get chatsDirectSection;
+
+  /// No description provided for @chatsNoMessagesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet'**
+  String get chatsNoMessagesYet;
+
+  /// No description provided for @chatsYouPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'You: {text}'**
+  String chatsYouPrefix(String text);
+
+  /// No description provided for @chatsUnread.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 unread} other{{count} unread}}'**
+  String chatsUnread(int count);
+
+  /// No description provided for @chatsDirectSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct message'**
+  String get chatsDirectSub;
+
+  /// No description provided for @chatsPrimaryChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary channel'**
+  String get chatsPrimaryChannel;
+
+  /// No description provided for @chatsNoChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'No channels yet. Connect a radio, or add one.'**
+  String get chatsNoChannels;
+
+  /// No description provided for @chatsNoDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'No direct messages yet'**
+  String get chatsNoDirect;
+
+  /// No description provided for @chatsNoDirectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Start one with a node you can hear.'**
+  String get chatsNoDirectHint;
+
+  /// No description provided for @chatsSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch chat'**
+  String get chatsSwitch;
+
+  /// No description provided for @chatsShareChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Share channel'**
+  String get chatsShareChannel;
+
+  /// No description provided for @chatsEditChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit channel'**
+  String get chatsEditChannel;
+
+  /// No description provided for @chatsNodeInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Node details'**
+  String get chatsNodeInfo;
+
+  /// No description provided for @chatsPinnedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 pinned message} other{{count} pinned messages}}'**
+  String chatsPinnedCount(int count);
+
+  /// No description provided for @chatsThreadEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages here yet'**
+  String get chatsThreadEmpty;
+
+  /// No description provided for @chatsNewBelow.
+  ///
+  /// In en, this message translates to:
+  /// **'New messages'**
+  String get chatsNewBelow;
+
+  /// No description provided for @chatsNeedRadioChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a radio to add or edit channels.'**
+  String get chatsNeedRadioChannels;
+
+  /// No description provided for @chatsScheduleTypeFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a message first, then choose when to send it.'**
+  String get chatsScheduleTypeFirst;
+
+  /// No description provided for @chChannelsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get chChannelsTitle;
+
+  /// No description provided for @chNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New channel'**
+  String get chNew;
+
+  /// No description provided for @chJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join with QR code or link'**
+  String get chJoin;
+
+  /// No description provided for @chShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share my channels'**
+  String get chShare;
+
+  /// No description provided for @chFreeSlots.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 free slot} other{{count} free slots}}'**
+  String chFreeSlots(int count);
+
+  /// No description provided for @chAllUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'All 8 channel slots are in use.'**
+  String get chAllUsed;
 }
 
 class _AppLocalizationsDelegate

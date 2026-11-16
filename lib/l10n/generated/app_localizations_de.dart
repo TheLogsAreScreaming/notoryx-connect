@@ -5990,4 +5990,115 @@ class AppLocalizationsDe extends AppLocalizations {
   String mlReadings(int count, String snr) {
     return '$count Messungen, mittleres SNR $snr dB';
   }
+
+  @override
+  String get chatsManageChannels => 'Kanäle verwalten';
+
+  @override
+  String get chatsNewChat => 'Neuer Chat';
+
+  @override
+  String get chatsChannelsSection => 'Kanäle';
+
+  @override
+  String get chatsDirectSection => 'Direktnachrichten';
+
+  @override
+  String get chatsNoMessagesYet => 'Noch keine Nachrichten';
+
+  @override
+  String chatsYouPrefix(String text) {
+    return 'Sie: $text';
+  }
+
+  @override
+  String chatsUnread(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ungelesen',
+      one: '1 ungelesen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatsDirectSub => 'Direktnachricht';
+
+  @override
+  String get chatsPrimaryChannel => 'Primärkanal';
+
+  @override
+  String get chatsNoChannels =>
+      'Noch keine Kanäle. Verbinden Sie ein Funkgerät oder fügen Sie einen hinzu.';
+
+  @override
+  String get chatsNoDirect => 'Noch keine Direktnachrichten';
+
+  @override
+  String get chatsNoDirectHint =>
+      'Starten Sie einen mit einem Knoten, den Sie hören.';
+
+  @override
+  String get chatsSwitch => 'Chat wechseln';
+
+  @override
+  String get chatsShareChannel => 'Kanal teilen';
+
+  @override
+  String get chatsEditChannel => 'Kanal bearbeiten';
+
+  @override
+  String get chatsNodeInfo => 'Knotendetails';
+
+  @override
+  String chatsPinnedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count angeheftete Nachrichten',
+      one: '1 angeheftete Nachricht',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatsThreadEmpty => 'Hier gibt es noch keine Nachrichten';
+
+  @override
+  String get chatsNewBelow => 'Neue Nachrichten';
+
+  @override
+  String get chatsNeedRadioChannels =>
+      'Verbinden Sie ein Funkgerät, um Kanäle hinzuzufügen oder zu bearbeiten.';
+
+  @override
+  String get chatsScheduleTypeFirst =>
+      'Schreiben Sie zuerst eine Nachricht und wählen Sie dann, wann sie gesendet wird.';
+
+  @override
+  String get chChannelsTitle => 'Kanäle';
+
+  @override
+  String get chNew => 'Neuer Kanal';
+
+  @override
+  String get chJoin => 'Per QR-Code oder Link beitreten';
+
+  @override
+  String get chShare => 'Meine Kanäle teilen';
+
+  @override
+  String chFreeSlots(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count freie Plätze',
+      one: '1 freier Platz',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chAllUsed => 'Alle 8 Kanalplätze sind belegt.';
 }

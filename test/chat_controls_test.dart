@@ -5,54 +5,65 @@ import 'package:shared_preferences_platform_interface/in_memory_shared_preferenc
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 import 'package:shared_preferences_platform_interface/types.dart';
 
+Future<void> openChats(WidgetTester tester) async {
+  await tester.pumpWidget(const BastionApp());
+  await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
+  await tester.pumpAndSettle();
+}
+
+Future<void> openPrimary(WidgetTester tester) async {
+  await tester.tap(find.byKey(const ValueKey('conversation-ch0')));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   setUp(() => SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty());
 
-  testWidgets('message history search includes queued messages', (tester) async {
-    await tester.pumpWidget(const BastionApp());
-    await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
+  testWidgets('a message typed in a chat shows there and in Chats search', (tester) async {
+    await openChats(tester);
+    await openPrimary(tester);
+    await tester.enterText(find.byKey(const ValueKey('chat-composer')), 'field check alpha');
+    await tester.tap(find.byKey(const ValueKey('chat-send')));
     await tester.pumpAndSettle();
-    final composer = find.widgetWithText(TextField, 'Message Channel 0');
-    await tester.enterText(composer, 'field check alpha');
-    await tester.ensureVisible(find.text('Send'));
+    expect(find.text('field check alpha'), findsOneWidget);
+    await tester.pageBack();
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Send'));
+    expect(find.text('You: field check alpha'), findsOneWidget, reason: 'the row shows the latest message');
+    await tester.tap(find.byKey(const ValueKey('chats-search')));
     await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(find.widgetWithText(TextField, 'Search message history'), 200,
-        scrollable: find.byType(Scrollable).first);
     await tester.enterText(find.widgetWithText(TextField, 'Search message history'), 'alpha');
     await tester.pumpAndSettle();
     expect(find.text('field check alpha'), findsOneWidget);
     await tester.enterText(find.widgetWithText(TextField, 'Search message history'), 'unmatched');
     await tester.pumpAndSettle();
-    expect(find.text('field check alpha'), findsNothing);
     expect(find.text('No messages match your search.'), findsOneWidget);
   });
 
-  testWidgets('a message scheduled from Chats is listed and can be cancelled', (tester) async {
-    await tester.pumpWidget(const BastionApp());
-    await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
-    await tester.pumpAndSettle();
-    await tester.enterText(find.widgetWithText(TextField, 'Message Channel 0'), 'leaving camp');
-    await tester.ensureVisible(find.byKey(const ValueKey('chat-schedule')));
-    await tester.pumpAndSettle();
+  testWidgets('a message scheduled in a chat is listed there and can be cancelled', (tester) async {
+    await openChats(tester);
+    await openPrimary(tester);
+    await tester.enterText(find.byKey(const ValueKey('chat-composer')), 'leaving camp');
     await tester.tap(find.byKey(const ValueKey('chat-schedule')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('In 1 hour'));
     await tester.pumpAndSettle();
     expect(find.text('leaving camp'), findsOneWidget);
-    await tester.ensureVisible(find.byTooltip('Cancel scheduled message'));
-    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Cancel scheduled message'));
     await tester.pumpAndSettle();
     expect(find.text('leaving camp'), findsNothing);
   });
 
+  testWidgets('send later with an empty message box explains what to do', (tester) async {
+    await openChats(tester);
+    await openPrimary(tester);
+    await tester.tap(find.byKey(const ValueKey('chat-schedule')));
+    await tester.pump();
+    expect(find.text('Type a message first, then choose when to send it.'), findsOneWidget);
+  });
+
   testWidgets('Chats warns when message history cannot be read', (tester) async {
     SharedPreferencesAsyncPlatform.instance = _UnreadableStore();
-    await tester.pumpWidget(const BastionApp());
-    await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
-    await tester.pumpAndSettle();
+    await openChats(tester);
     expect(find.text('Message storage problem'), findsOneWidget);
     expect(find.textContaining('stored history is not overwritten'), findsOneWidget);
   });

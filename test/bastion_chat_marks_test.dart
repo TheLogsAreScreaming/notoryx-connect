@@ -118,16 +118,22 @@ void main() {
     expect(find.text('1'), findsWidgets, reason: 'unread badge on Chats');
     await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
     await tester.pumpAndSettle();
-    expect(find.text('Pinned'), findsOneWidget);
+    final row = find.byKey(const ValueKey('conversation-ch0'));
+    expect(find.descendant(of: row, matching: find.text('1')), findsOneWidget, reason: 'unread count on the row');
+    await tester.tap(row);
+    await tester.pumpAndSettle();
     expect(find.text('Today'), findsOneWidget);
     expect(find.text('Yesterday'), findsWidgets);
-    expect(find.bySemanticsLabel('New messages above'), findsOneWidget);
-    expect(find.text('yesterday note'), findsNWidgets(2), reason: 'pinned copy and timeline');
+    expect(find.bySemanticsLabel('New messages'), findsOneWidget);
+    expect(find.text('yesterday note'), findsNWidgets(2), reason: 'pinned bar and timeline');
 
-    // Unpin from the pinned section.
+    // Unpin from the pinned bar.
+    await tester.tap(find.byKey(const ValueKey('chat-pins')));
+    await tester.pumpAndSettle();
+    expect(find.text('1 pinned message'), findsOneWidget);
     await tester.tap(find.byTooltip('Unpin'));
     await tester.pumpAndSettle();
-    expect(find.text('Pinned'), findsNothing);
+    expect(find.byKey(const ValueKey('chat-pins')), findsNothing);
 
     // Pin from the long-press sheet.
     await tester.longPress(find.text('fresh news'));
@@ -135,8 +141,13 @@ void main() {
     expect(find.text('Copy text'), findsOneWidget);
     await tester.tap(find.text('Pin'));
     await tester.pumpAndSettle();
-    expect(find.text('Pinned'), findsOneWidget);
-    expect(find.byIcon(Icons.push_pin), findsNWidgets(2), reason: 'pinned section and pin mark on the card');
+    expect(find.byKey(const ValueKey('chat-pins')), findsOneWidget);
+    expect(find.byIcon(Icons.push_pin), findsNWidgets(2), reason: 'pinned bar and pin mark on the bubble');
+
+    // Opening the chat marked it read.
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.descendant(of: find.byKey(const ValueKey('conversation-ch0')), matching: find.text('1')), findsNothing);
   });
 
   testWidgets('@ button inserts a mention at the cursor', (tester) async {
@@ -145,6 +156,8 @@ void main() {
     addTearDown(tester.view.reset);
     await tester.pumpWidget(const BastionApp());
     await tester.tap(find.byIcon(Icons.chat_bubble_outline).last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('conversation-ch0')));
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Mention a node'));
     await tester.pumpAndSettle();

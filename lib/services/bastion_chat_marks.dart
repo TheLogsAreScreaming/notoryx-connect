@@ -80,6 +80,7 @@ class BastionChatMarks {
   SharedPreferencesAsync get _store => _preferences ??= SharedPreferencesAsync();
   final List<String> _pins = [];
   DateTime? _lastRead;
+  final Map<String, DateTime> _readBy = {};
   bool _loadFailed = false;
 
   /// When you last looked at Chats, or null if never.
@@ -95,12 +96,33 @@ class BastionChatMarks {
     return [for (final id in _pins.reversed) if (byId[id] case final m?) m];
   }
 
-  /// Incoming messages newer than [lastRead]. Before the first visit every
+  /// The conversation a message belongs to: `ch<index>` for a channel,
+  /// `dm<node>` for a direct chat with that node.
+  static String conversationOf(BastionChatMessage m) => m.isBroadcast
+      ? 'ch${m.channel}'
+      : 'dm${m.direction == BastionMessageDirection.outgoing ? m.to : m.from}';
+
+  /// When [conversation] was last opened, or when Chats as a whole was last
+  /// marked read, whichever is later. Null before the first visit.
+  DateTime? readSince(String conversation) {
+    final own = _readBy[conversation];
+    final all = _lastRead;
+    if (own == null) return all;
+    if (all == null) return own;
+    return own.isAfter(all) ? own : all;
+  }
+
+  /// Incoming messages you haven't opened yet. Before the first visit every
   /// message counts as read, so a fresh install doesn't show a huge count.
-  int unreadIn(List<BastionChatMessage> messages) {
-    final since = _lastRead;
-    if (since == null) return 0;
-    return messages.where((m) => isUnread(m, since)).length;
+  int unreadIn(List<BastionChatMessage> messages, {String? conversation}) {
+    var count = 0;
+    for (final m in messages) {
+      final key = conversationOf(m);
+      if (conversation != null && key != conversation) continue;
+      final since = readSince(key);
+      if (since != null && isUnread(m, since)) count++;
+    }
+    return count;
   }
 
   static bool isUnread(BastionChatMessage m, DateTime since) =>
@@ -111,6 +133,7 @@ class BastionChatMarks {
   Future<void> load() async {
     _pins.clear();
     _lastRead = null;
+    _readBy.clear();
     try {
       final raw = await _store.getString(key);
       if (raw == null) return;
@@ -118,6 +141,13 @@ class BastionChatMarks {
       if (json is! Map) return;
       if (json['pins'] case final List pins) _pins.addAll(pins.whereType<String>());
       if (json['lastRead'] case final String t) _lastRead = DateTime.tryParse(t)?.toLocal();
+      if (json['readBy'] case final Map readBy) {
+        for (final MapEntry(:key, :value) in readBy.entries) {
+          if (key is String && value is String) {
+            if (DateTime.tryParse(value)?.toLocal() case final at?) _readBy[key] = at;
+          }
+        }
+      }
     } on FormatException {
       // Damaged marks are replaced by the next change.
     } catch (_) {
@@ -144,11 +174,24 @@ class BastionChatMarks {
     await _save();
   }
 
+  /// Records that [conversation] has been read up to [time].
+  Future<void> markConversationRead(String conversation, DateTime time) async {
+    final before = _readBy[conversation];
+    if (before != null && !time.isAfter(before)) return;
+    _readBy[conversation] = time;
+    // Before the first visit nothing counts as unread; opening a chat is a visit.
+    _lastRead ??= DateTime.fromMillisecondsSinceEpoch(0);
+    if (_loadFailed) return;
+    await _save();
+  }
+
   Future<String?> _save() async {
     try {
       await _store.setString(key, jsonEncode({
         'pins': _pins,
         if (_lastRead != null) 'lastRead': _lastRead!.toUtc().toIso8601String(),
+        if (_readBy.isNotEmpty)
+          'readBy': {for (final e in _readBy.entries) e.key: e.value.toUtc().toIso8601String()},
       }));
       return null;
     } catch (_) {
