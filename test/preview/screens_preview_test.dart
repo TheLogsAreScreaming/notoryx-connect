@@ -2,7 +2,8 @@
 // with real fonts.
 // Skipped unless PREVIEW_OUT is set:
 //   PREVIEW_OUT=docs/screenshots flutter test test/preview
-// No radio is connected, so tabs show their not-yet-connected state.
+// Screens use the built-in demo radio (BastionDemoRadio), so they show a
+// pretend mesh instead of the not-yet-connected state.
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -13,6 +14,7 @@ import 'package:bastion/main.dart';
 import 'package:bastion/phone_backup_page.dart';
 import 'package:bastion/privacy_page.dart';
 import 'package:bastion/radio_backup_page.dart';
+import 'package:bastion/services/bastion_demo_radio.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/trip_page.dart';
 import 'package:bastion/services/bastion_preferences.dart';
@@ -40,6 +42,13 @@ Future<void> _loadFonts() async {
     for (final w in ['Light', 'Regular', 'Medium', 'Bold', 'Black']) '$fonts/Roboto-$w.ttf',
   ]);
   await load('MaterialIcons', ['$fonts/MaterialIcons-Regular.otf']);
+  // The app's own bundled fonts (NxFonts).
+  await load('Inter', [
+    for (final w in ['Regular', 'Medium', 'SemiBold', 'Bold']) 'assets/fonts/Inter-$w.ttf',
+  ]);
+  await load('JetBrains Mono', [
+    for (final w in ['Regular', 'Medium', 'SemiBold', 'Bold']) 'assets/fonts/JetBrainsMono-$w.ttf',
+  ]);
 }
 
 void main() {
@@ -82,7 +91,7 @@ void main() {
       tester.view.devicePixelRatio = 2;
       tester.view.physicalSize = const Size(780, 1688);
       addTearDown(tester.view.reset);
-      final radio = MeshtasticRadioCoordinator();
+      final radio = BastionDemoRadio();
       addTearDown(radio.dispose);
       final boundary = GlobalKey();
       await tester.pumpWidget(RepaintBoundary(key: boundary, child: MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, 
@@ -115,14 +124,22 @@ void main() {
       final boundary = GlobalKey();
       await tester.pumpWidget(RepaintBoundary(key: boundary, child: const BastionApp()));
       await tester.pumpAndSettle();
+      // Switch to the demo radio from the Home tab's "Try the demo".
+      await tester.tap(find.byIcon(Icons.play_circle_outline).first);
+      await tester.pumpAndSettle();
       for (final tab in tabs.entries) {
         await tester.tap(find.byIcon(tab.key).last);
         await tester.pumpAndSettle();
+        if (tab.value == 'nodes') {
+          // Bring the demo mesh's node list to the top of the screen.
+          await tester.dragFrom(const Offset(195, 600), const Offset(0, -520));
+          await tester.pumpAndSettle();
+        }
         await tester.runAsync(() async {
           final ro = boundary.currentContext!.findRenderObject()! as RenderRepaintBoundary;
           final image = await ro.toImage(pixelRatio: 2);
           final png = await image.toByteData(format: ui.ImageByteFormat.png);
-          final suffix = theme == 'blaze' ? '' : '_$theme';
+          final suffix = switch (theme) { 'blaze' => '', 'bare_beauty' => '_light', _ => '_$theme' };
           File('$out/${tab.value}$suffix.png')
             ..createSync(recursive: true)
             ..writeAsBytesSync(png!.buffer.asUint8List());
