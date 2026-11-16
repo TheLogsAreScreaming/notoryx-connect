@@ -8,6 +8,8 @@ on:
   pull_request:
     paths:
       - 'scripts/prepare_ios.py'
+      - 'tool/ios_launcher_icons.yaml'
+      - 'branding/notoryx-icon.png'
       - 'lib/services/bastion_message_alerts.dart'
       - '.github/workflows/ios-build.yml'
 
@@ -38,6 +40,8 @@ jobs:
           # The Podfile only exists once Flutter has configured the iOS build.
           flutter build ios --config-only --no-codesign
           python3 scripts/prepare_ios.py
+          # Replace Flutter's blank placeholder with the NOTORYX icon.
+          dart run flutter_launcher_icons -f tool/ios_launcher_icons.yaml
       - name: Build without signing
         run: flutter build ios --release --no-codesign
       - name: Check the app bundle

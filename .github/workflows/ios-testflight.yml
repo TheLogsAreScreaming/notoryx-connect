@@ -56,6 +56,8 @@ jobs:
           flutter pub get --enforce-lockfile
           flutter build ios --config-only --no-codesign
           python3 scripts/prepare_ios.py
+          # Replace Flutter's blank placeholder with the NOTORYX icon.
+          dart run flutter_launcher_icons -f tool/ios_launcher_icons.yaml
           flutter build ios --release --no-codesign
       - name: Install the App Store Connect key
         run: |
