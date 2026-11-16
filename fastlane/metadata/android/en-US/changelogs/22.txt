@@ -1,0 +1,1 @@
+Chats is redone: one row per channel and direct chat with its own unread count, each chat on its own screen with the message box at the bottom, and channels can be added, joined and shared from Chats. French and German wording fixes, and tab labels no longer break mid-word.
