@@ -5922,4 +5922,113 @@ class AppLocalizationsEn extends AppLocalizations {
   String mlReadings(int count, String snr) {
     return '$count readings, average SNR $snr dB';
   }
+
+  @override
+  String get chatsManageChannels => 'Manage channels';
+
+  @override
+  String get chatsNewChat => 'New chat';
+
+  @override
+  String get chatsChannelsSection => 'Channels';
+
+  @override
+  String get chatsDirectSection => 'Direct messages';
+
+  @override
+  String get chatsNoMessagesYet => 'No messages yet';
+
+  @override
+  String chatsYouPrefix(String text) {
+    return 'You: $text';
+  }
+
+  @override
+  String chatsUnread(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unread',
+      one: '1 unread',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatsDirectSub => 'Direct message';
+
+  @override
+  String get chatsPrimaryChannel => 'Primary channel';
+
+  @override
+  String get chatsNoChannels => 'No channels yet. Connect a radio, or add one.';
+
+  @override
+  String get chatsNoDirect => 'No direct messages yet';
+
+  @override
+  String get chatsNoDirectHint => 'Start one with a node you can hear.';
+
+  @override
+  String get chatsSwitch => 'Switch chat';
+
+  @override
+  String get chatsShareChannel => 'Share channel';
+
+  @override
+  String get chatsEditChannel => 'Edit channel';
+
+  @override
+  String get chatsNodeInfo => 'Node details';
+
+  @override
+  String chatsPinnedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pinned messages',
+      one: '1 pinned message',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatsThreadEmpty => 'No messages here yet';
+
+  @override
+  String get chatsNewBelow => 'New messages';
+
+  @override
+  String get chatsNeedRadioChannels =>
+      'Connect a radio to add or edit channels.';
+
+  @override
+  String get chatsScheduleTypeFirst =>
+      'Type a message first, then choose when to send it.';
+
+  @override
+  String get chChannelsTitle => 'Channels';
+
+  @override
+  String get chNew => 'New channel';
+
+  @override
+  String get chJoin => 'Join with QR code or link';
+
+  @override
+  String get chShare => 'Share my channels';
+
+  @override
+  String chFreeSlots(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count free slots',
+      one: '1 free slot',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chAllUsed => 'All 8 channel slots are in use.';
 }

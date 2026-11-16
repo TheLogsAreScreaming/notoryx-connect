@@ -332,6 +332,12 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     notifyListeners();
   }
 
+  /// Records that one conversation (`ch<index>` or `dm<node>`) has been read.
+  Future<void> markConversationRead(String conversation) async {
+    await _chatMarks.markConversationRead(conversation, DateTime.now());
+    notifyListeners();
+  }
+
   /// Incoming messages you haven't seen yet.
   int get unreadCount => _chatMarks.unreadIn(messages);
 
