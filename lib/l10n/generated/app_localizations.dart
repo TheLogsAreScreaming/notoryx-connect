@@ -9924,6 +9924,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All 8 channel slots are in use.'**
   String get chAllUsed;
+
+  /// No description provided for @nodesShowAllBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all Bluetooth devices'**
+  String get nodesShowAllBluetooth;
+
+  /// No description provided for @nodesHiddenDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 other device nearby isn\'t a Meshtastic radio, so it\'s hidden.} other{{count} other devices nearby aren\'t Meshtastic radios, so they\'re hidden.}}'**
+  String nodesHiddenDevices(int count);
+
+  /// No description provided for @nodesShowAllOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Listing everything nearby. Only needed if your radio doesn\'t show up otherwise.'**
+  String get nodesShowAllOn;
+
+  /// No description provided for @nodesFindAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Find another radio'**
+  String get nodesFindAnother;
 }
 
 class _AppLocalizationsDelegate

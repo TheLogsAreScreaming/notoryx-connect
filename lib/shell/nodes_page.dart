@@ -240,8 +240,9 @@ class _NodesPage extends StatelessWidget {
                 ),
               ],
             )
-          else
+          else if (!showsConnectedCard)
             FilledButton.icon(
+              key: const ValueKey('scan-radios'),
               onPressed: discovery.scan,
               icon: const Icon(Icons.bluetooth_searching),
               label: Text(l.toolsScan),
@@ -333,7 +334,7 @@ class _NodesPage extends StatelessWidget {
                     title: Text(item.name),
                     subtitle: Text(
                       [
-                        item.advertisesMeshtastic
+                        item.looksLikeMeshtastic
                             ? l.nodesMeshtasticRadio
                             : l.nodesBluetoothDevice,
                         _rssiLabel(context, item.rssi),
@@ -362,6 +363,27 @@ class _NodesPage extends StatelessWidget {
                           ),
                   ),
                 ),
+          // With a radio connected, scanning is only for switching radios.
+          if (showsConnectedCard && !discovery.scanning)
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton.icon(
+                key: const ValueKey('find-another-radio'),
+                onPressed: discovery.scan,
+                icon: const Icon(Icons.bluetooth_searching),
+                label: Text(l.nodesFindAnother),
+              ),
+            ),
+          if (discovery.hiddenCount > 0 || discovery.showAll)
+            SwitchListTile(
+              key: const ValueKey('scan-show-all'),
+              contentPadding: EdgeInsets.zero,
+              secondary: const Icon(Icons.devices_other),
+              title: Text(l.nodesShowAllBluetooth),
+              subtitle: Text(discovery.showAll ? l.nodesShowAllOn : l.nodesHiddenDevices(discovery.hiddenCount)),
+              value: discovery.showAll,
+              onChanged: (value) => discovery.showAll = value,
+            ),
           if (radio.nodes.isNotEmpty) ...[
             NxSectionLabel(
               heard.window == null && !favoritesOnly
