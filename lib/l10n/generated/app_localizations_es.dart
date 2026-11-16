@@ -21,7 +21,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tabMap => 'Mapa';
 
   @override
-  String get tabTools => 'Herramientas';
+  String get tabTools => 'Útiles';
 
   @override
   String get tabSettings => 'Ajustes';
