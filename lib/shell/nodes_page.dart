@@ -305,7 +305,8 @@ class _NodesPage extends StatelessWidget {
           if (discovery.error != null)
             NxBanner(tone: NxTone.warning, message: discovery.error!),
           const SizedBox(height: NxSpace.xs),
-          if (discovery.results.isEmpty && !discovery.scanning)
+          // With a radio connected there is nothing to invite you to scan for.
+          if (discovery.results.isEmpty && !discovery.scanning && !showsConnectedCard)
             NxEmptyState(
               icon: Icons.bluetooth_disabled,
               title: l.nodesNoRadios,
