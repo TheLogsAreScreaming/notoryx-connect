@@ -10014,6 +10014,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nodes appear here as your radio hears them.'**
   String get nodesNoMeshYetBody;
+
+  /// No description provided for @chUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this channel'**
+  String get chUse;
+
+  /// No description provided for @chUseOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On: your radio sends and listens on this channel.'**
+  String get chUseOn;
+
+  /// No description provided for @chUseOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off: this slot is empty.'**
+  String get chUseOff;
+
+  /// No description provided for @chMainAlwaysOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Your main channel. It is always on.'**
+  String get chMainAlwaysOn;
+
+  /// No description provided for @chWhoCanRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Who can read it'**
+  String get chWhoCanRead;
+
+  /// No description provided for @chPrivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get chPrivate;
+
+  /// No description provided for @chPrivateSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Its own random key. Only people you share the channel with can read it.'**
+  String get chPrivateSub;
+
+  /// No description provided for @chPublic.
+  ///
+  /// In en, this message translates to:
+  /// **'Public'**
+  String get chPublic;
+
+  /// No description provided for @chPublicSub.
+  ///
+  /// In en, this message translates to:
+  /// **'The default key. Anyone using the default Meshtastic settings can read it.'**
+  String get chPublicSub;
+
+  /// No description provided for @chNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No encryption'**
+  String get chNone;
+
+  /// No description provided for @chNoneSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone in range can read it.'**
+  String get chNoneSub;
+
+  /// No description provided for @chNewKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Make a new key'**
+  String get chNewKey;
+
+  /// No description provided for @chAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel added. Share it so others can join.'**
+  String get chAdded;
+
+  /// No description provided for @chShareAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get chShareAction;
+
+  /// No description provided for @setNoRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'No radio connected'**
+  String get setNoRadio;
+
+  /// No description provided for @setChannelsInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No channels in use} one{1 channel: {names}} other{{count} channels: {names}}}'**
+  String setChannelsInUse(int count, String names);
+
+  /// No description provided for @rsMainSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Main settings'**
+  String get rsMainSettings;
+
+  /// No description provided for @rsMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get rsMore;
+
+  /// No description provided for @rsModulesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional features such as MQTT, telemetry and store & forward'**
+  String get rsModulesSubtitle;
+
+  /// No description provided for @rsAdvanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get rsAdvanced;
+
+  /// No description provided for @rsAdvancedSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Every settings section, and a check of what this radio supports'**
+  String get rsAdvancedSub;
+
+  /// No description provided for @rsNotInFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 not in this radio\'s firmware} other{{count} not in this radio\'s firmware}}'**
+  String rsNotInFirmware(int count);
 }
 
 class _AppLocalizationsDelegate

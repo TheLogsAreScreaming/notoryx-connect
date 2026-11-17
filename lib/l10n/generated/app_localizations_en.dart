@@ -6089,4 +6089,91 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get nodesNoMeshYetBody =>
       'Nodes appear here as your radio hears them.';
+
+  @override
+  String get chUse => 'Use this channel';
+
+  @override
+  String get chUseOn => 'On: your radio sends and listens on this channel.';
+
+  @override
+  String get chUseOff => 'Off: this slot is empty.';
+
+  @override
+  String get chMainAlwaysOn => 'Your main channel. It is always on.';
+
+  @override
+  String get chWhoCanRead => 'Who can read it';
+
+  @override
+  String get chPrivate => 'Private';
+
+  @override
+  String get chPrivateSub =>
+      'Its own random key. Only people you share the channel with can read it.';
+
+  @override
+  String get chPublic => 'Public';
+
+  @override
+  String get chPublicSub =>
+      'The default key. Anyone using the default Meshtastic settings can read it.';
+
+  @override
+  String get chNone => 'No encryption';
+
+  @override
+  String get chNoneSub => 'Anyone in range can read it.';
+
+  @override
+  String get chNewKey => 'Make a new key';
+
+  @override
+  String get chAdded => 'Channel added. Share it so others can join.';
+
+  @override
+  String get chShareAction => 'Share';
+
+  @override
+  String get setNoRadio => 'No radio connected';
+
+  @override
+  String setChannelsInUse(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count channels: $names',
+      one: '1 channel: $names',
+      zero: 'No channels in use',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get rsMainSettings => 'Main settings';
+
+  @override
+  String get rsMore => 'More';
+
+  @override
+  String get rsModulesSubtitle =>
+      'Optional features such as MQTT, telemetry and store & forward';
+
+  @override
+  String get rsAdvanced => 'Advanced';
+
+  @override
+  String get rsAdvancedSub =>
+      'Every settings section, and a check of what this radio supports';
+
+  @override
+  String rsNotInFirmware(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count not in this radio\'s firmware',
+      one: '1 not in this radio\'s firmware',
+    );
+    return '$_temp0';
+  }
 }

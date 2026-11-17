@@ -52,95 +52,57 @@ class RadioSettingsPage extends StatelessWidget {
                 ),
               ),
             ),
-          Card(child: ListTile(
-            title: Text(_l(context).rsAvailability),
-            subtitle: Text(_l(context).rsAvailabilitySub),
-            trailing: radio.checkingSettings ? TextButton(
-              onPressed: radio.cancelSettingsCheck, child: Text(_l(context).rsStopChecking)) : const Icon(Icons.refresh),
-            onTap: radio.canAdminister && !radio.checkingSettings
-                ? radio.checkSettingsAvailability : null,
-          )),
-          _entry(
-            context,
-            Icons.person_outline,
-            _l(context).rsOwner,
-            _l(context).rsOwnerSub,
-            () => _OwnerEditor(radio: radio),
-          ),
-          _entry(
-            context,
-            Icons.settings_input_antenna,
-            'LoRa',
-            _l(context).rsLoraSub,
-            () => _LoraEditor(radio: radio),
-          ),
-          _entry(
-            context,
-            Icons.forum_outlined,
-            _l(context).rsChannels,
-            _l(context).rsChannelsSub,
-            () => ChannelListPage(radio: radio),
-          ),
-          _entry(
-            context,
-            Icons.memory,
-            _l(context).rsDevice,
-            _l(context).rsDeviceSub,
-            () => _DeviceEditor(radio: radio),
-          ),
-          _entry(
-            context,
-            Icons.my_location,
-            _l(context).rsPosition,
-            _l(context).rsPositionSub,
-            () => _PositionEditor(radio: radio),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(4, 20, 4, 8),
-            child: Text(
-              _l(context).rsAllSettings,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          for (final type in AdminMessage_ConfigType.values)
-            if (type != AdminMessage_ConfigType.SESSIONKEY_CONFIG)
-              _entry(
-                context,
-                Icons.tune,
-                _sectionName(type),
-                radio.availability('config:${type.value}'),
-                gate: radio.configGate(type.name),
-                () => _OneofEditor(
-                  radio: radio,
-                  title: _sectionName(type),
-                  load: () async => await radio.readConfig(type),
-                  save: (section) => radio.writeConfig(section as Config),
-                  empty: Config.new,
+          NxGroupLabel(_l(context).rsMainSettings),
+          Card(child: Column(children: [
+            _entry(context, Icons.person_outline, _l(context).rsOwner, _l(context).rsOwnerSub,
+                () => _OwnerEditor(radio: radio), card: false),
+            _entry(context, Icons.forum_outlined, _l(context).rsChannels, _l(context).rsChannelsSub,
+                () => ChannelListPage(radio: radio), card: false),
+            _entry(context, Icons.settings_input_antenna, 'LoRa', _l(context).rsLoraSub,
+                () => _LoraEditor(radio: radio), card: false),
+            _entry(context, Icons.memory, _l(context).rsDevice, _l(context).rsDeviceSub,
+                () => _DeviceEditor(radio: radio), card: false),
+            _entry(context, Icons.my_location, _l(context).rsPosition, _l(context).rsPositionSub,
+                () => _PositionEditor(radio: radio), card: false),
+          ])),
+          NxGroupLabel(_l(context).rsMore),
+          Card(child: Column(children: [
+            _entry(context, Icons.extension_outlined, _l(context).rsModules, _l(context).rsModulesSubtitle,
+                () => _ModulesPage(radio: radio), card: false),
+            ExpansionTile(
+              key: const ValueKey('radio-advanced'),
+              leading: const Icon(Icons.build_outlined),
+              title: Text(_l(context).rsAdvanced),
+              subtitle: Text(_l(context).rsAdvancedSub),
+              children: [
+                ListTile(
+                  title: Text(_l(context).rsAvailability),
+                  subtitle: Text(_l(context).rsAvailabilitySub),
+                  trailing: radio.checkingSettings
+                      ? TextButton(onPressed: radio.cancelSettingsCheck, child: Text(_l(context).rsStopChecking))
+                      : const Icon(Icons.refresh),
+                  onTap: radio.canAdminister && !radio.checkingSettings ? radio.checkSettingsAvailability : null,
                 ),
-              ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(4, 20, 4, 8),
-            child: Text(
-              _l(context).rsModules,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+                for (final type in AdminMessage_ConfigType.values)
+                  if (type != AdminMessage_ConfigType.SESSIONKEY_CONFIG)
+                    _entry(
+                      context,
+                      Icons.tune,
+                      _sectionName(type),
+                      radio.availability('config:${type.value}'),
+                      gate: radio.configGate(type.name),
+                      card: false,
+                      () => _OneofEditor(
+                        radio: radio,
+                        title: _sectionName(type),
+                        load: () async => await radio.readConfig(type),
+                        save: (section) => radio.writeConfig(section as Config),
+                        empty: Config.new,
+                      ),
+                    ),
+              ],
             ),
-          ),
-          for (final type in AdminMessage_ModuleConfigType.values)
-            _entry(
-              context,
-              Icons.extension_outlined,
-              _sectionName(type),
-              radio.availability('module:${type.value}'),
-              gate: radio.moduleGate(type.name),
-              () => _OneofEditor(
-                radio: radio,
-                title: _sectionName(type),
-                load: () async => await radio.readModuleConfig(type),
-                save: (section) =>
-                    radio.writeModuleConfig(section as ModuleConfig),
-                empty: ModuleConfig.new,
-              ),
-            ),
+          ])),
         ],
       ),
     )),
@@ -153,8 +115,8 @@ class RadioSettingsPage extends StatelessWidget {
     String detail,
     Widget Function() page, {
     FeatureGate gate = FeatureGate.unknown,
-  }) => Card(
-    child: ListTile(
+    bool card = true,
+  }) => _maybeCard(card, ListTile(
       // The app theme sets list colours, so a disabled tile would otherwise
       // look the same as one that opens: soften the icon and name, and show
       // a "not available" mark instead of the arrow.
@@ -182,6 +144,74 @@ class RadioSettingsPage extends StatelessWidget {
               .push(MaterialPageRoute<void>(builder: (_) => page())),
     ),
   );
+
+  static Widget _maybeCard(bool card, Widget tile) => card ? Card(child: tile) : tile;
+}
+
+/// A small heading above a group of settings.
+class NxGroupLabel extends StatelessWidget {
+  const NxGroupLabel(this.text, {super.key});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+        header: true,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(4, 16, 4, 6),
+          child: Text(text,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.primary)),
+        ),
+      );
+}
+
+/// Optional radio features. Ones the radio's firmware leaves out are folded
+/// away at the bottom, since they can't be changed.
+class _ModulesPage extends StatelessWidget {
+  const _ModulesPage({required this.radio});
+  final MeshtasticRadioCoordinator radio;
+
+  @override
+  Widget build(BuildContext context) {
+    final page = RadioSettingsPage(radio: radio);
+    return Scaffold(
+      appBar: AppBar(title: Text(_l(context).rsModules)),
+      body: SafeArea(top: false, child: AnimatedBuilder(
+        animation: radio,
+        builder: (context, _) {
+          final types = AdminMessage_ModuleConfigType.values;
+          final missing = [for (final t in types) if (radio.moduleGate(t.name).unavailable) t];
+          Widget entry(AdminMessage_ModuleConfigType type) => page._entry(
+                context,
+                Icons.extension_outlined,
+                _sectionName(type),
+                radio.availability('module:${type.value}'),
+                gate: radio.moduleGate(type.name),
+                card: false,
+                () => _OneofEditor(
+                  radio: radio,
+                  title: _sectionName(type),
+                  load: () async => await radio.readModuleConfig(type),
+                  save: (section) => radio.writeModuleConfig(section as ModuleConfig),
+                  empty: ModuleConfig.new,
+                ),
+              );
+          return ListView(padding: const EdgeInsets.all(16), children: [
+            Card(child: Column(children: [
+              for (final type in types)
+                if (!missing.contains(type)) entry(type),
+            ])),
+            if (missing.isNotEmpty)
+              Card(child: ExpansionTile(
+                key: const ValueKey('modules-missing'),
+                leading: const Icon(Icons.block),
+                title: Text(_l(context).rsNotInFirmware(missing.length)),
+                children: [for (final type in missing) entry(type)],
+              )),
+          ]);
+        },
+      )),
+    );
+  }
 }
 
 /// Shared load → edit → confirm → write flow for one protobuf message.
@@ -194,10 +224,15 @@ class _AdminEditor<T extends GeneratedMessage> extends StatefulWidget {
     required this.fields,
     this.validate,
     this.warning,
+    this.prepare,
   });
 
   final String title;
   final MeshtasticRadioCoordinator radio;
+
+  /// Changes the freshly loaded copy before it is shown, for example to set
+  /// up a new channel. The change counts as unsaved.
+  final void Function(T draft)? prepare;
   final Future<T> Function() load;
   final Future<void> Function(T draft) save;
   final List<Widget> Function(T draft, VoidCallback changed) fields;
@@ -247,7 +282,9 @@ class _AdminEditorState<T extends GeneratedMessage>
       setState(() {
         _readRevision++;
         _original = value;
-        _draft = value.deepCopy();
+        final draft = value.deepCopy();
+        widget.prepare?.call(draft);
+        _draft = draft;
       });
     } catch (error) {
       if (mounted) setState(() => _loadError = error);
@@ -799,10 +836,26 @@ class ChannelListPageState extends State<ChannelListPage> {
   Future<void> _newChannel() async {
     final slot = _channels.where((c) => c.role == Channel_Role.DISABLED).firstOrNull;
     if (slot == null) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final l = _l(context);
     await Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (_) => ChannelEditorPage(radio: widget.radio, index: slot.index),
+      builder: (_) => ChannelEditorPage(radio: widget.radio, index: slot.index, startNew: true),
     ));
-    if (mounted) await _load();
+    if (!mounted) return;
+    await _load();
+    if (!mounted) return;
+    final added = _channels.where((c) => c.index == slot.index && c.role != Channel_Role.DISABLED).isNotEmpty;
+    if (added) {
+      messenger.showSnackBar(SnackBar(
+        content: Text(l.chAdded),
+        action: SnackBarAction(
+          label: l.chShareAction,
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(builder: (_) => ChannelSharePage(radio: widget.radio)),
+          ),
+        ),
+      ));
+    }
   }
 
   /// Joins channels from a QR code or a pasted link.
@@ -914,10 +967,19 @@ String _describeKey(AppLocalizations l, List<int> psk) => switch (psk.length) {
 
 /// Edits one channel slot: name, key, role and position sharing.
 class ChannelEditorPage extends StatelessWidget {
-  const ChannelEditorPage({super.key, required this.radio, required this.index});
+  const ChannelEditorPage({super.key, required this.radio, required this.index, this.startNew = false});
 
   final MeshtasticRadioCoordinator radio;
   final int index;
+
+  /// Opens an unused slot already switched on with a new private key, so a
+  /// new channel only needs a name.
+  final bool startNew;
+
+  static List<int> _randomKey() {
+    final random = Random.secure();
+    return List.generate(32, (_) => random.nextInt(256));
+  }
 
   @override
   Widget build(BuildContext context) => _AdminEditor<Channel>(
@@ -925,6 +987,13 @@ class ChannelEditorPage extends StatelessWidget {
     title: _l(context).rsChannelN(index),
     load: () => radio.readChannel(index),
     save: radio.writeChannel,
+    prepare: startNew
+        ? (draft) {
+            if (draft.role != Channel_Role.DISABLED) return;
+            draft.role = Channel_Role.SECONDARY;
+            draft.ensureSettings().psk = _randomKey();
+          }
+        : null,
     validate: (draft) => BastionChannelValidation.validate(
       index: draft.index,
       role: draft.role.value,
@@ -939,13 +1008,21 @@ class ChannelEditorPage extends StatelessWidget {
         ? _l(context).rsKeyWarning
         : null,
     fields: (draft, changed) => [
-      if (index != 0)
-        _enumField(
-          label: _l(context).rsRole,
-          value: draft.role,
-          values: const [Channel_Role.SECONDARY, Channel_Role.DISABLED],
-          onChanged: (v) {
-            draft.role = v;
+      if (index == 0)
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading: const Icon(Icons.star_outline),
+          title: Text(_l(context).chMainAlwaysOn),
+        )
+      else
+        SwitchListTile(
+          key: const ValueKey('channel-use'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(_l(context).chUse),
+          subtitle: Text(draft.role == Channel_Role.DISABLED ? _l(context).chUseOff : _l(context).chUseOn),
+          value: draft.role != Channel_Role.DISABLED,
+          onChanged: (on) {
+            draft.role = on ? Channel_Role.SECONDARY : Channel_Role.DISABLED;
             changed();
           },
         ),
@@ -959,40 +1036,80 @@ class ChannelEditorPage extends StatelessWidget {
         },
       ),
       _precisionField(context, draft, changed),
-      const SizedBox(height: 8),
-      Text(_l(context).rsEncryption(_describeKey(_l(context), draft.settings.psk))),
-      Wrap(
-        spacing: 8,
-        children: [
-          OutlinedButton(
-            onPressed: () {
-              draft.ensureSettings().psk = const [1];
-              changed();
-            },
-            child: Text(_l(context).rsDefaultKey),
-          ),
-          OutlinedButton(
-            onPressed: () {
-              final random = Random.secure();
-              draft.ensureSettings().psk = List.generate(
-                32,
-                (_) => random.nextInt(256),
-              );
-              changed();
-            },
-            child: Text(_l(context).rsNewAes256),
-          ),
-          OutlinedButton(
-            onPressed: () {
-              draft.ensureSettings().psk = const [0];
-              changed();
-            },
-            child: Text(_l(context).rsNoEncryption),
-          ),
-        ],
-      ),
+      const SizedBox(height: 16),
+      _encryptionField(context, draft, changed),
     ],
   );
+}
+
+/// Who can read a channel: private (its own key), public (the default key)
+/// or anyone (no encryption).
+enum _ChannelPrivacy { private, public, none }
+
+_ChannelPrivacy _privacyOf(List<int> psk) => switch (psk.length) {
+      16 || 32 => _ChannelPrivacy.private,
+      1 when psk.first != 0 => _ChannelPrivacy.public,
+      _ => _ChannelPrivacy.none,
+    };
+
+Widget _encryptionField(BuildContext context, Channel draft, VoidCallback changed) {
+  final l = _l(context);
+  final current = _privacyOf(draft.settings.psk);
+  void pick(_ChannelPrivacy p) {
+    if (p == current) return;
+    draft.ensureSettings().psk = switch (p) {
+      _ChannelPrivacy.private => ChannelEditorPage._randomKey(),
+      _ChannelPrivacy.public => const [1],
+      _ChannelPrivacy.none => const [0],
+    };
+    changed();
+  }
+
+  return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+    Text(l.chWhoCanRead, style: Theme.of(context).textTheme.titleSmall),
+    RadioGroup<_ChannelPrivacy>(
+      groupValue: current,
+      onChanged: (v) {
+        if (v != null) pick(v);
+      },
+      child: Column(children: [
+        RadioListTile<_ChannelPrivacy>(
+          key: const ValueKey('privacy-private'),
+          contentPadding: EdgeInsets.zero,
+          value: _ChannelPrivacy.private,
+          title: Text(l.chPrivate),
+          subtitle: Text(l.chPrivateSub),
+        ),
+        RadioListTile<_ChannelPrivacy>(
+          key: const ValueKey('privacy-public'),
+          contentPadding: EdgeInsets.zero,
+          value: _ChannelPrivacy.public,
+          title: Text(l.chPublic),
+          subtitle: Text(l.chPublicSub),
+        ),
+        RadioListTile<_ChannelPrivacy>(
+          key: const ValueKey('privacy-none'),
+          contentPadding: EdgeInsets.zero,
+          value: _ChannelPrivacy.none,
+          title: Text(l.chNone),
+          subtitle: Text(l.chNoneSub),
+        ),
+      ]),
+    ),
+    if (current == _ChannelPrivacy.private)
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: TextButton.icon(
+          key: const ValueKey('privacy-new-key'),
+          onPressed: () {
+            draft.ensureSettings().psk = ChannelEditorPage._randomKey();
+            changed();
+          },
+          icon: const Icon(Icons.key),
+          label: Text(l.chNewKey),
+        ),
+      ),
+  ]);
 }
 
 /// The radio's own position precision for one channel.

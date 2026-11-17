@@ -6158,4 +6158,92 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get nodesNoMeshYetBody =>
       'Les nœuds apparaissent ici à mesure que votre radio les entend.';
+
+  @override
+  String get chUse => 'Utiliser ce canal';
+
+  @override
+  String get chUseOn => 'Activé : votre radio émet et écoute sur ce canal.';
+
+  @override
+  String get chUseOff => 'Désactivé : cet emplacement est vide.';
+
+  @override
+  String get chMainAlwaysOn => 'Votre canal principal. Il est toujours activé.';
+
+  @override
+  String get chWhoCanRead => 'Qui peut le lire';
+
+  @override
+  String get chPrivate => 'Privé';
+
+  @override
+  String get chPrivateSub =>
+      'Sa propre clé aléatoire. Seules les personnes avec qui vous partagez le canal peuvent le lire.';
+
+  @override
+  String get chPublic => 'Public';
+
+  @override
+  String get chPublicSub =>
+      'La clé par défaut. Toute personne utilisant les réglages Meshtastic par défaut peut le lire.';
+
+  @override
+  String get chNone => 'Sans chiffrement';
+
+  @override
+  String get chNoneSub => 'Toute personne à portée peut le lire.';
+
+  @override
+  String get chNewKey => 'Créer une nouvelle clé';
+
+  @override
+  String get chAdded =>
+      'Canal ajouté. Partagez-le pour que d\'autres le rejoignent.';
+
+  @override
+  String get chShareAction => 'Partager';
+
+  @override
+  String get setNoRadio => 'Aucune radio connectée';
+
+  @override
+  String setChannelsInUse(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count canaux : $names',
+      one: '1 canal : $names',
+      zero: 'Aucun canal utilisé',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get rsMainSettings => 'Réglages principaux';
+
+  @override
+  String get rsMore => 'Plus';
+
+  @override
+  String get rsModulesSubtitle =>
+      'Fonctions facultatives comme MQTT, la télémétrie et le stockage-retransmission';
+
+  @override
+  String get rsAdvanced => 'Avancé';
+
+  @override
+  String get rsAdvancedSub =>
+      'Toutes les sections de réglages, et une vérification de ce que cette radio prend en charge';
+
+  @override
+  String rsNotInFirmware(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count absents du firmware de cette radio',
+      one: '1 absent du firmware de cette radio',
+    );
+    return '$_temp0';
+  }
 }

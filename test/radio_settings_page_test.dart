@@ -75,8 +75,14 @@ void main() {
     await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, builder: (context, child) => MediaQuery(
       data: MediaQuery.of(context).copyWith(padding: const EdgeInsets.only(bottom: 48)),
       child: child!), home: RadioSettingsPage(radio: radio)));
+    await tester.ensureVisible(find.text('Modules'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Modules'));
+    await tester.pumpAndSettle();
     final list = find.byType(Scrollable).first;
     await tester.scrollUntilVisible(find.text('Mesh Beacon'), 500, scrollable: list);
+    await tester.ensureVisible(find.text('Mesh Beacon'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Mesh Beacon'));
     await tester.pumpAndSettle();
     expect(find.text('Mesh Beacon settings are unavailable through this radio’s firmware API.'), findsOneWidget);
@@ -91,10 +97,23 @@ void main() {
   });
 
   testWidgets('abbreviated module names have readable titles', (tester) async {
-    final radio = MeshtasticRadioCoordinator();
+    final radio = UnavailableRadio();
     addTearDown(radio.dispose);
     await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, home: RadioSettingsPage(radio: radio)));
-    for (final title in ['Device UI', 'MQTT', 'External notifications',
+    // Device UI is a settings section under Advanced; the rest are modules.
+    await tester.scrollUntilVisible(find.text('Advanced'), 150, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Advanced'));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.text('Device UI'), 150, scrollable: find.byType(Scrollable).first);
+    expect(find.text('Device UI'), findsOneWidget);
+    tester.state<ScrollableState>(find.byType(Scrollable).first).position.jumpTo(0);
+    await tester.pump();
+    await tester.scrollUntilVisible(find.text('Modules'), 150, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Modules'));
+    await tester.pumpAndSettle();
+    for (final title in ['MQTT', 'External notifications',
         'Canned messages', 'Remote hardware', 'TAK', 'Mesh Beacon']) {
       tester.state<ScrollableState>(find.byType(Scrollable).first).position.jumpTo(0);
       await tester.pump();

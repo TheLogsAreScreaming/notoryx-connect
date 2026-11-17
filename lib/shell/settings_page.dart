@@ -32,52 +32,48 @@ class _SettingsPage extends StatelessWidget {
       NxPageHeader(title: l.tabSettings,
         subtitle: l.setSubtitle),
       NxSectionLabel(l.setRadioSec),
-      Card(child: ExpansionTile(
-        initiallyExpanded: true,
-        leading: const Icon(Icons.settings_input_antenna),
-        title: Text(l.setRadioConfig),
-        subtitle: Text(radio.canAdminister
-          ? l.setCanChange
-          : radio.isReady && radio.firmwareSupport == FirmwareSupport.unsupported
-              ? l.setReadOnly('${radio.firmwareVersion}', '${BastionFirmware.minimum.$1}.${BastionFirmware.minimum.$2}', BastionFirmware.flasher)
-              : l.setConnectToView),
-        children: [
-          ListTile(
-            leading: const Icon(Icons.person_outline),
-            title: Text(l.setIdentity),
-            subtitle: Text(local == null
-              ? l.setWaitingNode
-              : '${local.longName ?? l.setNoLong} • ${local.shortName ?? l.setNoShort}\n'
-                '${local.id ?? l.setNoId}'),
-            isThreeLine: local != null,
-          ),
-          ListTile(
-            leading: const Icon(Icons.edit_outlined),
-            title: Text(l.setChange),
-            subtitle: Text(l.setChangeSub),
-            enabled: radio.canAdminister,
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => _open(context, RadioSettingsPage(radio: radio)),
-          ),
+      Card(child: Column(children: [
+        ListTile(
+          key: const ValueKey('settings-radio'),
+          leading: const Icon(Icons.settings_input_antenna),
+          title: Text(local?.longName ?? (radio.isReady ? l.setWaitingNode : l.setNoRadio)),
+          subtitle: Text([
+            if (local != null) [?local.shortName, ?local.id].join(' • '),
+            if (radio.canAdminister)
+              l.setCanChange
+            else if (radio.isReady && radio.firmwareSupport == FirmwareSupport.unsupported)
+              l.setReadOnly('${radio.firmwareVersion}', '${BastionFirmware.minimum.$1}.${BastionFirmware.minimum.$2}', BastionFirmware.flasher)
+            else
+              l.setConnectToView,
+          ].join('\n')),
+          isThreeLine: local != null,
+        ),
+        if (radio.loraSettings.isNotEmpty)
           ListTile(
             leading: const Icon(Icons.tune),
             title: Text(l.setDeviceLora),
-            subtitle: Text(radio.loraSettings.isEmpty
-              ? l.setConfigWait(radio.radioConfigCount)
-              : radio.loraSettings.join('\n'))),
+            subtitle: Text(radio.loraSettings.join(' • ')),
+          ),
+        if (radio.channelMetadata.isNotEmpty)
           ListTile(
+            key: const ValueKey('settings-channels'),
             leading: const Icon(Icons.podcasts),
             title: Text(l.setChannels),
-            subtitle: Text(radio.channelSettings.isEmpty
-              ? l.setChannelWait(radio.channelConfigCount)
-              : radio.channelSettings.join('\n')),
+            subtitle: Text(_channelSummary(l, radio)),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _open(context, ChannelListPage(radio: radio)),
           ),
-          ListTile(
-            leading: const Icon(Icons.extension_outlined),
-            title: Text(l.setModules),
-            subtitle: Text(l.setModulesSub(radio.moduleConfigCount))),
-        ],
-      )),
+        const Divider(height: 1),
+        ListTile(
+          key: const ValueKey('settings-radio-settings'),
+          leading: const Icon(Icons.edit_outlined),
+          title: Text(l.setChange),
+          subtitle: Text(l.setChangeSub),
+          enabled: radio.canAdminister,
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(context, RadioSettingsPage(radio: radio)),
+        ),
+      ])),
       Card(child: Column(children: [
         SwitchListTile(
           secondary: const Icon(Icons.share_location),
@@ -222,4 +218,13 @@ class _ReferenceRow extends StatelessWidget {
       Expanded(child: Text(label)),
     ]),
   );
+}
+
+/// "2 channels: LongFast, Team": the slots in use, by name.
+String _channelSummary(AppLocalizations l, MeshtasticRadioCoordinator radio) {
+  final used = [for (final c in radio.channelMetadata) if (c.role != 0) c];
+  final names = [
+    for (final c in used) c.name.isNotEmpty ? c.name : (c.index == 0 ? l.chatsPrimaryChannel : l.chatsChannelN(c.index)),
+  ];
+  return l.setChannelsInUse(used.length, names.join(', '));
 }

@@ -6161,4 +6161,92 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get nodesNoMeshYetBody =>
       'Knoten erscheinen hier, sobald Ihr Funkgerät sie hört.';
+
+  @override
+  String get chUse => 'Diesen Kanal verwenden';
+
+  @override
+  String get chUseOn => 'An: Ihr Funkgerät sendet und hört auf diesem Kanal.';
+
+  @override
+  String get chUseOff => 'Aus: Dieser Platz ist leer.';
+
+  @override
+  String get chMainAlwaysOn => 'Ihr Hauptkanal. Er ist immer an.';
+
+  @override
+  String get chWhoCanRead => 'Wer ihn lesen kann';
+
+  @override
+  String get chPrivate => 'Privat';
+
+  @override
+  String get chPrivateSub =>
+      'Ein eigener Zufallsschlüssel. Nur Personen, mit denen Sie den Kanal teilen, können ihn lesen.';
+
+  @override
+  String get chPublic => 'Öffentlich';
+
+  @override
+  String get chPublicSub =>
+      'Der Standardschlüssel. Jeder mit den Meshtastic-Standardeinstellungen kann ihn lesen.';
+
+  @override
+  String get chNone => 'Keine Verschlüsselung';
+
+  @override
+  String get chNoneSub => 'Jeder in Reichweite kann ihn lesen.';
+
+  @override
+  String get chNewKey => 'Neuen Schlüssel erstellen';
+
+  @override
+  String get chAdded =>
+      'Kanal hinzugefügt. Teilen Sie ihn, damit andere beitreten können.';
+
+  @override
+  String get chShareAction => 'Teilen';
+
+  @override
+  String get setNoRadio => 'Kein Funkgerät verbunden';
+
+  @override
+  String setChannelsInUse(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Kanäle: $names',
+      one: '1 Kanal: $names',
+      zero: 'Keine Kanäle in Gebrauch',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get rsMainSettings => 'Wichtigste Einstellungen';
+
+  @override
+  String get rsMore => 'Mehr';
+
+  @override
+  String get rsModulesSubtitle =>
+      'Optionale Funktionen wie MQTT, Telemetrie und Speichern und Weiterleiten';
+
+  @override
+  String get rsAdvanced => 'Erweitert';
+
+  @override
+  String get rsAdvancedSub =>
+      'Alle Einstellungsbereiche und eine Prüfung, was dieses Funkgerät unterstützt';
+
+  @override
+  String rsNotInFirmware(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nicht in der Firmware dieses Funkgeräts',
+      one: '1 nicht in der Firmware dieses Funkgeräts',
+    );
+    return '$_temp0';
+  }
 }

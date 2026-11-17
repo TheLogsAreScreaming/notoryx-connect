@@ -4365,5 +4365,44 @@
   },
   "nodesNoMatchHint": "Search by name, short name or node ID.",
   "nodesNoMeshYet": "No mesh nodes yet",
-  "nodesNoMeshYetBody": "Nodes appear here as your radio hears them."
+  "nodesNoMeshYetBody": "Nodes appear here as your radio hears them.",
+  "chUse": "Use this channel",
+  "chUseOn": "On: your radio sends and listens on this channel.",
+  "chUseOff": "Off: this slot is empty.",
+  "chMainAlwaysOn": "Your main channel. It is always on.",
+  "chWhoCanRead": "Who can read it",
+  "chPrivate": "Private",
+  "chPrivateSub": "Its own random key. Only people you share the channel with can read it.",
+  "chPublic": "Public",
+  "chPublicSub": "The default key. Anyone using the default Meshtastic settings can read it.",
+  "chNone": "No encryption",
+  "chNoneSub": "Anyone in range can read it.",
+  "chNewKey": "Make a new key",
+  "chAdded": "Channel added. Share it so others can join.",
+  "chShareAction": "Share",
+  "setNoRadio": "No radio connected",
+  "setChannelsInUse": "{count, plural, =0{No channels in use} one{1 channel: {names}} other{{count} channels: {names}}}",
+  "@setChannelsInUse": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "rsMainSettings": "Main settings",
+  "rsMore": "More",
+  "rsModulesSubtitle": "Optional features such as MQTT, telemetry and store & forward",
+  "rsAdvanced": "Advanced",
+  "rsAdvancedSub": "Every settings section, and a check of what this radio supports",
+  "rsNotInFirmware": "{count, plural, one{1 not in this radio's firmware} other{{count} not in this radio's firmware}}",
+  "@rsNotInFirmware": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
