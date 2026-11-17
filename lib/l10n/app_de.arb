@@ -1639,5 +1639,15 @@
   "nodesHiddenDevices": "{count, plural, one{1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.} other{{count} weitere Geräte in der Nähe sind keine Meshtastic-Funkgeräte und werden daher ausgeblendet.}}",
   "nodesShowAllOn": "Alles in der Nähe wird angezeigt. Nur nötig, wenn Ihr Funkgerät sonst nicht erscheint.",
   "nodesFindAnother": "Anderes Funkgerät suchen",
-  "nodesYourRadioHeading": "Ihr Funkgerät"
+  "nodesYourRadioHeading": "Ihr Funkgerät",
+  "nodesManage": "Verwalten",
+  "nodesSearch": "Knoten suchen",
+  "nodesActiveNow": "Gerade aktiv",
+  "nodesOlder": "Älter",
+  "nodesNeverHeard": "Noch nicht gehört",
+  "nodesFavorite": "Favorit",
+  "nodesNoMatch": "Kein Knoten passt zu „{query}“",
+  "nodesNoMatchHint": "Suchen Sie nach Name, Kurzname oder Knoten-ID.",
+  "nodesNoMeshYet": "Noch keine Mesh-Knoten",
+  "nodesNoMeshYetBody": "Knoten erscheinen hier, sobald Ihr Funkgerät sie hört."
 }

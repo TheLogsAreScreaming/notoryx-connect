@@ -1639,5 +1639,15 @@
   "nodesHiddenDevices": "{count, plural, one{1 dispositivo cercano no es una radio Meshtastic, así que está oculto.} other{{count} dispositivos cercanos no son radios Meshtastic, así que están ocultos.}}",
   "nodesShowAllOn": "Se muestra todo lo cercano. Solo hace falta si tu radio no aparece de otro modo.",
   "nodesFindAnother": "Buscar otra radio",
-  "nodesYourRadioHeading": "Tu radio"
+  "nodesYourRadioHeading": "Tu radio",
+  "nodesManage": "Gestionar",
+  "nodesSearch": "Buscar nodos",
+  "nodesActiveNow": "Activos ahora",
+  "nodesOlder": "Más antiguos",
+  "nodesNeverHeard": "Aún no se ha oído",
+  "nodesFavorite": "Favorito",
+  "nodesNoMatch": "Ningún nodo coincide con «{query}»",
+  "nodesNoMatchHint": "Busca por nombre, nombre corto o ID de nodo.",
+  "nodesNoMeshYet": "Aún no hay nodos de la malla",
+  "nodesNoMeshYetBody": "Los nodos aparecen aquí a medida que tu radio los oye."
 }

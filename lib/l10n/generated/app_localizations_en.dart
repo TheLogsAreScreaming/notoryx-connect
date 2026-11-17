@@ -6056,4 +6056,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nodesYourRadioHeading => 'Your radio';
+
+  @override
+  String get nodesManage => 'Manage';
+
+  @override
+  String get nodesSearch => 'Search nodes';
+
+  @override
+  String get nodesActiveNow => 'Active now';
+
+  @override
+  String get nodesOlder => 'Older';
+
+  @override
+  String get nodesNeverHeard => 'Not heard yet';
+
+  @override
+  String get nodesFavorite => 'Favorite';
+
+  @override
+  String nodesNoMatch(String query) {
+    return 'No nodes match \"$query\"';
+  }
+
+  @override
+  String get nodesNoMatchHint => 'Search by name, short name or node ID.';
+
+  @override
+  String get nodesNoMeshYet => 'No mesh nodes yet';
+
+  @override
+  String get nodesNoMeshYetBody =>
+      'Nodes appear here as your radio hears them.';
 }
