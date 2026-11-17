@@ -6053,4 +6053,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nodesFindAnother => 'Find another radio';
+
+  @override
+  String get nodesYourRadioHeading => 'Your radio';
 }
