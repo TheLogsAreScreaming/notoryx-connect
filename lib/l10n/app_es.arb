@@ -1638,5 +1638,6 @@
   "nodesShowAllBluetooth": "Mostrar todos los dispositivos Bluetooth",
   "nodesHiddenDevices": "{count, plural, one{1 dispositivo cercano no es una radio Meshtastic, así que está oculto.} other{{count} dispositivos cercanos no son radios Meshtastic, así que están ocultos.}}",
   "nodesShowAllOn": "Se muestra todo lo cercano. Solo hace falta si tu radio no aparece de otro modo.",
-  "nodesFindAnother": "Buscar otra radio"
+  "nodesFindAnother": "Buscar otra radio",
+  "nodesYourRadioHeading": "Tu radio"
 }

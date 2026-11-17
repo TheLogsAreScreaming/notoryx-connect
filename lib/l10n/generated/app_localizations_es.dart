@@ -6098,4 +6098,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nodesFindAnother => 'Buscar otra radio';
+
+  @override
+  String get nodesYourRadioHeading => 'Tu radio';
 }

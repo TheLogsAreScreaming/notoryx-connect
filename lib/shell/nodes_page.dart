@@ -170,10 +170,13 @@ class _NodesPage extends StatelessWidget {
           if (BastionPreferences.instance.statistics) ...[
             NxStatRow(
               children: [
-                NxStatTile(
-                  label: l.nodesRadiosFound,
-                  value: '${discovery.results.length}',
-                ),
+                // A scan count means nothing while a radio is connected:
+                // the app doesn't scan then, so it would read 0.
+                if (!showsConnectedCard)
+                  NxStatTile(
+                    label: l.nodesRadiosFound,
+                    value: '${discovery.results.length}',
+                  ),
                 NxStatTile(
                   label: l.nodesMeshNodes,
                   value: '${radio.nodes.length}',
@@ -218,7 +221,7 @@ class _NodesPage extends StatelessWidget {
                 icon: Icons.system_update_alt,
                 message: advice,
               ),
-          NxSectionLabel(l.nodesNearby),
+          NxSectionLabel(showsConnectedCard ? l.nodesYourRadioHeading : l.nodesNearby),
           if (discovery.scanning)
             Row(
               children: [

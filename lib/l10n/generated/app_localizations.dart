@@ -9948,6 +9948,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Find another radio'**
   String get nodesFindAnother;
+
+  /// No description provided for @nodesYourRadioHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio'**
+  String get nodesYourRadioHeading;
 }
 
 class _AppLocalizationsDelegate

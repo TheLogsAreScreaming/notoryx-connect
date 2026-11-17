@@ -6122,4 +6122,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get nodesFindAnother => 'Trouver une autre radio';
+
+  @override
+  String get nodesYourRadioHeading => 'Votre radio';
 }

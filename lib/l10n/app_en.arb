@@ -4347,5 +4347,6 @@
     }
   },
   "nodesShowAllOn": "Listing everything nearby. Only needed if your radio doesn't show up otherwise.",
-  "nodesFindAnother": "Find another radio"
+  "nodesFindAnother": "Find another radio",
+  "nodesYourRadioHeading": "Your radio"
 }
