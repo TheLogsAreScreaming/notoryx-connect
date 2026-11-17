@@ -6125,4 +6125,37 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get nodesYourRadioHeading => 'Votre radio';
+
+  @override
+  String get nodesManage => 'Gérer';
+
+  @override
+  String get nodesSearch => 'Rechercher des nœuds';
+
+  @override
+  String get nodesActiveNow => 'Actifs maintenant';
+
+  @override
+  String get nodesOlder => 'Plus anciens';
+
+  @override
+  String get nodesNeverHeard => 'Pas encore entendu';
+
+  @override
+  String get nodesFavorite => 'Favori';
+
+  @override
+  String nodesNoMatch(String query) {
+    return 'Aucun nœud ne correspond à « $query »';
+  }
+
+  @override
+  String get nodesNoMatchHint => 'Recherchez par nom, nom court ou ID de nœud.';
+
+  @override
+  String get nodesNoMeshYet => 'Aucun nœud du maillage pour l\'instant';
+
+  @override
+  String get nodesNoMeshYetBody =>
+      'Les nœuds apparaissent ici à mesure que votre radio les entend.';
 }

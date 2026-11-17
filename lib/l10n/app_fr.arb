@@ -1639,5 +1639,15 @@
   "nodesHiddenDevices": "{count, plural, one{1 autre appareil à proximité n'est pas une radio Meshtastic, il est donc masqué.} other{{count} autres appareils à proximité ne sont pas des radios Meshtastic, ils sont donc masqués.}}",
   "nodesShowAllOn": "Tout ce qui est à proximité est affiché. Utile seulement si votre radio n'apparaît pas autrement.",
   "nodesFindAnother": "Trouver une autre radio",
-  "nodesYourRadioHeading": "Votre radio"
+  "nodesYourRadioHeading": "Votre radio",
+  "nodesManage": "Gérer",
+  "nodesSearch": "Rechercher des nœuds",
+  "nodesActiveNow": "Actifs maintenant",
+  "nodesOlder": "Plus anciens",
+  "nodesNeverHeard": "Pas encore entendu",
+  "nodesFavorite": "Favori",
+  "nodesNoMatch": "Aucun nœud ne correspond à « {query} »",
+  "nodesNoMatchHint": "Recherchez par nom, nom court ou ID de nœud.",
+  "nodesNoMeshYet": "Aucun nœud du maillage pour l'instant",
+  "nodesNoMeshYetBody": "Les nœuds apparaissent ici à mesure que votre radio les entend."
 }

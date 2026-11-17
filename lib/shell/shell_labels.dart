@@ -60,16 +60,6 @@ String _rssiLabel(BuildContext context, int rssi) {
   return l.rssiVeryWeak;
 }
 
-String _heardLabel(BuildContext context, BastionHeardWithin value) {
-  final l = AppLocalizations.of(context);
-  return switch (value) {
-    BastionHeardWithin.any => l.heardAny,
-    BastionHeardWithin.hour => l.heardHour,
-    BastionHeardWithin.day => l.heardDay,
-    BastionHeardWithin.week => l.heardWeek,
-  };
-}
-
 String _connectionLabel(BuildContext context, MeshtasticConnectionState state) {
   final l = AppLocalizations.of(context);
   return switch (state) {

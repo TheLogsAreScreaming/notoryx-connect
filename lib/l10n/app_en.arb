@@ -4348,5 +4348,22 @@
   },
   "nodesShowAllOn": "Listing everything nearby. Only needed if your radio doesn't show up otherwise.",
   "nodesFindAnother": "Find another radio",
-  "nodesYourRadioHeading": "Your radio"
+  "nodesYourRadioHeading": "Your radio",
+  "nodesManage": "Manage",
+  "nodesSearch": "Search nodes",
+  "nodesActiveNow": "Active now",
+  "nodesOlder": "Older",
+  "nodesNeverHeard": "Not heard yet",
+  "nodesFavorite": "Favorite",
+  "nodesNoMatch": "No nodes match \"{query}\"",
+  "@nodesNoMatch": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "nodesNoMatchHint": "Search by name, short name or node ID.",
+  "nodesNoMeshYet": "No mesh nodes yet",
+  "nodesNoMeshYetBody": "Nodes appear here as your radio hears them."
 }
