@@ -1,0 +1,1 @@
+Channels are easier to add: New channel opens switched on with a private key, so you only type a name. Channel encryption is three plain choices. The radio part of Settings and the Radio settings screen are tidied up.
