@@ -1,0 +1,1 @@
+The Nodes tab is redone: your radio is one bar at the top, and nodes are grouped into Active now, Today and Older, with last heard, distance, hops, battery and signal on each row, plus search and favorites.
