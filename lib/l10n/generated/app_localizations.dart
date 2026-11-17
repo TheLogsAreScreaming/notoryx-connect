@@ -9954,6 +9954,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your radio'**
   String get nodesYourRadioHeading;
+
+  /// No description provided for @nodesManage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get nodesManage;
+
+  /// No description provided for @nodesSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search nodes'**
+  String get nodesSearch;
+
+  /// No description provided for @nodesActiveNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Active now'**
+  String get nodesActiveNow;
+
+  /// No description provided for @nodesOlder.
+  ///
+  /// In en, this message translates to:
+  /// **'Older'**
+  String get nodesOlder;
+
+  /// No description provided for @nodesNeverHeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Not heard yet'**
+  String get nodesNeverHeard;
+
+  /// No description provided for @nodesFavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite'**
+  String get nodesFavorite;
+
+  /// No description provided for @nodesNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes match \"{query}\"'**
+  String nodesNoMatch(String query);
+
+  /// No description provided for @nodesNoMatchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, short name or node ID.'**
+  String get nodesNoMatchHint;
+
+  /// No description provided for @nodesNoMeshYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No mesh nodes yet'**
+  String get nodesNoMeshYet;
+
+  /// No description provided for @nodesNoMeshYetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes appear here as your radio hears them.'**
+  String get nodesNoMeshYetBody;
 }
 
 class _AppLocalizationsDelegate

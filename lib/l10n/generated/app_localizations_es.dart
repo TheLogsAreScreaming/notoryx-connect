@@ -6101,4 +6101,37 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nodesYourRadioHeading => 'Tu radio';
+
+  @override
+  String get nodesManage => 'Gestionar';
+
+  @override
+  String get nodesSearch => 'Buscar nodos';
+
+  @override
+  String get nodesActiveNow => 'Activos ahora';
+
+  @override
+  String get nodesOlder => 'Más antiguos';
+
+  @override
+  String get nodesNeverHeard => 'Aún no se ha oído';
+
+  @override
+  String get nodesFavorite => 'Favorito';
+
+  @override
+  String nodesNoMatch(String query) {
+    return 'Ningún nodo coincide con «$query»';
+  }
+
+  @override
+  String get nodesNoMatchHint => 'Busca por nombre, nombre corto o ID de nodo.';
+
+  @override
+  String get nodesNoMeshYet => 'Aún no hay nodos de la malla';
+
+  @override
+  String get nodesNoMeshYetBody =>
+      'Los nodos aparecen aquí a medida que tu radio los oye.';
 }

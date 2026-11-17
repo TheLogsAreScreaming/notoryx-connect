@@ -6127,4 +6127,38 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get nodesYourRadioHeading => 'Ihr Funkgerät';
+
+  @override
+  String get nodesManage => 'Verwalten';
+
+  @override
+  String get nodesSearch => 'Knoten suchen';
+
+  @override
+  String get nodesActiveNow => 'Gerade aktiv';
+
+  @override
+  String get nodesOlder => 'Älter';
+
+  @override
+  String get nodesNeverHeard => 'Noch nicht gehört';
+
+  @override
+  String get nodesFavorite => 'Favorit';
+
+  @override
+  String nodesNoMatch(String query) {
+    return 'Kein Knoten passt zu „$query“';
+  }
+
+  @override
+  String get nodesNoMatchHint =>
+      'Suchen Sie nach Name, Kurzname oder Knoten-ID.';
+
+  @override
+  String get nodesNoMeshYet => 'Noch keine Mesh-Knoten';
+
+  @override
+  String get nodesNoMeshYetBody =>
+      'Knoten erscheinen hier, sobald Ihr Funkgerät sie hört.';
 }

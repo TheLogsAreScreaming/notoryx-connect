@@ -135,7 +135,6 @@ class _NodesPage extends StatelessWidget {
     ]),
     builder: (context, _) {
       final l = AppLocalizations.of(context);
-      final scheme = Theme.of(context).colorScheme;
       final local = radio.localNode;
       final connectedName = radio.connection.deviceName;
       // Every link type (Bluetooth too) gets a connected-radio card.
@@ -144,18 +143,6 @@ class _NodesPage extends StatelessWidget {
               radio.usesUsbLink ||
               connectedName != null) &&
           (radio.isReady || radio.isReconnecting || radio.busy);
-      final heard = BastionPreferences.instance.heardWithin;
-      final favoritesOnly = BastionPreferences.instance.favoritesOnly;
-      final favorites = radio.favoriteNums;
-      final now = DateTime.now();
-      final shown = [
-        for (final n in radio.nodes)
-          if (heard.matches(n.lastHeard, now, always: n.num == local?.num) &&
-              (!favoritesOnly ||
-                  n.num == local?.num ||
-                  favorites.contains(n.num)))
-            n,
-      ];
       return ListView(
         padding: NxSpace.page,
         children: [
@@ -167,30 +154,6 @@ class _NodesPage extends StatelessWidget {
                   )
                 : l.nodesFindRadio,
           ),
-          if (BastionPreferences.instance.statistics) ...[
-            NxStatRow(
-              children: [
-                // A scan count means nothing while a radio is connected:
-                // the app doesn't scan then, so it would read 0.
-                if (!showsConnectedCard)
-                  NxStatTile(
-                    label: l.nodesRadiosFound,
-                    value: '${discovery.results.length}',
-                  ),
-                NxStatTile(
-                  label: l.nodesMeshNodes,
-                  value: '${radio.nodes.length}',
-                ),
-                NxStatTile(
-                  flex: 2,
-                  label: l.nodesStatus,
-                  value: _connectionLabel(context, radio.connection.state),
-                  tone: _connectionTone(radio.connection.state),
-                ),
-              ],
-            ),
-            const SizedBox(height: NxSpace.sm),
-          ],
           if (radio.connection.error != null)
             NxBanner(
               tone: NxTone.danger,
@@ -221,6 +184,34 @@ class _NodesPage extends StatelessWidget {
                 icon: Icons.system_update_alt,
                 message: advice,
               ),
+          if (showsConnectedCard)
+            _RadioBar(radio: radio, onTap: () => _openRadioSheet(context))
+          else
+            ..._radioWidgets(context),
+          if (radio.nodes.any((n) => n.num != local?.num))
+            _NodeList(radio: radio)
+          else if (showsConnectedCard)
+            NxEmptyState(
+              icon: Icons.hub_outlined,
+              title: l.nodesNoMeshYet,
+              detail: l.nodesNoMeshYetBody,
+            ),
+        ],
+      );
+    },
+  );
+
+  /// Everything about the radio link: the connected radio, scanning for
+  /// radios, Wi-Fi and USB. Shown on the page when no radio is connected,
+  /// and in the radio sheet when one is.
+  List<Widget> _radioWidgets(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final connectedName = radio.connection.deviceName;
+    final showsConnectedCard =
+        (radio.usesNetworkLink || radio.usesUsbLink || connectedName != null) &&
+        (radio.isReady || radio.isReconnecting || radio.busy);
+    return [
           NxSectionLabel(showsConnectedCard ? l.nodesYourRadioHeading : l.nodesNearby),
           if (discovery.scanning)
             Row(
@@ -388,114 +379,13 @@ class _NodesPage extends StatelessWidget {
               value: discovery.showAll,
               onChanged: (value) => discovery.showAll = value,
             ),
-          if (radio.nodes.isNotEmpty) ...[
-            NxSectionLabel(
-              heard.window == null && !favoritesOnly
-                  ? l.nodesCount(radio.nodes.length)
-                  : l.nodesCountOf(shown.length, radio.nodes.length),
-            ),
-            _HeardFilterChips(
-              value: heard,
-              onChanged: (v) => BastionPreferences.instance.update(heard: v),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: NxSpace.xs),
-              child: FilterChip(
-                key: const ValueKey('nodes-favorites-only'),
-                avatar: Icon(favoritesOnly ? Icons.star : Icons.star_border),
-                showCheckmark: false,
-                label: Text(l.nodesFavoritesOnly),
-                selected: favoritesOnly,
-                onSelected: (v) =>
-                    BastionPreferences.instance.update(favorites: v),
-              ),
-            ),
-            if (shown.isEmpty && favoritesOnly && heard.window == null)
-              NxEmptyState(
-                icon: Icons.star_border,
-                title: l.nodesNoFavorites,
-                detail: l.nodesNoFavoritesHint,
-                action: TextButton(
-                  onPressed: () =>
-                      BastionPreferences.instance.update(favorites: false),
-                  child: Text(l.nodesShowAll),
-                ),
-              )
-            else if (shown.isEmpty)
-              NxEmptyState(
-                icon: Icons.filter_alt_off_outlined,
-                title: l.nodesNoneHeard(_heardLabel(context, heard)),
-                detail: l.nodesPickLonger,
-                action: TextButton(
-                  onPressed: () => BastionPreferences.instance.update(
-                    heard: BastionHeardWithin.any,
-                  ),
-                  child: Text(l.nodesShowAll),
-                ),
-              )
-            else
-              Card(
-                child: Column(
-                  children: [
-                    for (final (i, node) in shown.indexed) ...[
-                      if (i > 0) const Divider(indent: 72),
-                      ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: scheme.primaryContainer,
-                          foregroundColor: scheme.onPrimaryContainer,
-                          child: Text(
-                            _initials(node.shortName ?? node.displayName),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                        title: Text(node.displayName),
-                        subtitle: Text(
-                          [
-                            if (node.shortName?.isNotEmpty ?? false)
-                              node.shortName!,
-                            node.id ??
-                                '!${node.num.toRadixString(16).padLeft(8, '0')}',
-                          ].join(' • '),
-                        ),
-                        trailing: radio.nodeKeys.hasChanged(node.num)
-                            ? Tooltip(
-                                message: l.chatsKeyChanged,
-                                child: Icon(
-                                  Icons.gpp_maybe_outlined,
-                                  color: scheme.error,
-                                  semanticLabel: l.chatsKeyChanged,
-                                ),
-                              )
-                            : switch (radio.lookalikeOf(node.num)) {
-                                final like? => Tooltip(
-                                  message: l.nodesLookalike(
-                                    radio.nodeName(like),
-                                  ),
-                                  child: Icon(
-                                    Icons.content_copy_outlined,
-                                    color: scheme.error,
-                                    semanticLabel: l.nodesLookalike(
-                                      radio.nodeName(like),
-                                    ),
-                                  ),
-                                ),
-                                null => const Icon(Icons.chevron_right),
-                              },
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (_) =>
-                                NodeDetailPage(radio: radio, nodeNum: node.num),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-          ],
+    ];
+  }
+
+  List<Widget> _healthWidgets(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    return [
           if (radio.isReady && BastionPreferences.instance.meshHealth) ...[
             NxSectionLabel(
               l.nodesHealth,
@@ -588,6 +478,13 @@ class _NodesPage extends StatelessWidget {
               ),
             ),
           ],
+    ];
+  }
+
+  List<Widget> _encounterWidgets(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    return [
           if (radio.nodeVault.isNotEmpty &&
               BastionPreferences.instance.encounters) ...[
             NxSectionLabel(l.nodesEncounters),
@@ -618,52 +515,46 @@ class _NodesPage extends StatelessWidget {
                 ),
               ),
           ],
-          NxSectionLabel(l.nodesMore),
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.construction),
-              title: Text(l.nodesFieldTools),
-              subtitle: Text(l.nodesFieldToolsSub),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: onOpenTools,
+    ];
+  }
+
+  /// The radio sheet: connection, scanning, the connection doctor, mesh
+  /// health and saved encounters.
+  Future<void> _openRadioSheet(BuildContext context) => showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        showDragHandle: true,
+        builder: (sheet) => DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.8,
+          maxChildSize: 0.95,
+          builder: (sheet, controller) => AnimatedBuilder(
+            animation: Listenable.merge([discovery, radio, BastionPreferences.instance]),
+            builder: (sheet, _) => ListView(
+              key: const ValueKey('radio-sheet'),
+              controller: controller,
+              padding: NxSpace.page,
+              children: [
+                ..._radioWidgets(sheet),
+                Card(
+                  child: ListTile(
+                    key: const ValueKey('sheet-doctor'),
+                    leading: const Icon(Icons.medical_services_outlined),
+                    title: Text(AppLocalizations.of(sheet).toolsDoctor),
+                    subtitle: Text(AppLocalizations.of(sheet).toolsDoctorSub),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => Navigator.of(sheet).push(MaterialPageRoute<void>(
+                      builder: (_) => ConnectionDoctorPage(radio: radio, discovery: discovery),
+                    )),
+                  ),
+                ),
+                ..._healthWidgets(sheet),
+                ..._encounterWidgets(sheet),
+              ],
             ),
           ),
-          NxBanner(
-            tone: radio.isReady ? NxTone.success : NxTone.neutral,
-            message: radio.isReady ? l.nodesReadyBanner : l.nodesHelpBanner,
-          ),
-        ],
+        ),
       );
-    },
-  );
-}
-
-/// Chips that limit the node list to nodes heard recently.
-class _HeardFilterChips extends StatelessWidget {
-  const _HeardFilterChips({required this.value, required this.onChanged});
-  final BastionHeardWithin value;
-  final ValueChanged<BastionHeardWithin> onChanged;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: NxSpace.xs),
-    child: Semantics(
-      label: AppLocalizations.of(context).nodesHeardWithin,
-      child: Wrap(
-        spacing: NxSpace.xs,
-        runSpacing: NxSpace.xs,
-        children: [
-          for (final v in BastionHeardWithin.values)
-            ChoiceChip(
-              key: ValueKey('heard-${v.name}'),
-              label: Text(_heardLabel(context, v)),
-              selected: v == value,
-              onSelected: (_) => onChanged(v),
-            ),
-        ],
-      ),
-    ),
-  );
 }
 
 /// Asks for the address of a radio on Wi-Fi or Ethernet.
@@ -830,6 +721,366 @@ class _UsbRadioSheetState extends State<_UsbRadioSheet> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// One slim bar for the connected radio; tapping it opens the radio sheet.
+class _RadioBar extends StatelessWidget {
+  const _RadioBar({required this.radio, required this.onTap});
+  final MeshtasticRadioCoordinator radio;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final type = Theme.of(context).textTheme;
+    final state = radio.connection.state;
+    final tone = _connectionTone(state);
+    final color = NxStatusColors.of(context).strong(tone, scheme);
+    final name = (radio.usesUsbLink
+            ? radio.linkName
+            : radio.usesNetworkLink
+                ? radio.networkHost
+                : radio.connection.deviceName) ??
+        l.nodesRadio;
+    final link = radio.usesUsbLink
+        ? l.nodesOverUsb
+        : radio.usesNetworkLink
+            ? l.nodesOverWifi
+            : l.nodesOverBluetooth;
+    final status = _connectionLabel(context, state);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: NxSpace.sm),
+      child: Semantics(
+        button: true,
+        label: '$name, $link, $status',
+        hint: l.nodesManage,
+        excludeSemantics: true,
+        child: Material(
+          color: scheme.surfaceContainerHigh,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: color.withValues(alpha: 0.6)),
+          ),
+          child: InkWell(
+            key: const ValueKey('radio-bar'),
+            borderRadius: BorderRadius.circular(16),
+            onTap: onTap,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 64),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                child: Row(children: [
+                  Icon(
+                    radio.usesUsbLink
+                        ? Icons.usb
+                        : radio.usesNetworkLink
+                            ? Icons.wifi
+                            : Icons.bluetooth_connected,
+                    color: color,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Text(name, style: type.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                    Text('$link • $status', style: type.bodySmall?.copyWith(color: color)),
+                  ])),
+                  Text(l.nodesManage, style: type.labelLarge?.copyWith(color: scheme.primary)),
+                  Icon(Icons.chevron_right, color: scheme.primary),
+                ]),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The mesh nodes, grouped by when they were last heard, with a search box
+/// and a favorites filter.
+class _NodeList extends StatefulWidget {
+  const _NodeList({required this.radio});
+  final MeshtasticRadioCoordinator radio;
+
+  @override
+  State<_NodeList> createState() => _NodeListState();
+}
+
+class _NodeListState extends State<_NodeList> {
+  final _search = TextEditingController();
+  bool _showOlder = false;
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final radio = widget.radio;
+    final favoritesOnly = BastionPreferences.instance.favoritesOnly;
+    final query = _search.text.trim();
+    final groups = BastionNodeGroups.of(
+      radio.nodes,
+      now: DateTime.now(),
+      localNum: radio.localNode?.num,
+      query: query,
+      favoritesOnly: favoritesOnly,
+      favorites: radio.favoriteNums,
+    );
+    final all = radio.nodes.where((n) => n.num != radio.localNode?.num).length;
+    // While searching, nothing stays folded away.
+    final showOlder = _showOlder || query.isNotEmpty;
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      NxSectionLabel(l.nodesCount(all)),
+      TextField(
+        key: const ValueKey('nodes-search'),
+        controller: _search,
+        decoration: InputDecoration(
+          hintText: l.nodesSearch,
+          prefixIcon: const Icon(Icons.search),
+          suffixIcon: query.isEmpty
+              ? null
+              : IconButton(
+                  tooltip: l.chatsClearSearch,
+                  icon: const Icon(Icons.close),
+                  onPressed: () => setState(_search.clear),
+                ),
+        ),
+        onChanged: (_) => setState(() {}),
+      ),
+      const SizedBox(height: NxSpace.xs),
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: FilterChip(
+          key: const ValueKey('nodes-favorites-only'),
+          avatar: Icon(favoritesOnly ? Icons.star : Icons.star_border),
+          showCheckmark: false,
+          label: Text(l.nodesFavoritesOnly),
+          selected: favoritesOnly,
+          onSelected: (v) => BastionPreferences.instance.update(favorites: v),
+        ),
+      ),
+      if (groups.total == 0)
+        favoritesOnly && query.isEmpty
+            ? NxEmptyState(
+                icon: Icons.star_border,
+                title: l.nodesNoFavorites,
+                detail: l.nodesNoFavoritesHint,
+                action: TextButton(
+                  onPressed: () => BastionPreferences.instance.update(favorites: false),
+                  child: Text(l.nodesShowAll),
+                ),
+              )
+            : NxEmptyState(icon: Icons.search_off, title: l.nodesNoMatch(query), detail: l.nodesNoMatchHint),
+      if (groups.active.isNotEmpty) ...[
+        _GroupHeader(key: const ValueKey('group-active'), label: l.nodesActiveNow, count: groups.active.length),
+        _NodeCard(radio: radio, nodes: groups.active),
+      ],
+      if (groups.today.isNotEmpty) ...[
+        _GroupHeader(key: const ValueKey('group-today'), label: l.svcToday, count: groups.today.length),
+        _NodeCard(radio: radio, nodes: groups.today),
+      ],
+      if (groups.older.isNotEmpty) ...[
+        _GroupHeader(
+          key: const ValueKey('group-older'),
+          label: l.nodesOlder,
+          count: groups.older.length,
+          expanded: showOlder,
+          onToggle: query.isNotEmpty ? null : () => setState(() => _showOlder = !_showOlder),
+        ),
+        if (showOlder) _NodeCard(radio: radio, nodes: groups.older),
+      ],
+    ]);
+  }
+}
+
+/// "Active now · 4", optionally a button that folds the group away.
+class _GroupHeader extends StatelessWidget {
+  const _GroupHeader({super.key, required this.label, required this.count, this.expanded, this.onToggle});
+  final String label;
+  final int count;
+
+  /// Null for a group that can't be folded.
+  final bool? expanded;
+  final VoidCallback? onToggle;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final text = Text('$label · $count',
+        style: Theme.of(context).textTheme.titleSmall?.copyWith(color: scheme.primary, fontWeight: FontWeight.w700));
+    if (expanded == null) {
+      return Semantics(
+        header: true,
+        child: Padding(padding: const EdgeInsets.fromLTRB(4, 16, 4, 6), child: text),
+      );
+    }
+    return Semantics(
+      button: true,
+      header: true,
+      expanded: expanded,
+      hint: expanded! ? l.chatsHide : l.chatsShow,
+      child: InkWell(
+        onTap: onToggle,
+        borderRadius: BorderRadius.circular(8),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 48),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(4, 12, 4, 6),
+            child: Row(children: [
+              Expanded(child: text),
+              if (onToggle != null)
+                ExcludeSemantics(child: Icon(expanded! ? Icons.expand_less : Icons.expand_more, color: scheme.primary)),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NodeCard extends StatelessWidget {
+  const _NodeCard({required this.radio, required this.nodes});
+  final MeshtasticRadioCoordinator radio;
+  final List<MeshtasticNode> nodes;
+
+  @override
+  Widget build(BuildContext context) => Card(
+        child: Column(children: [
+          for (final (i, node) in nodes.indexed) ...[
+            if (i > 0) const Divider(height: 1, indent: 72),
+            _NodeRow(radio: radio, node: node),
+          ],
+        ]),
+      );
+}
+
+/// One node: when it was heard, how far away, how many hops, battery and
+/// signal, plus any security warning.
+class _NodeRow extends StatelessWidget {
+  const _NodeRow({required this.radio, required this.node});
+  final MeshtasticRadioCoordinator radio;
+  final MeshtasticNode node;
+
+  String? _distance(BuildContext context) {
+    final me = radio.localNode;
+    if (me == null || !me.hasPosition || !node.hasPosition) return null;
+    final meters = BastionGeo.distanceMeters(me.latitude!, me.longitude!, node.latitude!, node.longitude!);
+    final bearing = BastionGeo.bearingDegrees(me.latitude!, me.longitude!, node.latitude!, node.longitude!);
+    return '${BastionUnitFormat.distance(meters, BastionPreferences.instance.units)} ${BastionGeo.compassPoint(bearing)}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final type = Theme.of(context).textTheme;
+    final favorite = radio.favoriteNums.contains(node.num);
+    final heard = node.lastHeard;
+    final battery = node.batteryLevel;
+    final details = [
+      heard == null ? l.nodesNeverHeard : _ago(context, heard),
+      ?_distance(context),
+      if (node.viaMqtt) l.chatsViaMqtt else ?_hopsLabel(context, node.hopsAway),
+      if (battery != null) battery > 100 ? l.homePluggedIn : l.toolsBatteryPct(battery),
+    ];
+    final keyChanged = radio.nodeKeys.hasChanged(node.num);
+    final like = radio.lookalikeOf(node.num);
+    final bars = BastionNodeGroups.bars(node.snr);
+    final warning = keyChanged
+        ? l.chatsKeyChanged
+        : like != null
+            ? l.nodesLookalike(radio.nodeName(like))
+            : null;
+    final signal = switch (bars) {
+      3 => l.toolsSigStrong,
+      2 => l.toolsSigUsable,
+      1 => l.toolsSigWeak,
+      0 => l.toolsSigVeryWeak,
+      _ => null,
+    };
+    return Semantics(
+      button: true,
+      label: [
+        node.displayName,
+        if (favorite) l.nodesFavorite,
+        ...details,
+        if (signal != null) '${l.ndSignal}: $signal',
+        ?warning,
+      ].join(', '),
+      excludeSemantics: true,
+      child: InkWell(
+        key: ValueKey('node-${node.num}'),
+        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
+          builder: (_) => NodeDetailPage(radio: radio, nodeNum: node.num),
+        )),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 68),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Row(children: [
+              CircleAvatar(
+                radius: 22,
+                backgroundColor: scheme.primaryContainer,
+                foregroundColor: scheme.onPrimaryContainer,
+                child: Text(_initials(node.shortName ?? node.displayName),
+                    style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
+              ),
+              const SizedBox(width: 14),
+              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(children: [
+                  Flexible(child: Text(node.displayName, style: type.titleMedium?.copyWith(fontWeight: FontWeight.w600))),
+                  if (favorite) Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 4),
+                    child: Icon(Icons.star, size: 16, color: scheme.primary),
+                  ),
+                ]),
+                const SizedBox(height: 2),
+                Text(details.join(' • '), style: type.bodyMedium?.copyWith(color: scheme.onSurfaceVariant)),
+              ])),
+              const SizedBox(width: 8),
+              if (warning != null)
+                Icon(keyChanged ? Icons.gpp_maybe_outlined : Icons.content_copy_outlined, color: scheme.error)
+              else if (bars != null)
+                _SignalBars(bars: bars)
+              else
+                Icon(Icons.chevron_right, color: scheme.onSurfaceVariant),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Three bars, filled up to [bars]; the count is said in words elsewhere.
+class _SignalBars extends StatelessWidget {
+  const _SignalBars({required this.bars});
+  final int bars;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return SizedBox(
+      width: 22,
+      height: 18,
+      child: Row(crossAxisAlignment: CrossAxisAlignment.end, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        for (var i = 1; i <= 3; i++)
+          Container(
+            width: 5,
+            height: 6.0 * i,
+            decoration: BoxDecoration(
+              color: i <= bars ? scheme.primary : scheme.outlineVariant,
+              borderRadius: BorderRadius.circular(1.5),
+            ),
+          ),
+      ]),
     );
   }
 }
