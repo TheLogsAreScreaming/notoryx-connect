@@ -786,9 +786,11 @@ class _MapPageState extends State<MapPage> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Expanded(child: Align(
-                  alignment: Alignment.centerRight,
-                  child: SingleChildScrollView(child: _toolbar(context, placed)),
+                Expanded(child: LayoutBuilder(
+                  builder: (context, box) => Align(
+                    alignment: Alignment.centerRight,
+                    child: SingleChildScrollView(child: _toolbar(context, placed, box.maxHeight)),
+                  ),
                 )),
                 if (_traffic && _planning == null) ...[
                   const SizedBox(height: 8),
@@ -839,7 +841,8 @@ class _MapPageState extends State<MapPage> {
       );
 
   /// The frosted pill on the right: locate, filter, traffic, search, fit, options.
-  Widget _toolbar(BuildContext context, List<MeshtasticNode> placed) => TrafficToolbar(buttons: [
+  Widget _toolbar(BuildContext context, List<MeshtasticNode> placed, double maxHeight) =>
+      TrafficToolbar(maxHeight: maxHeight, buttons: [
         TrafficToolButton(
           key: const ValueKey('map-locate'),
           icon: Icons.near_me_outlined,

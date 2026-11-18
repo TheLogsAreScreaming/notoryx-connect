@@ -4455,17 +4455,6 @@
       }
     }
   },
-  "trafficHeardFromSnr": "Heard from {name} · {snr} dB",
-  "@trafficHeardFromSnr": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      },
-      "snr": {
-        "type": "String"
-      }
-    }
-  },
   "trafficHops": "{count, plural, =1{1 hop} other{{count} hops}}",
   "@trafficHops": {
     "placeholders": {
