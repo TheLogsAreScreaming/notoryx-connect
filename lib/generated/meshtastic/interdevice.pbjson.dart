@@ -37,13 +37,15 @@ const FileOperation$json = {
     {'1': 'POST', '2': 1},
     {'1': 'PUT', '2': 2},
     {'1': 'DELETE', '2': 3},
+    {'1': 'MKDIR', '2': 4},
+    {'1': 'RMDIR', '2': 5},
   ],
 };
 
 /// Descriptor for `FileOperation`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List fileOperationDescriptor = $convert.base64Decode(
-    'Cg1GaWxlT3BlcmF0aW9uEgcKA0dFVBAAEggKBFBPU1QQARIHCgNQVVQQAhIKCgZERUxFVEUQAw'
-    '==');
+    'Cg1GaWxlT3BlcmF0aW9uEgcKA0dFVBAAEggKBFBPU1QQARIHCgNQVVQQAhIKCgZERUxFVEUQAx'
+    'IJCgVNS0RJUhAEEgkKBVJNRElSEAU=');
 
 @$core.Deprecated('Use fileStatusDescriptor instead')
 const FileStatus$json = {
@@ -57,6 +59,7 @@ const FileStatus$json = {
     {'1': 'FILE_OFFSET_CONFLICT', '2': 5},
     {'1': 'FILE_IO_ERROR', '2': 6},
     {'1': 'FILE_NOT_A_FILE', '2': 7},
+    {'1': 'FILE_NOT_EMPTY', '2': 8},
   ],
 };
 
@@ -64,8 +67,8 @@ const FileStatus$json = {
 final $typed_data.Uint8List fileStatusDescriptor = $convert.base64Decode(
     'CgpGaWxlU3RhdHVzEhQKEEZJTEVfVU5TUEVDSUZJRUQQABILCgdGSUxFX09LEAESDQoJRklMRV'
     '9CVVNZEAISEAoMRklMRV9OT19DQVJEEAMSEgoORklMRV9OT1RfRk9VTkQQBBIYChRGSUxFX09G'
-    'RlNFVF9DT05GTElDVBAFEhEKDUZJTEVfSU9fRVJST1IQBhITCg9GSUxFX05PVF9BX0ZJTEUQBw'
-    '==');
+    'RlNFVF9DT05GTElDVBAFEhEKDUZJTEVfSU9fRVJST1IQBhITCg9GSUxFX05PVF9BX0ZJTEUQBx'
+    'ISCg5GSUxFX05PVF9FTVBUWRAI');
 
 @$core.Deprecated('Use sdCommandDescriptor instead')
 const SdCommand$json = {
