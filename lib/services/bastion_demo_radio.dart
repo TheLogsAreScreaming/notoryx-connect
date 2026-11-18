@@ -10,6 +10,7 @@ import 'bastion_node_journal.dart';
 import 'bastion_node_vault.dart';
 import 'bastion_telemetry_codec.dart';
 import 'bastion_telemetry_history.dart';
+import 'bastion_traffic.dart';
 import 'bastion_trip.dart';
 import 'bastion_waypoints.dart';
 import 'meshtastic_ble_discovery.dart';
@@ -31,6 +32,52 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
       ..beginSync()
       ..markReady();
     _seed();
+    traffic.onWatching = _demoTraffic;
+  }
+
+  Timer? _trafficTimer;
+  int _trafficStep = 0;
+
+  /// Pretend packets for the Traffic map, only while it is watching.
+  void _demoTraffic(bool watching) {
+    _trafficTimer?.cancel();
+    _trafficTimer = null;
+    if (!watching || _closed) return;
+    void beat() {
+      if (_closed) return;
+      final packet = demoTrafficPacket(_trafficStep++, _clock());
+      traffic.add(packet);
+    }
+    beat();
+    _trafficTimer = Timer.periodic(const Duration(milliseconds: 2600), (_) => beat());
+  }
+
+  /// The [step]th packet of a repeating demo pattern covering every colour.
+  static TrafficPacket demoTrafficPacket(int step, DateTime heard) {
+    const ridge = 0xDE300002, mara = 0xDE300003, base = 0xDE300004, sam = 0xDE300005, wx = 0xDE300006;
+    final pattern = [
+      (sam, TrafficKind.channel, 2, ridge & 0xff),
+      (mara, TrafficKind.direct, 1, base & 0xff),
+      (wx, TrafficKind.advert, 1, ridge & 0xff),
+      (ridge, TrafficKind.ack, 0, null),
+      (sam, TrafficKind.trace, 2, null),
+      (wx, TrafficKind.other, 1, ridge & 0xff),
+    ];
+    final (from, kind, hops, relay) = pattern[step % pattern.length];
+    return TrafficPacket(
+      id: 0x9000 + step,
+      from: from,
+      to: kind == TrafficKind.channel || kind == TrafficKind.advert ? TrafficPacket.broadcast : localNum,
+      kind: kind,
+      path: kind == TrafficKind.trace
+          ? const [TrafficNodeStop(sam), TrafficNodeStop(mara), TrafficNodeStop(ridge), TrafficNodeStop(localNum)]
+          : TrafficPacket.inferredPath(from: from, local: localNum, hopsAway: hops, relayByte: relay),
+      heard: heard,
+      hopsAway: hops,
+      snr: 9.5 - hops * 3.5,
+      rssi: -88 - hops * 9,
+      fullPath: kind == TrafficKind.trace,
+    );
   }
 
   /// The name the pretend radio shows in the connection status.
@@ -361,6 +408,8 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
   @override
   void dispose() {
     _closed = true;
+    _trafficTimer?.cancel();
+    traffic.onWatching = null;
     for (final t in _timers) {
       t.cancel();
     }

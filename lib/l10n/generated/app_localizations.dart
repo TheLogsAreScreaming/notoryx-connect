@@ -10200,6 +10200,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dismiss'**
   String get noticeDismiss;
+
+  /// No description provided for @trafficTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic'**
+  String get trafficTitle;
+
+  /// No description provided for @trafficShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show live traffic'**
+  String get trafficShow;
+
+  /// No description provided for @trafficHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide live traffic'**
+  String get trafficHide;
+
+  /// No description provided for @trafficLocate.
+  ///
+  /// In en, this message translates to:
+  /// **'Locate'**
+  String get trafficLocate;
+
+  /// No description provided for @trafficLocateNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio has no position yet.'**
+  String get trafficLocateNone;
+
+  /// No description provided for @trafficFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get trafficFilter;
+
+  /// No description provided for @trafficFilterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Packet types to show'**
+  String get trafficFilterTitle;
+
+  /// No description provided for @trafficSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get trafficSearch;
+
+  /// No description provided for @trafficFit.
+  ///
+  /// In en, this message translates to:
+  /// **'Fit all'**
+  String get trafficFit;
+
+  /// No description provided for @trafficOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get trafficOptions;
+
+  /// No description provided for @trafficOptionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic options'**
+  String get trafficOptionsTitle;
+
+  /// No description provided for @trafficLabels.
+  ///
+  /// In en, this message translates to:
+  /// **'Hop labels'**
+  String get trafficLabels;
+
+  /// No description provided for @trafficLabelsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Name each hop while a route is on screen.'**
+  String get trafficLabelsHelp;
+
+  /// No description provided for @trafficClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the route card'**
+  String get trafficClear;
+
+  /// No description provided for @trafficPathHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Only traceroutes name every relay. Other packets show the sender, the hop count and the last relay when the radio reports it.'**
+  String get trafficPathHelp;
+
+  /// No description provided for @trafficAdvert.
+  ///
+  /// In en, this message translates to:
+  /// **'Node info'**
+  String get trafficAdvert;
+
+  /// No description provided for @trafficDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct message'**
+  String get trafficDirect;
+
+  /// No description provided for @trafficChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel message'**
+  String get trafficChannel;
+
+  /// No description provided for @trafficAck.
+  ///
+  /// In en, this message translates to:
+  /// **'Acknowledgement'**
+  String get trafficAck;
+
+  /// No description provided for @trafficTrace.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute'**
+  String get trafficTrace;
+
+  /// No description provided for @trafficOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get trafficOther;
+
+  /// No description provided for @trafficListening.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening for packets…'**
+  String get trafficListening;
+
+  /// No description provided for @trafficDirectHop.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct'**
+  String get trafficDirectHop;
+
+  /// No description provided for @trafficHopsUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Hops unknown'**
+  String get trafficHopsUnknown;
+
+  /// No description provided for @trafficUnnamedRelay.
+  ///
+  /// In en, this message translates to:
+  /// **'an unnamed relay'**
+  String get trafficUnnamedRelay;
+
+  /// No description provided for @trafficHeardFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard from {name}'**
+  String trafficHeardFrom(String name);
+
+  /// No description provided for @trafficHeardFromSnr.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard from {name} · {snr} dB'**
+  String trafficHeardFromSnr(String name, String snr);
+
+  /// No description provided for @trafficHops.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 hop} other{{count} hops}}'**
+  String trafficHops(int count);
+
+  /// No description provided for @trafficNotOnMapCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} not on map'**
+  String trafficNotOnMapCount(int count);
+
+  /// No description provided for @trafficAge.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String trafficAge(int seconds);
+
+  /// No description provided for @trafficNotOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Not on map: {names}'**
+  String trafficNotOnMap(String names);
+
+  /// No description provided for @trafficUnnamed.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 relay without a name} other{{count} relays without a name}}'**
+  String trafficUnnamed(int count);
 }
 
 class _AppLocalizationsDelegate

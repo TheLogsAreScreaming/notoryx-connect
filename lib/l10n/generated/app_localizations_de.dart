@@ -6281,4 +6281,128 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get noticeDismiss => 'Schließen';
+
+  @override
+  String get trafficTitle => 'Verkehr';
+
+  @override
+  String get trafficShow => 'Live-Verkehr anzeigen';
+
+  @override
+  String get trafficHide => 'Live-Verkehr ausblenden';
+
+  @override
+  String get trafficLocate => 'Orten';
+
+  @override
+  String get trafficLocateNone => 'Ihr Funkgerät hat noch keine Position.';
+
+  @override
+  String get trafficFilter => 'Filter';
+
+  @override
+  String get trafficFilterTitle => 'Anzuzeigende Pakettypen';
+
+  @override
+  String get trafficSearch => 'Suchen';
+
+  @override
+  String get trafficFit => 'Alle zeigen';
+
+  @override
+  String get trafficOptions => 'Optionen';
+
+  @override
+  String get trafficOptionsTitle => 'Verkehrsoptionen';
+
+  @override
+  String get trafficLabels => 'Hop-Beschriftungen';
+
+  @override
+  String get trafficLabelsHelp =>
+      'Benennt jeden Hop, solange eine Route sichtbar ist.';
+
+  @override
+  String get trafficClear => 'Routenkarte leeren';
+
+  @override
+  String get trafficPathHelp =>
+      'Nur Traceroutes nennen jedes Relais. Andere Pakete zeigen Absender, Hop-Anzahl und das letzte Relais, wenn das Funkgerät es meldet.';
+
+  @override
+  String get trafficAdvert => 'Knoteninfo';
+
+  @override
+  String get trafficDirect => 'Direktnachricht';
+
+  @override
+  String get trafficChannel => 'Kanalnachricht';
+
+  @override
+  String get trafficAck => 'Bestätigung';
+
+  @override
+  String get trafficTrace => 'Traceroute';
+
+  @override
+  String get trafficOther => 'Sonstiges';
+
+  @override
+  String get trafficListening => 'Warte auf Pakete…';
+
+  @override
+  String get trafficDirectHop => 'Direkt';
+
+  @override
+  String get trafficHopsUnknown => 'Hops unbekannt';
+
+  @override
+  String get trafficUnnamedRelay => 'einem unbekannten Relais';
+
+  @override
+  String trafficHeardFrom(String name) {
+    return 'Gehört von $name';
+  }
+
+  @override
+  String trafficHeardFromSnr(String name, String snr) {
+    return 'Gehört von $name · $snr dB';
+  }
+
+  @override
+  String trafficHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Hops',
+      one: '1 Hop',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trafficNotOnMapCount(int count) {
+    return '$count nicht auf der Karte';
+  }
+
+  @override
+  String trafficAge(int seconds) {
+    return '$seconds s';
+  }
+
+  @override
+  String trafficNotOnMap(String names) {
+    return 'Nicht auf der Karte: $names';
+  }
+
+  @override
+  String trafficUnnamed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Relais ohne Namen',
+      one: '1 Relais ohne Namen',
+    );
+    return '$_temp0';
+  }
 }

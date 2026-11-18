@@ -6253,4 +6253,128 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noticeDismiss => 'Cerrar';
+
+  @override
+  String get trafficTitle => 'Tráfico';
+
+  @override
+  String get trafficShow => 'Mostrar tráfico en vivo';
+
+  @override
+  String get trafficHide => 'Ocultar tráfico en vivo';
+
+  @override
+  String get trafficLocate => 'Ubicar';
+
+  @override
+  String get trafficLocateNone => 'Tu radio aún no tiene posición.';
+
+  @override
+  String get trafficFilter => 'Filtro';
+
+  @override
+  String get trafficFilterTitle => 'Tipos de paquete a mostrar';
+
+  @override
+  String get trafficSearch => 'Buscar';
+
+  @override
+  String get trafficFit => 'Ver todo';
+
+  @override
+  String get trafficOptions => 'Opciones';
+
+  @override
+  String get trafficOptionsTitle => 'Opciones de tráfico';
+
+  @override
+  String get trafficLabels => 'Etiquetas de saltos';
+
+  @override
+  String get trafficLabelsHelp =>
+      'Nombra cada salto mientras la ruta está en pantalla.';
+
+  @override
+  String get trafficClear => 'Borrar la tarjeta de ruta';
+
+  @override
+  String get trafficPathHelp =>
+      'Solo los traceroutes nombran cada repetidor. Los demás paquetes muestran el remitente, el número de saltos y el último repetidor si la radio lo indica.';
+
+  @override
+  String get trafficAdvert => 'Info de nodo';
+
+  @override
+  String get trafficDirect => 'Mensaje directo';
+
+  @override
+  String get trafficChannel => 'Mensaje de canal';
+
+  @override
+  String get trafficAck => 'Confirmación';
+
+  @override
+  String get trafficTrace => 'Traceroute';
+
+  @override
+  String get trafficOther => 'Otro';
+
+  @override
+  String get trafficListening => 'Escuchando paquetes…';
+
+  @override
+  String get trafficDirectHop => 'Directo';
+
+  @override
+  String get trafficHopsUnknown => 'Saltos desconocidos';
+
+  @override
+  String get trafficUnnamedRelay => 'un repetidor sin nombre';
+
+  @override
+  String trafficHeardFrom(String name) {
+    return 'Oído desde $name';
+  }
+
+  @override
+  String trafficHeardFromSnr(String name, String snr) {
+    return 'Oído desde $name · $snr dB';
+  }
+
+  @override
+  String trafficHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count saltos',
+      one: '1 salto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trafficNotOnMapCount(int count) {
+    return '$count fuera del mapa';
+  }
+
+  @override
+  String trafficAge(int seconds) {
+    return '$seconds s';
+  }
+
+  @override
+  String trafficNotOnMap(String names) {
+    return 'Fuera del mapa: $names';
+  }
+
+  @override
+  String trafficUnnamed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count repetidores sin nombre',
+      one: '1 repetidor sin nombre',
+    );
+    return '$_temp0';
+  }
 }
