@@ -6362,11 +6362,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String trafficHeardFromSnr(String name, String snr) {
-    return 'Entendu via $name · $snr dB';
-  }
-
-  @override
   String trafficHops(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

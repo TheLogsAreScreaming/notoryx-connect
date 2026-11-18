@@ -1707,7 +1707,6 @@
   "trafficHopsUnknown": "Saltos desconocidos",
   "trafficUnnamedRelay": "un repetidor sin nombre",
   "trafficHeardFrom": "Oído desde {name}",
-  "trafficHeardFromSnr": "Oído desde {name} · {snr} dB",
   "trafficHops": "{count, plural, =1{1 salto} other{{count} saltos}}",
   "trafficNotOnMapCount": "{count} fuera del mapa",
   "trafficAge": "{seconds} s",

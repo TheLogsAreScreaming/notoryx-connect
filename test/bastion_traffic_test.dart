@@ -171,7 +171,51 @@ void main() {
     });
   });
 
-  group('animation timing', () {
+  group('toolbar fits the space it has', () {
+    const one = TextScaler.noScaling;
+    test('labels when there is room', () {
+      expect(TrafficToolbar.layoutFor(6, 500, one), TrafficToolbarLayout.labelled);
+    });
+    test('icons only when labels would not fit', () {
+      expect(TrafficToolbar.layoutFor(6, 320, one), TrafficToolbarLayout.icons);
+    });
+    test('two columns in a very short space', () {
+      expect(TrafficToolbar.layoutFor(6, 200, one), TrafficToolbarLayout.twoColumns);
+    });
+    test('large text drops the labels sooner', () {
+      expect(TrafficToolbar.layoutFor(6, 400, one), TrafficToolbarLayout.labelled);
+      expect(TrafficToolbar.layoutFor(6, 400, const TextScaler.linear(2)), TrafficToolbarLayout.icons);
+    });
+  });
+
+  testWidgets('every toolbar button stays on screen on a short phone with the card open', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
+    await tester.binding.setSurfaceSize(const Size(400, 700));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final radio = BastionDemoRadio(replyDelay: Duration.zero);
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(body: MapPage(radio: radio)),
+    ));
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('map-traffic')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byType(TrafficRouteCard), findsOneWidget);
+    final card = tester.getRect(find.byType(TrafficRouteCard));
+    for (final key in ['map-locate', 'map-traffic-filter', 'map-traffic', 'map-find-place', 'map-fit-all', 'map-traffic-options']) {
+      final r = tester.getRect(find.byKey(ValueKey(key)));
+      expect(r.bottom, lessThanOrEqualTo(card.top), reason: '$key is above the route card');
+      expect(r.top, greaterThanOrEqualTo(0), reason: '$key is on screen');
+    }
+    await tester.tap(find.byKey(const ValueKey('map-traffic')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 5));
+  });
+
+    group('animation timing', () {
     test('the dot crosses each leg in turn, then the route fades', () {
       expect(TrafficTiming.frame(Duration.zero, 2).leg, 0);
       final mid = TrafficTiming.frame(TrafficTiming.leg + TrafficTiming.leg ~/ 2, 2);
@@ -249,6 +293,8 @@ void main() {
     expect(find.text('Sam → +1 → Ridge Relay → Demo Base'), findsOneWidget);
     expect(find.text('Channel message'), findsWidgets, reason: 'pill and legend');
     expect(find.textContaining('2 hops · -106 dBm · SNR 2.5'), findsOneWidget);
+    // The SNR is only in the stats line, not repeated next to the name.
+    expect(find.text('Heard from Ridge Relay'), findsOneWidget);
     expect(find.byType(PolylineLayer), findsWidgets);
 
     // Hide channel messages: the next channel packet is skipped.

@@ -10357,12 +10357,6 @@ abstract class AppLocalizations {
   /// **'Heard from {name}'**
   String trafficHeardFrom(String name);
 
-  /// No description provided for @trafficHeardFromSnr.
-  ///
-  /// In en, this message translates to:
-  /// **'Heard from {name} · {snr} dB'**
-  String trafficHeardFromSnr(String name, String snr);
-
   /// No description provided for @trafficHops.
   ///
   /// In en, this message translates to:

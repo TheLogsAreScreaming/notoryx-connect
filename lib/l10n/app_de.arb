@@ -1707,7 +1707,6 @@
   "trafficHopsUnknown": "Hops unbekannt",
   "trafficUnnamedRelay": "einem unbekannten Relais",
   "trafficHeardFrom": "Gehört von {name}",
-  "trafficHeardFromSnr": "Gehört von {name} · {snr} dB",
   "trafficHops": "{count, plural, =1{1 Hop} other{{count} Hops}}",
   "trafficNotOnMapCount": "{count} nicht auf der Karte",
   "trafficAge": "{seconds} s",

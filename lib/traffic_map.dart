@@ -360,13 +360,17 @@ class _TrafficRouteCardState extends State<TrafficRouteCard> {
     ].join(' · ');
   }
 
-  static String _num(double v) => v == v.roundToDouble() ? v.toStringAsFixed(0) : v.toStringAsFixed(2).replaceFirst(RegExp(r'0$'), '');
+  /// One decimal, without a trailing ".0" (SNR comes in quarter-dB steps).
+  static String _num(double v) {
+    final s = v.toStringAsFixed(1);
+    return s.endsWith('.0') ? s.substring(0, s.length - 2) : s;
+  }
 
   static String heardFrom(AppLocalizations l, TrafficRoute route) {
     final hop = route.lastHop;
     final name = hop == null || hop.unknownCount > 0 ? l.trafficUnnamedRelay : hop.label;
-    final snr = route.packet.snr;
-    return snr == null ? l.trafficHeardFrom(name) : l.trafficHeardFromSnr(name, _num(snr));
+    // The SNR is already in the stats line under it.
+    return l.trafficHeardFrom(name);
   }
 
   @override
@@ -433,50 +437,97 @@ class TrafficToolButton {
   final Key? key;
 }
 
+/// How the toolbar fits the height it has.
+enum TrafficToolbarLayout {
+  /// One column, icon over label.
+  labelled,
+
+  /// One column, icons only (labels in tooltips and for screen readers).
+  icons,
+
+  /// Two columns of icons, for very short spaces.
+  twoColumns,
+}
+
 /// The frosted vertical pill on the right of the map.
+///
+/// Shrinks to icons, then to two columns, when [maxHeight] is too short for
+/// the labelled column (for example when the route card is open).
 class TrafficToolbar extends StatelessWidget {
-  const TrafficToolbar({super.key, required this.buttons});
+  const TrafficToolbar({super.key, required this.buttons, this.maxHeight = double.infinity});
 
   final List<TrafficToolButton> buttons;
+  final double maxHeight;
+
+  static const double _pad = 12;
+  static const double _iconButton = 48;
+
+  /// Picks the layout for [count] buttons in [maxHeight].
+  static TrafficToolbarLayout layoutFor(int count, double maxHeight, TextScaler scaler) {
+    final labelled = _pad + count * (44 + scaler.scale(16));
+    if (labelled <= maxHeight) return TrafficToolbarLayout.labelled;
+    if (_pad + count * _iconButton <= maxHeight) return TrafficToolbarLayout.icons;
+    return TrafficToolbarLayout.twoColumns;
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final accent = theme.colorScheme.primary;
-    return TrafficGlass(
-      radius: 28,
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        for (final b in buttons)
-          Semantics(
-            key: b.key,
-            button: true,
-            selected: b.selected,
-            label: b.label,
-            onTap: b.onPressed,
-            excludeSemantics: true,
-            child: InkWell(
-              onTap: b.onPressed,
-              borderRadius: BorderRadius.circular(16),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(minWidth: 64, minHeight: 52),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    Icon(b.icon, color: b.selected ? accent : theme.colorScheme.onSurface),
-                    const SizedBox(height: 2),
-                    Text(b.label,
-                        maxLines: 1,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: b.selected ? accent : theme.colorScheme.onSurface,
-                          fontWeight: b.selected ? FontWeight.w700 : null,
-                        )),
-                  ]),
-                ),
+    final layout = layoutFor(buttons.length, maxHeight, MediaQuery.textScalerOf(context));
+    Widget button(TrafficToolButton b) {
+      final color = b.selected ? accent : theme.colorScheme.onSurface;
+      final Widget body = layout == TrafficToolbarLayout.labelled
+          ? ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: 64, minHeight: 52),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  Icon(b.icon, color: color),
+                  const SizedBox(height: 2),
+                  Text(b.label,
+                      maxLines: 1,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: color,
+                        fontWeight: b.selected ? FontWeight.w700 : null,
+                      )),
+                ]),
               ),
-            ),
-          ),
-      ]),
+            )
+          : Tooltip(
+              message: b.label,
+              excludeFromSemantics: true,
+              child: SizedBox.square(dimension: _iconButton, child: Icon(b.icon, color: color)),
+            );
+      return Semantics(
+        key: b.key,
+        button: true,
+        selected: b.selected,
+        label: b.label,
+        onTap: b.onPressed,
+        excludeSemantics: true,
+        child: InkWell(
+          onTap: b.onPressed,
+          borderRadius: BorderRadius.circular(16),
+          child: body,
+        ),
+      );
+    }
+
+    final Widget content;
+    if (layout == TrafficToolbarLayout.twoColumns) {
+      final half = (buttons.length + 1) ~/ 2;
+      content = Row(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Column(mainAxisSize: MainAxisSize.min, children: [for (final b in buttons.take(half)) button(b)]),
+        Column(mainAxisSize: MainAxisSize.min, children: [for (final b in buttons.skip(half)) button(b)]),
+      ]);
+    } else {
+      content = Column(mainAxisSize: MainAxisSize.min, children: [for (final b in buttons) button(b)]);
+    }
+    return TrafficGlass(
+      radius: layout == TrafficToolbarLayout.labelled ? 28 : 24,
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
+      child: content,
     );
   }
 }
