@@ -1671,5 +1671,14 @@
   "rsModulesSubtitle": "Optionale Funktionen wie MQTT, Telemetrie und Speichern und Weiterleiten",
   "rsAdvanced": "Erweitert",
   "rsAdvancedSub": "Alle Einstellungsbereiche und eine Prüfung, was dieses Funkgerät unterstützt",
-  "rsNotInFirmware": "{count, plural, one{1 nicht in der Firmware dieses Funkgeräts} other{{count} nicht in der Firmware dieses Funkgeräts}}"
+  "rsNotInFirmware": "{count, plural, one{1 nicht in der Firmware dieses Funkgeräts} other{{count} nicht in der Firmware dieses Funkgeräts}}",
+  "noticeKeyTitle": "Warnung zum Sicherheitsschlüssel",
+  "noticeKeyBody": "Dein Funkgerät meldet ein Problem mit seinem eigenen Sicherheitsschlüssel. Direktnachrichten sind eventuell nicht privat, oder andere Knoten brauchen deinen neuen Schlüssel.",
+  "noticeIdentityTitle": "Unsignierte Namensänderung abgelehnt",
+  "noticeIdentityBody": "Ein Knoten wollte Name oder Rolle eines bekannten Knotens ohne gültige Signatur ändern. Dein Funkgerät hat die alten Angaben behalten.",
+  "noticeAirtimeTitle": "Sendezeit-Limit erreicht",
+  "noticeAirtimeBody": "Dein Funkgerät hat das Senden gestoppt, um sein Sendezeit-Limit einzuhalten. Versuche es später erneut.",
+  "noticeGeneralTitle": "Meldung deines Funkgeräts",
+  "noticeRadioSays": "Funkgerät: {message}",
+  "noticeDismiss": "Schließen"
 }

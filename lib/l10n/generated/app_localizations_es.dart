@@ -6221,4 +6221,36 @@ class AppLocalizationsEs extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get noticeKeyTitle => 'Aviso sobre la clave de seguridad';
+
+  @override
+  String get noticeKeyBody =>
+      'Tu radio informa de un problema con su propia clave de seguridad. Los mensajes directos podrían no ser privados, o otros nodos podrían necesitar tu nueva clave.';
+
+  @override
+  String get noticeIdentityTitle => 'Cambio de nombre sin firma rechazado';
+
+  @override
+  String get noticeIdentityBody =>
+      'Un nodo intentó cambiar el nombre o el rol de un nodo conocido sin una firma válida. Tu radio conservó los datos anteriores.';
+
+  @override
+  String get noticeAirtimeTitle => 'Límite de tiempo en el aire alcanzado';
+
+  @override
+  String get noticeAirtimeBody =>
+      'Tu radio detuvo un envío para respetar su límite de tiempo en el aire. Inténtalo más tarde.';
+
+  @override
+  String get noticeGeneralTitle => 'Mensaje de tu radio';
+
+  @override
+  String noticeRadioSays(String message) {
+    return 'Radio: $message';
+  }
+
+  @override
+  String get noticeDismiss => 'Cerrar';
 }

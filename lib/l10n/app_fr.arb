@@ -1671,5 +1671,14 @@
   "rsModulesSubtitle": "Fonctions facultatives comme MQTT, la télémétrie et le stockage-retransmission",
   "rsAdvanced": "Avancé",
   "rsAdvancedSub": "Toutes les sections de réglages, et une vérification de ce que cette radio prend en charge",
-  "rsNotInFirmware": "{count, plural, one{1 absent du firmware de cette radio} other{{count} absents du firmware de cette radio}}"
+  "rsNotInFirmware": "{count, plural, one{1 absent du firmware de cette radio} other{{count} absents du firmware de cette radio}}",
+  "noticeKeyTitle": "Alerte sur la clé de sécurité",
+  "noticeKeyBody": "Votre radio signale un problème avec sa propre clé de sécurité. Les messages directs peuvent ne pas être privés, ou d'autres nœuds peuvent avoir besoin de votre nouvelle clé.",
+  "noticeIdentityTitle": "Changement de nom non signé refusé",
+  "noticeIdentityBody": "Un nœud a tenté de changer le nom ou le rôle d'un nœud connu sans signature valide. Votre radio a gardé les anciennes informations.",
+  "noticeAirtimeTitle": "Limite de temps d'émission atteinte",
+  "noticeAirtimeBody": "Votre radio a arrêté un envoi pour respecter sa limite de temps d'émission. Réessayez plus tard.",
+  "noticeGeneralTitle": "Message de votre radio",
+  "noticeRadioSays": "Radio : {message}",
+  "noticeDismiss": "Fermer"
 }

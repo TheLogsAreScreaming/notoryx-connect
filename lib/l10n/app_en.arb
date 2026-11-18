@@ -4404,5 +4404,22 @@
         "type": "int"
       }
     }
-  }
+  },
+  "noticeKeyTitle": "Security key warning",
+  "noticeKeyBody": "Your radio reported a problem with its own security key. Direct messages may not be private, or other nodes may need your new key.",
+  "noticeIdentityTitle": "Unsigned name change refused",
+  "noticeIdentityBody": "A node tried to change a known node's name or role without a valid signature. Your radio kept the old details.",
+  "noticeAirtimeTitle": "Airtime limit reached",
+  "noticeAirtimeBody": "Your radio stopped a send to stay within its airtime limit. Try again later.",
+  "noticeGeneralTitle": "Message from your radio",
+  "noticeRadioSays": "Radio: {message}",
+  "@noticeRadioSays": {
+    "description": "The radio firmware's own English text, quoted under a notice.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "noticeDismiss": "Dismiss"
 }
