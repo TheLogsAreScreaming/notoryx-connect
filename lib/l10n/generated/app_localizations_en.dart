@@ -6089,4 +6089,127 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get nodesNoMeshYetBody =>
       'Nodes appear here as your radio hears them.';
+
+  @override
+  String get trafficTitle => 'Traffic';
+
+  @override
+  String get trafficShow => 'Show live traffic';
+
+  @override
+  String get trafficHide => 'Hide live traffic';
+
+  @override
+  String get trafficLocate => 'Locate';
+
+  @override
+  String get trafficLocateNone => 'Your radio has no position yet.';
+
+  @override
+  String get trafficFilter => 'Filter';
+
+  @override
+  String get trafficFilterTitle => 'Packet types to show';
+
+  @override
+  String get trafficSearch => 'Search';
+
+  @override
+  String get trafficFit => 'Fit all';
+
+  @override
+  String get trafficOptions => 'Options';
+
+  @override
+  String get trafficOptionsTitle => 'Traffic options';
+
+  @override
+  String get trafficLabels => 'Hop labels';
+
+  @override
+  String get trafficLabelsHelp => 'Name each hop while a route is on screen.';
+
+  @override
+  String get trafficClear => 'Clear the route card';
+
+  @override
+  String get trafficPathHelp =>
+      'Only traceroutes name every relay. Other packets show the sender, the hop count and the last relay when the radio reports it.';
+
+  @override
+  String get trafficAdvert => 'Node info';
+
+  @override
+  String get trafficDirect => 'Direct message';
+
+  @override
+  String get trafficChannel => 'Channel message';
+
+  @override
+  String get trafficAck => 'Acknowledgement';
+
+  @override
+  String get trafficTrace => 'Traceroute';
+
+  @override
+  String get trafficOther => 'Other';
+
+  @override
+  String get trafficListening => 'Listening for packets…';
+
+  @override
+  String get trafficDirectHop => 'Direct';
+
+  @override
+  String get trafficHopsUnknown => 'Hops unknown';
+
+  @override
+  String get trafficUnnamedRelay => 'an unnamed relay';
+
+  @override
+  String trafficHeardFrom(String name) {
+    return 'Heard from $name';
+  }
+
+  @override
+  String trafficHeardFromSnr(String name, String snr) {
+    return 'Heard from $name · $snr dB';
+  }
+
+  @override
+  String trafficHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hops',
+      one: '1 hop',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trafficNotOnMapCount(int count) {
+    return '$count not on map';
+  }
+
+  @override
+  String trafficAge(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String trafficNotOnMap(String names) {
+    return 'Not on map: $names';
+  }
+
+  @override
+  String trafficUnnamed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relays without a name',
+      one: '1 relay without a name',
+    );
+    return '$_temp0';
+  }
 }

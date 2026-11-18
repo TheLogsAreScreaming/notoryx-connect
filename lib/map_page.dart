@@ -32,7 +32,9 @@ import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'services/bastion_node_vault.dart';
 import 'services/bastion_place_search.dart';
+import 'services/bastion_traffic.dart';
 import 'theme/notoryx_theme.dart';
+import 'traffic_map.dart';
 
 /// Mesh nodes with a reported position on an OpenStreetMap base map.
 ///
@@ -63,7 +65,7 @@ class MapPage extends StatefulWidget {
     ));
   }
 
-  /// NOTORYX orange; markers sit on light map tiles in both themes.
+  /// NOTORYX orange; reads on both the light and the dark street map.
   static const accent = Color(0xFFFC7202);
 
   @override
@@ -80,6 +82,14 @@ class _MapPageState extends State<MapPage> {
   bool _showTrails = true;
   bool _showHeatmap = false;
   bool _showRemembered = false;
+
+  /// Live Traffic mode: packets animate across the map as they are heard.
+  bool _traffic = false;
+  Set<TrafficKind> _trafficKinds = TrafficKind.values.toSet();
+  bool _trafficLabels = true;
+
+  /// The newest shown packet, for the route card.
+  TrafficRoute? _latestRoute;
 
   /// The last place chosen in Find a place, shown with a pin until cleared.
   PlaceResult? _found;
@@ -431,6 +441,10 @@ class _MapPageState extends State<MapPage> {
                         : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'com.bastionmesh.connect',
                     maxNativeZoom: _topo ? 17 : 19,
+                    // Dark street map in a dark theme, so traffic glows.
+                    tileBuilder: !_topo && Theme.of(context).brightness == Brightness.dark
+                        ? darkModeTileBuilder
+                        : null,
                   ),
                   if (_offline.info case final info? when _offline.active)
                     TileLayer(
@@ -572,14 +586,24 @@ class _MapPageState extends State<MapPage> {
                         ),
                     ],
                   ),
+                  if (_traffic)
+                    TrafficLayer(
+                      key: const ValueKey('traffic-layer'),
+                      packets: widget.radio.traffic.packets,
+                      nodes: () => {for (final n in widget.radio.nodes) n.num: n},
+                      kinds: _trafficKinds,
+                      labels: _trafficLabels,
+                      onRoute: (route) {
+                        if (mounted) setState(() => _latestRoute = route);
+                      },
+                    ),
                   _MapAttribution(topo: _topo),
                 ],
               ),
-              Positioned(
-                top: 12,
-                left: 12,
-                right: 12,
-                child: Card(
+              Positioned.fill(child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                Card(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -612,12 +636,6 @@ class _MapPageState extends State<MapPage> {
                             ), key: const ValueKey('heatmap-summary')),
                           )),
                       Wrap(alignment: WrapAlignment.end, children: [
-                        IconButton(
-                          key: const ValueKey('map-find-place'),
-                          tooltip: l.mapFindPlace,
-                          icon: const Icon(Icons.search),
-                          onPressed: () => _findPlace(context),
-                        ),
                         IconButton(
                           key: const ValueKey('map-favorites-only'),
                           tooltip: BastionPreferences.instance.favoritesOnly
@@ -763,17 +781,26 @@ class _MapPageState extends State<MapPage> {
                           icon: Icon(_showRemembered ? Icons.history : Icons.history_toggle_off),
                           onPressed: () => _toggleRemembered(context),
                         ),
-                        if (placed.isNotEmpty)
-                          IconButton(
-                            tooltip: l.mapShowAll,
-                            icon: const Icon(Icons.fit_screen),
-                            onPressed: () => _fit(placed),
-                          ),
                       ]),
                     ]),
                   ),
                 ),
-              ),
+                const SizedBox(height: 8),
+                Expanded(child: Align(
+                  alignment: Alignment.centerRight,
+                  child: SingleChildScrollView(child: _toolbar(context, placed)),
+                )),
+                if (_traffic && _planning == null) ...[
+                  const SizedBox(height: 8),
+                  TrafficRouteCard(
+                    route: _latestRoute,
+                    onTap: () => _showTrafficRoute(context),
+                  ),
+                  // Keeps the map's licence credit visible below the card.
+                  const SizedBox(height: 22),
+                ],
+                ]),
+              )),
               if (_planning case final plan?)
                 Positioned(
                   left: 12,
@@ -810,6 +837,170 @@ class _MapPageState extends State<MapPage> {
           );
         },
       );
+
+  /// The frosted pill on the right: locate, filter, traffic, search, fit, options.
+  Widget _toolbar(BuildContext context, List<MeshtasticNode> placed) => TrafficToolbar(buttons: [
+        TrafficToolButton(
+          key: const ValueKey('map-locate'),
+          icon: Icons.near_me_outlined,
+          label: l.trafficLocate,
+          onPressed: () => _locate(context),
+        ),
+        TrafficToolButton(
+          key: const ValueKey('map-traffic-filter'),
+          icon: Icons.filter_list,
+          label: l.trafficFilter,
+          selected: _trafficKinds.length < TrafficKind.values.length,
+          onPressed: () => _showTrafficFilter(context),
+        ),
+        TrafficToolButton(
+          key: const ValueKey('map-traffic'),
+          icon: Icons.route,
+          label: l.trafficTitle,
+          selected: _traffic,
+          onPressed: () => setState(() {
+            _traffic = !_traffic;
+            if (!_traffic) _latestRoute = null;
+          }),
+        ),
+        TrafficToolButton(
+          key: const ValueKey('map-find-place'),
+          icon: Icons.search,
+          label: l.trafficSearch,
+          onPressed: () => _findPlace(context),
+        ),
+        TrafficToolButton(
+          key: const ValueKey('map-fit-all'),
+          icon: Icons.open_in_full,
+          label: l.trafficFit,
+          onPressed: placed.isEmpty ? null : () => _fit(placed),
+        ),
+        TrafficToolButton(
+          key: const ValueKey('map-traffic-options'),
+          icon: Icons.more_horiz,
+          label: l.trafficOptions,
+          onPressed: () => _showTrafficOptions(context),
+        ),
+      ]);
+
+  void _locate(BuildContext context) {
+    final me = widget.radio.localNode;
+    if (me == null || !me.hasPosition) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.trafficLocateNone)));
+      return;
+    }
+    _map.move(LatLng(me.latitude!, me.longitude!), _map.camera.zoom < 12 ? 13 : _map.camera.zoom);
+  }
+
+  void _showTrafficFilter(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheet) => StatefulBuilder(builder: (sheet, setSheet) => SafeArea(
+        child: ListView(shrinkWrap: true, padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), children: [
+          Text(l.trafficFilterTitle, style: Theme.of(sheet).textTheme.titleMedium),
+          for (final kind in TrafficKind.values)
+            CheckboxListTile(
+              key: ValueKey('traffic-kind-${kind.name}'),
+              contentPadding: EdgeInsets.zero,
+              value: _trafficKinds.contains(kind),
+              secondary: Container(width: 18, height: 6, decoration: BoxDecoration(
+                  color: TrafficStyle.color(kind), borderRadius: BorderRadius.circular(3))),
+              title: Text(TrafficStyle.name(l, kind)),
+              onChanged: (on) {
+                final next = {..._trafficKinds};
+                on ?? false ? next.add(kind) : next.remove(kind);
+                setState(() => _trafficKinds = next);
+                setSheet(() {});
+              },
+            ),
+        ]),
+      )),
+    );
+  }
+
+  void _showTrafficOptions(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheet) => StatefulBuilder(builder: (sheet, setSheet) => SafeArea(
+        child: ListView(shrinkWrap: true, padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), children: [
+          Text(l.trafficOptionsTitle, style: Theme.of(sheet).textTheme.titleMedium),
+          const SizedBox(height: 4),
+          Text(l.trafficPathHelp, style: Theme.of(sheet).textTheme.bodySmall),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            value: _traffic,
+            title: Text(l.trafficShow),
+            onChanged: (v) {
+              setState(() {
+                _traffic = v;
+                if (!v) _latestRoute = null;
+              });
+              setSheet(() {});
+            },
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            value: _trafficLabels,
+            title: Text(l.trafficLabels),
+            subtitle: Text(l.trafficLabelsHelp),
+            onChanged: (v) {
+              setState(() => _trafficLabels = v);
+              setSheet(() {});
+            },
+          ),
+          if (_latestRoute != null)
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.clear_all),
+              title: Text(l.trafficClear),
+              onTap: () {
+                setState(() => _latestRoute = null);
+                Navigator.of(sheet).pop();
+              },
+            ),
+        ]),
+      )),
+    );
+  }
+
+  /// Every stop of the latest route, with the node's details one tap away.
+  void _showTrafficRoute(BuildContext context) {
+    final route = _latestRoute;
+    if (route == null) return;
+    final byNum = {for (final n in widget.radio.nodes) n.num: n};
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheet) => SafeArea(child: ListView(shrinkWrap: true, padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), children: [
+        Row(children: [TrafficPill(kind: route.packet.kind)]),
+        const SizedBox(height: 8),
+        for (final (i, s) in route.stops.indexed)
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: CircleAvatar(radius: 14, child: Text('${i + 1}', style: const TextStyle(fontSize: 12))),
+            title: Text(s.label),
+            subtitle: Text(s.unknownCount > 0
+                ? l.trafficUnnamed(s.unknownCount)
+                : s.placed
+                    ? '${s.latitude!.toStringAsFixed(4)}, ${s.longitude!.toStringAsFixed(4)}'
+                    : l.trafficNotOnMap(s.label)),
+            onTap: switch (byNum[s.num]) {
+              final node? => () {
+                  Navigator.of(sheet).pop();
+                  _showNode(context, node);
+                },
+              null => null,
+            },
+          ),
+        Text(l.trafficPathHelp, style: Theme.of(sheet).textTheme.bodySmall),
+      ])),
+    );
+  }
 
   ({double distance, double bearing})? _fromMe(double lat, double lon) {
     final me = widget.radio.localNode;

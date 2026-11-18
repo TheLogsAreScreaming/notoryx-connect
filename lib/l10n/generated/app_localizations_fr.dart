@@ -6158,4 +6158,128 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get nodesNoMeshYetBody =>
       'Les nœuds apparaissent ici à mesure que votre radio les entend.';
+
+  @override
+  String get trafficTitle => 'Trafic';
+
+  @override
+  String get trafficShow => 'Afficher le trafic en direct';
+
+  @override
+  String get trafficHide => 'Masquer le trafic en direct';
+
+  @override
+  String get trafficLocate => 'Localiser';
+
+  @override
+  String get trafficLocateNone => 'Votre radio n\'a pas encore de position.';
+
+  @override
+  String get trafficFilter => 'Filtre';
+
+  @override
+  String get trafficFilterTitle => 'Types de paquets à afficher';
+
+  @override
+  String get trafficSearch => 'Rechercher';
+
+  @override
+  String get trafficFit => 'Tout voir';
+
+  @override
+  String get trafficOptions => 'Options';
+
+  @override
+  String get trafficOptionsTitle => 'Options du trafic';
+
+  @override
+  String get trafficLabels => 'Étiquettes des sauts';
+
+  @override
+  String get trafficLabelsHelp =>
+      'Nomme chaque saut pendant l\'affichage d\'une route.';
+
+  @override
+  String get trafficClear => 'Effacer la carte de route';
+
+  @override
+  String get trafficPathHelp =>
+      'Seuls les traceroutes nomment chaque relais. Les autres paquets montrent l\'expéditeur, le nombre de sauts et le dernier relais si la radio l\'indique.';
+
+  @override
+  String get trafficAdvert => 'Info du nœud';
+
+  @override
+  String get trafficDirect => 'Message direct';
+
+  @override
+  String get trafficChannel => 'Message de canal';
+
+  @override
+  String get trafficAck => 'Accusé de réception';
+
+  @override
+  String get trafficTrace => 'Traceroute';
+
+  @override
+  String get trafficOther => 'Autre';
+
+  @override
+  String get trafficListening => 'À l\'écoute des paquets…';
+
+  @override
+  String get trafficDirectHop => 'Direct';
+
+  @override
+  String get trafficHopsUnknown => 'Sauts inconnus';
+
+  @override
+  String get trafficUnnamedRelay => 'un relais inconnu';
+
+  @override
+  String trafficHeardFrom(String name) {
+    return 'Entendu via $name';
+  }
+
+  @override
+  String trafficHeardFromSnr(String name, String snr) {
+    return 'Entendu via $name · $snr dB';
+  }
+
+  @override
+  String trafficHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sauts',
+      one: '1 saut',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trafficNotOnMapCount(int count) {
+    return '$count hors carte';
+  }
+
+  @override
+  String trafficAge(int seconds) {
+    return '$seconds s';
+  }
+
+  @override
+  String trafficNotOnMap(String names) {
+    return 'Hors carte : $names';
+  }
+
+  @override
+  String trafficUnnamed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relais sans nom',
+      one: '1 relais sans nom',
+    );
+    return '$_temp0';
+  }
 }

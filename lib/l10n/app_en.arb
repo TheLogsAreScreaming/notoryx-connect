@@ -4365,5 +4365,89 @@
   },
   "nodesNoMatchHint": "Search by name, short name or node ID.",
   "nodesNoMeshYet": "No mesh nodes yet",
-  "nodesNoMeshYetBody": "Nodes appear here as your radio hears them."
+  "nodesNoMeshYetBody": "Nodes appear here as your radio hears them.",
+  "trafficTitle": "Traffic",
+  "trafficShow": "Show live traffic",
+  "trafficHide": "Hide live traffic",
+  "trafficLocate": "Locate",
+  "trafficLocateNone": "Your radio has no position yet.",
+  "trafficFilter": "Filter",
+  "trafficFilterTitle": "Packet types to show",
+  "trafficSearch": "Search",
+  "trafficFit": "Fit all",
+  "trafficOptions": "Options",
+  "trafficOptionsTitle": "Traffic options",
+  "trafficLabels": "Hop labels",
+  "trafficLabelsHelp": "Name each hop while a route is on screen.",
+  "trafficClear": "Clear the route card",
+  "trafficPathHelp": "Only traceroutes name every relay. Other packets show the sender, the hop count and the last relay when the radio reports it.",
+  "trafficAdvert": "Node info",
+  "trafficDirect": "Direct message",
+  "trafficChannel": "Channel message",
+  "trafficAck": "Acknowledgement",
+  "trafficTrace": "Traceroute",
+  "trafficOther": "Other",
+  "trafficListening": "Listening for packets…",
+  "trafficDirectHop": "Direct",
+  "trafficHopsUnknown": "Hops unknown",
+  "trafficUnnamedRelay": "an unnamed relay",
+  "trafficHeardFrom": "Heard from {name}",
+  "@trafficHeardFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "trafficHeardFromSnr": "Heard from {name} · {snr} dB",
+  "@trafficHeardFromSnr": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "snr": {
+        "type": "String"
+      }
+    }
+  },
+  "trafficHops": "{count, plural, =1{1 hop} other{{count} hops}}",
+  "@trafficHops": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "trafficNotOnMapCount": "{count} not on map",
+  "@trafficNotOnMapCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "trafficAge": "{seconds}s",
+  "@trafficAge": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "trafficNotOnMap": "Not on map: {names}",
+  "@trafficNotOnMap": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "trafficUnnamed": "{count, plural, =1{1 relay without a name} other{{count} relays without a name}}",
+  "@trafficUnnamed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

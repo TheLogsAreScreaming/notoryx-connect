@@ -74,6 +74,7 @@ import 'meshtastic_stream_transport.dart';
 import 'meshtastic_usb_transport.dart';
 import 'meshtastic_text_codec.dart';
 import 'meshtastic_traceroute.dart';
+import 'bastion_traffic.dart';
 import 'bastion_lookalike.dart';
 
 /// Owns one verified Meshtastic radio session and exposes it to the UI.
@@ -513,6 +514,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   final MeshtasticMeshTools _meshTools = MeshtasticMeshTools();
   StreamSubscription<Uint8List>? _meshToolsSubscription;
   StreamSubscription<Uint8List>? _waypointSubscription;
+  StreamSubscription<Uint8List>? _trafficSubscription;
+
+  /// Packets heard on this radio, for the live Traffic map.
+  final BastionTrafficLog traffic = BastionTrafficLog();
   static const _sharePreferenceKey = 'bastion.share_phone_location';
   static const _precisionPreferenceKey = 'bastion.share_location_precision';
   int _locationPrecision = BastionPhonePositionSharer.precise;
@@ -1195,6 +1200,19 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
             notifyListeners();
           }
         } catch (_) {
+          // Malformed frames are handled by the other decoders.
+        }
+      });
+
+      _trafficSubscription = session.incomingEnvelopes.listen((bytes) {
+        final local = _localNodeNum;
+        if (local == null) return;
+        try {
+          final envelope = pb.FromRadio.fromBuffer(bytes);
+          if (!envelope.hasPacket()) return;
+          final packet = TrafficPacket.fromMeshPacket(envelope.packet, local: local, heard: DateTime.now());
+          if (packet != null) traffic.add(packet);
+        } on InvalidProtocolBufferException {
           // Malformed frames are handled by the other decoders.
         }
       });
@@ -2295,6 +2313,8 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _linkLossSubscription = null;
     await _waypointSubscription?.cancel();
     _waypointSubscription = null;
+    await _trafficSubscription?.cancel();
+    _trafficSubscription = null;
     await _meshToolsSubscription?.cancel();
     _meshToolsSubscription = null;
     await _sharer?.stop();
