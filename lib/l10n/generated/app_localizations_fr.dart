@@ -6160,6 +6160,38 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les nœuds apparaissent ici à mesure que votre radio les entend.';
 
   @override
+  String get noticeKeyTitle => 'Alerte sur la clé de sécurité';
+
+  @override
+  String get noticeKeyBody =>
+      'Votre radio signale un problème avec sa propre clé de sécurité. Les messages directs peuvent ne pas être privés, ou d\'autres nœuds peuvent avoir besoin de votre nouvelle clé.';
+
+  @override
+  String get noticeIdentityTitle => 'Changement de nom non signé refusé';
+
+  @override
+  String get noticeIdentityBody =>
+      'Un nœud a tenté de changer le nom ou le rôle d\'un nœud connu sans signature valide. Votre radio a gardé les anciennes informations.';
+
+  @override
+  String get noticeAirtimeTitle => 'Limite de temps d\'émission atteinte';
+
+  @override
+  String get noticeAirtimeBody =>
+      'Votre radio a arrêté un envoi pour respecter sa limite de temps d\'émission. Réessayez plus tard.';
+
+  @override
+  String get noticeGeneralTitle => 'Message de votre radio';
+
+  @override
+  String noticeRadioSays(String message) {
+    return 'Radio : $message';
+  }
+
+  @override
+  String get noticeDismiss => 'Fermer';
+
+  @override
   String get trafficTitle => 'Trafic';
 
   @override

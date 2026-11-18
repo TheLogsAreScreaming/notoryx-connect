@@ -55,16 +55,22 @@ class FileOperation extends $pb.ProtobufEnum {
       FileOperation._(2, _omitEnumNames ? '' : 'PUT');
   static const FileOperation DELETE =
       FileOperation._(3, _omitEnumNames ? '' : 'DELETE');
+  static const FileOperation MKDIR =
+      FileOperation._(4, _omitEnumNames ? '' : 'MKDIR');
+  static const FileOperation RMDIR =
+      FileOperation._(5, _omitEnumNames ? '' : 'RMDIR');
 
   static const $core.List<FileOperation> values = <FileOperation>[
     GET,
     POST,
     PUT,
     DELETE,
+    MKDIR,
+    RMDIR,
   ];
 
   static final $core.List<FileOperation?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 3);
+      $pb.ProtobufEnum.$_initByValueList(values, 5);
   static FileOperation? valueOf($core.int value) =>
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 
@@ -98,6 +104,8 @@ class FileStatus extends $pb.ProtobufEnum {
       FileStatus._(6, _omitEnumNames ? '' : 'FILE_IO_ERROR');
   static const FileStatus FILE_NOT_A_FILE =
       FileStatus._(7, _omitEnumNames ? '' : 'FILE_NOT_A_FILE');
+  static const FileStatus FILE_NOT_EMPTY =
+      FileStatus._(8, _omitEnumNames ? '' : 'FILE_NOT_EMPTY');
 
   static const $core.List<FileStatus> values = <FileStatus>[
     FILE_UNSPECIFIED,
@@ -108,10 +116,11 @@ class FileStatus extends $pb.ProtobufEnum {
     FILE_OFFSET_CONFLICT,
     FILE_IO_ERROR,
     FILE_NOT_A_FILE,
+    FILE_NOT_EMPTY,
   ];
 
   static final $core.List<FileStatus?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 7);
+      $pb.ProtobufEnum.$_initByValueList(values, 8);
   static FileStatus? valueOf($core.int value) =>
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 

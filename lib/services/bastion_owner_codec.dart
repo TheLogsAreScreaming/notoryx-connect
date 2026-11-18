@@ -9,14 +9,22 @@ abstract final class BastionOwnerCodec {
   static Uint8List encodeUser({
     required String longName,
     required String shortName,
+    String? firmwareVersion,
   }) {
-    final longError = BastionNodeIdentityValidation.longNameError(longName);
-    if (longError != null) throw ArgumentError.value(longName, 'longName', longError);
+    final longError = BastionNodeIdentityValidation.longNameError(
+      longName,
+      firmwareVersion: firmwareVersion,
+    );
+    if (longError != null)
+      throw ArgumentError.value(longName, 'longName', longError);
     final shortError = BastionNodeIdentityValidation.shortNameError(shortName);
-    if (shortError != null) throw ArgumentError.value(shortName, 'shortName', shortError);
+    if (shortError != null)
+      throw ArgumentError.value(shortName, 'shortName', shortError);
     final longBytes = utf8.encode(longName.trim());
     final shortBytes = utf8.encode(shortName.trim());
-    if (longBytes.length > 39 || shortBytes.length > 4) {
+    if (longBytes.length >
+            BastionNodeIdentityValidation.maxLongNameBytes(firmwareVersion) ||
+        shortBytes.length > BastionNodeIdentityValidation.shortNameBytes) {
       throw ArgumentError('Node names exceed Meshtastic UTF-8 byte limits.');
     }
     return Uint8List.fromList([
@@ -28,7 +36,12 @@ abstract final class BastionOwnerCodec {
   static Uint8List encodeAdminSetOwner({
     required String longName,
     required String shortName,
+    String? firmwareVersion,
   }) => BastionAdminCodec.setOwner(
-        encodeUser(longName: longName, shortName: shortName),
-      );
+    encodeUser(
+      longName: longName,
+      shortName: shortName,
+      firmwareVersion: firmwareVersion,
+    ),
+  );
 }

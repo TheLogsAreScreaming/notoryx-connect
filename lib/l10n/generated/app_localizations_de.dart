@@ -6163,6 +6163,38 @@ class AppLocalizationsDe extends AppLocalizations {
       'Knoten erscheinen hier, sobald Ihr Funkgerät sie hört.';
 
   @override
+  String get noticeKeyTitle => 'Warnung zum Sicherheitsschlüssel';
+
+  @override
+  String get noticeKeyBody =>
+      'Dein Funkgerät meldet ein Problem mit seinem eigenen Sicherheitsschlüssel. Direktnachrichten sind eventuell nicht privat, oder andere Knoten brauchen deinen neuen Schlüssel.';
+
+  @override
+  String get noticeIdentityTitle => 'Unsignierte Namensänderung abgelehnt';
+
+  @override
+  String get noticeIdentityBody =>
+      'Ein Knoten wollte Name oder Rolle eines bekannten Knotens ohne gültige Signatur ändern. Dein Funkgerät hat die alten Angaben behalten.';
+
+  @override
+  String get noticeAirtimeTitle => 'Sendezeit-Limit erreicht';
+
+  @override
+  String get noticeAirtimeBody =>
+      'Dein Funkgerät hat das Senden gestoppt, um sein Sendezeit-Limit einzuhalten. Versuche es später erneut.';
+
+  @override
+  String get noticeGeneralTitle => 'Meldung deines Funkgeräts';
+
+  @override
+  String noticeRadioSays(String message) {
+    return 'Funkgerät: $message';
+  }
+
+  @override
+  String get noticeDismiss => 'Schließen';
+
+  @override
   String get trafficTitle => 'Verkehr';
 
   @override

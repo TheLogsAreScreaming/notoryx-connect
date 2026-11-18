@@ -6091,6 +6091,38 @@ class AppLocalizationsEn extends AppLocalizations {
       'Nodes appear here as your radio hears them.';
 
   @override
+  String get noticeKeyTitle => 'Security key warning';
+
+  @override
+  String get noticeKeyBody =>
+      'Your radio reported a problem with its own security key. Direct messages may not be private, or other nodes may need your new key.';
+
+  @override
+  String get noticeIdentityTitle => 'Unsigned name change refused';
+
+  @override
+  String get noticeIdentityBody =>
+      'A node tried to change a known node\'s name or role without a valid signature. Your radio kept the old details.';
+
+  @override
+  String get noticeAirtimeTitle => 'Airtime limit reached';
+
+  @override
+  String get noticeAirtimeBody =>
+      'Your radio stopped a send to stay within its airtime limit. Try again later.';
+
+  @override
+  String get noticeGeneralTitle => 'Message from your radio';
+
+  @override
+  String noticeRadioSays(String message) {
+    return 'Radio: $message';
+  }
+
+  @override
+  String get noticeDismiss => 'Dismiss';
+
+  @override
   String get trafficTitle => 'Traffic';
 
   @override
