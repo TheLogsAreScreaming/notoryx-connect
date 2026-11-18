@@ -10014,6 +10014,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nodes appear here as your radio hears them.'**
   String get nodesNoMeshYetBody;
+
+  /// No description provided for @noticeKeyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Security key warning'**
+  String get noticeKeyTitle;
+
+  /// No description provided for @noticeKeyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio reported a problem with its own security key. Direct messages may not be private, or other nodes may need your new key.'**
+  String get noticeKeyBody;
+
+  /// No description provided for @noticeIdentityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsigned name change refused'**
+  String get noticeIdentityTitle;
+
+  /// No description provided for @noticeIdentityBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A node tried to change a known node\'s name or role without a valid signature. Your radio kept the old details.'**
+  String get noticeIdentityBody;
+
+  /// No description provided for @noticeAirtimeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Airtime limit reached'**
+  String get noticeAirtimeTitle;
+
+  /// No description provided for @noticeAirtimeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio stopped a send to stay within its airtime limit. Try again later.'**
+  String get noticeAirtimeBody;
+
+  /// No description provided for @noticeGeneralTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Message from your radio'**
+  String get noticeGeneralTitle;
+
+  /// The radio firmware's own English text, quoted under a notice.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio: {message}'**
+  String noticeRadioSays(String message);
+
+  /// No description provided for @noticeDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get noticeDismiss;
 }
 
 class _AppLocalizationsDelegate

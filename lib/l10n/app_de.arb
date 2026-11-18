@@ -1649,5 +1649,14 @@
   "nodesNoMatch": "Kein Knoten passt zu „{query}“",
   "nodesNoMatchHint": "Suchen Sie nach Name, Kurzname oder Knoten-ID.",
   "nodesNoMeshYet": "Noch keine Mesh-Knoten",
-  "nodesNoMeshYetBody": "Knoten erscheinen hier, sobald Ihr Funkgerät sie hört."
+  "nodesNoMeshYetBody": "Knoten erscheinen hier, sobald Ihr Funkgerät sie hört.",
+  "noticeKeyTitle": "Warnung zum Sicherheitsschlüssel",
+  "noticeKeyBody": "Dein Funkgerät meldet ein Problem mit seinem eigenen Sicherheitsschlüssel. Direktnachrichten sind eventuell nicht privat, oder andere Knoten brauchen deinen neuen Schlüssel.",
+  "noticeIdentityTitle": "Unsignierte Namensänderung abgelehnt",
+  "noticeIdentityBody": "Ein Knoten wollte Name oder Rolle eines bekannten Knotens ohne gültige Signatur ändern. Dein Funkgerät hat die alten Angaben behalten.",
+  "noticeAirtimeTitle": "Sendezeit-Limit erreicht",
+  "noticeAirtimeBody": "Dein Funkgerät hat das Senden gestoppt, um sein Sendezeit-Limit einzuhalten. Versuche es später erneut.",
+  "noticeGeneralTitle": "Meldung deines Funkgeräts",
+  "noticeRadioSays": "Funkgerät: {message}",
+  "noticeDismiss": "Schließen"
 }
