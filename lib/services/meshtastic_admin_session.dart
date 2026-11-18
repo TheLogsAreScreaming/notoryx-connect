@@ -309,13 +309,14 @@ class MeshtasticAdminSession {
       } on InvalidProtocolBufferException {
         return;
       }
+      // Only a reply to a request this session sent counts. An unasked
+      // admin packet must not replace the session key or answer anything.
+      if (pending == null || !pending.expectsResponse) return;
       if (admin.sessionPasskey.isNotEmpty) {
         _passkey = List.unmodifiable(admin.sessionPasskey);
         _passkeyReceivedAt = _clock();
       }
-      if (pending != null && pending.expectsResponse) {
-        pending.complete(admin);
-      }
+      pending.complete(admin);
     } else if (data.portnum == PortNum.ROUTING_APP && pending != null) {
       final Routing routing;
       try {
