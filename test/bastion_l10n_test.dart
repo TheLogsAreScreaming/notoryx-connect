@@ -324,8 +324,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Ajustes')));
     await tester.pumpAndSettle();
-    expect(find.text('Configuración de la radio'), findsOneWidget);
-    expect(find.text('Radio configuration'), findsNothing);
+    expect(find.text('Cambiar ajustes de la radio'), findsOneWidget);
+    expect(find.text('Change radio settings'), findsNothing);
     expect(find.textContaining('registered trademark of Meshtastic LLC'), findsOneWidget);
   });
 

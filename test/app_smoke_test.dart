@@ -47,11 +47,11 @@ void main() {
     await tester.tap(find.byIcon(Icons.settings_outlined).last);
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.text('Radio configuration'),
+      find.text('Change radio settings'),
       250,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('Radio configuration'), findsOneWidget);
+    expect(find.text('Change radio settings'), findsOneWidget);
     await tester.scrollUntilVisible(
       find.text('Low-power field mode'),
       250,
