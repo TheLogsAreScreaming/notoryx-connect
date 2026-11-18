@@ -458,13 +458,18 @@ class _OwnerEditor extends StatelessWidget {
     load: radio.readOwner,
     save: radio.writeOwner,
     validate: (draft) =>
-        BastionNodeIdentityValidation.longNameError(draft.longName) ??
+        BastionNodeIdentityValidation.longNameError(
+          draft.longName,
+          firmwareVersion: radio.firmwareVersion,
+        ) ??
         BastionNodeIdentityValidation.shortNameError(draft.shortName),
     fields: (draft, changed) => [
       _DraftTextField(
         label: _l(context).rsLongName,
         initial: draft.longName,
-        maxLength: 39,
+        maxLength: BastionNodeIdentityValidation.maxLongNameBytes(
+          radio.firmwareVersion,
+        ),
         onChanged: (v) {
           draft.longName = v.trim();
           changed();
