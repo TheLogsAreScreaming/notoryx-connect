@@ -223,6 +223,27 @@ void main() {
     await admin.dispose();
   });
 
+  test('an unasked admin packet cannot replace the session passkey', () async {
+    final radio = FakeAdminRadio();
+    final admin = sessionFor(radio);
+    await admin.getOwner();
+    expect(admin.hasFreshPasskey, isTrue);
+    // A reply to a request this session never sent, carrying another key.
+    radio._reply(424242, AdminMessage(
+      getOwnerResponse: User(longName: 'Other'),
+      sessionPasskey: const [6, 6, 6, 6],
+    ));
+    // Nor does a packet with no request ID at all.
+    radio._emit(Data(
+      portnum: PortNum.ADMIN_APP,
+      payload: AdminMessage(sessionPasskey: const [7, 7, 7, 7]).writeToBuffer(),
+    ));
+    await Future<void>.delayed(Duration.zero);
+    await admin.setConfig(Config(lora: Config_LoRaConfig(hopLimit: 4)));
+    expect(radio.received.last.sessionPasskey, [9, 9, 9, 9]);
+    await admin.dispose();
+  });
+
   test('editTransaction wraps writes in begin and commit', () async {
     final radio = FakeAdminRadio();
     final admin = sessionFor(radio);
