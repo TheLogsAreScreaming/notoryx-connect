@@ -172,7 +172,11 @@ class _RemoteAdminPageState extends State<RemoteAdminPage> {
     if (owner == null) return;
     final result = await showDialog<(String, String)>(
       context: context,
-      builder: (_) => _OwnerDialog(longName: owner.longName, shortName: owner.shortName),
+      builder: (_) => _OwnerDialog(
+        longName: owner.longName,
+        shortName: owner.shortName,
+        firmwareVersion: _metadata?.firmwareVersion,
+      ),
     );
     if (result == null) return;
     final updated = owner.deepCopy()
@@ -353,9 +357,16 @@ class _AdminKeyCard extends StatelessWidget {
 }
 
 class _OwnerDialog extends StatefulWidget {
-  const _OwnerDialog({required this.longName, required this.shortName});
+  const _OwnerDialog({
+    required this.longName,
+    required this.shortName,
+    this.firmwareVersion,
+  });
   final String longName;
   final String shortName;
+
+  /// The remote node's firmware, which sets how long its long name can be.
+  final String? firmwareVersion;
 
   @override
   State<_OwnerDialog> createState() => _OwnerDialogState();
@@ -382,7 +393,10 @@ class _OwnerDialogState extends State<_OwnerDialog> {
             TextFormField(
               controller: _long,
               decoration: InputDecoration(labelText: AppLocalizations.of(context).rsLongName),
-              validator: (v) => BastionNodeIdentityValidation.longNameError(v ?? ''),
+              validator: (v) => BastionNodeIdentityValidation.longNameError(
+                v ?? '',
+                firmwareVersion: widget.firmwareVersion,
+              ),
             ),
             const SizedBox(height: NxSpace.sm),
             TextFormField(

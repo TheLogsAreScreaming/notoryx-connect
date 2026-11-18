@@ -1392,6 +1392,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   }) => BastionOwnerCodec.encodeAdminSetOwner(
     longName: longName,
     shortName: shortName,
+    firmwareVersion: _firmwareVersion,
   );
 
   /// Observes a fresh local NodeInfo update after an authorized owner write.
