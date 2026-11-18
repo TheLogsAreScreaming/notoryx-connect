@@ -7,6 +7,7 @@ import 'l10n/generated/app_localizations.dart';
 
 import 'services/bastion_chat_message.dart';
 import 'services/bastion_firmware.dart';
+import 'services/bastion_radio_notice.dart';
 import 'services/bastion_trip.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'theme/notoryx_theme.dart';
@@ -44,6 +45,8 @@ class HomePage extends StatelessWidget {
               title: l.homeFirmwareTitle,
               message: advice,
             ),
+        if (radio.radioNotice case final notice?)
+          _RadioNoticeBanner(notice: notice, onDismiss: radio.dismissRadioNotice),
         _TripCard(radio: radio),
         NxSectionLabel(l.homeCheckIn),
         _CheckInButtons(radio: radio),
@@ -385,4 +388,40 @@ class _SosBanner extends StatelessWidget {
 String _time(DateTime t) {
   final l = t.toLocal();
   return '${l.hour.toString().padLeft(2, '0')}:${l.minute.toString().padLeft(2, '0')}';
+}
+
+/// A notice the radio sent: a key problem, a refused unsigned identity
+/// change, the airtime limit, or the firmware's own text.
+class _RadioNoticeBanner extends StatelessWidget {
+  const _RadioNoticeBanner({required this.notice, required this.onDismiss});
+
+  final RadioNotice notice;
+  final VoidCallback onDismiss;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final (title, body, tone, icon) = switch (notice.kind) {
+      RadioNoticeKind.keySecurity =>
+        (l.noticeKeyTitle, l.noticeKeyBody, NxTone.danger, Icons.key_off),
+      RadioNoticeKind.identityRefused =>
+        (l.noticeIdentityTitle, l.noticeIdentityBody, NxTone.warning, Icons.gpp_maybe_outlined),
+      RadioNoticeKind.airtime =>
+        (l.noticeAirtimeTitle, l.noticeAirtimeBody, NxTone.warning, Icons.timer_outlined),
+      RadioNoticeKind.general => (
+          l.noticeGeneralTitle,
+          null,
+          notice.isWarning ? NxTone.warning : NxTone.info,
+          Icons.campaign_outlined,
+        ),
+    };
+    final radioWords = notice.message.isEmpty ? null : l.noticeRadioSays(notice.message);
+    return NxBanner(
+      tone: tone,
+      icon: icon,
+      title: title,
+      message: [?body, ?radioWords].join('\n'),
+      action: TextButton(onPressed: onDismiss, child: Text(l.noticeDismiss)),
+    );
+  }
 }

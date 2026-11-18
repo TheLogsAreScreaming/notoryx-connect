@@ -20,6 +20,7 @@ import '../generated/meshtastic/telemetry.pb.dart';
 import 'bastion_identity_key.dart';
 import 'bastion_admin_packet_codec.dart';
 import 'bastion_radio_backup.dart';
+import 'bastion_radio_notice.dart';
 import 'bastion_background_service.dart';
 import 'bastion_channel_import.dart';
 import 'bastion_bluetooth_state.dart';
@@ -562,6 +563,20 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   DateTime _connectedAt = DateTime.now();
   @override
   String? get firmwareVersion => _firmwareVersion;
+
+  RadioNotice? _radioNotice;
+
+  /// The latest notice the connected radio sent (a weak or duplicated key, a
+  /// send stopped by the airtime limit, ...), until dismissed or the link
+  /// ends.
+  RadioNotice? get radioNotice => _radioNotice;
+
+  /// Hides [radioNotice] until the radio sends another one.
+  void dismissRadioNotice() {
+    if (_radioNotice == null) return;
+    _radioNotice = null;
+    notifyListeners();
+  }
   final List<double> _snrHistory = [];
   int _receivedTextPackets = 0;
   final Map<int, BastionDeviceTelemetry> _deviceTelemetry = {};
@@ -1122,6 +1137,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       _deviceTelemetry.clear();
       _firmwareVersion = null;
       _deviceMetadata = null;
+      _radioNotice = null;
       _connectedAt = DateTime.now();
       settingsAvailability.clear();
       _radioConfigSnapshots.clear();
@@ -1201,6 +1217,17 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
       _identitySubscription = session.incomingEnvelopes.listen((bytes) {
         final envelope = MeshtasticPhoneApiCodec.decodeFromRadio(bytes);
+        if (envelope.kind == FromRadioPayloadKind.clientNotification &&
+            envelope.payload != null) {
+          final notice = RadioNotice.fromPayload(
+            envelope.payload!,
+            DateTime.now(),
+          );
+          if (notice != null) {
+            _radioNotice = notice;
+            notifyListeners();
+          }
+        }
         if (envelope.kind == FromRadioPayloadKind.metadata &&
             envelope.payload != null) {
           try {
@@ -2321,6 +2348,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _localNodeNum = null;
     _firmwareVersion = null;
     _deviceMetadata = null;
+    _radioNotice = null;
     if (resetConnection) connection.disconnect();
   }
 

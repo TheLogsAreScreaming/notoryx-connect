@@ -1649,5 +1649,14 @@
   "nodesNoMatch": "Aucun nœud ne correspond à « {query} »",
   "nodesNoMatchHint": "Recherchez par nom, nom court ou ID de nœud.",
   "nodesNoMeshYet": "Aucun nœud du maillage pour l'instant",
-  "nodesNoMeshYetBody": "Les nœuds apparaissent ici à mesure que votre radio les entend."
+  "nodesNoMeshYetBody": "Les nœuds apparaissent ici à mesure que votre radio les entend.",
+  "noticeKeyTitle": "Alerte sur la clé de sécurité",
+  "noticeKeyBody": "Votre radio signale un problème avec sa propre clé de sécurité. Les messages directs peuvent ne pas être privés, ou d'autres nœuds peuvent avoir besoin de votre nouvelle clé.",
+  "noticeIdentityTitle": "Changement de nom non signé refusé",
+  "noticeIdentityBody": "Un nœud a tenté de changer le nom ou le rôle d'un nœud connu sans signature valide. Votre radio a gardé les anciennes informations.",
+  "noticeAirtimeTitle": "Limite de temps d'émission atteinte",
+  "noticeAirtimeBody": "Votre radio a arrêté un envoi pour respecter sa limite de temps d'émission. Réessayez plus tard.",
+  "noticeGeneralTitle": "Message de votre radio",
+  "noticeRadioSays": "Radio : {message}",
+  "noticeDismiss": "Fermer"
 }

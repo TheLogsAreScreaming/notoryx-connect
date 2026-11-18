@@ -1649,5 +1649,14 @@
   "nodesNoMatch": "Ningún nodo coincide con «{query}»",
   "nodesNoMatchHint": "Busca por nombre, nombre corto o ID de nodo.",
   "nodesNoMeshYet": "Aún no hay nodos de la malla",
-  "nodesNoMeshYetBody": "Los nodos aparecen aquí a medida que tu radio los oye."
+  "nodesNoMeshYetBody": "Los nodos aparecen aquí a medida que tu radio los oye.",
+  "noticeKeyTitle": "Aviso sobre la clave de seguridad",
+  "noticeKeyBody": "Tu radio informa de un problema con su propia clave de seguridad. Los mensajes directos podrían no ser privados, o otros nodos podrían necesitar tu nueva clave.",
+  "noticeIdentityTitle": "Cambio de nombre sin firma rechazado",
+  "noticeIdentityBody": "Un nodo intentó cambiar el nombre o el rol de un nodo conocido sin una firma válida. Tu radio conservó los datos anteriores.",
+  "noticeAirtimeTitle": "Límite de tiempo en el aire alcanzado",
+  "noticeAirtimeBody": "Tu radio detuvo un envío para respetar su límite de tiempo en el aire. Inténtalo más tarde.",
+  "noticeGeneralTitle": "Mensaje de tu radio",
+  "noticeRadioSays": "Radio: {message}",
+  "noticeDismiss": "Cerrar"
 }
