@@ -4,6 +4,7 @@ import 'package:bastion/services/bastion_demo_radio.dart';
 import 'package:bastion/services/bastion_geofences.dart';
 import 'package:bastion/services/bastion_preferences.dart';
 import 'package:bastion/services/bastion_stale.dart';
+import 'package:bastion/services/meshtastic_node_database.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -257,5 +258,38 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('map-stack-sheet')), findsNothing);
     expect(find.text('Old Camp'), findsWidgets, reason: "Old Camp's own sheet opens");
+  });
+
+  group('mapSpotGroups', () {
+    final now = DateTime(2026, 11, 19, 12);
+    MeshtasticNode node(int num, double lat, {Duration ago = const Duration(minutes: 5)}) => MeshtasticNode(
+        num: num, id: '!$num', longName: 'N$num', shortName: 'N$num',
+        latitude: lat, longitude: -73.1, lastHeard: now.subtract(ago));
+
+    test('this radio leads the group at its own spot', () {
+      final groups = mapSpotGroups([
+        node(2, 41.3, ago: const Duration(minutes: 1)),
+        node(1, 41.3, ago: const Duration(hours: 3)),
+        node(3, 41.3),
+        node(4, 41.4),
+      ], local: 1, team: const {}, now: now);
+      expect(groups.map((g) => g.map((n) => n.num).toList()), [
+        [1, 2, 3],
+        [4],
+      ]);
+    });
+
+    test('other spots list the most recently heard node first', () {
+      final groups = mapSpotGroups([
+        node(5, 41.5, ago: const Duration(days: 2)),
+        node(6, 41.5, ago: const Duration(minutes: 2)),
+      ], local: 1, team: const {}, now: now);
+      expect(groups.single.map((n) => n.num), [6, 5]);
+    });
+
+    test('trip contacts keep their own pins, even at this radio\'s spot', () {
+      final groups = mapSpotGroups([node(1, 41.3), node(7, 41.3)], local: 1, team: const {7}, now: now);
+      expect(groups.map((g) => g.map((n) => n.num).toList()), unorderedEquals([[7], [1]]));
+    });
   });
 }
