@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6086,8 +6087,7 @@ class AppLocalizationsEs extends AppLocalizations {
       locale: localeName,
       other:
           '$count dispositivos cercanos no son radios Meshtastic, así que están ocultos.',
-      one:
-          '1 dispositivo cercano no es una radio Meshtastic, así que está oculto.',
+      one: '1 dispositivo cercano no es una radio Meshtastic, así que está oculto.',
     );
     return '$_temp0';
   }
@@ -6415,4 +6415,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nodesHeardUnknown => 'Última vez oído: desconocido';
+
+  @override
+  String mapStackMore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'y $count nodos más aquí',
+      one: 'y 1 nodo más aquí',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String mapStackTitle(int count) {
+    return '$count nodos en este punto';
+  }
 }

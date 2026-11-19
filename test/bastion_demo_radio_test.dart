@@ -1,6 +1,7 @@
 import 'package:bastion/main.dart';
 import 'package:bastion/services/bastion_chat_message.dart';
 import 'package:bastion/services/bastion_demo_radio.dart';
+import 'package:bastion/services/bastion_stale.dart';
 import 'package:bastion/services/meshtastic_ble_discovery.dart';
 import 'package:bastion/services/bastion_telemetry_history.dart';
 import 'package:bastion/services/bastion_trip.dart';
@@ -12,6 +13,18 @@ import 'package:shared_preferences_platform_interface/shared_preferences_async_p
 
 void main() {
   setUp(() => SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty());
+
+  test('the demo shows a stale node, a shared spot and an unknown last-heard time', () {
+    final now = DateTime(2026, 11, 19, 12);
+    final radio = BastionDemoRadio(clock: () => now);
+    addTearDown(radio.dispose);
+    final byName = {for (final n in radio.nodes) n.longName: n};
+    final old = byName['Old Camp']!, base = byName['Basecamp Solar']!, lost = byName['Lost Tracker']!;
+    expect(BastionStaleAfter.day.marks(old.lastHeard, now), isTrue);
+    expect((old.latitude, old.longitude), (base.latitude, base.longitude));
+    expect(knownHeardTime(lost.lastHeard, now), isNull, reason: 'its clock was never set');
+    expect(BastionStaleAfter.day.marks(lost.lastHeard, now), isFalse);
+  });
 
   test('the demo radio is ready with nodes, messages and sensor history', () {
     final radio = BastionDemoRadio();

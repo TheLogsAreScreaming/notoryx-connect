@@ -428,6 +428,71 @@ class _MapPageState extends State<MapPage> {
         .toList();
   }
 
+  /// [placed] nodes grouped by position, so nodes reported at the same spot
+  /// (common with reduced position precision) share one pin instead of
+  /// stacking their name tags. Each group lists the most recently heard node
+  /// first. This radio and trip contacts always keep their own pins.
+  static List<List<MeshtasticNode>> _stacks(
+    List<MeshtasticNode> placed, {
+    required int? local,
+    required Set<int> team,
+    required DateTime now,
+  }) {
+    final groups = <String, List<MeshtasticNode>>{};
+    final out = <List<MeshtasticNode>>[];
+    for (final n in placed) {
+      if (n.num == local || team.contains(n.num)) {
+        out.add([n]);
+        continue;
+      }
+      final key = '${n.latitude!.toStringAsFixed(5)},${n.longitude!.toStringAsFixed(5)}';
+      groups.putIfAbsent(key, () => []).add(n);
+    }
+    DateTime heard(MeshtasticNode n) =>
+        knownHeardTime(n.lastHeard, now) ?? DateTime.fromMillisecondsSinceEpoch(0);
+    for (final g in groups.values) {
+      g.sort((a, b) => heard(b).compareTo(heard(a)));
+      out.add(g);
+    }
+    return out;
+  }
+
+  /// Lists the nodes that share one map spot; tapping one opens its sheet.
+  void _showStack(BuildContext context, List<MeshtasticNode> nodes, DateTime now) {
+    final l = AppLocalizations.of(context);
+    final staleAfter = BastionPreferences.instance.staleAfter;
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheet) => SafeArea(
+        child: ListView(
+          key: const ValueKey('map-stack-sheet'),
+          shrinkWrap: true,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: Text(l.mapStackTitle(nodes.length), style: Theme.of(sheet).textTheme.titleMedium),
+            ),
+            for (final n in nodes)
+              ListTile(
+                title: Text(n.displayName),
+                subtitle: Text(switch (knownHeardTime(n.lastHeard, now)) {
+                  null => l.nodesHeardUnknown,
+                  final t when staleAfter.marks(n.lastHeard, now) => l.nodesStale(_agoLabel(l, t, now)),
+                  final t => _agoLabel(l, t, now),
+                }),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  Navigator.of(sheet).pop();
+                  _showNode(context, n);
+                },
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
   void _fit(List<MeshtasticNode> nodes) {
     if (nodes.isEmpty) return;
     final points = [for (final n in nodes) LatLng(n.latitude!, n.longitude!)];
@@ -625,21 +690,24 @@ class _MapPageState extends State<MapPage> {
                             onTap: () => _showWaypoint(context, waypoint),
                           ),
                         ),
-                      for (final node in placed)
+                      for (final spot in _stacks(placed, local: local, team: team, now: now))
                         Marker(
-                          point: LatLng(node.latitude!, node.longitude!),
-                          width: 72,
-                          height: MediaQuery.textScalerOf(context).scale(team.contains(node.num) ? 80 : 64),
+                          point: LatLng(spot.first.latitude!, spot.first.longitude!),
+                          width: spot.length == 1 ? 72 : 96,
+                          height: MediaQuery.textScalerOf(context).scale(team.contains(spot.first.num) ? 80 : 64),
                           child: _NodePin(
-                            node: node,
-                            isLocal: node.num == local,
-                            team: team.contains(node.num)
-                                ? TeamMemberStatus.of(node.num, node, now: now)
+                            node: spot.first,
+                            isLocal: spot.first.num == local,
+                            team: team.contains(spot.first.num)
+                                ? TeamMemberStatus.of(spot.first.num, spot.first, now: now)
                                 : null,
-                            stale: node.num != local && staleAfter.marks(node.lastHeard, now)
-                                ? _agoLabel(l, knownHeardTime(node.lastHeard, now)!, now)
+                            stale: spot.first.num != local && staleAfter.marks(spot.first.lastHeard, now)
+                                ? _agoLabel(l, knownHeardTime(spot.first.lastHeard, now)!, now)
                                 : null,
-                            onTap: () => _showNode(context, node),
+                            more: spot.length - 1,
+                            onTap: spot.length == 1
+                                ? () => _showNode(context, spot.first)
+                                : () => _showStack(context, spot, now),
                           ),
                         ),
                     ],
@@ -1660,7 +1728,7 @@ class _MapPageState extends State<MapPage> {
 }
 
 class _NodePin extends StatelessWidget {
-  const _NodePin({required this.node, required this.isLocal, required this.onTap, this.team, this.stale});
+  const _NodePin({required this.node, required this.isLocal, required this.onTap, this.team, this.stale, this.more = 0});
 
   final MeshtasticNode node;
   final bool isLocal;
@@ -1673,6 +1741,9 @@ class _NodePin extends StatelessWidget {
   /// node is not stale. A stale pin is drawn faded and says so in words.
   final String? stale;
 
+  /// How many other nodes share this pin's spot; shown as "+N".
+  final int more;
+
   /// How opaque a stale pin is drawn.
   static const staleOpacity = 0.45;
 
@@ -1684,7 +1755,8 @@ class _NodePin extends StatelessWidget {
       button: true,
       label: '${node.displayName}${isLocal ? l.mapThisRadioSuffix : ''}'
           '${team == null ? '' : l.mapTripContactSuffix(team!.summaryIn(BastionPreferences.instance.units))}'
-          '${stale == null ? '' : ', ${l.nodesStale(stale!)}'}',
+          '${stale == null ? '' : ', ${l.nodesStale(stale!)}'}'
+          '${more == 0 ? '' : ', ${l.mapStackMore(more)}'}',
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
@@ -1702,7 +1774,11 @@ class _NodePin extends StatelessWidget {
                 border: Border.all(color: MapPage.accent, width: 2),
               ),
               child: Text(
-                label,
+                more == 0 ? label : '$label +$more',
+                key: more == 0 ? null : ValueKey('stack-pin-${node.num}'),
+                maxLines: 1,
+                softWrap: false,
+                overflow: TextOverflow.visible,
                 style: TextStyle(
                   color: isLocal ? Colors.black : Colors.white,
                   fontWeight: FontWeight.bold,
@@ -1782,16 +1858,24 @@ class _RangeRingsLayer extends StatelessWidget {
     final tagHeight = MediaQuery.textScalerOf(context).scale(20);
     const compass = [0.0, 90.0, 180.0, 270.0];
     // Compass tags first, then rings from the inside out, so when labels are
-    // pushed to the same edge the tags and inner rings win.
-    final wanted = [
-      for (final b in compass) (_at(b, outer + step * 0.3), _compassTagWidth),
-      for (final r in radii) (_at(0, r), _ringTagWidth),
-    ];
-    final spots = BastionRangeRings.placeLabels([
-      for (final (p, w) in wanted)
-        if (camera.latLngToScreenOffset(p) case final o)
-          (x: o.dx, y: o.dy, halfW: w / 2, halfH: tagHeight / 2),
-    ], (left: clear.left, top: clear.top, right: clear.right, bottom: clear.bottom));
+    // pushed to the same edge the tags and inner rings win. A ring label is
+    // wanted at the ring's north point; when that is under this radio's own
+    // pin (inner rings at close zoom), it moves round the ring to the first
+    // free spot: south, east, west, then the diagonals.
+    const ringBearings = [0.0, 180.0, 90.0, 270.0, 45.0, 315.0, 135.0, 225.0];
+    RingLabelBox box(LatLng p, double w) {
+      final o = camera.latLngToScreenOffset(p);
+      return (x: o.dx, y: o.dy, halfW: w / 2, halfH: tagHeight / 2);
+    }
+    final pin = camera.latLngToScreenOffset(center);
+    final scaler = MediaQuery.textScalerOf(context);
+    final spots = BastionRangeRings.placeLabelChoices([
+      for (final b in compass) [box(_at(b, outer + step * 0.3), _compassTagWidth)],
+      for (final r in radii) [for (final b in ringBearings) box(_at(b, r), _ringTagWidth)],
+    ], (left: clear.left, top: clear.top, right: clear.right, bottom: clear.bottom), obstacles: [
+      // This radio's pin: its name tag above the point and the icon on it.
+      (x: pin.dx, y: pin.dy, halfW: scaler.scale(30), halfH: (scaler.scale(22) + 26) / 2),
+    ]);
     LatLng? spot(int i) => switch (spots[i]) {
           (final x, final y) => camera.screenOffsetToLatLng(Offset(x, y)),
           null => null,

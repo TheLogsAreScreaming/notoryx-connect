@@ -129,6 +129,25 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
         snr: 9.5 - i * 3.25, hopsAway: hops, batteryLevel: num == 0xDE300004 ? 101 : 92 - i * 13,
       ));
     }
+    // Two quiet nodes that show the stale badge, a shared map spot and an
+    // unknown last-heard time. Old Camp was last heard two days ago at the
+    // same spot as Basecamp Solar. Lost Tracker's clock was never set, so it
+    // reports a 1970 time, which the app shows as unknown.
+    _demoNodes
+      ..add(MeshtasticNode(
+        num: 0xDE300007, id: _id(0xDE300007), longName: 'Old Camp', shortName: 'OLD',
+        latitude: _baseLat + 0.004, longitude: _baseLon - 0.009, altitudeMeters: 1690,
+        positionTime: now.subtract(const Duration(days: 2)),
+        lastHeard: now.subtract(const Duration(days: 2, hours: 3)),
+        snr: -6.5, hopsAway: 1, batteryLevel: 18,
+      ))
+      ..add(MeshtasticNode(
+        num: 0xDE300008, id: _id(0xDE300008), longName: 'Lost Tracker', shortName: 'LOST',
+        latitude: _baseLat - 0.008, longitude: _baseLon + 0.012, altitudeMeters: 1660,
+        positionTime: DateTime.fromMillisecondsSinceEpoch(42 * 1000),
+        lastHeard: DateTime.fromMillisecondsSinceEpoch(42 * 1000),
+        hopsAway: 2, batteryLevel: 64,
+      ));
 
     BastionChatMessage incoming(int from, String text, Duration ago, {int channel = 0, bool direct = false}) =>
         BastionChatMessage(

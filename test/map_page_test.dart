@@ -73,7 +73,7 @@ void main() {
     await tester.pump();
     final pins = find.byWidgetPredicate((w) => w.runtimeType.toString() == '_NodePin');
     final all = tester.widgetList(pins).length;
-    expect(all, radio.nodes.length);
+    expect(all, radio.nodes.length - 1, reason: "Old Camp shares Basecamp Solar's pin");
 
     await tester.tap(find.byKey(const ValueKey('map-favorites-only')));
     await tester.pump();
@@ -132,7 +132,14 @@ void main() {
     await tester.pumpWidget(app(radio));
     await tester.pump();
 
-    final others = radio.nodes.where((n) => n.num != radio.localNodeNum).toList();
+    // Old Camp shares Basecamp Solar's spot, so Basecamp leads that pin, and
+    // Lost Tracker's clock was never set, so it is never stale.
+    const oldCamp = 0xDE300007, lostTracker = 0xDE300008;
+    final others = radio.nodes
+        .where((n) => n.num != radio.localNodeNum && n.num != oldCamp && n.num != lostTracker)
+        .toList();
+    expect(find.byKey(const ValueKey('stale-pin-$lostTracker')), findsNothing,
+        reason: 'an unknown last-heard time is never stale');
     for (final n in others) {
       final faded = find.byKey(ValueKey('stale-pin-${n.num}'));
       expect(faded, findsOneWidget, reason: n.displayName);
@@ -178,6 +185,7 @@ void main() {
         w.key is ValueKey<String> &&
         RegExp(r'^range-ring-(label|compass)-').hasMatch((w.key! as ValueKey<String>).value));
     expect(find.byKey(const ValueKey('range-ring-label-0')), findsOneWidget, reason: 'the inner ring is always labelled');
+    final ownPin = tester.getRect(find.text('DEMO'));
     expect(tags.evaluate().length, greaterThanOrEqualTo(2));
     final topBar = tester.getRect(find.ancestor(of: find.byKey(const ValueKey('map-range-rings')), matching: find.byType(Card)).first);
     final sideBar = tester.getRect(find.byType(TrafficToolbar));
@@ -185,6 +193,7 @@ void main() {
     for (final r in shown) {
       expect(r.overlaps(topBar), isFalse, reason: 'tag at $r is under the top bar $topBar');
       expect(r.overlaps(sideBar), isFalse, reason: 'tag at $r is under the side toolbar $sideBar');
+      expect(r.overlaps(ownPin), isFalse, reason: "tag at $r is under this radio's pin $ownPin");
     }
     for (var i = 0; i < shown.length; i++) {
       for (var j = i + 1; j < shown.length; j++) {
@@ -215,5 +224,38 @@ void main() {
     await tester.pump();
     expect(find.text("Range rings need your radio's position, and it has none yet."), findsOneWidget);
     expect(find.byKey(const ValueKey('range-rings')), findsNothing);
+  });
+
+  testWidgets('nodes at the same spot share one pin that lists them', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
+    await BastionPreferences.instance.update(stale: BastionStaleAfter.day, favorites: false);
+    addTearDown(() => BastionPreferences.instance.update(stale: BastionStaleAfter.standard));
+    final radio = BastionDemoRadio();
+    addTearDown(radio.dispose);
+    await tester.binding.setSurfaceSize(const Size(1000, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(app(radio));
+    await tester.pump();
+
+    // Basecamp Solar (heard minutes ago) and Old Camp (two days ago) report
+    // the same position: one pin, led by the node heard last.
+    const base = 0xDE300004;
+    expect(find.text('BASE +1'), findsOneWidget);
+    expect(find.text('OLD'), findsNothing, reason: 'no second name tag on the same spot');
+    expect(find.byKey(const ValueKey('stale-pin-$base')), findsNothing, reason: 'the lead node is not stale');
+    expect(find.bySemanticsLabel(RegExp(r'^Basecamp Solar.*, and 1 more node here')), findsOneWidget);
+
+    await tester.tap(find.text('BASE +1'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('map-stack-sheet')), findsOneWidget);
+    expect(find.text('2 nodes at this spot'), findsOneWidget);
+    expect(find.text('Basecamp Solar'), findsOneWidget);
+    expect(find.text('Old Camp'), findsOneWidget);
+    expect(find.text('stale · 2 d ago'), findsOneWidget);
+
+    await tester.tap(find.text('Old Camp'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('map-stack-sheet')), findsNothing);
+    expect(find.text('Old Camp'), findsWidgets, reason: "Old Camp's own sheet opens");
   });
 }

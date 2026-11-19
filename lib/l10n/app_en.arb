@@ -4515,5 +4515,21 @@
   "mapShowRangeRings": "Show range rings",
   "mapHideRangeRings": "Hide range rings",
   "mapRangeRingsNoPosition": "Range rings need your radio's position, and it has none yet.",
-  "nodesHeardUnknown": "Last heard: unknown"
+  "nodesHeardUnknown": "Last heard: unknown",
+  "mapStackMore": "{count, plural, =1{and 1 more node here} other{and {count} more nodes here}}",
+  "@mapStackMore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapStackTitle": "{count} nodes at this spot",
+  "@mapStackTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
