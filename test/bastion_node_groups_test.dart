@@ -10,7 +10,7 @@ MeshtasticNode node(int num, String name, {Duration? ago, String? short}) =>
 void main() {
   final nodes = [
     node(1, 'My radio', ago: Duration.zero),
-    node(2, 'Rav4 KC1TCD', ago: const Duration(minutes: 2), short: 'RV'),
+    node(2, 'Test Node B', ago: const Duration(minutes: 2), short: 'TB'),
     node(3, 'Xitiomet Router', ago: const Duration(minutes: 50)),
     node(4, 'Meshxor', ago: const Duration(hours: 3)),
     node(5, 'Old timer', ago: const Duration(days: 3)),
@@ -27,7 +27,7 @@ void main() {
 
   test('search matches name, short name or node ID, ignoring case', () {
     expect([for (final n in BastionNodeGroups.of(nodes, now: now, query: 'mesh').today) n.num], [4]);
-    expect(BastionNodeGroups.of(nodes, now: now, query: 'rv').active.single.num, 2);
+    expect(BastionNodeGroups.of(nodes, now: now, query: 'tb').active.single.num, 2);
     expect(BastionNodeGroups.of(nodes, now: now, query: '00000005').older.single.num, 5);
     expect(BastionNodeGroups.of(nodes, now: now, query: 'nothing like this').total, 0);
   });
