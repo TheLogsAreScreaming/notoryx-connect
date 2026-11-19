@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6113,7 +6112,8 @@ class AppLocalizationsDe extends AppLocalizations {
       locale: localeName,
       other:
           '$count weitere Geräte in der Nähe sind keine Meshtastic-Funkgeräte und werden daher ausgeblendet.',
-      one: '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
+      one:
+          '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
     );
     return '$_temp0';
   }
@@ -6458,5 +6458,122 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String mapStackTitle(int count) {
     return '$count Knoten an dieser Stelle';
+  }
+
+  @override
+  String get setImportNodes => 'Knoten aus Meshtastic importieren';
+
+  @override
+  String get setImportNodesSub =>
+      'Knoten aus einer in der Meshtastic-App gespeicherten Knotendatenbank-Datei hinzufügen';
+
+  @override
+  String get ndbTitle => 'Knoten importieren';
+
+  @override
+  String get ndbIntro =>
+      'Fügt die Knoten aus einer Knotendatenbank der Meshtastic-App zu den Knoten hinzu, die dieses Telefon kennt: Namen, Hardware, wann sie zuletzt gehört wurden, Positionen und Favoriten.';
+
+  @override
+  String get ndbHowTo =>
+      'Exportiere in der Meshtastic-App die Knotendatenbank. Sie speichert eine Datei namens Meshtastic_nodedb_….json, meist unter Downloads.';
+
+  @override
+  String get ndbChoose => 'Datei wählen';
+
+  @override
+  String get ndbFileSummary => 'In dieser Datei';
+
+  @override
+  String ndbFileFrom(String name) {
+    return 'Gespeichert von $name';
+  }
+
+  @override
+  String ndbHeardByRadio(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Knoten per Funk gehört',
+      one: '$count Knoten per Funk gehört',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ndbFavorites(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Favoriten',
+      one: '$count Favorit',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ndbInternet(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Knoten nur über das Internet (MQTT) gehört',
+      one: '$count Knoten nur über das Internet (MQTT) gehört',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ndbIncludeInternet => 'Auch Internet-Knoten (MQTT) hinzufügen';
+
+  @override
+  String ndbIncludeInternetSub(int limit) {
+    return 'Nur die neuesten $limit. Sie sind meist weit weg und für dein Funkgerät nicht erreichbar.';
+  }
+
+  @override
+  String ndbAddsTo(String radio) {
+    return 'Fügt sie den gemerkten Knoten von $radio hinzu.';
+  }
+
+  @override
+  String get ndbNothingSent =>
+      'Es wird nichts an das Funkgerät gesendet. Bekannte Knoten behalten ihren Verlauf, und ein Sicherheitsschlüssel wird nur für Knoten ohne gemerkten Schlüssel hinzugefügt.';
+
+  @override
+  String ndbImport(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Knoten importieren',
+      one: '$count Knoten importieren',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ndbDone(int added, int updated, int keys, String radio) {
+    return 'Fertig für $radio: $added neu, $updated schon bekannt. $keys Sicherheitsschlüssel hinzugefügt.';
+  }
+
+  @override
+  String get ndbEmpty => 'Diese Datei enthält keine Knoten zum Hinzufügen.';
+
+  @override
+  String get ndbNotNodeDb => 'Das ist keine Meshtastic-Knotendatenbank-Datei.';
+
+  @override
+  String get ndbNewerVersion =>
+      'Diese Datei stammt aus einer neueren Meshtastic-App. Aktualisiere NOTORYX Connect, um sie zu lesen.';
+
+  @override
+  String get ndbTooLarge => 'Diese Datei ist zu groß für eine Knotendatenbank.';
+
+  @override
+  String get ndbNotSaved =>
+      'Die Knoten konnten auf diesem Telefon nicht gespeichert werden. Es wurde nichts geändert.';
+
+  @override
+  String ndbFailed(String error) {
+    return 'Import fehlgeschlagen: $error';
   }
 }

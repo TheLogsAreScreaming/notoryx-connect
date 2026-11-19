@@ -10476,6 +10476,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} nodes at this spot'**
   String mapStackTitle(int count);
+
+  /// No description provided for @setImportNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Import nodes from Meshtastic'**
+  String get setImportNodes;
+
+  /// No description provided for @setImportNodesSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Add nodes from a node database file saved in the Meshtastic app'**
+  String get setImportNodesSub;
+
+  /// No description provided for @ndbTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import nodes'**
+  String get ndbTitle;
+
+  /// No description provided for @ndbIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Adds the nodes from a Meshtastic app node database to the nodes this phone remembers: names, hardware, when they were last heard, positions and favorites.'**
+  String get ndbIntro;
+
+  /// No description provided for @ndbHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'In the Meshtastic app, export the node database. It saves a file named like Meshtastic_nodedb_….json, usually in Downloads.'**
+  String get ndbHowTo;
+
+  /// No description provided for @ndbChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose file'**
+  String get ndbChoose;
+
+  /// No description provided for @ndbFileSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'In this file'**
+  String get ndbFileSummary;
+
+  /// No description provided for @ndbFileFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved from {name}'**
+  String ndbFileFrom(String name);
+
+  /// No description provided for @ndbHeardByRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} node heard by radio} other{{count} nodes heard by radio}}'**
+  String ndbHeardByRadio(int count);
+
+  /// No description provided for @ndbFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} favorite} other{{count} favorites}}'**
+  String ndbFavorites(int count);
+
+  /// No description provided for @ndbInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} node heard only over the internet (MQTT)} other{{count} nodes heard only over the internet (MQTT)}}'**
+  String ndbInternet(int count);
+
+  /// No description provided for @ndbIncludeInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'Also add internet (MQTT) nodes'**
+  String get ndbIncludeInternet;
+
+  /// No description provided for @ndbIncludeInternetSub.
+  ///
+  /// In en, this message translates to:
+  /// **'The newest {limit} only. These are usually far away and not reachable by your radio.'**
+  String ndbIncludeInternetSub(int limit);
+
+  /// No description provided for @ndbAddsTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Adds them to the nodes remembered for {radio}.'**
+  String ndbAddsTo(String radio);
+
+  /// No description provided for @ndbNothingSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is sent to the radio. Nodes you already know keep their history, and a security key is only added for nodes with none remembered yet.'**
+  String get ndbNothingSent;
+
+  /// No description provided for @ndbImport.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Import {count} node} other{Import {count} nodes}}'**
+  String ndbImport(int count);
+
+  /// No description provided for @ndbDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done for {radio}: {added} new, {updated} already known. {keys} security keys added.'**
+  String ndbDone(int added, int updated, int keys, String radio);
+
+  /// No description provided for @ndbEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'This file has no nodes to add.'**
+  String get ndbEmpty;
+
+  /// No description provided for @ndbNotNodeDb.
+  ///
+  /// In en, this message translates to:
+  /// **'That isn\'t a Meshtastic node database file.'**
+  String get ndbNotNodeDb;
+
+  /// No description provided for @ndbNewerVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'This file comes from a newer Meshtastic app. Update NOTORYX Connect to read it.'**
+  String get ndbNewerVersion;
+
+  /// No description provided for @ndbTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'That file is too large to be a node database.'**
+  String get ndbTooLarge;
+
+  /// No description provided for @ndbNotSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'The nodes could not be saved on this phone. Nothing was changed.'**
+  String get ndbNotSaved;
+
+  /// No description provided for @ndbFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String ndbFailed(String error);
 }
 
 class _AppLocalizationsDelegate

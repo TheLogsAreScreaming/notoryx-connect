@@ -4531,5 +4531,100 @@
         "type": "int"
       }
     }
+  },
+  "setImportNodes": "Import nodes from Meshtastic",
+  "setImportNodesSub": "Add nodes from a node database file saved in the Meshtastic app",
+  "ndbTitle": "Import nodes",
+  "ndbIntro": "Adds the nodes from a Meshtastic app node database to the nodes this phone remembers: names, hardware, when they were last heard, positions and favorites.",
+  "ndbHowTo": "In the Meshtastic app, export the node database. It saves a file named like Meshtastic_nodedb_….json, usually in Downloads.",
+  "ndbChoose": "Choose file",
+  "ndbFileSummary": "In this file",
+  "ndbFileFrom": "Saved from {name}",
+  "@ndbFileFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ndbHeardByRadio": "{count, plural, one{{count} node heard by radio} other{{count} nodes heard by radio}}",
+  "@ndbHeardByRadio": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ndbFavorites": "{count, plural, one{{count} favorite} other{{count} favorites}}",
+  "@ndbFavorites": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ndbInternet": "{count, plural, one{{count} node heard only over the internet (MQTT)} other{{count} nodes heard only over the internet (MQTT)}}",
+  "@ndbInternet": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ndbIncludeInternet": "Also add internet (MQTT) nodes",
+  "ndbIncludeInternetSub": "The newest {limit} only. These are usually far away and not reachable by your radio.",
+  "@ndbIncludeInternetSub": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "ndbAddsTo": "Adds them to the nodes remembered for {radio}.",
+  "@ndbAddsTo": {
+    "placeholders": {
+      "radio": {
+        "type": "String"
+      }
+    }
+  },
+  "ndbNothingSent": "Nothing is sent to the radio. Nodes you already know keep their history, and a security key is only added for nodes with none remembered yet.",
+  "ndbImport": "{count, plural, one{Import {count} node} other{Import {count} nodes}}",
+  "@ndbImport": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ndbDone": "Done for {radio}: {added} new, {updated} already known. {keys} security keys added.",
+  "@ndbDone": {
+    "placeholders": {
+      "added": {
+        "type": "int"
+      },
+      "updated": {
+        "type": "int"
+      },
+      "keys": {
+        "type": "int"
+      },
+      "radio": {
+        "type": "String"
+      }
+    }
+  },
+  "ndbEmpty": "This file has no nodes to add.",
+  "ndbNotNodeDb": "That isn't a Meshtastic node database file.",
+  "ndbNewerVersion": "This file comes from a newer Meshtastic app. Update NOTORYX Connect to read it.",
+  "ndbTooLarge": "That file is too large to be a node database.",
+  "ndbNotSaved": "The nodes could not be saved on this phone. Nothing was changed.",
+  "ndbFailed": "Import failed: {error}",
+  "@ndbFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
   }
 }

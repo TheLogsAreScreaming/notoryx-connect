@@ -77,6 +77,7 @@ import 'meshtastic_text_codec.dart';
 import 'meshtastic_traceroute.dart';
 import 'bastion_traffic.dart';
 import 'bastion_lookalike.dart';
+import 'meshtastic_nodedb_import.dart';
 
 /// Owns one verified Meshtastic radio session and exposes it to the UI.
 class MeshtasticRadioCoordinator extends ChangeNotifier
@@ -997,6 +998,50 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   Future<void> setNodeNote(int num, String note) async {
     await _nodeVault.setNote(num, note);
     notifyListeners();
+  }
+
+  /// The radio whose remembered nodes are shown, or null before any radio
+  /// has connected on this phone.
+  int? get nodeListRadio => _nodeVault.radio;
+
+  /// Adds the nodes in a Meshtastic app export to this phone's remembered
+  /// nodes for [nodeListRadio] (or, before any radio connected, for the
+  /// radio the file came from). Nothing is sent to any radio. Public keys
+  /// are only remembered for nodes with no key known yet. Returns null when
+  /// nothing could be saved.
+  Future<NodeDbImportResult?> importNodeDatabase(
+    MeshtasticNodeDbExport export, {
+    required bool includeInternet,
+  }) async {
+    final radio = _nodeVault.radio ?? export.myNodeNum;
+    if (radio == null) return null;
+    final records = <BastionNodeRecord>[];
+    final keys = <int, String>{};
+    for (final n in export.pick(includeInternet: includeInternet)) {
+      // A node with no last-heard time can't be placed in time; skip it.
+      final heard = n.lastHeard?.toLocal();
+      if (heard == null) continue;
+      records.add(BastionNodeRecord(
+        num: n.num, id: n.id, longName: n.longName, shortName: n.shortName,
+        hardwareModel: n.hardwareModel, firstSeen: heard, lastSeen: heard,
+        encounters: 0, latitude: n.latitude, longitude: n.longitude,
+        positionTime: n.positionTime?.toLocal(),
+      ));
+      if (n.publicKey case final k?) keys[n.num] = k;
+    }
+    final added = await _nodeVault.importNodes(radio, records, favorites: {
+      for (final n in export.nodes)
+        if (n.favorite && records.any((r) => r.num == n.num)) n.num,
+    });
+    if (added == null) return null;
+    final keysAdded = await _nodeKeys.rememberImported(keys);
+    notifyListeners();
+    return NodeDbImportResult(
+      radio: radio,
+      added: added,
+      updated: records.length - added,
+      keys: keysAdded,
+    );
   }
 
   /// Shows the last connected radio's history until a radio connects.
@@ -2453,3 +2498,21 @@ class _CoordinatorTripRadio implements TripRadio {
 /// The trip's view of [radio], for a coordinator that keeps its own trip.
 TripRadio tripRadioFor(MeshtasticRadioCoordinator radio) =>
     _CoordinatorTripRadio(radio);
+
+/// What [MeshtasticRadioCoordinator.importNodeDatabase] did.
+class NodeDbImportResult {
+  const NodeDbImportResult({
+    required this.radio,
+    required this.added,
+    required this.updated,
+    required this.keys,
+  });
+
+  /// The radio whose remembered nodes received them.
+  final int radio;
+  final int added;
+  final int updated;
+
+  /// Public keys remembered for nodes that had none.
+  final int keys;
+}

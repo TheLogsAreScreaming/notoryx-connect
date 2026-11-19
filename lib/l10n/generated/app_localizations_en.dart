@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6385,5 +6384,122 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String mapStackTitle(int count) {
     return '$count nodes at this spot';
+  }
+
+  @override
+  String get setImportNodes => 'Import nodes from Meshtastic';
+
+  @override
+  String get setImportNodesSub =>
+      'Add nodes from a node database file saved in the Meshtastic app';
+
+  @override
+  String get ndbTitle => 'Import nodes';
+
+  @override
+  String get ndbIntro =>
+      'Adds the nodes from a Meshtastic app node database to the nodes this phone remembers: names, hardware, when they were last heard, positions and favorites.';
+
+  @override
+  String get ndbHowTo =>
+      'In the Meshtastic app, export the node database. It saves a file named like Meshtastic_nodedb_….json, usually in Downloads.';
+
+  @override
+  String get ndbChoose => 'Choose file';
+
+  @override
+  String get ndbFileSummary => 'In this file';
+
+  @override
+  String ndbFileFrom(String name) {
+    return 'Saved from $name';
+  }
+
+  @override
+  String ndbHeardByRadio(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nodes heard by radio',
+      one: '$count node heard by radio',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ndbFavorites(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count favorites',
+      one: '$count favorite',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ndbInternet(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nodes heard only over the internet (MQTT)',
+      one: '$count node heard only over the internet (MQTT)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ndbIncludeInternet => 'Also add internet (MQTT) nodes';
+
+  @override
+  String ndbIncludeInternetSub(int limit) {
+    return 'The newest $limit only. These are usually far away and not reachable by your radio.';
+  }
+
+  @override
+  String ndbAddsTo(String radio) {
+    return 'Adds them to the nodes remembered for $radio.';
+  }
+
+  @override
+  String get ndbNothingSent =>
+      'Nothing is sent to the radio. Nodes you already know keep their history, and a security key is only added for nodes with none remembered yet.';
+
+  @override
+  String ndbImport(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Import $count nodes',
+      one: 'Import $count node',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ndbDone(int added, int updated, int keys, String radio) {
+    return 'Done for $radio: $added new, $updated already known. $keys security keys added.';
+  }
+
+  @override
+  String get ndbEmpty => 'This file has no nodes to add.';
+
+  @override
+  String get ndbNotNodeDb => 'That isn\'t a Meshtastic node database file.';
+
+  @override
+  String get ndbNewerVersion =>
+      'This file comes from a newer Meshtastic app. Update NOTORYX Connect to read it.';
+
+  @override
+  String get ndbTooLarge => 'That file is too large to be a node database.';
+
+  @override
+  String get ndbNotSaved =>
+      'The nodes could not be saved on this phone. Nothing was changed.';
+
+  @override
+  String ndbFailed(String error) {
+    return 'Import failed: $error';
   }
 }

@@ -152,6 +152,15 @@ class _SettingsPage extends StatelessWidget {
         ),
         const Divider(indent: 56),
         ListTile(
+          key: const ValueKey('settings-import-nodes'),
+          leading: const Icon(Icons.group_add_outlined),
+          title: Text(l.setImportNodes),
+          subtitle: Text(l.setImportNodesSub),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(context, NodeDbImportPage(radio: radio)),
+        ),
+        const Divider(indent: 56),
+        ListTile(
           leading: const Icon(Icons.privacy_tip_outlined),
           title: Text(l.setPrivacy),
           subtitle: Text(l.setPrivacySub),

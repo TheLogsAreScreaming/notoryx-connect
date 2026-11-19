@@ -151,7 +151,13 @@ class BastionNodeVault {
   /// The radio whose encounters are shown; null before any radio connected.
   int? get radio => _radio;
 
-  List<BastionNodeRecord> get records {
+  /// Sorted copy of the records, rebuilt only after a change. Name lookups
+  /// read this often, and an imported list can hold thousands of nodes.
+  List<BastionNodeRecord>? _sorted;
+
+  List<BastionNodeRecord> get records => _sorted ??= _sortRecords();
+
+  List<BastionNodeRecord> _sortRecords() {
     final result = [
       for (final r in _records.values)
         if (_annotations[r.num] case final a?)
@@ -179,6 +185,7 @@ class BastionNodeVault {
     final observed = _radio == null && radio != null ? Map.of(_records) : <int, BastionNodeRecord>{};
     _radio = radio;
     _records.clear();
+    _sorted = null;
     _recordsBlocked = false;
     await _loadAnnotations();
     final key = radio == null ? legacyKey : radioKey(radio);
@@ -188,6 +195,7 @@ class BastionNodeVault {
       return;
     }
     _records.addAll(stored);
+    _sorted = null;
     if (radio == null) return;
 
     final legacy = await _read(legacyKey);
@@ -203,6 +211,7 @@ class BastionNodeVault {
     for (final r in observed.values) {
       _records[r.num] = _merge(_records[r.num], r);
     }
+    _sorted = null;
     if (!migrate && observed.isEmpty) return;
     final saved = await _saveRecords() & await _saveAnnotations();
     if (migrate && saved) {
@@ -225,6 +234,7 @@ class BastionNodeVault {
     for (final r in stored.values) {
       _records[r.num] = _merge(_records[r.num], r);
     }
+    _sorted = null;
     return _saveRecords();
   }
 
@@ -234,6 +244,7 @@ class BastionNodeVault {
     if (_radio == null) return;
     _radio = null;
     _records.clear();
+    _sorted = null;
   }
 
   static BastionNodeRecord _merge(BastionNodeRecord? a, BastionNodeRecord b) {
@@ -292,11 +303,77 @@ class BastionNodeVault {
           _annotations[num] = (favorite: v['favorite'] == true, note: v['note'] as String? ?? '');
         }
       });
+      _sorted = null;
     } on FormatException {
       // Damaged notes are replaced on the next change.
     } catch (_) {
       _annotationsBlocked = true;
     }
+  }
+
+  /// Adds [nodes] from another app to [radio]'s list, which need not be the
+  /// one shown. Nodes already known keep their history; missing names,
+  /// hardware and positions are filled in and the newer last-heard time
+  /// wins. [favorites] are starred unless a star or note is already set.
+  /// Returns how many nodes were new, or null when nothing could be saved.
+  Future<int?> importNodes(
+    int radio,
+    Iterable<BastionNodeRecord> nodes, {
+    Set<int> favorites = const {},
+  }) async {
+    final shown = radio == _radio;
+    if (shown && _recordsBlocked) return null;
+    final target = shown ? _records : await _read(radioKey(radio));
+    if (target == null) return null;
+    var added = 0;
+    for (final n in nodes) {
+      final old = target[n.num];
+      if (old == null) added++;
+      target[n.num] = _fillIn(old, n);
+    }
+    if (shown) {
+      _sorted = null;
+      if (!await _saveRecords()) return null;
+    } else {
+      try {
+        await _store.setString(radioKey(radio), jsonEncode(
+          target.values.map((r) => r.copyWith(favorite: false, note: '').toJson()).toList()));
+      } catch (_) {
+        return null;
+      }
+    }
+    await _loadAnnotations();
+    var starred = false;
+    for (final num in favorites) {
+      if (_annotations.containsKey(num)) continue;
+      _annotations[num] = (favorite: true, note: '');
+      starred = true;
+    }
+    if (starred) {
+      _sorted = null;
+      await _saveAnnotations();
+    }
+    return added;
+  }
+
+  /// [old] with gaps filled from [imported]; encounters are not counted,
+  /// since the other app's sightings are not this phone's.
+  static BastionNodeRecord _fillIn(BastionNodeRecord? old, BastionNodeRecord imported) {
+    if (old == null) return imported;
+    final newer = imported.lastSeen.isAfter(old.lastSeen);
+    final placed = !old.hasPosition ? imported : !imported.hasPosition ? old
+        : (imported.positionTime ?? imported.lastSeen).isAfter(old.positionTime ?? old.lastSeen) ? imported : old;
+    return BastionNodeRecord(
+      num: old.num,
+      id: old.id ?? imported.id,
+      longName: (newer ? imported.longName : null) ?? old.longName ?? imported.longName,
+      shortName: (newer ? imported.shortName : null) ?? old.shortName ?? imported.shortName,
+      hardwareModel: old.hardwareModel ?? imported.hardwareModel,
+      firstSeen: old.firstSeen.isBefore(imported.firstSeen) ? old.firstSeen : imported.firstSeen,
+      lastSeen: newer ? imported.lastSeen : old.lastSeen,
+      encounters: old.encounters,
+      latitude: placed.latitude, longitude: placed.longitude, positionTime: placed.positionTime,
+    );
   }
 
   Future<void> observe(MeshtasticNode node) async {
@@ -311,6 +388,7 @@ class BastionNodeVault {
             id: node.id, longName: node.longName, shortName: node.shortName,
             hardwareModel: node.hardwareModel, lastSeen: now,
             encounters: old.encounters + 1);
+    _sorted = null;
     if (_radio != null) await _saveRecords();
   }
 
@@ -326,7 +404,10 @@ class BastionNodeVault {
           latitude: node.latitude, longitude: node.longitude, positionTime: node.positionTime);
       changed = true;
     }
-    if (changed) _positionsDirty = true;
+    if (changed) {
+      _positionsDirty = true;
+      _sorted = null;
+    }
     final at = now ?? DateTime.now();
     final last = _positionsSavedAt;
     if (!_positionsDirty || (last != null && at.difference(last) < const Duration(minutes: 1))) return;
@@ -338,6 +419,7 @@ class BastionNodeVault {
     if (!_records.containsKey(num)) return;
     final old = _annotations[num];
     _annotations[num] = (favorite: value, note: old?.note ?? '');
+    _sorted = null;
     await _saveAnnotations();
   }
 
@@ -345,6 +427,7 @@ class BastionNodeVault {
     if (!_records.containsKey(num)) return;
     final old = _annotations[num];
     _annotations[num] = (favorite: old?.favorite ?? false, note: value.trim());
+    _sorted = null;
     await _saveAnnotations();
   }
 
