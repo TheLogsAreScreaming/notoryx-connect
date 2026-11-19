@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6086,8 +6087,7 @@ class AppLocalizationsEs extends AppLocalizations {
       locale: localeName,
       other:
           '$count dispositivos cercanos no son radios Meshtastic, así que están ocultos.',
-      one:
-          '1 dispositivo cercano no es una radio Meshtastic, así que está oculto.',
+      one: '1 dispositivo cercano no es una radio Meshtastic, así que está oculto.',
     );
     return '$_temp0';
   }
@@ -6372,4 +6372,44 @@ class AppLocalizationsEs extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get setStaleAfter => 'Marcar nodos como inactivos tras';
+
+  @override
+  String get setStaleAfterHelp =>
+      'Los nodos que no se oyen durante este tiempo aparecen como inactivos en Nodos y Mapa. Siguen en la lista.';
+
+  @override
+  String get staleOff => 'Desactivado';
+
+  @override
+  String get stale1h => '1 hora';
+
+  @override
+  String get stale6h => '6 horas';
+
+  @override
+  String get stale24h => '24 horas';
+
+  @override
+  String get stale3d => '3 días';
+
+  @override
+  String get stale7d => '7 días';
+
+  @override
+  String nodesStale(String age) {
+    return 'inactivo · $age';
+  }
+
+  @override
+  String get mapShowRangeRings => 'Mostrar anillos de distancia';
+
+  @override
+  String get mapHideRangeRings => 'Ocultar anillos de distancia';
+
+  @override
+  String get mapRangeRingsNoPosition =>
+      'Los anillos de distancia necesitan la posición de tu radio, y aún no tiene ninguna.';
 }

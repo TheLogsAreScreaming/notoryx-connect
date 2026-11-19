@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6112,8 +6113,7 @@ class AppLocalizationsDe extends AppLocalizations {
       locale: localeName,
       other:
           '$count weitere Geräte in der Nähe sind keine Meshtastic-Funkgeräte und werden daher ausgeblendet.',
-      one:
-          '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
+      one: '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
     );
     return '$_temp0';
   }
@@ -6400,4 +6400,44 @@ class AppLocalizationsDe extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get setStaleAfter => 'Knoten als veraltet markieren nach';
+
+  @override
+  String get setStaleAfterHelp =>
+      'Knoten, die so lange nicht gehört wurden, erscheinen unter Knoten und Karte als veraltet. Sie bleiben in der Liste.';
+
+  @override
+  String get staleOff => 'Aus';
+
+  @override
+  String get stale1h => '1 Stunde';
+
+  @override
+  String get stale6h => '6 Stunden';
+
+  @override
+  String get stale24h => '24 Stunden';
+
+  @override
+  String get stale3d => '3 Tage';
+
+  @override
+  String get stale7d => '7 Tage';
+
+  @override
+  String nodesStale(String age) {
+    return 'veraltet · $age';
+  }
+
+  @override
+  String get mapShowRangeRings => 'Entfernungsringe zeigen';
+
+  @override
+  String get mapHideRangeRings => 'Entfernungsringe ausblenden';
+
+  @override
+  String get mapRangeRingsNoPosition =>
+      'Entfernungsringe brauchen die Position deines Funkgeräts, und es hat noch keine.';
 }

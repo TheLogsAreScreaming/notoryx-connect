@@ -1711,5 +1711,17 @@
   "trafficNotOnMapCount": "{count} fuera del mapa",
   "trafficAge": "{seconds} s",
   "trafficNotOnMap": "Fuera del mapa: {names}",
-  "trafficUnnamed": "{count, plural, =1{1 repetidor sin nombre} other{{count} repetidores sin nombre}}"
+  "trafficUnnamed": "{count, plural, =1{1 repetidor sin nombre} other{{count} repetidores sin nombre}}",
+  "setStaleAfter": "Marcar nodos como inactivos tras",
+  "setStaleAfterHelp": "Los nodos que no se oyen durante este tiempo aparecen como inactivos en Nodos y Mapa. Siguen en la lista.",
+  "staleOff": "Desactivado",
+  "stale1h": "1 hora",
+  "stale6h": "6 horas",
+  "stale24h": "24 horas",
+  "stale3d": "3 días",
+  "stale7d": "7 días",
+  "nodesStale": "inactivo · {age}",
+  "mapShowRangeRings": "Mostrar anillos de distancia",
+  "mapHideRangeRings": "Ocultar anillos de distancia",
+  "mapRangeRingsNoPosition": "Los anillos de distancia necesitan la posición de tu radio, y aún no tiene ninguna."
 }

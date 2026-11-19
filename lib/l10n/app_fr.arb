@@ -1711,5 +1711,17 @@
   "trafficNotOnMapCount": "{count} hors carte",
   "trafficAge": "{seconds} s",
   "trafficNotOnMap": "Hors carte : {names}",
-  "trafficUnnamed": "{count, plural, =1{1 relais sans nom} other{{count} relais sans nom}}"
+  "trafficUnnamed": "{count, plural, =1{1 relais sans nom} other{{count} relais sans nom}}",
+  "setStaleAfter": "Marquer les nœuds inactifs après",
+  "setStaleAfterHelp": "Les nœuds non entendus depuis ce délai apparaissent comme inactifs dans Nœuds et Carte. Ils restent dans la liste.",
+  "staleOff": "Désactivé",
+  "stale1h": "1 heure",
+  "stale6h": "6 heures",
+  "stale24h": "24 heures",
+  "stale3d": "3 jours",
+  "stale7d": "7 jours",
+  "nodesStale": "inactif · {age}",
+  "mapShowRangeRings": "Afficher les cercles de distance",
+  "mapHideRangeRings": "Masquer les cercles de distance",
+  "mapRangeRingsNoPosition": "Les cercles de distance ont besoin de la position de votre radio, qui n'en a pas encore."
 }

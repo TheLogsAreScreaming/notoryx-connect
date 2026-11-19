@@ -56,6 +56,46 @@ class _MessagesCard extends StatelessWidget {
   );
 }
 
+/// When Nodes and Map start marking a quiet node as stale.
+class _StaleNodesCard extends StatelessWidget {
+  const _StaleNodesCard();
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: BastionPreferences.instance,
+    builder: (context, _) {
+      final l = AppLocalizations.of(context);
+      final p = BastionPreferences.instance;
+      return Card(child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+        child: DropdownButtonFormField<BastionStaleAfter>(
+          key: const ValueKey('settings-stale-after'),
+          initialValue: p.staleAfter,
+          isExpanded: true,
+          decoration: InputDecoration(
+            icon: const Icon(Icons.history_toggle_off),
+            labelText: l.setStaleAfter,
+            helperText: l.setStaleAfterHelp,
+            helperMaxLines: 3,
+          ),
+          items: [for (final v in BastionStaleAfter.values)
+            DropdownMenuItem(value: v, child: Text(staleAfterLabel(l, v)))],
+          onChanged: (v) => p.update(stale: v),
+        ),
+      ));
+    },
+  );
+}
+
+/// The words for a stale threshold choice.
+String staleAfterLabel(AppLocalizations l, BastionStaleAfter v) => switch (v) {
+      BastionStaleAfter.off => l.staleOff,
+      BastionStaleAfter.hour => l.stale1h,
+      BastionStaleAfter.sixHours => l.stale6h,
+      BastionStaleAfter.day => l.stale24h,
+      BastionStaleAfter.threeDays => l.stale3d,
+      BastionStaleAfter.week => l.stale7d,
+    };
+
 /// Shows whether Android lets the app keep the radio link open in the
 /// background, with a shortcut to the battery optimization setting.
 /// Opt-in: this phone carries MQTT for a radio without Wi-Fi.

@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6326,4 +6327,44 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get setStaleAfter => 'Mark nodes stale after';
+
+  @override
+  String get setStaleAfterHelp =>
+      'Nodes not heard for this long show as stale on Nodes and Map. They stay in the list.';
+
+  @override
+  String get staleOff => 'Off';
+
+  @override
+  String get stale1h => '1 hour';
+
+  @override
+  String get stale6h => '6 hours';
+
+  @override
+  String get stale24h => '24 hours';
+
+  @override
+  String get stale3d => '3 days';
+
+  @override
+  String get stale7d => '7 days';
+
+  @override
+  String nodesStale(String age) {
+    return 'stale · $age';
+  }
+
+  @override
+  String get mapShowRangeRings => 'Show range rings';
+
+  @override
+  String get mapHideRangeRings => 'Hide range rings';
+
+  @override
+  String get mapRangeRingsNoPosition =>
+      'Range rings need your radio\'s position, and it has none yet.';
 }
