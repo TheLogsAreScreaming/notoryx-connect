@@ -1,0 +1,1 @@
+Map fixes: range-ring labels stay clear of your radio's own pin, and nodes reported at the same spot share one pin (for example "BASE +1") that lists them. Demo mode now shows a stale node and one with an unknown last-heard time.
