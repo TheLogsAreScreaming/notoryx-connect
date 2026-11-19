@@ -50,8 +50,10 @@ class MeshtasticBleDevice {
       .contains('6ba1b218-15a8-461f-9fa8-5dcae273eafd');
 
   /// Meshtastic radios name themselves "<short name>_<last 4 hex of the node
-  /// ID>", for example "SQCH_49cb" or "Meshtastic_1a2b".
-  static final _radioName = RegExp(r'_[0-9a-fA-F]{4}$');
+  /// ID>", for example "SQCH_49cb", or "Meshtastic_1a2b" before a short name
+  /// is set. Short names are at most 4 characters, so longer names that only
+  /// end the same way (smart lights such as "Govee_H6169_3A66") don't match.
+  static final _radioName = RegExp(r'^(?:Meshtastic|\S{1,4})_[0-9a-fA-F]{4}$', unicode: true);
 
   /// Whether this is probably a Meshtastic radio: it advertises the
   /// Meshtastic service, or has a Meshtastic-style name (some radios only
