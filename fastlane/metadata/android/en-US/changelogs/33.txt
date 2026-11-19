@@ -1,0 +1,1 @@
+Fix: switching on an empty channel slot now gives it its own private key, instead of leaving it unencrypted. You can still choose Public or No encryption before saving.
