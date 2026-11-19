@@ -4514,5 +4514,6 @@
   },
   "mapShowRangeRings": "Show range rings",
   "mapHideRangeRings": "Hide range rings",
-  "mapRangeRingsNoPosition": "Range rings need your radio's position, and it has none yet."
+  "mapRangeRingsNoPosition": "Range rings need your radio's position, and it has none yet.",
+  "nodesHeardUnknown": "Last heard: unknown"
 }

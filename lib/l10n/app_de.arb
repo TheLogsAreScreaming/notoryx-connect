@@ -1723,5 +1723,6 @@
   "nodesStale": "veraltet · {age}",
   "mapShowRangeRings": "Entfernungsringe zeigen",
   "mapHideRangeRings": "Entfernungsringe ausblenden",
-  "mapRangeRingsNoPosition": "Entfernungsringe brauchen die Position deines Funkgeräts, und es hat noch keine."
+  "mapRangeRingsNoPosition": "Entfernungsringe brauchen die Position deines Funkgeräts, und es hat noch keine.",
+  "nodesHeardUnknown": "Zuletzt gehört: unbekannt"
 }

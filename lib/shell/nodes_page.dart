@@ -982,14 +982,16 @@ class _NodeRow extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final type = Theme.of(context).textTheme;
     final favorite = radio.favoriteNums.contains(node.num);
-    final heard = node.lastHeard;
+    final now = DateTime.now();
+    // A radio with an unset clock reports 1970 or a far-future time: no age.
+    final heard = knownHeardTime(node.lastHeard, now);
     final battery = node.batteryLevel;
     // Your own radio is never stale; the badge is for nodes gone quiet.
     final stale = node.num != radio.localNodeNum &&
-        BastionPreferences.instance.staleAfter.marks(heard, DateTime.now());
+        BastionPreferences.instance.staleAfter.marks(heard, now);
     final details = [
       heard == null
-          ? l.nodesNeverHeard
+          ? (node.lastHeard == null ? l.nodesNeverHeard : l.nodesHeardUnknown)
           : stale
               ? l.nodesStale(_ago(context, heard))
               : _ago(context, heard),

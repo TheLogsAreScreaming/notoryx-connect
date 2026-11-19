@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6113,7 +6112,8 @@ class AppLocalizationsDe extends AppLocalizations {
       locale: localeName,
       other:
           '$count weitere Geräte in der Nähe sind keine Meshtastic-Funkgeräte und werden daher ausgeblendet.',
-      one: '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
+      one:
+          '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
     );
     return '$_temp0';
   }
@@ -6440,4 +6440,7 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get mapRangeRingsNoPosition =>
       'Entfernungsringe brauchen die Position deines Funkgeräts, und es hat noch keine.';
+
+  @override
+  String get nodesHeardUnknown => 'Zuletzt gehört: unbekannt';
 }
