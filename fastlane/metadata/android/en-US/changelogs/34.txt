@@ -1,0 +1,1 @@
+New: leaving a radio settings page with unsaved changes now asks before discarding them, instead of dropping them silently.
