@@ -1,0 +1,1 @@
+Nodes you haven't heard from in a while are marked stale (set the time in Settings, default 24 hours). The map can show range rings around your radio and has a live Traffic mode that draws packets hop by hop. The radio scan no longer lists smart lights.
