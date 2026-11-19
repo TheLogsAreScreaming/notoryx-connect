@@ -1749,5 +1749,7 @@
   "ndbNewerVersion": "Ce fichier vient d'une version plus récente de l'app Meshtastic. Mettez à jour NOTORYX Connect pour le lire.",
   "ndbTooLarge": "Ce fichier est trop volumineux pour être une base de nœuds.",
   "ndbNotSaved": "Les nœuds n'ont pas pu être enregistrés sur ce téléphone. Rien n'a été modifié.",
-  "ndbFailed": "L'importation a échoué : {error}"
+  "ndbFailed": "L'importation a échoué : {error}",
+  "rsDiscardBody": "Vos modifications n'ont pas été enregistrées sur la radio.",
+  "rsKeepEditing": "Continuer"
 }

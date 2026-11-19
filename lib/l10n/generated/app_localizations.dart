@@ -10614,6 +10614,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Import failed: {error}'**
   String ndbFailed(String error);
+
+  /// No description provided for @rsDiscardBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your changes haven\'t been saved to the radio.'**
+  String get rsDiscardBody;
+
+  /// No description provided for @rsKeepEditing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get rsKeepEditing;
 }
 
 class _AppLocalizationsDelegate

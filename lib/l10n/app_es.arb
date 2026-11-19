@@ -1749,5 +1749,7 @@
   "ndbNewerVersion": "Este archivo es de una versión más nueva de la app Meshtastic. Actualiza NOTORYX Connect para leerlo.",
   "ndbTooLarge": "Ese archivo es demasiado grande para ser una base de datos de nodos.",
   "ndbNotSaved": "No se pudieron guardar los nodos en este teléfono. No se cambió nada.",
-  "ndbFailed": "La importación falló: {error}"
+  "ndbFailed": "La importación falló: {error}",
+  "rsDiscardBody": "Tus cambios no se han guardado en la radio.",
+  "rsKeepEditing": "Seguir editando"
 }
