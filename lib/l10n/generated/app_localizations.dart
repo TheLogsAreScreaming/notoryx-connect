@@ -10626,6 +10626,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Keep editing'**
   String get rsKeepEditing;
+
+  /// No description provided for @searchTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get searchTooltip;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search nodes, messages, places…'**
+  String get searchHint;
+
+  /// No description provided for @searchStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Search everything on this phone: nodes, messages, channels, places, settings and tools. Nothing is sent.'**
+  String get searchStart;
+
+  /// No description provided for @searchNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches “{query}”.'**
+  String searchNone(String query);
+
+  /// No description provided for @searchClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get searchClear;
+
+  /// No description provided for @searchNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get searchNodes;
+
+  /// No description provided for @searchMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get searchMessages;
+
+  /// No description provided for @searchChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get searchChannels;
+
+  /// No description provided for @searchPlaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Places'**
+  String get searchPlaces;
+
+  /// No description provided for @searchFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings and tools'**
+  String get searchFeatures;
+
+  /// No description provided for @searchRemembered.
+  ///
+  /// In en, this message translates to:
+  /// **'Remembered'**
+  String get searchRemembered;
 }
 
 class _AppLocalizationsDelegate

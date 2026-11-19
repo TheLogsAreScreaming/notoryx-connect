@@ -6582,4 +6582,40 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get rsKeepEditing => 'Continuer';
+
+  @override
+  String get searchTooltip => 'Rechercher';
+
+  @override
+  String get searchHint => 'Rechercher nœuds, messages, lieux…';
+
+  @override
+  String get searchStart =>
+      'Recherche dans tout ce qui est sur ce téléphone : nœuds, messages, canaux, lieux, réglages et outils. Rien n\'est envoyé.';
+
+  @override
+  String searchNone(String query) {
+    return 'Aucun résultat pour « $query ».';
+  }
+
+  @override
+  String get searchClear => 'Effacer la recherche';
+
+  @override
+  String get searchNodes => 'Nœuds';
+
+  @override
+  String get searchMessages => 'Messages';
+
+  @override
+  String get searchChannels => 'Canaux';
+
+  @override
+  String get searchPlaces => 'Lieux';
+
+  @override
+  String get searchFeatures => 'Réglages et outils';
+
+  @override
+  String get searchRemembered => 'Mémorisé';
 }

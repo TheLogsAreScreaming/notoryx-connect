@@ -6583,4 +6583,40 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get rsKeepEditing => 'Weiter bearbeiten';
+
+  @override
+  String get searchTooltip => 'Suchen';
+
+  @override
+  String get searchHint => 'Knoten, Nachrichten, Orte suchen…';
+
+  @override
+  String get searchStart =>
+      'Durchsucht alles auf diesem Telefon: Knoten, Nachrichten, Kanäle, Orte, Einstellungen und Werkzeuge. Es wird nichts gesendet.';
+
+  @override
+  String searchNone(String query) {
+    return 'Keine Treffer für „$query“.';
+  }
+
+  @override
+  String get searchClear => 'Suche löschen';
+
+  @override
+  String get searchNodes => 'Knoten';
+
+  @override
+  String get searchMessages => 'Nachrichten';
+
+  @override
+  String get searchChannels => 'Kanäle';
+
+  @override
+  String get searchPlaces => 'Orte';
+
+  @override
+  String get searchFeatures => 'Einstellungen und Werkzeuge';
+
+  @override
+  String get searchRemembered => 'Gemerkt';
 }

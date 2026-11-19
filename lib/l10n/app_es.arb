@@ -1751,5 +1751,16 @@
   "ndbNotSaved": "No se pudieron guardar los nodos en este teléfono. No se cambió nada.",
   "ndbFailed": "La importación falló: {error}",
   "rsDiscardBody": "Tus cambios no se han guardado en la radio.",
-  "rsKeepEditing": "Seguir editando"
+  "rsKeepEditing": "Seguir editando",
+  "searchTooltip": "Buscar",
+  "searchHint": "Buscar nodos, mensajes, lugares…",
+  "searchStart": "Busca en todo lo que hay en este teléfono: nodos, mensajes, canales, lugares, ajustes y herramientas. No se envía nada.",
+  "searchNone": "Nada coincide con «{query}».",
+  "searchClear": "Borrar búsqueda",
+  "searchNodes": "Nodos",
+  "searchMessages": "Mensajes",
+  "searchChannels": "Canales",
+  "searchPlaces": "Lugares",
+  "searchFeatures": "Ajustes y herramientas",
+  "searchRemembered": "Recordado"
 }

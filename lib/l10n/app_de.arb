@@ -1751,5 +1751,16 @@
   "ndbNotSaved": "Die Knoten konnten auf diesem Telefon nicht gespeichert werden. Es wurde nichts geändert.",
   "ndbFailed": "Import fehlgeschlagen: {error}",
   "rsDiscardBody": "Deine Änderungen wurden nicht auf dem Funkgerät gespeichert.",
-  "rsKeepEditing": "Weiter bearbeiten"
+  "rsKeepEditing": "Weiter bearbeiten",
+  "searchTooltip": "Suchen",
+  "searchHint": "Knoten, Nachrichten, Orte suchen…",
+  "searchStart": "Durchsucht alles auf diesem Telefon: Knoten, Nachrichten, Kanäle, Orte, Einstellungen und Werkzeuge. Es wird nichts gesendet.",
+  "searchNone": "Keine Treffer für „{query}“.",
+  "searchClear": "Suche löschen",
+  "searchNodes": "Knoten",
+  "searchMessages": "Nachrichten",
+  "searchChannels": "Kanäle",
+  "searchPlaces": "Orte",
+  "searchFeatures": "Einstellungen und Werkzeuge",
+  "searchRemembered": "Gemerkt"
 }
