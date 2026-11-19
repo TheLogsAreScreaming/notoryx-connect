@@ -6556,4 +6556,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get rsKeepEditing => 'Seguir editando';
+
+  @override
+  String get searchTooltip => 'Buscar';
+
+  @override
+  String get searchHint => 'Buscar nodos, mensajes, lugares…';
+
+  @override
+  String get searchStart =>
+      'Busca en todo lo que hay en este teléfono: nodos, mensajes, canales, lugares, ajustes y herramientas. No se envía nada.';
+
+  @override
+  String searchNone(String query) {
+    return 'Nada coincide con «$query».';
+  }
+
+  @override
+  String get searchClear => 'Borrar búsqueda';
+
+  @override
+  String get searchNodes => 'Nodos';
+
+  @override
+  String get searchMessages => 'Mensajes';
+
+  @override
+  String get searchChannels => 'Canales';
+
+  @override
+  String get searchPlaces => 'Lugares';
+
+  @override
+  String get searchFeatures => 'Ajustes y herramientas';
+
+  @override
+  String get searchRemembered => 'Recordado';
 }

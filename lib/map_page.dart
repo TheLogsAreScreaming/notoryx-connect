@@ -43,7 +43,7 @@ import 'traffic_map.dart';
 /// Tiles load from tile.openstreetmap.org and need internet access; node
 /// positions come only from the radio.
 class MapPage extends StatefulWidget {
-  const MapPage({super.key, required this.radio, this.shareFile = _shareFile, this.tak, this.mapLayers, this.offlineMap});
+  const MapPage({super.key, required this.radio, this.shareFile = _shareFile, this.tak, this.mapLayers, this.offlineMap, this.focus});
 
   final MeshtasticRadioCoordinator radio;
 
@@ -55,6 +55,10 @@ class MapPage extends StatefulWidget {
 
   /// The imported offline map file; the app-wide one when null.
   final BastionOfflineMap? offlineMap;
+
+  /// Set to a spot to centre the map on it, e.g. from search. The map
+  /// clears it once it has moved.
+  final ValueNotifier<({double lat, double lon})?>? focus;
 
   /// Hands an exported file to the system share sheet; replaced in tests.
   final Future<void> Function(String fileName, String text) shareFile;
@@ -229,12 +233,32 @@ class _MapPageState extends State<MapPage> {
     unawaited(_layers.load());
     _offline.addListener(_onLayers);
     unawaited(_offline.load());
+    widget.focus?.addListener(_onFocus);
+    _onFocus();
+  }
+
+  /// Centres the map on a spot asked for from outside, once it has a size.
+  void _onFocus([int tries = 0]) {
+    final spot = widget.focus?.value;
+    if (spot == null || tries > 60) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || widget.focus?.value != spot) return;
+      try {
+        _map.move(LatLng(spot.lat, spot.lon), 15);
+        widget.focus!.value = null;
+      } on Object catch (e) {
+        // Not laid out yet (the Map tab hasn't been shown); try next frame.
+        if (tries == 0) debugPrint('Map focus waits for layout: $e');
+        _onFocus(tries + 1);
+      }
+    });
   }
 
   @override
   void dispose() {
     _layers.removeListener(_onLayers);
     _offline.removeListener(_onLayers);
+    widget.focus?.removeListener(_onFocus);
     _map.dispose();
     super.dispose();
   }

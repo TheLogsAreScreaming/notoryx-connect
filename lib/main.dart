@@ -15,6 +15,7 @@ import 'map_page.dart';
 import 'field_tools_page.dart';
 import 'home_page.dart';
 import 'services/bastion_units.dart';
+import 'services/bastion_app_search.dart';
 import 'services/bastion_geo.dart';
 import 'services/bastion_node_groups.dart';
 import 'services/bastion_field_log.dart';
@@ -84,6 +85,7 @@ part 'shell/tools_page.dart';
 part 'shell/settings_page.dart';
 part 'shell/settings_cards.dart';
 part 'shell/shell_labels.dart';
+part 'shell/search_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -229,6 +231,21 @@ class BastionShell extends StatefulWidget {
 class _BastionShellState extends State<BastionShell> {
   int index = 0;
   final ble = MeshtasticBleDiscovery();
+
+  /// A spot search asked the Map to centre on.
+  final _mapFocus = ValueNotifier<({double lat, double lon})?>(null);
+
+  void _openSearch() => Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (_) => AppSearchPage(
+          radio: radio,
+          discovery: ble,
+          onShowPlace: (lat, lon) {
+            _mapFocus.value = (lat: lat, lon: lon);
+            _go(3);
+          },
+          onGoTab: _go,
+        ),
+      ));
   final _realRadio = MeshtasticRadioCoordinator();
   BastionDemoRadio? _demo;
 
@@ -333,6 +350,7 @@ class _BastionShellState extends State<BastionShell> {
   @override
   void dispose() {
     ble.dispose();
+    _mapFocus.dispose();
     BastionAutomations.instance?.dispose();
     BastionAutomations.instance = null;
     _homeWidget?.dispose();
@@ -375,7 +393,7 @@ class _BastionShellState extends State<BastionShell> {
               radio.configureBot(enabled: botMode, reply: value);
             },
           ),
-          MapPage(radio: radio),
+          MapPage(radio: radio, focus: _mapFocus),
           _ToolsPage(discovery: ble, radio: radio),
           _SettingsPage(radio: radio, demo: _inDemo, onDemoChanged: _setDemo),
         ],
@@ -417,6 +435,12 @@ class _BastionShellState extends State<BastionShell> {
           ),
         ),
         actions: [
+          IconButton(
+            key: const ValueKey('app-search'),
+            tooltip: AppLocalizations.of(context).searchTooltip,
+            icon: const Icon(Icons.search),
+            onPressed: _openSearch,
+          ),
           Padding(
             padding: const EdgeInsets.only(right: NxSpace.md),
             child: AnimatedBuilder(

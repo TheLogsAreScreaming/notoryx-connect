@@ -1751,5 +1751,16 @@
   "ndbNotSaved": "Les nœuds n'ont pas pu être enregistrés sur ce téléphone. Rien n'a été modifié.",
   "ndbFailed": "L'importation a échoué : {error}",
   "rsDiscardBody": "Vos modifications n'ont pas été enregistrées sur la radio.",
-  "rsKeepEditing": "Continuer"
+  "rsKeepEditing": "Continuer",
+  "searchTooltip": "Rechercher",
+  "searchHint": "Rechercher nœuds, messages, lieux…",
+  "searchStart": "Recherche dans tout ce qui est sur ce téléphone : nœuds, messages, canaux, lieux, réglages et outils. Rien n'est envoyé.",
+  "searchNone": "Aucun résultat pour « {query} ».",
+  "searchClear": "Effacer la recherche",
+  "searchNodes": "Nœuds",
+  "searchMessages": "Messages",
+  "searchChannels": "Canaux",
+  "searchPlaces": "Lieux",
+  "searchFeatures": "Réglages et outils",
+  "searchRemembered": "Mémorisé"
 }
