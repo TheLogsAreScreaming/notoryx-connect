@@ -1,0 +1,1 @@
+New: a search button at the top of every tab finds nodes, messages, channels, places and settings on this phone. Tap a result to go straight there.
