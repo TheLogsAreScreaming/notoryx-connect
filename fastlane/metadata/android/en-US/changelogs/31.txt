@@ -1,0 +1,1 @@
+Map fix: when other nodes report your radio's exact position, your radio now leads that shared pin (for example "SQCH +4") so nothing covers its name tag.
