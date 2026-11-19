@@ -27,12 +27,31 @@ enum BastionStaleAfter {
       isStale(lastHeard, now, after);
 }
 
+/// Times before this come from radios whose clock was never set (they count
+/// from 1970), so they are not real last-heard times.
+final earliestHeardTime = DateTime.utc(2020);
+
+/// How far ahead of the phone a last-heard time may be before it is treated
+/// as a wrong radio clock rather than ordinary clock drift.
+const futureHeardSlack = Duration(days: 1);
+
+/// [lastHeard] when it is a believable time at [now], else null: null, the
+/// epoch, anything before 2020, or more than a day in the future count as
+/// unknown, so no age is shown for them.
+DateTime? knownHeardTime(DateTime? lastHeard, DateTime now) {
+  if (lastHeard == null) return null;
+  if (lastHeard.isBefore(earliestHeardTime)) return null;
+  if (lastHeard.isAfter(now.add(futureHeardSlack))) return null;
+  return lastHeard;
+}
+
 /// Whether a node last heard at [lastHeard] has been quiet for longer than
 /// [after] at [now].
 ///
-/// A node with no last-heard time is never stale (there is no age to show),
-/// and a null [after] turns marking off.
+/// A node with no believable last-heard time (see [knownHeardTime]) is never
+/// stale, as there is no age to show, and a null [after] turns marking off.
 bool isStale(DateTime? lastHeard, DateTime now, Duration? after) {
-  if (lastHeard == null || after == null) return false;
-  return now.difference(lastHeard) > after;
+  final heard = knownHeardTime(lastHeard, now);
+  if (heard == null || after == null) return false;
+  return now.difference(heard) > after;
 }

@@ -24,6 +24,7 @@ import 'services/bastion_offline_map.dart';
 import 'services/bastion_heard_filter.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_range_rings.dart';
+import 'services/bastion_stale.dart';
 import 'services/bastion_routes.dart';
 import 'services/bastion_tak_bridge.dart';
 import 'services/bastion_units.dart';
@@ -83,6 +84,45 @@ class _MapPageState extends State<MapPage> {
   bool _showTrails = true;
   bool _showHeatmap = false;
   bool _showRemembered = false;
+
+  /// The map area left uncovered by the top card, the side toolbar and any
+  /// bottom card, measured after layout; range rings and their labels stay
+  /// inside it. Null until measured.
+  Rect? _clearArea;
+  final _stackKey = GlobalKey();
+  final _bandKey = GlobalKey();
+  final _sideBarKey = GlobalKey();
+  final _planCardKey = GlobalKey();
+
+  Rect? _rectOf(GlobalKey key, RenderBox stack) {
+    final box = key.currentContext?.findRenderObject();
+    if (box is! RenderBox || !box.attached || !box.hasSize) return null;
+    return box.localToGlobal(Offset.zero, ancestor: stack) & box.size;
+  }
+
+  /// Measures [_clearArea]: the band between the top card and any bottom
+  /// card, minus the side toolbar.
+  void _measureClearArea() {
+    if (!mounted) return;
+    final stack = _stackKey.currentContext?.findRenderObject();
+    if (stack is! RenderBox || !stack.hasSize) return;
+    final band = _rectOf(_bandKey, stack);
+    if (band == null) return;
+    var right = stack.size.width;
+    if (_rectOf(_sideBarKey, stack) case final side? when side.left > band.left) right = side.left;
+    var bottom = band.bottom;
+    if (_rectOf(_planCardKey, stack) case final plan? when plan.top < bottom) bottom = plan.top;
+    final area = Rect.fromLTRB(0, band.top, right, bottom);
+    final old = _clearArea;
+    if (old != null &&
+        (old.left - area.left).abs() < 0.5 &&
+        (old.top - area.top).abs() < 0.5 &&
+        (old.right - area.right).abs() < 0.5 &&
+        (old.bottom - area.bottom).abs() < 0.5) {
+      return;
+    }
+    setState(() => _clearArea = area);
+  }
 
   /// Live Traffic mode: packets animate across the map as they are heard.
   bool _traffic = false;
@@ -420,7 +460,11 @@ class _MapPageState extends State<MapPage> {
               if (mounted) _fit(placed);
             });
           }
+          if (BastionPreferences.instance.rangeRings) {
+            WidgetsBinding.instance.addPostFrameCallback((_) => _measureClearArea());
+          }
           return Stack(
+            key: _stackKey,
             children: [
               FlutterMap(
                 mapController: _map,
@@ -514,6 +558,7 @@ class _MapPageState extends State<MapPage> {
                       key: const ValueKey('range-rings'),
                       center: LatLng(me.latitude!, me.longitude!),
                       units: BastionPreferences.instance.units,
+                      clearArea: _clearArea,
                     ),
                   if (_planning case final plan? when plan.isNotEmpty) ...[
                     PolylineLayer(polylines: [
@@ -592,7 +637,7 @@ class _MapPageState extends State<MapPage> {
                                 ? TeamMemberStatus.of(node.num, node, now: now)
                                 : null,
                             stale: node.num != local && staleAfter.marks(node.lastHeard, now)
-                                ? _agoLabel(l, node.lastHeard!, now)
+                                ? _agoLabel(l, knownHeardTime(node.lastHeard, now)!, now)
                                 : null,
                             onTap: () => _showNode(context, node),
                           ),
@@ -807,12 +852,13 @@ class _MapPageState extends State<MapPage> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Expanded(child: LayoutBuilder(
+                Expanded(child: KeyedSubtree(key: _bandKey, child: LayoutBuilder(
                   builder: (context, box) => Align(
                     alignment: Alignment.centerRight,
-                    child: SingleChildScrollView(child: _toolbar(context, placed, box.maxHeight)),
+                    child: SingleChildScrollView(
+                        child: KeyedSubtree(key: _sideBarKey, child: _toolbar(context, placed, box.maxHeight))),
                   ),
-                )),
+                ))),
                 if (_traffic && _planning == null) ...[
                   const SizedBox(height: 8),
                   TrafficRouteCard(
@@ -829,7 +875,7 @@ class _MapPageState extends State<MapPage> {
                   left: 12,
                   right: 12,
                   bottom: 36,
-                  child: Card(child: Padding(
+                  child: Card(key: _planCardKey, child: Padding(
                     padding: const EdgeInsets.all(12),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                       Semantics(liveRegion: true, child: Text(
@@ -1556,7 +1602,8 @@ class _MapPageState extends State<MapPage> {
         ? BastionGeo.distanceMeters(
             localNode.latitude!, localNode.longitude!, node.latitude!, node.longitude!)
         : null;
-    String ago(DateTime? time) {
+    String ago(DateTime? raw) {
+      final time = knownHeardTime(raw, DateTime.now());
       if (time == null) return l.mapUnknown;
       final d = DateTime.now().difference(time);
       if (d.inMinutes < 1) return l.agoNow;
@@ -1690,13 +1737,20 @@ String _agoLabel(AppLocalizations l, DateTime time, DateTime now) {
   return l.agoDays(d.inDays);
 }
 
-/// Four distance rings around this radio, spaced to fit the visible view,
-/// with faint spokes every 45° and N/E/S/W just outside the outer ring.
+/// Four distance rings around this radio, spaced to fit the part of the map
+/// not covered by its bars, with faint spokes every 45° and N/E/S/W just
+/// outside the outer ring. Labels are kept inside that uncovered part.
 class _RangeRingsLayer extends StatelessWidget {
-  const _RangeRingsLayer({super.key, required this.center, required this.units});
+  const _RangeRingsLayer({super.key, required this.center, required this.units, this.clearArea});
 
   final LatLng center;
   final BastionUnits units;
+
+  /// The uncovered part of the map in screen pixels; the whole map when null.
+  final Rect? clearArea;
+
+  static const _ringTagWidth = 72.0;
+  static const _compassTagWidth = 28.0;
 
   LatLng _at(double bearing, double meters) {
     final (lat, lon) = BastionRangeRings.pointAt(center.latitude, center.longitude, bearing, meters);
@@ -1706,19 +1760,42 @@ class _RangeRingsLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final camera = MapCamera.of(context);
+    final size = camera.nonRotatedSize;
+    final whole = Offset.zero & size;
+    // Ignore a measurement that leaves too little map to be useful.
+    final clear = switch (clearArea?.intersect(whole)) {
+      final r? when r.width >= 80 && r.height >= 80 => r,
+      _ => whole,
+    };
     final step = BastionRangeRings.niceStep(
       BastionRangeRings.edgeMeters(
         latitude: camera.center.latitude,
         zoom: camera.zoom,
-        widthPx: camera.nonRotatedSize.width,
-        heightPx: camera.nonRotatedSize.height,
+        widthPx: clear.width,
+        heightPx: clear.height,
       ),
       units,
     );
     final radii = BastionRangeRings.ringRadii(step);
     final outer = radii.last;
     const ring = MapPage.accent;
-    final textScale = MediaQuery.textScalerOf(context);
+    final tagHeight = MediaQuery.textScalerOf(context).scale(20);
+    const compass = [0.0, 90.0, 180.0, 270.0];
+    // Compass tags first, then rings from the inside out, so when labels are
+    // pushed to the same edge the tags and inner rings win.
+    final wanted = [
+      for (final b in compass) (_at(b, outer + step * 0.3), _compassTagWidth),
+      for (final r in radii) (_at(0, r), _ringTagWidth),
+    ];
+    final spots = BastionRangeRings.placeLabels([
+      for (final (p, w) in wanted)
+        if (camera.latLngToScreenOffset(p) case final o)
+          (x: o.dx, y: o.dy, halfW: w / 2, halfH: tagHeight / 2),
+    ], (left: clear.left, top: clear.top, right: clear.right, bottom: clear.bottom));
+    LatLng? spot(int i) => switch (spots[i]) {
+          (final x, final y) => camera.screenOffsetToLatLng(Offset(x, y)),
+          null => null,
+        };
     Widget tag(String text, {Key? key}) => Center(
           child: Container(
             key: key,
@@ -1748,20 +1825,22 @@ class _RangeRingsLayer extends StatelessWidget {
           ),
       ]),
       MarkerLayer(markers: [
+        for (final (i, b) in compass.indexed)
+          if (spot(i) case final p?)
+            Marker(
+              point: p,
+              width: _compassTagWidth,
+              height: tagHeight,
+              child: tag(BastionGeo.compassPoint(b), key: ValueKey('range-ring-compass-${BastionGeo.compassPoint(b)}')),
+            ),
         for (final (i, r) in radii.indexed)
-          Marker(
-            point: _at(0, r),
-            width: 72,
-            height: textScale.scale(20),
-            child: tag(BastionRangeRings.ringLabel(r, units), key: ValueKey('range-ring-label-$i')),
-          ),
-        for (final b in const [0.0, 90.0, 180.0, 270.0])
-          Marker(
-            point: _at(b, outer + step * 0.3),
-            width: 28,
-            height: textScale.scale(20),
-            child: tag(BastionGeo.compassPoint(b)),
-          ),
+          if (spot(compass.length + i) case final p?)
+            Marker(
+              point: p,
+              width: _ringTagWidth,
+              height: tagHeight,
+              child: tag(BastionRangeRings.ringLabel(r, units), key: ValueKey('range-ring-label-$i')),
+            ),
       ]),
     ]);
   }

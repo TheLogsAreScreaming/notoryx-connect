@@ -154,4 +154,67 @@ void main() {
     );
     expect(narrower, closeTo(world / 2, 1), reason: 'cos 60° = 0.5');
   });
+
+  group('label placement', () {
+    const area = (left: 0.0, top: 100.0, right: 300.0, bottom: 600.0);
+
+    test('clampInto keeps a label inside the clear area', () {
+      expect(BastionRangeRings.clampInto(150, 300, area, 20, 10), (
+        150,
+        300,
+      ), reason: 'already inside');
+      expect(BastionRangeRings.clampInto(150, 40, area, 20, 10), (
+        150,
+        110,
+      ), reason: 'under the top bar');
+      expect(BastionRangeRings.clampInto(340, 300, area, 20, 10), (
+        280,
+        300,
+      ), reason: 'under the side toolbar');
+      expect(BastionRangeRings.clampInto(-50, 900, area, 20, 10), (20, 590));
+    });
+
+    test('a label wider than the area is centred', () {
+      expect(
+        BastionRangeRings.clampInto(
+          500,
+          300,
+          (left: 0, top: 0, right: 30, bottom: 600),
+          20,
+          10,
+        ),
+        (15, 300),
+      );
+    });
+
+    test('labels pushed onto the same spot are dropped, earlier ones win', () {
+      final spots = BastionRangeRings.placeLabels([
+        (x: 150, y: 300, halfW: 36, halfH: 10),
+        (x: 150, y: 20, halfW: 36, halfH: 10),
+        (x: 150, y: -80, halfW: 36, halfH: 10),
+        (x: 150, y: 285, halfW: 36, halfH: 10),
+        (x: 150, y: 250, halfW: 36, halfH: 10),
+      ], area);
+      expect(spots, [
+        (150.0, 300.0),
+        (150.0, 110.0),
+        null,
+        null,
+        (150.0, 250.0),
+      ]);
+    });
+
+    test('every placed label lies inside the area', () {
+      final spots = BastionRangeRings.placeLabels([
+        for (var i = 0; i < 40; i++)
+          (x: -200.0 + i * 25, y: 900.0 - i * 30, halfW: 14.0, halfH: 10.0),
+      ], area);
+      for (final s in spots.nonNulls) {
+        expect(s.$1 - 14, greaterThanOrEqualTo(area.left));
+        expect(s.$1 + 14, lessThanOrEqualTo(area.right));
+        expect(s.$2 - 10, greaterThanOrEqualTo(area.top));
+        expect(s.$2 + 10, lessThanOrEqualTo(area.bottom));
+      }
+    });
+  });
 }

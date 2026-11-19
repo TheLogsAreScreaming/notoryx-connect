@@ -1,4 +1,5 @@
 import 'package:bastion/map_page.dart';
+import 'package:bastion/traffic_map.dart';
 import 'package:bastion/services/bastion_demo_radio.dart';
 import 'package:bastion/services/bastion_geofences.dart';
 import 'package:bastion/services/bastion_preferences.dart';
@@ -170,11 +171,25 @@ void main() {
     expect(find.text("Range rings need your radio's position, and it has none yet."), findsNothing);
     final rings = find.descendant(of: find.byKey(const ValueKey('range-rings')), matching: find.byType(CircleLayer));
     expect(tester.widget<CircleLayer>(rings).circles, hasLength(4));
-    for (var i = 0; i < 4; i++) {
-      expect(find.byKey(ValueKey('range-ring-label-$i')), findsOneWidget);
+    // The clear map area is measured after the first frame.
+    await tester.pump();
+    await tester.pump();
+    final tags = find.byWidgetPredicate((w) =>
+        w.key is ValueKey<String> &&
+        RegExp(r'^range-ring-(label|compass)-').hasMatch((w.key! as ValueKey<String>).value));
+    expect(find.byKey(const ValueKey('range-ring-label-0')), findsOneWidget, reason: 'the inner ring is always labelled');
+    expect(tags.evaluate().length, greaterThanOrEqualTo(2));
+    final topBar = tester.getRect(find.ancestor(of: find.byKey(const ValueKey('map-range-rings')), matching: find.byType(Card)).first);
+    final sideBar = tester.getRect(find.byType(TrafficToolbar));
+    final shown = [for (final e in tags.evaluate()) tester.getRect(find.byWidget(e.widget))];
+    for (final r in shown) {
+      expect(r.overlaps(topBar), isFalse, reason: 'tag at $r is under the top bar $topBar');
+      expect(r.overlaps(sideBar), isFalse, reason: 'tag at $r is under the side toolbar $sideBar');
     }
-    for (final tag in ['N', 'E', 'S', 'W']) {
-      expect(find.descendant(of: find.byKey(const ValueKey('range-rings')), matching: find.text(tag)), findsOneWidget);
+    for (var i = 0; i < shown.length; i++) {
+      for (var j = i + 1; j < shown.length; j++) {
+        expect(shown[i].overlaps(shown[j]), isFalse, reason: 'tags overlap');
+      }
     }
     final spokes = find.descendant(of: find.byKey(const ValueKey('range-rings')), matching: find.byType(PolylineLayer));
     expect(tester.widget<PolylineLayer>(spokes).polylines, hasLength(8));

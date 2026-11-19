@@ -1723,5 +1723,6 @@
   "nodesStale": "inactivo · {age}",
   "mapShowRangeRings": "Mostrar anillos de distancia",
   "mapHideRangeRings": "Ocultar anillos de distancia",
-  "mapRangeRingsNoPosition": "Los anillos de distancia necesitan la posición de tu radio, y aún no tiene ninguna."
+  "mapRangeRingsNoPosition": "Los anillos de distancia necesitan la posición de tu radio, y aún no tiene ninguna.",
+  "nodesHeardUnknown": "Última vez oído: desconocido"
 }

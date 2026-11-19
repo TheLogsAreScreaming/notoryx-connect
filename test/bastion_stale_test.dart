@@ -55,6 +55,44 @@ void main() {
     });
   });
 
+  group('knownHeardTime', () {
+    test('the epoch and other pre-2020 times are unknown and never stale', () {
+      final epoch = DateTime.fromMillisecondsSinceEpoch(0, isUtc: true);
+      final unsetClock = DateTime.fromMillisecondsSinceEpoch(
+        3600 * 1000,
+        isUtc: true,
+      );
+      final pre2020 = DateTime.utc(2019, 12, 31, 23, 59);
+      for (final t in [epoch, unsetClock, pre2020]) {
+        expect(knownHeardTime(t, now), isNull, reason: '$t');
+        expect(
+          isStale(t, now, const Duration(hours: 1)),
+          isFalse,
+          reason: '$t',
+        );
+      }
+    });
+
+    test(
+      'more than a day in the future is unknown; a little drift is kept',
+      () {
+        final farAhead = now.add(const Duration(days: 1, minutes: 1));
+        expect(knownHeardTime(farAhead, now), isNull);
+        expect(isStale(farAhead, now, const Duration(hours: 1)), isFalse);
+        final drift = now.add(const Duration(hours: 2));
+        expect(knownHeardTime(drift, now), drift);
+      },
+    );
+
+    test('a normal time is kept and can be stale', () {
+      final heard = now.subtract(const Duration(days: 2));
+      expect(knownHeardTime(heard, now), heard);
+      expect(knownHeardTime(DateTime.utc(2020), now), DateTime.utc(2020));
+      expect(isStale(heard, now, const Duration(hours: 24)), isTrue);
+      expect(knownHeardTime(null, now), isNull);
+    });
+  });
+
   group('BastionStaleAfter', () {
     test(
       'offers Off, 1 h, 6 h, 24 h, 3 days and 7 days, defaulting to 24 h',

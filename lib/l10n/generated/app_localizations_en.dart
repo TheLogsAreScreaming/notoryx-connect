@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6367,4 +6366,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mapRangeRingsNoPosition =>
       'Range rings need your radio\'s position, and it has none yet.';
+
+  @override
+  String get nodesHeardUnknown => 'Last heard: unknown';
 }

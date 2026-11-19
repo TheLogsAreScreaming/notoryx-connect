@@ -105,4 +105,52 @@ abstract final class BastionRangeRings {
     final lonDeg = (l2 * 180 / math.pi + 540) % 360 - 180;
     return (p2 * 180 / math.pi, lonDeg);
   }
+
+  /// [x], [y] moved just enough that a label of half-size [halfW] × [halfH]
+  /// centred there lies inside [area] (screen pixels). A label bigger than
+  /// the area is centred in it.
+  static (double, double) clampInto(
+    double x,
+    double y,
+    RingArea area,
+    double halfW,
+    double halfH,
+  ) {
+    double fit(double v, double lo, double hi, double half) =>
+        hi - lo < 2 * half ? (lo + hi) / 2 : v.clamp(lo + half, hi - half);
+    return (
+      fit(x, area.left, area.right, halfW),
+      fit(y, area.top, area.bottom, halfH),
+    );
+  }
+
+  /// Screen positions for [labels], in order, each clamped inside [area].
+  /// A label that would then overlap one placed before it is dropped (null),
+  /// so labels pushed to the same edge do not pile up.
+  static List<(double, double)?> placeLabels(
+    List<RingLabelBox> labels,
+    RingArea area,
+  ) {
+    final placed = <(double, double, double, double)>[];
+    return [
+      for (final b in labels)
+        () {
+          final (x, y) = clampInto(b.x, b.y, area, b.halfW, b.halfH);
+          final hit = placed.any(
+            (p) =>
+                (p.$1 - x).abs() < p.$3 + b.halfW &&
+                (p.$2 - y).abs() < p.$4 + b.halfH,
+          );
+          if (hit) return null;
+          placed.add((x, y, b.halfW, b.halfH));
+          return (x, y);
+        }(),
+    ];
+  }
 }
+
+/// The part of the map not covered by its bars and cards, in screen pixels.
+typedef RingArea = ({double left, double top, double right, double bottom});
+
+/// A label wanted at ([x], [y]) on screen, with its half width and height.
+typedef RingLabelBox = ({double x, double y, double halfW, double halfH});

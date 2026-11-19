@@ -10458,6 +10458,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Range rings need your radio\'s position, and it has none yet.'**
   String get mapRangeRingsNoPosition;
+
+  /// No description provided for @nodesHeardUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Last heard: unknown'**
+  String get nodesHeardUnknown;
 }
 
 class _AppLocalizationsDelegate
