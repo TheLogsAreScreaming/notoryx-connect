@@ -1,0 +1,1 @@
+New: import nodes from a Meshtastic app node database file (Settings > Your data). Nodes heard by radio and favorites are added; internet (MQTT) nodes are optional. Nothing is sent to the radio.
