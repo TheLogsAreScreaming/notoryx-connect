@@ -6575,4 +6575,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String ndbFailed(String error) {
     return 'L\'importation a échoué : $error';
   }
+
+  @override
+  String get rsDiscardBody =>
+      'Vos modifications n\'ont pas été enregistrées sur la radio.';
+
+  @override
+  String get rsKeepEditing => 'Continuer';
 }

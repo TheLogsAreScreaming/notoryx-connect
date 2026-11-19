@@ -1749,5 +1749,7 @@
   "ndbNewerVersion": "Diese Datei stammt aus einer neueren Meshtastic-App. Aktualisiere NOTORYX Connect, um sie zu lesen.",
   "ndbTooLarge": "Diese Datei ist zu groß für eine Knotendatenbank.",
   "ndbNotSaved": "Die Knoten konnten auf diesem Telefon nicht gespeichert werden. Es wurde nichts geändert.",
-  "ndbFailed": "Import fehlgeschlagen: {error}"
+  "ndbFailed": "Import fehlgeschlagen: {error}",
+  "rsDiscardBody": "Deine Änderungen wurden nicht auf dem Funkgerät gespeichert.",
+  "rsKeepEditing": "Weiter bearbeiten"
 }

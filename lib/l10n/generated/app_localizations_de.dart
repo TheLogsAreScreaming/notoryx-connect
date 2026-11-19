@@ -6576,4 +6576,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String ndbFailed(String error) {
     return 'Import fehlgeschlagen: $error';
   }
+
+  @override
+  String get rsDiscardBody =>
+      'Deine Änderungen wurden nicht auf dem Funkgerät gespeichert.';
+
+  @override
+  String get rsKeepEditing => 'Weiter bearbeiten';
 }

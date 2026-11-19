@@ -6550,4 +6550,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String ndbFailed(String error) {
     return 'La importación falló: $error';
   }
+
+  @override
+  String get rsDiscardBody => 'Tus cambios no se han guardado en la radio.';
+
+  @override
+  String get rsKeepEditing => 'Seguir editando';
 }

@@ -75,6 +75,70 @@ void main() {
     expect(radio.channels[2].settings.psk, hasLength(32));
   });
 
+  group('leaving with unsaved changes', () {
+    Future<ChannelRadio> openFromList(WidgetTester tester) async {
+      tester.view.physicalSize = const Size(400, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final radio = ChannelRadio();
+      addTearDown(radio.dispose);
+      await tester.pumpWidget(app(Builder(
+        builder: (context) => Scaffold(
+          body: TextButton(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                builder: (_) => ChannelEditorPage(radio: radio, index: 2))),
+            child: const Text('open'),
+          ),
+        ),
+      )));
+      await tester.tap(find.text('open'));
+      await tester.pumpAndSettle();
+      expect(find.text('Channel 2'), findsOneWidget);
+      return radio;
+    }
+
+    testWidgets('leaves without asking when nothing changed', (tester) async {
+      await openFromList(tester);
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+      expect(find.text('Discard changes?'), findsNothing);
+      expect(find.text('open'), findsOneWidget);
+    });
+
+    testWidgets('asks first, can keep editing, and discards without saving', (tester) async {
+      final radio = await openFromList(tester);
+      await tester.tap(find.byKey(const ValueKey('channel-use')));
+      await tester.pumpAndSettle();
+
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+      expect(find.text('Discard changes?'), findsOneWidget);
+      expect(find.text("Your changes haven't been saved to the radio."), findsOneWidget);
+
+      await tester.tap(find.byKey(const ValueKey('discard-keep')));
+      await tester.pumpAndSettle();
+      expect(find.text('Channel 2'), findsOneWidget, reason: 'still editing');
+      expect(find.text('On: your radio sends and listens on this channel.'), findsOneWidget);
+
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('discard-confirm')));
+      await tester.pumpAndSettle();
+      expect(find.text('open'), findsOneWidget);
+      expect(radio.channels[2].role, Channel_Role.DISABLED, reason: 'nothing was sent');
+    });
+
+    testWidgets('a saved change closes the page without asking', (tester) async {
+      final radio = await openFromList(tester);
+      await tester.tap(find.byKey(const ValueKey('channel-use')));
+      await tester.pumpAndSettle();
+      await saveAndConfirm(tester);
+      expect(find.text('Discard changes?'), findsNothing);
+      expect(find.text('open'), findsOneWidget);
+      expect(radio.channels[2].role, Channel_Role.SECONDARY);
+    });
+  });
+
   testWidgets('the main channel says it is always on instead of offering a switch', (tester) async {
     final radio = ChannelRadio();
     addTearDown(radio.dispose);

@@ -353,7 +353,39 @@ class _AdminEditorState<T extends GeneratedMessage>
     final draft = _draft;
     final error = draft == null ? null : widget.validate?.call(draft);
     final dirty = draft != null && draft != _original;
-    return Scaffold(
+    // Once a save was sent there is nothing left to discard: the radio has
+    // the change, or the page says it could not be verified.
+    return PopScope(
+      canPop: !dirty || _saveAttempted,
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) return;
+        final navigator = Navigator.of(context);
+        final l = _l(context);
+        final discard = await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+            title: Text(l.raDiscardQ),
+            content: Text(l.rsDiscardBody),
+            actions: [
+              TextButton(
+                key: const ValueKey('discard-keep'),
+                onPressed: () => Navigator.pop(dialogContext, false),
+                child: Text(l.rsKeepEditing),
+              ),
+              FilledButton(
+                key: const ValueKey('discard-confirm'),
+                onPressed: () => Navigator.pop(dialogContext, true),
+                child: Text(l.raDiscard),
+              ),
+            ],
+          ),
+        );
+        if (discard == true && mounted) {
+          setState(() => _draft = _original);
+          navigator.pop();
+        }
+      },
+      child: Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
@@ -414,7 +446,7 @@ class _AdminEditorState<T extends GeneratedMessage>
           ),
         ),
       }),
-    );
+    ));
   }
 }
 
