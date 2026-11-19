@@ -10,7 +10,7 @@ MeshtasticNode node(int num, String name, {Duration? ago, String? short}) =>
 void main() {
   final nodes = [
     node(1, 'My radio', ago: Duration.zero),
-    node(2, 'Rav4 KC1TCD', ago: const Duration(minutes: 2), short: 'RV'),
+    node(2, 'Test Node B', ago: const Duration(minutes: 2), short: 'TB'),
     node(3, 'Xitiomet Router', ago: const Duration(minutes: 50)),
     node(4, 'Meshxor', ago: const Duration(hours: 3)),
     node(5, 'Old timer', ago: const Duration(days: 3)),
