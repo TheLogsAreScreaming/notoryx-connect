@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6110,8 +6111,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count autres appareils à proximité ne sont pas des radios Meshtastic, ils sont donc masqués.',
-      one:
-          '1 autre appareil à proximité n\'est pas une radio Meshtastic, il est donc masqué.',
+      one: '1 autre appareil à proximité n\'est pas une radio Meshtastic, il est donc masqué.',
     );
     return '$_temp0';
   }
@@ -6397,4 +6397,44 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get setStaleAfter => 'Marquer les nœuds inactifs après';
+
+  @override
+  String get setStaleAfterHelp =>
+      'Les nœuds non entendus depuis ce délai apparaissent comme inactifs dans Nœuds et Carte. Ils restent dans la liste.';
+
+  @override
+  String get staleOff => 'Désactivé';
+
+  @override
+  String get stale1h => '1 heure';
+
+  @override
+  String get stale6h => '6 heures';
+
+  @override
+  String get stale24h => '24 heures';
+
+  @override
+  String get stale3d => '3 jours';
+
+  @override
+  String get stale7d => '7 jours';
+
+  @override
+  String nodesStale(String age) {
+    return 'inactif · $age';
+  }
+
+  @override
+  String get mapShowRangeRings => 'Afficher les cercles de distance';
+
+  @override
+  String get mapHideRangeRings => 'Masquer les cercles de distance';
+
+  @override
+  String get mapRangeRingsNoPosition =>
+      'Les cercles de distance ont besoin de la position de votre radio, qui n\'en a pas encore.';
 }

@@ -1711,5 +1711,17 @@
   "trafficNotOnMapCount": "{count} nicht auf der Karte",
   "trafficAge": "{seconds} s",
   "trafficNotOnMap": "Nicht auf der Karte: {names}",
-  "trafficUnnamed": "{count, plural, =1{1 Relais ohne Namen} other{{count} Relais ohne Namen}}"
+  "trafficUnnamed": "{count, plural, =1{1 Relais ohne Namen} other{{count} Relais ohne Namen}}",
+  "setStaleAfter": "Knoten als veraltet markieren nach",
+  "setStaleAfterHelp": "Knoten, die so lange nicht gehört wurden, erscheinen unter Knoten und Karte als veraltet. Sie bleiben in der Liste.",
+  "staleOff": "Aus",
+  "stale1h": "1 Stunde",
+  "stale6h": "6 Stunden",
+  "stale24h": "24 Stunden",
+  "stale3d": "3 Tage",
+  "stale7d": "7 Tage",
+  "nodesStale": "veraltet · {age}",
+  "mapShowRangeRings": "Entfernungsringe zeigen",
+  "mapHideRangeRings": "Entfernungsringe ausblenden",
+  "mapRangeRingsNoPosition": "Entfernungsringe brauchen die Position deines Funkgeräts, und es hat noch keine."
 }

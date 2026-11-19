@@ -5,6 +5,7 @@ import '../theme/nx_theme_picker.dart';
 import '../theme/nx_themes.dart';
 import 'bastion_heard_filter.dart';
 import 'bastion_history_limit.dart';
+import 'bastion_stale.dart';
 import 'bastion_units.dart';
 
 /// Phone appearance preferences; radio configuration is never changed.
@@ -30,6 +31,10 @@ class BastionPreferences extends ChangeNotifier {
   BastionHeardWithin heardWithin = BastionHeardWithin.any;
   /// Show only favourite (trusted) nodes on Nodes and Map.
   bool favoritesOnly = false;
+  /// Mark nodes stale on Nodes and Map after this long unheard.
+  BastionStaleAfter staleAfter = BastionStaleAfter.standard;
+  /// Draw distance rings around this radio on the map.
+  bool rangeRings = false;
 
   /// The theme id to show for the device's light/dark [platform] setting.
   String activeTheme(Brightness platform) => activeThemeId(
@@ -78,6 +83,8 @@ class BastionPreferences extends ChangeNotifier {
       mqttProxy = await p.getBool('bastion.mqtt_proxy') ?? false;
       heardWithin = BastionHeardWithin.fromName(await p.getString('bastion.nodes.heard_within'));
       favoritesOnly = await p.getBool('bastion.nodes.favorites_only') ?? false;
+      staleAfter = BastionStaleAfter.fromName(await p.getString('bastion.nodes.stale_after'));
+      rangeRings = await p.getBool('bastion.map.range_rings') ?? false;
       statistics = await p.getBool('bastion.dashboard.statistics') ?? true;
       meshHealth = await p.getBool('bastion.dashboard.health') ?? true;
       encounters = await p.getBool('bastion.dashboard.encounters') ?? true;
@@ -93,11 +100,13 @@ class BastionPreferences extends ChangeNotifier {
   }
 
   Future<void> update({bool? catchUp, bool? proxyMqtt, BastionHeardWithin? heard, bool? favorites, String? theme, String? darkTheme, String? season, bool? holidays, bool? stats, bool? health, bool? saved,
-      int? retentionDays, bool? speak, BastionUnits? unitSystem, int? keepMessages}) async {
+      int? retentionDays, bool? speak, BastionUnits? unitSystem, int? keepMessages, BastionStaleAfter? stale, bool? rings}) async {
     storeForwardCatchUp = catchUp ?? storeForwardCatchUp;
     mqttProxy = proxyMqtt ?? mqttProxy;
     heardWithin = heard ?? heardWithin;
     favoritesOnly = favorites ?? favoritesOnly;
+    staleAfter = stale ?? staleAfter;
+    rangeRings = rings ?? rangeRings;
     appTheme = theme ?? appTheme;
     darkModeTheme = darkTheme ?? darkModeTheme;
     seasonalOverride = season ?? seasonalOverride;
@@ -121,6 +130,8 @@ class BastionPreferences extends ChangeNotifier {
       await p.setBool('bastion.mqtt_proxy', mqttProxy);
       await p.setString('bastion.nodes.heard_within', heardWithin.name);
       await p.setBool('bastion.nodes.favorites_only', favoritesOnly);
+      await p.setString('bastion.nodes.stale_after', staleAfter.name);
+      await p.setBool('bastion.map.range_rings', rangeRings);
       await p.setBool('bastion.dashboard.statistics', statistics);
       await p.setBool('bastion.dashboard.health', meshHealth);
       await p.setBool('bastion.dashboard.encounters', encounters);

@@ -23,6 +23,7 @@ import 'services/bastion_map_layers.dart';
 import 'services/bastion_offline_map.dart';
 import 'services/bastion_heard_filter.dart';
 import 'services/bastion_preferences.dart';
+import 'services/bastion_range_rings.dart';
 import 'services/bastion_routes.dart';
 import 'services/bastion_tak_bridge.dart';
 import 'services/bastion_units.dart';
@@ -403,13 +404,16 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
-        animation: Listenable.merge([widget.radio, _tak]),
+        animation: Listenable.merge([widget.radio, _tak, BastionPreferences.instance]),
         builder: (context, _) {
           final placed = _placed;
           final takMarkers = _tak.receive ? _tak.markers : const <TakMarker>[];
           final local = widget.radio.localNodeNum;
           final team = _team;
           final trails = _trailLines(team, local);
+          final staleAfter = BastionPreferences.instance.staleAfter;
+          final now = DateTime.now();
+          final me = widget.radio.localNode;
           if (!_fitted && placed.isNotEmpty) {
             _fitted = true;
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -505,6 +509,12 @@ class _MapPageState extends State<MapPage> {
                     PolylineLayer(polylines: lines),
                   if (_layerMarkers(context, Theme.of(context).colorScheme.secondary) case final marks when marks.isNotEmpty)
                     MarkerLayer(markers: marks),
+                  if (BastionPreferences.instance.rangeRings && me != null && me.hasPosition)
+                    _RangeRingsLayer(
+                      key: const ValueKey('range-rings'),
+                      center: LatLng(me.latitude!, me.longitude!),
+                      units: BastionPreferences.instance.units,
+                    ),
                   if (_planning case final plan? when plan.isNotEmpty) ...[
                     PolylineLayer(polylines: [
                       if (plan.length >= 2)
@@ -579,7 +589,10 @@ class _MapPageState extends State<MapPage> {
                             node: node,
                             isLocal: node.num == local,
                             team: team.contains(node.num)
-                                ? TeamMemberStatus.of(node.num, node, now: DateTime.now())
+                                ? TeamMemberStatus.of(node.num, node, now: now)
+                                : null,
+                            stale: node.num != local && staleAfter.marks(node.lastHeard, now)
+                                ? _agoLabel(l, node.lastHeard!, now)
                                 : null,
                             onTap: () => _showNode(context, node),
                           ),
@@ -774,6 +787,14 @@ class _MapPageState extends State<MapPage> {
                           tooltip: _showHeatmap ? l.mapHideHeatmap : l.mapShowHeatmap,
                           icon: Icon(_showHeatmap ? Icons.grid_on : Icons.grid_off),
                           onPressed: () => _toggleHeatmap(context),
+                        ),
+                        IconButton(
+                          key: const ValueKey('map-range-rings'),
+                          tooltip: BastionPreferences.instance.rangeRings ? l.mapHideRangeRings : l.mapShowRangeRings,
+                          isSelected: BastionPreferences.instance.rangeRings,
+                          icon: const Icon(Icons.radar_outlined),
+                          selectedIcon: const Icon(Icons.radar),
+                          onPressed: () => _toggleRangeRings(context),
                         ),
                         IconButton(
                           key: const ValueKey('map-remembered'),
@@ -1017,6 +1038,16 @@ class _MapPageState extends State<MapPage> {
   /// Rally points with distance and direction, shared routes, and route planning.
   List<CoverageCell> get _coverage =>
       BastionCoverageGrid.build(BastionFieldLog.instance.records, radio: widget.radio.localNodeNum);
+
+  Future<void> _toggleRangeRings(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final turningOn = !BastionPreferences.instance.rangeRings;
+    final me = widget.radio.localNode;
+    if (turningOn && (me == null || !me.hasPosition)) {
+      messenger.showSnackBar(SnackBar(content: Text(l.mapRangeRingsNoPosition)));
+    }
+    await BastionPreferences.instance.update(rings: turningOn);
+  }
 
   void _toggleHeatmap(BuildContext context) {
     final messenger = ScaffoldMessenger.of(context);
@@ -1582,7 +1613,7 @@ class _MapPageState extends State<MapPage> {
 }
 
 class _NodePin extends StatelessWidget {
-  const _NodePin({required this.node, required this.isLocal, required this.onTap, this.team});
+  const _NodePin({required this.node, required this.isLocal, required this.onTap, this.team, this.stale});
 
   final MeshtasticNode node;
   final bool isLocal;
@@ -1591,6 +1622,13 @@ class _NodePin extends StatelessWidget {
   /// Set for trip contacts: the pin shows how old their position is.
   final TeamMemberStatus? team;
 
+  /// How long ago a stale node was last heard, e.g. "3 d ago"; null when the
+  /// node is not stale. A stale pin is drawn faded and says so in words.
+  final String? stale;
+
+  /// How opaque a stale pin is drawn.
+  static const staleOpacity = 0.45;
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
@@ -1598,11 +1636,15 @@ class _NodePin extends StatelessWidget {
     return Semantics(
       button: true,
       label: '${node.displayName}${isLocal ? l.mapThisRadioSuffix : ''}'
-          '${team == null ? '' : l.mapTripContactSuffix(team!.summaryIn(BastionPreferences.instance.units))}',
+          '${team == null ? '' : l.mapTripContactSuffix(team!.summaryIn(BastionPreferences.instance.units))}'
+          '${stale == null ? '' : ', ${l.nodesStale(stale!)}'}',
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Column(
+        child: Opacity(
+          key: stale == null ? null : ValueKey('stale-pin-${node.num}'),
+          opacity: stale == null ? 1 : staleOpacity,
+          child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
@@ -1633,8 +1675,95 @@ class _NodePin extends StatelessWidget {
                 color: MapPage.accent, size: 26),
           ],
         ),
+        ),
       ),
     );
+  }
+}
+
+/// "3 h ago" style age of [time] at [now], for stale pins.
+String _agoLabel(AppLocalizations l, DateTime time, DateTime now) {
+  final d = now.difference(time);
+  if (d.inMinutes < 1) return l.agoNow;
+  if (d.inHours < 1) return l.agoMin(d.inMinutes);
+  if (d.inDays < 1) return l.agoHours(d.inHours);
+  return l.agoDays(d.inDays);
+}
+
+/// Four distance rings around this radio, spaced to fit the visible view,
+/// with faint spokes every 45° and N/E/S/W just outside the outer ring.
+class _RangeRingsLayer extends StatelessWidget {
+  const _RangeRingsLayer({super.key, required this.center, required this.units});
+
+  final LatLng center;
+  final BastionUnits units;
+
+  LatLng _at(double bearing, double meters) {
+    final (lat, lon) = BastionRangeRings.pointAt(center.latitude, center.longitude, bearing, meters);
+    return LatLng(lat, lon);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final camera = MapCamera.of(context);
+    final step = BastionRangeRings.niceStep(
+      BastionRangeRings.edgeMeters(
+        latitude: camera.center.latitude,
+        zoom: camera.zoom,
+        widthPx: camera.nonRotatedSize.width,
+        heightPx: camera.nonRotatedSize.height,
+      ),
+      units,
+    );
+    final radii = BastionRangeRings.ringRadii(step);
+    final outer = radii.last;
+    const ring = MapPage.accent;
+    final textScale = MediaQuery.textScalerOf(context);
+    Widget tag(String text, {Key? key}) => Center(
+          child: Container(
+            key: key,
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.7),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(text, maxLines: 1, softWrap: false,
+                style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600)),
+          ),
+        );
+    return Stack(children: [
+      PolylineLayer(polylines: [
+        for (var b = 0; b < 360; b += 45)
+          Polyline(points: [center, _at(b.toDouble(), outer)], strokeWidth: 1, color: ring.withValues(alpha: 0.3)),
+      ]),
+      CircleLayer(circles: [
+        for (final r in radii)
+          CircleMarker(
+            point: center,
+            radius: r,
+            useRadiusInMeter: true,
+            color: Colors.transparent,
+            borderColor: ring.withValues(alpha: 0.8),
+            borderStrokeWidth: 1.5,
+          ),
+      ]),
+      MarkerLayer(markers: [
+        for (final (i, r) in radii.indexed)
+          Marker(
+            point: _at(0, r),
+            width: 72,
+            height: textScale.scale(20),
+            child: tag(BastionRangeRings.ringLabel(r, units), key: ValueKey('range-ring-label-$i')),
+          ),
+        for (final b in const [0.0, 90.0, 180.0, 270.0])
+          Marker(
+            point: _at(b, outer + step * 0.3),
+            width: 28,
+            height: textScale.scale(20),
+            child: tag(BastionGeo.compassPoint(b)),
+          ),
+      ]),
+    ]);
   }
 }
 

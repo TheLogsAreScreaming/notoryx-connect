@@ -4494,5 +4494,25 @@
         "type": "int"
       }
     }
-  }
+  },
+  "setStaleAfter": "Mark nodes stale after",
+  "setStaleAfterHelp": "Nodes not heard for this long show as stale on Nodes and Map. They stay in the list.",
+  "staleOff": "Off",
+  "stale1h": "1 hour",
+  "stale6h": "6 hours",
+  "stale24h": "24 hours",
+  "stale3d": "3 days",
+  "stale7d": "7 days",
+  "nodesStale": "stale · {age}",
+  "@nodesStale": {
+    "description": "Node list detail for a node not heard within the stale setting; age is like \"3 h ago\".",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "mapShowRangeRings": "Show range rings",
+  "mapHideRangeRings": "Hide range rings",
+  "mapRangeRingsNoPosition": "Range rings need your radio's position, and it has none yet."
 }

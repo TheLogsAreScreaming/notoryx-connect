@@ -115,6 +115,7 @@ class _SettingsPage extends StatelessWidget {
         onChanged: (value) => radio.setLowPowerMode(value))),
       NxSectionLabel(l.setApp),
       const BastionAppearanceCard(),
+      const _StaleNodesCard(),
       _FieldAlertsCard(radio: radio),
       const _MessagesCard(),
       _FiltersCard(radio: radio),

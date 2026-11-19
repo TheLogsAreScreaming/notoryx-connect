@@ -2,6 +2,7 @@ import 'package:bastion/map_page.dart';
 import 'package:bastion/services/bastion_demo_radio.dart';
 import 'package:bastion/services/bastion_geofences.dart';
 import 'package:bastion/services/bastion_preferences.dart';
+import 'package:bastion/services/bastion_stale.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -111,5 +112,93 @@ void main() {
     await tester.tap(find.byTooltip('Delete Camp'));
     await tester.pumpAndSettle();
     expect(radio.geofences, isEmpty);
+  });
+
+  Widget app(MeshtasticRadioCoordinator radio) => MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(body: MapPage(radio: radio)));
+
+  testWidgets('nodes quiet past the stale setting are drawn faded and say so', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
+    await BastionPreferences.instance.update(stale: BastionStaleAfter.day, favorites: false);
+    addTearDown(() => BastionPreferences.instance.update(stale: BastionStaleAfter.standard));
+    // Every demo node, this radio included, was last heard two days ago.
+    final radio = BastionDemoRadio(clock: () => DateTime.now().subtract(const Duration(days: 2)));
+    addTearDown(radio.dispose);
+    await tester.binding.setSurfaceSize(const Size(1000, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(app(radio));
+    await tester.pump();
+
+    final others = radio.nodes.where((n) => n.num != radio.localNodeNum).toList();
+    for (final n in others) {
+      final faded = find.byKey(ValueKey('stale-pin-${n.num}'));
+      expect(faded, findsOneWidget, reason: n.displayName);
+      expect(tester.widget<Opacity>(faded).opacity, closeTo(0.45, 1e-9));
+    }
+    expect(find.byKey(ValueKey('stale-pin-${radio.localNodeNum}')), findsNothing,
+        reason: 'your own radio is never marked stale');
+    expect(find.bySemanticsLabel(RegExp('${RegExp.escape(others.first.displayName)}.*stale · 2 d ago')), findsOneWidget);
+
+    await BastionPreferences.instance.update(stale: BastionStaleAfter.week);
+    await tester.pump();
+    expect(find.byWidgetPredicate((w) => w.key is ValueKey<String> && (w.key! as ValueKey<String>).value.startsWith('stale-pin-')),
+        findsNothing);
+
+    await BastionPreferences.instance.update(stale: BastionStaleAfter.off);
+    await tester.pump();
+    expect(find.byKey(ValueKey('stale-pin-${others.first.num}')), findsNothing);
+  });
+
+  testWidgets('range rings draw four labelled rings around this radio and are remembered', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
+    await BastionPreferences.instance.update(rings: false);
+    addTearDown(() => BastionPreferences.instance.update(rings: false));
+    final radio = BastionDemoRadio();
+    addTearDown(radio.dispose);
+    await tester.binding.setSurfaceSize(const Size(1000, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(app(radio));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('range-rings')), findsNothing);
+
+    await tester.tap(find.byKey(const ValueKey('map-range-rings')));
+    await tester.pump();
+    expect(BastionPreferences.instance.rangeRings, isTrue);
+    expect(find.byKey(const ValueKey('range-rings')), findsOneWidget);
+    expect(find.text("Range rings need your radio's position, and it has none yet."), findsNothing);
+    final rings = find.descendant(of: find.byKey(const ValueKey('range-rings')), matching: find.byType(CircleLayer));
+    expect(tester.widget<CircleLayer>(rings).circles, hasLength(4));
+    for (var i = 0; i < 4; i++) {
+      expect(find.byKey(ValueKey('range-ring-label-$i')), findsOneWidget);
+    }
+    for (final tag in ['N', 'E', 'S', 'W']) {
+      expect(find.descendant(of: find.byKey(const ValueKey('range-rings')), matching: find.text(tag)), findsOneWidget);
+    }
+    final spokes = find.descendant(of: find.byKey(const ValueKey('range-rings')), matching: find.byType(PolylineLayer));
+    expect(tester.widget<PolylineLayer>(spokes).polylines, hasLength(8));
+
+    await tester.tap(find.byKey(const ValueKey('map-range-rings')));
+    await tester.pump();
+    expect(BastionPreferences.instance.rangeRings, isFalse);
+    expect(find.byKey(const ValueKey('range-rings')), findsNothing);
+  });
+
+  testWidgets('range rings say so when this radio has no position', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
+    await BastionPreferences.instance.update(rings: false);
+    addTearDown(() => BastionPreferences.instance.update(rings: false));
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.binding.setSurfaceSize(const Size(1000, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(app(radio));
+    await tester.pump();
+
+    await tester.tap(find.byKey(const ValueKey('map-range-rings')));
+    await tester.pump();
+    expect(find.text("Range rings need your radio's position, and it has none yet."), findsOneWidget);
+    expect(find.byKey(const ValueKey('range-rings')), findsNothing);
   });
 }

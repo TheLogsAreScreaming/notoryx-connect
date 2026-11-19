@@ -984,8 +984,15 @@ class _NodeRow extends StatelessWidget {
     final favorite = radio.favoriteNums.contains(node.num);
     final heard = node.lastHeard;
     final battery = node.batteryLevel;
+    // Your own radio is never stale; the badge is for nodes gone quiet.
+    final stale = node.num != radio.localNodeNum &&
+        BastionPreferences.instance.staleAfter.marks(heard, DateTime.now());
     final details = [
-      heard == null ? l.nodesNeverHeard : _ago(context, heard),
+      heard == null
+          ? l.nodesNeverHeard
+          : stale
+              ? l.nodesStale(_ago(context, heard))
+              : _ago(context, heard),
       ?_distance(context),
       if (node.viaMqtt) l.chatsViaMqtt else ?_hopsLabel(context, node.hopsAway),
       if (battery != null) battery > 100 ? l.homePluggedIn : l.toolsBatteryPct(battery),
@@ -1039,6 +1046,12 @@ class _NodeRow extends StatelessWidget {
                   if (favorite) Padding(
                     padding: const EdgeInsetsDirectional.only(start: 4),
                     child: Icon(Icons.star, size: 16, color: scheme.primary),
+                  ),
+                  // Shape and words, not only colour, say the node is stale.
+                  if (stale) Padding(
+                    key: ValueKey('node-${node.num}-stale'),
+                    padding: const EdgeInsetsDirectional.only(start: 4),
+                    child: Icon(Icons.history_toggle_off, size: 16, color: scheme.onSurfaceVariant),
                   ),
                 ]),
                 const SizedBox(height: 2),

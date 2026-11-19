@@ -10386,6 +10386,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 relay without a name} other{{count} relays without a name}}'**
   String trafficUnnamed(int count);
+
+  /// No description provided for @setStaleAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark nodes stale after'**
+  String get setStaleAfter;
+
+  /// No description provided for @setStaleAfterHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes not heard for this long show as stale on Nodes and Map. They stay in the list.'**
+  String get setStaleAfterHelp;
+
+  /// No description provided for @staleOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get staleOff;
+
+  /// No description provided for @stale1h.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get stale1h;
+
+  /// No description provided for @stale6h.
+  ///
+  /// In en, this message translates to:
+  /// **'6 hours'**
+  String get stale6h;
+
+  /// No description provided for @stale24h.
+  ///
+  /// In en, this message translates to:
+  /// **'24 hours'**
+  String get stale24h;
+
+  /// No description provided for @stale3d.
+  ///
+  /// In en, this message translates to:
+  /// **'3 days'**
+  String get stale3d;
+
+  /// No description provided for @stale7d.
+  ///
+  /// In en, this message translates to:
+  /// **'7 days'**
+  String get stale7d;
+
+  /// Node list detail for a node not heard within the stale setting; age is like "3 h ago".
+  ///
+  /// In en, this message translates to:
+  /// **'stale · {age}'**
+  String nodesStale(String age);
+
+  /// No description provided for @mapShowRangeRings.
+  ///
+  /// In en, this message translates to:
+  /// **'Show range rings'**
+  String get mapShowRangeRings;
+
+  /// No description provided for @mapHideRangeRings.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide range rings'**
+  String get mapHideRangeRings;
+
+  /// No description provided for @mapRangeRingsNoPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Range rings need your radio\'s position, and it has none yet.'**
+  String get mapRangeRingsNoPosition;
 }
 
 class _AppLocalizationsDelegate

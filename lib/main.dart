@@ -27,6 +27,7 @@ import 'services/bastion_bot_guard.dart';
 import 'services/bastion_history_limit.dart';
 import 'services/bastion_mqtt_proxy.dart';
 import 'services/bastion_preferences.dart';
+import 'services/bastion_stale.dart';
 import 'services/bastion_radio_data.dart';
 import 'phone_backup_page.dart';
 import 'privacy_page.dart';
