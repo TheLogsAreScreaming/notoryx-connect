@@ -1,0 +1,1 @@
+Fixes for the stale badge and range rings: radios with an unset clock now show "Last heard: unknown" instead of a huge age, and the ring labels and N/E/S/W marks stay clear of the map's top card and side buttons.
