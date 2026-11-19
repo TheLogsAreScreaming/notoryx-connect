@@ -428,35 +428,6 @@ class _MapPageState extends State<MapPage> {
         .toList();
   }
 
-  /// [placed] nodes grouped by position, so nodes reported at the same spot
-  /// (common with reduced position precision) share one pin instead of
-  /// stacking their name tags. Each group lists the most recently heard node
-  /// first. This radio and trip contacts always keep their own pins.
-  static List<List<MeshtasticNode>> _stacks(
-    List<MeshtasticNode> placed, {
-    required int? local,
-    required Set<int> team,
-    required DateTime now,
-  }) {
-    final groups = <String, List<MeshtasticNode>>{};
-    final out = <List<MeshtasticNode>>[];
-    for (final n in placed) {
-      if (n.num == local || team.contains(n.num)) {
-        out.add([n]);
-        continue;
-      }
-      final key = '${n.latitude!.toStringAsFixed(5)},${n.longitude!.toStringAsFixed(5)}';
-      groups.putIfAbsent(key, () => []).add(n);
-    }
-    DateTime heard(MeshtasticNode n) =>
-        knownHeardTime(n.lastHeard, now) ?? DateTime.fromMillisecondsSinceEpoch(0);
-    for (final g in groups.values) {
-      g.sort((a, b) => heard(b).compareTo(heard(a)));
-      out.add(g);
-    }
-    return out;
-  }
-
   /// Lists the nodes that share one map spot; tapping one opens its sheet.
   void _showStack(BuildContext context, List<MeshtasticNode> nodes, DateTime now) {
     final l = AppLocalizations.of(context);
@@ -475,7 +446,9 @@ class _MapPageState extends State<MapPage> {
             ),
             for (final n in nodes)
               ListTile(
-                title: Text(n.displayName),
+                title: Text(n.num == widget.radio.localNodeNum
+                    ? '${n.displayName}${l.mapThisRadioSuffix}'
+                    : n.displayName),
                 subtitle: Text(switch (knownHeardTime(n.lastHeard, now)) {
                   null => l.nodesHeardUnknown,
                   final t when staleAfter.marks(n.lastHeard, now) => l.nodesStale(_agoLabel(l, t, now)),
@@ -519,6 +492,8 @@ class _MapPageState extends State<MapPage> {
           final staleAfter = BastionPreferences.instance.staleAfter;
           final now = DateTime.now();
           final me = widget.radio.localNode;
+          final spots = mapSpotGroups(placed, local: local, team: team, now: now);
+          final ownSpot = spots.where((g) => g.first.num == local).firstOrNull;
           if (!_fitted && placed.isNotEmpty) {
             _fitted = true;
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -624,6 +599,7 @@ class _MapPageState extends State<MapPage> {
                       center: LatLng(me.latitude!, me.longitude!),
                       units: BastionPreferences.instance.units,
                       clearArea: _clearArea,
+                      ownMore: (ownSpot?.length ?? 1) - 1,
                     ),
                   if (_planning case final plan? when plan.isNotEmpty) ...[
                     PolylineLayer(polylines: [
@@ -690,7 +666,7 @@ class _MapPageState extends State<MapPage> {
                             onTap: () => _showWaypoint(context, waypoint),
                           ),
                         ),
-                      for (final spot in _stacks(placed, local: local, team: team, now: now))
+                      for (final spot in spots)
                         Marker(
                           point: LatLng(spot.first.latitude!, spot.first.longitude!),
                           width: spot.length == 1 ? 72 : 96,
@@ -1804,6 +1780,41 @@ class _NodePin extends StatelessWidget {
   }
 }
 
+/// [placed] nodes grouped by position, so nodes reported at the same spot
+/// (common with reduced position precision) share one pin instead of
+/// stacking their name tags. This radio leads the group at its own spot;
+/// otherwise the most recently heard node comes first. Trip contacts
+/// always keep their own pins.
+@visibleForTesting
+List<List<MeshtasticNode>> mapSpotGroups(
+  List<MeshtasticNode> placed, {
+  required int? local,
+  required Set<int> team,
+  required DateTime now,
+}) {
+  final groups = <String, List<MeshtasticNode>>{};
+  final out = <List<MeshtasticNode>>[];
+  for (final n in placed) {
+    if (n.num != local && team.contains(n.num)) {
+      out.add([n]);
+      continue;
+    }
+    final key = '${n.latitude!.toStringAsFixed(5)},${n.longitude!.toStringAsFixed(5)}';
+    groups.putIfAbsent(key, () => []).add(n);
+  }
+  DateTime heard(MeshtasticNode n) =>
+      knownHeardTime(n.lastHeard, now) ?? DateTime.fromMillisecondsSinceEpoch(0);
+  for (final g in groups.values) {
+    g.sort((a, b) => a.num == local
+        ? -1
+        : b.num == local
+            ? 1
+            : heard(b).compareTo(heard(a)));
+    out.add(g);
+  }
+  return out;
+}
+
 /// "3 h ago" style age of [time] at [now], for stale pins.
 String _agoLabel(AppLocalizations l, DateTime time, DateTime now) {
   final d = now.difference(time);
@@ -1817,13 +1828,17 @@ String _agoLabel(AppLocalizations l, DateTime time, DateTime now) {
 /// not covered by its bars, with faint spokes every 45° and N/E/S/W just
 /// outside the outer ring. Labels are kept inside that uncovered part.
 class _RangeRingsLayer extends StatelessWidget {
-  const _RangeRingsLayer({super.key, required this.center, required this.units, this.clearArea});
+  const _RangeRingsLayer({super.key, required this.center, required this.units, this.clearArea, this.ownMore = 0});
 
   final LatLng center;
   final BastionUnits units;
 
   /// The uncovered part of the map in screen pixels; the whole map when null.
   final Rect? clearArea;
+
+  /// How many other nodes share this radio's pin ("SQCH +4"), which makes
+  /// its name tag wider.
+  final int ownMore;
 
   static const _ringTagWidth = 72.0;
   static const _compassTagWidth = 28.0;
@@ -1874,7 +1889,7 @@ class _RangeRingsLayer extends StatelessWidget {
       for (final r in radii) [for (final b in ringBearings) box(_at(b, r), _ringTagWidth)],
     ], (left: clear.left, top: clear.top, right: clear.right, bottom: clear.bottom), obstacles: [
       // This radio's pin: its name tag above the point and the icon on it.
-      (x: pin.dx, y: pin.dy, halfW: scaler.scale(30), halfH: (scaler.scale(22) + 26) / 2),
+      (x: pin.dx, y: pin.dy, halfW: scaler.scale(ownMore == 0 ? 30 : 48), halfH: (scaler.scale(22) + 26) / 2),
     ]);
     LatLng? spot(int i) => switch (spots[i]) {
           (final x, final y) => camera.screenOffsetToLatLng(Offset(x, y)),
