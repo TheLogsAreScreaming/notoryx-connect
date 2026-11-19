@@ -129,23 +129,44 @@ abstract final class BastionRangeRings {
   /// so labels pushed to the same edge do not pile up.
   static List<(double, double)?> placeLabels(
     List<RingLabelBox> labels,
-    RingArea area,
-  ) {
-    final placed = <(double, double, double, double)>[];
-    return [
-      for (final b in labels)
-        () {
-          final (x, y) = clampInto(b.x, b.y, area, b.halfW, b.halfH);
-          final hit = placed.any(
-            (p) =>
-                (p.$1 - x).abs() < p.$3 + b.halfW &&
-                (p.$2 - y).abs() < p.$4 + b.halfH,
-          );
-          if (hit) return null;
-          placed.add((x, y, b.halfW, b.halfH));
-          return (x, y);
-        }(),
+    RingArea area, {
+    List<RingLabelBox> obstacles = const [],
+  }) => placeLabelChoices(
+    [
+      for (final b in labels) [b],
+    ],
+    area,
+    obstacles: obstacles,
+  );
+
+  /// Like [placeLabels], but each label has several wanted spots, tried in
+  /// order: it takes the first one that, clamped inside [area], overlaps
+  /// neither a label placed before it nor any of [obstacles] (for example
+  /// this radio's own pin). A label with no free spot is dropped (null).
+  static List<(double, double)?> placeLabelChoices(
+    List<List<RingLabelBox>> choices,
+    RingArea area, {
+    List<RingLabelBox> obstacles = const [],
+  }) {
+    final placed = <(double, double, double, double)>[
+      for (final o in obstacles) (o.x, o.y, o.halfW, o.halfH),
     ];
+    (double, double)? place(List<RingLabelBox> options) {
+      for (final b in options) {
+        final (x, y) = clampInto(b.x, b.y, area, b.halfW, b.halfH);
+        final hit = placed.any(
+          (p) =>
+              (p.$1 - x).abs() < p.$3 + b.halfW &&
+              (p.$2 - y).abs() < p.$4 + b.halfH,
+        );
+        if (hit) continue;
+        placed.add((x, y, b.halfW, b.halfH));
+        return (x, y);
+      }
+      return null;
+    }
+
+    return [for (final options in choices) place(options)];
   }
 }
 

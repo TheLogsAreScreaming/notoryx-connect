@@ -1724,5 +1724,7 @@
   "mapShowRangeRings": "Mostrar anillos de distancia",
   "mapHideRangeRings": "Ocultar anillos de distancia",
   "mapRangeRingsNoPosition": "Los anillos de distancia necesitan la posición de tu radio, y aún no tiene ninguna.",
-  "nodesHeardUnknown": "Última vez oído: desconocido"
+  "nodesHeardUnknown": "Última vez oído: desconocido",
+  "mapStackMore": "{count, plural, =1{y 1 nodo más aquí} other{y {count} nodos más aquí}}",
+  "mapStackTitle": "{count} nodos en este punto"
 }

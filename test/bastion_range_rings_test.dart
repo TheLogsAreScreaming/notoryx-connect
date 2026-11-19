@@ -217,4 +217,47 @@ void main() {
       }
     });
   });
+
+  group('placeLabelChoices', () {
+    const area = (left: 0.0, top: 0.0, right: 400.0, bottom: 400.0);
+    RingLabelBox at(double x, double y) => (x: x, y: y, halfW: 20, halfH: 10);
+
+    test('a label under an obstacle takes its next free spot', () {
+      final spots = BastionRangeRings.placeLabelChoices(
+        [
+          [at(200, 180), at(200, 220), at(200, 240)],
+        ],
+        area,
+        obstacles: [(x: 200, y: 190, halfW: 30, halfH: 24)],
+      );
+      // 180 and 220 are both within 34 px of the obstacle's centre row.
+      expect(spots, [(200.0, 240.0)]);
+    });
+
+    test('a label with no free spot is dropped', () {
+      final spots = BastionRangeRings.placeLabelChoices(
+        [
+          [at(200, 200), at(205, 205)],
+        ],
+        area,
+        obstacles: [(x: 200, y: 200, halfW: 60, halfH: 60)],
+      );
+      expect(spots.single, isNull);
+    });
+
+    test('earlier labels win and later ones move round', () {
+      final spots = BastionRangeRings.placeLabelChoices([
+        [at(100, 100)],
+        [at(100, 100), at(100, 300)],
+      ], area);
+      expect(spots, [(100.0, 100.0), (100.0, 300.0)]);
+    });
+
+    test('placeLabels with no obstacles is unchanged', () {
+      expect(
+        BastionRangeRings.placeLabels([at(100, 100), at(105, 100)], area),
+        [(100.0, 100.0), null],
+      );
+    });
+  });
 }

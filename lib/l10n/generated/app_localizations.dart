@@ -10464,6 +10464,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last heard: unknown'**
   String get nodesHeardUnknown;
+
+  /// No description provided for @mapStackMore.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{and 1 more node here} other{and {count} more nodes here}}'**
+  String mapStackMore(int count);
+
+  /// No description provided for @mapStackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes at this spot'**
+  String mapStackTitle(int count);
 }
 
 class _AppLocalizationsDelegate

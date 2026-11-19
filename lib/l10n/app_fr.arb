@@ -1724,5 +1724,7 @@
   "mapShowRangeRings": "Afficher les cercles de distance",
   "mapHideRangeRings": "Masquer les cercles de distance",
   "mapRangeRingsNoPosition": "Les cercles de distance ont besoin de la position de votre radio, qui n'en a pas encore.",
-  "nodesHeardUnknown": "Dernière écoute : inconnue"
+  "nodesHeardUnknown": "Dernière écoute : inconnue",
+  "mapStackMore": "{count, plural, =1{et 1 autre nœud ici} other{et {count} autres nœuds ici}}",
+  "mapStackTitle": "{count} nœuds à cet endroit"
 }

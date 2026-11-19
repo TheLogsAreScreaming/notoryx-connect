@@ -1724,5 +1724,7 @@
   "mapShowRangeRings": "Entfernungsringe zeigen",
   "mapHideRangeRings": "Entfernungsringe ausblenden",
   "mapRangeRingsNoPosition": "Entfernungsringe brauchen die Position deines Funkgeräts, und es hat noch keine.",
-  "nodesHeardUnknown": "Zuletzt gehört: unbekannt"
+  "nodesHeardUnknown": "Zuletzt gehört: unbekannt",
+  "mapStackMore": "{count, plural, =1{und 1 weiterer Knoten hier} other{und {count} weitere Knoten hier}}",
+  "mapStackTitle": "{count} Knoten an dieser Stelle"
 }

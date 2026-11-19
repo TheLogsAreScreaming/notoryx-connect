@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6369,4 +6370,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nodesHeardUnknown => 'Last heard: unknown';
+
+  @override
+  String mapStackMore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'and $count more nodes here',
+      one: 'and 1 more node here',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String mapStackTitle(int count) {
+    return '$count nodes at this spot';
+  }
 }
