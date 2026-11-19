@@ -60,6 +60,21 @@ void main() {
     expect(radio.channels[2].settings.psk, [1]);
   });
 
+  testWidgets('switching on an empty slot gives it a private key, not no encryption', (tester) async {
+    tester.view.physicalSize = const Size(400, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final radio = ChannelRadio();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(app(ChannelEditorPage(radio: radio, index: 2)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('channel-use')));
+    await tester.pumpAndSettle();
+    await saveAndConfirm(tester);
+    expect(radio.channels[2].role, Channel_Role.SECONDARY);
+    expect(radio.channels[2].settings.psk, hasLength(32));
+  });
+
   testWidgets('the main channel says it is always on instead of offering a switch', (tester) async {
     final radio = ChannelRadio();
     addTearDown(radio.dispose);

@@ -1028,6 +1028,12 @@ class ChannelEditorPage extends StatelessWidget {
           value: draft.role != Channel_Role.DISABLED,
           onChanged: (on) {
             draft.role = on ? Channel_Role.SECONDARY : Channel_Role.DISABLED;
+            // An empty slot has no key. Switching it on must not quietly
+            // make an unencrypted channel, so it gets its own private key.
+            // The key choice below can still change it before saving.
+            if (on && _privacyOf(draft.settings.psk) == _ChannelPrivacy.none) {
+              draft.ensureSettings().psk = ChannelEditorPage._randomKey();
+            }
             changed();
           },
         ),
