@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6111,7 +6110,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count autres appareils à proximité ne sont pas des radios Meshtastic, ils sont donc masqués.',
-      one: '1 autre appareil à proximité n\'est pas une radio Meshtastic, il est donc masqué.',
+      one:
+          '1 autre appareil à proximité n\'est pas une radio Meshtastic, il est donc masqué.',
     );
     return '$_temp0';
   }
@@ -6455,5 +6455,124 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String mapStackTitle(int count) {
     return '$count nœuds à cet endroit';
+  }
+
+  @override
+  String get setImportNodes => 'Importer des nœuds depuis Meshtastic';
+
+  @override
+  String get setImportNodesSub =>
+      'Ajoute les nœuds d\'un fichier de base de nœuds enregistré dans l\'app Meshtastic';
+
+  @override
+  String get ndbTitle => 'Importer des nœuds';
+
+  @override
+  String get ndbIntro =>
+      'Ajoute les nœuds d\'une base de nœuds de l\'app Meshtastic à ceux que ce téléphone mémorise : noms, matériel, dernière écoute, positions et favoris.';
+
+  @override
+  String get ndbHowTo =>
+      'Dans l\'app Meshtastic, exportez la base de nœuds. Elle enregistre un fichier nommé Meshtastic_nodedb_….json, en général dans Téléchargements.';
+
+  @override
+  String get ndbChoose => 'Choisir un fichier';
+
+  @override
+  String get ndbFileSummary => 'Dans ce fichier';
+
+  @override
+  String ndbFileFrom(String name) {
+    return 'Enregistré depuis $name';
+  }
+
+  @override
+  String ndbHeardByRadio(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nœuds entendus par radio',
+      one: '$count nœud entendu par radio',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ndbFavorites(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count favoris',
+      one: '$count favori',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ndbInternet(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nœuds entendus seulement par internet (MQTT)',
+      one: '$count nœud entendu seulement par internet (MQTT)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ndbIncludeInternet => 'Ajouter aussi les nœuds internet (MQTT)';
+
+  @override
+  String ndbIncludeInternetSub(int limit) {
+    return 'Seulement les $limit plus récents. Ils sont en général loin et hors de portée de votre radio.';
+  }
+
+  @override
+  String ndbAddsTo(String radio) {
+    return 'Les ajoute aux nœuds mémorisés pour $radio.';
+  }
+
+  @override
+  String get ndbNothingSent =>
+      'Rien n\'est envoyé à la radio. Les nœuds déjà connus gardent leur historique, et une clé de sécurité n\'est ajoutée que pour les nœuds qui n\'en ont pas encore.';
+
+  @override
+  String ndbImport(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Importer $count nœuds',
+      one: 'Importer $count nœud',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ndbDone(int added, int updated, int keys, String radio) {
+    return 'Terminé pour $radio : $added nouveaux, $updated déjà connus. $keys clés de sécurité ajoutées.';
+  }
+
+  @override
+  String get ndbEmpty => 'Ce fichier ne contient aucun nœud à ajouter.';
+
+  @override
+  String get ndbNotNodeDb =>
+      'Ce n\'est pas un fichier de base de nœuds Meshtastic.';
+
+  @override
+  String get ndbNewerVersion =>
+      'Ce fichier vient d\'une version plus récente de l\'app Meshtastic. Mettez à jour NOTORYX Connect pour le lire.';
+
+  @override
+  String get ndbTooLarge =>
+      'Ce fichier est trop volumineux pour être une base de nœuds.';
+
+  @override
+  String get ndbNotSaved =>
+      'Les nœuds n\'ont pas pu être enregistrés sur ce téléphone. Rien n\'a été modifié.';
+
+  @override
+  String ndbFailed(String error) {
+    return 'L\'importation a échoué : $error';
   }
 }

@@ -75,6 +75,21 @@ class BastionNodeKeys {
     return KeyCheck.changed;
   }
 
+  /// Remembers keys from an imported node list, only for nodes with no key
+  /// remembered yet: an import never replaces or overrules a key this phone
+  /// has already seen. Returns how many were added.
+  Future<int> rememberImported(Map<int, String> keys) async {
+    if (_loadFailed) return 0;
+    var added = 0;
+    for (final MapEntry(:key, :value) in keys.entries) {
+      if (_known.containsKey(key) || _changed.containsKey(key)) continue;
+      _known[key] = value;
+      added++;
+    }
+    if (added > 0) await _save();
+    return added;
+  }
+
   /// Accepts the new key of [num] as its key from now on.
   Future<void> trust(int num) async {
     final next = _changed.remove(num);
