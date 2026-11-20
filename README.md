@@ -33,7 +33,7 @@ NOTORYX Connect pairs your phone with a radio over Bluetooth so you can message,
 
 <sub>Screenshots are rendered from the app's built-in demo mode (a pretend radio and mesh), not a live radio.</sub>
 
-> **Status (2026-11-15):** the latest release is **v1.0.0-beta.17** (version 1.0.0, build 21). It is a test beta. Beta.16 and beta.17 were checked on one phone (a Samsung Galaxy A15) with one radio (a Seeed T1000-E running Meshtastic firmware). Many features (USB, Wi-Fi, two-way ATAK, MQTT proxy, remote admin, offline map files, Windows and macOS builds) have automated tests but have not yet been checked on a range of phones, radios and firmware versions. Don't rely on it as your only way to call for help. Please [report issues](../../issues).
+> **Status (2026-11-20):** the latest release is **v1.0.0-beta.31** (version 1.0.0, build 35), which adds app-wide search. It is a test beta. Recent betas (up to beta.31) were checked on one phone (a Samsung Galaxy A15) with one radio (a Seeed T1000-E running Meshtastic firmware). Many features (USB, Wi-Fi, two-way ATAK, MQTT proxy, remote admin, offline map files, Windows and macOS builds) have automated tests but have not yet been checked on a range of phones, radios and firmware versions. Don't rely on it as your only way to call for help. Please [report issues](../../issues).
 
 ## Download
 
@@ -87,6 +87,9 @@ Newer betas install over older ones and keep your data. Don't uninstall first.
 - Optional **community moderation** (off by default): report spam, see a Flagged label on banned nodes, and appeal a ban on your own node.
 
 ### Nodes and maps
+- **App-wide search** from every tab: nodes (by name or node ID), channels, messages, saved places and settings.
+- Nodes grouped by when they were heard, with distance, hops, battery and signal on each row, a **stale** badge for quiet nodes, and **import nodes** from a Meshtastic app node database export.
+- **Live Traffic map** that animates heard packets hop by hop, **range rings** around your radio, and one shared pin for nodes at the same spot.
 - **NodeVault:** every node your radios have heard, with favorites, a favorites-only filter, a **node journal** (notes and tags), telemetry charts, signal history, neighbors and node-key change alerts.
 - **Traceroute** with SNR for each hop, shown on the map, plus a **network diagram** and **mesh health** (channel use and airtime).
 - Map with node positions, waypoints, rally points and routes, a coverage heatmap, and nodes your radio has forgotten. The map can also be read as a list for screen readers.
