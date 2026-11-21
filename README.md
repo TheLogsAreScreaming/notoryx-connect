@@ -84,6 +84,7 @@ Newer betas install over older ones and keep your data. Don't uninstall first.
 - Search across all saved messages. Chat history is kept in an on-phone database, separately for each radio, and can be **encrypted**.
 - Reply from the notification. **Ignore** or **mute** nodes, hide words you choose, and get a warning when a node's name looks like another's. An SOS reply from a trip contact is never missed.
 - **SALUTE** and **9-Line** report forms, check-in and assistance templates, and **Bot Mode** with quiet hours, rate limits and loop protection.
+- **SARNEG code words** (Tools → SARNEG code word): send grid references, frequencies and times as letters instead of digits. Your team agrees on a 10-letter word with no repeated letter (with BLACKHORSE, `[SARNEG] LRs KSAC` reads as 17S 4823). A SARNEG button in the message box codes the numbers before you press Send, and a received `[SARNEG]` message gets a tap-to-decode line. Share the word by QR code or text, and set a different word for given days. The same format works in every NOTORYX app, MeshCore ones included. It keeps numbers away from a casual listener; it is **not encryption**. Merged after the latest release, so it arrives in the next test build; not yet tried on a phone.
 - Optional **community moderation** (off by default): report spam, see a Flagged label on banned nodes, and appeal a ban on your own node.
 
 ### Nodes and maps
