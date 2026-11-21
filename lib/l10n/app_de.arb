@@ -1450,7 +1450,7 @@
   "ldLastHeard": "Zuletzt empfangen: {date} {time}",
   "lpHeightRange": "Antennenhöhen müssen zwischen 0 und 300 m liegen.",
   "lpTerrainFailed": "Geländehöhen konnten nicht geladen werden. Prüfe deine Internetverbindung. ({error})",
-  "lpTitle": "Link-Vorschau",
+  "lpTitle": "Verbindungsplaner",
   "lpIntro": "Prüfe, ob sich zwei Knoten über das Gelände dazwischen erreichen können.",
   "lpNeedPositions": "Mindestens zwei Knoten brauchen eine bekannte Position. Positionen kommen aus dem Mesh, sobald ein Funkgerät verbunden ist.",
   "lpLink": "Verbindung",
@@ -1792,7 +1792,8 @@
   "nlPhotoFailed": "Dieses Foto ließ sich nicht verwenden. Versuch ein anderes.",
   "snsTitle": "Sensoren",
   "snsNone": "Keine Sensorwerte vom Funkgerät.",
-  "lpSub": "Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage deines Handys.",
   "chatJumpLatest": "Zur neuesten Nachricht",
-  "pvSent9": "Abrufe von in Chats verlinkten Webseiten, nur wenn du die Link-Vorschau einschaltest; die Website sieht deine IP-Adresse"
+  "pvSent9": "Abrufe von in Chats verlinkten Webseiten, nur wenn du die Link-Vorschau einschaltest; die Website sieht deine IP-Adresse",
+  "lnkPrevTitle": "Link-Vorschau",
+  "lnkPrevSub": "Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage deines Handys."
 }

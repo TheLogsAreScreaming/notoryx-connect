@@ -5399,7 +5399,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get lpTitle => 'Link-Vorschau';
+  String get lpTitle => 'Verbindungsplaner';
 
   @override
   String get lpIntro =>
@@ -6718,13 +6718,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get snsNone => 'Keine Sensorwerte vom Funkgerät.';
 
   @override
-  String get lpSub =>
-      'Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage deines Handys.';
-
-  @override
   String get chatJumpLatest => 'Zur neuesten Nachricht';
 
   @override
   String get pvSent9 =>
       'Abrufe von in Chats verlinkten Webseiten, nur wenn du die Link-Vorschau einschaltest; die Website sieht deine IP-Adresse';
+
+  @override
+  String get lnkPrevTitle => 'Link-Vorschau';
+
+  @override
+  String get lnkPrevSub =>
+      'Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage deines Handys.';
 }

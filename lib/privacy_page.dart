@@ -131,8 +131,8 @@ class _PrivacyPageState extends State<PrivacyPage> {
           builder: (context, _) => Card(child: SwitchListTile(
             key: const ValueKey('privacy-link-previews'),
             secondary: const Icon(Icons.link),
-            title: Text(l.lpTitle),
-            subtitle: Text(l.lpSub),
+            title: Text(l.lnkPrevTitle),
+            subtitle: Text(l.lnkPrevSub),
             value: BastionPreferences.instance.linkPreviews,
             onChanged: (v) => BastionPreferences.instance.update(previews: v),
           )),

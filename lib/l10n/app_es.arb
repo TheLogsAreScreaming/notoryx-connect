@@ -1450,7 +1450,7 @@
   "ldLastHeard": "Oído por última vez: {date} {time}",
   "lpHeightRange": "Las alturas de antena deben estar entre 0 y 300 m.",
   "lpTerrainFailed": "No se pudieron obtener las alturas del terreno. Revisa tu conexión a internet. ({error})",
-  "lpTitle": "Vista previa de enlaces",
+  "lpTitle": "Planificador de enlace",
   "lpIntro": "Comprueba si dos nodos pueden alcanzarse a pesar del relieve entre ellos.",
   "lpNeedPositions": "Al menos dos nodos necesitan una posición conocida. Las posiciones llegan de la malla cuando hay una radio conectada.",
   "lpLink": "Enlace",
@@ -1792,7 +1792,8 @@
   "nlPhotoFailed": "No se pudo usar esa foto. Prueba con otra.",
   "snsTitle": "Sensores",
   "snsNone": "Tu radio no da lecturas de sensores.",
-  "lpSub": "Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono.",
   "chatJumpLatest": "Ir al último mensaje",
-  "pvSent9": "Peticiones de las páginas web enlazadas en los chats, solo si activas la vista previa de enlaces; el sitio ve tu dirección IP"
+  "pvSent9": "Peticiones de las páginas web enlazadas en los chats, solo si activas la vista previa de enlaces; el sitio ve tu dirección IP",
+  "lnkPrevTitle": "Vista previa de enlaces",
+  "lnkPrevSub": "Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono."
 }
