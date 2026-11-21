@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../backdrop_page.dart';
 import '../theme/nx_theme_picker.dart';
 import '../theme/nx_themes.dart';
 import 'bastion_heard_filter.dart';
@@ -158,6 +159,7 @@ class BastionAppearanceCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
             child: NxThemePicker(prefs: p),
           ),
+          const BackdropSettingsTile(),
           ListTile(
             title: const Text('Units'),
             // The choice sits under the description, so it never runs out of

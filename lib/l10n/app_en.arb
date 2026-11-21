@@ -4646,5 +4646,31 @@
   "searchChannels": "Channels",
   "searchPlaces": "Places",
   "searchFeatures": "Settings and tools",
-  "searchRemembered": "Remembered"
+  "searchRemembered": "Remembered",
+  "tabMore": "More",
+  "bgTitle": "Background",
+  "bgKindTheme": "Theme glow",
+  "bgKindSolid": "Color",
+  "bgKindLinear": "Gradient",
+  "bgKindMesh": "Mesh blend",
+  "bgKindPhoto": "Photo",
+  "bgColor1": "First color",
+  "bgColor2": "Second color",
+  "bgColorN": "Color {index}",
+  "@bgColorN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "bgDim": "Dim",
+  "bgBlur": "Blur",
+  "bgChoosePhoto": "Choose photo",
+  "bgReset": "Back to the theme's background",
+  "bgHint": "Cards sit on frosted glass over this. Turn up Dim if text is hard to read.",
+  "bgPreviewTitle": "Preview",
+  "bgPreviewBody": "Text on a glass card looks like this.",
+  "bgPhotoNotBackedUp": "The photo stays on this phone and isn't included in backups.",
+  "bgPhotoFailed": "Couldn't use that photo. Try a different one."
 }

@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6086,8 +6087,7 @@ class AppLocalizationsEs extends AppLocalizations {
       locale: localeName,
       other:
           '$count dispositivos cercanos no son radios Meshtastic, así que están ocultos.',
-      one:
-          '1 dispositivo cercano no es una radio Meshtastic, así que está oculto.',
+      one: '1 dispositivo cercano no es una radio Meshtastic, así que está oculto.',
     );
     return '$_temp0';
   }
@@ -6592,4 +6592,65 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get searchRemembered => 'Recordado';
+
+  @override
+  String get tabMore => 'Más';
+
+  @override
+  String get bgTitle => 'Fondo';
+
+  @override
+  String get bgKindTheme => 'Brillo del tema';
+
+  @override
+  String get bgKindSolid => 'Color';
+
+  @override
+  String get bgKindLinear => 'Degradado';
+
+  @override
+  String get bgKindMesh => 'Mezcla suave';
+
+  @override
+  String get bgKindPhoto => 'Foto';
+
+  @override
+  String get bgColor1 => 'Primer color';
+
+  @override
+  String get bgColor2 => 'Segundo color';
+
+  @override
+  String bgColorN(int index) {
+    return 'Color $index';
+  }
+
+  @override
+  String get bgDim => 'Atenuar';
+
+  @override
+  String get bgBlur => 'Desenfoque';
+
+  @override
+  String get bgChoosePhoto => 'Elegir foto';
+
+  @override
+  String get bgReset => 'Volver al fondo del tema';
+
+  @override
+  String get bgHint =>
+      'Las tarjetas son de cristal esmerilado encima. Sube Atenuar si cuesta leer el texto.';
+
+  @override
+  String get bgPreviewTitle => 'Vista previa';
+
+  @override
+  String get bgPreviewBody => 'Así se ve el texto en una tarjeta de cristal.';
+
+  @override
+  String get bgPhotoNotBackedUp =>
+      'La foto se queda en este teléfono y no se incluye en las copias de seguridad.';
+
+  @override
+  String get bgPhotoFailed => 'No se pudo usar esa foto. Prueba con otra.';
 }

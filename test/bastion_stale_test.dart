@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
+import 'support/shell_nav.dart';
 
 void main() {
   final now = DateTime.utc(2026, 11, 18, 12);
@@ -140,7 +141,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(const BastionApp());
-    await tester.tap(find.byIcon(Icons.settings_outlined).last);
+    await openSettings(tester);
     await tester.pumpAndSettle();
     final field = find.byKey(const ValueKey('settings-stale-after'));
     await tester.scrollUntilVisible(
@@ -154,6 +155,8 @@ void main() {
       findsOneWidget,
       reason: 'default',
     );
+    await tester.ensureVisible(field);
+    await tester.pumpAndSettle();
     await tester.tap(field);
     await tester.pumpAndSettle();
     await tester.tap(find.text('6 hours').last);

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bastion/main.dart';
+import 'support/shell_nav.dart';
 
 void main() {
-  testWidgets('NOTORYX Connect exposes six functional field tabs', (tester) async {
+  testWidgets('NOTORYX Connect has five tabs, with Tools and Settings under More', (tester) async {
     await tester.pumpWidget(const BastionApp());
     expect(find.text('NOTORYX'), findsOneWidget);
     expect(find.text('CONNECT'), findsOneWidget);
@@ -32,10 +33,11 @@ void main() {
     );
     expect(find.text('Bot mode'), findsOneWidget);
 
-    await tester.tap(find.byIcon(Icons.build_outlined).last);
-    await tester.pumpAndSettle();
+    await openTools(tester);
     expect(find.text('Tools'), findsWidgets);
     expect(find.text('Connection doctor'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Deployment checklist'), 250,
+        scrollable: find.byType(Scrollable).first);
     expect(find.text('Deployment checklist'), findsOneWidget);
     await tester.scrollUntilVisible(find.text('Battery runtime'), 250,
         scrollable: find.byType(Scrollable).first);
@@ -44,8 +46,7 @@ void main() {
         scrollable: find.byType(Scrollable).first);
     expect(find.text('Bluetooth signal guide'), findsOneWidget);
 
-    await tester.tap(find.byIcon(Icons.settings_outlined).last);
-    await tester.pumpAndSettle();
+    await openSettings(tester);
     await tester.scrollUntilVisible(
       find.text('Change radio settings'),
       250,

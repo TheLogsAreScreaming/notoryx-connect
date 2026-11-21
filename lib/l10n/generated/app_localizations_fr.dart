@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6110,8 +6111,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count autres appareils à proximité ne sont pas des radios Meshtastic, ils sont donc masqués.',
-      one:
-          '1 autre appareil à proximité n\'est pas une radio Meshtastic, il est donc masqué.',
+      one: '1 autre appareil à proximité n\'est pas une radio Meshtastic, il est donc masqué.',
     );
     return '$_temp0';
   }
@@ -6618,4 +6618,66 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get searchRemembered => 'Mémorisé';
+
+  @override
+  String get tabMore => 'Plus';
+
+  @override
+  String get bgTitle => 'Arrière-plan';
+
+  @override
+  String get bgKindTheme => 'Halo du thème';
+
+  @override
+  String get bgKindSolid => 'Couleur';
+
+  @override
+  String get bgKindLinear => 'Dégradé';
+
+  @override
+  String get bgKindMesh => 'Fondu maillé';
+
+  @override
+  String get bgKindPhoto => 'Photo';
+
+  @override
+  String get bgColor1 => 'Première couleur';
+
+  @override
+  String get bgColor2 => 'Deuxième couleur';
+
+  @override
+  String bgColorN(int index) {
+    return 'Couleur $index';
+  }
+
+  @override
+  String get bgDim => 'Assombrir';
+
+  @override
+  String get bgBlur => 'Flou';
+
+  @override
+  String get bgChoosePhoto => 'Choisir une photo';
+
+  @override
+  String get bgReset => 'Revenir à l\'arrière-plan du thème';
+
+  @override
+  String get bgHint =>
+      'Les cartes en verre dépoli se posent dessus. Augmentez Assombrir si le texte est difficile à lire.';
+
+  @override
+  String get bgPreviewTitle => 'Aperçu';
+
+  @override
+  String get bgPreviewBody => 'Voici le texte sur une carte en verre.';
+
+  @override
+  String get bgPhotoNotBackedUp =>
+      'La photo reste sur ce téléphone et n\'est pas incluse dans les sauvegardes.';
+
+  @override
+  String get bgPhotoFailed =>
+      'Impossible d\'utiliser cette photo. Essayez-en une autre.';
 }

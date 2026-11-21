@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6112,8 +6113,7 @@ class AppLocalizationsDe extends AppLocalizations {
       locale: localeName,
       other:
           '$count weitere Geräte in der Nähe sind keine Meshtastic-Funkgeräte und werden daher ausgeblendet.',
-      one:
-          '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
+      one: '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
     );
     return '$_temp0';
   }
@@ -6619,4 +6619,66 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get searchRemembered => 'Gemerkt';
+
+  @override
+  String get tabMore => 'Mehr';
+
+  @override
+  String get bgTitle => 'Hintergrund';
+
+  @override
+  String get bgKindTheme => 'Themen-Glühen';
+
+  @override
+  String get bgKindSolid => 'Farbe';
+
+  @override
+  String get bgKindLinear => 'Verlauf';
+
+  @override
+  String get bgKindMesh => 'Farbwolken';
+
+  @override
+  String get bgKindPhoto => 'Foto';
+
+  @override
+  String get bgColor1 => 'Erste Farbe';
+
+  @override
+  String get bgColor2 => 'Zweite Farbe';
+
+  @override
+  String bgColorN(int index) {
+    return 'Farbe $index';
+  }
+
+  @override
+  String get bgDim => 'Abdunkeln';
+
+  @override
+  String get bgBlur => 'Unschärfe';
+
+  @override
+  String get bgChoosePhoto => 'Foto auswählen';
+
+  @override
+  String get bgReset => 'Zurück zum Themen-Hintergrund';
+
+  @override
+  String get bgHint =>
+      'Karten liegen als Milchglas darüber. Erhöhe das Abdunkeln, wenn Text schwer lesbar ist.';
+
+  @override
+  String get bgPreviewTitle => 'Vorschau';
+
+  @override
+  String get bgPreviewBody => 'So sieht Text auf einer Glaskarte aus.';
+
+  @override
+  String get bgPhotoNotBackedUp =>
+      'Das Foto bleibt auf diesem Handy und ist nicht in Backups enthalten.';
+
+  @override
+  String get bgPhotoFailed =>
+      'Dieses Foto ließ sich nicht verwenden. Versuch ein anderes.';
 }
