@@ -64,6 +64,14 @@ class _ToolsPageState extends State<_ToolsPage> {
         onTap: () => _open(const FieldGuidePage()),
       )),
       Card(child: ListTile(
+        key: const ValueKey('tools-antenna-hunt'),
+        leading: const Icon(Icons.settings_input_antenna),
+        title: Text(l.ahTitle),
+        subtitle: Text(l.ahToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(AntennaHuntPage(radio: CoordinatorHuntRadio(radio))),
+      )),
+      Card(child: ListTile(
         key: const ValueKey('tools-mesh-activity'),
         leading: const Icon(Icons.query_stats),
         title: Text(l.maTitle),

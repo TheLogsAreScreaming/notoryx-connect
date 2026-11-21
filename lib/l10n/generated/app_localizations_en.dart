@@ -7125,4 +7125,59 @@ class AppLocalizationsEn extends AppLocalizations {
   String maFromTo(String from, String to) {
     return '$from → $to';
   }
+
+  @override
+  String get ahTitle => 'Antenna hunt';
+
+  @override
+  String get ahToolSub =>
+      'Clicks speed up as the signal from one node gets stronger, for aiming an antenna or finding a spot';
+
+  @override
+  String get ahPick => 'Choose a node you hear directly';
+
+  @override
+  String get ahNoneDirect =>
+      'No node heard directly yet. Antenna hunt needs a node your radio hears with no relay in between.';
+
+  @override
+  String get ahStart => 'Start';
+
+  @override
+  String get ahStop => 'Stop';
+
+  @override
+  String get ahSound => 'Clicks and vibration';
+
+  @override
+  String get ahPing => 'Ask it to reply every 30 s';
+
+  @override
+  String get ahPingSub =>
+      'Sends a traceroute each time. It uses airtime, so leave it off on a busy mesh; without it, any packet the node sends still counts.';
+
+  @override
+  String ahWaiting(String name) {
+    return 'Waiting for $name to transmit…';
+  }
+
+  @override
+  String get ahYouHear => 'You hear it';
+
+  @override
+  String get ahTheyHear => 'It hears you';
+
+  @override
+  String get ahBest => 'Best so far';
+
+  @override
+  String ahAgo(int seconds) {
+    return 'Last heard $seconds s ago';
+  }
+
+  @override
+  String get ahLost => 'Not heard for a while: clicks stopped.';
+
+  @override
+  String get ahChange => 'Change node';
 }

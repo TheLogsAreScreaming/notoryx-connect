@@ -1916,5 +1916,21 @@
   "maEveryone": "tout le monde",
   "maHops": "{count, plural, =0{direct} =1{1 saut} other{{count} sauts}}",
   "maViaMqtt": "via MQTT",
-  "maFromTo": "{from} → {to}"
+  "maFromTo": "{from} → {to}",
+  "ahTitle": "Chasse à l’antenne",
+  "ahToolSub": "Les clics accélèrent quand le signal d’un nœud s’améliore, pour orienter une antenne ou trouver un emplacement",
+  "ahPick": "Choisissez un nœud entendu en direct",
+  "ahNoneDirect": "Aucun nœud entendu en direct pour l’instant. Il faut un nœud que votre radio entend sans relais.",
+  "ahStart": "Démarrer",
+  "ahStop": "Arrêter",
+  "ahSound": "Clics et vibrations",
+  "ahPing": "Lui demander de répondre toutes les 30 s",
+  "ahPingSub": "Envoie un traceroute à chaque fois. Cela consomme du temps d’antenne : laissez désactivé sur un maillage chargé ; sans cela, tout paquet du nœud compte.",
+  "ahWaiting": "En attente d’une émission de {name}…",
+  "ahYouHear": "Vous l’entendez",
+  "ahTheyHear": "Il vous entend",
+  "ahBest": "Meilleur jusqu’ici",
+  "ahAgo": "Entendu il y a {seconds} s",
+  "ahLost": "Plus entendu depuis un moment : clics arrêtés.",
+  "ahChange": "Changer de nœud"
 }
