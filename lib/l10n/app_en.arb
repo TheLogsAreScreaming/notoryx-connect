@@ -4738,5 +4738,469 @@
       }
     }
   },
-  "sarneg_decodeA11y": "Decode SARNEG numbers"
+  "sarneg_decodeA11y": "Decode SARNEG numbers",
+  "tabMore": "More",
+  "bgTitle": "Background",
+  "bgKindTheme": "Theme glow",
+  "bgKindSolid": "Color",
+  "bgKindLinear": "Gradient",
+  "bgKindMesh": "Mesh blend",
+  "bgKindPhoto": "Photo",
+  "bgColor1": "First color",
+  "bgColor2": "Second color",
+  "bgColorN": "Color {index}",
+  "@bgColorN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "bgDim": "Dim",
+  "bgBlur": "Blur",
+  "bgChoosePhoto": "Choose photo",
+  "bgReset": "Back to the theme's background",
+  "bgHint": "Cards sit on frosted glass over this. Turn up Dim if text is hard to read.",
+  "bgPreviewTitle": "Preview",
+  "bgPreviewBody": "Text on a glass card looks like this.",
+  "bgPhotoNotBackedUp": "The photo stays on this phone and isn't included in backups.",
+  "bgPhotoFailed": "Couldn't use that photo. Try a different one.",
+  "nlMenu": "Photo or color",
+  "nlTitle": "Look for {name}",
+  "nlHint": "Only on this phone. It's never sent over the mesh.",
+  "nlChoosePhoto": "Choose photo",
+  "nlRemovePhoto": "Remove photo",
+  "nlClear": "Use the default look",
+  "nlColorN": "Color {index}",
+  "nlPhotoFailed": "Couldn't use that photo. Try a different one.",
+  "snsTitle": "Sensors",
+  "snsNone": "No sensor readings from your radio.",
+  "@nlTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@nlColorN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "chatJumpLatest": "Jump to the latest message",
+  "pvSent9": "Requests for web pages linked in chats, only if you turn on Link previews; the linked site sees your IP address",
+  "tlgTitle": "Track log",
+  "tlgToolSub": "Record where you go, export it as GPX, or get a warning when you stray from it",
+  "tlgSources": "Points come from your radio's GPS while it's connected, and from this phone's location while the app is open. Tracks stay on this phone.",
+  "tlgStart": "Start recording",
+  "tlgStop": "Stop recording",
+  "tlgRecording": "Recording",
+  "tlgStats": "{points} points • {distance} • {time}",
+  "tlgSaved": "Saved tracks",
+  "tlgEmpty": "No tracks yet. Start a recording before you head out.",
+  "tlgShowMap": "Show on the map",
+  "tlgOnMap": "Added to the map as a layer.",
+  "tlgMapFailed": "Couldn't add this track to the map.",
+  "tlgExport": "Export GPX",
+  "tlgWatchAt": "Warn me if I stray more than {distance}",
+  "tlgUnwatch": "Stop the stray warning",
+  "tlgWatching": "Watching {name}: warns past {distance}",
+  "tlgWaitingFix": "Waiting for a position.",
+  "tlgOffNow": "You are {distance} from it now.",
+  "tlgDelete": "Delete",
+  "tlgDeleteQ": "Delete this track?",
+  "tlgDefaultName": "Track {date}",
+  "tlgPhoneLocationOff": "Phone location is off ({reason}). The radio's GPS can still record.",
+  "tlgOffTitle": "Off your route",
+  "tlgOffBody": "You are {distance} from {name}.",
+  "@tlgStats": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      },
+      "distance": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgWatchAt": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgWatching": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgOffNow": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgDefaultName": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgPhoneLocationOff": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgOffBody": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gdTitle": "Field guide",
+  "gdToolSub": "Mesh basics, batteries in the cold, solar and antennas",
+  "gdSecMesh": "Getting on the mesh",
+  "gdMesh1": "Your phone talks to your radio over Bluetooth, USB or Wi-Fi; the radio talks to the mesh over LoRa. Messages still work with no phone signal.",
+  "gdMesh2": "Every radio that hears a message can pass it on. Each pass is a hop, and the hop limit (3 by default) sets how far a message spreads.",
+  "gdMesh3": "Leave your role as Client unless your radio sits somewhere high and is always on. Too many routers make the mesh worse, not better.",
+  "gdMesh4": "Keep messages short and avoid flooding busy channels: every message uses shared airtime.",
+  "gdSecCold": "Batteries in the cold",
+  "gdCold1": "Don’t charge lithium batteries below freezing (0 °C / 32 °F): it damages them permanently.",
+  "gdCold2": "Carry the radio inside your jacket. Cold cuts capacity, but it comes back once the battery warms up.",
+  "gdCold3": "For fixed sites in cold climates, LiFePO4 copes better than lithium-ion; a heated or insulated box helps either.",
+  "gdSecSolar": "Solar for fixed nodes",
+  "gdSolar1": "A node uses little power, but size the panel and battery for your darkest winter week, not a summer day.",
+  "gdSolar2": "Face the panel toward the equator and tilt it steeply in winter; keep snow and shade off it.",
+  "gdSecAntenna": "Antennas and placement",
+  "gdAnt1": "Height beats power: a radio a few meters up reaches far more than one on a desk.",
+  "gdAnt2": "Keep the antenna vertical and clear of metal, and use one made for your band (for example 915 MHz in the US, 868 MHz in Europe). Never transmit without one.",
+  "gdSecMore": "Learn more",
+  "gdMore": "Meshtastic documentation: meshtastic.org/docs",
+  "tgSection": "Something else wrong?",
+  "tgNoDelivery": "Messages aren’t delivered",
+  "tgHearNobody": "I don’t hear anyone",
+  "tgStartHere": "Start here",
+  "tgOk": "OK",
+  "tgProblem": "Problem",
+  "tgUnchecked": "Can’t check",
+  "tgAllOk": "Every check passed. If it still doesn’t work, the steps below are worth a look.",
+  "tgConnected": "Your radio is connected",
+  "tgConnectedAdvice": "Connect your radio first: Nodes → Scan for radios.",
+  "tgHeardRecently": "The people you message were heard in the last day",
+  "tgHeardRecentlyAdvice": "Someone not heard in a while may be out of range or switched off. A direct message can’t be acknowledged until they’re back.",
+  "tgNeighbours": "Your radio hears other nodes",
+  "tgNeighboursAdvice": "Nothing heard in the last hour means your radio can’t reach the mesh from here. Raise the antenna, go higher, or move closer to other nodes.",
+  "tgBusy": "The channel isn’t too busy",
+  "tgBusyAdvice": "Above 40% channel use, messages collide and get lost. Send less, and check nobody nearby is flooding the mesh.",
+  "tgSameChannel": "You share a channel with the people you message",
+  "tgSameChannelAdvice": "Channel messages only reach radios with the same channel name and key. Share the channel’s QR code to be sure.",
+  "tgHops": "Your hop limit reaches them",
+  "tgHopsAdvice": "Each relay uses one hop. If they’re far away, raise the hop limit in Radio settings → LoRa; more than 3 is rarely needed.",
+  "tgRegion": "Your radio has a region set",
+  "tgRegionAdvice": "A radio with no region set can’t transmit. Choose your country’s region in Radio settings → LoRa.",
+  "tgPreset": "Your radio uses the same preset as the local mesh",
+  "tgPresetAdvice": "Radios on a different modem preset or frequency slot hear no one. Long Fast is the default; ask your local mesh what they use.",
+  "tgAntenna": "The antenna is fitted",
+  "tgAntennaAdvice": "Make sure the antenna is screwed on firmly. Never transmit without one; it can damage the radio.",
+  "bwTitle": "Battery watch",
+  "bwToolSub": "Every node that reports its battery, the most worrying first",
+  "bwEmpty": "No node has reported its battery yet.",
+  "bwPlugged": "On external power",
+  "bwSteady": "Steady",
+  "bwNoTrend": "Not enough readings yet for a trend",
+  "bwRising": "Rising about {rate}% a day",
+  "bwDropping": "Dropping about {rate}% a day",
+  "bwDaysLeft": "{days, plural, =1{about 1 day left} other{about {days} days left}}",
+  "bwUnderDay": "less than a day left",
+  "bwPluggedShort": "Plugged in",
+  "svcFavBack": "{name} is back",
+  "svcFavBackBody": "Heard again after {time} of silence.",
+  "setFavBack": "Favorite is back",
+  "setFavBackSub": "When a favorite is heard again after {time} or more of silence",
+  "setBackAfter": "Back after at least",
+  "@bwRising": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "@bwDropping": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "@bwDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "@svcFavBack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@svcFavBackBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@setFavBackSub": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "lnkPrevTitle": "Link previews",
+  "lnkPrevSub": "Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.",
+  "teamTitle": "Team setup",
+  "teamToolSub": "Channels, radio settings and trip contacts in one QR code",
+  "teamIntro": "Everything a teammate needs in one scan: your channels and their keys, the radio settings, and your trip contacts, including you.",
+  "teamChannels": "Channels",
+  "teamContacts": "{count, plural, =1{1 trip contact} other{{count} trip contacts}}",
+  "@teamContacts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "teamHowTo": "On the other phone: More → Settings → Channels → Join with QR code or link, then scan this code.",
+  "teamAddContacts": "Add them as trip contacts",
+  "teamAddContactsSub": "{count, plural, =0{They are already your trip contacts.} =1{Adds 1 new contact to your trip.} other{Adds {count} new contacts to your trip.}}",
+  "@teamAddContactsSub": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "teamAdded": "{count, plural, =1{1 trip contact added.} other{{count} trip contacts added.}}",
+  "@teamAdded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "teamShareButton": "Share team setup",
+  "maTitle": "Mesh activity",
+  "maToolSub": "Field stats, network changes and a live packet log",
+  "maTabStats": "Stats",
+  "maTabChanges": "Changes",
+  "maTabPackets": "Packets",
+  "maRealOnly": "Recorded from your radio while it’s connected. The demo radio isn’t recorded.",
+  "maLastHour": "Last hour",
+  "maPackets": "Packets heard",
+  "maSenders": "Nodes heard",
+  "maDirect": "Heard directly",
+  "maAvgHops": "Average hops",
+  "maSnrRange": "Signal (SNR)",
+  "maMqtt": "Through the internet (MQTT)",
+  "maByKind": "By type",
+  "maBusiest": "Heard most",
+  "maNothing": "Nothing heard yet. Connect your radio and leave this open for a while.",
+  "maNoChanges": "No changes yet. Nodes appearing, going quiet, coming back or being renamed show here.",
+  "maAppeared": "{name} appeared",
+  "maQuiet": "{name} went quiet",
+  "maBack": "{name} is back",
+  "maRenamed": "{old} is now {name}",
+  "maClear": "Clear changes",
+  "maEveryone": "everyone",
+  "maHops": "{count, plural, =0{direct} =1{1 hop} other{{count} hops}}",
+  "maViaMqtt": "via MQTT",
+  "maFromTo": "{from} → {to}",
+  "@maAppeared": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@maQuiet": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@maBack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@maRenamed": {
+    "placeholders": {
+      "old": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@maHops": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@maFromTo": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "ahTitle": "Antenna hunt",
+  "ahToolSub": "Clicks speed up as the signal from one node gets stronger, for aiming an antenna or finding a spot",
+  "ahPick": "Choose a node you hear directly",
+  "ahNoneDirect": "No node heard directly yet. Antenna hunt needs a node your radio hears with no relay in between.",
+  "ahStart": "Start",
+  "ahStop": "Stop",
+  "ahSound": "Clicks and vibration",
+  "ahPing": "Ask it to reply every 30 s",
+  "ahPingSub": "Sends a traceroute each time. It uses airtime, so leave it off on a busy mesh; without it, any packet the node sends still counts.",
+  "ahWaiting": "Waiting for {name} to transmit…",
+  "ahYouHear": "You hear it",
+  "ahTheyHear": "It hears you",
+  "ahBest": "Best so far",
+  "ahAgo": "Last heard {seconds} s ago",
+  "ahLost": "Not heard for a while: clicks stopped.",
+  "ahChange": "Change node",
+  "@ahWaiting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@ahAgo": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "srTitle": "Relay SOS the mesh can’t carry",
+  "srSub": "When a NOTORYX SOS on a channel reaches you with no hops left, or your radio is set not to rebroadcast, pass it on once from your radio. Uses airtime; off by default.",
+  "srCount": "{count, plural, =1{Relayed 1 SOS so far.} other{Relayed {count} SOS so far.}}",
+  "srRelayedTitle": "You passed on an SOS",
+  "srRelayedBody": "Your radio relayed the SOS from {name} on the same channel.",
+  "@srCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@srRelayedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "trlTitle": "Trail routing",
+  "trlToolSub": "Plan walking routes with no signal, over trails you download beforehand",
+  "trlIntro": "Download the trails around you while you have signal. Later, plan walking routes along them anywhere in that area, with no signal at all.",
+  "trlPlanSection": "Plan a route from where you are",
+  "trlTo": "To: a peak, hut, trailhead or saved waypoint",
+  "trlNoAreas": "Download an area first, below.",
+  "trlAreasSection": "Downloaded areas",
+  "trlDownloadHint": "Trails and named places come from OpenStreetMap. Downloading sends the area’s bounds to the Overpass service, which sees your IP address.",
+  "trlWithin": "Within {distance}",
+  "trlDownload": "Download trails around me",
+  "trlSaved": "Area saved. It works with no signal now.",
+  "trlAreaName": "Trails near me, {date}",
+  "trlNoPosition": "No position yet. Connect a radio with GPS, or allow this phone’s location.",
+  "trlTooLarge": "That area is too large to download at once.",
+  "trlFull": "Not enough room: delete an area first.",
+  "trlNoTrails": "No trails or named places found there.",
+  "trlFailed": "Couldn’t download. Check the internet connection and try again.",
+  "trlNoArea": "You and that place aren’t in the same downloaded area.",
+  "trlStartFar": "You’re more than 500 m from any downloaded trail.",
+  "trlEndFar": "That place is more than 500 m from any downloaded trail.",
+  "trlNotConnected": "No trail connects you to that place in this area.",
+  "trlDamaged": "This area’s trail data is damaged. Delete it and download it again.",
+  "trlRouteTo": "Route to {name}",
+  "trlRouteStats": "{distance} • about {time} at an easy pace",
+  "trlNoClimb": "The time doesn’t include climbing; allow more in hills.",
+  "trlKindPeak": "Peak",
+  "trlKindPass": "Pass",
+  "trlKindSpring": "Spring",
+  "trlKindHut": "Hut",
+  "trlKindCampsite": "Campsite",
+  "trlKindViewpoint": "Viewpoint",
+  "trlKindShelter": "Shelter",
+  "trlKindTrailhead": "Trailhead",
+  "trlKindTown": "Town",
+  "trlKindLocality": "Place",
+  "trlKindWaypoint": "Saved waypoint",
+  "pvSent10": "The bounds of an area to OpenStreetMap’s Overpass service, only when you download trails; it sees your IP address",
+  "@trlWithin": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "@trlAreaName": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@trlRouteTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@trlRouteStats": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -138,8 +138,13 @@ void main() {
     await tester.scrollUntilVisible(find.text('Sent off this phone'), 200, scrollable: find.byType(Scrollable).first);
     expect(find.text('Sent off this phone'), findsOneWidget);
     await tester.scrollUntilVisible(find.text('Delete all phone data'), 200, scrollable: find.byType(Scrollable).first);
+    await tester.ensureVisible(find.text('Delete all phone data'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Delete all phone data'));
     await tester.pumpAndSettle();
+    // The answer appears under the buttons, at the end of the page.
+    await tester.scrollUntilVisible(find.text('Disconnect the radio before deleting phone data.'), 200,
+        scrollable: find.byType(Scrollable).first);
     expect(find.text('Disconnect the radio before deleting phone data.'), findsOneWidget);
     expect(await prefs.getBool('bastion.low_power_mode'), isTrue);
   });

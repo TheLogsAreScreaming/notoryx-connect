@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
+import 'support/shell_nav.dart';
 
 void main() {
   setUp(() {
@@ -17,7 +18,7 @@ void main() {
         const MethodChannel('plugins.flutter.io/path_provider'), (_) async => cache.path);
   });
 
-  const tabs = ['Nodes', 'Tools', 'Settings'];
+  const tabs = ['Chats', 'Nodes', 'More'];
 
   testWidgets('every tap target on the main tabs is big enough and named', (tester) async {
     final handle = tester.ensureSemantics();
@@ -35,6 +36,9 @@ void main() {
       await expectLater(tester, meetsGuideline(androidTapTargetGuideline), reason: label);
       await expectLater(tester, meetsGuideline(labeledTapTargetGuideline), reason: label);
     }
+    await openSettings(tester);
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline), reason: 'Settings');
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline), reason: 'Settings');
     handle.dispose();
   });
 

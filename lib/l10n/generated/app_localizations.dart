@@ -11058,6 +11058,1278 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Decode SARNEG numbers'**
   String get sarneg_decodeA11y;
+
+  /// No description provided for @tabMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get tabMore;
+
+  /// No description provided for @bgTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get bgTitle;
+
+  /// No description provided for @bgKindTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme glow'**
+  String get bgKindTheme;
+
+  /// No description provided for @bgKindSolid.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get bgKindSolid;
+
+  /// No description provided for @bgKindLinear.
+  ///
+  /// In en, this message translates to:
+  /// **'Gradient'**
+  String get bgKindLinear;
+
+  /// No description provided for @bgKindMesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh blend'**
+  String get bgKindMesh;
+
+  /// No description provided for @bgKindPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get bgKindPhoto;
+
+  /// No description provided for @bgColor1.
+  ///
+  /// In en, this message translates to:
+  /// **'First color'**
+  String get bgColor1;
+
+  /// No description provided for @bgColor2.
+  ///
+  /// In en, this message translates to:
+  /// **'Second color'**
+  String get bgColor2;
+
+  /// No description provided for @bgColorN.
+  ///
+  /// In en, this message translates to:
+  /// **'Color {index}'**
+  String bgColorN(int index);
+
+  /// No description provided for @bgDim.
+  ///
+  /// In en, this message translates to:
+  /// **'Dim'**
+  String get bgDim;
+
+  /// No description provided for @bgBlur.
+  ///
+  /// In en, this message translates to:
+  /// **'Blur'**
+  String get bgBlur;
+
+  /// No description provided for @bgChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get bgChoosePhoto;
+
+  /// No description provided for @bgReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the theme\'s background'**
+  String get bgReset;
+
+  /// No description provided for @bgHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards sit on frosted glass over this. Turn up Dim if text is hard to read.'**
+  String get bgHint;
+
+  /// No description provided for @bgPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get bgPreviewTitle;
+
+  /// No description provided for @bgPreviewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Text on a glass card looks like this.'**
+  String get bgPreviewBody;
+
+  /// No description provided for @bgPhotoNotBackedUp.
+  ///
+  /// In en, this message translates to:
+  /// **'The photo stays on this phone and isn\'t included in backups.'**
+  String get bgPhotoNotBackedUp;
+
+  /// No description provided for @bgPhotoFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t use that photo. Try a different one.'**
+  String get bgPhotoFailed;
+
+  /// No description provided for @nlMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo or color'**
+  String get nlMenu;
+
+  /// No description provided for @nlTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Look for {name}'**
+  String nlTitle(String name);
+
+  /// No description provided for @nlHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Only on this phone. It\'s never sent over the mesh.'**
+  String get nlHint;
+
+  /// No description provided for @nlChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get nlChoosePhoto;
+
+  /// No description provided for @nlRemovePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get nlRemovePhoto;
+
+  /// No description provided for @nlClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the default look'**
+  String get nlClear;
+
+  /// No description provided for @nlColorN.
+  ///
+  /// In en, this message translates to:
+  /// **'Color {index}'**
+  String nlColorN(int index);
+
+  /// No description provided for @nlPhotoFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t use that photo. Try a different one.'**
+  String get nlPhotoFailed;
+
+  /// No description provided for @snsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sensors'**
+  String get snsTitle;
+
+  /// No description provided for @snsNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No sensor readings from your radio.'**
+  String get snsNone;
+
+  /// No description provided for @chatJumpLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'Jump to the latest message'**
+  String get chatJumpLatest;
+
+  /// No description provided for @pvSent9.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests for web pages linked in chats, only if you turn on Link previews; the linked site sees your IP address'**
+  String get pvSent9;
+
+  /// No description provided for @tlgTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track log'**
+  String get tlgTitle;
+
+  /// No description provided for @tlgToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Record where you go, export it as GPX, or get a warning when you stray from it'**
+  String get tlgToolSub;
+
+  /// No description provided for @tlgSources.
+  ///
+  /// In en, this message translates to:
+  /// **'Points come from your radio\'s GPS while it\'s connected, and from this phone\'s location while the app is open. Tracks stay on this phone.'**
+  String get tlgSources;
+
+  /// No description provided for @tlgStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start recording'**
+  String get tlgStart;
+
+  /// No description provided for @tlgStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop recording'**
+  String get tlgStop;
+
+  /// No description provided for @tlgRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording'**
+  String get tlgRecording;
+
+  /// No description provided for @tlgStats.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} points • {distance} • {time}'**
+  String tlgStats(int points, String distance, String time);
+
+  /// No description provided for @tlgSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved tracks'**
+  String get tlgSaved;
+
+  /// No description provided for @tlgEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No tracks yet. Start a recording before you head out.'**
+  String get tlgEmpty;
+
+  /// No description provided for @tlgShowMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Show on the map'**
+  String get tlgShowMap;
+
+  /// No description provided for @tlgOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to the map as a layer.'**
+  String get tlgOnMap;
+
+  /// No description provided for @tlgMapFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t add this track to the map.'**
+  String get tlgMapFailed;
+
+  /// No description provided for @tlgExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export GPX'**
+  String get tlgExport;
+
+  /// No description provided for @tlgWatchAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Warn me if I stray more than {distance}'**
+  String tlgWatchAt(String distance);
+
+  /// No description provided for @tlgUnwatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop the stray warning'**
+  String get tlgUnwatch;
+
+  /// No description provided for @tlgWatching.
+  ///
+  /// In en, this message translates to:
+  /// **'Watching {name}: warns past {distance}'**
+  String tlgWatching(String name, String distance);
+
+  /// No description provided for @tlgWaitingFix.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a position.'**
+  String get tlgWaitingFix;
+
+  /// No description provided for @tlgOffNow.
+  ///
+  /// In en, this message translates to:
+  /// **'You are {distance} from it now.'**
+  String tlgOffNow(String distance);
+
+  /// No description provided for @tlgDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get tlgDelete;
+
+  /// No description provided for @tlgDeleteQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this track?'**
+  String get tlgDeleteQ;
+
+  /// No description provided for @tlgDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'Track {date}'**
+  String tlgDefaultName(String date);
+
+  /// No description provided for @tlgPhoneLocationOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone location is off ({reason}). The radio\'s GPS can still record.'**
+  String tlgPhoneLocationOff(String reason);
+
+  /// No description provided for @tlgOffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Off your route'**
+  String get tlgOffTitle;
+
+  /// No description provided for @tlgOffBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You are {distance} from {name}.'**
+  String tlgOffBody(String distance, String name);
+
+  /// No description provided for @gdTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Field guide'**
+  String get gdTitle;
+
+  /// No description provided for @gdToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh basics, batteries in the cold, solar and antennas'**
+  String get gdToolSub;
+
+  /// No description provided for @gdSecMesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting on the mesh'**
+  String get gdSecMesh;
+
+  /// No description provided for @gdMesh1.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone talks to your radio over Bluetooth, USB or Wi-Fi; the radio talks to the mesh over LoRa. Messages still work with no phone signal.'**
+  String get gdMesh1;
+
+  /// No description provided for @gdMesh2.
+  ///
+  /// In en, this message translates to:
+  /// **'Every radio that hears a message can pass it on. Each pass is a hop, and the hop limit (3 by default) sets how far a message spreads.'**
+  String get gdMesh2;
+
+  /// No description provided for @gdMesh3.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave your role as Client unless your radio sits somewhere high and is always on. Too many routers make the mesh worse, not better.'**
+  String get gdMesh3;
+
+  /// No description provided for @gdMesh4.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep messages short and avoid flooding busy channels: every message uses shared airtime.'**
+  String get gdMesh4;
+
+  /// No description provided for @gdSecCold.
+  ///
+  /// In en, this message translates to:
+  /// **'Batteries in the cold'**
+  String get gdSecCold;
+
+  /// No description provided for @gdCold1.
+  ///
+  /// In en, this message translates to:
+  /// **'Don’t charge lithium batteries below freezing (0 °C / 32 °F): it damages them permanently.'**
+  String get gdCold1;
+
+  /// No description provided for @gdCold2.
+  ///
+  /// In en, this message translates to:
+  /// **'Carry the radio inside your jacket. Cold cuts capacity, but it comes back once the battery warms up.'**
+  String get gdCold2;
+
+  /// No description provided for @gdCold3.
+  ///
+  /// In en, this message translates to:
+  /// **'For fixed sites in cold climates, LiFePO4 copes better than lithium-ion; a heated or insulated box helps either.'**
+  String get gdCold3;
+
+  /// No description provided for @gdSecSolar.
+  ///
+  /// In en, this message translates to:
+  /// **'Solar for fixed nodes'**
+  String get gdSecSolar;
+
+  /// No description provided for @gdSolar1.
+  ///
+  /// In en, this message translates to:
+  /// **'A node uses little power, but size the panel and battery for your darkest winter week, not a summer day.'**
+  String get gdSolar1;
+
+  /// No description provided for @gdSolar2.
+  ///
+  /// In en, this message translates to:
+  /// **'Face the panel toward the equator and tilt it steeply in winter; keep snow and shade off it.'**
+  String get gdSolar2;
+
+  /// No description provided for @gdSecAntenna.
+  ///
+  /// In en, this message translates to:
+  /// **'Antennas and placement'**
+  String get gdSecAntenna;
+
+  /// No description provided for @gdAnt1.
+  ///
+  /// In en, this message translates to:
+  /// **'Height beats power: a radio a few meters up reaches far more than one on a desk.'**
+  String get gdAnt1;
+
+  /// No description provided for @gdAnt2.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the antenna vertical and clear of metal, and use one made for your band (for example 915 MHz in the US, 868 MHz in Europe). Never transmit without one.'**
+  String get gdAnt2;
+
+  /// No description provided for @gdSecMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn more'**
+  String get gdSecMore;
+
+  /// No description provided for @gdMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Meshtastic documentation: meshtastic.org/docs'**
+  String get gdMore;
+
+  /// No description provided for @tgSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Something else wrong?'**
+  String get tgSection;
+
+  /// No description provided for @tgNoDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages aren’t delivered'**
+  String get tgNoDelivery;
+
+  /// No description provided for @tgHearNobody.
+  ///
+  /// In en, this message translates to:
+  /// **'I don’t hear anyone'**
+  String get tgHearNobody;
+
+  /// No description provided for @tgStartHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Start here'**
+  String get tgStartHere;
+
+  /// No description provided for @tgOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get tgOk;
+
+  /// No description provided for @tgProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem'**
+  String get tgProblem;
+
+  /// No description provided for @tgUnchecked.
+  ///
+  /// In en, this message translates to:
+  /// **'Can’t check'**
+  String get tgUnchecked;
+
+  /// No description provided for @tgAllOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Every check passed. If it still doesn’t work, the steps below are worth a look.'**
+  String get tgAllOk;
+
+  /// No description provided for @tgConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio is connected'**
+  String get tgConnected;
+
+  /// No description provided for @tgConnectedAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your radio first: Nodes → Scan for radios.'**
+  String get tgConnectedAdvice;
+
+  /// No description provided for @tgHeardRecently.
+  ///
+  /// In en, this message translates to:
+  /// **'The people you message were heard in the last day'**
+  String get tgHeardRecently;
+
+  /// No description provided for @tgHeardRecentlyAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone not heard in a while may be out of range or switched off. A direct message can’t be acknowledged until they’re back.'**
+  String get tgHeardRecentlyAdvice;
+
+  /// No description provided for @tgNeighbours.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio hears other nodes'**
+  String get tgNeighbours;
+
+  /// No description provided for @tgNeighboursAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing heard in the last hour means your radio can’t reach the mesh from here. Raise the antenna, go higher, or move closer to other nodes.'**
+  String get tgNeighboursAdvice;
+
+  /// No description provided for @tgBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'The channel isn’t too busy'**
+  String get tgBusy;
+
+  /// No description provided for @tgBusyAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Above 40% channel use, messages collide and get lost. Send less, and check nobody nearby is flooding the mesh.'**
+  String get tgBusyAdvice;
+
+  /// No description provided for @tgSameChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'You share a channel with the people you message'**
+  String get tgSameChannel;
+
+  /// No description provided for @tgSameChannelAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel messages only reach radios with the same channel name and key. Share the channel’s QR code to be sure.'**
+  String get tgSameChannelAdvice;
+
+  /// No description provided for @tgHops.
+  ///
+  /// In en, this message translates to:
+  /// **'Your hop limit reaches them'**
+  String get tgHops;
+
+  /// No description provided for @tgHopsAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Each relay uses one hop. If they’re far away, raise the hop limit in Radio settings → LoRa; more than 3 is rarely needed.'**
+  String get tgHopsAdvice;
+
+  /// No description provided for @tgRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio has a region set'**
+  String get tgRegion;
+
+  /// No description provided for @tgRegionAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'A radio with no region set can’t transmit. Choose your country’s region in Radio settings → LoRa.'**
+  String get tgRegionAdvice;
+
+  /// No description provided for @tgPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio uses the same preset as the local mesh'**
+  String get tgPreset;
+
+  /// No description provided for @tgPresetAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Radios on a different modem preset or frequency slot hear no one. Long Fast is the default; ask your local mesh what they use.'**
+  String get tgPresetAdvice;
+
+  /// No description provided for @tgAntenna.
+  ///
+  /// In en, this message translates to:
+  /// **'The antenna is fitted'**
+  String get tgAntenna;
+
+  /// No description provided for @tgAntennaAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Make sure the antenna is screwed on firmly. Never transmit without one; it can damage the radio.'**
+  String get tgAntennaAdvice;
+
+  /// No description provided for @bwTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery watch'**
+  String get bwTitle;
+
+  /// No description provided for @bwToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Every node that reports its battery, the most worrying first'**
+  String get bwToolSub;
+
+  /// No description provided for @bwEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No node has reported its battery yet.'**
+  String get bwEmpty;
+
+  /// No description provided for @bwPlugged.
+  ///
+  /// In en, this message translates to:
+  /// **'On external power'**
+  String get bwPlugged;
+
+  /// No description provided for @bwSteady.
+  ///
+  /// In en, this message translates to:
+  /// **'Steady'**
+  String get bwSteady;
+
+  /// No description provided for @bwNoTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough readings yet for a trend'**
+  String get bwNoTrend;
+
+  /// No description provided for @bwRising.
+  ///
+  /// In en, this message translates to:
+  /// **'Rising about {rate}% a day'**
+  String bwRising(String rate);
+
+  /// No description provided for @bwDropping.
+  ///
+  /// In en, this message translates to:
+  /// **'Dropping about {rate}% a day'**
+  String bwDropping(String rate);
+
+  /// No description provided for @bwDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{about 1 day left} other{about {days} days left}}'**
+  String bwDaysLeft(int days);
+
+  /// No description provided for @bwUnderDay.
+  ///
+  /// In en, this message translates to:
+  /// **'less than a day left'**
+  String get bwUnderDay;
+
+  /// No description provided for @bwPluggedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Plugged in'**
+  String get bwPluggedShort;
+
+  /// No description provided for @svcFavBack.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is back'**
+  String svcFavBack(String name);
+
+  /// No description provided for @svcFavBackBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard again after {time} of silence.'**
+  String svcFavBackBody(String time);
+
+  /// No description provided for @setFavBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite is back'**
+  String get setFavBack;
+
+  /// No description provided for @setFavBackSub.
+  ///
+  /// In en, this message translates to:
+  /// **'When a favorite is heard again after {time} or more of silence'**
+  String setFavBackSub(String time);
+
+  /// No description provided for @setBackAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Back after at least'**
+  String get setBackAfter;
+
+  /// No description provided for @lnkPrevTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Link previews'**
+  String get lnkPrevTitle;
+
+  /// No description provided for @lnkPrevSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.'**
+  String get lnkPrevSub;
+
+  /// No description provided for @teamTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Team setup'**
+  String get teamTitle;
+
+  /// No description provided for @teamToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels, radio settings and trip contacts in one QR code'**
+  String get teamToolSub;
+
+  /// No description provided for @teamIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything a teammate needs in one scan: your channels and their keys, the radio settings, and your trip contacts, including you.'**
+  String get teamIntro;
+
+  /// No description provided for @teamChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get teamChannels;
+
+  /// No description provided for @teamContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 trip contact} other{{count} trip contacts}}'**
+  String teamContacts(int count);
+
+  /// No description provided for @teamHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'On the other phone: More → Settings → Channels → Join with QR code or link, then scan this code.'**
+  String get teamHowTo;
+
+  /// No description provided for @teamAddContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Add them as trip contacts'**
+  String get teamAddContacts;
+
+  /// No description provided for @teamAddContactsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{They are already your trip contacts.} =1{Adds 1 new contact to your trip.} other{Adds {count} new contacts to your trip.}}'**
+  String teamAddContactsSub(int count);
+
+  /// No description provided for @teamAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 trip contact added.} other{{count} trip contacts added.}}'**
+  String teamAdded(int count);
+
+  /// No description provided for @teamShareButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Share team setup'**
+  String get teamShareButton;
+
+  /// No description provided for @maTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh activity'**
+  String get maTitle;
+
+  /// No description provided for @maToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Field stats, network changes and a live packet log'**
+  String get maToolSub;
+
+  /// No description provided for @maTabStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Stats'**
+  String get maTabStats;
+
+  /// No description provided for @maTabChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes'**
+  String get maTabChanges;
+
+  /// No description provided for @maTabPackets.
+  ///
+  /// In en, this message translates to:
+  /// **'Packets'**
+  String get maTabPackets;
+
+  /// No description provided for @maRealOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded from your radio while it’s connected. The demo radio isn’t recorded.'**
+  String get maRealOnly;
+
+  /// No description provided for @maLastHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Last hour'**
+  String get maLastHour;
+
+  /// No description provided for @maPackets.
+  ///
+  /// In en, this message translates to:
+  /// **'Packets heard'**
+  String get maPackets;
+
+  /// No description provided for @maSenders.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes heard'**
+  String get maSenders;
+
+  /// No description provided for @maDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard directly'**
+  String get maDirect;
+
+  /// No description provided for @maAvgHops.
+  ///
+  /// In en, this message translates to:
+  /// **'Average hops'**
+  String get maAvgHops;
+
+  /// No description provided for @maSnrRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal (SNR)'**
+  String get maSnrRange;
+
+  /// No description provided for @maMqtt.
+  ///
+  /// In en, this message translates to:
+  /// **'Through the internet (MQTT)'**
+  String get maMqtt;
+
+  /// No description provided for @maByKind.
+  ///
+  /// In en, this message translates to:
+  /// **'By type'**
+  String get maByKind;
+
+  /// No description provided for @maBusiest.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard most'**
+  String get maBusiest;
+
+  /// No description provided for @maNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing heard yet. Connect your radio and leave this open for a while.'**
+  String get maNothing;
+
+  /// No description provided for @maNoChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'No changes yet. Nodes appearing, going quiet, coming back or being renamed show here.'**
+  String get maNoChanges;
+
+  /// No description provided for @maAppeared.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} appeared'**
+  String maAppeared(String name);
+
+  /// No description provided for @maQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} went quiet'**
+  String maQuiet(String name);
+
+  /// No description provided for @maBack.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is back'**
+  String maBack(String name);
+
+  /// No description provided for @maRenamed.
+  ///
+  /// In en, this message translates to:
+  /// **'{old} is now {name}'**
+  String maRenamed(String old, String name);
+
+  /// No description provided for @maClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear changes'**
+  String get maClear;
+
+  /// No description provided for @maEveryone.
+  ///
+  /// In en, this message translates to:
+  /// **'everyone'**
+  String get maEveryone;
+
+  /// No description provided for @maHops.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{direct} =1{1 hop} other{{count} hops}}'**
+  String maHops(int count);
+
+  /// No description provided for @maViaMqtt.
+  ///
+  /// In en, this message translates to:
+  /// **'via MQTT'**
+  String get maViaMqtt;
+
+  /// No description provided for @maFromTo.
+  ///
+  /// In en, this message translates to:
+  /// **'{from} → {to}'**
+  String maFromTo(String from, String to);
+
+  /// No description provided for @ahTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Antenna hunt'**
+  String get ahTitle;
+
+  /// No description provided for @ahToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Clicks speed up as the signal from one node gets stronger, for aiming an antenna or finding a spot'**
+  String get ahToolSub;
+
+  /// No description provided for @ahPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a node you hear directly'**
+  String get ahPick;
+
+  /// No description provided for @ahNoneDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'No node heard directly yet. Antenna hunt needs a node your radio hears with no relay in between.'**
+  String get ahNoneDirect;
+
+  /// No description provided for @ahStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get ahStart;
+
+  /// No description provided for @ahStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get ahStop;
+
+  /// No description provided for @ahSound.
+  ///
+  /// In en, this message translates to:
+  /// **'Clicks and vibration'**
+  String get ahSound;
+
+  /// No description provided for @ahPing.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask it to reply every 30 s'**
+  String get ahPing;
+
+  /// No description provided for @ahPingSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends a traceroute each time. It uses airtime, so leave it off on a busy mesh; without it, any packet the node sends still counts.'**
+  String get ahPingSub;
+
+  /// No description provided for @ahWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name} to transmit…'**
+  String ahWaiting(String name);
+
+  /// No description provided for @ahYouHear.
+  ///
+  /// In en, this message translates to:
+  /// **'You hear it'**
+  String get ahYouHear;
+
+  /// No description provided for @ahTheyHear.
+  ///
+  /// In en, this message translates to:
+  /// **'It hears you'**
+  String get ahTheyHear;
+
+  /// No description provided for @ahBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Best so far'**
+  String get ahBest;
+
+  /// No description provided for @ahAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Last heard {seconds} s ago'**
+  String ahAgo(int seconds);
+
+  /// No description provided for @ahLost.
+  ///
+  /// In en, this message translates to:
+  /// **'Not heard for a while: clicks stopped.'**
+  String get ahLost;
+
+  /// No description provided for @ahChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change node'**
+  String get ahChange;
+
+  /// No description provided for @srTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Relay SOS the mesh can’t carry'**
+  String get srTitle;
+
+  /// No description provided for @srSub.
+  ///
+  /// In en, this message translates to:
+  /// **'When a NOTORYX SOS on a channel reaches you with no hops left, or your radio is set not to rebroadcast, pass it on once from your radio. Uses airtime; off by default.'**
+  String get srSub;
+
+  /// No description provided for @srCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Relayed 1 SOS so far.} other{Relayed {count} SOS so far.}}'**
+  String srCount(int count);
+
+  /// No description provided for @srRelayedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You passed on an SOS'**
+  String get srRelayedTitle;
+
+  /// No description provided for @srRelayedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio relayed the SOS from {name} on the same channel.'**
+  String srRelayedBody(String name);
+
+  /// No description provided for @trlTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trail routing'**
+  String get trlTitle;
+
+  /// No description provided for @trlToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan walking routes with no signal, over trails you download beforehand'**
+  String get trlToolSub;
+
+  /// No description provided for @trlIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the trails around you while you have signal. Later, plan walking routes along them anywhere in that area, with no signal at all.'**
+  String get trlIntro;
+
+  /// No description provided for @trlPlanSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a route from where you are'**
+  String get trlPlanSection;
+
+  /// No description provided for @trlTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To: a peak, hut, trailhead or saved waypoint'**
+  String get trlTo;
+
+  /// No description provided for @trlNoAreas.
+  ///
+  /// In en, this message translates to:
+  /// **'Download an area first, below.'**
+  String get trlNoAreas;
+
+  /// No description provided for @trlAreasSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded areas'**
+  String get trlAreasSection;
+
+  /// No description provided for @trlDownloadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Trails and named places come from OpenStreetMap. Downloading sends the area’s bounds to the Overpass service, which sees your IP address.'**
+  String get trlDownloadHint;
+
+  /// No description provided for @trlWithin.
+  ///
+  /// In en, this message translates to:
+  /// **'Within {distance}'**
+  String trlWithin(String distance);
+
+  /// No description provided for @trlDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download trails around me'**
+  String get trlDownload;
+
+  /// No description provided for @trlSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Area saved. It works with no signal now.'**
+  String get trlSaved;
+
+  /// No description provided for @trlAreaName.
+  ///
+  /// In en, this message translates to:
+  /// **'Trails near me, {date}'**
+  String trlAreaName(String date);
+
+  /// No description provided for @trlNoPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'No position yet. Connect a radio with GPS, or allow this phone’s location.'**
+  String get trlNoPosition;
+
+  /// No description provided for @trlTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'That area is too large to download at once.'**
+  String get trlTooLarge;
+
+  /// No description provided for @trlFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough room: delete an area first.'**
+  String get trlFull;
+
+  /// No description provided for @trlNoTrails.
+  ///
+  /// In en, this message translates to:
+  /// **'No trails or named places found there.'**
+  String get trlNoTrails;
+
+  /// No description provided for @trlFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t download. Check the internet connection and try again.'**
+  String get trlFailed;
+
+  /// No description provided for @trlNoArea.
+  ///
+  /// In en, this message translates to:
+  /// **'You and that place aren’t in the same downloaded area.'**
+  String get trlNoArea;
+
+  /// No description provided for @trlStartFar.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re more than 500 m from any downloaded trail.'**
+  String get trlStartFar;
+
+  /// No description provided for @trlEndFar.
+  ///
+  /// In en, this message translates to:
+  /// **'That place is more than 500 m from any downloaded trail.'**
+  String get trlEndFar;
+
+  /// No description provided for @trlNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'No trail connects you to that place in this area.'**
+  String get trlNotConnected;
+
+  /// No description provided for @trlDamaged.
+  ///
+  /// In en, this message translates to:
+  /// **'This area’s trail data is damaged. Delete it and download it again.'**
+  String get trlDamaged;
+
+  /// No description provided for @trlRouteTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Route to {name}'**
+  String trlRouteTo(String name);
+
+  /// No description provided for @trlRouteStats.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} • about {time} at an easy pace'**
+  String trlRouteStats(String distance, String time);
+
+  /// No description provided for @trlNoClimb.
+  ///
+  /// In en, this message translates to:
+  /// **'The time doesn’t include climbing; allow more in hills.'**
+  String get trlNoClimb;
+
+  /// No description provided for @trlKindPeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Peak'**
+  String get trlKindPeak;
+
+  /// No description provided for @trlKindPass.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass'**
+  String get trlKindPass;
+
+  /// No description provided for @trlKindSpring.
+  ///
+  /// In en, this message translates to:
+  /// **'Spring'**
+  String get trlKindSpring;
+
+  /// No description provided for @trlKindHut.
+  ///
+  /// In en, this message translates to:
+  /// **'Hut'**
+  String get trlKindHut;
+
+  /// No description provided for @trlKindCampsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Campsite'**
+  String get trlKindCampsite;
+
+  /// No description provided for @trlKindViewpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewpoint'**
+  String get trlKindViewpoint;
+
+  /// No description provided for @trlKindShelter.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelter'**
+  String get trlKindShelter;
+
+  /// No description provided for @trlKindTrailhead.
+  ///
+  /// In en, this message translates to:
+  /// **'Trailhead'**
+  String get trlKindTrailhead;
+
+  /// No description provided for @trlKindTown.
+  ///
+  /// In en, this message translates to:
+  /// **'Town'**
+  String get trlKindTown;
+
+  /// No description provided for @trlKindLocality.
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get trlKindLocality;
+
+  /// No description provided for @trlKindWaypoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved waypoint'**
+  String get trlKindWaypoint;
+
+  /// No description provided for @pvSent10.
+  ///
+  /// In en, this message translates to:
+  /// **'The bounds of an area to OpenStreetMap’s Overpass service, only when you download trails; it sees your IP address'**
+  String get pvSent10;
 }
 
 class _AppLocalizationsDelegate

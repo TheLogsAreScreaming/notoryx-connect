@@ -1418,6 +1418,16 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       });
       _nodeVaultSubscription = nodeDatabase.nodeUpdates.listen((node) {
         if (connection.isReady) {
+          final record = _nodeVault.records.where((r) => r.num == node.num).firstOrNull;
+          _raise(
+            _fieldAlerts.favoriteBack(
+              node.num,
+              node.displayName,
+              favorite: record?.favorite ?? false,
+              lastHeardBefore: record?.lastSeen,
+              settings: _alertSettings,
+            ),
+          );
           _raise(
             _fieldAlerts.nodeHeard(
               node.num,
@@ -2208,6 +2218,27 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     }
   }
 
+  /// Told about each live incoming message that isn't filtered out, e.g.
+  /// for the SOS relay. Replays from store-and-forward are not passed on.
+  void Function(MeshtasticTextMessage message)? onIncomingText;
+
+  /// Whether this radio rebroadcasts what it hears. False for Client Mute
+  /// or rebroadcast mode None; true when unknown, the firmware default.
+  bool get rebroadcasts {
+    Config_DeviceConfig? device;
+    for (final bytes in _radioConfigSnapshots) {
+      try {
+        final c = Config.fromBuffer(bytes);
+        if (c.hasDevice()) device = c.device;
+      } catch (_) {
+        // Ignore malformed configuration frames.
+      }
+    }
+    if (device == null) return true;
+    return device.role != Config_DeviceConfig_Role.CLIENT_MUTE &&
+        device.rebroadcastMode != Config_DeviceConfig_RebroadcastMode.NONE;
+  }
+
   void _alertIncoming(MeshtasticTextMessage message) {
     // A replay from a store-and-forward router is history: it shows in the
     // chat marked as such, but never alerts, speaks or relays by SMS, so an
@@ -2215,6 +2246,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     if (message.replayed) return;
     if (filters.isSilenced(message.from) || filters.matchesWord(message.text))
       return;
+    onIncomingText?.call(message);
     if (BastionSmsRelay.available && !message.isReaction)
       unawaited(_relaySms(message));
     String sender = '!${message.from.toRadixString(16).padLeft(8, '0')}';

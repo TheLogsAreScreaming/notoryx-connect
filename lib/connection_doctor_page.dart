@@ -10,6 +10,8 @@ import 'l10n/generated/app_localizations.dart';
 import 'services/bastion_background_service.dart';
 import 'services/bastion_bluetooth_state.dart';
 import 'services/bastion_connection_doctor.dart';
+import 'services/bastion_trouble_guides.dart';
+import 'generated/meshtastic/config.pbenum.dart';
 import 'services/meshtastic_ble_discovery.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'theme/notoryx_theme.dart';
@@ -101,6 +103,20 @@ class _ConnectionDoctorPageState extends State<ConnectionDoctorPage> {
       radiosFound: d.results.length,
       scanError: d.error,
       firmwareVersion: r.firmwareVersion,
+    );
+  }
+
+  TroubleSnapshot _snapshot() {
+    final r = widget.radio;
+    final region = r.loraConfig?.region;
+    return TroubleSnapshot.of(
+      connected: r.isReady,
+      localNode: r.localNodeNum,
+      nodes: r.nodes,
+      messages: r.messages,
+      now: DateTime.now(),
+      regionSet: region == null ? null : region != Config_LoRaConfig_RegionCode.UNSET,
+      channelUtilization: r.localNodeNum == null ? null : r.deviceTelemetry[r.localNodeNum]?.channelUtilization,
     );
   }
 
@@ -197,6 +213,8 @@ class _ConnectionDoctorPageState extends State<ConnectionDoctorPage> {
                   ),
                 ],
               ),
+              NxSectionLabel(l.tgSection),
+              _TroubleGuides(snapshot: _snapshot()),
               NxSectionLabel(l.cpRecentEvents),
               if (log.isEmpty)
                 Text(l.cpNoEvents)
@@ -265,3 +283,105 @@ class _CheckTile extends StatelessWidget {
     );
   }
 }
+
+/// Core's step-by-step guides for problems after connecting: each step is
+/// checked live where the app can tell, and "Start here" marks the first
+/// problem.
+class _TroubleGuides extends StatelessWidget {
+  const _TroubleGuides({required this.snapshot});
+  final TroubleSnapshot snapshot;
+
+  static String title(AppLocalizations l, TroubleStep s) => switch (s) {
+        TroubleStep.connected => l.tgConnected,
+        TroubleStep.heardRecently => l.tgHeardRecently,
+        TroubleStep.neighbours => l.tgNeighbours,
+        TroubleStep.busyChannel => l.tgBusy,
+        TroubleStep.sameChannel => l.tgSameChannel,
+        TroubleStep.hops => l.tgHops,
+        TroubleStep.region => l.tgRegion,
+        TroubleStep.preset => l.tgPreset,
+        TroubleStep.antenna => l.tgAntenna,
+      };
+
+  static String advice(AppLocalizations l, TroubleStep s) => switch (s) {
+        TroubleStep.connected => l.tgConnectedAdvice,
+        TroubleStep.heardRecently => l.tgHeardRecentlyAdvice,
+        TroubleStep.neighbours => l.tgNeighboursAdvice,
+        TroubleStep.busyChannel => l.tgBusyAdvice,
+        TroubleStep.sameChannel => l.tgSameChannelAdvice,
+        TroubleStep.hops => l.tgHopsAdvice,
+        TroubleStep.region => l.tgRegionAdvice,
+        TroubleStep.preset => l.tgPresetAdvice,
+        TroubleStep.antenna => l.tgAntennaAdvice,
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final status = NxStatusColors.of(context);
+    return Column(children: [
+      for (final guide in TroubleGuide.values)
+        Builder(builder: (context) {
+          final steps = runGuide(guide, snapshot);
+          final start = startHere(steps);
+          final allOk = steps.every((s) => s.$2 == StepResult.ok);
+          return Card(
+            child: ExpansionTile(
+              key: ValueKey('guide-${guide.name}'),
+              leading: Icon(guide == TroubleGuide.noDelivery ? Icons.mark_chat_unread_outlined : Icons.hearing_disabled),
+              title: Text(guide == TroubleGuide.noDelivery ? l.tgNoDelivery : l.tgHearNobody),
+              childrenPadding: const EdgeInsets.fromLTRB(NxSpace.md, 0, NxSpace.md, NxSpace.md),
+              children: [
+                if (allOk) Padding(padding: const EdgeInsets.only(bottom: NxSpace.sm), child: Text(l.tgAllOk)),
+                for (final (step, result) in steps)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: NxSpace.xs),
+                    child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      // Shape and word, not just color, say how a step went.
+                      Icon(
+                        switch (result) {
+                          StepResult.ok => Icons.check_circle_outline,
+                          StepResult.problem => Icons.error_outline,
+                          StepResult.unchecked => Icons.help_outline,
+                        },
+                        color: switch (result) {
+                          StepResult.ok => status.success,
+                          StepResult.problem => scheme.error,
+                          StepResult.unchecked => scheme.onSurfaceVariant,
+                        },
+                      ),
+                      const SizedBox(width: NxSpace.sm),
+                      Expanded(
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Text(title(l, step), style: Theme.of(context).textTheme.titleSmall),
+                          Text(
+                            switch (result) {
+                              StepResult.ok => l.tgOk,
+                              StepResult.problem => l.tgProblem,
+                              StepResult.unchecked => l.tgUnchecked,
+                            },
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                          if (step == start)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2),
+                              child: Chip(
+                                key: ValueKey('start-${guide.name}-${step.name}'),
+                                label: Text(l.tgStartHere),
+                                visualDensity: VisualDensity.compact,
+                              ),
+                            ),
+                          if (result != StepResult.ok) Text(advice(l, step)),
+                        ]),
+                      ),
+                    ]),
+                  ),
+              ],
+            ),
+          );
+        }),
+    ]);
+  }
+}
+

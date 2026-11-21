@@ -73,7 +73,23 @@ import 'services/meshtastic_radio_coordinator.dart';
 import 'services/meshtastic_usb_transport.dart';
 import 'theme/notoryx_theme.dart';
 import 'theme/notoryx_tokens.dart';
+import 'node_avatar.dart';
+import 'services/bastion_node_looks.dart';
+import 'services/bastion_link_preview.dart';
+import 'services/bastion_track_log.dart';
+import 'track_log_page.dart';
+import 'field_guide_page.dart';
+import 'backdrop_page.dart';
+import 'battery_watch_page.dart';
+import 'mesh_activity_page.dart';
+import 'antenna_hunt_page.dart';
+import 'services/bastion_sos_relay.dart';
+import 'services/bastion_trail_store.dart';
+import 'trail_routing_page.dart';
+import 'services/bastion_mesh_watch.dart';
+import 'theme/nx_backdrop.dart';
 import 'theme/nx_components.dart';
+import 'services/bastion_backdrop.dart';
 import 'connection_doctor_page.dart';
 import 'sentinel_page.dart';
 import 'services/bastion_sentinel.dart';
@@ -88,6 +104,7 @@ part 'shell/settings_page.dart';
 part 'shell/settings_cards.dart';
 part 'shell/shell_labels.dart';
 part 'shell/search_page.dart';
+part 'shell/more_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -108,6 +125,10 @@ Future<void> main() async {
   });
   await BastionTileCache.initialize();
   await BastionPreferences.instance.load();
+  await BastionBackdrop.instance.load();
+  await BastionNodeLooks.instance.load();
+  await BastionTrackLog.instance.load();
+  await BastionMeshWatch.instance.load();
   // Chat history lives in its own database; older saves move over once.
   await BastionChatStorage.useSqlite();
   await BastionChatStorage.applySavedEncryption();
@@ -231,7 +252,10 @@ class BastionShell extends StatefulWidget {
 }
 
 class _BastionShellState extends State<BastionShell> {
-  int index = 0;
+  ShellTab tab = ShellTab.home;
+
+  /// The side of More shown when it is next opened.
+  ShellTab _moreSection = ShellTab.tools;
   final ble = MeshtasticBleDiscovery();
 
   /// A spot search asked the Map to centre on.
@@ -243,7 +267,7 @@ class _BastionShellState extends State<BastionShell> {
           discovery: ble,
           onShowPlace: (lat, lon) {
             _mapFocus.value = (lat: lat, lon: lon);
-            _go(3);
+            _go(ShellTab.map);
           },
           onGoTab: _go,
         ),
@@ -262,7 +286,7 @@ class _BastionShellState extends State<BastionShell> {
     final old = _demo;
     setState(() {
       _demo = on ? BastionDemoRadio() : null;
-      index = 0;
+      tab = ShellTab.home;
     });
     // Let the screens stop listening before the old demo radio goes away.
     if (old != null)
@@ -273,33 +297,38 @@ class _BastionShellState extends State<BastionShell> {
   bool botMode = false;
   String awayReply = MeshtasticMessagingService.defaultAwayReply;
 
+  /// The bottom bar, in order: Home, Chats, Nodes, Map, More.
   List<String> _labels(BuildContext context) {
     final l = AppLocalizations.of(context);
-    return [
-      l.tabHome,
-      l.tabNodes,
-      l.tabChats,
-      l.tabMap,
-      l.tabTools,
-      l.tabSettings,
-    ];
+    return [l.tabHome, l.tabChats, l.tabNodes, l.tabMap, l.tabMore];
   }
 
   static const icons = [
     Icons.shield_outlined,
-    Icons.hub_outlined,
     Icons.chat_bubble_outline,
+    Icons.hub_outlined,
     Icons.map_outlined,
-    Icons.build_outlined,
-    Icons.settings_outlined,
+    Icons.more_horiz,
   ];
+
+  static const _scenes = [NxScene.home, NxScene.chats, NxScene.nodes, NxScene.map, NxScene.more];
+
+  /// The tab at bar position [i]; More opens on the side used last.
+  ShellTab _atDestination(int i) => i == 4 ? _moreSection : ShellTab.values[i];
 
   /// Wider than this, the tabs move to a rail on the left.
   static const railBreakpoint = 600.0;
 
-  void _go(int tab) => setState(() => index = tab);
+  void _go(ShellTab to) => setState(() {
+        tab = to;
+        if (to.isMore) _moreSection = to;
+      });
+
+  void _goDestination(int i) => _go(_atDestination(i));
 
   BastionHomeWidget? _homeWidget;
+  TrackLogFeed? _trackFeed;
+  MeshWatchFeed? _meshFeed;
 
   @override
   void initState() {
@@ -318,6 +347,31 @@ class _BastionShellState extends State<BastionShell> {
     BastionTakBridge.instance.attach(() => _realRadio.nodes);
     // The timeline records the real radio only, never the demo.
     BastionTimeline.instance.attach(CoordinatorTimelineSource(_realRadio));
+    _trackFeed = TrackLogFeed(log: BastionTrackLog.instance, radio: _realRadio)..start();
+    // Mesh activity records the real radio only, never the demo.
+    BastionMeshWatch.instance.attach(_realRadio.traffic);
+    _meshFeed = MeshWatchFeed(
+      watch: BastionMeshWatch.instance,
+      nodes: () => _realRadio.nodes,
+      self: () => _realRadio.localNodeNum,
+      ready: () => _realRadio.isReady,
+    )..start();
+    _realRadio.addListener(_meshFeed!.check);
+    // The SOS relay listens to the real radio only, never the demo.
+    final relay = BastionSosRelay.instance = BastionSosRelay(
+      send: (text, channel) => _realRadio.sendText(text: text, channel: channel),
+      radioRelaysItself: () => _realRadio.rebroadcasts,
+      self: () => _realRadio.localNodeNum,
+      nameOf: _realRadio.nodeName,
+      onRelayed: (from, text) => unawaited(_realRadio.showLocalAlert(BastionFieldAlert(
+        BastionAlertKind.sosRelayed,
+        from,
+        BastionText.l.srRelayedTitle,
+        BastionText.l.srRelayedBody(_realRadio.nodeName(from)),
+      ))),
+    );
+    unawaited(relay.load());
+    _realRadio.onIncomingText = relay.onMessage;
     _setUpShortcuts();
     // The widget follows the real radio, never the demo.
     if (BastionHomeWidget.supported) {
@@ -329,12 +383,12 @@ class _BastionShellState extends State<BastionShell> {
   /// Long-press shortcuts on the app icon, each opening a tab.
   void _setUpShortcuts() {
     if (kIsWeb || !Platform.isAndroid) return;
-    const tabs = {'home': 0, 'nodes': 1, 'chats': 2, 'map': 3};
+    const tabs = {'home': ShellTab.home, 'nodes': ShellTab.nodes, 'chats': ShellTab.chats, 'map': ShellTab.map};
     try {
       const actions = QuickActions();
       actions.initialize((type) {
         final tab = tabs[type];
-        if (tab != null && mounted) setState(() => index = tab);
+        if (tab != null && mounted) _go(tab);
       });
       actions
           .setShortcutItems(const [
@@ -358,6 +412,15 @@ class _BastionShellState extends State<BastionShell> {
     _homeWidget?.dispose();
     BastionTakBridge.instance.detach();
     BastionTimeline.instance.detach();
+    _trackFeed?.dispose();
+    if (_meshFeed case final f?) {
+      _realRadio.removeListener(f.check);
+      f.dispose();
+    }
+    BastionMeshWatch.instance.detach();
+    _realRadio.onIncomingText = null;
+    BastionSosRelay.instance?.dispose();
+    BastionSosRelay.instance = null;
     _realRadio.dispose();
     _demo?.dispose();
     super.dispose();
@@ -368,22 +431,16 @@ class _BastionShellState extends State<BastionShell> {
     final pages = PrimaryScrollController.none(
       child: IndexedStack(
         key: ValueKey(_inDemo),
-        index: index,
+        index: tab.destination,
         children: [
           HomePage(
             radio: radio,
-            onConnect: () => _go(1),
-            onTryDemo: _inDemo ? null : () => _setDemo(true),
-          ),
-          _NodesPage(
-            discovery: ble,
-            radio: radio,
-            onOpenTools: () => _go(4),
+            onConnect: () => _go(ShellTab.nodes),
             onTryDemo: _inDemo ? null : () => _setDemo(true),
           ),
           BastionChatsPage(
             radio: radio,
-            visible: index == 2,
+            visible: tab == ShellTab.chats,
             botMode: botMode,
             awayReply: awayReply,
             onBotModeChanged: (value) {
@@ -395,16 +452,32 @@ class _BastionShellState extends State<BastionShell> {
               radio.configureBot(enabled: botMode, reply: value);
             },
           ),
+          _NodesPage(
+            discovery: ble,
+            radio: radio,
+            onOpenTools: () => _go(ShellTab.tools),
+            onTryDemo: _inDemo ? null : () => _setDemo(true),
+          ),
           MapPage(radio: radio, focus: _mapFocus),
-          _ToolsPage(discovery: ble, radio: radio),
-          _SettingsPage(radio: radio, demo: _inDemo, onDemoChanged: _setDemo),
+          _MorePage(
+            section: _moreSection,
+            onSection: _go,
+            tools: _ToolsPage(discovery: ble, radio: radio),
+            settings: _SettingsPage(radio: radio, demo: _inDemo, onDemoChanged: _setDemo),
+          ),
         ],
       ),
     );
     final wide = MediaQuery.sizeOf(context).width >= railBreakpoint;
     final scheme = Theme.of(context).colorScheme;
-    return Scaffold(
+    // The glow sits behind the whole main screen; the bar and cards are
+    // see-through so it carries into them.
+    return NxBackdrop(
+      scene: _scenes[tab.destination],
+      child: Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         toolbarHeight: MediaQuery.textScalerOf(context).scale(36) + 20,
         titleSpacing: NxSpace.md,
         title: Semantics(
@@ -459,7 +532,7 @@ class _BastionShellState extends State<BastionShell> {
                     context,
                   ).radioStatus(_connectionLabel(context, state)),
                   onTapHint: AppLocalizations.of(context).radioStatusHint,
-                  onTap: () => _go(1),
+                  onTap: () => _go(ShellTab.nodes),
                   excludeSemantics: true,
                   child: Tooltip(
                     message: AppLocalizations.of(
@@ -467,7 +540,7 @@ class _BastionShellState extends State<BastionShell> {
                     ).radioStatusTip(_connectionLabel(context, state)),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(NxRadius.pill),
-                      onTap: () => _go(1),
+                      onTap: () => _go(ShellTab.nodes),
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(
                           minHeight: NxTouch.min,
@@ -499,8 +572,8 @@ class _BastionShellState extends State<BastionShell> {
                   ? Row(
                       children: [
                         NavigationRail(
-                          selectedIndex: index,
-                          onDestinationSelected: _go,
+                          selectedIndex: tab.destination,
+                          onDestinationSelected: _goDestination,
                           destinations: [
                             for (final (i, label) in _labels(context).indexed)
                               NavigationRailDestination(
@@ -529,8 +602,8 @@ class _BastionShellState extends State<BastionShell> {
       bottomNavigationBar: wide
           ? null
           : NavigationBar(
-              selectedIndex: index,
-              onDestinationSelected: _go,
+              selectedIndex: tab.destination,
+              onDestinationSelected: _goDestination,
               destinations: [
                 for (final (i, label) in _labels(context).indexed)
                   NavigationDestination(
@@ -540,16 +613,17 @@ class _BastionShellState extends State<BastionShell> {
                   ),
               ],
             ),
+    ),
     );
   }
 
   /// A tab's icon; Chats carries a badge with the unread count.
-  Widget _tabIcon(int i) => i != 2
+  Widget _tabIcon(int i) => i != 1
       ? Icon(icons[i])
       : AnimatedBuilder(
           animation: radio,
           builder: (context, _) {
-            final unread = index == 2 ? 0 : radio.unreadCount;
+            final unread = tab == ShellTab.chats ? 0 : radio.unreadCount;
             return Semantics(
               label: unread == 0 ? null : '$unread unread',
               child: Badge(

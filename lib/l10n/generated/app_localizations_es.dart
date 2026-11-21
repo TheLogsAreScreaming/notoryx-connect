@@ -6794,4 +6794,800 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sarneg_decodeA11y => 'Decodificar números SARNEG';
+
+  @override
+  String get tabMore => 'Más';
+
+  @override
+  String get bgTitle => 'Fondo';
+
+  @override
+  String get bgKindTheme => 'Brillo del tema';
+
+  @override
+  String get bgKindSolid => 'Color';
+
+  @override
+  String get bgKindLinear => 'Degradado';
+
+  @override
+  String get bgKindMesh => 'Mezcla suave';
+
+  @override
+  String get bgKindPhoto => 'Foto';
+
+  @override
+  String get bgColor1 => 'Primer color';
+
+  @override
+  String get bgColor2 => 'Segundo color';
+
+  @override
+  String bgColorN(int index) {
+    return 'Color $index';
+  }
+
+  @override
+  String get bgDim => 'Atenuar';
+
+  @override
+  String get bgBlur => 'Desenfoque';
+
+  @override
+  String get bgChoosePhoto => 'Elegir foto';
+
+  @override
+  String get bgReset => 'Volver al fondo del tema';
+
+  @override
+  String get bgHint =>
+      'Las tarjetas son de cristal esmerilado encima. Sube Atenuar si cuesta leer el texto.';
+
+  @override
+  String get bgPreviewTitle => 'Vista previa';
+
+  @override
+  String get bgPreviewBody => 'Así se ve el texto en una tarjeta de cristal.';
+
+  @override
+  String get bgPhotoNotBackedUp =>
+      'La foto se queda en este teléfono y no se incluye en las copias de seguridad.';
+
+  @override
+  String get bgPhotoFailed => 'No se pudo usar esa foto. Prueba con otra.';
+
+  @override
+  String get nlMenu => 'Foto o color';
+
+  @override
+  String nlTitle(String name) {
+    return 'Aspecto de $name';
+  }
+
+  @override
+  String get nlHint => 'Solo en este teléfono. Nunca se envía por la malla.';
+
+  @override
+  String get nlChoosePhoto => 'Elegir foto';
+
+  @override
+  String get nlRemovePhoto => 'Quitar foto';
+
+  @override
+  String get nlClear => 'Usar el aspecto predeterminado';
+
+  @override
+  String nlColorN(int index) {
+    return 'Color $index';
+  }
+
+  @override
+  String get nlPhotoFailed => 'No se pudo usar esa foto. Prueba con otra.';
+
+  @override
+  String get snsTitle => 'Sensores';
+
+  @override
+  String get snsNone => 'Tu radio no da lecturas de sensores.';
+
+  @override
+  String get chatJumpLatest => 'Ir al último mensaje';
+
+  @override
+  String get pvSent9 =>
+      'Peticiones de las páginas web enlazadas en los chats, solo si activas la vista previa de enlaces; el sitio ve tu dirección IP';
+
+  @override
+  String get tlgTitle => 'Registro de recorrido';
+
+  @override
+  String get tlgToolSub =>
+      'Graba por dónde vas, expórtalo en GPX o recibe un aviso si te desvías';
+
+  @override
+  String get tlgSources =>
+      'Los puntos vienen del GPS de tu radio mientras está conectada, y de la ubicación de este teléfono mientras la app está abierta. Los recorridos se quedan en este teléfono.';
+
+  @override
+  String get tlgStart => 'Empezar a grabar';
+
+  @override
+  String get tlgStop => 'Parar la grabación';
+
+  @override
+  String get tlgRecording => 'Grabando';
+
+  @override
+  String tlgStats(int points, String distance, String time) {
+    return '$points puntos • $distance • $time';
+  }
+
+  @override
+  String get tlgSaved => 'Recorridos guardados';
+
+  @override
+  String get tlgEmpty =>
+      'Aún no hay recorridos. Empieza a grabar antes de salir.';
+
+  @override
+  String get tlgShowMap => 'Mostrar en el mapa';
+
+  @override
+  String get tlgOnMap => 'Añadido al mapa como capa.';
+
+  @override
+  String get tlgMapFailed => 'No se pudo añadir este recorrido al mapa.';
+
+  @override
+  String get tlgExport => 'Exportar GPX';
+
+  @override
+  String tlgWatchAt(String distance) {
+    return 'Avísame si me desvío más de $distance';
+  }
+
+  @override
+  String get tlgUnwatch => 'Quitar el aviso de desvío';
+
+  @override
+  String tlgWatching(String name, String distance) {
+    return 'Vigilando $name: avisa a más de $distance';
+  }
+
+  @override
+  String get tlgWaitingFix => 'Esperando una posición.';
+
+  @override
+  String tlgOffNow(String distance) {
+    return 'Ahora estás a $distance.';
+  }
+
+  @override
+  String get tlgDelete => 'Eliminar';
+
+  @override
+  String get tlgDeleteQ => '¿Eliminar este recorrido?';
+
+  @override
+  String tlgDefaultName(String date) {
+    return 'Recorrido $date';
+  }
+
+  @override
+  String tlgPhoneLocationOff(String reason) {
+    return 'La ubicación del teléfono está desactivada ($reason). El GPS de la radio puede seguir grabando.';
+  }
+
+  @override
+  String get tlgOffTitle => 'Fuera de tu ruta';
+
+  @override
+  String tlgOffBody(String distance, String name) {
+    return 'Estás a $distance de $name.';
+  }
+
+  @override
+  String get gdTitle => 'Guía de campo';
+
+  @override
+  String get gdToolSub =>
+      'Lo básico de la malla, baterías con frío, solar y antenas';
+
+  @override
+  String get gdSecMesh => 'Entrar en la malla';
+
+  @override
+  String get gdMesh1 =>
+      'Tu teléfono habla con tu radio por Bluetooth, USB o Wi-Fi; la radio habla con la malla por LoRa. Los mensajes funcionan sin cobertura móvil.';
+
+  @override
+  String get gdMesh2 =>
+      'Cada radio que oye un mensaje puede reenviarlo. Cada reenvío es un salto, y el límite de saltos (3 por defecto) marca hasta dónde llega.';
+
+  @override
+  String get gdMesh3 =>
+      'Deja el rol en Cliente salvo que tu radio esté en un sitio alto y siempre encendida. Demasiados routers empeoran la malla.';
+
+  @override
+  String get gdMesh4 =>
+      'Escribe mensajes cortos y no satures canales ocupados: cada mensaje usa tiempo de aire compartido.';
+
+  @override
+  String get gdSecCold => 'Baterías con frío';
+
+  @override
+  String get gdCold1 =>
+      'No cargues baterías de litio bajo cero (0 °C / 32 °F): se dañan para siempre.';
+
+  @override
+  String get gdCold2 =>
+      'Lleva la radio dentro de la chaqueta. El frío reduce la capacidad, pero vuelve cuando la batería se calienta.';
+
+  @override
+  String get gdCold3 =>
+      'En sitios fijos con frío, LiFePO4 aguanta mejor que el ion de litio; una caja aislada o calefactada ayuda a ambas.';
+
+  @override
+  String get gdSecSolar => 'Solar para nodos fijos';
+
+  @override
+  String get gdSolar1 =>
+      'Un nodo gasta poco, pero dimensiona panel y batería para la semana más oscura del invierno, no para un día de verano.';
+
+  @override
+  String get gdSolar2 =>
+      'Orienta el panel hacia el ecuador e inclínalo mucho en invierno; mantenlo sin nieve ni sombra.';
+
+  @override
+  String get gdSecAntenna => 'Antenas y ubicación';
+
+  @override
+  String get gdAnt1 =>
+      'La altura gana a la potencia: una radio a unos metros del suelo llega mucho más lejos que una sobre la mesa.';
+
+  @override
+  String get gdAnt2 =>
+      'Mantén la antena vertical y lejos del metal, y usa una hecha para tu banda (por ejemplo 915 MHz en EE. UU., 868 MHz en Europa). Nunca transmitas sin antena.';
+
+  @override
+  String get gdSecMore => 'Más información';
+
+  @override
+  String get gdMore => 'Documentación de Meshtastic: meshtastic.org/docs';
+
+  @override
+  String get tgSection => '¿Otro problema?';
+
+  @override
+  String get tgNoDelivery => 'Los mensajes no llegan';
+
+  @override
+  String get tgHearNobody => 'No oigo a nadie';
+
+  @override
+  String get tgStartHere => 'Empieza aquí';
+
+  @override
+  String get tgOk => 'Bien';
+
+  @override
+  String get tgProblem => 'Problema';
+
+  @override
+  String get tgUnchecked => 'No se puede comprobar';
+
+  @override
+  String get tgAllOk =>
+      'Todas las comprobaciones pasaron. Si sigue sin funcionar, revisa los pasos de abajo.';
+
+  @override
+  String get tgConnected => 'Tu radio está conectada';
+
+  @override
+  String get tgConnectedAdvice =>
+      'Conecta primero tu radio: Nodos → Buscar radios.';
+
+  @override
+  String get tgHeardRecently =>
+      'Las personas a las que escribes se oyeron en el último día';
+
+  @override
+  String get tgHeardRecentlyAdvice =>
+      'Alguien que no se oye hace tiempo puede estar fuera de alcance o apagado. Un mensaje directo no se confirma hasta que vuelva.';
+
+  @override
+  String get tgNeighbours => 'Tu radio oye otros nodos';
+
+  @override
+  String get tgNeighboursAdvice =>
+      'No oír nada en la última hora significa que tu radio no llega a la malla desde aquí. Sube la antena, busca altura o acércate a otros nodos.';
+
+  @override
+  String get tgBusy => 'El canal no está saturado';
+
+  @override
+  String get tgBusyAdvice =>
+      'Por encima del 40 % de uso, los mensajes chocan y se pierden. Envía menos y comprueba que nadie cerca esté saturando la malla.';
+
+  @override
+  String get tgSameChannel => 'Compartes canal con quienes escribes';
+
+  @override
+  String get tgSameChannelAdvice =>
+      'Los mensajes de canal solo llegan a radios con el mismo nombre y clave de canal. Comparte el código QR del canal para asegurarte.';
+
+  @override
+  String get tgHops => 'Tu límite de saltos llega hasta ellos';
+
+  @override
+  String get tgHopsAdvice =>
+      'Cada reenvío usa un salto. Si están lejos, sube el límite en Ajustes de la radio → LoRa; rara vez hace falta más de 3.';
+
+  @override
+  String get tgRegion => 'Tu radio tiene una región configurada';
+
+  @override
+  String get tgRegionAdvice =>
+      'Una radio sin región no puede transmitir. Elige la región de tu país en Ajustes de la radio → LoRa.';
+
+  @override
+  String get tgPreset => 'Tu radio usa el mismo preajuste que la malla local';
+
+  @override
+  String get tgPresetAdvice =>
+      'Las radios con otro preajuste de módem o canal de frecuencia no oyen a nadie. Long Fast es el predeterminado; pregunta qué usa tu malla local.';
+
+  @override
+  String get tgAntenna => 'La antena está puesta';
+
+  @override
+  String get tgAntennaAdvice =>
+      'Asegúrate de que la antena está bien enroscada. Nunca transmitas sin ella; puede dañar la radio.';
+
+  @override
+  String get bwTitle => 'Vigilancia de baterías';
+
+  @override
+  String get bwToolSub =>
+      'Todos los nodos que informan de su batería, primero los más preocupantes';
+
+  @override
+  String get bwEmpty => 'Ningún nodo ha informado aún de su batería.';
+
+  @override
+  String get bwPlugged => 'Con alimentación externa';
+
+  @override
+  String get bwSteady => 'Estable';
+
+  @override
+  String get bwNoTrend => 'Aún no hay lecturas suficientes para una tendencia';
+
+  @override
+  String bwRising(String rate) {
+    return 'Sube un $rate % al día';
+  }
+
+  @override
+  String bwDropping(String rate) {
+    return 'Baja un $rate % al día';
+  }
+
+  @override
+  String bwDaysLeft(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'quedan $days días aprox.',
+      one: 'queda 1 día aprox.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bwUnderDay => 'queda menos de un día';
+
+  @override
+  String get bwPluggedShort => 'Enchufado';
+
+  @override
+  String svcFavBack(String name) {
+    return '$name ha vuelto';
+  }
+
+  @override
+  String svcFavBackBody(String time) {
+    return 'Se ha oído de nuevo tras $time de silencio.';
+  }
+
+  @override
+  String get setFavBack => 'Un favorito vuelve';
+
+  @override
+  String setFavBackSub(String time) {
+    return 'Cuando un favorito se oye de nuevo tras $time o más de silencio';
+  }
+
+  @override
+  String get setBackAfter => 'Vuelve tras al menos';
+
+  @override
+  String get lnkPrevTitle => 'Vista previa de enlaces';
+
+  @override
+  String get lnkPrevSub =>
+      'Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono.';
+
+  @override
+  String get teamTitle => 'Configuración de equipo';
+
+  @override
+  String get teamToolSub =>
+      'Canales, ajustes de radio y contactos del viaje en un solo código QR';
+
+  @override
+  String get teamIntro =>
+      'Todo lo que necesita un compañero en un solo escaneo: tus canales y sus claves, los ajustes de la radio y tus contactos del viaje, incluido tú.';
+
+  @override
+  String get teamChannels => 'Canales';
+
+  @override
+  String teamContacts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count contactos del viaje',
+      one: '1 contacto del viaje',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get teamHowTo =>
+      'En el otro teléfono: Más → Ajustes → Canales → Unirse con código QR o enlace, y escanea este código.';
+
+  @override
+  String get teamAddContacts => 'Añadirlos como contactos del viaje';
+
+  @override
+  String teamAddContactsSub(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Añade $count contactos nuevos a tu viaje.',
+      one: 'Añade 1 contacto nuevo a tu viaje.',
+      zero: 'Ya son tus contactos del viaje.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String teamAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count contactos del viaje añadidos.',
+      one: '1 contacto del viaje añadido.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get teamShareButton => 'Compartir configuración de equipo';
+
+  @override
+  String get maTitle => 'Actividad de la malla';
+
+  @override
+  String get maToolSub =>
+      'Estadísticas de campo, cambios en la red y registro de paquetes en vivo';
+
+  @override
+  String get maTabStats => 'Estadísticas';
+
+  @override
+  String get maTabChanges => 'Cambios';
+
+  @override
+  String get maTabPackets => 'Paquetes';
+
+  @override
+  String get maRealOnly =>
+      'Se registra desde tu radio mientras está conectada. La radio de demostración no se registra.';
+
+  @override
+  String get maLastHour => 'Última hora';
+
+  @override
+  String get maPackets => 'Paquetes oídos';
+
+  @override
+  String get maSenders => 'Nodos oídos';
+
+  @override
+  String get maDirect => 'Oídos directamente';
+
+  @override
+  String get maAvgHops => 'Saltos de media';
+
+  @override
+  String get maSnrRange => 'Señal (SNR)';
+
+  @override
+  String get maMqtt => 'Por internet (MQTT)';
+
+  @override
+  String get maByKind => 'Por tipo';
+
+  @override
+  String get maBusiest => 'Más oídos';
+
+  @override
+  String get maNothing =>
+      'Aún no se ha oído nada. Conecta tu radio y deja esto abierto un rato.';
+
+  @override
+  String get maNoChanges =>
+      'Aún no hay cambios. Aquí aparecen nodos nuevos, que callan, que vuelven o que cambian de nombre.';
+
+  @override
+  String maAppeared(String name) {
+    return 'Apareció $name';
+  }
+
+  @override
+  String maQuiet(String name) {
+    return '$name se quedó en silencio';
+  }
+
+  @override
+  String maBack(String name) {
+    return '$name ha vuelto';
+  }
+
+  @override
+  String maRenamed(String old, String name) {
+    return '$old ahora es $name';
+  }
+
+  @override
+  String get maClear => 'Borrar cambios';
+
+  @override
+  String get maEveryone => 'todos';
+
+  @override
+  String maHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count saltos',
+      one: '1 salto',
+      zero: 'directo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get maViaMqtt => 'por MQTT';
+
+  @override
+  String maFromTo(String from, String to) {
+    return '$from → $to';
+  }
+
+  @override
+  String get ahTitle => 'Búsqueda de antena';
+
+  @override
+  String get ahToolSub =>
+      'Los clics se aceleran cuando mejora la señal de un nodo, para orientar una antena o buscar un sitio';
+
+  @override
+  String get ahPick => 'Elige un nodo que oigas directamente';
+
+  @override
+  String get ahNoneDirect =>
+      'Aún no se oye ningún nodo directamente. La búsqueda necesita un nodo que tu radio oiga sin reenvíos.';
+
+  @override
+  String get ahStart => 'Empezar';
+
+  @override
+  String get ahStop => 'Parar';
+
+  @override
+  String get ahSound => 'Clics y vibración';
+
+  @override
+  String get ahPing => 'Pedirle respuesta cada 30 s';
+
+  @override
+  String get ahPingSub =>
+      'Envía un traceroute cada vez. Usa tiempo de aire, así que déjalo apagado en una malla ocupada; sin él, cualquier paquete del nodo cuenta.';
+
+  @override
+  String ahWaiting(String name) {
+    return 'Esperando a que $name transmita…';
+  }
+
+  @override
+  String get ahYouHear => 'Tú lo oyes';
+
+  @override
+  String get ahTheyHear => 'Te oye';
+
+  @override
+  String get ahBest => 'Mejor hasta ahora';
+
+  @override
+  String ahAgo(int seconds) {
+    return 'Oído hace $seconds s';
+  }
+
+  @override
+  String get ahLost => 'Hace rato que no se oye: clics parados.';
+
+  @override
+  String get ahChange => 'Cambiar de nodo';
+
+  @override
+  String get srTitle => 'Reenviar SOS que la malla no puede llevar';
+
+  @override
+  String get srSub =>
+      'Cuando un SOS de NOTORYX en un canal te llega sin saltos restantes, o tu radio está configurada para no retransmitir, reenvíalo una vez desde tu radio. Usa tiempo de aire; apagado por defecto.';
+
+  @override
+  String srCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count SOS reenviados hasta ahora.',
+      one: '1 SOS reenviado hasta ahora.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get srRelayedTitle => 'Has reenviado un SOS';
+
+  @override
+  String srRelayedBody(String name) {
+    return 'Tu radio reenvió el SOS de $name en el mismo canal.';
+  }
+
+  @override
+  String get trlTitle => 'Rutas por senderos';
+
+  @override
+  String get trlToolSub =>
+      'Planifica rutas a pie sin cobertura, por senderos que descargas antes';
+
+  @override
+  String get trlIntro =>
+      'Descarga los senderos de tu zona mientras tienes cobertura. Después, planifica rutas a pie por ellos en cualquier punto de esa zona, sin cobertura.';
+
+  @override
+  String get trlPlanSection => 'Planificar una ruta desde donde estás';
+
+  @override
+  String get trlTo =>
+      'Hasta: una cima, refugio, inicio de sendero o waypoint guardado';
+
+  @override
+  String get trlNoAreas => 'Primero descarga una zona, abajo.';
+
+  @override
+  String get trlAreasSection => 'Zonas descargadas';
+
+  @override
+  String get trlDownloadHint =>
+      'Los senderos y lugares vienen de OpenStreetMap. Al descargar se envían los límites de la zona al servicio Overpass, que ve tu dirección IP.';
+
+  @override
+  String trlWithin(String distance) {
+    return 'A $distance';
+  }
+
+  @override
+  String get trlDownload => 'Descargar senderos a mi alrededor';
+
+  @override
+  String get trlSaved => 'Zona guardada. Ya funciona sin cobertura.';
+
+  @override
+  String trlAreaName(String date) {
+    return 'Senderos cercanos, $date';
+  }
+
+  @override
+  String get trlNoPosition =>
+      'Aún no hay posición. Conecta una radio con GPS o permite la ubicación del teléfono.';
+
+  @override
+  String get trlTooLarge =>
+      'Esa zona es demasiado grande para descargarla de una vez.';
+
+  @override
+  String get trlFull => 'No hay espacio: elimina antes una zona.';
+
+  @override
+  String get trlNoTrails => 'No se encontraron senderos ni lugares ahí.';
+
+  @override
+  String get trlFailed =>
+      'No se pudo descargar. Comprueba la conexión a internet e inténtalo de nuevo.';
+
+  @override
+  String get trlNoArea =>
+      'Tú y ese lugar no estáis en la misma zona descargada.';
+
+  @override
+  String get trlStartFar =>
+      'Estás a más de 500 m de cualquier sendero descargado.';
+
+  @override
+  String get trlEndFar =>
+      'Ese lugar está a más de 500 m de cualquier sendero descargado.';
+
+  @override
+  String get trlNotConnected =>
+      'Ningún sendero de esta zona te lleva hasta ese lugar.';
+
+  @override
+  String get trlDamaged =>
+      'Los datos de esta zona están dañados. Elimínala y descárgala de nuevo.';
+
+  @override
+  String trlRouteTo(String name) {
+    return 'Ruta a $name';
+  }
+
+  @override
+  String trlRouteStats(String distance, String time) {
+    return '$distance • unos $time a paso tranquilo';
+  }
+
+  @override
+  String get trlNoClimb =>
+      'El tiempo no incluye la subida; cuenta con más en terreno con desnivel.';
+
+  @override
+  String get trlKindPeak => 'Cima';
+
+  @override
+  String get trlKindPass => 'Collado';
+
+  @override
+  String get trlKindSpring => 'Fuente';
+
+  @override
+  String get trlKindHut => 'Refugio';
+
+  @override
+  String get trlKindCampsite => 'Camping';
+
+  @override
+  String get trlKindViewpoint => 'Mirador';
+
+  @override
+  String get trlKindShelter => 'Abrigo';
+
+  @override
+  String get trlKindTrailhead => 'Inicio de sendero';
+
+  @override
+  String get trlKindTown => 'Pueblo';
+
+  @override
+  String get trlKindLocality => 'Lugar';
+
+  @override
+  String get trlKindWaypoint => 'Waypoint guardado';
+
+  @override
+  String get pvSent10 =>
+      'Los límites de una zona al servicio Overpass de OpenStreetMap, solo cuando descargas senderos; ve tu dirección IP';
 }

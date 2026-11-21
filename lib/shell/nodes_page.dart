@@ -1034,13 +1034,7 @@ class _NodeRow extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Row(children: [
-              CircleAvatar(
-                radius: 22,
-                backgroundColor: scheme.primaryContainer,
-                foregroundColor: scheme.onPrimaryContainer,
-                child: Text(_initials(node.shortName ?? node.displayName),
-                    style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
-              ),
+              NodeAvatar(num: node.num, label: node.shortName ?? node.displayName),
               const SizedBox(width: 14),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(children: [

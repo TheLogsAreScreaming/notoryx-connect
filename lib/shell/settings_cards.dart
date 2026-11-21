@@ -271,6 +271,38 @@ class _FieldAlertsCard extends StatelessWidget {
           onChanged: (v) => _update(context, s.copyWith(favoriteSilent: v)),
         ),
         SwitchListTile(
+          key: const ValueKey('fav-back-switch'),
+          title: Text(l.setFavBack),
+          subtitle: Text(l.setFavBackSub(_duration(s.backAfter))),
+          value: s.favoriteBack,
+          onChanged: (v) => _update(context, s.copyWith(favoriteBack: v)),
+        ),
+        ListTile(
+          title: Text(l.setBackAfter),
+          enabled: s.favoriteBack,
+          trailing: DropdownButton<Duration>(
+            key: const ValueKey('fav-back-after'),
+            value: s.backAfter,
+            items: [for (final v in BastionAlertSettings.backChoices)
+              DropdownMenuItem(value: v, child: Text(_duration(v)))],
+            onChanged: s.favoriteBack ? (v) => _update(context, s.copyWith(backAfter: v)) : null,
+          ),
+        ),
+        if (BastionSosRelay.instance case final relay?)
+          ListenableBuilder(
+            listenable: relay,
+            builder: (context, _) => SwitchListTile(
+              key: const ValueKey('sos-relay-switch'),
+              title: Text(l.srTitle),
+              subtitle: Text([
+                l.srSub,
+                if (relay.relayed > 0) l.srCount(relay.relayed),
+              ].join(' ')),
+              value: relay.enabled,
+              onChanged: (v) => relay.setEnabled(v),
+            ),
+          ),
+        SwitchListTile(
           key: const ValueKey('mesh-drop-switch'),
           title: Text(l.setMeshQuiet),
           subtitle: Text(l.setMeshQuietSub),

@@ -14,6 +14,8 @@ class BastionAlertSettings {
     this.favoriteSilent = false,
     this.silence = const Duration(hours: 2),
     this.meshDrop = false,
+    this.favoriteBack = false,
+    this.backAfter = const Duration(hours: 6),
   });
 
   static const key = 'bastion.alerts.v1';
@@ -36,20 +38,29 @@ class BastionAlertSettings {
   /// Far fewer nodes are being heard than earlier in this session.
   final bool meshDrop;
 
+  /// A favorite node is heard again after at least [backAfter] of silence.
+  final bool favoriteBack;
+  final Duration backAfter;
+  static const backChoices = [Duration(hours: 1), Duration(hours: 6), Duration(hours: 24), Duration(days: 3)];
+
   BastionAlertSettings copyWith({bool? lowBattery, int? batteryThreshold, bool? newNode,
-      bool? favoriteSilent, Duration? silence, bool? meshDrop}) => BastionAlertSettings(
+      bool? favoriteSilent, Duration? silence, bool? meshDrop, bool? favoriteBack, Duration? backAfter}) =>
+      BastionAlertSettings(
     lowBattery: lowBattery ?? this.lowBattery,
     batteryThreshold: batteryThreshold ?? this.batteryThreshold,
     newNode: newNode ?? this.newNode,
     favoriteSilent: favoriteSilent ?? this.favoriteSilent,
     silence: silence ?? this.silence,
     meshDrop: meshDrop ?? this.meshDrop,
+    favoriteBack: favoriteBack ?? this.favoriteBack,
+    backAfter: backAfter ?? this.backAfter,
   );
 
   Map<String, Object> toJson() => {
     'lowBattery': lowBattery, 'batteryThreshold': batteryThreshold,
     'newNode': newNode, 'favoriteSilent': favoriteSilent, 'silenceMinutes': silence.inMinutes,
     'meshDrop': meshDrop,
+    'favoriteBack': favoriteBack, 'backAfterMinutes': backAfter.inMinutes,
   };
 
   /// Unknown or out-of-range values fall back to the defaults.
@@ -65,6 +76,8 @@ class BastionAlertSettings {
       favoriteSilent: json['favoriteSilent'] is bool ? json['favoriteSilent'] as bool : d.favoriteSilent,
       silence: silenceChoices.firstWhere((c) => c.inMinutes == minutes, orElse: () => d.silence),
       meshDrop: json['meshDrop'] is bool ? json['meshDrop'] as bool : d.meshDrop,
+      favoriteBack: json['favoriteBack'] is bool ? json['favoriteBack'] as bool : d.favoriteBack,
+      backAfter: backChoices.firstWhere((c) => c.inMinutes == json['backAfterMinutes'], orElse: () => d.backAfter),
     );
   }
 
@@ -95,7 +108,7 @@ class BastionAlertSettings {
   int get hashCode => jsonEncode(toJson()).hashCode;
 }
 
-enum BastionAlertKind { lowBattery, newNode, favoriteSilent, sosAcknowledged, checkInDue, contactOverdue, geofenceArrive, geofenceLeave, keyChanged, meshDrop, offRoute, automation }
+enum BastionAlertKind { lowBattery, newNode, favoriteSilent, sosAcknowledged, checkInDue, contactOverdue, geofenceArrive, geofenceLeave, keyChanged, meshDrop, offRoute, automation, favoriteBack, sosRelayed }
 
 @immutable
 class BastionFieldAlert {
@@ -166,6 +179,19 @@ class BastionFieldAlertEngine {
     if (!_active.add('new:$nodeNum')) return null;
     return BastionFieldAlert(BastionAlertKind.newNode, nodeNum, BastionText.l.svcNewNode(name),
         BastionText.l.svcNewNodeBody(name));
+  }
+
+  /// A favorite heard again after a long silence, as on NOTORYX Core.
+  /// [lastHeardBefore] is when it was last heard before this update.
+  BastionFieldAlert? favoriteBack(int nodeNum, String name,
+      {required bool favorite, required DateTime? lastHeardBefore, required BastionAlertSettings settings}) {
+    if (!inSession || !settings.favoriteBack || !favorite || nodeNum == _localNode) return null;
+    final before = lastHeardBefore;
+    if (before == null) return null;
+    final gap = _clock().difference(before);
+    if (gap < settings.backAfter) return null;
+    return BastionFieldAlert(BastionAlertKind.favoriteBack, nodeNum, BastionText.l.svcFavBack(name),
+        BastionText.l.svcFavBackBody(_describe(gap)));
   }
 
   /// Below this many nodes, normal comings and goings look like an outage.

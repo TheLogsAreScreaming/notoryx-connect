@@ -1,12 +1,5 @@
 part of '../main.dart';
 
-/// One or two letters for a node's avatar.
-String _initials(String name) {
-  final trimmed = name.trim();
-  if (trimmed.isEmpty) return '?';
-  return trimmed.characters.take(trimmed.length >= 2 ? 2 : 1).toString().toUpperCase();
-}
-
 IconData _signalIcon(int rssi) {
   if (rssi >= -60) return Icons.signal_cellular_alt;
   if (rssi >= -75) return Icons.signal_cellular_alt_2_bar;

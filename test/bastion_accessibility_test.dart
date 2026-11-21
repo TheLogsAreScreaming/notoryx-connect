@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
+import 'support/shell_nav.dart';
 
 Future<void> screenshot(WidgetTester tester, GlobalKey key, String name) async {
   if (Platform.environment['CI'] != 'true') return;
@@ -59,7 +60,7 @@ void main() {
       final capture = GlobalKey();
       await tester.pumpWidget(RepaintBoundary(key: capture, child: const BastionApp())); await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
-      await tester.tap(find.byIcon(Icons.settings_outlined).last); await tester.pumpAndSettle();
+      await openSettings(tester);
       expect(tester.takeException(), isNull);
       await tester.scrollUntilVisible(find.text('Appearance & dashboard'), 200, scrollable: find.byType(Scrollable).first);
       await tester.ensureVisible(find.text('Appearance & dashboard')); await tester.pumpAndSettle();

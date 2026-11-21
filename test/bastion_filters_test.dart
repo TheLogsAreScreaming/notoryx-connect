@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
+import 'support/shell_nav.dart';
 
 final class FlakyStore extends InMemorySharedPreferencesAsync {
   FlakyStore() : super.empty();
@@ -101,7 +102,7 @@ void main() {
 
   testWidgets('Settings lets you add and remove filtered words', (tester) async {
     await tester.pumpWidget(const BastionApp());
-    await tester.tap(find.byIcon(Icons.settings_outlined).last);
+    await openSettings(tester);
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.text('Filters'), 250, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.text('Filters'));

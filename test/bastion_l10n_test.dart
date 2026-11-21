@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
+import 'support/shell_nav.dart';
 
 Set<String> keysOf(String path) => (jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>)
     .keys.where((k) => !k.startsWith('@')).toSet();
@@ -259,7 +260,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(const BastionApp());
     await tester.pumpAndSettle();
-    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Útiles')));
+    await openTools(tester);
     await tester.pumpAndSettle();
     expect(find.text('Doctor de conexión'), findsOneWidget);
     // More tools sit above the checklist than fit on a small phone.
@@ -322,7 +323,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(const BastionApp());
     await tester.pumpAndSettle();
-    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Ajustes')));
+    await openSettings(tester);
     await tester.pumpAndSettle();
     expect(find.text('Cambiar ajustes de la radio'), findsOneWidget);
     expect(find.text('Change radio settings'), findsNothing);
@@ -330,8 +331,8 @@ void main() {
   });
 
   for (final (locale, settings, offline) in [
-    (const Locale('en'), 'Settings', 'Radio: Offline'),
-    (const Locale('es'), 'Ajustes', 'Radio: Sin conexión'),
+    (const Locale('en'), 'More', 'Radio: Offline'),
+    (const Locale('es'), 'Más', 'Radio: Sin conexión'),
   ]) {
     testWidgets('tabs and radio status follow the phone language: ${locale.languageCode}', (tester) async {
       tester.platformDispatcher.localeTestValue = locale;

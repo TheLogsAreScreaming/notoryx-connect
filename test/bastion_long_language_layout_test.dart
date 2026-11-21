@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
+import 'support/shell_nav.dart';
 
 /// German and French run longer than English. Every main tab must fit a
 /// small phone without overflow stripes, with normal and large text.
@@ -70,6 +71,10 @@ void main() {
           if (find.text(l.toolsDoctor).evaluate().isNotEmpty) seen.add('tools');
           if (find.text(l.setSubtitle).evaluate().isNotEmpty) seen.add('settings');
         }
+        // Settings is the other side of More.
+        await openSettings(tester);
+        expect(tester.takeException(), isNull, reason: 'Settings in $code');
+        if (find.text(l.setSubtitle).evaluate().isNotEmpty) seen.add('settings');
         expect(seen, {'tools', 'settings'}, reason: 'the taps really opened the Tools and Settings tabs');
       });
     }
