@@ -7015,4 +7015,62 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get lnkPrevSub =>
       'Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono.';
+
+  @override
+  String get teamTitle => 'Configuración de equipo';
+
+  @override
+  String get teamToolSub =>
+      'Canales, ajustes de radio y contactos del viaje en un solo código QR';
+
+  @override
+  String get teamIntro =>
+      'Todo lo que necesita un compañero en un solo escaneo: tus canales y sus claves, los ajustes de la radio y tus contactos del viaje, incluido tú.';
+
+  @override
+  String get teamChannels => 'Canales';
+
+  @override
+  String teamContacts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count contactos del viaje',
+      one: '1 contacto del viaje',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get teamHowTo =>
+      'En el otro teléfono: Más → Ajustes → Canales → Unirse con código QR o enlace, y escanea este código.';
+
+  @override
+  String get teamAddContacts => 'Añadirlos como contactos del viaje';
+
+  @override
+  String teamAddContactsSub(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Añade $count contactos nuevos a tu viaje.',
+      one: 'Añade 1 contacto nuevo a tu viaje.',
+      zero: 'Ya son tus contactos del viaje.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String teamAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count contactos del viaje añadidos.',
+      one: '1 contacto del viaje añadido.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get teamShareButton => 'Compartir configuración de equipo';
 }

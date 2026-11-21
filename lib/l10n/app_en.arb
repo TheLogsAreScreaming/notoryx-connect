@@ -4888,5 +4888,36 @@
     }
   },
   "lnkPrevTitle": "Link previews",
-  "lnkPrevSub": "Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it."
+  "lnkPrevSub": "Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.",
+  "teamTitle": "Team setup",
+  "teamToolSub": "Channels, radio settings and trip contacts in one QR code",
+  "teamIntro": "Everything a teammate needs in one scan: your channels and their keys, the radio settings, and your trip contacts, including you.",
+  "teamChannels": "Channels",
+  "teamContacts": "{count, plural, =1{1 trip contact} other{{count} trip contacts}}",
+  "@teamContacts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "teamHowTo": "On the other phone: More → Settings → Channels → Join with QR code or link, then scan this code.",
+  "teamAddContacts": "Add them as trip contacts",
+  "teamAddContactsSub": "{count, plural, =0{They are already your trip contacts.} =1{Adds 1 new contact to your trip.} other{Adds {count} new contacts to your trip.}}",
+  "@teamAddContactsSub": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "teamAdded": "{count, plural, =1{1 trip contact added.} other{{count} trip contacts added.}}",
+  "@teamAdded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "teamShareButton": "Share team setup"
 }

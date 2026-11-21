@@ -73,6 +73,14 @@ class _ToolsPageState extends State<_ToolsPage> {
       )),
       NxSectionLabel(l.toolsBeforeYouGo),
       Card(child: ListTile(
+        key: const ValueKey('tools-team-setup'),
+        leading: const Icon(Icons.groups_outlined),
+        title: Text(l.teamTitle),
+        subtitle: Text(l.teamToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(TeamSharePage(radio: radio)),
+      )),
+      Card(child: ListTile(
         key: const ValueKey('tools-track-log'),
         leading: const Icon(Icons.route_outlined),
         title: Text(l.tlgTitle),

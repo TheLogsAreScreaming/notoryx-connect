@@ -1856,9 +1856,9 @@
   "tgSameChannel": "Vous partagez un canal avec vos correspondants",
   "tgSameChannelAdvice": "Les messages de canal n’atteignent que les radios avec le même nom et la même clé de canal. Partagez le QR code du canal pour en être sûr.",
   "tgHops": "Votre limite de sauts les atteint",
-  "tgHopsAdvice": "Chaque relais utilise un saut. S’ils sont loin, augmentez la limite dans Réglages radio → LoRa ; plus de 3 est rarement utile.",
+  "tgHopsAdvice": "Chaque relais utilise un saut. S’ils sont loin, augmentez la limite dans Réglages de la radio → LoRa ; plus de 3 est rarement utile.",
   "tgRegion": "Votre radio a une région définie",
-  "tgRegionAdvice": "Une radio sans région ne peut pas émettre. Choisissez la région de votre pays dans Réglages radio → LoRa.",
+  "tgRegionAdvice": "Une radio sans région ne peut pas émettre. Choisissez la région de votre pays dans Réglages de la radio → LoRa.",
   "tgPreset": "Votre radio utilise le même préréglage que le maillage local",
   "tgPresetAdvice": "Des radios sur un autre préréglage de modem ou une autre fréquence n’entendent personne. Long Fast est le défaut ; demandez ce qu’utilise votre maillage local.",
   "tgAntenna": "L’antenne est montée",
@@ -1880,5 +1880,15 @@
   "setFavBackSub": "Quand un favori est de nouveau entendu après {time} ou plus de silence",
   "setBackAfter": "De retour après au moins",
   "lnkPrevTitle": "Aperçu des liens",
-  "lnkPrevSub": "Affiche le titre des liens web dans les discussions. La page est téléchargée depuis internet, donc le site voit la demande de votre téléphone."
+  "lnkPrevSub": "Affiche le titre des liens web dans les discussions. La page est téléchargée depuis internet, donc le site voit la demande de votre téléphone.",
+  "teamTitle": "Configuration d’équipe",
+  "teamToolSub": "Canaux, réglages radio et contacts de sortie dans un seul QR code",
+  "teamIntro": "Tout ce qu’il faut à un coéquipier en un scan : vos canaux et leurs clés, les réglages radio et vos contacts de sortie, vous compris.",
+  "teamChannels": "Canaux",
+  "teamContacts": "{count, plural, =1{1 contact de sortie} other{{count} contacts de sortie}}",
+  "teamHowTo": "Sur l’autre téléphone : Plus → Réglages → Canaux → Rejoindre avec un QR code ou un lien, puis scannez ce code.",
+  "teamAddContacts": "Les ajouter comme contacts de sortie",
+  "teamAddContactsSub": "{count, plural, =0{Ce sont déjà vos contacts de sortie.} =1{Ajoute 1 nouveau contact à votre sortie.} other{Ajoute {count} nouveaux contacts à votre sortie.}}",
+  "teamAdded": "{count, plural, =1{1 contact de sortie ajouté.} other{{count} contacts de sortie ajoutés.}}",
+  "teamShareButton": "Partager la configuration d’équipe"
 }

@@ -11400,6 +11400,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.'**
   String get lnkPrevSub;
+
+  /// No description provided for @teamTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Team setup'**
+  String get teamTitle;
+
+  /// No description provided for @teamToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels, radio settings and trip contacts in one QR code'**
+  String get teamToolSub;
+
+  /// No description provided for @teamIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything a teammate needs in one scan: your channels and their keys, the radio settings, and your trip contacts, including you.'**
+  String get teamIntro;
+
+  /// No description provided for @teamChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get teamChannels;
+
+  /// No description provided for @teamContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 trip contact} other{{count} trip contacts}}'**
+  String teamContacts(int count);
+
+  /// No description provided for @teamHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'On the other phone: More → Settings → Channels → Join with QR code or link, then scan this code.'**
+  String get teamHowTo;
+
+  /// No description provided for @teamAddContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Add them as trip contacts'**
+  String get teamAddContacts;
+
+  /// No description provided for @teamAddContactsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{They are already your trip contacts.} =1{Adds 1 new contact to your trip.} other{Adds {count} new contacts to your trip.}}'**
+  String teamAddContactsSub(int count);
+
+  /// No description provided for @teamAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 trip contact added.} other{{count} trip contacts added.}}'**
+  String teamAdded(int count);
+
+  /// No description provided for @teamShareButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Share team setup'**
+  String get teamShareButton;
 }
 
 class _AppLocalizationsDelegate

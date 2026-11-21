@@ -1880,5 +1880,15 @@
   "setFavBackSub": "Cuando un favorito se oye de nuevo tras {time} o más de silencio",
   "setBackAfter": "Vuelve tras al menos",
   "lnkPrevTitle": "Vista previa de enlaces",
-  "lnkPrevSub": "Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono."
+  "lnkPrevSub": "Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono.",
+  "teamTitle": "Configuración de equipo",
+  "teamToolSub": "Canales, ajustes de radio y contactos del viaje en un solo código QR",
+  "teamIntro": "Todo lo que necesita un compañero en un solo escaneo: tus canales y sus claves, los ajustes de la radio y tus contactos del viaje, incluido tú.",
+  "teamChannels": "Canales",
+  "teamContacts": "{count, plural, =1{1 contacto del viaje} other{{count} contactos del viaje}}",
+  "teamHowTo": "En el otro teléfono: Más → Ajustes → Canales → Unirse con código QR o enlace, y escanea este código.",
+  "teamAddContacts": "Añadirlos como contactos del viaje",
+  "teamAddContactsSub": "{count, plural, =0{Ya son tus contactos del viaje.} =1{Añade 1 contacto nuevo a tu viaje.} other{Añade {count} contactos nuevos a tu viaje.}}",
+  "teamAdded": "{count, plural, =1{1 contacto del viaje añadido.} other{{count} contactos del viaje añadidos.}}",
+  "teamShareButton": "Compartir configuración de equipo"
 }

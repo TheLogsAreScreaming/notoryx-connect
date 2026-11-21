@@ -6948,14 +6948,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tgHopsAdvice =>
-      'Chaque relais utilise un saut. S’ils sont loin, augmentez la limite dans Réglages radio → LoRa ; plus de 3 est rarement utile.';
+      'Chaque relais utilise un saut. S’ils sont loin, augmentez la limite dans Réglages de la radio → LoRa ; plus de 3 est rarement utile.';
 
   @override
   String get tgRegion => 'Votre radio a une région définie';
 
   @override
   String get tgRegionAdvice =>
-      'Une radio sans région ne peut pas émettre. Choisissez la région de votre pays dans Réglages radio → LoRa.';
+      'Une radio sans région ne peut pas émettre. Choisissez la région de votre pays dans Réglages de la radio → LoRa.';
 
   @override
   String get tgPreset =>
@@ -7045,4 +7045,62 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get lnkPrevSub =>
       'Affiche le titre des liens web dans les discussions. La page est téléchargée depuis internet, donc le site voit la demande de votre téléphone.';
+
+  @override
+  String get teamTitle => 'Configuration d’équipe';
+
+  @override
+  String get teamToolSub =>
+      'Canaux, réglages radio et contacts de sortie dans un seul QR code';
+
+  @override
+  String get teamIntro =>
+      'Tout ce qu’il faut à un coéquipier en un scan : vos canaux et leurs clés, les réglages radio et vos contacts de sortie, vous compris.';
+
+  @override
+  String get teamChannels => 'Canaux';
+
+  @override
+  String teamContacts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count contacts de sortie',
+      one: '1 contact de sortie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get teamHowTo =>
+      'Sur l’autre téléphone : Plus → Réglages → Canaux → Rejoindre avec un QR code ou un lien, puis scannez ce code.';
+
+  @override
+  String get teamAddContacts => 'Les ajouter comme contacts de sortie';
+
+  @override
+  String teamAddContactsSub(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ajoute $count nouveaux contacts à votre sortie.',
+      one: 'Ajoute 1 nouveau contact à votre sortie.',
+      zero: 'Ce sont déjà vos contacts de sortie.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String teamAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count contacts de sortie ajoutés.',
+      one: '1 contact de sortie ajouté.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get teamShareButton => 'Partager la configuration d’équipe';
 }
