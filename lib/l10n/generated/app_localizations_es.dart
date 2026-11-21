@@ -7229,4 +7229,30 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ahChange => 'Cambiar de nodo';
+
+  @override
+  String get srTitle => 'Reenviar SOS que la malla no puede llevar';
+
+  @override
+  String get srSub =>
+      'Cuando un SOS de NOTORYX en un canal te llega sin saltos restantes, o tu radio está configurada para no retransmitir, reenvíalo una vez desde tu radio. Usa tiempo de aire; apagado por defecto.';
+
+  @override
+  String srCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count SOS reenviados hasta ahora.',
+      one: '1 SOS reenviado hasta ahora.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get srRelayedTitle => 'Has reenviado un SOS';
+
+  @override
+  String srRelayedBody(String name) {
+    return 'Tu radio reenvió el SOS de $name en el mismo canal.';
+  }
 }

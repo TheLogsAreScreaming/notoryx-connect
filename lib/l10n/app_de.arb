@@ -1932,5 +1932,10 @@
   "ahBest": "Bester Wert bisher",
   "ahAgo": "Vor {seconds} s gehört",
   "ahLost": "Länger nicht gehört: Klicks gestoppt.",
-  "ahChange": "Knoten wechseln"
+  "ahChange": "Knoten wechseln",
+  "srTitle": "SOS weiterleiten, die das Mesh nicht mehr trägt",
+  "srSub": "Wenn ein NOTORYX-SOS auf einem Kanal Sie ohne verbleibende Hops erreicht oder Ihr Funkgerät nicht weitersendet, wird es einmal von Ihrem Funkgerät weitergegeben. Kostet Sendezeit; standardmäßig aus.",
+  "srCount": "{count, plural, =1{Bisher 1 SOS weitergeleitet.} other{Bisher {count} SOS weitergeleitet.}}",
+  "srRelayedTitle": "Sie haben ein SOS weitergeleitet",
+  "srRelayedBody": "Ihr Funkgerät hat das SOS von {name} auf demselben Kanal weitergeleitet."
 }

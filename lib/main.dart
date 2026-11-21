@@ -83,6 +83,7 @@ import 'backdrop_page.dart';
 import 'battery_watch_page.dart';
 import 'mesh_activity_page.dart';
 import 'antenna_hunt_page.dart';
+import 'services/bastion_sos_relay.dart';
 import 'services/bastion_mesh_watch.dart';
 import 'theme/nx_backdrop.dart';
 import 'theme/nx_components.dart';
@@ -352,6 +353,21 @@ class _BastionShellState extends State<BastionShell> {
       ready: () => _realRadio.isReady,
     )..start();
     _realRadio.addListener(_meshFeed!.check);
+    // The SOS relay listens to the real radio only, never the demo.
+    final relay = BastionSosRelay.instance = BastionSosRelay(
+      send: (text, channel) => _realRadio.sendText(text: text, channel: channel),
+      radioRelaysItself: () => _realRadio.rebroadcasts,
+      self: () => _realRadio.localNodeNum,
+      nameOf: _realRadio.nodeName,
+      onRelayed: (from, text) => unawaited(_realRadio.showLocalAlert(BastionFieldAlert(
+        BastionAlertKind.sosRelayed,
+        from,
+        BastionText.l.srRelayedTitle,
+        BastionText.l.srRelayedBody(_realRadio.nodeName(from)),
+      ))),
+    );
+    unawaited(relay.load());
+    _realRadio.onIncomingText = relay.onMessage;
     _setUpShortcuts();
     // The widget follows the real radio, never the demo.
     if (BastionHomeWidget.supported) {
@@ -398,6 +414,9 @@ class _BastionShellState extends State<BastionShell> {
       f.dispose();
     }
     BastionMeshWatch.instance.detach();
+    _realRadio.onIncomingText = null;
+    BastionSosRelay.instance?.dispose();
+    BastionSosRelay.instance = null;
     _realRadio.dispose();
     _demo?.dispose();
     super.dispose();

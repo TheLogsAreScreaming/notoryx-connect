@@ -1932,5 +1932,10 @@
   "ahBest": "Meilleur jusqu’ici",
   "ahAgo": "Entendu il y a {seconds} s",
   "ahLost": "Plus entendu depuis un moment : clics arrêtés.",
-  "ahChange": "Changer de nœud"
+  "ahChange": "Changer de nœud",
+  "srTitle": "Relayer les SOS que le maillage ne porte plus",
+  "srSub": "Quand un SOS NOTORYX sur un canal vous parvient sans saut restant, ou que votre radio est réglée pour ne pas rediffuser, le renvoyer une fois depuis votre radio. Consomme du temps d’antenne ; désactivé par défaut.",
+  "srCount": "{count, plural, =1{1 SOS relayé jusqu’ici.} other{{count} SOS relayés jusqu’ici.}}",
+  "srRelayedTitle": "Vous avez relayé un SOS",
+  "srRelayedBody": "Votre radio a relayé le SOS de {name} sur le même canal."
 }

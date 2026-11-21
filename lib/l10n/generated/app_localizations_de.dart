@@ -7260,4 +7260,30 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get ahChange => 'Knoten wechseln';
+
+  @override
+  String get srTitle => 'SOS weiterleiten, die das Mesh nicht mehr trägt';
+
+  @override
+  String get srSub =>
+      'Wenn ein NOTORYX-SOS auf einem Kanal Sie ohne verbleibende Hops erreicht oder Ihr Funkgerät nicht weitersendet, wird es einmal von Ihrem Funkgerät weitergegeben. Kostet Sendezeit; standardmäßig aus.';
+
+  @override
+  String srCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Bisher $count SOS weitergeleitet.',
+      one: 'Bisher 1 SOS weitergeleitet.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get srRelayedTitle => 'Sie haben ein SOS weitergeleitet';
+
+  @override
+  String srRelayedBody(String name) {
+    return 'Ihr Funkgerät hat das SOS von $name auf demselben Kanal weitergeleitet.';
+  }
 }

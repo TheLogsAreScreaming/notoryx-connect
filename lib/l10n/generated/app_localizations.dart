@@ -11712,6 +11712,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change node'**
   String get ahChange;
+
+  /// No description provided for @srTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Relay SOS the mesh can’t carry'**
+  String get srTitle;
+
+  /// No description provided for @srSub.
+  ///
+  /// In en, this message translates to:
+  /// **'When a NOTORYX SOS on a channel reaches you with no hops left, or your radio is set not to rebroadcast, pass it on once from your radio. Uses airtime; off by default.'**
+  String get srSub;
+
+  /// No description provided for @srCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Relayed 1 SOS so far.} other{Relayed {count} SOS so far.}}'**
+  String srCount(int count);
+
+  /// No description provided for @srRelayedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You passed on an SOS'**
+  String get srRelayedTitle;
+
+  /// No description provided for @srRelayedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio relayed the SOS from {name} on the same channel.'**
+  String srRelayedBody(String name);
 }
 
 class _AppLocalizationsDelegate

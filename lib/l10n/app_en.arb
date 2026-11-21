@@ -5023,5 +5023,24 @@
         "type": "int"
       }
     }
+  },
+  "srTitle": "Relay SOS the mesh can’t carry",
+  "srSub": "When a NOTORYX SOS on a channel reaches you with no hops left, or your radio is set not to rebroadcast, pass it on once from your radio. Uses airtime; off by default.",
+  "srCount": "{count, plural, =1{Relayed 1 SOS so far.} other{Relayed {count} SOS so far.}}",
+  "srRelayedTitle": "You passed on an SOS",
+  "srRelayedBody": "Your radio relayed the SOS from {name} on the same channel.",
+  "@srCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@srRelayedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }
