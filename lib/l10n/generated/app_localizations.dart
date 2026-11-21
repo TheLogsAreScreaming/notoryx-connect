@@ -10692,6 +10692,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remembered'**
   String get searchRemembered;
+
+  /// No description provided for @tabMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get tabMore;
+
+  /// No description provided for @bgTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get bgTitle;
+
+  /// No description provided for @bgKindTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme glow'**
+  String get bgKindTheme;
+
+  /// No description provided for @bgKindSolid.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get bgKindSolid;
+
+  /// No description provided for @bgKindLinear.
+  ///
+  /// In en, this message translates to:
+  /// **'Gradient'**
+  String get bgKindLinear;
+
+  /// No description provided for @bgKindMesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh blend'**
+  String get bgKindMesh;
+
+  /// No description provided for @bgKindPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get bgKindPhoto;
+
+  /// No description provided for @bgColor1.
+  ///
+  /// In en, this message translates to:
+  /// **'First color'**
+  String get bgColor1;
+
+  /// No description provided for @bgColor2.
+  ///
+  /// In en, this message translates to:
+  /// **'Second color'**
+  String get bgColor2;
+
+  /// No description provided for @bgColorN.
+  ///
+  /// In en, this message translates to:
+  /// **'Color {index}'**
+  String bgColorN(int index);
+
+  /// No description provided for @bgDim.
+  ///
+  /// In en, this message translates to:
+  /// **'Dim'**
+  String get bgDim;
+
+  /// No description provided for @bgBlur.
+  ///
+  /// In en, this message translates to:
+  /// **'Blur'**
+  String get bgBlur;
+
+  /// No description provided for @bgChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get bgChoosePhoto;
+
+  /// No description provided for @bgReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the theme\'s background'**
+  String get bgReset;
+
+  /// No description provided for @bgHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards sit on frosted glass over this. Turn up Dim if text is hard to read.'**
+  String get bgHint;
+
+  /// No description provided for @bgPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get bgPreviewTitle;
+
+  /// No description provided for @bgPreviewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Text on a glass card looks like this.'**
+  String get bgPreviewBody;
+
+  /// No description provided for @bgPhotoNotBackedUp.
+  ///
+  /// In en, this message translates to:
+  /// **'The photo stays on this phone and isn\'t included in backups.'**
+  String get bgPhotoNotBackedUp;
+
+  /// No description provided for @bgPhotoFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t use that photo. Try a different one.'**
+  String get bgPhotoFailed;
 }
 
 class _AppLocalizationsDelegate

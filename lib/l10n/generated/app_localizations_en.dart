@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6544,4 +6545,65 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchRemembered => 'Remembered';
+
+  @override
+  String get tabMore => 'More';
+
+  @override
+  String get bgTitle => 'Background';
+
+  @override
+  String get bgKindTheme => 'Theme glow';
+
+  @override
+  String get bgKindSolid => 'Color';
+
+  @override
+  String get bgKindLinear => 'Gradient';
+
+  @override
+  String get bgKindMesh => 'Mesh blend';
+
+  @override
+  String get bgKindPhoto => 'Photo';
+
+  @override
+  String get bgColor1 => 'First color';
+
+  @override
+  String get bgColor2 => 'Second color';
+
+  @override
+  String bgColorN(int index) {
+    return 'Color $index';
+  }
+
+  @override
+  String get bgDim => 'Dim';
+
+  @override
+  String get bgBlur => 'Blur';
+
+  @override
+  String get bgChoosePhoto => 'Choose photo';
+
+  @override
+  String get bgReset => 'Back to the theme\'s background';
+
+  @override
+  String get bgHint =>
+      'Cards sit on frosted glass over this. Turn up Dim if text is hard to read.';
+
+  @override
+  String get bgPreviewTitle => 'Preview';
+
+  @override
+  String get bgPreviewBody => 'Text on a glass card looks like this.';
+
+  @override
+  String get bgPhotoNotBackedUp =>
+      'The photo stays on this phone and isn\'t included in backups.';
+
+  @override
+  String get bgPhotoFailed => 'Couldn\'t use that photo. Try a different one.';
 }

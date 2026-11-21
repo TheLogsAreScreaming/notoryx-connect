@@ -53,13 +53,14 @@ Future<void> _loadFonts() async {
 
 void main() {
   final out = Platform.environment['PREVIEW_OUT'];
-  // Tab icon to tap, and the file name for that tab.
+  // Icons to tap in turn, and the file name for that screen. Tools and
+  // Settings are the two sides of the More tab.
   final tabs = {
-    Icons.shield_outlined: 'home',
-    Icons.hub_outlined: 'nodes',
-    Icons.chat_bubble_outline: 'chats',
-    Icons.build_outlined: 'tools',
-    Icons.settings_outlined: 'settings',
+    'home': [Icons.shield_outlined],
+    'nodes': [Icons.hub_outlined],
+    'chats': [Icons.chat_bubble_outline],
+    'tools': [Icons.more_horiz, Icons.build_outlined],
+    'settings': [Icons.more_horiz, Icons.settings_outlined],
   };
 
   setUpAll(() async {
@@ -128,9 +129,11 @@ void main() {
       await tester.tap(find.byIcon(Icons.play_circle_outline).first);
       await tester.pumpAndSettle();
       for (final tab in tabs.entries) {
-        await tester.tap(find.byIcon(tab.key).last);
-        await tester.pumpAndSettle();
-        if (tab.value == 'nodes') {
+        for (final icon in tab.value) {
+          await tester.tap(find.byIcon(icon).last);
+          await tester.pumpAndSettle();
+        }
+        if (tab.key == 'nodes') {
           // Bring the demo mesh's node list to the top of the screen.
           await tester.dragFrom(const Offset(195, 600), const Offset(0, -520));
           await tester.pumpAndSettle();
@@ -140,7 +143,7 @@ void main() {
           final image = await ro.toImage(pixelRatio: 2);
           final png = await image.toByteData(format: ui.ImageByteFormat.png);
           final suffix = switch (theme) { 'blaze' => '', 'bare_beauty' => '_light', _ => '_$theme' };
-          File('$out/${tab.value}$suffix.png')
+          File('$out/${tab.key}$suffix.png')
             ..createSync(recursive: true)
             ..writeAsBytesSync(png!.buffer.asUint8List());
         });

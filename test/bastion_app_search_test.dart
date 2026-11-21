@@ -104,7 +104,7 @@ void main() {
     testWidgets('opens from the top bar on every tab and finds app pages', (tester) async {
       await tester.pumpWidget(const BastionApp());
       await tester.pumpAndSettle();
-      for (final icon in [Icons.hub_outlined, Icons.settings_outlined]) {
+      for (final icon in [Icons.hub_outlined, Icons.more_horiz]) {
         await tester.tap(find.byIcon(icon).last);
         await tester.pumpAndSettle();
         expect(find.byKey(const ValueKey('app-search')), findsOneWidget);

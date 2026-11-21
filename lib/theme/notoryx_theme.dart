@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'notoryx_tokens.dart';
+import 'nx_backdrop.dart';
 import 'nx_themes.dart';
 
 /// The tone of a status: what it means, shown with colour AND an icon or
@@ -176,11 +177,15 @@ abstract final class NotoryxTheme {
     return c;
   }
 
+  /// How much of the page colour a card keeps over the backdrop. High
+  /// enough that text on a card keeps the theme's contrast.
+  static const glassOpacity = 0.82;
+
   /// The whole app theme for palette [p].
   static ThemeData fromPalette(BastionPalette p) =>
-      _compose(schemeFor(p), NxStatusColors.fromPalette(p));
+      _compose(schemeFor(p), NxStatusColors.fromPalette(p), NxGlow.fromPalette(p));
 
-  static ThemeData _compose(ColorScheme c, NxStatusColors status) {
+  static ThemeData _compose(ColorScheme c, NxStatusColors status, [NxGlow? glow]) {
     final brightness = c.brightness;
     final type = _type(c);
     // Squared-off controls and hairline cards: the NOTORYX Core look.
@@ -197,7 +202,7 @@ abstract final class NotoryxTheme {
       textTheme: type,
       fontFamily: NxFonts.sans,
       fontFamilyFallback: NxFonts.sansFallback,
-      extensions: [status],
+      extensions: [status, ?glow],
       splashFactory: InkSparkle.splashFactory,
       scaffoldBackgroundColor: c.surface,
       canvasColor: c.surface,
@@ -214,18 +219,18 @@ abstract final class NotoryxTheme {
         titleTextStyle: type.titleLarge,
         foregroundColor: c.onSurface,
       ),
-      // Field-instrument cards: no fill, a hairline outline, squared off.
-      // Painted with the page colour, so it reads as unfilled but text
-      // contrast is still measured against a real surface.
+      // Frosted-glass cards, as in NOTORYX Core: mostly the page colour, so
+      // text contrast holds, with a little of the backdrop glow showing
+      // through and an edge that catches the theme's accent.
       cardTheme: CardThemeData(
-        color: c.surface,
+        color: c.surface.withValues(alpha: glassOpacity),
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         margin: const EdgeInsets.symmetric(vertical: NxSpace.xxs + 2),
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(NxRadius.xs),
-          side: BorderSide(color: c.outlineVariant),
+          borderRadius: BorderRadius.circular(NxRadius.md),
+          side: BorderSide(color: Color.alphaBlend(c.primary.withValues(alpha: .30), c.outlineVariant)),
         ),
       ),
       listTileTheme: ListTileThemeData(
@@ -326,7 +331,8 @@ abstract final class NotoryxTheme {
       ),
       // Solid accent block behind the chosen tab, as in NOTORYX Core.
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: c.surface,
+        // See-through, so the backdrop glow carries into the bar.
+        backgroundColor: c.surface.withValues(alpha: .88),
         surfaceTintColor: Colors.transparent,
         indicatorColor: c.primary,
         indicatorShape: soft,
@@ -340,7 +346,7 @@ abstract final class NotoryxTheme {
             fontWeight: s.contains(WidgetState.selected) ? FontWeight.w700 : FontWeight.w500)),
       ),
       navigationRailTheme: NavigationRailThemeData(
-        backgroundColor: c.surface,
+        backgroundColor: c.surface.withValues(alpha: .88),
         indicatorColor: c.primary,
         indicatorShape: soft,
         selectedIconTheme: IconThemeData(color: c.onPrimary),

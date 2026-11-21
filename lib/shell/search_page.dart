@@ -17,8 +17,8 @@ class AppSearchPage extends StatefulWidget {
   /// Closes search, switches to the Map and centres it on the spot.
   final void Function(double lat, double lon) onShowPlace;
 
-  /// Closes search and switches to a tab (index as in the shell).
-  final void Function(int tab) onGoTab;
+  /// Closes search and switches to a tab.
+  final void Function(ShellTab tab) onGoTab;
 
   @override
   State<AppSearchPage> createState() => _AppSearchPageState();
@@ -30,7 +30,7 @@ class _Feature {
   const _Feature(this.info, {this.page, this.tab, this.icon = Icons.tune});
   final SearchFeature info;
   final Widget Function()? page;
-  final int? tab;
+  final ShellTab? tab;
   final IconData icon;
 }
 
@@ -55,14 +55,14 @@ class _AppSearchPageState extends State<AppSearchPage> {
   }
 
   List<_Feature> _buildFeatures(AppLocalizations l) {
-    _Feature f(String id, String title, String sub, {Widget Function()? page, int? tab, IconData icon = Icons.tune, String keywords = ''}) =>
+    _Feature f(String id, String title, String sub, {Widget Function()? page, ShellTab? tab, IconData icon = Icons.tune, String keywords = ''}) =>
         _Feature(SearchFeature(id: id, title: title, subtitle: sub, keywords: keywords), page: page, tab: tab, icon: icon);
     return [
       f('radio-settings', l.setChange, l.setChangeSub, icon: Icons.edit_outlined,
           page: () => RadioSettingsPage(radio: radio)),
       f('channels', l.setChannels, l.chWhoCanRead, icon: Icons.tag,
           page: () => ChannelListPage(radio: radio)),
-      f('location', l.setShareLoc, l.setPrecisionSub, icon: Icons.my_location, tab: 5),
+      f('location', l.setShareLoc, l.setPrecisionSub, icon: Icons.my_location, tab: ShellTab.settings),
       f('radio-backup', l.setRadioBackup, l.setRadioBackupSub, icon: Icons.enhanced_encryption_outlined,
           page: () => RadioBackupPage(radio: radio)),
       f('phone-backup', l.setPhoneBackup, l.setPhoneBackupSub, icon: Icons.phone_android_outlined,
@@ -71,7 +71,7 @@ class _AppSearchPageState extends State<AppSearchPage> {
           page: () => NodeDbImportPage(radio: radio)),
       f('privacy', l.setPrivacy, l.setPrivacySub, icon: Icons.privacy_tip_outlined,
           page: () => PrivacyPage(radio: radio)),
-      f('demo', l.setDemo, l.setDemoSub, icon: Icons.play_circle_outline, tab: 5),
+      f('demo', l.setDemo, l.setDemoSub, icon: Icons.play_circle_outline, tab: ShellTab.settings),
       f('doctor', l.toolsDoctor, l.toolsDoctorSub, icon: Icons.medical_services_outlined,
           page: () => ConnectionDoctorPage(radio: radio, discovery: widget.discovery)),
       f('timeline', l.tlTitle, l.tlToolSub, icon: Icons.timeline,
