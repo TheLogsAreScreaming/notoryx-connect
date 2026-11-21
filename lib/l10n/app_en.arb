@@ -3915,7 +3915,7 @@
       }
     }
   },
-  "lpTitle": "Link previews",
+  "lpTitle": "Link planner",
   "lpIntro": "Check whether two nodes can reach each other over the hills between them.",
   "lpNeedPositions": "At least two nodes need a known position. Positions come from the mesh once a radio is connected.",
   "lpLink": "Link",
@@ -4697,7 +4697,6 @@
       }
     }
   },
-  "lpSub": "Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.",
   "chatJumpLatest": "Jump to the latest message",
   "pvSent9": "Requests for web pages linked in chats, only if you turn on Link previews; the linked site sees your IP address",
   "tlgTitle": "Track log",
@@ -4829,5 +4828,7 @@
   "tgPreset": "Your radio uses the same preset as the local mesh",
   "tgPresetAdvice": "Radios on a different modem preset or frequency slot hear no one. Long Fast is the default; ask your local mesh what they use.",
   "tgAntenna": "The antenna is fitted",
-  "tgAntennaAdvice": "Make sure the antenna is screwed on firmly. Never transmit without one; it can damage the radio."
+  "tgAntennaAdvice": "Make sure the antenna is screwed on firmly. Never transmit without one; it can damage the radio.",
+  "lnkPrevTitle": "Link previews",
+  "lnkPrevSub": "Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it."
 }

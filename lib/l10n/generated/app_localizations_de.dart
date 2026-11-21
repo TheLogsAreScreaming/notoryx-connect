@@ -5399,7 +5399,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get lpTitle => 'Link-Vorschau';
+  String get lpTitle => 'Verbindungsplaner';
 
   @override
   String get lpIntro =>
@@ -6718,10 +6718,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get snsNone => 'Keine Sensorwerte vom Funkgerät.';
 
   @override
-  String get lpSub =>
-      'Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage deines Handys.';
-
-  @override
   String get chatJumpLatest => 'Zur neuesten Nachricht';
 
   @override
@@ -6976,4 +6972,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get tgAntennaAdvice =>
       'Achte darauf, dass die Antenne fest sitzt. Sende nie ohne; das kann das Funkgerät beschädigen.';
+
+  @override
+  String get lnkPrevTitle => 'Link-Vorschau';
+
+  @override
+  String get lnkPrevSub =>
+      'Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage deines Handys.';
 }
