@@ -115,14 +115,15 @@ class _ChatsPageState extends State<BastionChatsPage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Row(children: [
-              CircleAvatar(
-                radius: 24,
-                backgroundColor: c.isChannel ? scheme.primaryContainer : scheme.secondaryContainer,
-                foregroundColor: c.isChannel ? scheme.onPrimaryContainer : scheme.onSecondaryContainer,
-                child: c.isChannel
-                    ? Text('${c.channel}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700))
-                    : Text(_initials(title), style: const TextStyle(fontWeight: FontWeight.w700)),
-              ),
+              if (c.isChannel)
+                CircleAvatar(
+                  radius: 24,
+                  backgroundColor: scheme.primaryContainer,
+                  foregroundColor: scheme.onPrimaryContainer,
+                  child: Text('${c.channel}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                )
+              else
+                NodeAvatar(num: c.node!, label: title, radius: 24),
               const SizedBox(width: 14),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(children: [

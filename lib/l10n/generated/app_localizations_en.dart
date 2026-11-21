@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6606,4 +6605,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bgPhotoFailed => 'Couldn\'t use that photo. Try a different one.';
+
+  @override
+  String get nlMenu => 'Photo or color';
+
+  @override
+  String nlTitle(String name) {
+    return 'Look for $name';
+  }
+
+  @override
+  String get nlHint => 'Only on this phone. It\'s never sent over the mesh.';
+
+  @override
+  String get nlChoosePhoto => 'Choose photo';
+
+  @override
+  String get nlRemovePhoto => 'Remove photo';
+
+  @override
+  String get nlClear => 'Use the default look';
+
+  @override
+  String nlColorN(int index) {
+    return 'Color $index';
+  }
+
+  @override
+  String get nlPhotoFailed => 'Couldn\'t use that photo. Try a different one.';
+
+  @override
+  String get snsTitle => 'Sensors';
+
+  @override
+  String get snsNone => 'No sensor readings from your radio.';
+
+  @override
+  String get chatJumpLatest => 'Jump to the latest message';
+
+  @override
+  String get pvSent9 =>
+      'Requests for web pages linked in chats, only if you turn on Link previews; the linked site sees your IP address';
+
+  @override
+  String get lnkPrevTitle => 'Link previews';
+
+  @override
+  String get lnkPrevSub =>
+      'Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.';
 }

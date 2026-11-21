@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6113,7 +6112,8 @@ class AppLocalizationsDe extends AppLocalizations {
       locale: localeName,
       other:
           '$count weitere Geräte in der Nähe sind keine Meshtastic-Funkgeräte und werden daher ausgeblendet.',
-      one: '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
+      one:
+          '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
     );
     return '$_temp0';
   }
@@ -6681,4 +6681,53 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get bgPhotoFailed =>
       'Dieses Foto ließ sich nicht verwenden. Versuch ein anderes.';
+
+  @override
+  String get nlMenu => 'Foto oder Farbe';
+
+  @override
+  String nlTitle(String name) {
+    return 'Aussehen von $name';
+  }
+
+  @override
+  String get nlHint => 'Nur auf diesem Handy. Wird nie über das Mesh gesendet.';
+
+  @override
+  String get nlChoosePhoto => 'Foto auswählen';
+
+  @override
+  String get nlRemovePhoto => 'Foto entfernen';
+
+  @override
+  String get nlClear => 'Standardaussehen verwenden';
+
+  @override
+  String nlColorN(int index) {
+    return 'Farbe $index';
+  }
+
+  @override
+  String get nlPhotoFailed =>
+      'Dieses Foto ließ sich nicht verwenden. Versuch ein anderes.';
+
+  @override
+  String get snsTitle => 'Sensoren';
+
+  @override
+  String get snsNone => 'Keine Sensorwerte vom Funkgerät.';
+
+  @override
+  String get chatJumpLatest => 'Zur neuesten Nachricht';
+
+  @override
+  String get pvSent9 =>
+      'Abrufe von in Chats verlinkten Webseiten, nur wenn du die Link-Vorschau einschaltest; die Website sieht deine IP-Adresse';
+
+  @override
+  String get lnkPrevTitle => 'Link-Vorschau';
+
+  @override
+  String get lnkPrevSub =>
+      'Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage deines Handys.';
 }

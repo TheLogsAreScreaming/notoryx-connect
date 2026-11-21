@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6087,7 +6086,8 @@ class AppLocalizationsEs extends AppLocalizations {
       locale: localeName,
       other:
           '$count dispositivos cercanos no son radios Meshtastic, así que están ocultos.',
-      one: '1 dispositivo cercano no es una radio Meshtastic, así que está oculto.',
+      one:
+          '1 dispositivo cercano no es una radio Meshtastic, así que está oculto.',
     );
     return '$_temp0';
   }
@@ -6653,4 +6653,52 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bgPhotoFailed => 'No se pudo usar esa foto. Prueba con otra.';
+
+  @override
+  String get nlMenu => 'Foto o color';
+
+  @override
+  String nlTitle(String name) {
+    return 'Aspecto de $name';
+  }
+
+  @override
+  String get nlHint => 'Solo en este teléfono. Nunca se envía por la malla.';
+
+  @override
+  String get nlChoosePhoto => 'Elegir foto';
+
+  @override
+  String get nlRemovePhoto => 'Quitar foto';
+
+  @override
+  String get nlClear => 'Usar el aspecto predeterminado';
+
+  @override
+  String nlColorN(int index) {
+    return 'Color $index';
+  }
+
+  @override
+  String get nlPhotoFailed => 'No se pudo usar esa foto. Prueba con otra.';
+
+  @override
+  String get snsTitle => 'Sensores';
+
+  @override
+  String get snsNone => 'Tu radio no da lecturas de sensores.';
+
+  @override
+  String get chatJumpLatest => 'Ir al último mensaje';
+
+  @override
+  String get pvSent9 =>
+      'Peticiones de las páginas web enlazadas en los chats, solo si activas la vista previa de enlaces; el sitio ve tu dirección IP';
+
+  @override
+  String get lnkPrevTitle => 'Vista previa de enlaces';
+
+  @override
+  String get lnkPrevSub =>
+      'Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono.';
 }

@@ -73,6 +73,9 @@ import 'services/meshtastic_radio_coordinator.dart';
 import 'services/meshtastic_usb_transport.dart';
 import 'theme/notoryx_theme.dart';
 import 'theme/notoryx_tokens.dart';
+import 'node_avatar.dart';
+import 'services/bastion_node_looks.dart';
+import 'services/bastion_link_preview.dart';
 import 'theme/nx_backdrop.dart';
 import 'theme/nx_components.dart';
 import 'services/bastion_backdrop.dart';
@@ -110,6 +113,7 @@ Future<void> main() async {
   await BastionTileCache.initialize();
   await BastionPreferences.instance.load();
   await BastionBackdrop.instance.load();
+  await BastionNodeLooks.instance.load();
   // Chat history lives in its own database; older saves move over once.
   await BastionChatStorage.useSqlite();
   await BastionChatStorage.applySavedEncryption();

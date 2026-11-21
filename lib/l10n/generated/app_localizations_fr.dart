@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6111,7 +6110,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count autres appareils à proximité ne sont pas des radios Meshtastic, ils sont donc masqués.',
-      one: '1 autre appareil à proximité n\'est pas une radio Meshtastic, il est donc masqué.',
+      one:
+          '1 autre appareil à proximité n\'est pas une radio Meshtastic, il est donc masqué.',
     );
     return '$_temp0';
   }
@@ -6680,4 +6680,54 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get bgPhotoFailed =>
       'Impossible d\'utiliser cette photo. Essayez-en une autre.';
+
+  @override
+  String get nlMenu => 'Photo ou couleur';
+
+  @override
+  String nlTitle(String name) {
+    return 'Apparence de $name';
+  }
+
+  @override
+  String get nlHint =>
+      'Uniquement sur ce téléphone. Jamais envoyé sur le maillage.';
+
+  @override
+  String get nlChoosePhoto => 'Choisir une photo';
+
+  @override
+  String get nlRemovePhoto => 'Retirer la photo';
+
+  @override
+  String get nlClear => 'Utiliser l\'apparence par défaut';
+
+  @override
+  String nlColorN(int index) {
+    return 'Couleur $index';
+  }
+
+  @override
+  String get nlPhotoFailed =>
+      'Impossible d\'utiliser cette photo. Essayez-en une autre.';
+
+  @override
+  String get snsTitle => 'Capteurs';
+
+  @override
+  String get snsNone => 'Aucune mesure de capteur de votre radio.';
+
+  @override
+  String get chatJumpLatest => 'Aller au dernier message';
+
+  @override
+  String get pvSent9 =>
+      'Demandes des pages web liées dans les discussions, uniquement si vous activez l\'aperçu des liens ; le site voit votre adresse IP';
+
+  @override
+  String get lnkPrevTitle => 'Aperçu des liens';
+
+  @override
+  String get lnkPrevSub =>
+      'Affiche le titre des liens web dans les discussions. La page est téléchargée depuis internet, donc le site voit la demande de votre téléphone.';
 }

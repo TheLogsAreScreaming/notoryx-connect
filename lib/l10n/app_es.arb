@@ -1781,5 +1781,19 @@
   "bgPreviewTitle": "Vista previa",
   "bgPreviewBody": "Así se ve el texto en una tarjeta de cristal.",
   "bgPhotoNotBackedUp": "La foto se queda en este teléfono y no se incluye en las copias de seguridad.",
-  "bgPhotoFailed": "No se pudo usar esa foto. Prueba con otra."
+  "bgPhotoFailed": "No se pudo usar esa foto. Prueba con otra.",
+  "nlMenu": "Foto o color",
+  "nlTitle": "Aspecto de {name}",
+  "nlHint": "Solo en este teléfono. Nunca se envía por la malla.",
+  "nlChoosePhoto": "Elegir foto",
+  "nlRemovePhoto": "Quitar foto",
+  "nlClear": "Usar el aspecto predeterminado",
+  "nlColorN": "Color {index}",
+  "nlPhotoFailed": "No se pudo usar esa foto. Prueba con otra.",
+  "snsTitle": "Sensores",
+  "snsNone": "Tu radio no da lecturas de sensores.",
+  "chatJumpLatest": "Ir al último mensaje",
+  "pvSent9": "Peticiones de las páginas web enlazadas en los chats, solo si activas la vista previa de enlaces; el sitio ve tu dirección IP",
+  "lnkPrevTitle": "Vista previa de enlaces",
+  "lnkPrevSub": "Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono."
 }

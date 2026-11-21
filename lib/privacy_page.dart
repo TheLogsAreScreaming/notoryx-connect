@@ -5,6 +5,7 @@ import 'l10n/generated/app_localizations.dart';
 import 'services/app_exit.dart';
 import 'services/bastion_app_lock.dart';
 import 'services/bastion_chat_store.dart';
+import 'services/bastion_preferences.dart';
 import 'services/bastion_phone_backup.dart';
 import 'services/bastion_tile_cache.dart';
 import 'services/meshtastic_connection_controller.dart';
@@ -48,7 +49,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   List<String> get _stored => [l.pvStored1, l.pvStored2, l.pvStored3, l.pvStored4, l.pvStored5, l.pvStored6];
 
-  List<String> get _sent => [l.pvSent1, l.pvSent2, l.pvSent3, l.pvSent4, l.pvSent5, l.pvSent6, l.pvSent7, l.pvSent8];
+  List<String> get _sent => [l.pvSent1, l.pvSent2, l.pvSent3, l.pvSent4, l.pvSent5, l.pvSent6, l.pvSent7, l.pvSent8, l.pvSent9];
 
   Future<void> _erase({required bool everything}) async {
     final l = this.l;
@@ -125,6 +126,17 @@ class _PrivacyPageState extends State<PrivacyPage> {
           value: BastionChatStorage.encrypted,
           onChanged: _busy ? null : _setEncrypted,
         )),
+        ListenableBuilder(
+          listenable: BastionPreferences.instance,
+          builder: (context, _) => Card(child: SwitchListTile(
+            key: const ValueKey('privacy-link-previews'),
+            secondary: const Icon(Icons.link),
+            title: Text(l.lnkPrevTitle),
+            subtitle: Text(l.lnkPrevSub),
+            value: BastionPreferences.instance.linkPreviews,
+            onChanged: (v) => BastionPreferences.instance.update(previews: v),
+          )),
+        ),
         _list(l.pvStored, _stored),
         _list(l.pvSent, _sent),
         const SizedBox(height: 8),

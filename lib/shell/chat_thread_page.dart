@@ -24,6 +24,30 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
   DateTime? _unreadSince;
   bool _showPins = false;
 
+  /// The message list; newest at offset 0, since the list runs upwards.
+  final _scroll = ScrollController();
+
+  /// Whether the list is scrolled back far enough to offer a jump to the
+  /// newest message.
+  final _awayFromLatest = ValueNotifier(false);
+
+  /// How far back (logical pixels) before the jump button shows.
+  static const jumpAfter = 400.0;
+
+  void _onScroll() {
+    if (!_scroll.hasClients) return;
+    _awayFromLatest.value = _scroll.offset > jumpAfter;
+  }
+
+  void _jumpToLatest() {
+    if (!_scroll.hasClients) return;
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _scroll.jumpTo(0);
+    } else {
+      unawaited(_scroll.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut));
+    }
+  }
+
   AppLocalizations get l => AppLocalizations.of(context);
   BastionConversation get conversation => widget.conversation;
   MeshtasticRadioCoordinator get radio => widget.radio;
@@ -41,6 +65,7 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
     }
     unawaited(radio.markConversationRead(conversation.key));
     radio.addListener(_markReadWhileOpen);
+    _scroll.addListener(_onScroll);
   }
 
   /// New messages in an open chat count as read.
@@ -56,6 +81,8 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
     radio.removeListener(_markReadWhileOpen);
     _saveDraft();
     composer.dispose();
+    _scroll.dispose();
+    _awayFromLatest.dispose();
     super.dispose();
   }
 
@@ -466,6 +493,9 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
                         SentinelFlag(message.from),
                       ]),
                     Text(message.text, style: type.bodyLarge?.copyWith(color: foreground)),
+                    if (BastionPreferences.instance.linkPreviews)
+                      if (BastionLinkPreviews.firstLink(message.text) case final link?)
+                        _LinkPreviewCard(link: link, foreground: foreground),
                     if (mentioned)
                       Padding(
                         padding: const EdgeInsets.only(top: 2),
@@ -760,16 +790,37 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
                           detail: radio.isReady ? l.chatsConnectedSub : l.chatsOfflineSub,
                         ),
                       ))
-                    : ListView.builder(
-                        reverse: true,
-                        padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                        itemCount: rows.length,
-                        itemBuilder: (context, i) => switch (rows[i]) {
-                          _DayRow(:final label) => _TimelineDivider(label: label),
-                          _NewRow() => _TimelineDivider(label: l.chatsNewBelow, highlight: true),
-                          _MessageRow(:final message) => _bubble(context, message, reactions[message.packetId]),
-                        },
-                      ),
+                    : Stack(children: [
+                        ListView.builder(
+                          controller: _scroll,
+                          reverse: true,
+                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                          itemCount: rows.length,
+                          itemBuilder: (context, i) => switch (rows[i]) {
+                            _DayRow(:final label) => _TimelineDivider(label: label),
+                            _NewRow() => _TimelineDivider(label: l.chatsNewBelow, highlight: true),
+                            _MessageRow(:final message) => _bubble(context, message, reactions[message.packetId]),
+                          },
+                        ),
+                        // Back to the newest message after scrolling up, as in
+                        // NOTORYX Core.
+                        PositionedDirectional(
+                          end: NxSpace.md,
+                          bottom: NxSpace.md,
+                          child: ValueListenableBuilder(
+                            valueListenable: _awayFromLatest,
+                            builder: (context, away, _) => away
+                                ? FloatingActionButton.small(
+                                    key: const ValueKey('chat-jump-latest'),
+                                    heroTag: null,
+                                    tooltip: l.chatJumpLatest,
+                                    onPressed: _jumpToLatest,
+                                    child: const Icon(Icons.keyboard_double_arrow_down),
+                                  )
+                                : const SizedBox.shrink(),
+                          ),
+                        ),
+                      ]),
               ),
               _scheduledFor(context),
               _composer(context, name),
@@ -869,3 +920,36 @@ Future<BastionConversation?> pickConversation(
     )),
   );
 }
+
+/// A quiet card under a message with a web link: the site, the page title
+/// and a line about it. Shown only when link previews are on in Privacy.
+class _LinkPreviewCard extends StatelessWidget {
+  const _LinkPreviewCard({required this.link, required this.foreground});
+  final Uri link;
+  final Color foreground;
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<LinkPreview?>(
+        future: BastionLinkPreviews.instance.previewFor(link),
+        builder: (context, snap) {
+          final p = snap.data;
+          if (p == null) return const SizedBox.shrink();
+          final type = Theme.of(context).textTheme;
+          return Container(
+            key: ValueKey('link-preview-${link.host}'),
+            margin: const EdgeInsets.only(top: 6),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              border: BorderDirectional(start: BorderSide(color: foreground.withValues(alpha: .6), width: 3)),
+              color: foreground.withValues(alpha: .06),
+            ),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(p.host, style: type.labelSmall?.copyWith(color: foreground.withValues(alpha: .85))),
+              Text(p.title, style: type.titleSmall?.copyWith(color: foreground)),
+              if (p.description case final d?) Text(d, style: type.bodySmall?.copyWith(color: foreground)),
+            ]),
+          );
+        },
+      );
+}
+

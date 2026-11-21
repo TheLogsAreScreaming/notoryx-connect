@@ -1781,5 +1781,19 @@
   "bgPreviewTitle": "Vorschau",
   "bgPreviewBody": "So sieht Text auf einer Glaskarte aus.",
   "bgPhotoNotBackedUp": "Das Foto bleibt auf diesem Handy und ist nicht in Backups enthalten.",
-  "bgPhotoFailed": "Dieses Foto ließ sich nicht verwenden. Versuch ein anderes."
+  "bgPhotoFailed": "Dieses Foto ließ sich nicht verwenden. Versuch ein anderes.",
+  "nlMenu": "Foto oder Farbe",
+  "nlTitle": "Aussehen von {name}",
+  "nlHint": "Nur auf diesem Handy. Wird nie über das Mesh gesendet.",
+  "nlChoosePhoto": "Foto auswählen",
+  "nlRemovePhoto": "Foto entfernen",
+  "nlClear": "Standardaussehen verwenden",
+  "nlColorN": "Farbe {index}",
+  "nlPhotoFailed": "Dieses Foto ließ sich nicht verwenden. Versuch ein anderes.",
+  "snsTitle": "Sensoren",
+  "snsNone": "Keine Sensorwerte vom Funkgerät.",
+  "chatJumpLatest": "Zur neuesten Nachricht",
+  "pvSent9": "Abrufe von in Chats verlinkten Webseiten, nur wenn du die Link-Vorschau einschaltest; die Website sieht deine IP-Adresse",
+  "lnkPrevTitle": "Link-Vorschau",
+  "lnkPrevSub": "Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage deines Handys."
 }

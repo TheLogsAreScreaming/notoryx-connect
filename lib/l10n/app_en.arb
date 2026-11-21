@@ -4672,5 +4672,33 @@
   "bgPreviewTitle": "Preview",
   "bgPreviewBody": "Text on a glass card looks like this.",
   "bgPhotoNotBackedUp": "The photo stays on this phone and isn't included in backups.",
-  "bgPhotoFailed": "Couldn't use that photo. Try a different one."
+  "bgPhotoFailed": "Couldn't use that photo. Try a different one.",
+  "nlMenu": "Photo or color",
+  "nlTitle": "Look for {name}",
+  "nlHint": "Only on this phone. It's never sent over the mesh.",
+  "nlChoosePhoto": "Choose photo",
+  "nlRemovePhoto": "Remove photo",
+  "nlClear": "Use the default look",
+  "nlColorN": "Color {index}",
+  "nlPhotoFailed": "Couldn't use that photo. Try a different one.",
+  "snsTitle": "Sensors",
+  "snsNone": "No sensor readings from your radio.",
+  "@nlTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@nlColorN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "chatJumpLatest": "Jump to the latest message",
+  "pvSent9": "Requests for web pages linked in chats, only if you turn on Link previews; the linked site sees your IP address",
+  "lnkPrevTitle": "Link previews",
+  "lnkPrevSub": "Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it."
 }
