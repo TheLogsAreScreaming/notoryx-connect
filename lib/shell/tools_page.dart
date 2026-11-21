@@ -55,6 +55,14 @@ class _ToolsPageState extends State<_ToolsPage> {
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(TimelinePage(radio: radio, timeline: BastionTimeline.instance)),
       )),
+      Card(child: ListTile(
+        key: const ValueKey('tools-field-guide'),
+        leading: const Icon(Icons.menu_book_outlined),
+        title: Text(l.gdTitle),
+        subtitle: Text(l.gdToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(const FieldGuidePage()),
+      )),
       NxSectionLabel(l.toolsBeforeYouGo),
       Card(child: ListTile(
         key: const ValueKey('tools-track-log'),
