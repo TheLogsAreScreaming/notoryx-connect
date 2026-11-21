@@ -5377,7 +5377,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get lpTitle => 'Vista previa de enlaces';
+  String get lpTitle => 'Planificador de enlace';
 
   @override
   String get lpIntro =>
@@ -6689,10 +6689,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get snsNone => 'Tu radio no da lecturas de sensores.';
 
   @override
-  String get lpSub =>
-      'Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono.';
-
-  @override
   String get chatJumpLatest => 'Ir al último mensaje';
 
   @override
@@ -7012,4 +7008,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setBackAfter => 'Vuelve tras al menos';
+
+  @override
+  String get lnkPrevTitle => 'Vista previa de enlaces';
+
+  @override
+  String get lnkPrevSub =>
+      'Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono.';
 }

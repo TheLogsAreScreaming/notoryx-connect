@@ -1450,7 +1450,7 @@
   "ldLastHeard": "Dernière réception : {date} {time}",
   "lpHeightRange": "Les hauteurs d'antenne doivent être entre 0 et 300 m.",
   "lpTerrainFailed": "Impossible d'obtenir les altitudes du terrain. Vérifiez votre connexion internet. ({error})",
-  "lpTitle": "Aperçu des liens",
+  "lpTitle": "Planificateur de liaison",
   "lpIntro": "Vérifiez si deux nœuds peuvent se joindre malgré le relief entre eux.",
   "lpNeedPositions": "Au moins deux nœuds doivent avoir une position connue. Les positions arrivent du maillage une fois une radio connectée.",
   "lpLink": "Liaison",
@@ -1792,7 +1792,6 @@
   "nlPhotoFailed": "Impossible d'utiliser cette photo. Essayez-en une autre.",
   "snsTitle": "Capteurs",
   "snsNone": "Aucune mesure de capteur de votre radio.",
-  "lpSub": "Affiche le titre des liens web dans les discussions. La page est téléchargée depuis internet, donc le site voit la demande de votre téléphone.",
   "chatJumpLatest": "Aller au dernier message",
   "pvSent9": "Demandes des pages web liées dans les discussions, uniquement si vous activez l'aperçu des liens ; le site voit votre adresse IP",
   "tlgTitle": "Journal de trace",
@@ -1879,5 +1878,7 @@
   "svcFavBackBody": "Entendu à nouveau après {time} de silence.",
   "setFavBack": "Un favori est de retour",
   "setFavBackSub": "Quand un favori est de nouveau entendu après {time} ou plus de silence",
-  "setBackAfter": "De retour après au moins"
+  "setBackAfter": "De retour après au moins",
+  "lnkPrevTitle": "Aperçu des liens",
+  "lnkPrevSub": "Affiche le titre des liens web dans les discussions. La page est téléchargée depuis internet, donc le site voit la demande de votre téléphone."
 }
