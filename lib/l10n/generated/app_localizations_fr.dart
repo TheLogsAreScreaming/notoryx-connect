@@ -5400,7 +5400,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get lpTitle => 'Aperçu des liens';
+  String get lpTitle => 'Planificateur de liaison';
 
   @override
   String get lpIntro =>
@@ -6718,10 +6718,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get snsNone => 'Aucune mesure de capteur de votre radio.';
 
   @override
-  String get lpSub =>
-      'Affiche le titre des liens web dans les discussions. La page est téléchargée depuis internet, donc le site voit la demande de votre téléphone.';
-
-  @override
   String get chatJumpLatest => 'Aller au dernier message';
 
   @override
@@ -6816,4 +6812,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String tlgOffBody(String distance, String name) {
     return 'Vous êtes à $distance de $name.';
   }
+
+  @override
+  String get lnkPrevTitle => 'Aperçu des liens';
+
+  @override
+  String get lnkPrevSub =>
+      'Affiche le titre des liens web dans les discussions. La page est téléchargée depuis internet, donc le site voit la demande de votre téléphone.';
 }

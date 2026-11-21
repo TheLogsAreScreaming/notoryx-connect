@@ -8818,7 +8818,7 @@ abstract class AppLocalizations {
   /// No description provided for @lpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Link previews'**
+  /// **'Link planner'**
   String get lpTitle;
 
   /// No description provided for @lpIntro.
@@ -10867,12 +10867,6 @@ abstract class AppLocalizations {
   /// **'No sensor readings from your radio.'**
   String get snsNone;
 
-  /// No description provided for @lpSub.
-  ///
-  /// In en, this message translates to:
-  /// **'Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.'**
-  String get lpSub;
-
   /// No description provided for @chatJumpLatest.
   ///
   /// In en, this message translates to:
@@ -11028,6 +11022,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are {distance} from {name}.'**
   String tlgOffBody(String distance, String name);
+
+  /// No description provided for @lnkPrevTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Link previews'**
+  String get lnkPrevTitle;
+
+  /// No description provided for @lnkPrevSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.'**
+  String get lnkPrevSub;
 }
 
 class _AppLocalizationsDelegate
