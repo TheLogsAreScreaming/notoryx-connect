@@ -7535,4 +7535,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get pvSent10 =>
       'The bounds of an area to OpenStreetMap’s Overpass service, only when you download trails; it sees your IP address';
+
+  @override
+  String get sarneg_wordHidden => 'Code word hidden';
 }

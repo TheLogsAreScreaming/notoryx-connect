@@ -7590,4 +7590,7 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get pvSent10 =>
       'Los límites de una zona al servicio Overpass de OpenStreetMap, solo cuando descargas senderos; ve tu dirección IP';
+
+  @override
+  String get sarneg_wordHidden => 'Palabra clave oculta';
 }
