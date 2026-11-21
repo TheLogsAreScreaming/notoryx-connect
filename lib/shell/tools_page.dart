@@ -178,6 +178,14 @@ class _ToolsPageState extends State<_ToolsPage> {
                   color: Theme.of(context).colorScheme.primary)))),
         ],
       )),
+      Card(child: ListTile(
+        key: const ValueKey('tools-sarneg'),
+        leading: const Icon(Icons.pin_outlined),
+        title: Text(l.sarneg_title),
+        subtitle: Text(l.sarneg_toolSubtitle),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(const SarnegScreen()),
+      )),
       NxSectionLabel(l.toolsMeshTools),
       NxGroupCard(children: [
         ListTile(
