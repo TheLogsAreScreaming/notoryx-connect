@@ -15,12 +15,19 @@ import 'services/meshtastic_radio_coordinator.dart';
 import 'theme/notoryx_theme.dart';
 import 'theme/notoryx_tokens.dart';
 import 'theme/nx_components.dart';
+import 'theme/nx_glass.dart';
 import 'trip_page.dart';
+
+/// A shortcut on Home's Field tools list.
+typedef HomeTool = ({IconData icon, Color? color, String title, String subtitle, VoidCallback onTap});
 
 /// HOME: the Field Console, with the trip, check-ins and SOS up front.
 class HomePage extends StatelessWidget {
-  const HomePage({super.key, required this.radio, required this.onConnect, this.onTryDemo});
+  const HomePage({super.key, required this.radio, required this.onConnect, this.onTryDemo, this.fieldTools = const []});
   final MeshtasticRadioCoordinator radio;
+
+  /// Shortcuts to the tools used most outdoors, as on NOTORYX Core's Home.
+  final List<HomeTool> fieldTools;
 
   /// Starts demo mode; null while it is already on.
   final VoidCallback? onTryDemo;
@@ -60,6 +67,11 @@ class HomePage extends StatelessWidget {
           style: muted),
         if (trip.problem != null)
           NxBanner(tone: NxTone.danger, message: trip.problem!),
+        if (fieldTools.isNotEmpty) ...[
+          NxGlassLabel(l.homeFieldTools),
+          for (final t in fieldTools)
+            NxGlassRow(icon: t.icon, iconColor: t.color, title: t.title, subtitle: t.subtitle, onTap: t.onTap),
+        ],
         const SizedBox(height: NxSpace.md),
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Icon(Icons.info_outline, size: 16, color: Theme.of(context).colorScheme.onSurfaceVariant),
@@ -82,58 +94,56 @@ class _ConsoleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
-    final type = Theme.of(context).textTheme;
     final status = NxStatusColors.of(context);
     final node = radio.localNode;
     final battery = node?.batteryLevel;
     final ready = radio.isReady;
-    final tone = ready ? NxTone.success : NxTone.neutral;
-    return Card(child: Padding(
-      padding: const EdgeInsets.all(NxSpace.md),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
-          Container(
-            width: 44, height: 44,
-            decoration: BoxDecoration(
-              color: ready ? status.successContainer : scheme.surfaceContainerHigh,
-              borderRadius: BorderRadius.circular(NxRadius.md),
-            ),
-            child: Icon(ready ? Icons.settings_input_antenna : Icons.portable_wifi_off,
-              color: status.strong(tone, scheme)),
+    final self = radio.localNodeNum;
+    double? latest(TelemetryMetric m) => self == null
+        ? null
+        : switch (radio.telemetrySeries(self, m)) { [..., final p] => p.value, _ => null };
+    final volts = ready ? latest(TelemetryMetric.voltage) : null;
+    final chUse = ready ? latest(TelemetryMetric.channelUtilization) : null;
+    // NOTORYX Core's instrument face: live numbers in one glass panel.
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      NxGlassLabel(ready
+          ? '${l.homeConnected} · ${node == null ? l.homeYourRadio : node.longName ?? node.shortName ?? l.homeYourRadio}'
+          : l.homeNotConnected),
+      NxGlassPanel(
+        key: const ValueKey('home-readouts'),
+        padding: const EdgeInsets.symmetric(vertical: NxSpace.xs, horizontal: NxSpace.xxs),
+        child: NxReadoutStrip([
+          NxReadout(
+            !ready || battery == null ? '–' : battery > 100 ? l.homePluggedIn : '$battery%',
+            l.homeBattery,
+            color: battery != null && battery <= 20 ? status.warning : null,
           ),
-          const SizedBox(width: NxSpace.sm),
-          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Semantics(header: true, child: Text(ready ? l.homeConnected : l.homeNotConnected,
-              style: type.titleMedium)),
-            const SizedBox(height: 2),
-            Text(ready
-                ? (node == null ? l.homeYourRadio : node.longName ?? node.shortName ?? l.homeYourRadio)
-                : l.homeConnectHint,
-              style: type.bodyMedium?.copyWith(color: scheme.onSurfaceVariant)),
-          ])),
+          NxReadout(volts == null ? '–' : volts.toStringAsFixed(2), TelemetryMetric.voltage.label),
+          NxReadout(chUse == null ? '–' : '${chUse.toStringAsFixed(0)}%', TelemetryMetric.channelUtilization.label),
+          NxReadout(ready ? '${radio.nodes.length}' : '0', l.homeNodes, color: scheme.secondary),
         ]),
-        const SizedBox(height: NxSpace.sm),
-        if (ready)
-          NxStatRow(children: [
-            NxStatTile(label: l.homeNodes, value: '${radio.nodes.length}', icon: Icons.hub_outlined),
-            NxStatTile(
-              label: l.homeBattery,
-              icon: battery != null && battery > 100 ? Icons.power : Icons.battery_std,
-              value: battery == null ? l.homeUnknown : battery > 100 ? l.homePluggedIn : '$battery%',
-              tone: battery != null && battery <= 20 ? NxTone.warning : NxTone.neutral,
-            ),
-          ]),
-        if (ready) _SensorsPanel(radio: radio),
-        if (!ready)
-          Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
-            FilledButton.icon(onPressed: onConnect, icon: const Icon(Icons.bluetooth_searching),
-              label: Text(l.homeConnectRadio)),
-            if (onTryDemo != null)
-              TextButton.icon(onPressed: onTryDemo, icon: const Icon(Icons.play_circle_outline),
-                label: Text(l.homeTryDemo)),
-          ]),
-      ]),
-    ));
+      ),
+      const SizedBox(height: NxSpace.sm),
+      if (ready) _SensorsPanel(radio: radio),
+      if (!ready) ...[
+        NxGlassRow(
+          key: const ValueKey('home-connect'),
+          icon: Icons.bluetooth_searching,
+          iconColor: scheme.primary,
+          title: l.homeConnectRadio,
+          titleColor: scheme.primary,
+          subtitle: l.homeConnectHint,
+          onTap: onConnect,
+        ),
+        if (onTryDemo != null)
+          NxGlassRow(
+            icon: Icons.play_circle_outline,
+            iconColor: scheme.tertiary,
+            title: l.homeTryDemo,
+            onTap: onTryDemo,
+          ),
+      ],
+    ]);
   }
 }
 
@@ -200,7 +210,16 @@ class _CheckInButtonsState extends State<_CheckInButtons> {
     final last = trip.lastCheckIn;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       FilledButton.icon(
-        style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(NxTouch.large)),
+        style: FilledButton.styleFrom(
+          minimumSize: const Size.fromHeight(NxTouch.large),
+          // Glass while it can't be used, as on NOTORYX Core, instead of a
+          // flat grey block.
+          disabledBackgroundColor: Colors.white.withValues(alpha: _glassFill(context)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(NxRadius.lg),
+            side: enabled ? BorderSide.none : BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+          ),
+        ),
         onPressed: enabled ? () => _checkIn(checkInLabels.first) : null,
         icon: _sending
             ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2.5))
@@ -324,9 +343,9 @@ class _SosButtonState extends State<_SosButton> with SingleTickerProviderStateMi
             builder: (context, _) => Container(
               height: NxTouch.large,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(NxRadius.md),
-                border: enabled ? null : Border.all(color: scheme.outlineVariant),
-                color: enabled ? scheme.errorContainer : scheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(NxRadius.lg),
+                border: Border.all(color: enabled ? scheme.error : scheme.outlineVariant, width: enabled ? 1.5 : 1),
+                color: enabled ? scheme.errorContainer : Colors.white.withValues(alpha: _glassFill(context)),
               ),
               clipBehavior: Clip.antiAlias,
               child: Stack(children: [
@@ -431,6 +450,12 @@ class _RadioNoticeBanner extends StatelessWidget {
 
 /// The connected radio's own latest readings as chips, as on NOTORYX Core's
 /// Home. Battery is left out: the tile above already shows it.
+/// Readings the instrument panel already shows.
+const _onReadouts = {TelemetryMetric.battery, TelemetryMetric.voltage, TelemetryMetric.channelUtilization};
+
+/// The white a glass surface adds: a little on dark themes, more on light.
+double _glassFill(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? .07 : .5;
+
 class _SensorsPanel extends StatelessWidget {
   const _SensorsPanel({required this.radio});
   final MeshtasticRadioCoordinator radio;
@@ -444,20 +469,19 @@ class _SensorsPanel extends StatelessWidget {
     final chips = <String>[
       if (self != null)
         for (final metric in radio.telemetryMetricsOf(self))
-          if (metric != TelemetryMetric.battery)
+          if (!_onReadouts.contains(metric))
             if (radio.telemetrySeries(self, metric) case [..., final latest])
               '${metric.label} ${metric.format(latest.value, units)}',
     ];
+    // Nothing beyond the readouts above: no panel at all.
+    if (chips.isEmpty) return const SizedBox.shrink();
     return Padding(
       key: const ValueKey('home-sensors'),
       padding: const EdgeInsets.only(top: NxSpace.sm),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(l.snsTitle, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: scheme.onSurfaceVariant)),
         const SizedBox(height: NxSpace.xs),
-        if (chips.isEmpty)
-          Text(l.snsNone, style: Theme.of(context).textTheme.bodySmall)
-        else
-          Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
+        Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
             for (final c in chips) Chip(label: Text(c), visualDensity: VisualDensity.compact),
           ]),
       ]),

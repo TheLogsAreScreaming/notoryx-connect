@@ -20,7 +20,8 @@ void main() {
       final scheme = theme.colorScheme;
       final surfaces = {
         'scaffold': theme.scaffoldBackgroundColor,
-        'card': theme.cardTheme.color!,
+        // Cards are see-through glass: measure them as they look on the page.
+        'card': Color.alphaBlend(theme.cardTheme.color!, theme.scaffoldBackgroundColor),
         'surface': scheme.surface,
       };
       for (final MapEntry(:key, :value) in surfaces.entries) {

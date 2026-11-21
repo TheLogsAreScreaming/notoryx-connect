@@ -7618,4 +7618,7 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get pvSent10 =>
       'Die Grenzen eines Gebiets an den Overpass-Dienst von OpenStreetMap, nur wenn Sie Wege laden; er sieht Ihre IP-Adresse';
+
+  @override
+  String get homeFieldTools => 'Feldwerkzeuge';
 }

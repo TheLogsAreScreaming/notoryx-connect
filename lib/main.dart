@@ -88,6 +88,7 @@ import 'services/bastion_trail_store.dart';
 import 'trail_routing_page.dart';
 import 'services/bastion_mesh_watch.dart';
 import 'theme/nx_backdrop.dart';
+import 'theme/nx_glass.dart';
 import 'theme/nx_components.dart';
 import 'services/bastion_backdrop.dart';
 import 'connection_doctor_page.dart';
@@ -436,6 +437,7 @@ class _BastionShellState extends State<BastionShell> {
           HomePage(
             radio: radio,
             onConnect: () => _go(ShellTab.nodes),
+            fieldTools: _homeTools(context),
             onTryDemo: _inDemo ? null : () => _setDemo(true),
           ),
           BastionChatsPage(
@@ -480,34 +482,32 @@ class _BastionShellState extends State<BastionShell> {
         backgroundColor: Colors.transparent,
         toolbarHeight: MediaQuery.textScalerOf(context).scale(36) + 20,
         titleSpacing: NxSpace.md,
-        title: Semantics(
-          label: 'NOTORYX Connect',
-          excludeSemantics: true,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'NOTORYX',
-                style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 20,
-                  color: scheme.primary,
-                  letterSpacing: 2.4,
-                  height: 1.1,
+        // NOTORYX Core's header: the app's mark and the radio it is talking to.
+        title: AnimatedBuilder(
+          animation: radio,
+          builder: (context, _) {
+            final me = radio.localNode;
+            final name = radio.isReady && me != null ? me.displayName : 'NOTORYX Connect';
+            return Semantics(
+              label: 'NOTORYX Connect',
+              excludeSemantics: true,
+              child: Row(children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Image.asset('assets/images/notoryx_logo.png', width: 28, height: 28,
+                      filterQuality: FilterQuality.medium),
                 ),
-              ),
-              Text(
-                'CONNECT',
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 3,
-                  color: scheme.onSurfaceVariant,
+                const SizedBox(width: NxSpace.sm),
+                Flexible(
+                  child: Text(name,
+                      key: const ValueKey('shell-title'),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: scheme.onSurface)),
                 ),
-              ),
-            ],
-          ),
+              ]),
+            );
+          },
         ),
         actions: [
           IconButton(
@@ -546,7 +546,7 @@ class _BastionShellState extends State<BastionShell> {
                           minHeight: NxTouch.min,
                         ),
                         child: Center(
-                          child: NxStatusPill(
+                          child: _MonoStatus(
                             label: _connectionLabel(context, state),
                             tone: _connectionTone(state),
                             busy:
@@ -599,22 +599,52 @@ class _BastionShellState extends State<BastionShell> {
           ],
         ),
       ),
+      // The screen runs on under Core's floating glass bar.
+      extendBody: !wide,
       bottomNavigationBar: wide
           ? null
-          : NavigationBar(
-              selectedIndex: tab.destination,
-              onDestinationSelected: _goDestination,
-              destinations: [
-                for (final (i, label) in _labels(context).indexed)
-                  NavigationDestination(
-                    icon: _tabIcon(i),
-                    label: label,
-                    tooltip: label,
-                  ),
-              ],
+          : NxFloatingBar(
+              child: NavigationBar(
+                selectedIndex: tab.destination,
+                onDestinationSelected: (i) {
+                  if (i != tab.destination) HapticFeedback.selectionClick();
+                  _goDestination(i);
+                },
+                destinations: [
+                  for (final (i, label) in _labels(context).indexed)
+                    NavigationDestination(
+                      icon: _tabIcon(i),
+                      label: label,
+                      tooltip: label,
+                    ),
+                ],
+              ),
             ),
     ),
     );
+  }
+
+  void _push(Widget page) => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
+
+  /// Home's Field tools, colored as on NOTORYX Core.
+  List<HomeTool> _homeTools(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    return [
+      (icon: Icons.query_stats, color: scheme.primary, title: l.maTitle, subtitle: l.maToolSub,
+          onTap: () => _push(MeshActivityPage(watch: BastionMeshWatch.instance, nameOf: radio.nodeName))),
+      (icon: Icons.route_outlined, color: scheme.tertiary, title: l.tlgTitle, subtitle: l.tlgToolSub,
+          onTap: () => _push(TrackLogPage(log: BastionTrackLog.instance, share: MapPage.shareGpx, location: GeolocatorLocationSource()))),
+      (icon: Icons.hiking, color: scheme.secondary, title: l.trlTitle, subtitle: l.trlToolSub,
+          onTap: () => _push(TrailRoutingPage(
+                store: BastionTrailStore.instance,
+                whereAmI: radioOrPhonePosition(radio),
+                share: MapPage.shareGpx,
+                savedPlaces: waypointPlaces(radio),
+              ))),
+      (icon: Icons.medical_services_outlined, color: NxStatusColors.of(context).info, title: l.toolsDoctor, subtitle: l.toolsDoctorSub,
+          onTap: () => _push(ConnectionDoctorPage(radio: radio, discovery: ble))),
+    ];
   }
 
   /// A tab's icon; Chats carries a badge with the unread count.
@@ -685,3 +715,37 @@ class _DemoBanner extends StatelessWidget {
     );
   }
 }
+
+/// The radio status as on NOTORYX Core: a dot and the state in the mono
+/// face, quiet when offline and in the signal color when connected.
+class _MonoStatus extends StatelessWidget {
+  const _MonoStatus({required this.label, required this.tone, this.busy = false});
+  final String label;
+  final NxTone tone;
+  final bool busy;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final color = NxStatusColors.of(context).strong(tone, scheme);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: NxSpace.xs),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        if (busy)
+          SizedBox.square(dimension: 10, child: CircularProgressIndicator(strokeWidth: 1.6, color: color))
+        else
+          // Filled when connected, hollow otherwise: shape as well as color.
+          Icon(tone == NxTone.success ? Icons.circle : Icons.circle_outlined, size: 10, color: color),
+        const SizedBox(width: 6),
+        Text(label.toLowerCase(),
+            style: TextStyle(
+              fontFamily: NxFonts.mono,
+              fontFamilyFallback: NxFonts.monoFallback,
+              fontSize: 13,
+              color: tone == NxTone.neutral ? scheme.onSurfaceVariant : color,
+            )),
+      ]),
+    );
+  }
+}
+

@@ -41,7 +41,8 @@ void main() {
       final theme = NotoryxTheme.fromPalette(e.value);
       final c = theme.colorScheme;
       final s = theme.extension<NxStatusColors>()!;
-      final card = theme.cardTheme.color!;
+      // Cards are see-through glass: measure them as they look on the page.
+      final card = Color.alphaBlend(theme.cardTheme.color!, theme.scaffoldBackgroundColor);
       final text = {
         'text on page': contrast(c.onSurface, c.surface),
         'text on cards': contrast(c.onSurface, card),

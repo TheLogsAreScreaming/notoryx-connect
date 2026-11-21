@@ -2035,5 +2035,6 @@
   "trlKindTown": "Ort",
   "trlKindLocality": "Flurname",
   "trlKindWaypoint": "Gespeicherter Wegpunkt",
-  "pvSent10": "Die Grenzen eines Gebiets an den Overpass-Dienst von OpenStreetMap, nur wenn Sie Wege laden; er sieht Ihre IP-Adresse"
+  "pvSent10": "Die Grenzen eines Gebiets an den Overpass-Dienst von OpenStreetMap, nur wenn Sie Wege laden; er sieht Ihre IP-Adresse",
+  "homeFieldTools": "Feldwerkzeuge"
 }

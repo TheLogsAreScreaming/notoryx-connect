@@ -5202,5 +5202,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "homeFieldTools": "Field tools"
 }

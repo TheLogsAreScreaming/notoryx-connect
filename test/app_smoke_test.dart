@@ -6,12 +6,14 @@ import 'support/shell_nav.dart';
 void main() {
   testWidgets('NOTORYX Connect has five tabs, with Tools and Settings under More', (tester) async {
     await tester.pumpWidget(const BastionApp());
-    expect(find.text('NOTORYX'), findsOneWidget);
-    expect(find.text('CONNECT'), findsOneWidget);
+    // Core's header: the app's mark and name until a radio is connected.
+    expect(find.byKey(const ValueKey('shell-title')), findsOneWidget);
+    expect(find.text('NOTORYX Connect'), findsOneWidget);
     // HOME opens first, with the trip, check-ins and SOS.
     expect(find.text('No radio connected'), findsOneWidget);
     expect(find.text('Plan your trip'), findsOneWidget);
     expect(find.text("Check in: I'm OK"), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Hold for SOS'), 250, scrollable: find.byType(Scrollable).first);
     expect(find.text('Hold for SOS'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.hub_outlined).last);
@@ -64,7 +66,8 @@ void main() {
       250,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('NOTORYX Connect'), findsOneWidget);
+    // The About card, as well as the header.
+    expect(find.text('NOTORYX Connect'), findsNWidgets(2));
     expect(find.textContaining('Bastion'), findsNothing);
   });
 }

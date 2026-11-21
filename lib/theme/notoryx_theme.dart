@@ -181,6 +181,10 @@ abstract final class NotoryxTheme {
   /// enough that text on a card keeps the theme's contrast.
   static const glassOpacity = 0.82;
 
+  /// How much white a card adds over what's behind it, as on NOTORYX
+  /// Core's glass: a little on dark themes, more on light ones.
+  static double glassWhite(Brightness b) => b == Brightness.dark ? .075 : .55;
+
   /// The whole app theme for palette [p].
   static ThemeData fromPalette(BastionPalette p) =>
       _compose(schemeFor(p), NxStatusColors.fromPalette(p), NxGlow.fromPalette(p));
@@ -223,14 +227,16 @@ abstract final class NotoryxTheme {
       // text contrast holds, with a little of the backdrop glow showing
       // through and an edge that catches the theme's accent.
       cardTheme: CardThemeData(
-        color: c.surface.withValues(alpha: glassOpacity),
+        // Frosted glass, as in NOTORYX Core: a little white over whatever is
+        // behind, so the backdrop glow shows through.
+        color: Colors.white.withValues(alpha: glassWhite(brightness)),
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         margin: const EdgeInsets.symmetric(vertical: NxSpace.xxs + 2),
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(NxRadius.md),
-          side: BorderSide(color: Color.alphaBlend(c.primary.withValues(alpha: .30), c.outlineVariant)),
+          borderRadius: BorderRadius.circular(NxRadius.lg),
+          side: BorderSide(color: c.primary.withValues(alpha: brightness == Brightness.dark ? .30 : .38)),
         ),
       ),
       listTileTheme: ListTileThemeData(
@@ -332,17 +338,20 @@ abstract final class NotoryxTheme {
       // Solid accent block behind the chosen tab, as in NOTORYX Core.
       navigationBarTheme: NavigationBarThemeData(
         // See-through, so the backdrop glow carries into the bar.
-        backgroundColor: c.surface.withValues(alpha: .88),
+        // Drawn inside Core's floating glass pill, which supplies the fill.
+        backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        indicatorColor: c.primary,
-        indicatorShape: soft,
+        shadowColor: Colors.transparent,
+        indicatorColor: c.primary.withValues(alpha: .18),
+        indicatorShape: const StadiumBorder(),
         elevation: 0,
-        height: 72,
+        height: 64,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         iconTheme: WidgetStateProperty.resolveWith((s) => IconThemeData(size: 22,
-            color: s.contains(WidgetState.selected) ? c.onPrimary : c.onSurfaceVariant)),
+            color: s.contains(WidgetState.selected) ? c.primary : c.onSurfaceVariant)),
         labelTextStyle: WidgetStateProperty.resolveWith((s) => type.labelMedium?.copyWith(
-            color: s.contains(WidgetState.selected) ? c.onSurface : c.onSurfaceVariant,
+            fontSize: 11.5,
+            color: s.contains(WidgetState.selected) ? c.primary : c.onSurfaceVariant,
             fontWeight: s.contains(WidgetState.selected) ? FontWeight.w700 : FontWeight.w500)),
       ),
       navigationRailTheme: NavigationRailThemeData(
