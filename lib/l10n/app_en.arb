@@ -4829,6 +4829,64 @@
   "tgPresetAdvice": "Radios on a different modem preset or frequency slot hear no one. Long Fast is the default; ask your local mesh what they use.",
   "tgAntenna": "The antenna is fitted",
   "tgAntennaAdvice": "Make sure the antenna is screwed on firmly. Never transmit without one; it can damage the radio.",
+  "bwTitle": "Battery watch",
+  "bwToolSub": "Every node that reports its battery, the most worrying first",
+  "bwEmpty": "No node has reported its battery yet.",
+  "bwPlugged": "On external power",
+  "bwSteady": "Steady",
+  "bwNoTrend": "Not enough readings yet for a trend",
+  "bwRising": "Rising about {rate}% a day",
+  "bwDropping": "Dropping about {rate}% a day",
+  "bwDaysLeft": "{days, plural, =1{about 1 day left} other{about {days} days left}}",
+  "bwUnderDay": "less than a day left",
+  "bwPluggedShort": "Plugged in",
+  "svcFavBack": "{name} is back",
+  "svcFavBackBody": "Heard again after {time} of silence.",
+  "setFavBack": "Favorite is back",
+  "setFavBackSub": "When a favorite is heard again after {time} or more of silence",
+  "setBackAfter": "Back after at least",
+  "@bwRising": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "@bwDropping": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "@bwDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "@svcFavBack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@svcFavBackBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@setFavBackSub": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "lnkPrevTitle": "Link previews",
   "lnkPrevSub": "Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it."
 }

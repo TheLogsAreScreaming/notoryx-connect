@@ -6943,6 +6943,73 @@ class AppLocalizationsEs extends AppLocalizations {
       'Asegúrate de que la antena está bien enroscada. Nunca transmitas sin ella; puede dañar la radio.';
 
   @override
+  String get bwTitle => 'Vigilancia de baterías';
+
+  @override
+  String get bwToolSub =>
+      'Todos los nodos que informan de su batería, primero los más preocupantes';
+
+  @override
+  String get bwEmpty => 'Ningún nodo ha informado aún de su batería.';
+
+  @override
+  String get bwPlugged => 'Con alimentación externa';
+
+  @override
+  String get bwSteady => 'Estable';
+
+  @override
+  String get bwNoTrend => 'Aún no hay lecturas suficientes para una tendencia';
+
+  @override
+  String bwRising(String rate) {
+    return 'Sube un $rate % al día';
+  }
+
+  @override
+  String bwDropping(String rate) {
+    return 'Baja un $rate % al día';
+  }
+
+  @override
+  String bwDaysLeft(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'quedan $days días aprox.',
+      one: 'queda 1 día aprox.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bwUnderDay => 'queda menos de un día';
+
+  @override
+  String get bwPluggedShort => 'Enchufado';
+
+  @override
+  String svcFavBack(String name) {
+    return '$name ha vuelto';
+  }
+
+  @override
+  String svcFavBackBody(String time) {
+    return 'Se ha oído de nuevo tras $time de silencio.';
+  }
+
+  @override
+  String get setFavBack => 'Un favorito vuelve';
+
+  @override
+  String setFavBackSub(String time) {
+    return 'Cuando un favorito se oye de nuevo tras $time o más de silencio';
+  }
+
+  @override
+  String get setBackAfter => 'Vuelve tras al menos';
+
+  @override
   String get lnkPrevTitle => 'Vista previa de enlaces';
 
   @override
