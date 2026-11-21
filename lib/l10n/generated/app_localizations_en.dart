@@ -7025,4 +7025,104 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get teamShareButton => 'Share team setup';
+
+  @override
+  String get maTitle => 'Mesh activity';
+
+  @override
+  String get maToolSub => 'Field stats, network changes and a live packet log';
+
+  @override
+  String get maTabStats => 'Stats';
+
+  @override
+  String get maTabChanges => 'Changes';
+
+  @override
+  String get maTabPackets => 'Packets';
+
+  @override
+  String get maRealOnly =>
+      'Recorded from your radio while it’s connected. The demo radio isn’t recorded.';
+
+  @override
+  String get maLastHour => 'Last hour';
+
+  @override
+  String get maPackets => 'Packets heard';
+
+  @override
+  String get maSenders => 'Nodes heard';
+
+  @override
+  String get maDirect => 'Heard directly';
+
+  @override
+  String get maAvgHops => 'Average hops';
+
+  @override
+  String get maSnrRange => 'Signal (SNR)';
+
+  @override
+  String get maMqtt => 'Through the internet (MQTT)';
+
+  @override
+  String get maByKind => 'By type';
+
+  @override
+  String get maBusiest => 'Heard most';
+
+  @override
+  String get maNothing =>
+      'Nothing heard yet. Connect your radio and leave this open for a while.';
+
+  @override
+  String get maNoChanges =>
+      'No changes yet. Nodes appearing, going quiet, coming back or being renamed show here.';
+
+  @override
+  String maAppeared(String name) {
+    return '$name appeared';
+  }
+
+  @override
+  String maQuiet(String name) {
+    return '$name went quiet';
+  }
+
+  @override
+  String maBack(String name) {
+    return '$name is back';
+  }
+
+  @override
+  String maRenamed(String old, String name) {
+    return '$old is now $name';
+  }
+
+  @override
+  String get maClear => 'Clear changes';
+
+  @override
+  String get maEveryone => 'everyone';
+
+  @override
+  String maHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hops',
+      one: '1 hop',
+      zero: 'direct',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get maViaMqtt => 'via MQTT';
+
+  @override
+  String maFromTo(String from, String to) {
+    return '$from → $to';
+  }
 }

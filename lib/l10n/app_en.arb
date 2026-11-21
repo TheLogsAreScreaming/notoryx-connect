@@ -4919,5 +4919,79 @@
       }
     }
   },
-  "teamShareButton": "Share team setup"
+  "teamShareButton": "Share team setup",
+  "maTitle": "Mesh activity",
+  "maToolSub": "Field stats, network changes and a live packet log",
+  "maTabStats": "Stats",
+  "maTabChanges": "Changes",
+  "maTabPackets": "Packets",
+  "maRealOnly": "Recorded from your radio while it’s connected. The demo radio isn’t recorded.",
+  "maLastHour": "Last hour",
+  "maPackets": "Packets heard",
+  "maSenders": "Nodes heard",
+  "maDirect": "Heard directly",
+  "maAvgHops": "Average hops",
+  "maSnrRange": "Signal (SNR)",
+  "maMqtt": "Through the internet (MQTT)",
+  "maByKind": "By type",
+  "maBusiest": "Heard most",
+  "maNothing": "Nothing heard yet. Connect your radio and leave this open for a while.",
+  "maNoChanges": "No changes yet. Nodes appearing, going quiet, coming back or being renamed show here.",
+  "maAppeared": "{name} appeared",
+  "maQuiet": "{name} went quiet",
+  "maBack": "{name} is back",
+  "maRenamed": "{old} is now {name}",
+  "maClear": "Clear changes",
+  "maEveryone": "everyone",
+  "maHops": "{count, plural, =0{direct} =1{1 hop} other{{count} hops}}",
+  "maViaMqtt": "via MQTT",
+  "maFromTo": "{from} → {to}",
+  "@maAppeared": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@maQuiet": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@maBack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@maRenamed": {
+    "placeholders": {
+      "old": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@maHops": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@maFromTo": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  }
 }
