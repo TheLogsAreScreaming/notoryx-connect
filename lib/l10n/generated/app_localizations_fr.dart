@@ -6727,4 +6727,93 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get pvSent9 =>
       'Demandes des pages web liées dans les discussions, uniquement si vous activez l\'aperçu des liens ; le site voit votre adresse IP';
+
+  @override
+  String get tlgTitle => 'Journal de trace';
+
+  @override
+  String get tlgToolSub =>
+      'Enregistrez votre parcours, exportez-le en GPX ou soyez averti si vous vous en écartez';
+
+  @override
+  String get tlgSources =>
+      'Les points viennent du GPS de votre radio quand elle est connectée, et de la position de ce téléphone quand l\'app est ouverte. Les traces restent sur ce téléphone.';
+
+  @override
+  String get tlgStart => 'Démarrer l\'enregistrement';
+
+  @override
+  String get tlgStop => 'Arrêter l\'enregistrement';
+
+  @override
+  String get tlgRecording => 'Enregistrement';
+
+  @override
+  String tlgStats(int points, String distance, String time) {
+    return '$points points • $distance • $time';
+  }
+
+  @override
+  String get tlgSaved => 'Traces enregistrées';
+
+  @override
+  String get tlgEmpty =>
+      'Aucune trace. Lancez un enregistrement avant de partir.';
+
+  @override
+  String get tlgShowMap => 'Afficher sur la carte';
+
+  @override
+  String get tlgOnMap => 'Ajoutée à la carte comme calque.';
+
+  @override
+  String get tlgMapFailed => 'Impossible d\'ajouter cette trace à la carte.';
+
+  @override
+  String get tlgExport => 'Exporter en GPX';
+
+  @override
+  String tlgWatchAt(String distance) {
+    return 'M\'avertir si je m\'écarte de plus de $distance';
+  }
+
+  @override
+  String get tlgUnwatch => 'Arrêter l\'alerte d\'écart';
+
+  @override
+  String tlgWatching(String name, String distance) {
+    return 'Surveillance de $name : alerte au-delà de $distance';
+  }
+
+  @override
+  String get tlgWaitingFix => 'En attente d\'une position.';
+
+  @override
+  String tlgOffNow(String distance) {
+    return 'Vous en êtes à $distance.';
+  }
+
+  @override
+  String get tlgDelete => 'Supprimer';
+
+  @override
+  String get tlgDeleteQ => 'Supprimer cette trace ?';
+
+  @override
+  String tlgDefaultName(String date) {
+    return 'Trace $date';
+  }
+
+  @override
+  String tlgPhoneLocationOff(String reason) {
+    return 'La position du téléphone est désactivée ($reason). Le GPS de la radio peut encore enregistrer.';
+  }
+
+  @override
+  String get tlgOffTitle => 'Hors de votre itinéraire';
+
+  @override
+  String tlgOffBody(String distance, String name) {
+    return 'Vous êtes à $distance de $name.';
+  }
 }

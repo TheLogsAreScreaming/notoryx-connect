@@ -4699,5 +4699,90 @@
   },
   "lpSub": "Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.",
   "chatJumpLatest": "Jump to the latest message",
-  "pvSent9": "Requests for web pages linked in chats, only if you turn on Link previews; the linked site sees your IP address"
+  "pvSent9": "Requests for web pages linked in chats, only if you turn on Link previews; the linked site sees your IP address",
+  "tlgTitle": "Track log",
+  "tlgToolSub": "Record where you go, export it as GPX, or get a warning when you stray from it",
+  "tlgSources": "Points come from your radio's GPS while it's connected, and from this phone's location while the app is open. Tracks stay on this phone.",
+  "tlgStart": "Start recording",
+  "tlgStop": "Stop recording",
+  "tlgRecording": "Recording",
+  "tlgStats": "{points} points • {distance} • {time}",
+  "tlgSaved": "Saved tracks",
+  "tlgEmpty": "No tracks yet. Start a recording before you head out.",
+  "tlgShowMap": "Show on the map",
+  "tlgOnMap": "Added to the map as a layer.",
+  "tlgMapFailed": "Couldn't add this track to the map.",
+  "tlgExport": "Export GPX",
+  "tlgWatchAt": "Warn me if I stray more than {distance}",
+  "tlgUnwatch": "Stop the stray warning",
+  "tlgWatching": "Watching {name}: warns past {distance}",
+  "tlgWaitingFix": "Waiting for a position.",
+  "tlgOffNow": "You are {distance} from it now.",
+  "tlgDelete": "Delete",
+  "tlgDeleteQ": "Delete this track?",
+  "tlgDefaultName": "Track {date}",
+  "tlgPhoneLocationOff": "Phone location is off ({reason}). The radio's GPS can still record.",
+  "tlgOffTitle": "Off your route",
+  "tlgOffBody": "You are {distance} from {name}.",
+  "@tlgStats": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      },
+      "distance": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgWatchAt": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgWatching": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgOffNow": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgDefaultName": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgPhoneLocationOff": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "@tlgOffBody": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

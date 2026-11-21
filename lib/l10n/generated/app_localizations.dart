@@ -10884,6 +10884,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Requests for web pages linked in chats, only if you turn on Link previews; the linked site sees your IP address'**
   String get pvSent9;
+
+  /// No description provided for @tlgTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track log'**
+  String get tlgTitle;
+
+  /// No description provided for @tlgToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Record where you go, export it as GPX, or get a warning when you stray from it'**
+  String get tlgToolSub;
+
+  /// No description provided for @tlgSources.
+  ///
+  /// In en, this message translates to:
+  /// **'Points come from your radio\'s GPS while it\'s connected, and from this phone\'s location while the app is open. Tracks stay on this phone.'**
+  String get tlgSources;
+
+  /// No description provided for @tlgStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start recording'**
+  String get tlgStart;
+
+  /// No description provided for @tlgStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop recording'**
+  String get tlgStop;
+
+  /// No description provided for @tlgRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording'**
+  String get tlgRecording;
+
+  /// No description provided for @tlgStats.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} points • {distance} • {time}'**
+  String tlgStats(int points, String distance, String time);
+
+  /// No description provided for @tlgSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved tracks'**
+  String get tlgSaved;
+
+  /// No description provided for @tlgEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No tracks yet. Start a recording before you head out.'**
+  String get tlgEmpty;
+
+  /// No description provided for @tlgShowMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Show on the map'**
+  String get tlgShowMap;
+
+  /// No description provided for @tlgOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to the map as a layer.'**
+  String get tlgOnMap;
+
+  /// No description provided for @tlgMapFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t add this track to the map.'**
+  String get tlgMapFailed;
+
+  /// No description provided for @tlgExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export GPX'**
+  String get tlgExport;
+
+  /// No description provided for @tlgWatchAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Warn me if I stray more than {distance}'**
+  String tlgWatchAt(String distance);
+
+  /// No description provided for @tlgUnwatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop the stray warning'**
+  String get tlgUnwatch;
+
+  /// No description provided for @tlgWatching.
+  ///
+  /// In en, this message translates to:
+  /// **'Watching {name}: warns past {distance}'**
+  String tlgWatching(String name, String distance);
+
+  /// No description provided for @tlgWaitingFix.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a position.'**
+  String get tlgWaitingFix;
+
+  /// No description provided for @tlgOffNow.
+  ///
+  /// In en, this message translates to:
+  /// **'You are {distance} from it now.'**
+  String tlgOffNow(String distance);
+
+  /// No description provided for @tlgDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get tlgDelete;
+
+  /// No description provided for @tlgDeleteQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this track?'**
+  String get tlgDeleteQ;
+
+  /// No description provided for @tlgDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'Track {date}'**
+  String tlgDefaultName(String date);
+
+  /// No description provided for @tlgPhoneLocationOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone location is off ({reason}). The radio\'s GPS can still record.'**
+  String tlgPhoneLocationOff(String reason);
+
+  /// No description provided for @tlgOffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Off your route'**
+  String get tlgOffTitle;
+
+  /// No description provided for @tlgOffBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You are {distance} from {name}.'**
+  String tlgOffBody(String distance, String name);
 }
 
 class _AppLocalizationsDelegate
