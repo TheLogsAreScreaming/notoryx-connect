@@ -46,7 +46,7 @@ class BastionSosRelay extends ChangeNotifier {
   /// The one the app uses, once the shell has made it.
   static BastionSosRelay? instance;
 
-  static const prefsKey = 'bastion.sos_relay.v1';
+  static const storageName = 'bastion.sos_relay.v1';
   static const sosPrefix = '[NOTORYX SOS]';
   static const relayPrefix = '[NOTORYX SOS relay]';
 
@@ -94,7 +94,7 @@ class BastionSosRelay extends ChangeNotifier {
 
   Future<void> load() async {
     try {
-      _enabled = await _store.getBool(prefsKey) ?? false;
+      _enabled = await _store.getBool(storageName) ?? false;
     } catch (_) {
       _enabled = false;
     }
@@ -107,7 +107,7 @@ class BastionSosRelay extends ChangeNotifier {
     if (!on) _cancelAll();
     notifyListeners();
     try {
-      await _store.setBool(prefsKey, on);
+      await _store.setBool(storageName, on);
     } catch (e) {
       debugPrint('Could not save SOS relay setting: $e');
     }
