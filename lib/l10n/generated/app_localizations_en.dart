@@ -7538,4 +7538,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeFieldTools => 'Field tools';
+
+  @override
+  String get sarneg_wordHidden => 'Code word hidden';
 }

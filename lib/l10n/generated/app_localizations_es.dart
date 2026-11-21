@@ -7593,4 +7593,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get homeFieldTools => 'Herramientas de campo';
+
+  @override
+  String get sarneg_wordHidden => 'Palabra clave oculta';
 }

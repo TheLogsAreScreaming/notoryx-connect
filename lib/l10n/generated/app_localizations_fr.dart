@@ -7626,4 +7626,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get homeFieldTools => 'Outils de terrain';
+
+  @override
+  String get sarneg_wordHidden => 'Mot de code masqué';
 }

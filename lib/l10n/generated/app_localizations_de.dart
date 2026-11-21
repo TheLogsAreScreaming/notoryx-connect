@@ -7621,4 +7621,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get homeFieldTools => 'Feldwerkzeuge';
+
+  @override
+  String get sarneg_wordHidden => 'Codewort verborgen';
 }

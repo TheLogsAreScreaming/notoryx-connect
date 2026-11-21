@@ -2036,5 +2036,6 @@
   "trlKindLocality": "Lugar",
   "trlKindWaypoint": "Waypoint guardado",
   "pvSent10": "Los límites de una zona al servicio Overpass de OpenStreetMap, solo cuando descargas senderos; ve tu dirección IP",
-  "homeFieldTools": "Herramientas de campo"
+  "homeFieldTools": "Herramientas de campo",
+  "sarneg_wordHidden": "Palabra clave oculta"
 }
