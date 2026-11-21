@@ -6666,7 +6666,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bgHint =>
-      'Karten liegen als Milchglas darüber. Erhöhe das Abdunkeln, wenn Text schwer lesbar ist.';
+      'Karten liegen als Milchglas darüber. Erhöhen Sie das Abdunkeln, wenn Text schwer lesbar ist.';
 
   @override
   String get bgPreviewTitle => 'Vorschau';
@@ -6680,7 +6680,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bgPhotoFailed =>
-      'Dieses Foto ließ sich nicht verwenden. Versuch ein anderes.';
+      'Dieses Foto ließ sich nicht verwenden. Versuchen Sie ein anderes.';
 
   @override
   String get nlMenu => 'Foto oder Farbe';
@@ -6709,7 +6709,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get nlPhotoFailed =>
-      'Dieses Foto ließ sich nicht verwenden. Versuch ein anderes.';
+      'Dieses Foto ließ sich nicht verwenden. Versuchen Sie ein anderes.';
 
   @override
   String get snsTitle => 'Sensoren';
@@ -6722,18 +6722,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get pvSent9 =>
-      'Abrufe von in Chats verlinkten Webseiten, nur wenn du die Link-Vorschau einschaltest; die Website sieht deine IP-Adresse';
+      'Abrufe von in Chats verlinkten Webseiten, nur wenn Sie die Link-Vorschau einschalten; die Website sieht Ihre IP-Adresse';
 
   @override
   String get tlgTitle => 'Spurprotokoll';
 
   @override
   String get tlgToolSub =>
-      'Zeichne deinen Weg auf, exportiere ihn als GPX oder lass dich warnen, wenn du abweichst';
+      'Zeichnen Sie Ihren Weg auf, exportieren Sie ihn als GPX oder lassen Sie sich warnen, wenn Sie abweichen';
 
   @override
   String get tlgSources =>
-      'Punkte kommen vom GPS deines Funkgeräts, solange es verbunden ist, und vom Standort dieses Handys, solange die App offen ist. Spuren bleiben auf diesem Handy.';
+      'Punkte kommen vom GPS Ihres Funkgeräts, solange es verbunden ist, und vom Standort dieses Handys, solange die App offen ist. Spuren bleiben auf diesem Handy.';
 
   @override
   String get tlgStart => 'Aufzeichnung starten';
@@ -6754,7 +6754,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tlgEmpty =>
-      'Noch keine Spuren. Starte eine Aufzeichnung, bevor du losgehst.';
+      'Noch keine Spuren. Starten Sie eine Aufzeichnung, bevor Sie losgehen.';
 
   @override
   String get tlgShowMap => 'Auf der Karte zeigen';
@@ -6787,7 +6787,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String tlgOffNow(String distance) {
-    return 'Du bist jetzt $distance entfernt.';
+    return 'Sie sind jetzt $distance entfernt.';
   }
 
   @override
@@ -6807,11 +6807,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get tlgOffTitle => 'Abseits deiner Route';
+  String get tlgOffTitle => 'Abseits Ihrer Route';
 
   @override
   String tlgOffBody(String distance, String name) {
-    return 'Du bist $distance von $name entfernt.';
+    return 'Sie sind $distance von $name entfernt.';
   }
 
   @override
@@ -6826,7 +6826,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get gdMesh1 =>
-      'Dein Handy spricht per Bluetooth, USB oder WLAN mit dem Funkgerät; das Funkgerät spricht per LoRa mit dem Mesh. Nachrichten gehen auch ohne Handynetz.';
+      'Ihr Handy spricht per Bluetooth, USB oder WLAN mit dem Funkgerät; das Funkgerät spricht per LoRa mit dem Mesh. Nachrichten gehen auch ohne Handynetz.';
 
   @override
   String get gdMesh2 =>
@@ -6834,22 +6834,22 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get gdMesh3 =>
-      'Lass die Rolle auf Client, außer dein Funkgerät steht hoch und läuft immer. Zu viele Router machen das Mesh schlechter, nicht besser.';
+      'Lassen Sie die Rolle auf Client, außer Ihr Funkgerät steht hoch und läuft immer. Zu viele Router machen das Mesh schlechter, nicht besser.';
 
   @override
   String get gdMesh4 =>
-      'Halte Nachrichten kurz und flute keine vollen Kanäle: Jede Nachricht nutzt gemeinsame Sendezeit.';
+      'Halten Sie Nachrichten kurz und fluten Sie keine vollen Kanäle: Jede Nachricht nutzt gemeinsame Sendezeit.';
 
   @override
   String get gdSecCold => 'Akkus in der Kälte';
 
   @override
   String get gdCold1 =>
-      'Lade Lithium-Akkus nicht unter dem Gefrierpunkt (0 °C / 32 °F): Das schädigt sie dauerhaft.';
+      'Laden Sie Lithium-Akkus nicht unter dem Gefrierpunkt (0 °C / 32 °F): Das schädigt sie dauerhaft.';
 
   @override
   String get gdCold2 =>
-      'Trag das Funkgerät in der Jacke. Kälte senkt die Kapazität, aber sie kommt zurück, wenn der Akku warm wird.';
+      'Tragen Sie das Funkgerät in der Jacke. Kälte senkt die Kapazität, aber sie kommt zurück, wenn der Akku warm wird.';
 
   @override
   String get gdCold3 =>
@@ -6864,7 +6864,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get gdSolar2 =>
-      'Richte das Panel zum Äquator aus und stell es im Winter steil; halte es frei von Schnee und Schatten.';
+      'Richten Sie das Panel zum Äquator aus und stellen Sie es im Winter steil; halten Sie es frei von Schnee und Schatten.';
 
   @override
   String get gdSecAntenna => 'Antennen und Standort';
@@ -6875,7 +6875,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get gdAnt2 =>
-      'Halte die Antenne senkrecht und fern von Metall und nimm eine für dein Band (zum Beispiel 868 MHz in Europa, 915 MHz in den USA). Sende nie ohne Antenne.';
+      'Halten Sie die Antenne senkrecht und fern von Metall und nehmen Sie eine für Ihr Band (zum Beispiel 868 MHz in Europa, 915 MHz in den USA). Senden Sie nie ohne Antenne.';
 
   @override
   String get gdSecMore => 'Mehr erfahren';
@@ -6909,69 +6909,69 @@ class AppLocalizationsDe extends AppLocalizations {
       'Alle Prüfungen bestanden. Wenn es trotzdem nicht geht, lohnt ein Blick auf die Schritte unten.';
 
   @override
-  String get tgConnected => 'Dein Funkgerät ist verbunden';
+  String get tgConnected => 'Ihr Funkgerät ist verbunden';
 
   @override
   String get tgConnectedAdvice =>
-      'Verbinde zuerst dein Funkgerät: Knoten → Nach Funkgeräten suchen.';
+      'Verbinden Sie zuerst Ihr Funkgerät: Knoten → Nach Funkgeräten suchen.';
 
   @override
   String get tgHeardRecently =>
-      'Die Leute, denen du schreibst, wurden am letzten Tag gehört';
+      'Die Leute, denen Sie schreiben, wurden am letzten Tag gehört';
 
   @override
   String get tgHeardRecentlyAdvice =>
       'Wer länger nicht gehört wurde, ist vielleicht außer Reichweite oder aus. Eine Direktnachricht kann erst bestätigt werden, wenn er zurück ist.';
 
   @override
-  String get tgNeighbours => 'Dein Funkgerät hört andere Knoten';
+  String get tgNeighbours => 'Ihr Funkgerät hört andere Knoten';
 
   @override
   String get tgNeighboursAdvice =>
-      'Nichts in der letzten Stunde gehört heißt, dein Funkgerät erreicht das Mesh von hier nicht. Antenne höher, selbst höher gehen oder näher an andere Knoten.';
+      'Nichts in der letzten Stunde gehört heißt, Ihr Funkgerät erreicht das Mesh von hier nicht. Antenne höher, selbst höher gehen oder näher an andere Knoten.';
 
   @override
   String get tgBusy => 'Der Kanal ist nicht überlastet';
 
   @override
   String get tgBusyAdvice =>
-      'Über 40 % Kanalauslastung stoßen Nachrichten zusammen und gehen verloren. Sende weniger und prüfe, ob jemand in der Nähe das Mesh flutet.';
+      'Über 40 % Kanalauslastung stoßen Nachrichten zusammen und gehen verloren. Senden Sie weniger und prüfen Sie, ob jemand in der Nähe das Mesh flutet.';
 
   @override
-  String get tgSameChannel => 'Du teilst einen Kanal mit deinen Empfängern';
+  String get tgSameChannel => 'Sie teilen einen Kanal mit Ihren Empfängern';
 
   @override
   String get tgSameChannelAdvice =>
-      'Kanalnachrichten erreichen nur Funkgeräte mit gleichem Kanalnamen und Schlüssel. Teile den QR-Code des Kanals, um sicherzugehen.';
+      'Kanalnachrichten erreichen nur Funkgeräte mit gleichem Kanalnamen und Schlüssel. Teilen Sie den QR-Code des Kanals, um sicherzugehen.';
 
   @override
-  String get tgHops => 'Dein Hop-Limit reicht bis zu ihnen';
+  String get tgHops => 'Ihr Hop-Limit reicht bis zu ihnen';
 
   @override
   String get tgHopsAdvice =>
-      'Jede Weitergabe kostet einen Hop. Sind sie weit weg, erhöhe das Limit unter Funkeinstellungen → LoRa; mehr als 3 braucht man selten.';
+      'Jede Weitergabe kostet einen Hop. Sind sie weit weg, erhöhen Sie das Limit unter Funkgeräteeinstellungen → LoRa; mehr als 3 braucht man selten.';
 
   @override
-  String get tgRegion => 'Dein Funkgerät hat eine Region';
+  String get tgRegion => 'Ihr Funkgerät hat eine Region';
 
   @override
   String get tgRegionAdvice =>
-      'Ein Funkgerät ohne Region kann nicht senden. Wähle die Region deines Landes unter Funkeinstellungen → LoRa.';
+      'Ein Funkgerät ohne Region kann nicht senden. Wählen Sie die Region Ihres Landes unter Funkgeräteeinstellungen → LoRa.';
 
   @override
   String get tgPreset =>
-      'Dein Funkgerät nutzt dasselbe Preset wie das lokale Mesh';
+      'Ihr Funkgerät nutzt dasselbe Preset wie das lokale Mesh';
 
   @override
   String get tgPresetAdvice =>
-      'Funkgeräte mit anderem Modem-Preset oder Frequenz-Slot hören niemanden. Long Fast ist Standard; frag dein lokales Mesh, was es nutzt.';
+      'Funkgeräte mit anderem Modem-Preset oder Frequenz-Slot hören niemanden. Long Fast ist Standard; fragen Sie Ihr lokales Mesh, was es nutzt.';
 
   @override
   String get tgAntenna => 'Die Antenne ist montiert';
 
   @override
   String get tgAntennaAdvice =>
-      'Achte darauf, dass die Antenne fest sitzt. Sende nie ohne; das kann das Funkgerät beschädigen.';
+      'Achten Sie darauf, dass die Antenne fest sitzt. Senden Sie nie ohne; das kann das Funkgerät beschädigen.';
 
   @override
   String get bwTitle => 'Akku-Wache';
@@ -7045,5 +7045,63 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get lnkPrevSub =>
-      'Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage deines Handys.';
+      'Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage Ihres Handys.';
+
+  @override
+  String get teamTitle => 'Team-Einrichtung';
+
+  @override
+  String get teamToolSub =>
+      'Kanäle, Funkeinstellungen und Tourkontakte in einem QR-Code';
+
+  @override
+  String get teamIntro =>
+      'Alles, was ein Teammitglied braucht, in einem Scan: Ihre Kanäle mit Schlüsseln, die Funkeinstellungen und Ihre Tourkontakte, Sie eingeschlossen.';
+
+  @override
+  String get teamChannels => 'Kanäle';
+
+  @override
+  String teamContacts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Tourkontakte',
+      one: '1 Tourkontakt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get teamHowTo =>
+      'Auf dem anderen Handy: Mehr → Optionen → Kanäle → Per QR-Code oder Link beitreten, dann diesen Code scannen.';
+
+  @override
+  String get teamAddContacts => 'Als Tourkontakte hinzufügen';
+
+  @override
+  String teamAddContactsSub(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Fügt Ihrer Tour $count neue Kontakte hinzu.',
+      one: 'Fügt Ihrer Tour 1 neuen Kontakt hinzu.',
+      zero: 'Sie sind schon Ihre Tourkontakte.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String teamAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Tourkontakte hinzugefügt.',
+      one: '1 Tourkontakt hinzugefügt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get teamShareButton => 'Team-Einrichtung teilen';
 }

@@ -6967,4 +6967,62 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get lnkPrevSub =>
       'Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.';
+
+  @override
+  String get teamTitle => 'Team setup';
+
+  @override
+  String get teamToolSub =>
+      'Channels, radio settings and trip contacts in one QR code';
+
+  @override
+  String get teamIntro =>
+      'Everything a teammate needs in one scan: your channels and their keys, the radio settings, and your trip contacts, including you.';
+
+  @override
+  String get teamChannels => 'Channels';
+
+  @override
+  String teamContacts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count trip contacts',
+      one: '1 trip contact',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get teamHowTo =>
+      'On the other phone: More → Settings → Channels → Join with QR code or link, then scan this code.';
+
+  @override
+  String get teamAddContacts => 'Add them as trip contacts';
+
+  @override
+  String teamAddContactsSub(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Adds $count new contacts to your trip.',
+      one: 'Adds 1 new contact to your trip.',
+      zero: 'They are already your trip contacts.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String teamAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count trip contacts added.',
+      one: '1 trip contact added.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get teamShareButton => 'Share team setup';
 }

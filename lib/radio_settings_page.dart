@@ -978,6 +978,15 @@ class ChannelListPageState extends State<ChannelListPage> {
             icon: const Icon(Icons.qr_code),
             label: Text(_l(context).chShare),
           ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            key: const ValueKey('team-share'),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(builder: (_) => TeamSharePage(radio: widget.radio)),
+            ),
+            icon: const Icon(Icons.groups_outlined),
+            label: Text(_l(context).teamShareButton),
+          ),
         ],
         if (_error != null) ...[
           Text(_l(context).rsChannelsFailed('$_error')),
