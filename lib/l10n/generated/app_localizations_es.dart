@@ -7592,5 +7592,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los límites de una zona al servicio Overpass de OpenStreetMap, solo cuando descargas senderos; ve tu dirección IP';
 
   @override
+  String get homeFieldTools => 'Herramientas de campo';
+
+  @override
   String get sarneg_wordHidden => 'Palabra clave oculta';
 }

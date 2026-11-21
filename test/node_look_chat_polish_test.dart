@@ -206,15 +206,18 @@ void main() {
     });
   });
 
-  testWidgets('Home shows the connected radio\'s own readings, without repeating battery', (tester) async {
+  testWidgets('Home shows the radio on an instrument panel, and Sensors only adds what it lacks', (tester) async {
     await tester.pumpWidget(const BastionApp());
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.play_circle_outline).first);
     await tester.pumpAndSettle();
-    final panel = find.byKey(const ValueKey('home-sensors'));
-    expect(panel, findsOneWidget);
-    expect(find.descendant(of: panel, matching: find.text('Sensors')), findsOneWidget);
-    expect(find.descendant(of: panel, matching: find.textContaining('Voltage')), findsOneWidget);
-    expect(find.descendant(of: panel, matching: find.textContaining('Battery')), findsNothing);
+    final readouts = find.byKey(const ValueKey('home-readouts'));
+    expect(readouts, findsOneWidget);
+    for (final label in ['Battery', 'Voltage', 'Channel use', 'Nodes']) {
+      expect(find.descendant(of: readouts, matching: find.text(label)), findsOneWidget, reason: label);
+    }
+    expect(find.descendant(of: readouts, matching: find.text('4.10')), findsOneWidget);
+    // The demo radio reports nothing beyond the panel, so no Sensors panel.
+    expect(find.byKey(const ValueKey('home-sensors')), findsNothing);
   });
 }

@@ -7620,5 +7620,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Grenzen eines Gebiets an den Overpass-Dienst von OpenStreetMap, nur wenn Sie Wege laden; er sieht Ihre IP-Adresse';
 
   @override
+  String get homeFieldTools => 'Feldwerkzeuge';
+
+  @override
   String get sarneg_wordHidden => 'Codewort verborgen';
 }

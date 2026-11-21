@@ -116,11 +116,12 @@ void main() {
     });
   });
 
-  test('cards are see-through glass that keeps most of the page colour', () {
+  test('cards are see-through glass: a little white over the page, as on Core', () {
     for (final t in BastionTheme.values) {
       final theme = NotoryxTheme.fromPalette(t.palette);
       final card = theme.cardTheme.color!;
-      expect(card.a, closeTo(NotoryxTheme.glassOpacity, 0.01), reason: t.id);
+      expect(card.a, closeTo(NotoryxTheme.glassWhite(theme.brightness), 0.01), reason: t.id);
+      expect(card.r, closeTo(1, 0.01), reason: '${t.id}: white glass');
       expect(theme.extension<NxGlow>(), isNotNull, reason: t.id);
     }
   });

@@ -7537,5 +7537,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'The bounds of an area to OpenStreetMap’s Overpass service, only when you download trails; it sees your IP address';
 
   @override
+  String get homeFieldTools => 'Field tools';
+
+  @override
   String get sarneg_wordHidden => 'Code word hidden';
 }
