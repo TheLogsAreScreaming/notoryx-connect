@@ -76,6 +76,8 @@ import 'theme/notoryx_tokens.dart';
 import 'node_avatar.dart';
 import 'services/bastion_node_looks.dart';
 import 'services/bastion_link_preview.dart';
+import 'services/bastion_track_log.dart';
+import 'track_log_page.dart';
 import 'theme/nx_backdrop.dart';
 import 'theme/nx_components.dart';
 import 'services/bastion_backdrop.dart';
@@ -114,6 +116,7 @@ Future<void> main() async {
   await BastionPreferences.instance.load();
   await BastionBackdrop.instance.load();
   await BastionNodeLooks.instance.load();
+  await BastionTrackLog.instance.load();
   // Chat history lives in its own database; older saves move over once.
   await BastionChatStorage.useSqlite();
   await BastionChatStorage.applySavedEncryption();
@@ -312,6 +315,7 @@ class _BastionShellState extends State<BastionShell> {
   void _goDestination(int i) => _go(_atDestination(i));
 
   BastionHomeWidget? _homeWidget;
+  TrackLogFeed? _trackFeed;
 
   @override
   void initState() {
@@ -330,6 +334,7 @@ class _BastionShellState extends State<BastionShell> {
     BastionTakBridge.instance.attach(() => _realRadio.nodes);
     // The timeline records the real radio only, never the demo.
     BastionTimeline.instance.attach(CoordinatorTimelineSource(_realRadio));
+    _trackFeed = TrackLogFeed(log: BastionTrackLog.instance, radio: _realRadio)..start();
     _setUpShortcuts();
     // The widget follows the real radio, never the demo.
     if (BastionHomeWidget.supported) {
@@ -370,6 +375,7 @@ class _BastionShellState extends State<BastionShell> {
     _homeWidget?.dispose();
     BastionTakBridge.instance.detach();
     BastionTimeline.instance.detach();
+    _trackFeed?.dispose();
     _realRadio.dispose();
     _demo?.dispose();
     super.dispose();

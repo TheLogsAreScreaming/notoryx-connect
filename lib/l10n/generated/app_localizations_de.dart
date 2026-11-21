@@ -6725,6 +6725,96 @@ class AppLocalizationsDe extends AppLocalizations {
       'Abrufe von in Chats verlinkten Webseiten, nur wenn du die Link-Vorschau einschaltest; die Website sieht deine IP-Adresse';
 
   @override
+  String get tlgTitle => 'Spurprotokoll';
+
+  @override
+  String get tlgToolSub =>
+      'Zeichne deinen Weg auf, exportiere ihn als GPX oder lass dich warnen, wenn du abweichst';
+
+  @override
+  String get tlgSources =>
+      'Punkte kommen vom GPS deines Funkgeräts, solange es verbunden ist, und vom Standort dieses Handys, solange die App offen ist. Spuren bleiben auf diesem Handy.';
+
+  @override
+  String get tlgStart => 'Aufzeichnung starten';
+
+  @override
+  String get tlgStop => 'Aufzeichnung beenden';
+
+  @override
+  String get tlgRecording => 'Aufzeichnung läuft';
+
+  @override
+  String tlgStats(int points, String distance, String time) {
+    return '$points Punkte • $distance • $time';
+  }
+
+  @override
+  String get tlgSaved => 'Gespeicherte Spuren';
+
+  @override
+  String get tlgEmpty =>
+      'Noch keine Spuren. Starte eine Aufzeichnung, bevor du losgehst.';
+
+  @override
+  String get tlgShowMap => 'Auf der Karte zeigen';
+
+  @override
+  String get tlgOnMap => 'Als Ebene zur Karte hinzugefügt.';
+
+  @override
+  String get tlgMapFailed =>
+      'Diese Spur konnte nicht zur Karte hinzugefügt werden.';
+
+  @override
+  String get tlgExport => 'Als GPX exportieren';
+
+  @override
+  String tlgWatchAt(String distance) {
+    return 'Warnen, wenn ich mehr als $distance abweiche';
+  }
+
+  @override
+  String get tlgUnwatch => 'Abweichungswarnung beenden';
+
+  @override
+  String tlgWatching(String name, String distance) {
+    return '$name wird überwacht: Warnung ab $distance';
+  }
+
+  @override
+  String get tlgWaitingFix => 'Warte auf eine Position.';
+
+  @override
+  String tlgOffNow(String distance) {
+    return 'Du bist jetzt $distance entfernt.';
+  }
+
+  @override
+  String get tlgDelete => 'Löschen';
+
+  @override
+  String get tlgDeleteQ => 'Diese Spur löschen?';
+
+  @override
+  String tlgDefaultName(String date) {
+    return 'Spur $date';
+  }
+
+  @override
+  String tlgPhoneLocationOff(String reason) {
+    return 'Der Handy-Standort ist aus ($reason). Das GPS des Funkgeräts kann weiter aufzeichnen.';
+  }
+
+  @override
+  String get tlgOffTitle => 'Abseits deiner Route';
+
+  @override
+  String tlgOffBody(String distance, String name) {
+    return 'Du bist $distance von $name entfernt.';
+  }
+
+  @override
   String get lnkPrevTitle => 'Link-Vorschau';
 
   @override

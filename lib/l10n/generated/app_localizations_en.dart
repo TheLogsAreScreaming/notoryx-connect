@@ -6648,6 +6648,95 @@ class AppLocalizationsEn extends AppLocalizations {
       'Requests for web pages linked in chats, only if you turn on Link previews; the linked site sees your IP address';
 
   @override
+  String get tlgTitle => 'Track log';
+
+  @override
+  String get tlgToolSub =>
+      'Record where you go, export it as GPX, or get a warning when you stray from it';
+
+  @override
+  String get tlgSources =>
+      'Points come from your radio\'s GPS while it\'s connected, and from this phone\'s location while the app is open. Tracks stay on this phone.';
+
+  @override
+  String get tlgStart => 'Start recording';
+
+  @override
+  String get tlgStop => 'Stop recording';
+
+  @override
+  String get tlgRecording => 'Recording';
+
+  @override
+  String tlgStats(int points, String distance, String time) {
+    return '$points points • $distance • $time';
+  }
+
+  @override
+  String get tlgSaved => 'Saved tracks';
+
+  @override
+  String get tlgEmpty =>
+      'No tracks yet. Start a recording before you head out.';
+
+  @override
+  String get tlgShowMap => 'Show on the map';
+
+  @override
+  String get tlgOnMap => 'Added to the map as a layer.';
+
+  @override
+  String get tlgMapFailed => 'Couldn\'t add this track to the map.';
+
+  @override
+  String get tlgExport => 'Export GPX';
+
+  @override
+  String tlgWatchAt(String distance) {
+    return 'Warn me if I stray more than $distance';
+  }
+
+  @override
+  String get tlgUnwatch => 'Stop the stray warning';
+
+  @override
+  String tlgWatching(String name, String distance) {
+    return 'Watching $name: warns past $distance';
+  }
+
+  @override
+  String get tlgWaitingFix => 'Waiting for a position.';
+
+  @override
+  String tlgOffNow(String distance) {
+    return 'You are $distance from it now.';
+  }
+
+  @override
+  String get tlgDelete => 'Delete';
+
+  @override
+  String get tlgDeleteQ => 'Delete this track?';
+
+  @override
+  String tlgDefaultName(String date) {
+    return 'Track $date';
+  }
+
+  @override
+  String tlgPhoneLocationOff(String reason) {
+    return 'Phone location is off ($reason). The radio\'s GPS can still record.';
+  }
+
+  @override
+  String get tlgOffTitle => 'Off your route';
+
+  @override
+  String tlgOffBody(String distance, String name) {
+    return 'You are $distance from $name.';
+  }
+
+  @override
   String get lnkPrevTitle => 'Link previews';
 
   @override

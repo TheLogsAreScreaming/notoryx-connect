@@ -57,6 +57,18 @@ class _ToolsPageState extends State<_ToolsPage> {
       )),
       NxSectionLabel(l.toolsBeforeYouGo),
       Card(child: ListTile(
+        key: const ValueKey('tools-track-log'),
+        leading: const Icon(Icons.route_outlined),
+        title: Text(l.tlgTitle),
+        subtitle: Text(l.tlgToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(TrackLogPage(
+          log: BastionTrackLog.instance,
+          share: MapPage.shareGpx,
+          location: GeolocatorLocationSource(),
+        )),
+      )),
+      Card(child: ListTile(
         key: const ValueKey('tools-checklists'),
         leading: const Icon(Icons.fact_check_outlined),
         title: Text(l.clTitle),

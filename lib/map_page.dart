@@ -64,6 +64,9 @@ class MapPage extends StatefulWidget {
   /// Hands an exported file to the system share sheet; replaced in tests.
   final Future<void> Function(String fileName, String text) shareFile;
 
+  /// Shares a GPX file from anywhere in the app.
+  static Future<void> shareGpx(String fileName, String text) => _shareFile(fileName, text);
+
   static Future<void> _shareFile(String fileName, String text) async {
     await SharePlus.instance.share(ShareParams(
       files: [XFile.fromData(Uint8List.fromList(utf8.encode(text)), mimeType: 'application/gpx+xml')],

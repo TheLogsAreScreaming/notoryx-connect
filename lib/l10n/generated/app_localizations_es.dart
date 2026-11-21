@@ -6696,6 +6696,95 @@ class AppLocalizationsEs extends AppLocalizations {
       'Peticiones de las páginas web enlazadas en los chats, solo si activas la vista previa de enlaces; el sitio ve tu dirección IP';
 
   @override
+  String get tlgTitle => 'Registro de recorrido';
+
+  @override
+  String get tlgToolSub =>
+      'Graba por dónde vas, expórtalo en GPX o recibe un aviso si te desvías';
+
+  @override
+  String get tlgSources =>
+      'Los puntos vienen del GPS de tu radio mientras está conectada, y de la ubicación de este teléfono mientras la app está abierta. Los recorridos se quedan en este teléfono.';
+
+  @override
+  String get tlgStart => 'Empezar a grabar';
+
+  @override
+  String get tlgStop => 'Parar la grabación';
+
+  @override
+  String get tlgRecording => 'Grabando';
+
+  @override
+  String tlgStats(int points, String distance, String time) {
+    return '$points puntos • $distance • $time';
+  }
+
+  @override
+  String get tlgSaved => 'Recorridos guardados';
+
+  @override
+  String get tlgEmpty =>
+      'Aún no hay recorridos. Empieza a grabar antes de salir.';
+
+  @override
+  String get tlgShowMap => 'Mostrar en el mapa';
+
+  @override
+  String get tlgOnMap => 'Añadido al mapa como capa.';
+
+  @override
+  String get tlgMapFailed => 'No se pudo añadir este recorrido al mapa.';
+
+  @override
+  String get tlgExport => 'Exportar GPX';
+
+  @override
+  String tlgWatchAt(String distance) {
+    return 'Avísame si me desvío más de $distance';
+  }
+
+  @override
+  String get tlgUnwatch => 'Quitar el aviso de desvío';
+
+  @override
+  String tlgWatching(String name, String distance) {
+    return 'Vigilando $name: avisa a más de $distance';
+  }
+
+  @override
+  String get tlgWaitingFix => 'Esperando una posición.';
+
+  @override
+  String tlgOffNow(String distance) {
+    return 'Ahora estás a $distance.';
+  }
+
+  @override
+  String get tlgDelete => 'Eliminar';
+
+  @override
+  String get tlgDeleteQ => '¿Eliminar este recorrido?';
+
+  @override
+  String tlgDefaultName(String date) {
+    return 'Recorrido $date';
+  }
+
+  @override
+  String tlgPhoneLocationOff(String reason) {
+    return 'La ubicación del teléfono está desactivada ($reason). El GPS de la radio puede seguir grabando.';
+  }
+
+  @override
+  String get tlgOffTitle => 'Fuera de tu ruta';
+
+  @override
+  String tlgOffBody(String distance, String name) {
+    return 'Estás a $distance de $name.';
+  }
+
+  @override
   String get lnkPrevTitle => 'Vista previa de enlaces';
 
   @override
