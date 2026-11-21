@@ -6815,6 +6815,165 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get gdTitle => 'Feldhandbuch';
+
+  @override
+  String get gdToolSub =>
+      'Mesh-Grundlagen, Akkus in der Kälte, Solar und Antennen';
+
+  @override
+  String get gdSecMesh => 'Ins Mesh kommen';
+
+  @override
+  String get gdMesh1 =>
+      'Dein Handy spricht per Bluetooth, USB oder WLAN mit dem Funkgerät; das Funkgerät spricht per LoRa mit dem Mesh. Nachrichten gehen auch ohne Handynetz.';
+
+  @override
+  String get gdMesh2 =>
+      'Jedes Funkgerät, das eine Nachricht hört, kann sie weitergeben. Jede Weitergabe ist ein Hop, und das Hop-Limit (standardmäßig 3) bestimmt die Reichweite.';
+
+  @override
+  String get gdMesh3 =>
+      'Lass die Rolle auf Client, außer dein Funkgerät steht hoch und läuft immer. Zu viele Router machen das Mesh schlechter, nicht besser.';
+
+  @override
+  String get gdMesh4 =>
+      'Halte Nachrichten kurz und flute keine vollen Kanäle: Jede Nachricht nutzt gemeinsame Sendezeit.';
+
+  @override
+  String get gdSecCold => 'Akkus in der Kälte';
+
+  @override
+  String get gdCold1 =>
+      'Lade Lithium-Akkus nicht unter dem Gefrierpunkt (0 °C / 32 °F): Das schädigt sie dauerhaft.';
+
+  @override
+  String get gdCold2 =>
+      'Trag das Funkgerät in der Jacke. Kälte senkt die Kapazität, aber sie kommt zurück, wenn der Akku warm wird.';
+
+  @override
+  String get gdCold3 =>
+      'Für feste Standorte in kaltem Klima hält LiFePO4 besser durch als Lithium-Ionen; eine beheizte oder gedämmte Box hilft beiden.';
+
+  @override
+  String get gdSecSolar => 'Solar für feste Knoten';
+
+  @override
+  String get gdSolar1 =>
+      'Ein Knoten braucht wenig Strom, aber plane Panel und Akku für die dunkelste Winterwoche, nicht für einen Sommertag.';
+
+  @override
+  String get gdSolar2 =>
+      'Richte das Panel zum Äquator aus und stell es im Winter steil; halte es frei von Schnee und Schatten.';
+
+  @override
+  String get gdSecAntenna => 'Antennen und Standort';
+
+  @override
+  String get gdAnt1 =>
+      'Höhe schlägt Leistung: Ein Funkgerät ein paar Meter hoch reicht viel weiter als eines auf dem Schreibtisch.';
+
+  @override
+  String get gdAnt2 =>
+      'Halte die Antenne senkrecht und fern von Metall und nimm eine für dein Band (zum Beispiel 868 MHz in Europa, 915 MHz in den USA). Sende nie ohne Antenne.';
+
+  @override
+  String get gdSecMore => 'Mehr erfahren';
+
+  @override
+  String get gdMore => 'Meshtastic-Dokumentation: meshtastic.org/docs';
+
+  @override
+  String get tgSection => 'Ein anderes Problem?';
+
+  @override
+  String get tgNoDelivery => 'Nachrichten kommen nicht an';
+
+  @override
+  String get tgHearNobody => 'Ich höre niemanden';
+
+  @override
+  String get tgStartHere => 'Hier anfangen';
+
+  @override
+  String get tgOk => 'OK';
+
+  @override
+  String get tgProblem => 'Problem';
+
+  @override
+  String get tgUnchecked => 'Nicht prüfbar';
+
+  @override
+  String get tgAllOk =>
+      'Alle Prüfungen bestanden. Wenn es trotzdem nicht geht, lohnt ein Blick auf die Schritte unten.';
+
+  @override
+  String get tgConnected => 'Dein Funkgerät ist verbunden';
+
+  @override
+  String get tgConnectedAdvice =>
+      'Verbinde zuerst dein Funkgerät: Knoten → Nach Funkgeräten suchen.';
+
+  @override
+  String get tgHeardRecently =>
+      'Die Leute, denen du schreibst, wurden am letzten Tag gehört';
+
+  @override
+  String get tgHeardRecentlyAdvice =>
+      'Wer länger nicht gehört wurde, ist vielleicht außer Reichweite oder aus. Eine Direktnachricht kann erst bestätigt werden, wenn er zurück ist.';
+
+  @override
+  String get tgNeighbours => 'Dein Funkgerät hört andere Knoten';
+
+  @override
+  String get tgNeighboursAdvice =>
+      'Nichts in der letzten Stunde gehört heißt, dein Funkgerät erreicht das Mesh von hier nicht. Antenne höher, selbst höher gehen oder näher an andere Knoten.';
+
+  @override
+  String get tgBusy => 'Der Kanal ist nicht überlastet';
+
+  @override
+  String get tgBusyAdvice =>
+      'Über 40 % Kanalauslastung stoßen Nachrichten zusammen und gehen verloren. Sende weniger und prüfe, ob jemand in der Nähe das Mesh flutet.';
+
+  @override
+  String get tgSameChannel => 'Du teilst einen Kanal mit deinen Empfängern';
+
+  @override
+  String get tgSameChannelAdvice =>
+      'Kanalnachrichten erreichen nur Funkgeräte mit gleichem Kanalnamen und Schlüssel. Teile den QR-Code des Kanals, um sicherzugehen.';
+
+  @override
+  String get tgHops => 'Dein Hop-Limit reicht bis zu ihnen';
+
+  @override
+  String get tgHopsAdvice =>
+      'Jede Weitergabe kostet einen Hop. Sind sie weit weg, erhöhe das Limit unter Funkeinstellungen → LoRa; mehr als 3 braucht man selten.';
+
+  @override
+  String get tgRegion => 'Dein Funkgerät hat eine Region';
+
+  @override
+  String get tgRegionAdvice =>
+      'Ein Funkgerät ohne Region kann nicht senden. Wähle die Region deines Landes unter Funkeinstellungen → LoRa.';
+
+  @override
+  String get tgPreset =>
+      'Dein Funkgerät nutzt dasselbe Preset wie das lokale Mesh';
+
+  @override
+  String get tgPresetAdvice =>
+      'Funkgeräte mit anderem Modem-Preset oder Frequenz-Slot hören niemanden. Long Fast ist Standard; frag dein lokales Mesh, was es nutzt.';
+
+  @override
+  String get tgAntenna => 'Die Antenne ist montiert';
+
+  @override
+  String get tgAntennaAdvice =>
+      'Achte darauf, dass die Antenne fest sitzt. Sende nie ohne; das kann das Funkgerät beschädigen.';
+
+  @override
   String get lnkPrevTitle => 'Link-Vorschau';
 
   @override

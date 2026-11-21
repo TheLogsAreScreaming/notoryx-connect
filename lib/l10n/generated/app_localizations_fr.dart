@@ -6814,6 +6814,165 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get gdTitle => 'Guide de terrain';
+
+  @override
+  String get gdToolSub =>
+      'Les bases du maillage, batteries par temps froid, solaire et antennes';
+
+  @override
+  String get gdSecMesh => 'Rejoindre le maillage';
+
+  @override
+  String get gdMesh1 =>
+      'Votre téléphone parle à votre radio en Bluetooth, USB ou Wi-Fi ; la radio parle au maillage en LoRa. Les messages fonctionnent sans réseau mobile.';
+
+  @override
+  String get gdMesh2 =>
+      'Chaque radio qui entend un message peut le relayer. Chaque relais est un saut, et la limite de sauts (3 par défaut) fixe sa portée.';
+
+  @override
+  String get gdMesh3 =>
+      'Gardez le rôle Client sauf si votre radio est en hauteur et toujours allumée. Trop de routeurs dégradent le maillage.';
+
+  @override
+  String get gdMesh4 =>
+      'Écrivez des messages courts et ne saturez pas les canaux chargés : chaque message utilise du temps d’antenne partagé.';
+
+  @override
+  String get gdSecCold => 'Batteries par temps froid';
+
+  @override
+  String get gdCold1 =>
+      'Ne chargez pas les batteries lithium sous zéro (0 °C / 32 °F) : cela les abîme définitivement.';
+
+  @override
+  String get gdCold2 =>
+      'Portez la radio sous votre veste. Le froid réduit la capacité, mais elle revient quand la batterie se réchauffe.';
+
+  @override
+  String get gdCold3 =>
+      'Pour les sites fixes en climat froid, le LiFePO4 tient mieux que le lithium-ion ; un boîtier isolé ou chauffé aide dans les deux cas.';
+
+  @override
+  String get gdSecSolar => 'Solaire pour nœuds fixes';
+
+  @override
+  String get gdSolar1 =>
+      'Un nœud consomme peu, mais dimensionnez panneau et batterie pour la semaine la plus sombre de l’hiver, pas pour un jour d’été.';
+
+  @override
+  String get gdSolar2 =>
+      'Orientez le panneau vers l’équateur et inclinez-le fortement en hiver ; gardez-le sans neige ni ombre.';
+
+  @override
+  String get gdSecAntenna => 'Antennes et emplacement';
+
+  @override
+  String get gdAnt1 =>
+      'La hauteur bat la puissance : une radio à quelques mètres du sol porte bien plus loin qu’une radio sur un bureau.';
+
+  @override
+  String get gdAnt2 =>
+      'Gardez l’antenne verticale et loin du métal, et utilisez-en une faite pour votre bande (par exemple 868 MHz en Europe, 915 MHz aux États-Unis). N’émettez jamais sans antenne.';
+
+  @override
+  String get gdSecMore => 'En savoir plus';
+
+  @override
+  String get gdMore => 'Documentation Meshtastic : meshtastic.org/docs';
+
+  @override
+  String get tgSection => 'Un autre problème ?';
+
+  @override
+  String get tgNoDelivery => 'Les messages n’arrivent pas';
+
+  @override
+  String get tgHearNobody => 'Je n’entends personne';
+
+  @override
+  String get tgStartHere => 'Commencez ici';
+
+  @override
+  String get tgOk => 'OK';
+
+  @override
+  String get tgProblem => 'Problème';
+
+  @override
+  String get tgUnchecked => 'Impossible à vérifier';
+
+  @override
+  String get tgAllOk =>
+      'Toutes les vérifications sont passées. Si cela ne marche toujours pas, regardez les étapes ci-dessous.';
+
+  @override
+  String get tgConnected => 'Votre radio est connectée';
+
+  @override
+  String get tgConnectedAdvice =>
+      'Connectez d’abord votre radio : Nœuds → Rechercher des radios.';
+
+  @override
+  String get tgHeardRecently =>
+      'Vos correspondants ont été entendus dans la dernière journée';
+
+  @override
+  String get tgHeardRecentlyAdvice =>
+      'Quelqu’un qu’on n’entend plus est peut-être hors de portée ou éteint. Un message direct ne peut pas être confirmé avant son retour.';
+
+  @override
+  String get tgNeighbours => 'Votre radio entend d’autres nœuds';
+
+  @override
+  String get tgNeighboursAdvice =>
+      'Rien entendu depuis une heure signifie que votre radio n’atteint pas le maillage d’ici. Montez l’antenne, prenez de la hauteur ou rapprochez-vous d’autres nœuds.';
+
+  @override
+  String get tgBusy => 'Le canal n’est pas saturé';
+
+  @override
+  String get tgBusyAdvice =>
+      'Au-delà de 40 % d’occupation, les messages se heurtent et se perdent. Envoyez moins et vérifiez que personne à proximité ne sature le maillage.';
+
+  @override
+  String get tgSameChannel => 'Vous partagez un canal avec vos correspondants';
+
+  @override
+  String get tgSameChannelAdvice =>
+      'Les messages de canal n’atteignent que les radios avec le même nom et la même clé de canal. Partagez le QR code du canal pour en être sûr.';
+
+  @override
+  String get tgHops => 'Votre limite de sauts les atteint';
+
+  @override
+  String get tgHopsAdvice =>
+      'Chaque relais utilise un saut. S’ils sont loin, augmentez la limite dans Réglages radio → LoRa ; plus de 3 est rarement utile.';
+
+  @override
+  String get tgRegion => 'Votre radio a une région définie';
+
+  @override
+  String get tgRegionAdvice =>
+      'Une radio sans région ne peut pas émettre. Choisissez la région de votre pays dans Réglages radio → LoRa.';
+
+  @override
+  String get tgPreset =>
+      'Votre radio utilise le même préréglage que le maillage local';
+
+  @override
+  String get tgPresetAdvice =>
+      'Des radios sur un autre préréglage de modem ou une autre fréquence n’entendent personne. Long Fast est le défaut ; demandez ce qu’utilise votre maillage local.';
+
+  @override
+  String get tgAntenna => 'L’antenne est montée';
+
+  @override
+  String get tgAntennaAdvice =>
+      'Vérifiez que l’antenne est bien vissée. N’émettez jamais sans elle ; cela peut abîmer la radio.';
+
+  @override
   String get lnkPrevTitle => 'Aperçu des liens';
 
   @override

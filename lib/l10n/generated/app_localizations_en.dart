@@ -6737,6 +6737,164 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get gdTitle => 'Field guide';
+
+  @override
+  String get gdToolSub =>
+      'Mesh basics, batteries in the cold, solar and antennas';
+
+  @override
+  String get gdSecMesh => 'Getting on the mesh';
+
+  @override
+  String get gdMesh1 =>
+      'Your phone talks to your radio over Bluetooth, USB or Wi-Fi; the radio talks to the mesh over LoRa. Messages still work with no phone signal.';
+
+  @override
+  String get gdMesh2 =>
+      'Every radio that hears a message can pass it on. Each pass is a hop, and the hop limit (3 by default) sets how far a message spreads.';
+
+  @override
+  String get gdMesh3 =>
+      'Leave your role as Client unless your radio sits somewhere high and is always on. Too many routers make the mesh worse, not better.';
+
+  @override
+  String get gdMesh4 =>
+      'Keep messages short and avoid flooding busy channels: every message uses shared airtime.';
+
+  @override
+  String get gdSecCold => 'Batteries in the cold';
+
+  @override
+  String get gdCold1 =>
+      'Don’t charge lithium batteries below freezing (0 °C / 32 °F): it damages them permanently.';
+
+  @override
+  String get gdCold2 =>
+      'Carry the radio inside your jacket. Cold cuts capacity, but it comes back once the battery warms up.';
+
+  @override
+  String get gdCold3 =>
+      'For fixed sites in cold climates, LiFePO4 copes better than lithium-ion; a heated or insulated box helps either.';
+
+  @override
+  String get gdSecSolar => 'Solar for fixed nodes';
+
+  @override
+  String get gdSolar1 =>
+      'A node uses little power, but size the panel and battery for your darkest winter week, not a summer day.';
+
+  @override
+  String get gdSolar2 =>
+      'Face the panel toward the equator and tilt it steeply in winter; keep snow and shade off it.';
+
+  @override
+  String get gdSecAntenna => 'Antennas and placement';
+
+  @override
+  String get gdAnt1 =>
+      'Height beats power: a radio a few meters up reaches far more than one on a desk.';
+
+  @override
+  String get gdAnt2 =>
+      'Keep the antenna vertical and clear of metal, and use one made for your band (for example 915 MHz in the US, 868 MHz in Europe). Never transmit without one.';
+
+  @override
+  String get gdSecMore => 'Learn more';
+
+  @override
+  String get gdMore => 'Meshtastic documentation: meshtastic.org/docs';
+
+  @override
+  String get tgSection => 'Something else wrong?';
+
+  @override
+  String get tgNoDelivery => 'Messages aren’t delivered';
+
+  @override
+  String get tgHearNobody => 'I don’t hear anyone';
+
+  @override
+  String get tgStartHere => 'Start here';
+
+  @override
+  String get tgOk => 'OK';
+
+  @override
+  String get tgProblem => 'Problem';
+
+  @override
+  String get tgUnchecked => 'Can’t check';
+
+  @override
+  String get tgAllOk =>
+      'Every check passed. If it still doesn’t work, the steps below are worth a look.';
+
+  @override
+  String get tgConnected => 'Your radio is connected';
+
+  @override
+  String get tgConnectedAdvice =>
+      'Connect your radio first: Nodes → Scan for radios.';
+
+  @override
+  String get tgHeardRecently =>
+      'The people you message were heard in the last day';
+
+  @override
+  String get tgHeardRecentlyAdvice =>
+      'Someone not heard in a while may be out of range or switched off. A direct message can’t be acknowledged until they’re back.';
+
+  @override
+  String get tgNeighbours => 'Your radio hears other nodes';
+
+  @override
+  String get tgNeighboursAdvice =>
+      'Nothing heard in the last hour means your radio can’t reach the mesh from here. Raise the antenna, go higher, or move closer to other nodes.';
+
+  @override
+  String get tgBusy => 'The channel isn’t too busy';
+
+  @override
+  String get tgBusyAdvice =>
+      'Above 40% channel use, messages collide and get lost. Send less, and check nobody nearby is flooding the mesh.';
+
+  @override
+  String get tgSameChannel => 'You share a channel with the people you message';
+
+  @override
+  String get tgSameChannelAdvice =>
+      'Channel messages only reach radios with the same channel name and key. Share the channel’s QR code to be sure.';
+
+  @override
+  String get tgHops => 'Your hop limit reaches them';
+
+  @override
+  String get tgHopsAdvice =>
+      'Each relay uses one hop. If they’re far away, raise the hop limit in Radio settings → LoRa; more than 3 is rarely needed.';
+
+  @override
+  String get tgRegion => 'Your radio has a region set';
+
+  @override
+  String get tgRegionAdvice =>
+      'A radio with no region set can’t transmit. Choose your country’s region in Radio settings → LoRa.';
+
+  @override
+  String get tgPreset => 'Your radio uses the same preset as the local mesh';
+
+  @override
+  String get tgPresetAdvice =>
+      'Radios on a different modem preset or frequency slot hear no one. Long Fast is the default; ask your local mesh what they use.';
+
+  @override
+  String get tgAntenna => 'The antenna is fitted';
+
+  @override
+  String get tgAntennaAdvice =>
+      'Make sure the antenna is screwed on firmly. Never transmit without one; it can damage the radio.';
+
+  @override
   String get lnkPrevTitle => 'Link previews';
 
   @override

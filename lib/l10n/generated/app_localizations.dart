@@ -11023,6 +11023,276 @@ abstract class AppLocalizations {
   /// **'You are {distance} from {name}.'**
   String tlgOffBody(String distance, String name);
 
+  /// No description provided for @gdTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Field guide'**
+  String get gdTitle;
+
+  /// No description provided for @gdToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh basics, batteries in the cold, solar and antennas'**
+  String get gdToolSub;
+
+  /// No description provided for @gdSecMesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting on the mesh'**
+  String get gdSecMesh;
+
+  /// No description provided for @gdMesh1.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone talks to your radio over Bluetooth, USB or Wi-Fi; the radio talks to the mesh over LoRa. Messages still work with no phone signal.'**
+  String get gdMesh1;
+
+  /// No description provided for @gdMesh2.
+  ///
+  /// In en, this message translates to:
+  /// **'Every radio that hears a message can pass it on. Each pass is a hop, and the hop limit (3 by default) sets how far a message spreads.'**
+  String get gdMesh2;
+
+  /// No description provided for @gdMesh3.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave your role as Client unless your radio sits somewhere high and is always on. Too many routers make the mesh worse, not better.'**
+  String get gdMesh3;
+
+  /// No description provided for @gdMesh4.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep messages short and avoid flooding busy channels: every message uses shared airtime.'**
+  String get gdMesh4;
+
+  /// No description provided for @gdSecCold.
+  ///
+  /// In en, this message translates to:
+  /// **'Batteries in the cold'**
+  String get gdSecCold;
+
+  /// No description provided for @gdCold1.
+  ///
+  /// In en, this message translates to:
+  /// **'Don’t charge lithium batteries below freezing (0 °C / 32 °F): it damages them permanently.'**
+  String get gdCold1;
+
+  /// No description provided for @gdCold2.
+  ///
+  /// In en, this message translates to:
+  /// **'Carry the radio inside your jacket. Cold cuts capacity, but it comes back once the battery warms up.'**
+  String get gdCold2;
+
+  /// No description provided for @gdCold3.
+  ///
+  /// In en, this message translates to:
+  /// **'For fixed sites in cold climates, LiFePO4 copes better than lithium-ion; a heated or insulated box helps either.'**
+  String get gdCold3;
+
+  /// No description provided for @gdSecSolar.
+  ///
+  /// In en, this message translates to:
+  /// **'Solar for fixed nodes'**
+  String get gdSecSolar;
+
+  /// No description provided for @gdSolar1.
+  ///
+  /// In en, this message translates to:
+  /// **'A node uses little power, but size the panel and battery for your darkest winter week, not a summer day.'**
+  String get gdSolar1;
+
+  /// No description provided for @gdSolar2.
+  ///
+  /// In en, this message translates to:
+  /// **'Face the panel toward the equator and tilt it steeply in winter; keep snow and shade off it.'**
+  String get gdSolar2;
+
+  /// No description provided for @gdSecAntenna.
+  ///
+  /// In en, this message translates to:
+  /// **'Antennas and placement'**
+  String get gdSecAntenna;
+
+  /// No description provided for @gdAnt1.
+  ///
+  /// In en, this message translates to:
+  /// **'Height beats power: a radio a few meters up reaches far more than one on a desk.'**
+  String get gdAnt1;
+
+  /// No description provided for @gdAnt2.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the antenna vertical and clear of metal, and use one made for your band (for example 915 MHz in the US, 868 MHz in Europe). Never transmit without one.'**
+  String get gdAnt2;
+
+  /// No description provided for @gdSecMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn more'**
+  String get gdSecMore;
+
+  /// No description provided for @gdMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Meshtastic documentation: meshtastic.org/docs'**
+  String get gdMore;
+
+  /// No description provided for @tgSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Something else wrong?'**
+  String get tgSection;
+
+  /// No description provided for @tgNoDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages aren’t delivered'**
+  String get tgNoDelivery;
+
+  /// No description provided for @tgHearNobody.
+  ///
+  /// In en, this message translates to:
+  /// **'I don’t hear anyone'**
+  String get tgHearNobody;
+
+  /// No description provided for @tgStartHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Start here'**
+  String get tgStartHere;
+
+  /// No description provided for @tgOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get tgOk;
+
+  /// No description provided for @tgProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem'**
+  String get tgProblem;
+
+  /// No description provided for @tgUnchecked.
+  ///
+  /// In en, this message translates to:
+  /// **'Can’t check'**
+  String get tgUnchecked;
+
+  /// No description provided for @tgAllOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Every check passed. If it still doesn’t work, the steps below are worth a look.'**
+  String get tgAllOk;
+
+  /// No description provided for @tgConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio is connected'**
+  String get tgConnected;
+
+  /// No description provided for @tgConnectedAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your radio first: Nodes → Scan for radios.'**
+  String get tgConnectedAdvice;
+
+  /// No description provided for @tgHeardRecently.
+  ///
+  /// In en, this message translates to:
+  /// **'The people you message were heard in the last day'**
+  String get tgHeardRecently;
+
+  /// No description provided for @tgHeardRecentlyAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone not heard in a while may be out of range or switched off. A direct message can’t be acknowledged until they’re back.'**
+  String get tgHeardRecentlyAdvice;
+
+  /// No description provided for @tgNeighbours.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio hears other nodes'**
+  String get tgNeighbours;
+
+  /// No description provided for @tgNeighboursAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing heard in the last hour means your radio can’t reach the mesh from here. Raise the antenna, go higher, or move closer to other nodes.'**
+  String get tgNeighboursAdvice;
+
+  /// No description provided for @tgBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'The channel isn’t too busy'**
+  String get tgBusy;
+
+  /// No description provided for @tgBusyAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Above 40% channel use, messages collide and get lost. Send less, and check nobody nearby is flooding the mesh.'**
+  String get tgBusyAdvice;
+
+  /// No description provided for @tgSameChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'You share a channel with the people you message'**
+  String get tgSameChannel;
+
+  /// No description provided for @tgSameChannelAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel messages only reach radios with the same channel name and key. Share the channel’s QR code to be sure.'**
+  String get tgSameChannelAdvice;
+
+  /// No description provided for @tgHops.
+  ///
+  /// In en, this message translates to:
+  /// **'Your hop limit reaches them'**
+  String get tgHops;
+
+  /// No description provided for @tgHopsAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Each relay uses one hop. If they’re far away, raise the hop limit in Radio settings → LoRa; more than 3 is rarely needed.'**
+  String get tgHopsAdvice;
+
+  /// No description provided for @tgRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio has a region set'**
+  String get tgRegion;
+
+  /// No description provided for @tgRegionAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'A radio with no region set can’t transmit. Choose your country’s region in Radio settings → LoRa.'**
+  String get tgRegionAdvice;
+
+  /// No description provided for @tgPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio uses the same preset as the local mesh'**
+  String get tgPreset;
+
+  /// No description provided for @tgPresetAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Radios on a different modem preset or frequency slot hear no one. Long Fast is the default; ask your local mesh what they use.'**
+  String get tgPresetAdvice;
+
+  /// No description provided for @tgAntenna.
+  ///
+  /// In en, this message translates to:
+  /// **'The antenna is fitted'**
+  String get tgAntenna;
+
+  /// No description provided for @tgAntennaAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Make sure the antenna is screwed on firmly. Never transmit without one; it can damage the radio.'**
+  String get tgAntennaAdvice;
+
   /// No description provided for @lnkPrevTitle.
   ///
   /// In en, this message translates to:
