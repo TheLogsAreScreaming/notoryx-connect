@@ -2035,5 +2035,6 @@
   "trlKindTown": "Localité",
   "trlKindLocality": "Lieu-dit",
   "trlKindWaypoint": "Point enregistré",
-  "pvSent10": "Les limites d’une zone au service Overpass d’OpenStreetMap, uniquement quand vous téléchargez des sentiers ; il voit votre adresse IP"
+  "pvSent10": "Les limites d’une zone au service Overpass d’OpenStreetMap, uniquement quand vous téléchargez des sentiers ; il voit votre adresse IP",
+  "sarneg_wordHidden": "Mot de code masqué"
 }

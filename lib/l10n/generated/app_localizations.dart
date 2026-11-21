@@ -12330,6 +12330,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The bounds of an area to OpenStreetMap’s Overpass service, only when you download trails; it sees your IP address'**
   String get pvSent10;
+
+  /// No description provided for @sarneg_wordHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Code word hidden'**
+  String get sarneg_wordHidden;
 }
 
 class _AppLocalizationsDelegate
