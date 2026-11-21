@@ -11742,6 +11742,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your radio relayed the SOS from {name} on the same channel.'**
   String srRelayedBody(String name);
+
+  /// No description provided for @trlTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trail routing'**
+  String get trlTitle;
+
+  /// No description provided for @trlToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan walking routes with no signal, over trails you download beforehand'**
+  String get trlToolSub;
+
+  /// No description provided for @trlIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the trails around you while you have signal. Later, plan walking routes along them anywhere in that area, with no signal at all.'**
+  String get trlIntro;
+
+  /// No description provided for @trlPlanSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a route from where you are'**
+  String get trlPlanSection;
+
+  /// No description provided for @trlTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To: a peak, hut, trailhead or saved waypoint'**
+  String get trlTo;
+
+  /// No description provided for @trlNoAreas.
+  ///
+  /// In en, this message translates to:
+  /// **'Download an area first, below.'**
+  String get trlNoAreas;
+
+  /// No description provided for @trlAreasSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded areas'**
+  String get trlAreasSection;
+
+  /// No description provided for @trlDownloadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Trails and named places come from OpenStreetMap. Downloading sends the area’s bounds to the Overpass service, which sees your IP address.'**
+  String get trlDownloadHint;
+
+  /// No description provided for @trlWithin.
+  ///
+  /// In en, this message translates to:
+  /// **'Within {distance}'**
+  String trlWithin(String distance);
+
+  /// No description provided for @trlDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download trails around me'**
+  String get trlDownload;
+
+  /// No description provided for @trlSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Area saved. It works with no signal now.'**
+  String get trlSaved;
+
+  /// No description provided for @trlAreaName.
+  ///
+  /// In en, this message translates to:
+  /// **'Trails near me, {date}'**
+  String trlAreaName(String date);
+
+  /// No description provided for @trlNoPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'No position yet. Connect a radio with GPS, or allow this phone’s location.'**
+  String get trlNoPosition;
+
+  /// No description provided for @trlTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'That area is too large to download at once.'**
+  String get trlTooLarge;
+
+  /// No description provided for @trlFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough room: delete an area first.'**
+  String get trlFull;
+
+  /// No description provided for @trlNoTrails.
+  ///
+  /// In en, this message translates to:
+  /// **'No trails or named places found there.'**
+  String get trlNoTrails;
+
+  /// No description provided for @trlFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t download. Check the internet connection and try again.'**
+  String get trlFailed;
+
+  /// No description provided for @trlNoArea.
+  ///
+  /// In en, this message translates to:
+  /// **'You and that place aren’t in the same downloaded area.'**
+  String get trlNoArea;
+
+  /// No description provided for @trlStartFar.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re more than 500 m from any downloaded trail.'**
+  String get trlStartFar;
+
+  /// No description provided for @trlEndFar.
+  ///
+  /// In en, this message translates to:
+  /// **'That place is more than 500 m from any downloaded trail.'**
+  String get trlEndFar;
+
+  /// No description provided for @trlNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'No trail connects you to that place in this area.'**
+  String get trlNotConnected;
+
+  /// No description provided for @trlDamaged.
+  ///
+  /// In en, this message translates to:
+  /// **'This area’s trail data is damaged. Delete it and download it again.'**
+  String get trlDamaged;
+
+  /// No description provided for @trlRouteTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Route to {name}'**
+  String trlRouteTo(String name);
+
+  /// No description provided for @trlRouteStats.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} • about {time} at an easy pace'**
+  String trlRouteStats(String distance, String time);
+
+  /// No description provided for @trlNoClimb.
+  ///
+  /// In en, this message translates to:
+  /// **'The time doesn’t include climbing; allow more in hills.'**
+  String get trlNoClimb;
+
+  /// No description provided for @trlKindPeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Peak'**
+  String get trlKindPeak;
+
+  /// No description provided for @trlKindPass.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass'**
+  String get trlKindPass;
+
+  /// No description provided for @trlKindSpring.
+  ///
+  /// In en, this message translates to:
+  /// **'Spring'**
+  String get trlKindSpring;
+
+  /// No description provided for @trlKindHut.
+  ///
+  /// In en, this message translates to:
+  /// **'Hut'**
+  String get trlKindHut;
+
+  /// No description provided for @trlKindCampsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Campsite'**
+  String get trlKindCampsite;
+
+  /// No description provided for @trlKindViewpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewpoint'**
+  String get trlKindViewpoint;
+
+  /// No description provided for @trlKindShelter.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelter'**
+  String get trlKindShelter;
+
+  /// No description provided for @trlKindTrailhead.
+  ///
+  /// In en, this message translates to:
+  /// **'Trailhead'**
+  String get trlKindTrailhead;
+
+  /// No description provided for @trlKindTown.
+  ///
+  /// In en, this message translates to:
+  /// **'Town'**
+  String get trlKindTown;
+
+  /// No description provided for @trlKindLocality.
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get trlKindLocality;
+
+  /// No description provided for @trlKindWaypoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved waypoint'**
+  String get trlKindWaypoint;
+
+  /// No description provided for @pvSent10.
+  ///
+  /// In en, this message translates to:
+  /// **'The bounds of an area to OpenStreetMap’s Overpass service, only when you download trails; it sees your IP address'**
+  String get pvSent10;
 }
 
 class _AppLocalizationsDelegate

@@ -89,6 +89,19 @@ class _ToolsPageState extends State<_ToolsPage> {
       )),
       NxSectionLabel(l.toolsBeforeYouGo),
       Card(child: ListTile(
+        key: const ValueKey('tools-trail-routing'),
+        leading: const Icon(Icons.hiking),
+        title: Text(l.trlTitle),
+        subtitle: Text(l.trlToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(TrailRoutingPage(
+          store: BastionTrailStore.instance,
+          whereAmI: radioOrPhonePosition(radio),
+          share: MapPage.shareGpx,
+          savedPlaces: waypointPlaces(radio),
+        )),
+      )),
+      Card(child: ListTile(
         key: const ValueKey('tools-team-setup'),
         leading: const Icon(Icons.groups_outlined),
         title: Text(l.teamTitle),

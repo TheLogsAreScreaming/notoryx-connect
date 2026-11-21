@@ -7286,4 +7286,136 @@ class AppLocalizationsDe extends AppLocalizations {
   String srRelayedBody(String name) {
     return 'Ihr Funkgerät hat das SOS von $name auf demselben Kanal weitergeleitet.';
   }
+
+  @override
+  String get trlTitle => 'Wegrouting';
+
+  @override
+  String get trlToolSub =>
+      'Planen Sie Wanderrouten ohne Netz, auf vorher geladenen Wegen';
+
+  @override
+  String get trlIntro =>
+      'Laden Sie die Wege in Ihrer Umgebung, solange Sie Netz haben. Danach planen Sie Wanderrouten überall in diesem Gebiet, ganz ohne Netz.';
+
+  @override
+  String get trlPlanSection => 'Route von Ihrem Standort planen';
+
+  @override
+  String get trlTo =>
+      'Nach: Gipfel, Hütte, Wanderparkplatz oder gespeicherter Wegpunkt';
+
+  @override
+  String get trlNoAreas => 'Laden Sie zuerst unten ein Gebiet.';
+
+  @override
+  String get trlAreasSection => 'Geladene Gebiete';
+
+  @override
+  String get trlDownloadHint =>
+      'Wege und Orte stammen aus OpenStreetMap. Beim Laden werden die Gebietsgrenzen an den Overpass-Dienst gesendet, der Ihre IP-Adresse sieht.';
+
+  @override
+  String trlWithin(String distance) {
+    return 'Im Umkreis von $distance';
+  }
+
+  @override
+  String get trlDownload => 'Wege um mich herum laden';
+
+  @override
+  String get trlSaved => 'Gebiet gespeichert. Es funktioniert jetzt ohne Netz.';
+
+  @override
+  String trlAreaName(String date) {
+    return 'Wege in der Nähe, $date';
+  }
+
+  @override
+  String get trlNoPosition =>
+      'Noch keine Position. Verbinden Sie ein Funkgerät mit GPS oder erlauben Sie den Standort des Handys.';
+
+  @override
+  String get trlTooLarge => 'Dieses Gebiet ist zu groß für einen Download.';
+
+  @override
+  String get trlFull => 'Nicht genug Platz: Löschen Sie zuerst ein Gebiet.';
+
+  @override
+  String get trlNoTrails => 'Dort wurden keine Wege oder Orte gefunden.';
+
+  @override
+  String get trlFailed =>
+      'Laden fehlgeschlagen. Prüfen Sie die Internetverbindung und versuchen Sie es erneut.';
+
+  @override
+  String get trlNoArea =>
+      'Sie und dieser Ort liegen nicht im selben geladenen Gebiet.';
+
+  @override
+  String get trlStartFar =>
+      'Sie sind mehr als 500 m von jedem geladenen Weg entfernt.';
+
+  @override
+  String get trlEndFar =>
+      'Dieser Ort ist mehr als 500 m von jedem geladenen Weg entfernt.';
+
+  @override
+  String get trlNotConnected =>
+      'Kein Weg in diesem Gebiet führt zu diesem Ort.';
+
+  @override
+  String get trlDamaged =>
+      'Die Wegdaten dieses Gebiets sind beschädigt. Löschen Sie es und laden Sie es neu.';
+
+  @override
+  String trlRouteTo(String name) {
+    return 'Route nach $name';
+  }
+
+  @override
+  String trlRouteStats(String distance, String time) {
+    return '$distance • etwa $time in ruhigem Tempo';
+  }
+
+  @override
+  String get trlNoClimb =>
+      'Die Zeit enthält keine Steigung; planen Sie am Berg mehr ein.';
+
+  @override
+  String get trlKindPeak => 'Gipfel';
+
+  @override
+  String get trlKindPass => 'Pass';
+
+  @override
+  String get trlKindSpring => 'Quelle';
+
+  @override
+  String get trlKindHut => 'Hütte';
+
+  @override
+  String get trlKindCampsite => 'Zeltplatz';
+
+  @override
+  String get trlKindViewpoint => 'Aussichtspunkt';
+
+  @override
+  String get trlKindShelter => 'Unterstand';
+
+  @override
+  String get trlKindTrailhead => 'Wanderparkplatz';
+
+  @override
+  String get trlKindTown => 'Ort';
+
+  @override
+  String get trlKindLocality => 'Flurname';
+
+  @override
+  String get trlKindWaypoint => 'Gespeicherter Wegpunkt';
+
+  @override
+  String get pvSent10 =>
+      'Die Grenzen eines Gebiets an den Overpass-Dienst von OpenStreetMap, nur wenn Sie Wege laden; er sieht Ihre IP-Adresse';
 }

@@ -84,6 +84,13 @@ class _AppSearchPageState extends State<AppSearchPage> {
           page: () => MeshActivityPage(watch: BastionMeshWatch.instance, nameOf: radio.nodeName)),
       f('antenna-hunt', l.ahTitle, l.ahToolSub, icon: Icons.settings_input_antenna,
           page: () => AntennaHuntPage(radio: CoordinatorHuntRadio(radio))),
+      f('trail-routing', l.trlTitle, l.trlToolSub, icon: Icons.hiking, keywords: 'route hike offline',
+          page: () => TrailRoutingPage(
+                store: BastionTrailStore.instance,
+                whereAmI: radioOrPhonePosition(radio),
+                share: MapPage.shareGpx,
+                savedPlaces: waypointPlaces(radio),
+              )),
       f('field-guide', l.gdTitle, l.gdToolSub, icon: Icons.menu_book_outlined,
           page: () => const FieldGuidePage()),
       f('background', l.bgTitle, l.bgHint, icon: Icons.wallpaper_outlined,
