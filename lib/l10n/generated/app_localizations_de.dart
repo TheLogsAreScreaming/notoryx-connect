@@ -7104,4 +7104,105 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get teamShareButton => 'Team-Einrichtung teilen';
+
+  @override
+  String get maTitle => 'Mesh-Aktivität';
+
+  @override
+  String get maToolSub =>
+      'Feldstatistik, Netzänderungen und ein Live-Paketprotokoll';
+
+  @override
+  String get maTabStats => 'Statistik';
+
+  @override
+  String get maTabChanges => 'Änderungen';
+
+  @override
+  String get maTabPackets => 'Pakete';
+
+  @override
+  String get maRealOnly =>
+      'Wird von Ihrem Funkgerät aufgezeichnet, solange es verbunden ist. Das Demo-Funkgerät wird nicht aufgezeichnet.';
+
+  @override
+  String get maLastHour => 'Letzte Stunde';
+
+  @override
+  String get maPackets => 'Gehörte Pakete';
+
+  @override
+  String get maSenders => 'Gehörte Knoten';
+
+  @override
+  String get maDirect => 'Direkt gehört';
+
+  @override
+  String get maAvgHops => 'Hops im Schnitt';
+
+  @override
+  String get maSnrRange => 'Signal (SNR)';
+
+  @override
+  String get maMqtt => 'Über das Internet (MQTT)';
+
+  @override
+  String get maByKind => 'Nach Art';
+
+  @override
+  String get maBusiest => 'Am häufigsten gehört';
+
+  @override
+  String get maNothing =>
+      'Noch nichts gehört. Verbinden Sie Ihr Funkgerät und lassen Sie diese Seite eine Weile offen.';
+
+  @override
+  String get maNoChanges =>
+      'Noch keine Änderungen. Knoten, die auftauchen, verstummen, zurückkommen oder umbenannt werden, erscheinen hier.';
+
+  @override
+  String maAppeared(String name) {
+    return '$name ist aufgetaucht';
+  }
+
+  @override
+  String maQuiet(String name) {
+    return '$name ist verstummt';
+  }
+
+  @override
+  String maBack(String name) {
+    return '$name ist zurück';
+  }
+
+  @override
+  String maRenamed(String old, String name) {
+    return '$old heißt jetzt $name';
+  }
+
+  @override
+  String get maClear => 'Änderungen löschen';
+
+  @override
+  String get maEveryone => 'alle';
+
+  @override
+  String maHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Hops',
+      one: '1 Hop',
+      zero: 'direkt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get maViaMqtt => 'über MQTT';
+
+  @override
+  String maFromTo(String from, String to) {
+    return '$from → $to';
+  }
 }

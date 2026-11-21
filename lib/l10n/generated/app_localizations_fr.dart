@@ -7103,4 +7103,105 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get teamShareButton => 'Partager la configuration d’équipe';
+
+  @override
+  String get maTitle => 'Activité du maillage';
+
+  @override
+  String get maToolSub =>
+      'Statistiques de terrain, changements du réseau et journal des paquets en direct';
+
+  @override
+  String get maTabStats => 'Stats';
+
+  @override
+  String get maTabChanges => 'Changements';
+
+  @override
+  String get maTabPackets => 'Paquets';
+
+  @override
+  String get maRealOnly =>
+      'Enregistré depuis votre radio quand elle est connectée. La radio de démonstration n’est pas enregistrée.';
+
+  @override
+  String get maLastHour => 'Dernière heure';
+
+  @override
+  String get maPackets => 'Paquets entendus';
+
+  @override
+  String get maSenders => 'Nœuds entendus';
+
+  @override
+  String get maDirect => 'Entendus en direct';
+
+  @override
+  String get maAvgHops => 'Sauts en moyenne';
+
+  @override
+  String get maSnrRange => 'Signal (SNR)';
+
+  @override
+  String get maMqtt => 'Par internet (MQTT)';
+
+  @override
+  String get maByKind => 'Par type';
+
+  @override
+  String get maBusiest => 'Les plus entendus';
+
+  @override
+  String get maNothing =>
+      'Rien d’entendu pour l’instant. Connectez votre radio et laissez cet écran ouvert un moment.';
+
+  @override
+  String get maNoChanges =>
+      'Aucun changement. Les nœuds qui apparaissent, se taisent, reviennent ou changent de nom s’affichent ici.';
+
+  @override
+  String maAppeared(String name) {
+    return '$name est apparu';
+  }
+
+  @override
+  String maQuiet(String name) {
+    return '$name s’est tu';
+  }
+
+  @override
+  String maBack(String name) {
+    return '$name est de retour';
+  }
+
+  @override
+  String maRenamed(String old, String name) {
+    return '$old s’appelle maintenant $name';
+  }
+
+  @override
+  String get maClear => 'Effacer les changements';
+
+  @override
+  String get maEveryone => 'tout le monde';
+
+  @override
+  String maHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sauts',
+      one: '1 saut',
+      zero: 'direct',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get maViaMqtt => 'via MQTT';
+
+  @override
+  String maFromTo(String from, String to) {
+    return '$from → $to';
+  }
 }

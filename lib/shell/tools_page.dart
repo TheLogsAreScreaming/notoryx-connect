@@ -64,6 +64,14 @@ class _ToolsPageState extends State<_ToolsPage> {
         onTap: () => _open(const FieldGuidePage()),
       )),
       Card(child: ListTile(
+        key: const ValueKey('tools-mesh-activity'),
+        leading: const Icon(Icons.query_stats),
+        title: Text(l.maTitle),
+        subtitle: Text(l.maToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(MeshActivityPage(watch: BastionMeshWatch.instance, nameOf: radio.nodeName)),
+      )),
+      Card(child: ListTile(
         key: const ValueKey('tools-battery-watch'),
         leading: const Icon(Icons.battery_alert_outlined),
         title: Text(l.bwTitle),

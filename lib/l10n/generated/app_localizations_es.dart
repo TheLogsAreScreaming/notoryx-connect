@@ -7073,4 +7073,105 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get teamShareButton => 'Compartir configuración de equipo';
+
+  @override
+  String get maTitle => 'Actividad de la malla';
+
+  @override
+  String get maToolSub =>
+      'Estadísticas de campo, cambios en la red y registro de paquetes en vivo';
+
+  @override
+  String get maTabStats => 'Estadísticas';
+
+  @override
+  String get maTabChanges => 'Cambios';
+
+  @override
+  String get maTabPackets => 'Paquetes';
+
+  @override
+  String get maRealOnly =>
+      'Se registra desde tu radio mientras está conectada. La radio de demostración no se registra.';
+
+  @override
+  String get maLastHour => 'Última hora';
+
+  @override
+  String get maPackets => 'Paquetes oídos';
+
+  @override
+  String get maSenders => 'Nodos oídos';
+
+  @override
+  String get maDirect => 'Oídos directamente';
+
+  @override
+  String get maAvgHops => 'Saltos de media';
+
+  @override
+  String get maSnrRange => 'Señal (SNR)';
+
+  @override
+  String get maMqtt => 'Por internet (MQTT)';
+
+  @override
+  String get maByKind => 'Por tipo';
+
+  @override
+  String get maBusiest => 'Más oídos';
+
+  @override
+  String get maNothing =>
+      'Aún no se ha oído nada. Conecta tu radio y deja esto abierto un rato.';
+
+  @override
+  String get maNoChanges =>
+      'Aún no hay cambios. Aquí aparecen nodos nuevos, que callan, que vuelven o que cambian de nombre.';
+
+  @override
+  String maAppeared(String name) {
+    return 'Apareció $name';
+  }
+
+  @override
+  String maQuiet(String name) {
+    return '$name se quedó en silencio';
+  }
+
+  @override
+  String maBack(String name) {
+    return '$name ha vuelto';
+  }
+
+  @override
+  String maRenamed(String old, String name) {
+    return '$old ahora es $name';
+  }
+
+  @override
+  String get maClear => 'Borrar cambios';
+
+  @override
+  String get maEveryone => 'todos';
+
+  @override
+  String maHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count saltos',
+      one: '1 salto',
+      zero: 'directo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get maViaMqtt => 'por MQTT';
+
+  @override
+  String maFromTo(String from, String to) {
+    return '$from → $to';
+  }
 }

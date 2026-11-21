@@ -81,6 +81,8 @@ import 'track_log_page.dart';
 import 'field_guide_page.dart';
 import 'backdrop_page.dart';
 import 'battery_watch_page.dart';
+import 'mesh_activity_page.dart';
+import 'services/bastion_mesh_watch.dart';
 import 'theme/nx_backdrop.dart';
 import 'theme/nx_components.dart';
 import 'services/bastion_backdrop.dart';
@@ -120,6 +122,7 @@ Future<void> main() async {
   await BastionBackdrop.instance.load();
   await BastionNodeLooks.instance.load();
   await BastionTrackLog.instance.load();
+  await BastionMeshWatch.instance.load();
   // Chat history lives in its own database; older saves move over once.
   await BastionChatStorage.useSqlite();
   await BastionChatStorage.applySavedEncryption();
@@ -319,6 +322,7 @@ class _BastionShellState extends State<BastionShell> {
 
   BastionHomeWidget? _homeWidget;
   TrackLogFeed? _trackFeed;
+  MeshWatchFeed? _meshFeed;
 
   @override
   void initState() {
@@ -338,6 +342,15 @@ class _BastionShellState extends State<BastionShell> {
     // The timeline records the real radio only, never the demo.
     BastionTimeline.instance.attach(CoordinatorTimelineSource(_realRadio));
     _trackFeed = TrackLogFeed(log: BastionTrackLog.instance, radio: _realRadio)..start();
+    // Mesh activity records the real radio only, never the demo.
+    BastionMeshWatch.instance.attach(_realRadio.traffic);
+    _meshFeed = MeshWatchFeed(
+      watch: BastionMeshWatch.instance,
+      nodes: () => _realRadio.nodes,
+      self: () => _realRadio.localNodeNum,
+      ready: () => _realRadio.isReady,
+    )..start();
+    _realRadio.addListener(_meshFeed!.check);
     _setUpShortcuts();
     // The widget follows the real radio, never the demo.
     if (BastionHomeWidget.supported) {
@@ -379,6 +392,11 @@ class _BastionShellState extends State<BastionShell> {
     BastionTakBridge.instance.detach();
     BastionTimeline.instance.detach();
     _trackFeed?.dispose();
+    if (_meshFeed case final f?) {
+      _realRadio.removeListener(f.check);
+      f.dispose();
+    }
+    BastionMeshWatch.instance.detach();
     _realRadio.dispose();
     _demo?.dispose();
     super.dispose();

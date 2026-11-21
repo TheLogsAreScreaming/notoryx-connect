@@ -11460,6 +11460,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Share team setup'**
   String get teamShareButton;
+
+  /// No description provided for @maTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh activity'**
+  String get maTitle;
+
+  /// No description provided for @maToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Field stats, network changes and a live packet log'**
+  String get maToolSub;
+
+  /// No description provided for @maTabStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Stats'**
+  String get maTabStats;
+
+  /// No description provided for @maTabChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes'**
+  String get maTabChanges;
+
+  /// No description provided for @maTabPackets.
+  ///
+  /// In en, this message translates to:
+  /// **'Packets'**
+  String get maTabPackets;
+
+  /// No description provided for @maRealOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded from your radio while it’s connected. The demo radio isn’t recorded.'**
+  String get maRealOnly;
+
+  /// No description provided for @maLastHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Last hour'**
+  String get maLastHour;
+
+  /// No description provided for @maPackets.
+  ///
+  /// In en, this message translates to:
+  /// **'Packets heard'**
+  String get maPackets;
+
+  /// No description provided for @maSenders.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes heard'**
+  String get maSenders;
+
+  /// No description provided for @maDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard directly'**
+  String get maDirect;
+
+  /// No description provided for @maAvgHops.
+  ///
+  /// In en, this message translates to:
+  /// **'Average hops'**
+  String get maAvgHops;
+
+  /// No description provided for @maSnrRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal (SNR)'**
+  String get maSnrRange;
+
+  /// No description provided for @maMqtt.
+  ///
+  /// In en, this message translates to:
+  /// **'Through the internet (MQTT)'**
+  String get maMqtt;
+
+  /// No description provided for @maByKind.
+  ///
+  /// In en, this message translates to:
+  /// **'By type'**
+  String get maByKind;
+
+  /// No description provided for @maBusiest.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard most'**
+  String get maBusiest;
+
+  /// No description provided for @maNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing heard yet. Connect your radio and leave this open for a while.'**
+  String get maNothing;
+
+  /// No description provided for @maNoChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'No changes yet. Nodes appearing, going quiet, coming back or being renamed show here.'**
+  String get maNoChanges;
+
+  /// No description provided for @maAppeared.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} appeared'**
+  String maAppeared(String name);
+
+  /// No description provided for @maQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} went quiet'**
+  String maQuiet(String name);
+
+  /// No description provided for @maBack.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is back'**
+  String maBack(String name);
+
+  /// No description provided for @maRenamed.
+  ///
+  /// In en, this message translates to:
+  /// **'{old} is now {name}'**
+  String maRenamed(String old, String name);
+
+  /// No description provided for @maClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear changes'**
+  String get maClear;
+
+  /// No description provided for @maEveryone.
+  ///
+  /// In en, this message translates to:
+  /// **'everyone'**
+  String get maEveryone;
+
+  /// No description provided for @maHops.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{direct} =1{1 hop} other{{count} hops}}'**
+  String maHops(int count);
+
+  /// No description provided for @maViaMqtt.
+  ///
+  /// In en, this message translates to:
+  /// **'via MQTT'**
+  String get maViaMqtt;
+
+  /// No description provided for @maFromTo.
+  ///
+  /// In en, this message translates to:
+  /// **'{from} → {to}'**
+  String maFromTo(String from, String to);
 }
 
 class _AppLocalizationsDelegate
