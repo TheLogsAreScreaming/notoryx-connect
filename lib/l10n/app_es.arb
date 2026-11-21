@@ -1932,5 +1932,10 @@
   "ahBest": "Mejor hasta ahora",
   "ahAgo": "Oído hace {seconds} s",
   "ahLost": "Hace rato que no se oye: clics parados.",
-  "ahChange": "Cambiar de nodo"
+  "ahChange": "Cambiar de nodo",
+  "srTitle": "Reenviar SOS que la malla no puede llevar",
+  "srSub": "Cuando un SOS de NOTORYX en un canal te llega sin saltos restantes, o tu radio está configurada para no retransmitir, reenvíalo una vez desde tu radio. Usa tiempo de aire; apagado por defecto.",
+  "srCount": "{count, plural, =1{1 SOS reenviado hasta ahora.} other{{count} SOS reenviados hasta ahora.}}",
+  "srRelayedTitle": "Has reenviado un SOS",
+  "srRelayedBody": "Tu radio reenvió el SOS de {name} en el mismo canal."
 }

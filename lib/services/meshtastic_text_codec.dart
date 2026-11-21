@@ -117,6 +117,7 @@ abstract final class MeshtasticTextCodec {
       viaMqtt: viaMqtt,
       // Firmware before 2.3 leaves hop_start at 0, so hops can't be known.
       hops: hopStart > 0 && hopStart >= hopLimit ? hopStart - hopLimit : null,
+      hopsLeft: hopStart > 0 ? hopLimit : null,
       rxRssi: rxRssi,
       relayNode: relayNode == 0 ? null : relayNode & 0xff,
       pkiEncrypted: pkiEncrypted,
@@ -352,6 +353,7 @@ class MeshtasticTextMessage {
     this.isReaction = false,
     this.viaMqtt = false,
     this.hops,
+    this.hopsLeft,
     this.rxRssi,
     this.relayNode,
     this.pkiEncrypted = false,
@@ -379,6 +381,11 @@ class MeshtasticTextMessage {
   /// Relays the packet passed through: 0 means heard directly. Null when
   /// the sender's firmware doesn't report it.
   final int? hops;
+
+  /// Relays the packet may still pass through (its hop limit). 0 means no
+  /// radio will forward it again. Null when the sender's firmware doesn't
+  /// report it.
+  final int? hopsLeft;
 
   /// Received signal strength in dBm, when the radio reports it.
   final int? rxRssi;

@@ -7180,4 +7180,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ahChange => 'Change node';
+
+  @override
+  String get srTitle => 'Relay SOS the mesh can’t carry';
+
+  @override
+  String get srSub =>
+      'When a NOTORYX SOS on a channel reaches you with no hops left, or your radio is set not to rebroadcast, pass it on once from your radio. Uses airtime; off by default.';
+
+  @override
+  String srCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Relayed $count SOS so far.',
+      one: 'Relayed 1 SOS so far.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get srRelayedTitle => 'You passed on an SOS';
+
+  @override
+  String srRelayedBody(String name) {
+    return 'Your radio relayed the SOS from $name on the same channel.';
+  }
 }
