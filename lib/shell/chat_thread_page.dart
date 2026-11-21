@@ -466,6 +466,8 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
                         SentinelFlag(message.from),
                       ]),
                     Text(message.text, style: type.bodyLarge?.copyWith(color: foreground)),
+                    if (isSarnegMessage(message.text))
+                      SarnegDecodeLine(text: message.text, at: message.timestamp, color: foreground),
                     if (mentioned)
                       Padding(
                         padding: const EdgeInsets.only(top: 2),
@@ -561,6 +563,7 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
                 icon: const Icon(Icons.alternate_email),
                 onPressed: _mention,
               ),
+              SarnegComposeButton(controller: composer, onChanged: _saveDraft),
               Expanded(
                 child: TextField(
                   key: const ValueKey('chat-composer'),

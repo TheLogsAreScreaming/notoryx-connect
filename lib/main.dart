@@ -77,6 +77,8 @@ import 'theme/nx_components.dart';
 import 'connection_doctor_page.dart';
 import 'sentinel_page.dart';
 import 'services/bastion_sentinel.dart';
+import 'sarneg/sarneg.dart';
+import 'sarneg/sarneg_ui.dart';
 
 part 'shell/nodes_page.dart';
 part 'shell/chats_page.dart';

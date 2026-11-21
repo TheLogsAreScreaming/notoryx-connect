@@ -55,6 +55,14 @@ class _ToolsPageState extends State<_ToolsPage> {
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(TimelinePage(radio: radio, timeline: BastionTimeline.instance)),
       )),
+      Card(child: ListTile(
+        key: const ValueKey('tools-sarneg'),
+        leading: const Icon(Icons.pin_outlined),
+        title: Text(l.sarneg_title),
+        subtitle: Text(l.sarneg_toolSubtitle),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(const SarnegScreen()),
+      )),
       NxSectionLabel(l.toolsBeforeYouGo),
       Card(child: ListTile(
         key: const ValueKey('tools-checklists'),
