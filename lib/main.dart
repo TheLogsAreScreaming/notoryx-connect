@@ -80,6 +80,7 @@ import 'services/bastion_track_log.dart';
 import 'track_log_page.dart';
 import 'field_guide_page.dart';
 import 'backdrop_page.dart';
+import 'battery_watch_page.dart';
 import 'theme/nx_backdrop.dart';
 import 'theme/nx_components.dart';
 import 'services/bastion_backdrop.dart';

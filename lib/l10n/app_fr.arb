@@ -1863,5 +1863,21 @@
   "tgPreset": "Votre radio utilise le même préréglage que le maillage local",
   "tgPresetAdvice": "Des radios sur un autre préréglage de modem ou une autre fréquence n’entendent personne. Long Fast est le défaut ; demandez ce qu’utilise votre maillage local.",
   "tgAntenna": "L’antenne est montée",
-  "tgAntennaAdvice": "Vérifiez que l’antenne est bien vissée. N’émettez jamais sans elle ; cela peut abîmer la radio."
+  "tgAntennaAdvice": "Vérifiez que l’antenne est bien vissée. N’émettez jamais sans elle ; cela peut abîmer la radio.",
+  "bwTitle": "Suivi des batteries",
+  "bwToolSub": "Tous les nœuds qui indiquent leur batterie, les plus inquiétants en premier",
+  "bwEmpty": "Aucun nœud n’a encore indiqué sa batterie.",
+  "bwPlugged": "Sur alimentation externe",
+  "bwSteady": "Stable",
+  "bwNoTrend": "Pas encore assez de mesures pour une tendance",
+  "bwRising": "Monte d’environ {rate} % par jour",
+  "bwDropping": "Baisse d’environ {rate} % par jour",
+  "bwDaysLeft": "{days, plural, =1{environ 1 jour restant} other{environ {days} jours restants}}",
+  "bwUnderDay": "moins d’un jour restant",
+  "bwPluggedShort": "Branché",
+  "svcFavBack": "{name} est de retour",
+  "svcFavBackBody": "Entendu à nouveau après {time} de silence.",
+  "setFavBack": "Un favori est de retour",
+  "setFavBackSub": "Quand un favori est de nouveau entendu après {time} ou plus de silence",
+  "setBackAfter": "De retour après au moins"
 }

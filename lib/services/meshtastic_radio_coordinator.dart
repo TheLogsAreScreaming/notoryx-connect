@@ -1418,6 +1418,16 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       });
       _nodeVaultSubscription = nodeDatabase.nodeUpdates.listen((node) {
         if (connection.isReady) {
+          final record = _nodeVault.records.where((r) => r.num == node.num).firstOrNull;
+          _raise(
+            _fieldAlerts.favoriteBack(
+              node.num,
+              node.displayName,
+              favorite: record?.favorite ?? false,
+              lastHeardBefore: record?.lastSeen,
+              settings: _alertSettings,
+            ),
+          );
           _raise(
             _fieldAlerts.nodeHeard(
               node.num,

@@ -11298,6 +11298,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Make sure the antenna is screwed on firmly. Never transmit without one; it can damage the radio.'**
   String get tgAntennaAdvice;
+
+  /// No description provided for @bwTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery watch'**
+  String get bwTitle;
+
+  /// No description provided for @bwToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Every node that reports its battery, the most worrying first'**
+  String get bwToolSub;
+
+  /// No description provided for @bwEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No node has reported its battery yet.'**
+  String get bwEmpty;
+
+  /// No description provided for @bwPlugged.
+  ///
+  /// In en, this message translates to:
+  /// **'On external power'**
+  String get bwPlugged;
+
+  /// No description provided for @bwSteady.
+  ///
+  /// In en, this message translates to:
+  /// **'Steady'**
+  String get bwSteady;
+
+  /// No description provided for @bwNoTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough readings yet for a trend'**
+  String get bwNoTrend;
+
+  /// No description provided for @bwRising.
+  ///
+  /// In en, this message translates to:
+  /// **'Rising about {rate}% a day'**
+  String bwRising(String rate);
+
+  /// No description provided for @bwDropping.
+  ///
+  /// In en, this message translates to:
+  /// **'Dropping about {rate}% a day'**
+  String bwDropping(String rate);
+
+  /// No description provided for @bwDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{about 1 day left} other{about {days} days left}}'**
+  String bwDaysLeft(int days);
+
+  /// No description provided for @bwUnderDay.
+  ///
+  /// In en, this message translates to:
+  /// **'less than a day left'**
+  String get bwUnderDay;
+
+  /// No description provided for @bwPluggedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Plugged in'**
+  String get bwPluggedShort;
+
+  /// No description provided for @svcFavBack.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is back'**
+  String svcFavBack(String name);
+
+  /// No description provided for @svcFavBackBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard again after {time} of silence.'**
+  String svcFavBackBody(String time);
+
+  /// No description provided for @setFavBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite is back'**
+  String get setFavBack;
+
+  /// No description provided for @setFavBackSub.
+  ///
+  /// In en, this message translates to:
+  /// **'When a favorite is heard again after {time} or more of silence'**
+  String setFavBackSub(String time);
+
+  /// No description provided for @setBackAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Back after at least'**
+  String get setBackAfter;
 }
 
 class _AppLocalizationsDelegate

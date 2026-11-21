@@ -76,6 +76,8 @@ class _AppSearchPageState extends State<AppSearchPage> {
           page: () => ConnectionDoctorPage(radio: radio, discovery: widget.discovery)),
       f('track-log', l.tlgTitle, l.tlgToolSub, icon: Icons.route_outlined, keywords: 'gpx',
           page: () => TrackLogPage(log: BastionTrackLog.instance, share: MapPage.shareGpx, location: GeolocatorLocationSource())),
+      f('battery-watch', l.bwTitle, l.bwToolSub, icon: Icons.battery_alert_outlined,
+          page: () => BatteryWatchPage(radio: radio)),
       f('field-guide', l.gdTitle, l.gdToolSub, icon: Icons.menu_book_outlined,
           page: () => const FieldGuidePage()),
       f('background', l.bgTitle, l.bgHint, icon: Icons.wallpaper_outlined,

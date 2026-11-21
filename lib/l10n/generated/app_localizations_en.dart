@@ -6897,4 +6897,71 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tgAntennaAdvice =>
       'Make sure the antenna is screwed on firmly. Never transmit without one; it can damage the radio.';
+
+  @override
+  String get bwTitle => 'Battery watch';
+
+  @override
+  String get bwToolSub =>
+      'Every node that reports its battery, the most worrying first';
+
+  @override
+  String get bwEmpty => 'No node has reported its battery yet.';
+
+  @override
+  String get bwPlugged => 'On external power';
+
+  @override
+  String get bwSteady => 'Steady';
+
+  @override
+  String get bwNoTrend => 'Not enough readings yet for a trend';
+
+  @override
+  String bwRising(String rate) {
+    return 'Rising about $rate% a day';
+  }
+
+  @override
+  String bwDropping(String rate) {
+    return 'Dropping about $rate% a day';
+  }
+
+  @override
+  String bwDaysLeft(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'about $days days left',
+      one: 'about 1 day left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bwUnderDay => 'less than a day left';
+
+  @override
+  String get bwPluggedShort => 'Plugged in';
+
+  @override
+  String svcFavBack(String name) {
+    return '$name is back';
+  }
+
+  @override
+  String svcFavBackBody(String time) {
+    return 'Heard again after $time of silence.';
+  }
+
+  @override
+  String get setFavBack => 'Favorite is back';
+
+  @override
+  String setFavBackSub(String time) {
+    return 'When a favorite is heard again after $time or more of silence';
+  }
+
+  @override
+  String get setBackAfter => 'Back after at least';
 }

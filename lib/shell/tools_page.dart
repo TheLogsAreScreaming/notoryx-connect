@@ -63,6 +63,14 @@ class _ToolsPageState extends State<_ToolsPage> {
         trailing: const Icon(Icons.chevron_right),
         onTap: () => _open(const FieldGuidePage()),
       )),
+      Card(child: ListTile(
+        key: const ValueKey('tools-battery-watch'),
+        leading: const Icon(Icons.battery_alert_outlined),
+        title: Text(l.bwTitle),
+        subtitle: Text(l.bwToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(BatteryWatchPage(radio: radio)),
+      )),
       NxSectionLabel(l.toolsBeforeYouGo),
       Card(child: ListTile(
         key: const ValueKey('tools-track-log'),
