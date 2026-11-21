@@ -37,6 +37,7 @@ import 'services/bastion_place_search.dart';
 import 'services/bastion_traffic.dart';
 import 'theme/notoryx_theme.dart';
 import 'traffic_map.dart';
+import 'services/bastion_node_looks.dart';
 
 /// Mesh nodes with a reported position on an OpenStreetMap base map.
 ///
@@ -1748,9 +1749,17 @@ class _NodePin extends StatelessWidget {
   static const staleOpacity = 0.45;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListenableBuilder(
+        listenable: BastionNodeLooks.instance,
+        builder: (context, _) => _pin(context),
+      );
+
+  Widget _pin(BuildContext context) {
     final l = AppLocalizations.of(context);
     final label = node.shortName ?? node.displayName.characters.take(4).toString();
+    // The color picked for this node, if any, marks its pin on the map.
+    final picked = BastionNodeLooks.instance.lookFor(node.num)?.color;
+    final ring = picked == null ? MapPage.accent : Color(picked);
     return Semantics(
       button: true,
       label: '${node.displayName}${isLocal ? l.mapThisRadioSuffix : ''}'
@@ -1771,7 +1780,7 @@ class _NodePin extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isLocal ? MapPage.accent : const Color(0xFF151713),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: MapPage.accent, width: 2),
+                border: Border.all(color: ring, width: picked == null ? 2 : 3),
               ),
               child: Text(
                 more == 0 ? label : '$label +$more',
@@ -1795,7 +1804,7 @@ class _NodePin extends StatelessWidget {
                     style: const TextStyle(color: Colors.white, fontSize: 12)),
               ),
             Icon(isLocal ? Icons.my_location : team != null ? Icons.person_pin_circle : Icons.location_on,
-                color: MapPage.accent, size: 26),
+                key: picked == null ? null : ValueKey('pin-color-${node.num}'), color: ring, size: 26),
           ],
         ),
         ),

@@ -7,6 +7,8 @@ import 'l10n/generated/app_localizations.dart';
 
 import 'services/bastion_chat_message.dart';
 import 'services/bastion_firmware.dart';
+import 'services/bastion_preferences.dart';
+import 'services/bastion_telemetry_history.dart';
 import 'services/bastion_radio_notice.dart';
 import 'services/bastion_trip.dart';
 import 'services/meshtastic_radio_coordinator.dart';
@@ -120,8 +122,9 @@ class _ConsoleCard extends StatelessWidget {
               value: battery == null ? l.homeUnknown : battery > 100 ? l.homePluggedIn : '$battery%',
               tone: battery != null && battery <= 20 ? NxTone.warning : NxTone.neutral,
             ),
-          ])
-        else
+          ]),
+        if (ready) _SensorsPanel(radio: radio),
+        if (!ready)
           Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
             FilledButton.icon(onPressed: onConnect, icon: const Icon(Icons.bluetooth_searching),
               label: Text(l.homeConnectRadio)),
@@ -422,6 +425,42 @@ class _RadioNoticeBanner extends StatelessWidget {
       title: title,
       message: [?body, ?radioWords].join('\n'),
       action: TextButton(onPressed: onDismiss, child: Text(l.noticeDismiss)),
+    );
+  }
+}
+
+/// The connected radio's own latest readings as chips, as on NOTORYX Core's
+/// Home. Battery is left out: the tile above already shows it.
+class _SensorsPanel extends StatelessWidget {
+  const _SensorsPanel({required this.radio});
+  final MeshtasticRadioCoordinator radio;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final self = radio.localNodeNum;
+    final units = BastionPreferences.instance.units;
+    final chips = <String>[
+      if (self != null)
+        for (final metric in radio.telemetryMetricsOf(self))
+          if (metric != TelemetryMetric.battery)
+            if (radio.telemetrySeries(self, metric) case [..., final latest])
+              '${metric.label} ${metric.format(latest.value, units)}',
+    ];
+    return Padding(
+      key: const ValueKey('home-sensors'),
+      padding: const EdgeInsets.only(top: NxSpace.sm),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(l.snsTitle, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: scheme.onSurfaceVariant)),
+        const SizedBox(height: NxSpace.xs),
+        if (chips.isEmpty)
+          Text(l.snsNone, style: Theme.of(context).textTheme.bodySmall)
+        else
+          Wrap(spacing: NxSpace.xs, runSpacing: NxSpace.xs, children: [
+            for (final c in chips) Chip(label: Text(c), visualDensity: VisualDensity.compact),
+          ]),
+      ]),
     );
   }
 }

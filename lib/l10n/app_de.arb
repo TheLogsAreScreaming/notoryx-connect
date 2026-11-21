@@ -1450,7 +1450,7 @@
   "ldLastHeard": "Zuletzt empfangen: {date} {time}",
   "lpHeightRange": "Antennenhöhen müssen zwischen 0 und 300 m liegen.",
   "lpTerrainFailed": "Geländehöhen konnten nicht geladen werden. Prüfe deine Internetverbindung. ({error})",
-  "lpTitle": "Verbindungsplaner",
+  "lpTitle": "Link-Vorschau",
   "lpIntro": "Prüfe, ob sich zwei Knoten über das Gelände dazwischen erreichen können.",
   "lpNeedPositions": "Mindestens zwei Knoten brauchen eine bekannte Position. Positionen kommen aus dem Mesh, sobald ein Funkgerät verbunden ist.",
   "lpLink": "Verbindung",
@@ -1781,5 +1781,18 @@
   "bgPreviewTitle": "Vorschau",
   "bgPreviewBody": "So sieht Text auf einer Glaskarte aus.",
   "bgPhotoNotBackedUp": "Das Foto bleibt auf diesem Handy und ist nicht in Backups enthalten.",
-  "bgPhotoFailed": "Dieses Foto ließ sich nicht verwenden. Versuch ein anderes."
+  "bgPhotoFailed": "Dieses Foto ließ sich nicht verwenden. Versuch ein anderes.",
+  "nlMenu": "Foto oder Farbe",
+  "nlTitle": "Aussehen von {name}",
+  "nlHint": "Nur auf diesem Handy. Wird nie über das Mesh gesendet.",
+  "nlChoosePhoto": "Foto auswählen",
+  "nlRemovePhoto": "Foto entfernen",
+  "nlClear": "Standardaussehen verwenden",
+  "nlColorN": "Farbe {index}",
+  "nlPhotoFailed": "Dieses Foto ließ sich nicht verwenden. Versuch ein anderes.",
+  "snsTitle": "Sensoren",
+  "snsNone": "Keine Sensorwerte vom Funkgerät.",
+  "lpSub": "Zeigt den Titel von Weblinks in Chats. Die Seite wird aus dem Internet geladen, also sieht die Website die Anfrage deines Handys.",
+  "chatJumpLatest": "Zur neuesten Nachricht",
+  "pvSent9": "Abrufe von in Chats verlinkten Webseiten, nur wenn du die Link-Vorschau einschaltest; die Website sieht deine IP-Adresse"
 }

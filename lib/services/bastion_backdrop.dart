@@ -188,7 +188,7 @@ class BastionBackdrop extends ChangeNotifier {
     if (bytes.isEmpty || bytes.length > photoMaxBytes) return false;
     final Uint8List png;
     try {
-      png = await _shrink(bytes);
+      png = await shrinkImage(bytes, maxSide: photoMaxSide);
     } catch (e) {
       debugPrint('Background photo unreadable: $e');
       return false;
@@ -210,11 +210,13 @@ class BastionBackdrop extends ChangeNotifier {
     return true;
   }
 
-  static Future<Uint8List> _shrink(Uint8List bytes) async {
+  /// Decodes [bytes] as a picture, scales it to fit inside [maxSide] and
+  /// returns it as PNG. Throws when it isn't a picture this phone can read.
+  static Future<Uint8List> shrinkImage(Uint8List bytes, {required int maxSide}) async {
     final buffer = await ui.ImmutableBuffer.fromUint8List(bytes);
     final descriptor = await ui.ImageDescriptor.encoded(buffer);
     final w = descriptor.width, h = descriptor.height;
-    final scale = w > h ? photoMaxSide / w : photoMaxSide / h;
+    final scale = w > h ? maxSide / w : maxSide / h;
     final codec = await descriptor.instantiateCodec(
       targetWidth: scale < 1 ? (w * scale).round() : w,
       targetHeight: scale < 1 ? (h * scale).round() : h,

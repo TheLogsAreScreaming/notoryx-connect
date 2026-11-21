@@ -11,6 +11,7 @@ import 'services/bastion_node_vault.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'services/bastion_node_keys.dart';
+import 'node_avatar.dart';
 import 'telemetry_chart.dart';
 import 'theme/notoryx_theme.dart';
 import 'theme/nx_components.dart';
@@ -169,6 +170,21 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
             SentinelFlag(widget.nodeNum),
           ]),
           actions: [
+            IconButton(
+              key: const ValueKey('node-look'),
+              tooltip: l.nlMenu,
+              icon: NodeAvatar(
+                num: widget.nodeNum,
+                label: node?.shortName ?? record?.shortName ?? node?.displayName ?? _hexId,
+                radius: 14,
+              ),
+              onPressed: () => showNodeLookSheet(
+                context,
+                num: widget.nodeNum,
+                name: node?.displayName ?? record?.displayName ?? _hexId,
+                label: node?.shortName ?? record?.shortName ?? node?.displayName ?? _hexId,
+              ),
+            ),
             IconButton(
               tooltip: (record?.favorite ?? false)
                   ? l.ndRemoveFavorite

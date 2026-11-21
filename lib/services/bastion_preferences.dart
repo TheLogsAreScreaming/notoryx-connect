@@ -58,6 +58,10 @@ class BastionPreferences extends ChangeNotifier {
   /// Read incoming messages aloud while the app is open.
   bool readAloud = false;
 
+  /// Fetch a title for web links in chats. Off unless switched on, since it
+  /// asks the linked site for the page.
+  bool linkPreviews = false;
+
   /// Miles and feet, or kilometers and meters. Defaults from the phone's region.
   BastionUnits units = BastionUnits.metric;
   String? error;
@@ -91,6 +95,7 @@ class BastionPreferences extends ChangeNotifier {
       encounters = await p.getBool('bastion.dashboard.encounters') ?? true;
       channelRetentionDays = await p.getInt('bastion.messages.channel_retention_days') ?? 0;
       readAloud = await p.getBool('bastion.messages.read_aloud') ?? false;
+      linkPreviews = await p.getBool('bastion.messages.link_previews') ?? false;
       final limit = await p.getInt('bastion.messages.history_limit');
       historyLimit = BastionHistoryLimit.choices.contains(limit) ? limit! : BastionHistoryLimit.standard;
       final unitName = await p.getString('bastion.units');
@@ -101,7 +106,7 @@ class BastionPreferences extends ChangeNotifier {
   }
 
   Future<void> update({bool? catchUp, bool? proxyMqtt, BastionHeardWithin? heard, bool? favorites, String? theme, String? darkTheme, String? season, bool? holidays, bool? stats, bool? health, bool? saved,
-      int? retentionDays, bool? speak, BastionUnits? unitSystem, int? keepMessages, BastionStaleAfter? stale, bool? rings}) async {
+      int? retentionDays, bool? speak, BastionUnits? unitSystem, int? keepMessages, BastionStaleAfter? stale, bool? rings, bool? previews}) async {
     storeForwardCatchUp = catchUp ?? storeForwardCatchUp;
     mqttProxy = proxyMqtt ?? mqttProxy;
     heardWithin = heard ?? heardWithin;
@@ -117,6 +122,7 @@ class BastionPreferences extends ChangeNotifier {
     encounters = saved ?? encounters;
     channelRetentionDays = retentionDays ?? channelRetentionDays;
     readAloud = speak ?? readAloud;
+    linkPreviews = previews ?? linkPreviews;
     historyLimit = keepMessages ?? historyLimit;
     units = unitSystem ?? units;
     error = null;
@@ -138,6 +144,7 @@ class BastionPreferences extends ChangeNotifier {
       await p.setBool('bastion.dashboard.encounters', encounters);
       await p.setInt('bastion.messages.channel_retention_days', channelRetentionDays);
       await p.setBool('bastion.messages.read_aloud', readAloud);
+      await p.setBool('bastion.messages.link_previews', linkPreviews);
       await p.setInt('bastion.messages.history_limit', historyLimit);
       await p.setString('bastion.units', units.name);
     } catch (_) { error = 'Changes apply now, but could not be saved.'; notifyListeners(); }

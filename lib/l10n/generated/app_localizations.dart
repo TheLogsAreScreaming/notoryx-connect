@@ -8818,7 +8818,7 @@ abstract class AppLocalizations {
   /// No description provided for @lpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Link planner'**
+  /// **'Link previews'**
   String get lpTitle;
 
   /// No description provided for @lpIntro.
@@ -10806,6 +10806,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t use that photo. Try a different one.'**
   String get bgPhotoFailed;
+
+  /// No description provided for @nlMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo or color'**
+  String get nlMenu;
+
+  /// No description provided for @nlTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Look for {name}'**
+  String nlTitle(String name);
+
+  /// No description provided for @nlHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Only on this phone. It\'s never sent over the mesh.'**
+  String get nlHint;
+
+  /// No description provided for @nlChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get nlChoosePhoto;
+
+  /// No description provided for @nlRemovePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get nlRemovePhoto;
+
+  /// No description provided for @nlClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the default look'**
+  String get nlClear;
+
+  /// No description provided for @nlColorN.
+  ///
+  /// In en, this message translates to:
+  /// **'Color {index}'**
+  String nlColorN(int index);
+
+  /// No description provided for @nlPhotoFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t use that photo. Try a different one.'**
+  String get nlPhotoFailed;
+
+  /// No description provided for @snsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sensors'**
+  String get snsTitle;
+
+  /// No description provided for @snsNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No sensor readings from your radio.'**
+  String get snsNone;
+
+  /// No description provided for @lpSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the title of web links in chats. This fetches the page from the internet, so the site sees your phone ask for it.'**
+  String get lpSub;
+
+  /// No description provided for @chatJumpLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'Jump to the latest message'**
+  String get chatJumpLatest;
+
+  /// No description provided for @pvSent9.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests for web pages linked in chats, only if you turn on Link previews; the linked site sees your IP address'**
+  String get pvSent9;
 }
 
 class _AppLocalizationsDelegate

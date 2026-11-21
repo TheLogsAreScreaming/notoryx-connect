@@ -1450,7 +1450,7 @@
   "ldLastHeard": "Oído por última vez: {date} {time}",
   "lpHeightRange": "Las alturas de antena deben estar entre 0 y 300 m.",
   "lpTerrainFailed": "No se pudieron obtener las alturas del terreno. Revisa tu conexión a internet. ({error})",
-  "lpTitle": "Planificador de enlace",
+  "lpTitle": "Vista previa de enlaces",
   "lpIntro": "Comprueba si dos nodos pueden alcanzarse a pesar del relieve entre ellos.",
   "lpNeedPositions": "Al menos dos nodos necesitan una posición conocida. Las posiciones llegan de la malla cuando hay una radio conectada.",
   "lpLink": "Enlace",
@@ -1781,5 +1781,18 @@
   "bgPreviewTitle": "Vista previa",
   "bgPreviewBody": "Así se ve el texto en una tarjeta de cristal.",
   "bgPhotoNotBackedUp": "La foto se queda en este teléfono y no se incluye en las copias de seguridad.",
-  "bgPhotoFailed": "No se pudo usar esa foto. Prueba con otra."
+  "bgPhotoFailed": "No se pudo usar esa foto. Prueba con otra.",
+  "nlMenu": "Foto o color",
+  "nlTitle": "Aspecto de {name}",
+  "nlHint": "Solo en este teléfono. Nunca se envía por la malla.",
+  "nlChoosePhoto": "Elegir foto",
+  "nlRemovePhoto": "Quitar foto",
+  "nlClear": "Usar el aspecto predeterminado",
+  "nlColorN": "Color {index}",
+  "nlPhotoFailed": "No se pudo usar esa foto. Prueba con otra.",
+  "snsTitle": "Sensores",
+  "snsNone": "Tu radio no da lecturas de sensores.",
+  "lpSub": "Muestra el título de los enlaces web en los chats. Descarga la página de internet, así que el sitio ve la petición de tu teléfono.",
+  "chatJumpLatest": "Ir al último mensaje",
+  "pvSent9": "Peticiones de las páginas web enlazadas en los chats, solo si activas la vista previa de enlaces; el sitio ve tu dirección IP"
 }
