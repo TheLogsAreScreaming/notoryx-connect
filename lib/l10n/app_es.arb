@@ -1916,5 +1916,21 @@
   "maEveryone": "todos",
   "maHops": "{count, plural, =0{directo} =1{1 salto} other{{count} saltos}}",
   "maViaMqtt": "por MQTT",
-  "maFromTo": "{from} → {to}"
+  "maFromTo": "{from} → {to}",
+  "ahTitle": "Búsqueda de antena",
+  "ahToolSub": "Los clics se aceleran cuando mejora la señal de un nodo, para orientar una antena o buscar un sitio",
+  "ahPick": "Elige un nodo que oigas directamente",
+  "ahNoneDirect": "Aún no se oye ningún nodo directamente. La búsqueda necesita un nodo que tu radio oiga sin reenvíos.",
+  "ahStart": "Empezar",
+  "ahStop": "Parar",
+  "ahSound": "Clics y vibración",
+  "ahPing": "Pedirle respuesta cada 30 s",
+  "ahPingSub": "Envía un traceroute cada vez. Usa tiempo de aire, así que déjalo apagado en una malla ocupada; sin él, cualquier paquete del nodo cuenta.",
+  "ahWaiting": "Esperando a que {name} transmita…",
+  "ahYouHear": "Tú lo oyes",
+  "ahTheyHear": "Te oye",
+  "ahBest": "Mejor hasta ahora",
+  "ahAgo": "Oído hace {seconds} s",
+  "ahLost": "Hace rato que no se oye: clics parados.",
+  "ahChange": "Cambiar de nodo"
 }

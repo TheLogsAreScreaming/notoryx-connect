@@ -11616,6 +11616,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{from} → {to}'**
   String maFromTo(String from, String to);
+
+  /// No description provided for @ahTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Antenna hunt'**
+  String get ahTitle;
+
+  /// No description provided for @ahToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Clicks speed up as the signal from one node gets stronger, for aiming an antenna or finding a spot'**
+  String get ahToolSub;
+
+  /// No description provided for @ahPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a node you hear directly'**
+  String get ahPick;
+
+  /// No description provided for @ahNoneDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'No node heard directly yet. Antenna hunt needs a node your radio hears with no relay in between.'**
+  String get ahNoneDirect;
+
+  /// No description provided for @ahStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get ahStart;
+
+  /// No description provided for @ahStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get ahStop;
+
+  /// No description provided for @ahSound.
+  ///
+  /// In en, this message translates to:
+  /// **'Clicks and vibration'**
+  String get ahSound;
+
+  /// No description provided for @ahPing.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask it to reply every 30 s'**
+  String get ahPing;
+
+  /// No description provided for @ahPingSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends a traceroute each time. It uses airtime, so leave it off on a busy mesh; without it, any packet the node sends still counts.'**
+  String get ahPingSub;
+
+  /// No description provided for @ahWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name} to transmit…'**
+  String ahWaiting(String name);
+
+  /// No description provided for @ahYouHear.
+  ///
+  /// In en, this message translates to:
+  /// **'You hear it'**
+  String get ahYouHear;
+
+  /// No description provided for @ahTheyHear.
+  ///
+  /// In en, this message translates to:
+  /// **'It hears you'**
+  String get ahTheyHear;
+
+  /// No description provided for @ahBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Best so far'**
+  String get ahBest;
+
+  /// No description provided for @ahAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Last heard {seconds} s ago'**
+  String ahAgo(int seconds);
+
+  /// No description provided for @ahLost.
+  ///
+  /// In en, this message translates to:
+  /// **'Not heard for a while: clicks stopped.'**
+  String get ahLost;
+
+  /// No description provided for @ahChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change node'**
+  String get ahChange;
 }
 
 class _AppLocalizationsDelegate

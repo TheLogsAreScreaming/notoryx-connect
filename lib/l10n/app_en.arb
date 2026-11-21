@@ -4993,5 +4993,35 @@
         "type": "String"
       }
     }
+  },
+  "ahTitle": "Antenna hunt",
+  "ahToolSub": "Clicks speed up as the signal from one node gets stronger, for aiming an antenna or finding a spot",
+  "ahPick": "Choose a node you hear directly",
+  "ahNoneDirect": "No node heard directly yet. Antenna hunt needs a node your radio hears with no relay in between.",
+  "ahStart": "Start",
+  "ahStop": "Stop",
+  "ahSound": "Clicks and vibration",
+  "ahPing": "Ask it to reply every 30 s",
+  "ahPingSub": "Sends a traceroute each time. It uses airtime, so leave it off on a busy mesh; without it, any packet the node sends still counts.",
+  "ahWaiting": "Waiting for {name} to transmit…",
+  "ahYouHear": "You hear it",
+  "ahTheyHear": "It hears you",
+  "ahBest": "Best so far",
+  "ahAgo": "Last heard {seconds} s ago",
+  "ahLost": "Not heard for a while: clicks stopped.",
+  "ahChange": "Change node",
+  "@ahWaiting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@ahAgo": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
   }
 }

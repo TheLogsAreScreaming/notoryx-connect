@@ -82,6 +82,8 @@ class _AppSearchPageState extends State<AppSearchPage> {
           page: () => TeamSharePage(radio: radio)),
       f('mesh-activity', l.maTitle, l.maToolSub, icon: Icons.query_stats, keywords: 'packet log rx',
           page: () => MeshActivityPage(watch: BastionMeshWatch.instance, nameOf: radio.nodeName)),
+      f('antenna-hunt', l.ahTitle, l.ahToolSub, icon: Icons.settings_input_antenna,
+          page: () => AntennaHuntPage(radio: CoordinatorHuntRadio(radio))),
       f('field-guide', l.gdTitle, l.gdToolSub, icon: Icons.menu_book_outlined,
           page: () => const FieldGuidePage()),
       f('background', l.bgTitle, l.bgHint, icon: Icons.wallpaper_outlined,

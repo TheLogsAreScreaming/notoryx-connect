@@ -7205,4 +7205,59 @@ class AppLocalizationsDe extends AppLocalizations {
   String maFromTo(String from, String to) {
     return '$from → $to';
   }
+
+  @override
+  String get ahTitle => 'Antennensuche';
+
+  @override
+  String get ahToolSub =>
+      'Klicks werden schneller, je stärker das Signal eines Knotens ist, zum Ausrichten einer Antenne oder Finden eines Standorts';
+
+  @override
+  String get ahPick => 'Wählen Sie einen direkt gehörten Knoten';
+
+  @override
+  String get ahNoneDirect =>
+      'Noch kein Knoten direkt gehört. Die Antennensuche braucht einen Knoten, den Ihr Funkgerät ohne Weiterleitung hört.';
+
+  @override
+  String get ahStart => 'Starten';
+
+  @override
+  String get ahStop => 'Beenden';
+
+  @override
+  String get ahSound => 'Klicks und Vibration';
+
+  @override
+  String get ahPing => 'Alle 30 s um Antwort bitten';
+
+  @override
+  String get ahPingSub =>
+      'Sendet jedes Mal ein Traceroute. Das kostet Sendezeit, also lassen Sie es in einem vollen Mesh aus; ohne zählt jedes Paket des Knotens.';
+
+  @override
+  String ahWaiting(String name) {
+    return 'Warte darauf, dass $name sendet…';
+  }
+
+  @override
+  String get ahYouHear => 'Sie hören ihn';
+
+  @override
+  String get ahTheyHear => 'Er hört Sie';
+
+  @override
+  String get ahBest => 'Bester Wert bisher';
+
+  @override
+  String ahAgo(int seconds) {
+    return 'Vor $seconds s gehört';
+  }
+
+  @override
+  String get ahLost => 'Länger nicht gehört: Klicks gestoppt.';
+
+  @override
+  String get ahChange => 'Knoten wechseln';
 }

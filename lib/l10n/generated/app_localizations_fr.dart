@@ -7204,4 +7204,59 @@ class AppLocalizationsFr extends AppLocalizations {
   String maFromTo(String from, String to) {
     return '$from → $to';
   }
+
+  @override
+  String get ahTitle => 'Chasse à l’antenne';
+
+  @override
+  String get ahToolSub =>
+      'Les clics accélèrent quand le signal d’un nœud s’améliore, pour orienter une antenne ou trouver un emplacement';
+
+  @override
+  String get ahPick => 'Choisissez un nœud entendu en direct';
+
+  @override
+  String get ahNoneDirect =>
+      'Aucun nœud entendu en direct pour l’instant. Il faut un nœud que votre radio entend sans relais.';
+
+  @override
+  String get ahStart => 'Démarrer';
+
+  @override
+  String get ahStop => 'Arrêter';
+
+  @override
+  String get ahSound => 'Clics et vibrations';
+
+  @override
+  String get ahPing => 'Lui demander de répondre toutes les 30 s';
+
+  @override
+  String get ahPingSub =>
+      'Envoie un traceroute à chaque fois. Cela consomme du temps d’antenne : laissez désactivé sur un maillage chargé ; sans cela, tout paquet du nœud compte.';
+
+  @override
+  String ahWaiting(String name) {
+    return 'En attente d’une émission de $name…';
+  }
+
+  @override
+  String get ahYouHear => 'Vous l’entendez';
+
+  @override
+  String get ahTheyHear => 'Il vous entend';
+
+  @override
+  String get ahBest => 'Meilleur jusqu’ici';
+
+  @override
+  String ahAgo(int seconds) {
+    return 'Entendu il y a $seconds s';
+  }
+
+  @override
+  String get ahLost => 'Plus entendu depuis un moment : clics arrêtés.';
+
+  @override
+  String get ahChange => 'Changer de nœud';
 }

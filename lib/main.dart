@@ -82,6 +82,7 @@ import 'field_guide_page.dart';
 import 'backdrop_page.dart';
 import 'battery_watch_page.dart';
 import 'mesh_activity_page.dart';
+import 'antenna_hunt_page.dart';
 import 'services/bastion_mesh_watch.dart';
 import 'theme/nx_backdrop.dart';
 import 'theme/nx_components.dart';

@@ -1916,5 +1916,21 @@
   "maEveryone": "alle",
   "maHops": "{count, plural, =0{direkt} =1{1 Hop} other{{count} Hops}}",
   "maViaMqtt": "über MQTT",
-  "maFromTo": "{from} → {to}"
+  "maFromTo": "{from} → {to}",
+  "ahTitle": "Antennensuche",
+  "ahToolSub": "Klicks werden schneller, je stärker das Signal eines Knotens ist, zum Ausrichten einer Antenne oder Finden eines Standorts",
+  "ahPick": "Wählen Sie einen direkt gehörten Knoten",
+  "ahNoneDirect": "Noch kein Knoten direkt gehört. Die Antennensuche braucht einen Knoten, den Ihr Funkgerät ohne Weiterleitung hört.",
+  "ahStart": "Starten",
+  "ahStop": "Beenden",
+  "ahSound": "Klicks und Vibration",
+  "ahPing": "Alle 30 s um Antwort bitten",
+  "ahPingSub": "Sendet jedes Mal ein Traceroute. Das kostet Sendezeit, also lassen Sie es in einem vollen Mesh aus; ohne zählt jedes Paket des Knotens.",
+  "ahWaiting": "Warte darauf, dass {name} sendet…",
+  "ahYouHear": "Sie hören ihn",
+  "ahTheyHear": "Er hört Sie",
+  "ahBest": "Bester Wert bisher",
+  "ahAgo": "Vor {seconds} s gehört",
+  "ahLost": "Länger nicht gehört: Klicks gestoppt.",
+  "ahChange": "Knoten wechseln"
 }

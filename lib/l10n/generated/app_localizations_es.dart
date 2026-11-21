@@ -7174,4 +7174,59 @@ class AppLocalizationsEs extends AppLocalizations {
   String maFromTo(String from, String to) {
     return '$from → $to';
   }
+
+  @override
+  String get ahTitle => 'Búsqueda de antena';
+
+  @override
+  String get ahToolSub =>
+      'Los clics se aceleran cuando mejora la señal de un nodo, para orientar una antena o buscar un sitio';
+
+  @override
+  String get ahPick => 'Elige un nodo que oigas directamente';
+
+  @override
+  String get ahNoneDirect =>
+      'Aún no se oye ningún nodo directamente. La búsqueda necesita un nodo que tu radio oiga sin reenvíos.';
+
+  @override
+  String get ahStart => 'Empezar';
+
+  @override
+  String get ahStop => 'Parar';
+
+  @override
+  String get ahSound => 'Clics y vibración';
+
+  @override
+  String get ahPing => 'Pedirle respuesta cada 30 s';
+
+  @override
+  String get ahPingSub =>
+      'Envía un traceroute cada vez. Usa tiempo de aire, así que déjalo apagado en una malla ocupada; sin él, cualquier paquete del nodo cuenta.';
+
+  @override
+  String ahWaiting(String name) {
+    return 'Esperando a que $name transmita…';
+  }
+
+  @override
+  String get ahYouHear => 'Tú lo oyes';
+
+  @override
+  String get ahTheyHear => 'Te oye';
+
+  @override
+  String get ahBest => 'Mejor hasta ahora';
+
+  @override
+  String ahAgo(int seconds) {
+    return 'Oído hace $seconds s';
+  }
+
+  @override
+  String get ahLost => 'Hace rato que no se oye: clics parados.';
+
+  @override
+  String get ahChange => 'Cambiar de nodo';
 }
