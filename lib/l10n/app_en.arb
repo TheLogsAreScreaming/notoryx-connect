@@ -5042,5 +5042,73 @@
         "type": "String"
       }
     }
+  },
+  "trlTitle": "Trail routing",
+  "trlToolSub": "Plan walking routes with no signal, over trails you download beforehand",
+  "trlIntro": "Download the trails around you while you have signal. Later, plan walking routes along them anywhere in that area, with no signal at all.",
+  "trlPlanSection": "Plan a route from where you are",
+  "trlTo": "To: a peak, hut, trailhead or saved waypoint",
+  "trlNoAreas": "Download an area first, below.",
+  "trlAreasSection": "Downloaded areas",
+  "trlDownloadHint": "Trails and named places come from OpenStreetMap. Downloading sends the area’s bounds to the Overpass service, which sees your IP address.",
+  "trlWithin": "Within {distance}",
+  "trlDownload": "Download trails around me",
+  "trlSaved": "Area saved. It works with no signal now.",
+  "trlAreaName": "Trails near me, {date}",
+  "trlNoPosition": "No position yet. Connect a radio with GPS, or allow this phone’s location.",
+  "trlTooLarge": "That area is too large to download at once.",
+  "trlFull": "Not enough room: delete an area first.",
+  "trlNoTrails": "No trails or named places found there.",
+  "trlFailed": "Couldn’t download. Check the internet connection and try again.",
+  "trlNoArea": "You and that place aren’t in the same downloaded area.",
+  "trlStartFar": "You’re more than 500 m from any downloaded trail.",
+  "trlEndFar": "That place is more than 500 m from any downloaded trail.",
+  "trlNotConnected": "No trail connects you to that place in this area.",
+  "trlDamaged": "This area’s trail data is damaged. Delete it and download it again.",
+  "trlRouteTo": "Route to {name}",
+  "trlRouteStats": "{distance} • about {time} at an easy pace",
+  "trlNoClimb": "The time doesn’t include climbing; allow more in hills.",
+  "trlKindPeak": "Peak",
+  "trlKindPass": "Pass",
+  "trlKindSpring": "Spring",
+  "trlKindHut": "Hut",
+  "trlKindCampsite": "Campsite",
+  "trlKindViewpoint": "Viewpoint",
+  "trlKindShelter": "Shelter",
+  "trlKindTrailhead": "Trailhead",
+  "trlKindTown": "Town",
+  "trlKindLocality": "Place",
+  "trlKindWaypoint": "Saved waypoint",
+  "pvSent10": "The bounds of an area to OpenStreetMap’s Overpass service, only when you download trails; it sees your IP address",
+  "@trlWithin": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "@trlAreaName": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@trlRouteTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@trlRouteStats": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
   }
 }

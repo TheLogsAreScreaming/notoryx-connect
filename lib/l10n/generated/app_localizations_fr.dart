@@ -7285,4 +7285,138 @@ class AppLocalizationsFr extends AppLocalizations {
   String srRelayedBody(String name) {
     return 'Votre radio a relayé le SOS de $name sur le même canal.';
   }
+
+  @override
+  String get trlTitle => 'Itinéraires sur sentiers';
+
+  @override
+  String get trlToolSub =>
+      'Planifiez des itinéraires à pied sans réseau, sur des sentiers téléchargés à l’avance';
+
+  @override
+  String get trlIntro =>
+      'Téléchargez les sentiers autour de vous tant que vous avez du réseau. Ensuite, planifiez des itinéraires à pied n’importe où dans cette zone, sans aucun réseau.';
+
+  @override
+  String get trlPlanSection => 'Planifier un itinéraire depuis votre position';
+
+  @override
+  String get trlTo =>
+      'Vers : un sommet, un refuge, un départ de sentier ou un point enregistré';
+
+  @override
+  String get trlNoAreas => 'Téléchargez d’abord une zone, ci-dessous.';
+
+  @override
+  String get trlAreasSection => 'Zones téléchargées';
+
+  @override
+  String get trlDownloadHint =>
+      'Les sentiers et lieux viennent d’OpenStreetMap. Le téléchargement envoie les limites de la zone au service Overpass, qui voit votre adresse IP.';
+
+  @override
+  String trlWithin(String distance) {
+    return 'À $distance';
+  }
+
+  @override
+  String get trlDownload => 'Télécharger les sentiers autour de moi';
+
+  @override
+  String get trlSaved =>
+      'Zone enregistrée. Elle fonctionne désormais sans réseau.';
+
+  @override
+  String trlAreaName(String date) {
+    return 'Sentiers proches, $date';
+  }
+
+  @override
+  String get trlNoPosition =>
+      'Pas encore de position. Connectez une radio avec GPS ou autorisez la position du téléphone.';
+
+  @override
+  String get trlTooLarge =>
+      'Cette zone est trop grande pour un seul téléchargement.';
+
+  @override
+  String get trlFull => 'Pas assez de place : supprimez d’abord une zone.';
+
+  @override
+  String get trlNoTrails => 'Aucun sentier ni lieu trouvé ici.';
+
+  @override
+  String get trlFailed =>
+      'Téléchargement impossible. Vérifiez la connexion internet et réessayez.';
+
+  @override
+  String get trlNoArea =>
+      'Vous et ce lieu n’êtes pas dans la même zone téléchargée.';
+
+  @override
+  String get trlStartFar =>
+      'Vous êtes à plus de 500 m de tout sentier téléchargé.';
+
+  @override
+  String get trlEndFar =>
+      'Ce lieu est à plus de 500 m de tout sentier téléchargé.';
+
+  @override
+  String get trlNotConnected =>
+      'Aucun sentier de cette zone ne mène à ce lieu.';
+
+  @override
+  String get trlDamaged =>
+      'Les données de cette zone sont endommagées. Supprimez-la et téléchargez-la à nouveau.';
+
+  @override
+  String trlRouteTo(String name) {
+    return 'Itinéraire vers $name';
+  }
+
+  @override
+  String trlRouteStats(String distance, String time) {
+    return '$distance • environ $time à allure tranquille';
+  }
+
+  @override
+  String get trlNoClimb =>
+      'La durée ne compte pas le dénivelé ; prévoyez plus en montagne.';
+
+  @override
+  String get trlKindPeak => 'Sommet';
+
+  @override
+  String get trlKindPass => 'Col';
+
+  @override
+  String get trlKindSpring => 'Source';
+
+  @override
+  String get trlKindHut => 'Refuge';
+
+  @override
+  String get trlKindCampsite => 'Camping';
+
+  @override
+  String get trlKindViewpoint => 'Point de vue';
+
+  @override
+  String get trlKindShelter => 'Abri';
+
+  @override
+  String get trlKindTrailhead => 'Départ de sentier';
+
+  @override
+  String get trlKindTown => 'Localité';
+
+  @override
+  String get trlKindLocality => 'Lieu-dit';
+
+  @override
+  String get trlKindWaypoint => 'Point enregistré';
+
+  @override
+  String get pvSent10 =>
+      'Les limites d’une zone au service Overpass d’OpenStreetMap, uniquement quand vous téléchargez des sentiers ; il voit votre adresse IP';
 }

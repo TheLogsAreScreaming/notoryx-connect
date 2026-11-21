@@ -7206,4 +7206,134 @@ class AppLocalizationsEn extends AppLocalizations {
   String srRelayedBody(String name) {
     return 'Your radio relayed the SOS from $name on the same channel.';
   }
+
+  @override
+  String get trlTitle => 'Trail routing';
+
+  @override
+  String get trlToolSub =>
+      'Plan walking routes with no signal, over trails you download beforehand';
+
+  @override
+  String get trlIntro =>
+      'Download the trails around you while you have signal. Later, plan walking routes along them anywhere in that area, with no signal at all.';
+
+  @override
+  String get trlPlanSection => 'Plan a route from where you are';
+
+  @override
+  String get trlTo => 'To: a peak, hut, trailhead or saved waypoint';
+
+  @override
+  String get trlNoAreas => 'Download an area first, below.';
+
+  @override
+  String get trlAreasSection => 'Downloaded areas';
+
+  @override
+  String get trlDownloadHint =>
+      'Trails and named places come from OpenStreetMap. Downloading sends the area’s bounds to the Overpass service, which sees your IP address.';
+
+  @override
+  String trlWithin(String distance) {
+    return 'Within $distance';
+  }
+
+  @override
+  String get trlDownload => 'Download trails around me';
+
+  @override
+  String get trlSaved => 'Area saved. It works with no signal now.';
+
+  @override
+  String trlAreaName(String date) {
+    return 'Trails near me, $date';
+  }
+
+  @override
+  String get trlNoPosition =>
+      'No position yet. Connect a radio with GPS, or allow this phone’s location.';
+
+  @override
+  String get trlTooLarge => 'That area is too large to download at once.';
+
+  @override
+  String get trlFull => 'Not enough room: delete an area first.';
+
+  @override
+  String get trlNoTrails => 'No trails or named places found there.';
+
+  @override
+  String get trlFailed =>
+      'Couldn’t download. Check the internet connection and try again.';
+
+  @override
+  String get trlNoArea =>
+      'You and that place aren’t in the same downloaded area.';
+
+  @override
+  String get trlStartFar => 'You’re more than 500 m from any downloaded trail.';
+
+  @override
+  String get trlEndFar =>
+      'That place is more than 500 m from any downloaded trail.';
+
+  @override
+  String get trlNotConnected =>
+      'No trail connects you to that place in this area.';
+
+  @override
+  String get trlDamaged =>
+      'This area’s trail data is damaged. Delete it and download it again.';
+
+  @override
+  String trlRouteTo(String name) {
+    return 'Route to $name';
+  }
+
+  @override
+  String trlRouteStats(String distance, String time) {
+    return '$distance • about $time at an easy pace';
+  }
+
+  @override
+  String get trlNoClimb =>
+      'The time doesn’t include climbing; allow more in hills.';
+
+  @override
+  String get trlKindPeak => 'Peak';
+
+  @override
+  String get trlKindPass => 'Pass';
+
+  @override
+  String get trlKindSpring => 'Spring';
+
+  @override
+  String get trlKindHut => 'Hut';
+
+  @override
+  String get trlKindCampsite => 'Campsite';
+
+  @override
+  String get trlKindViewpoint => 'Viewpoint';
+
+  @override
+  String get trlKindShelter => 'Shelter';
+
+  @override
+  String get trlKindTrailhead => 'Trailhead';
+
+  @override
+  String get trlKindTown => 'Town';
+
+  @override
+  String get trlKindLocality => 'Place';
+
+  @override
+  String get trlKindWaypoint => 'Saved waypoint';
+
+  @override
+  String get pvSent10 =>
+      'The bounds of an area to OpenStreetMap’s Overpass service, only when you download trails; it sees your IP address';
 }
