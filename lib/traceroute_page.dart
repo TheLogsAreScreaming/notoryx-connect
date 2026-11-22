@@ -59,7 +59,7 @@ class _TraceroutePageState extends State<TraceroutePage> {
   }
 
   bool _hasPosition(int num) {
-    for (final node in widget.radio.nodes) {
+    for (final node in widget.radio.knownNodes) {
       if (node.num == num) return node.latitude != null && node.longitude != null;
     }
     return false;
@@ -67,7 +67,7 @@ class _TraceroutePageState extends State<TraceroutePage> {
 
   String _name(int num) {
     if (num == widget.radio.localNodeNum) return AppLocalizations.of(context).trcThisRadio;
-    for (final node in widget.radio.nodes) {
+    for (final node in widget.radio.knownNodes) {
       if (node.num == num) return node.displayName;
     }
     return '!${num.toRadixString(16).padLeft(8, '0')}';
@@ -78,7 +78,7 @@ class _TraceroutePageState extends State<TraceroutePage> {
       result,
       local: local,
       destination: _target!,
-      nodes: widget.radio.nodes,
+      nodes: widget.radio.knownNodes,
       name: _name,
       sentAt: _sentAt!,
       roundTrip: _roundTrip!,
@@ -94,8 +94,12 @@ class _TraceroutePageState extends State<TraceroutePage> {
           builder: (context, _) {
             final l = AppLocalizations.of(context);
             final local = widget.radio.localNodeNum;
-            final nodes = widget.radio.nodes.where((n) => n.num != local).toList()
+            // Known nodes, not just the radio's live list: a node restored
+            // from an import must still be pickable (and stay selected when
+            // opened from its node page).
+            final nodes = widget.radio.knownNodes.where((n) => n.num != local).toList()
               ..sort((a, b) => a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()));
+            final target = _target;
             return ListView(
               padding: const EdgeInsets.all(16),
               children: [
@@ -104,6 +108,8 @@ class _TraceroutePageState extends State<TraceroutePage> {
                   isExpanded: true,
                   decoration: InputDecoration(labelText: l.trcDestination),
                   items: [
+                    if (target != null && target != local && !nodes.any((n) => n.num == target))
+                      DropdownMenuItem(value: target, child: Text(_name(target))),
                     for (final MeshtasticNode node in nodes)
                       DropdownMenuItem(value: node.num, child: Text(node.displayName)),
                   ],
@@ -178,7 +184,7 @@ class _TraceroutePageState extends State<TraceroutePage> {
                   if (local != null) ...[
                     if (RouteMapPath.of(result, local: local, destination: _target!,
                         hasPosition: _hasPosition) case final path when path.drawable)
-                      TracerouteMap(path: path, nodes: widget.radio.nodes, name: _name)
+                      TracerouteMap(path: path, nodes: widget.radio.knownNodes, name: _name)
                     else
                       Card(child: ListTile(
                         leading: const Icon(Icons.location_off_outlined),
