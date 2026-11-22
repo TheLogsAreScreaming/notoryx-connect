@@ -7,7 +7,7 @@ https://meshtastic.org/docs/legal/licensing-and-trademark/
 
 ## Required notice
 
-Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses, see GitHub for details. No warranty is provided - use at your own risk.
+Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses; see GitHub for details. No warranty is provided. Use at your own risk.
 
 ## Project rules
 

@@ -33,4 +33,4 @@ A LoRa radio running Meshtastic® firmware with Bluetooth. Most features need a 
 
 Mesh radio is not a guaranteed or secure communication channel. Do not rely on this app as your only way to call for help in an emergency.
 
-Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses, see GitHub for details. No warranty is provided - use at your own risk. NOTORYX Connect is independently developed and is not affiliated with, sponsored by, or endorsed by Meshtastic LLC.
+Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses; see GitHub for details. No warranty is provided. Use at your own risk. NOTORYX Connect is independently developed and is not affiliated with, sponsored by, or endorsed by Meshtastic LLC.
