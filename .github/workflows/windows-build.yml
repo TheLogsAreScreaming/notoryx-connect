@@ -14,6 +14,7 @@ on:
       - 'scripts/prepare_windows.py'
       - '.github/workflows/windows-build.yml'
       - 'installer/**'
+      - 'branding/notoryx-icon.ico'
       - 'lib/services/bastion_chat_store.dart'
 
 permissions:
@@ -45,6 +46,8 @@ jobs:
           git checkout -- pubspec.lock
           rm -f test/widget_test.dart
           python scripts/prepare_windows.py
+          # flutter create ships Flutter's placeholder; use the NOTORYX icon.
+          cp branding/notoryx-icon.ico windows/runner/resources/app_icon.ico
           flutter pub get --enforce-lockfile
       - name: Build
         run: flutter build windows --release

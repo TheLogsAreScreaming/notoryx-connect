@@ -14,6 +14,7 @@ on:
     paths:
       - 'scripts/prepare_macos.py'
       - 'tool/macos_launcher_icons.yaml'
+      - 'branding/notoryx-icon-macos.png'
       - '.github/workflows/macos-build.yml'
       - 'lib/services/app_exit.dart'
 

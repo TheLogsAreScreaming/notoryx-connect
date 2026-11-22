@@ -165,11 +165,14 @@ The NOTORYX Connect icon artwork is in `branding/`:
 
 | File | Use |
 |---|---|
-| `notoryx-icon-source.png` | Original artwork (1254 px) |
-| `notoryx-icon.png` | Launcher icon for older Android versions (1024 px) |
-| `notoryx-icon-foreground.png` | Adaptive icon foreground: the N mark on transparency, inside the safe zone, over `#101011` |
+| `notoryx-icon.png` | Full square icon (1024 px): older Android launchers, iPhone and this README |
+| `notoryx-icon-foreground.png` | Android adaptive icon foreground: the emblem on transparency, inside the safe zone |
+| `notoryx-icon-background.png` | Android adaptive icon background |
+| `notoryx-icon-monochrome.png` | Android 13+ themed (monochrome) icon |
+| `notoryx-icon-macos.png` | macOS app icon (rounded tile, 1024 px) |
+| `notoryx-icon.ico` | Windows app icon (16–256 px) |
 
-Play Store graphics (512 px icon, 1024 × 500 feature graphic) are in `fastlane/metadata/android/en-US/images/`. `python3 tool/make_store_graphics.py` regenerates all of these from the source artwork (needs Pillow).
+These come from the NOTORYX BLACKOUT brand kit (Connect set). Play Store graphics (512 px icon, 1024 × 500 feature graphic) are in `fastlane/metadata/android/en-US/images/`, and the in-app header mark is `assets/images/notoryx_logo.png`.
 
 The icon and NOTORYX Connect visual identity are independent artwork and must not incorporate the official Meshtastic logo unless a future use is separately authorized and complies with the then-current trademark rules.
 
