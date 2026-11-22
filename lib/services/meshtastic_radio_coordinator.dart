@@ -659,6 +659,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   StreamSubscription<PhoneFix>? _coverageLocation;
   PhoneFix? _coverageFix;
   String? coverageProblem;
+
+  /// The phone's latest position while a drive records.
+  PhoneFix? get coverageFix => _coverageFix;
   bool get recordingCoverage => BastionDriveLog.instance.recording;
 
   /// Starts or stops a drive: every RF packet heard is saved with the
@@ -684,7 +687,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       await BastionDriveLog.instance.start(_localNodeNum!, name: tripName);
       try {
         _coverageLocation = _location.watch(background: true).listen(
-          (fix) => _coverageFix = fix,
+          (fix) {
+            _coverageFix = fix;
+            unawaited(BastionDriveLog.instance.addFix(fix).then((_) {}, onError: (Object _) {}));
+          },
           onError: (Object error) {
             unawaited(BastionDriveLog.instance.stop());
             coverageProblem = 'Location stopped: $error';

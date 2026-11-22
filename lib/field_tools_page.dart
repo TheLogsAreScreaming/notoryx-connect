@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'drive_page.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'services/bastion_bot_guard.dart';
 import 'services/bastion_drive_log.dart';
@@ -132,11 +133,13 @@ class _FieldToolsPageState extends State<FieldToolsPage> {
           Card(key: const ValueKey('coverage-log'), child: ExpansionTile(title: Text(l.frCoverage),
             subtitle: Text(l.frCoverageSub),
             childrenPadding: const EdgeInsets.all(16), children: [
-              SwitchListTile(title: Text(l.frRecord),
-                subtitle: Text(l.frRecordSub),
-                value: widget.radio.recordingCoverage,
-                onChanged: busy || (!widget.radio.isReady && !widget.radio.recordingCoverage) ? null
-                  : (v) => action(() => widget.radio.setCoverageRecording(v), v ? l.frRecordOn : l.frRecordOff)),
+              ListTile(key: const ValueKey('coverage-open-drive'),
+                leading: Icon(widget.radio.recordingCoverage ? Icons.fiber_manual_record : Icons.directions_car_outlined,
+                  color: widget.radio.recordingCoverage ? Colors.red : null),
+                title: Text(l.drvOpen),
+                subtitle: Text(widget.radio.recordingCoverage ? l.drvRecording : l.frRecordSub),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => DrivePage(radio: widget.radio)))),
               if (widget.radio.coverageProblem != null) Text(widget.radio.coverageProblem!),
               if (drives.error != null) Text(drives.error!),
               Text(l.frReadings(drives.samples.length)),

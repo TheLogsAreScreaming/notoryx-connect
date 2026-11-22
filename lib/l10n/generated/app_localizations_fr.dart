@@ -7657,4 +7657,157 @@ class AppLocalizationsFr extends AppLocalizations {
   String frDriveReading(String node, String hops, String snr, String rssi) {
     return 'Nœud $node • $hops • SNR $snr • RSSI $rssi';
   }
+
+  @override
+  String get drvTitle => 'Trajet';
+
+  @override
+  String get drvToolSub => 'Cartographiez la portée du maillage en roulant';
+
+  @override
+  String get drvOpen => 'Ouvrir l\'écran de trajet';
+
+  @override
+  String get drvName => 'Nom du trajet (facultatif)';
+
+  @override
+  String get drvStart => 'Démarrer le trajet';
+
+  @override
+  String get drvStop => 'Arrêter le trajet';
+
+  @override
+  String get drvRecording => 'Enregistrement';
+
+  @override
+  String get drvScreenOff =>
+      'Le GPS continue écran éteint jusqu\'à l\'arrêt du trajet.';
+
+  @override
+  String get drvNotConnected => 'Connectez une radio pour démarrer un trajet.';
+
+  @override
+  String drvShowing(String name) {
+    return 'Sur la carte : $name';
+  }
+
+  @override
+  String get drvMapEmpty =>
+      'Aucune mesure de couverture sur ce trajet pour l\'instant.';
+
+  @override
+  String drvBands(int strong, int fair, int weak) {
+    return 'Carrés : $strong forts, $fair moyens, $weak faibles';
+  }
+
+  @override
+  String get drvSquareSize => 'Taille des carrés';
+
+  @override
+  String get drvShowRelayed => 'Afficher les mesures relayées';
+
+  @override
+  String get drvShowRelayedSub =>
+      'Un paquet relayé prouve seulement que le signal a atteint le nœud qui l\'a relayé.';
+
+  @override
+  String get drvFollow => 'Me suivre';
+
+  @override
+  String drvStats(String distance, String duration, int readings) {
+    return '$distance • $duration • $readings mesures';
+  }
+
+  @override
+  String drvNodes(int nodes, int direct, int fresh) {
+    return 'Nœuds entendus : $nodes • directs : $direct • nouveaux : $fresh';
+  }
+
+  @override
+  String drvSquares(int squares, String snr) {
+    return 'Carrés de 300 m avec couverture directe : $squares • meilleur SNR : $snr';
+  }
+
+  @override
+  String get drvAlert => 'Alerte nouveau nœud';
+
+  @override
+  String get drvAlertOff => 'Désactivée';
+
+  @override
+  String get drvAlertTrip => 'Première fois sur ce trajet';
+
+  @override
+  String get drvAlertEver => 'Première fois tous trajets confondus';
+
+  @override
+  String drvNewNode(String node) {
+    return 'Entendu pour la première fois sur ce trajet : $node';
+  }
+
+  @override
+  String drvNewNodeEver(String node) {
+    return 'Jamais entendu sur un trajet : $node';
+  }
+
+  @override
+  String get drvSaved => 'Trajets enregistrés';
+
+  @override
+  String get drvEmpty => 'Aucun trajet enregistré pour l\'instant.';
+
+  @override
+  String get drvShowOnMap => 'Afficher sur la carte';
+
+  @override
+  String get drvRename => 'Renommer';
+
+  @override
+  String get drvSave => 'Enregistrer';
+
+  @override
+  String get drvDelete => 'Supprimer';
+
+  @override
+  String drvDeleteQ(String name) {
+    return 'Supprimer $name ?';
+  }
+
+  @override
+  String get drvDeleteBody =>
+      'Ses mesures et son tracé sont supprimés de ce téléphone. Action irréversible.';
+
+  @override
+  String get drvDeleted => 'Trajet supprimé.';
+
+  @override
+  String get drvGuide => 'Fonctionnement des trajets';
+
+  @override
+  String get drvGuideDirectTitle => 'Direct et relayé';
+
+  @override
+  String get drvGuideDirect =>
+      'Un paquet direct vient tout droit du nœud émetteur : il prouve que votre radio et ce nœud se joignent d\'ici. Un paquet relayé est passé par un autre nœud et prouve seulement que vous joignez ce relais. La carte compte les mesures directes, plus les anciennes mesures enregistrées avant le suivi des sauts. Les paquets venus par internet ne comptent jamais.';
+
+  @override
+  String get drvGuideListenTitle => 'Écoute seule';
+
+  @override
+  String get drvGuideListen =>
+      'Un trajet ne fait qu\'écouter : votre radio n\'envoie rien de plus et n\'ajoute aucun trafic au maillage. Les nœuds apparaissent quand ils émettent d\'eux-mêmes.';
+
+  @override
+  String get drvGuideAntennaTitle => 'Antenne';
+
+  @override
+  String get drvGuideAntenna =>
+      'Placez la radio le plus haut possible, antenne verticale, idéalement hors de la voiture ou contre une vitre. Une radio au plancher ou dans une poche entend bien moins, et la carte le montrera.';
+
+  @override
+  String get drvGuidePrivacyTitle => 'Confidentialité';
+
+  @override
+  String get drvGuidePrivacy =>
+      'Les trajets restent sur ce téléphone. Les positions sont toujours celles de votre téléphone, jamais celles d\'un autre nœud. Rien n\'est envoyé en ligne ; partager un fichier de trajet est votre choix.';
 }

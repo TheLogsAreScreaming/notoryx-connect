@@ -7623,4 +7623,157 @@ class AppLocalizationsEs extends AppLocalizations {
   String frDriveReading(String node, String hops, String snr, String rssi) {
     return 'Nodo $node • $hops • SNR $snr • RSSI $rssi';
   }
+
+  @override
+  String get drvTitle => 'Recorrido';
+
+  @override
+  String get drvToolSub => 'Mapea hasta dónde llega la malla mientras conduces';
+
+  @override
+  String get drvOpen => 'Abrir pantalla de recorrido';
+
+  @override
+  String get drvName => 'Nombre del recorrido (opcional)';
+
+  @override
+  String get drvStart => 'Iniciar recorrido';
+
+  @override
+  String get drvStop => 'Detener recorrido';
+
+  @override
+  String get drvRecording => 'Grabando';
+
+  @override
+  String get drvScreenOff =>
+      'El GPS sigue funcionando con la pantalla apagada hasta que detengas el recorrido.';
+
+  @override
+  String get drvNotConnected => 'Conecta una radio para iniciar un recorrido.';
+
+  @override
+  String drvShowing(String name) {
+    return 'En el mapa: $name';
+  }
+
+  @override
+  String get drvMapEmpty =>
+      'Aún no hay lecturas de cobertura en este recorrido.';
+
+  @override
+  String drvBands(int strong, int fair, int weak) {
+    return 'Cuadros: $strong fuertes, $fair regulares, $weak débiles';
+  }
+
+  @override
+  String get drvSquareSize => 'Tamaño del cuadro';
+
+  @override
+  String get drvShowRelayed => 'Mostrar lecturas retransmitidas';
+
+  @override
+  String get drvShowRelayedSub =>
+      'Un paquete retransmitido solo prueba que la señal llegó al nodo que lo reenvió.';
+
+  @override
+  String get drvFollow => 'Seguirme';
+
+  @override
+  String drvStats(String distance, String duration, int readings) {
+    return '$distance • $duration • $readings lecturas';
+  }
+
+  @override
+  String drvNodes(int nodes, int direct, int fresh) {
+    return 'Nodos oídos: $nodes • directos: $direct • nuevos: $fresh';
+  }
+
+  @override
+  String drvSquares(int squares, String snr) {
+    return 'Cuadros de 300 m con cobertura directa: $squares • mejor SNR: $snr';
+  }
+
+  @override
+  String get drvAlert => 'Aviso de nodo nuevo';
+
+  @override
+  String get drvAlertOff => 'Desactivado';
+
+  @override
+  String get drvAlertTrip => 'Primera vez en este recorrido';
+
+  @override
+  String get drvAlertEver => 'Primera vez en cualquier recorrido';
+
+  @override
+  String drvNewNode(String node) {
+    return 'Oído por primera vez en este recorrido: $node';
+  }
+
+  @override
+  String drvNewNodeEver(String node) {
+    return 'Nunca oído antes en un recorrido: $node';
+  }
+
+  @override
+  String get drvSaved => 'Recorridos guardados';
+
+  @override
+  String get drvEmpty => 'Aún no hay recorridos guardados.';
+
+  @override
+  String get drvShowOnMap => 'Mostrar en el mapa';
+
+  @override
+  String get drvRename => 'Renombrar';
+
+  @override
+  String get drvSave => 'Guardar';
+
+  @override
+  String get drvDelete => 'Eliminar';
+
+  @override
+  String drvDeleteQ(String name) {
+    return '¿Eliminar $name?';
+  }
+
+  @override
+  String get drvDeleteBody =>
+      'Sus lecturas y su trazado se borran de este teléfono. No se puede deshacer.';
+
+  @override
+  String get drvDeleted => 'Recorrido eliminado.';
+
+  @override
+  String get drvGuide => 'Cómo funcionan los recorridos';
+
+  @override
+  String get drvGuideDirectTitle => 'Directo y retransmitido';
+
+  @override
+  String get drvGuideDirect =>
+      'Un paquete directo llegó sin intermediarios desde el nodo que lo envió, así que prueba que tu radio y ese nodo se alcanzan desde aquí. Un paquete retransmitido pasó por otro nodo y solo prueba que alcanzas a ese retransmisor. El mapa cuenta las lecturas directas y las lecturas antiguas guardadas antes de registrar saltos. Los paquetes llegados por internet nunca cuentan.';
+
+  @override
+  String get drvGuideListenTitle => 'Solo escuchar';
+
+  @override
+  String get drvGuideListen =>
+      'Un recorrido solo escucha: tu radio no envía nada extra, así que no añade tráfico a la malla. Los nodos aparecen cuando envían algo por su cuenta.';
+
+  @override
+  String get drvGuideAntennaTitle => 'Antena';
+
+  @override
+  String get drvGuideAntenna =>
+      'Coloca la radio lo más alto posible con la antena vertical, idealmente fuera del coche o junto a una ventana. Una radio en el suelo o en un bolsillo oye mucho menos, y el mapa lo reflejará.';
+
+  @override
+  String get drvGuidePrivacyTitle => 'Privacidad';
+
+  @override
+  String get drvGuidePrivacy =>
+      'Los recorridos se quedan en este teléfono. Las posiciones son siempre las de tu teléfono, nunca las de otro nodo. No se sube nada; compartir un archivo de recorrido es decisión tuya.';
 }

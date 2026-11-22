@@ -5228,5 +5228,125 @@
         "type": "String"
       }
     }
-  }
+  },
+  "drvTitle": "Drive",
+  "drvToolSub": "Map where the mesh reaches as you drive",
+  "drvOpen": "Open drive screen",
+  "drvName": "Drive name (optional)",
+  "drvStart": "Start drive",
+  "drvStop": "Stop drive",
+  "drvRecording": "Recording",
+  "drvScreenOff": "GPS keeps running with the screen off until you stop the drive.",
+  "drvNotConnected": "Connect to a radio to start a drive.",
+  "drvShowing": "On the map: {name}",
+  "@drvShowing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "drvMapEmpty": "No coverage readings on this drive yet.",
+  "drvBands": "Squares: {strong} strong, {fair} fair, {weak} weak",
+  "@drvBands": {
+    "placeholders": {
+      "strong": {
+        "type": "int"
+      },
+      "fair": {
+        "type": "int"
+      },
+      "weak": {
+        "type": "int"
+      }
+    }
+  },
+  "drvSquareSize": "Square size",
+  "drvShowRelayed": "Show relayed readings",
+  "drvShowRelayedSub": "A relayed packet only proves the signal reached the node that passed it on.",
+  "drvFollow": "Follow me",
+  "drvStats": "{distance} • {duration} • {readings} readings",
+  "@drvStats": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      },
+      "readings": {
+        "type": "int"
+      }
+    }
+  },
+  "drvNodes": "Nodes heard: {nodes} • direct: {direct} • new: {fresh}",
+  "@drvNodes": {
+    "placeholders": {
+      "nodes": {
+        "type": "int"
+      },
+      "direct": {
+        "type": "int"
+      },
+      "fresh": {
+        "type": "int"
+      }
+    }
+  },
+  "drvSquares": "300 m squares with direct coverage: {squares} • best SNR: {snr}",
+  "@drvSquares": {
+    "placeholders": {
+      "squares": {
+        "type": "int"
+      },
+      "snr": {
+        "type": "String"
+      }
+    }
+  },
+  "drvAlert": "New node alert",
+  "drvAlertOff": "Off",
+  "drvAlertTrip": "First time on this drive",
+  "drvAlertEver": "First time on any drive",
+  "drvNewNode": "Heard on this drive for the first time: {node}",
+  "@drvNewNode": {
+    "placeholders": {
+      "node": {
+        "type": "String"
+      }
+    }
+  },
+  "drvNewNodeEver": "Never heard on a drive before: {node}",
+  "@drvNewNodeEver": {
+    "placeholders": {
+      "node": {
+        "type": "String"
+      }
+    }
+  },
+  "drvSaved": "Saved drives",
+  "drvEmpty": "No saved drives yet.",
+  "drvShowOnMap": "Show on map",
+  "drvRename": "Rename",
+  "drvSave": "Save",
+  "drvDelete": "Delete",
+  "drvDeleteQ": "Delete {name}?",
+  "@drvDeleteQ": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "drvDeleteBody": "Its readings and trail are removed from this phone. This can't be undone.",
+  "drvDeleted": "Drive deleted.",
+  "drvGuide": "How drives work",
+  "drvGuideDirectTitle": "Direct and relayed",
+  "drvGuideDirect": "A direct packet came straight from the node that sent it, so it proves your radio and that node reach each other from here. A relayed packet was passed on by another node and only proves you reach that relayer. The map counts direct readings, plus older readings saved before hop counts were kept. Packets that came over the internet are never counted.",
+  "drvGuideListenTitle": "Listening only",
+  "drvGuideListen": "A drive only listens: your radio sends nothing extra, so it adds no traffic to the mesh. Nodes show up when they send something on their own.",
+  "drvGuideAntennaTitle": "Antenna",
+  "drvGuideAntenna": "Put the radio as high as you can with the antenna upright, ideally outside the car or against a window. A radio on the floor or in a pocket hears much less, and the map will show it.",
+  "drvGuidePrivacyTitle": "Privacy",
+  "drvGuidePrivacy": "Drives stay on this phone. Positions are always your phone's, never another node's. Nothing is uploaded; sharing a drive file is up to you."
 }

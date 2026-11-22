@@ -110,6 +110,14 @@ class _ToolsPageState extends State<_ToolsPage> {
         onTap: () => _open(TeamSharePage(radio: radio)),
       )),
       Card(child: ListTile(
+        key: const ValueKey('tools-drive'),
+        leading: const Icon(Icons.directions_car_outlined),
+        title: Text(l.drvTitle),
+        subtitle: Text(l.drvToolSub),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _open(DrivePage(radio: radio)),
+      )),
+      Card(child: ListTile(
         key: const ValueKey('tools-track-log'),
         leading: const Icon(Icons.route_outlined),
         title: Text(l.tlgTitle),

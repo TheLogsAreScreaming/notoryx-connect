@@ -12390,6 +12390,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Node {node} • {hops} • SNR {snr} • RSSI {rssi}'**
   String frDriveReading(String node, String hops, String snr, String rssi);
+
+  /// No description provided for @drvTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive'**
+  String get drvTitle;
+
+  /// No description provided for @drvToolSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Map where the mesh reaches as you drive'**
+  String get drvToolSub;
+
+  /// No description provided for @drvOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open drive screen'**
+  String get drvOpen;
+
+  /// No description provided for @drvName.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive name (optional)'**
+  String get drvName;
+
+  /// No description provided for @drvStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start drive'**
+  String get drvStart;
+
+  /// No description provided for @drvStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop drive'**
+  String get drvStop;
+
+  /// No description provided for @drvRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording'**
+  String get drvRecording;
+
+  /// No description provided for @drvScreenOff.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS keeps running with the screen off until you stop the drive.'**
+  String get drvScreenOff;
+
+  /// No description provided for @drvNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a radio to start a drive.'**
+  String get drvNotConnected;
+
+  /// No description provided for @drvShowing.
+  ///
+  /// In en, this message translates to:
+  /// **'On the map: {name}'**
+  String drvShowing(String name);
+
+  /// No description provided for @drvMapEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No coverage readings on this drive yet.'**
+  String get drvMapEmpty;
+
+  /// No description provided for @drvBands.
+  ///
+  /// In en, this message translates to:
+  /// **'Squares: {strong} strong, {fair} fair, {weak} weak'**
+  String drvBands(int strong, int fair, int weak);
+
+  /// No description provided for @drvSquareSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Square size'**
+  String get drvSquareSize;
+
+  /// No description provided for @drvShowRelayed.
+  ///
+  /// In en, this message translates to:
+  /// **'Show relayed readings'**
+  String get drvShowRelayed;
+
+  /// No description provided for @drvShowRelayedSub.
+  ///
+  /// In en, this message translates to:
+  /// **'A relayed packet only proves the signal reached the node that passed it on.'**
+  String get drvShowRelayedSub;
+
+  /// No description provided for @drvFollow.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow me'**
+  String get drvFollow;
+
+  /// No description provided for @drvStats.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} • {duration} • {readings} readings'**
+  String drvStats(String distance, String duration, int readings);
+
+  /// No description provided for @drvNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes heard: {nodes} • direct: {direct} • new: {fresh}'**
+  String drvNodes(int nodes, int direct, int fresh);
+
+  /// No description provided for @drvSquares.
+  ///
+  /// In en, this message translates to:
+  /// **'300 m squares with direct coverage: {squares} • best SNR: {snr}'**
+  String drvSquares(int squares, String snr);
+
+  /// No description provided for @drvAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'New node alert'**
+  String get drvAlert;
+
+  /// No description provided for @drvAlertOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get drvAlertOff;
+
+  /// No description provided for @drvAlertTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'First time on this drive'**
+  String get drvAlertTrip;
+
+  /// No description provided for @drvAlertEver.
+  ///
+  /// In en, this message translates to:
+  /// **'First time on any drive'**
+  String get drvAlertEver;
+
+  /// No description provided for @drvNewNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard on this drive for the first time: {node}'**
+  String drvNewNode(String node);
+
+  /// No description provided for @drvNewNodeEver.
+  ///
+  /// In en, this message translates to:
+  /// **'Never heard on a drive before: {node}'**
+  String drvNewNodeEver(String node);
+
+  /// No description provided for @drvSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved drives'**
+  String get drvSaved;
+
+  /// No description provided for @drvEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved drives yet.'**
+  String get drvEmpty;
+
+  /// No description provided for @drvShowOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Show on map'**
+  String get drvShowOnMap;
+
+  /// No description provided for @drvRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get drvRename;
+
+  /// No description provided for @drvSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get drvSave;
+
+  /// No description provided for @drvDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get drvDelete;
+
+  /// No description provided for @drvDeleteQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}?'**
+  String drvDeleteQ(String name);
+
+  /// No description provided for @drvDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Its readings and trail are removed from this phone. This can\'t be undone.'**
+  String get drvDeleteBody;
+
+  /// No description provided for @drvDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive deleted.'**
+  String get drvDeleted;
+
+  /// No description provided for @drvGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'How drives work'**
+  String get drvGuide;
+
+  /// No description provided for @drvGuideDirectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct and relayed'**
+  String get drvGuideDirectTitle;
+
+  /// No description provided for @drvGuideDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'A direct packet came straight from the node that sent it, so it proves your radio and that node reach each other from here. A relayed packet was passed on by another node and only proves you reach that relayer. The map counts direct readings, plus older readings saved before hop counts were kept. Packets that came over the internet are never counted.'**
+  String get drvGuideDirect;
+
+  /// No description provided for @drvGuideListenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening only'**
+  String get drvGuideListenTitle;
+
+  /// No description provided for @drvGuideListen.
+  ///
+  /// In en, this message translates to:
+  /// **'A drive only listens: your radio sends nothing extra, so it adds no traffic to the mesh. Nodes show up when they send something on their own.'**
+  String get drvGuideListen;
+
+  /// No description provided for @drvGuideAntennaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Antenna'**
+  String get drvGuideAntennaTitle;
+
+  /// No description provided for @drvGuideAntenna.
+  ///
+  /// In en, this message translates to:
+  /// **'Put the radio as high as you can with the antenna upright, ideally outside the car or against a window. A radio on the floor or in a pocket hears much less, and the map will show it.'**
+  String get drvGuideAntenna;
+
+  /// No description provided for @drvGuidePrivacyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get drvGuidePrivacyTitle;
+
+  /// No description provided for @drvGuidePrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Drives stay on this phone. Positions are always your phone\'s, never another node\'s. Nothing is uploaded; sharing a drive file is up to you.'**
+  String get drvGuidePrivacy;
 }
 
 class _AppLocalizationsDelegate
