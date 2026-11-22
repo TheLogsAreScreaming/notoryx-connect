@@ -244,6 +244,7 @@ abstract interface class DriveLogStore {
   Future<void> deleteTrip(int id);
   Future<List<DrivePoint>> points();
   Future<void> addPoint(DrivePoint point);
+  Future<void> addPoints(List<DrivePoint> points);
   Future<void> renameTrip(int id, String name);
 }
 
@@ -293,6 +294,9 @@ class MemoryDriveLogStore implements DriveLogStore {
   Future<List<DrivePoint>> points() async => List.of(_points);
   @override
   Future<void> addPoint(DrivePoint point) async => _points.add(point);
+  @override
+  Future<void> addPoints(List<DrivePoint> points) async =>
+      _points.addAll(points);
   @override
   Future<void> renameTrip(int id, String name) async {
     final i = _trips.indexWhere((t) => t.id == id);
@@ -404,6 +408,15 @@ class SqliteDriveLogStore implements DriveLogStore {
   @override
   Future<void> addPoint(DrivePoint point) =>
       _db.insert('points', point.toRow());
+  @override
+  Future<void> addPoints(List<DrivePoint> points) =>
+      _db.transaction((txn) async {
+        final batch = txn.batch();
+        for (final p in points) {
+          batch.insert('points', p.toRow());
+        }
+        await batch.commit(noResult: true);
+      });
   @override
   Future<void> renameTrip(int id, String name) =>
       _db.update('trips', {'name': name}, where: 'id = ?', whereArgs: [id]);
@@ -697,6 +710,54 @@ class BastionDriveLog extends ChangeNotifier {
       radio: t.radio,
     );
     notifyListeners();
+  }
+
+  /// Saves a drive read from a file as a new finished drive. [points] and
+  /// [samples] may carry any trip id; they are moved to the new one.
+  /// Returns the new drive.
+  Future<DriveTrip> importTrip({
+    required String name,
+    required DateTime started,
+    DateTime? ended,
+    required List<DrivePoint> points,
+    required List<DriveSample> samples,
+  }) async {
+    if (error != null) throw StateError(error!);
+    final end =
+        ended ?? samples.lastOrNull?.time ?? points.lastOrNull?.time ?? started;
+    final id = await _store.addTrip(name, started.toUtc(), null);
+    final moved = [
+      for (final s in samples) DriveSample.fromRow({...s.toRow(), 'trip': id}),
+    ];
+    final trail = [
+      for (final p in points)
+        DrivePoint(
+          trip: id,
+          time: p.time,
+          latitude: p.latitude,
+          longitude: p.longitude,
+        ),
+    ];
+    try {
+      await _store.endTrip(id, end.toUtc());
+      await _store.addSamples(moved);
+      await _store.addPoints(trail);
+    } catch (_) {
+      await _store.deleteTrip(id);
+      rethrow;
+    }
+    final trip = DriveTrip(
+      id: id,
+      name: name,
+      started: started.toUtc(),
+      ended: end.toUtc(),
+    );
+    _trips.add(trip);
+    _samples.addAll(moved);
+    _points.addAll(trail);
+    await _enforceLimits();
+    notifyListeners();
+    return trip;
   }
 
   /// Adds the phone's position to the running drive's trail once it has

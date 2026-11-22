@@ -2088,5 +2088,15 @@
   "drvGuideAntennaTitle": "Antena",
   "drvGuideAntenna": "Coloca la radio lo más alto posible con la antena vertical, idealmente fuera del coche o junto a una ventana. Una radio en el suelo o en un bolsillo oye mucho menos, y el mapa lo reflejará.",
   "drvGuidePrivacyTitle": "Privacidad",
-  "drvGuidePrivacy": "Los recorridos se quedan en este teléfono. Las posiciones son siempre las de tu teléfono, nunca las de otro nodo. No se sube nada; compartir un archivo de recorrido es decisión tuya."
+  "drvGuidePrivacy": "Los recorridos se quedan en este teléfono. Las posiciones son siempre las de tu teléfono, nunca las de otro nodo. No se sube nada; compartir un archivo de recorrido es decisión tuya.",
+  "drvExport": "Exportar este recorrido",
+  "drvTrim": "Omitir los primeros y últimos 500 m",
+  "drvTrimSub": "Así el archivo no muestra dónde empezaste y terminaste, como tu casa o tu trabajo.",
+  "drvDriveFile": "Archivo de recorrido",
+  "drvExportEmpty": "No queda nada que exportar. Desactiva la omisión de 500 m en un recorrido corto.",
+  "drvImport": "Importar",
+  "drvImportedName": "{name} (importado)",
+  "drvImported": "Recorrido importado con {count} lecturas.",
+  "drvImportBad": "Ese archivo no se puede importar: {reason}",
+  "drvImportUnreadable": "No se pudo leer el archivo."
 }

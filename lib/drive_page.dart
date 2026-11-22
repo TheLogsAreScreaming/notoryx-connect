@@ -1,11 +1,16 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'l10n/generated/app_localizations.dart';
 import 'services/bastion_coverage_grid.dart';
+import 'services/bastion_drive_export.dart';
 import 'services/bastion_drive_log.dart';
 import 'services/bastion_preferences.dart';
 import 'services/bastion_units.dart';
@@ -14,6 +19,13 @@ import 'theme/notoryx_theme.dart';
 import 'theme/notoryx_tokens.dart';
 import 'theme/nx_components.dart';
 import 'track_log_page.dart';
+
+/// Hands a file to the share sheet: name, text, MIME type.
+typedef DriveShare =
+    Future<void> Function(String fileName, String text, String mimeType);
+
+/// Asks for a drive file and returns its text, or null if none was picked.
+typedef DrivePick = Future<String?> Function();
 
 /// Start and stop drives, watch coverage build up on a map, and look back
 /// at saved drives. Listening only: nothing is sent unless the optional
@@ -24,7 +36,41 @@ class DrivePage extends StatefulWidget {
     required this.radio,
     this.log,
     this.tiles = true,
+    this.share = shareDriveFile,
+    this.pick = pickDriveFile,
   });
+
+  /// Opens the share sheet with one file.
+  static Future<void> shareDriveFile(
+    String fileName,
+    String text,
+    String mimeType,
+  ) => SharePlus.instance.share(
+    ShareParams(
+      files: [
+        XFile.fromData(
+          Uint8List.fromList(utf8.encode(text)),
+          mimeType: mimeType,
+        ),
+      ],
+      fileNameOverrides: [fileName],
+      subject: fileName,
+    ),
+  );
+
+  /// Opens the file picker for a drive file.
+  static Future<String?> pickDriveFile() async {
+    final file = await openFile(
+      acceptedTypeGroups: const [
+        XTypeGroup(
+          label: 'Drive file',
+          extensions: ['json'],
+          uniformTypeIdentifiers: ['public.json'],
+        ),
+      ],
+    );
+    return file?.readAsString();
+  }
 
   final MeshtasticRadioCoordinator radio;
 
@@ -33,6 +79,9 @@ class DrivePage extends StatefulWidget {
 
   /// Draws map tiles from the network. Off in tests.
   final bool tiles;
+
+  final DriveShare share;
+  final DrivePick pick;
 
   @override
   State<DrivePage> createState() => _DrivePageState();
@@ -47,6 +96,7 @@ class _DrivePageState extends State<DrivePage> {
   bool _follow = true;
   bool _busy = false;
   bool _mapReady = false;
+  bool _trim = true;
   int? _shown;
   DrivePoint? _followed;
 
@@ -189,10 +239,22 @@ class _DrivePageState extends State<DrivePage> {
                 _mapCard(context, shown),
                 const SizedBox(height: NxSpace.sm),
                 _counters(context, shown, units),
+                if (!shown.running) ...[
+                  const SizedBox(height: NxSpace.sm),
+                  _exportCard(context, shown),
+                ],
               ],
               const SizedBox(height: NxSpace.sm),
               _alertSetting(context),
-              NxSectionLabel(l.drvSaved),
+              NxSectionLabel(
+                l.drvSaved,
+                trailing: TextButton.icon(
+                  key: const ValueKey('drive-import'),
+                  onPressed: _busy ? null : _import,
+                  icon: const Icon(Icons.file_open_outlined),
+                  label: Text(l.drvImport),
+                ),
+              ),
               if (saved.isEmpty)
                 Padding(
                   padding: const EdgeInsets.all(NxSpace.sm),
@@ -554,6 +616,100 @@ class _DrivePageState extends State<DrivePage> {
         ),
       ),
     );
+  }
+
+  Widget _exportCard(BuildContext context, DriveTrip trip) => Card(
+    key: const ValueKey('drive-export'),
+    child: Padding(
+      padding: const EdgeInsets.all(NxSpace.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(l.drvExport, style: Theme.of(context).textTheme.titleSmall),
+          SwitchListTile(
+            key: const ValueKey('drive-trim'),
+            contentPadding: EdgeInsets.zero,
+            title: Text(l.drvTrim),
+            subtitle: Text(l.drvTrimSub),
+            value: _trim,
+            onChanged: (v) => setState(() => _trim = v),
+          ),
+          Wrap(
+            spacing: NxSpace.xs,
+            runSpacing: NxSpace.xs,
+            children: [
+              for (final (format, label) in [
+                (DriveExportFormat.gpx, 'GPX'),
+                (DriveExportFormat.kml, 'KML'),
+                (DriveExportFormat.csv, 'CSV'),
+                (DriveExportFormat.geojson, 'GeoJSON'),
+                (DriveExportFormat.drive, l.drvDriveFile),
+              ])
+                OutlinedButton(
+                  key: ValueKey('drive-export-${format.name}'),
+                  onPressed: _busy ? null : () => _export(trip, format),
+                  child: Text(label),
+                ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+
+  Future<void> _export(DriveTrip trip, DriveExportFormat format) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final export = DriveExport.of(
+      log,
+      trip,
+      trimMeters: _trim ? DriveExport.defaultTrimMeters : 0,
+    );
+    if (export.samples.isEmpty && export.points.isEmpty) {
+      messenger.showSnackBar(SnackBar(content: Text(l.drvExportEmpty)));
+      return;
+    }
+    await _run(
+      () => widget.share(
+        export.fileName(format),
+        export.write(format),
+        format.mimeType,
+      ),
+    );
+  }
+
+  Future<void> _import() async {
+    final messenger = ScaffoldMessenger.of(context);
+    final l = this.l;
+    String? text;
+    try {
+      text = await widget.pick();
+    } catch (_) {
+      messenger.showSnackBar(SnackBar(content: Text(l.drvImportUnreadable)));
+      return;
+    }
+    if (text == null) return;
+    final DriveFile file;
+    try {
+      file = DriveFile.parse(text);
+    } on FormatException catch (e) {
+      messenger.showSnackBar(
+        SnackBar(content: Text(l.drvImportBad(e.message))),
+      );
+      return;
+    }
+    await _run(() async {
+      final trip = await log.importTrip(
+        name: l.drvImportedName(file.name),
+        started: file.started,
+        ended: file.ended,
+        points: file.points,
+        samples: file.samples,
+      );
+      if (mounted) setState(() => _shown = trip.id);
+      messenger.showSnackBar(
+        SnackBar(content: Text(l.drvImported(file.samples.length))),
+      );
+    });
   }
 
   Widget _guide(BuildContext context) => Card(
