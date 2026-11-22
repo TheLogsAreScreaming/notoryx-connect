@@ -1,0 +1,1 @@
+Chats: New chat now has a search box that finds any node your phone knows, including nodes restored from a backup, and chats with restored nodes show the node name instead of its ID.
