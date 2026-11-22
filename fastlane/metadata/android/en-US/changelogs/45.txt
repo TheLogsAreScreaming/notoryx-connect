@@ -1,0 +1,1 @@
+Chats: a DM your radio gave up on now shows as failed, with one line saying why (for example no key for that node, or no reply after several tries), instead of staying at Sent.
