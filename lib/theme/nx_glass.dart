@@ -60,10 +60,15 @@ class NxGlassPanel extends StatelessWidget {
 
 /// One live value in an [NxReadoutStrip].
 class NxReadout {
-  const NxReadout(this.value, this.label, {this.color});
+  const NxReadout(this.value, this.label, {this.color, this.icon});
   final String value;
   final String label;
   final Color? color;
+
+  /// Drawn in place of [value] when a word would not fit the narrow tile
+  /// (for example a plug for "Plugged in"); [value] is still what a screen
+  /// reader says.
+  final IconData? icon;
 }
 
 /// Live numbers side by side, split by hairlines, in the mono face, like
@@ -95,16 +100,19 @@ class NxReadoutStrip extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        readouts[i].value,
-                        style: TextStyle(
-                          fontFamily: NxFonts.mono,
-                          fontFamilyFallback: NxFonts.monoFallback,
-                          fontSize: 19,
-                          fontWeight: FontWeight.w500,
-                          color: readouts[i].color ?? scheme.onSurface,
+                      if (readouts[i].icon case final icon?)
+                        Icon(icon, size: 24, color: readouts[i].color ?? scheme.onSurface)
+                      else
+                        Text(
+                          readouts[i].value,
+                          style: TextStyle(
+                            fontFamily: NxFonts.mono,
+                            fontFamilyFallback: NxFonts.monoFallback,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w500,
+                            color: readouts[i].color ?? scheme.onSurface,
+                          ),
                         ),
-                      ),
                       const SizedBox(height: 2),
                       Text(readouts[i].label, style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
                     ],
