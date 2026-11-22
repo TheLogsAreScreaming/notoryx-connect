@@ -117,7 +117,7 @@ Newer betas install over older ones and keep your data. Don't uninstall first.
 ### Privacy, backups and look
 - No account, no analytics, no ads and no NOTORYX servers. **Settings → Privacy & data** lists what's stored and sent, and can delete chat history or all phone data.
 - Optional **app lock**, and an **encrypted phone data backup** of chats, NodeVault, waypoints, field records and settings.
-- Eight themes (Blaze, Neon Anarchy, Tactical, Pink Overload, Bare Beauty, Okabe-Ito, Night Ops and Seasonal) in the NOTORYX Core look, with Inter type and squared cards, and side tabs on tablets.
+- Five themes: BLACKOUT (the default NOTORYX monochrome), Blaze, Bare Beauty, Okabe-Ito and Night Ops, in the NOTORYX Core look, with Inter type and squared cards, and side tabs on tablets.
 - In English, Spanish, French and German (follows the phone language; translations are unreviewed). Layouts hold up with large text and screen readers ([accessibility audit](docs/ACCESSIBILITY_AUDIT.md)).
 
 ## Safety

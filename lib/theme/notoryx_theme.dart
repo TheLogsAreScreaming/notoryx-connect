@@ -117,10 +117,10 @@ abstract final class NotoryxTheme {
     );
   }
 
-  /// The built-in look for [brightness]: Blaze when dark, Bare Beauty when
-  /// light. The app itself uses [fromPalette] with the chosen theme.
+  /// The built-in look for [brightness]: BLACKOUT when dark, Bare Beauty
+  /// when light. The app itself uses [fromPalette] with the chosen theme.
   static ThemeData build(Brightness brightness) => fromPalette(
-      brightness == Brightness.dark ? BastionTheme.blaze.palette : BastionTheme.bareBeauty.palette);
+      brightness == Brightness.dark ? BastionTheme.blackout.palette : BastionTheme.bareBeauty.palette);
 
   /// The color scheme for theme [p]; every role is taken from the palette.
   static ColorScheme schemeFor(BastionPalette p) {

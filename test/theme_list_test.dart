@@ -4,6 +4,7 @@ import 'package:bastion/theme/nx_theme_picker.dart';
 import 'package:bastion/theme/nx_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 
@@ -12,27 +13,28 @@ double contrast(Color a, Color b) {
   return (la > lb ? la + .05 : lb + .05) / (la > lb ? lb + .05 : la + .05);
 }
 
-Map<String, BastionPalette> allPalettes() => {
-  for (final t in BastionTheme.values)
-    if (t != BastionTheme.seasonal) t.id: t.palette,
-  for (final s in Season.values) 'seasonal/${s.id}': s.palette,
-};
+Map<String, BastionPalette> allPalettes() => {for (final t in BastionTheme.values) t.id: t.palette};
 
 void main() {
   setUp(() => SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty());
 
-  test('exactly eight themes, in order, Blaze first', () {
-    expect(BastionTheme.values.map((t) => t.label), [
-      'Blaze',
-      'Neon Anarchy',
-      'Tactical',
-      'Pink Overload',
-      'Bare Beauty',
-      'Okabe-Ito',
-      'Night Ops',
-      'Seasonal',
-    ]);
-    expect(BastionPreferences().appTheme, BastionTheme.blaze.id);
+  test('five themes, in order, BLACKOUT first and the default', () {
+    expect(BastionTheme.values.map((t) => t.label), ['BLACKOUT', 'Blaze', 'Bare Beauty', 'Okabe-Ito', 'Night Ops']);
+    expect(BastionPreferences().appTheme, BastionTheme.blackout.id);
+  });
+
+  test('BLACKOUT is the brand monochrome: matte, charcoal, frost; status keeps its colors', () {
+    final p = BastionTheme.blackout.palette;
+    expect(p.bg, const Color(0xFF080808));
+    expect(p.bg3, const Color(0xFF242424));
+    expect(p.ink, const Color(0xFFE8E8E8));
+    expect(p.accent, const Color(0xFFE8E8E8));
+    expect(p.brightness, Brightness.dark);
+    // Good, warning and SOS must not turn grey.
+    for (final c in [p.signal, p.warn, p.alert]) {
+      final hsl = HSLColor.fromColor(c);
+      expect(hsl.saturation, greaterThan(.5), reason: '$c');
+    }
   });
 
   test('every theme keeps text, buttons, status and SOS readable (WCAG AA)', () {
@@ -108,29 +110,43 @@ void main() {
       expect(p.activeTheme(Brightness.dark), 'blaze');
     });
 
-    test('a fresh install is Blaze', () async {
+    test('a fresh install is BLACKOUT', () async {
       final p = await loadWith({});
-      expect((p.appTheme, p.darkModeTheme), ('blaze', ''));
+      expect((p.appTheme, p.darkModeTheme), ('blackout', ''));
     });
 
     test('a saved theme wins over the old setting, unknown ids fall back', () async {
-      expect((await loadWith({'bastion.theme': 'light', 'bastion.app_theme': 'tactical'})).appTheme, 'tactical');
-      expect((await loadWith({'bastion.app_theme': 'not_a_theme'})).appTheme, 'blaze');
+      expect((await loadWith({'bastion.theme': 'light', 'bastion.app_theme': 'okabe_ito'})).appTheme, 'okabe_ito');
+      expect((await loadWith({'bastion.app_theme': 'not_a_theme'})).appTheme, 'blackout');
     });
+
+    for (final removed in BastionTheme.removedIds) {
+      test('a removed theme ($removed) opens as BLACKOUT, day and dark mode', () async {
+        final p = await loadWith({
+          'bastion.app_theme': removed,
+          'bastion.dark_mode_theme': removed,
+          'bastion.seasonal_override': 'winter',
+          'bastion.seasonal_holidays': false,
+        });
+        expect((p.appTheme, p.darkModeTheme), ('blackout', 'blackout'));
+        expect(identical(p.palette(Brightness.dark), BastionTheme.blackout.palette), isTrue);
+        expect(identical(p.palette(Brightness.light), BastionTheme.blackout.palette), isTrue);
+        // The next save writes the new id and drops Seasonal's old settings.
+        await p.update(stats: true);
+        final again = BastionPreferences();
+        await again.load();
+        expect(again.appTheme, 'blackout');
+        expect(await SharedPreferencesAsync().getString('bastion.app_theme'), 'blackout');
+        expect(await SharedPreferencesAsync().getString('bastion.seasonal_override'), isNull);
+      });
+    }
   });
 
-  test('only Seasonal changes with the date', () {
-    final july = DateTime(2026, 7, 4);
-    final p = BastionPreferences()..appTheme = 'seasonal';
-    expect(identical(p.palette(Brightness.light, now: july), Season.summer.palette), isTrue);
-    expect(identical(p.palette(Brightness.light, now: DateTime(2026, 10, 30)), Season.halloween.palette), isTrue);
-    p.seasonalHolidays = false;
-    expect(identical(p.palette(Brightness.light, now: DateTime(2026, 10, 30)), Season.autumn.palette), isTrue);
-    p.seasonalOverride = 'winter';
-    expect(identical(p.palette(Brightness.light, now: july), Season.winter.palette), isTrue);
-    for (final t in BastionTheme.values.where((t) => t != BastionTheme.seasonal)) {
+  test('each theme resolves to its own palette', () {
+    final p = BastionPreferences();
+    for (final t in BastionTheme.values) {
       p.appTheme = t.id;
-      expect(identical(p.palette(Brightness.light, now: july), t.palette), isTrue, reason: t.id);
+      expect(identical(p.palette(Brightness.light), t.palette), isTrue, reason: t.id);
     }
   });
 
@@ -145,7 +161,7 @@ void main() {
     );
 
     for (final width in [320.0, 720.0]) {
-      testWidgets('eight cards at width $width and 2x text; a tap applies and saves', (tester) async {
+      testWidgets('all theme cards at width $width and 2x text; a tap applies and saves', (tester) async {
         await tester.binding.setSurfaceSize(Size(width, 3200));
         addTearDown(() => tester.binding.setSurfaceSize(null));
         final prefs = BastionPreferences();
@@ -155,12 +171,15 @@ void main() {
           expect(find.byKey(ValueKey('theme-${t.id}')), findsOneWidget);
         }
         expect(find.text('Selected'), findsOneWidget);
-        await tester.tap(find.byKey(const ValueKey('theme-pink_overload')));
+        for (final removed in BastionTheme.removedIds) {
+          expect(find.byKey(ValueKey('theme-$removed')), findsNothing);
+        }
+        await tester.tap(find.byKey(const ValueKey('theme-okabe_ito')));
         await tester.pumpAndSettle();
-        expect(prefs.appTheme, 'pink_overload');
+        expect(prefs.appTheme, 'okabe_ito');
         final restored = BastionPreferences();
         await restored.load();
-        expect(restored.appTheme, 'pink_overload');
+        expect(restored.appTheme, 'okabe_ito');
       });
     }
 
@@ -168,35 +187,21 @@ void main() {
       final handle = tester.ensureSemantics();
       final prefs = BastionPreferences();
       await tester.pumpWidget(app(prefs));
-      final card = find.byKey(const ValueKey('theme-blaze'));
+      final card = find.byKey(const ValueKey('theme-blackout'));
       expect(
         tester.getSemantics(find.ancestor(of: card, matching: find.byType(Semantics)).first),
         isSemantics(
           isButton: true,
           isSelected: true,
           hasTapAction: true,
-          label: 'Blaze. ${themeDescription(BastionTheme.blaze)}',
+          label: 'BLACKOUT. ${themeDescription(BastionTheme.blackout)}',
         ),
       );
-      await tester.tap(find.byKey(const ValueKey('theme-tactical')));
+      await tester.tap(find.byKey(const ValueKey('theme-blaze')));
       await tester.pumpAndSettle();
-      expect(prefs.appTheme, 'tactical');
+      expect(prefs.appTheme, 'blaze');
       await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
       handle.dispose();
-    });
-
-    testWidgets('Seasonal options appear only for Seasonal and save', (tester) async {
-      await tester.binding.setSurfaceSize(const Size(400, 3200));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-      final prefs = BastionPreferences();
-      await tester.pumpWidget(app(prefs));
-      expect(find.byKey(const ValueKey('seasonal-season')), findsNothing);
-      await tester.tap(find.byKey(const ValueKey('theme-seasonal')));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('seasonal-season')), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('seasonal-holidays')));
-      await tester.pumpAndSettle();
-      expect(prefs.seasonalHolidays, isFalse);
     });
 
     testWidgets('dark-mode theme: off by default, switch on, pick, switch off', (tester) async {
@@ -210,12 +215,12 @@ void main() {
       await tester.pumpAndSettle();
       expect(prefs.darkModeTheme, 'night_ops');
       expect(prefs.activeTheme(Brightness.dark), 'night_ops');
-      expect(prefs.activeTheme(Brightness.light), 'blaze');
+      expect(prefs.activeTheme(Brightness.light), 'blackout');
       await tester.tap(find.byKey(const ValueKey('dark-mode-theme')));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Tactical').last);
+      await tester.tap(find.text('Okabe-Ito').last);
       await tester.pumpAndSettle();
-      expect(prefs.darkModeTheme, 'tactical');
+      expect(prefs.darkModeTheme, 'okabe_ito');
       await tester.tap(find.byKey(const ValueKey('dark-mode-switch')));
       await tester.pumpAndSettle();
       expect(prefs.darkModeTheme, '');
