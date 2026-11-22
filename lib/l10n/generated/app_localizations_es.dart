@@ -7596,4 +7596,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sarneg_wordHidden => 'Palabra clave oculta';
+
+  @override
+  String get sarneg_randomWord => 'Palabra aleatoria';
+
+  @override
+  String get sarneg_wellKnownWord =>
+      'Esta palabra aparece en guías públicas, así que cualquiera puede probarla. Una palabra aleatoria es más segura.';
+
+  @override
+  String get sarneg_clipboardClears => 'El portapapeles se vacía en 1 minuto.';
+
+  @override
+  String get sarneg_autoClear => 'Se borra tras 1 minuto sin escribir.';
 }

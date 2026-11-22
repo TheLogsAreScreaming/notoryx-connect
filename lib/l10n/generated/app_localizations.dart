@@ -12342,6 +12342,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Code word hidden'**
   String get sarneg_wordHidden;
+
+  /// No description provided for @sarneg_randomWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Random word'**
+  String get sarneg_randomWord;
+
+  /// No description provided for @sarneg_wellKnownWord.
+  ///
+  /// In en, this message translates to:
+  /// **'This word is printed in public guides, so anyone can try it. A random word is safer.'**
+  String get sarneg_wellKnownWord;
+
+  /// No description provided for @sarneg_clipboardClears.
+  ///
+  /// In en, this message translates to:
+  /// **'The clipboard is cleared in 1 minute.'**
+  String get sarneg_clipboardClears;
+
+  /// No description provided for @sarneg_autoClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clears after 1 minute without typing.'**
+  String get sarneg_autoClear;
 }
 
 class _AppLocalizationsDelegate

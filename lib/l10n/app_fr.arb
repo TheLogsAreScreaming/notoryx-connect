@@ -2037,5 +2037,9 @@
   "trlKindWaypoint": "Point enregistré",
   "pvSent10": "Les limites d’une zone au service Overpass d’OpenStreetMap, uniquement quand vous téléchargez des sentiers ; il voit votre adresse IP",
   "homeFieldTools": "Outils de terrain",
-  "sarneg_wordHidden": "Mot de code masqué"
+  "sarneg_wordHidden": "Mot de code masqué",
+  "sarneg_randomWord": "Mot aléatoire",
+  "sarneg_wellKnownWord": "Ce mot figure dans des guides publics : n’importe qui peut l’essayer. Un mot aléatoire est plus sûr.",
+  "sarneg_clipboardClears": "Le presse-papiers est vidé dans 1 minute.",
+  "sarneg_autoClear": "S’efface après 1 minute sans saisie."
 }

@@ -7541,4 +7541,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sarneg_wordHidden => 'Code word hidden';
+
+  @override
+  String get sarneg_randomWord => 'Random word';
+
+  @override
+  String get sarneg_wellKnownWord =>
+      'This word is printed in public guides, so anyone can try it. A random word is safer.';
+
+  @override
+  String get sarneg_clipboardClears => 'The clipboard is cleared in 1 minute.';
+
+  @override
+  String get sarneg_autoClear => 'Clears after 1 minute without typing.';
 }
