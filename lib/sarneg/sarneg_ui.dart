@@ -15,6 +15,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../l10n/generated/app_localizations.dart';
 import 'sarneg.dart';
+import 'secure_screen.dart';
 
 AppLocalizations _t(BuildContext context) => AppLocalizations.of(context);
 
@@ -191,17 +192,19 @@ class SarnegScreen extends StatelessWidget {
   const SarnegScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(_t(context).sarneg_title)),
-    body: _keysBuilder(
-      (context, store) => !store.loaded
-          ? const Center(child: CircularProgressIndicator())
-          : Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 640),
-                child: _Body(store: store),
+  Widget build(BuildContext context) => SecureScreen(
+    child: Scaffold(
+      appBar: AppBar(title: Text(_t(context).sarneg_title)),
+      body: _keysBuilder(
+        (context, store) => !store.loaded
+            ? const Center(child: CircularProgressIndicator())
+            : Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 640),
+                  child: _Body(store: store),
+                ),
               ),
-            ),
+      ),
     ),
   );
 }
@@ -744,70 +747,72 @@ class _SarnegImportScreenState extends State<SarnegImportScreen> {
   @override
   Widget build(BuildContext context) {
     final t = _t(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(t.sarneg_importTitle)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          if (_scanning)
-            SizedBox(
-              height: 320,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: MobileScanner(
-                  onDetect: (capture) {
-                    for (final b in capture.barcodes) {
-                      final raw = b.rawValue ?? '';
-                      if (raw.trim().toUpperCase().startsWith(
-                        kSarnegSharePrefix,
-                      )) {
-                        setState(() => _scanning = false);
-                        _use(raw);
-                        return;
+    return SecureScreen(
+      child: Scaffold(
+        appBar: AppBar(title: Text(t.sarneg_importTitle)),
+        body: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            if (_scanning)
+              SizedBox(
+                height: 320,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: MobileScanner(
+                    onDetect: (capture) {
+                      for (final b in capture.barcodes) {
+                        final raw = b.rawValue ?? '';
+                        if (raw.trim().toUpperCase().startsWith(
+                          kSarnegSharePrefix,
+                        )) {
+                          setState(() => _scanning = false);
+                          _use(raw);
+                          return;
+                        }
                       }
-                    }
-                  },
-                  errorBuilder: (context, error) => Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(t.sarneg_cameraOff),
+                    },
+                    errorBuilder: (context, error) => Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(t.sarneg_cameraOff),
+                      ),
                     ),
                   ),
                 ),
+              )
+            else if (_canScan)
+              FilledButton.icon(
+                onPressed: () => setState(() => _scanning = true),
+                icon: const Icon(Icons.qr_code_scanner),
+                label: Text(t.sarneg_scanQr),
               ),
-            )
-          else if (_canScan)
-            FilledButton.icon(
-              onPressed: () => setState(() => _scanning = true),
-              icon: const Icon(Icons.qr_code_scanner),
-              label: Text(t.sarneg_scanQr),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _paste,
+              autocorrect: false,
+              enableSuggestions: false,
+              minLines: 1,
+              maxLines: 4,
+              style: _mono,
+              decoration: InputDecoration(
+                labelText: t.sarneg_pasteLabel,
+                hintText: 'SARNEG1:BLACKHORSE',
+                errorText: _error,
+              ),
+              onChanged: (_) {
+                if (_error != null) setState(() => _error = null);
+              },
             ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _paste,
-            autocorrect: false,
-            enableSuggestions: false,
-            minLines: 1,
-            maxLines: 4,
-            style: _mono,
-            decoration: InputDecoration(
-              labelText: t.sarneg_pasteLabel,
-              hintText: 'SARNEG1:BLACKHORSE',
-              errorText: _error,
+            const SizedBox(height: 8),
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: FilledButton(
+                onPressed: () => _use(_paste.text),
+                child: Text(t.sarneg_useWord),
+              ),
             ),
-            onChanged: (_) {
-              if (_error != null) setState(() => _error = null);
-            },
-          ),
-          const SizedBox(height: 8),
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: FilledButton(
-              onPressed: () => _use(_paste.text),
-              child: Text(t.sarneg_useWord),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
