@@ -2107,5 +2107,17 @@
   "drvCheckWaiting": "Warte auf Antwort…",
   "drvCheckBusy": "Pausiert: Der Kanal ist zu über {percent} % belegt.",
   "drvCheckReady": "Prüfungen werden unterwegs gesendet.",
-  "drvCheckResults": "Direkt beantwortet: {twoWay} • über anderen Knoten: {relayed} • keine Antwort: {none}"
+  "drvCheckResults": "Direkt beantwortet: {twoWay} • über anderen Knoten: {relayed} • keine Antwort: {none}",
+  "deliveryWhyNoKey": "Dein Funkgerät hat ihren Schlüssel noch nicht. Öffne den Knoten, fordere Knoteninfo an und sende erneut.",
+  "deliveryWhyTheyLackYourKey": "Ihr Funkgerät hat deinen Schlüssel noch nicht. Bitte sie, deine Knoteninfo anzufordern, und sende erneut.",
+  "deliveryWhyKeyMismatch": "Ihr Funkgerät konnte sie nicht entschlüsseln; einer von euch hat vielleicht einen neuen Schlüssel. Fordert auf beiden Geräten Knoteninfo an.",
+  "deliveryWhyNoRoute": "Dein Funkgerät erreicht sie gerade nicht. Versuche es von höherem Gelände oder wenn sie aktiv sind.",
+  "deliveryWhyNoReply": "Keine Antwort nach mehreren Versuchen. Sie sind vielleicht außer Reichweite oder ausgeschaltet. Versuche es später.",
+  "deliveryWhyTooLong": "Zu lang für ein Funkpaket. Kürze sie und sende erneut.",
+  "deliveryWhyAirtimeLimit": "Dein Funkgerät hat sein gesetzliches Sendezeitlimit erreicht. Warte ein paar Minuten und sende erneut.",
+  "deliveryWhyNoChannel": "Eines der Funkgeräte hat diesen Kanal nicht. Prüfe, ob ihr denselben Kanal habt.",
+  "deliveryWhyRateLimited": "Zu schnell gesendet. Warte kurz und sende erneut.",
+  "deliveryWhyRejected": "Ihr Funkgerät hat die Nachricht abgelehnt.",
+  "deliveryWhyRadioError": "Dein Funkgerät konnte nicht senden. Prüfe das Gerät und sende erneut.",
+  "deliveryWhyUnknown": "Das Funkgerät meldete Fehler {code}."
 }

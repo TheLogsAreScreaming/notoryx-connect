@@ -45,6 +45,26 @@ String _deliveryLabel(BuildContext context, BastionDeliveryState state) {
   };
 }
 
+/// Why a direct message failed and what to do, from the firmware's routing
+/// error [code].
+String _sendFailureLabel(BuildContext context, int code) {
+  final l = AppLocalizations.of(context);
+  return switch (BastionSendFailure.fromCode(code)) {
+    BastionSendFailure.noKey => l.deliveryWhyNoKey,
+    BastionSendFailure.theyLackYourKey => l.deliveryWhyTheyLackYourKey,
+    BastionSendFailure.keyMismatch => l.deliveryWhyKeyMismatch,
+    BastionSendFailure.noRoute => l.deliveryWhyNoRoute,
+    BastionSendFailure.noReply => l.deliveryWhyNoReply,
+    BastionSendFailure.tooLong => l.deliveryWhyTooLong,
+    BastionSendFailure.airtimeLimit => l.deliveryWhyAirtimeLimit,
+    BastionSendFailure.noChannel => l.deliveryWhyNoChannel,
+    BastionSendFailure.rateLimited => l.deliveryWhyRateLimited,
+    BastionSendFailure.rejected => l.deliveryWhyRejected,
+    BastionSendFailure.radioError => l.deliveryWhyRadioError,
+    BastionSendFailure.unknown => l.deliveryWhyUnknown(code),
+  };
+}
+
 String _rssiLabel(BuildContext context, int rssi) {
   final l = AppLocalizations.of(context);
   if (rssi >= -60) return l.rssiStrong;

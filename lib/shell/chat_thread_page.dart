@@ -545,6 +545,13 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
                                 color: message.ackProof == BastionAckProof.forged ? scheme.error : statusColor)),
                       ],
                     ]),
+                    if (failed && message.failureCode != null)
+                      Padding(
+                        key: ValueKey('chat-failure-${message.packetId}'),
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Text(_sendFailureLabel(context, message.failureCode!),
+                            style: type.bodySmall?.copyWith(color: foreground)),
+                      ),
                   ]),
                 ),
               ),

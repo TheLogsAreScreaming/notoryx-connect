@@ -7877,4 +7877,53 @@ class AppLocalizationsDe extends AppLocalizations {
   String drvCheckResults(int twoWay, int relayed, int none) {
     return 'Direkt beantwortet: $twoWay • über anderen Knoten: $relayed • keine Antwort: $none';
   }
+
+  @override
+  String get deliveryWhyNoKey =>
+      'Dein Funkgerät hat ihren Schlüssel noch nicht. Öffne den Knoten, fordere Knoteninfo an und sende erneut.';
+
+  @override
+  String get deliveryWhyTheyLackYourKey =>
+      'Ihr Funkgerät hat deinen Schlüssel noch nicht. Bitte sie, deine Knoteninfo anzufordern, und sende erneut.';
+
+  @override
+  String get deliveryWhyKeyMismatch =>
+      'Ihr Funkgerät konnte sie nicht entschlüsseln; einer von euch hat vielleicht einen neuen Schlüssel. Fordert auf beiden Geräten Knoteninfo an.';
+
+  @override
+  String get deliveryWhyNoRoute =>
+      'Dein Funkgerät erreicht sie gerade nicht. Versuche es von höherem Gelände oder wenn sie aktiv sind.';
+
+  @override
+  String get deliveryWhyNoReply =>
+      'Keine Antwort nach mehreren Versuchen. Sie sind vielleicht außer Reichweite oder ausgeschaltet. Versuche es später.';
+
+  @override
+  String get deliveryWhyTooLong =>
+      'Zu lang für ein Funkpaket. Kürze sie und sende erneut.';
+
+  @override
+  String get deliveryWhyAirtimeLimit =>
+      'Dein Funkgerät hat sein gesetzliches Sendezeitlimit erreicht. Warte ein paar Minuten und sende erneut.';
+
+  @override
+  String get deliveryWhyNoChannel =>
+      'Eines der Funkgeräte hat diesen Kanal nicht. Prüfe, ob ihr denselben Kanal habt.';
+
+  @override
+  String get deliveryWhyRateLimited =>
+      'Zu schnell gesendet. Warte kurz und sende erneut.';
+
+  @override
+  String get deliveryWhyRejected =>
+      'Ihr Funkgerät hat die Nachricht abgelehnt.';
+
+  @override
+  String get deliveryWhyRadioError =>
+      'Dein Funkgerät konnte nicht senden. Prüfe das Gerät und sende erneut.';
+
+  @override
+  String deliveryWhyUnknown(int code) {
+    return 'Das Funkgerät meldete Fehler $code.';
+  }
 }

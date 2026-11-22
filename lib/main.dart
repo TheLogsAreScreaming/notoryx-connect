@@ -41,6 +41,7 @@ import 'services/bastion_conversations.dart';
 import 'services/meshtastic_node_database.dart' show MeshtasticNode;
 import 'services/bastion_message_search.dart';
 import 'services/bastion_scheduled_messages.dart';
+import 'services/bastion_send_failure.dart';
 import 'services/bastion_sms_relay.dart';
 import 'services/bastion_tak_bridge.dart';
 import 'tak_bridge_page.dart';
