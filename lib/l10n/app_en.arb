@@ -1807,7 +1807,7 @@
   "frRecordSub": "Requests phone GPS. Stops on disconnect. Does not send your location.",
   "frRecordOn": "Coverage recorder enabled; waiting for a fresh accurate GPS fix and RF packets.",
   "frRecordOff": "Coverage recorder stopped.",
-  "frReadings": "{count} readings • maximum 2000 coverage readings • coverage expires after 30 days",
+  "frReadings": "{count} readings • up to 100,000 kept; the oldest drives are removed first",
   "@frReadings": {
     "placeholders": {
       "count": {
@@ -5208,5 +5208,25 @@
   "sarneg_randomWord": "Random word",
   "sarneg_wellKnownWord": "This word is printed in public guides, so anyone can try it. A random word is safer.",
   "sarneg_clipboardClears": "The clipboard is cleared in 1 minute.",
-  "sarneg_autoClear": "Clears after 1 minute without typing."
+  "sarneg_autoClear": "Clears after 1 minute without typing.",
+  "frHopDirect": "direct",
+  "frHopRelayed": "relayed",
+  "frHopUnknown": "hops unknown",
+  "frDriveReading": "Node {node} • {hops} • SNR {snr} • RSSI {rssi}",
+  "@frDriveReading": {
+    "placeholders": {
+      "node": {
+        "type": "String"
+      },
+      "hops": {
+        "type": "String"
+      },
+      "snr": {
+        "type": "String"
+      },
+      "rssi": {
+        "type": "String"
+      }
+    }
+  }
 }

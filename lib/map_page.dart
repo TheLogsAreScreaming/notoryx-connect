@@ -15,7 +15,7 @@ import 'place_search_page.dart';
 import 'map_list_page.dart';
 import 'network_diagram_page.dart';
 import 'services/bastion_coverage_grid.dart';
-import 'services/bastion_field_log.dart';
+import 'services/bastion_drive_log.dart';
 import 'services/bastion_geo.dart';
 import 'services/bastion_geofences.dart';
 import 'services/bastion_gpx.dart';
@@ -1154,8 +1154,12 @@ class _MapPageState extends State<MapPage> {
   }
 
   /// Rally points with distance and direction, shared routes, and route planning.
-  List<CoverageCell> get _coverage =>
-      BastionCoverageGrid.build(BastionFieldLog.instance.records, radio: widget.radio.localNodeNum);
+  List<CoverageCell> get _coverage {
+    final radio = widget.radio.localNodeNum;
+    final log = BastionDriveLog.instance;
+    return BastionCoverageGrid.build(log.samples,
+        trips: radio == null ? null : {for (final t in log.trips) if (t.radio == null || t.radio == radio) t.id});
+  }
 
   Future<void> _toggleRangeRings(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
@@ -1194,9 +1198,9 @@ class _MapPageState extends State<MapPage> {
         Polygon(
           points: [
             LatLng(c.south, c.west),
-            LatLng(c.south + BastionCoverageGrid.cellDegrees, c.west),
-            LatLng(c.south + BastionCoverageGrid.cellDegrees, c.west + BastionCoverageGrid.cellDegrees),
-            LatLng(c.south, c.west + BastionCoverageGrid.cellDegrees),
+            LatLng(c.north, c.west),
+            LatLng(c.north, c.east),
+            LatLng(c.south, c.east),
           ],
           color: colour(c.band).withValues(alpha: 0.2 + 0.4 * c.density),
           borderColor: colour(c.band),
