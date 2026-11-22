@@ -114,7 +114,8 @@ The app has five tabs: **Home**, **Chats**, **Nodes**, **Map** and **More**. **M
 - **Encrypted radio settings backup** (AES-256-GCM, PBKDF2 with 600,000 iterations), identity key backup, and a checklist for moving to a new radio.
 
 ### Field tools and integrations
-- Incident log, coverage observations (receiver location, SNR and RSSI), range test, store-and-forward catch-up and CSV export.
+- Incident log, range test, store-and-forward catch-up and CSV export.
+- Drive recording: a live map of where the mesh reaches as you drive (100 m or 300 m squares), direct and relayed readings kept apart, GPS that keeps running with the screen off, saved drives, exports (GPX, KML, CSV, GeoJSON, drive file; first and last 500 m left out by default) and an optional two-way check that's off by default.
 - **Mesh activity:** field stats, network changes and a live packet log. **Antenna hunt:** clicks speed up as one node's signal gets stronger, for aiming an antenna or finding a spot (listen-only, with an optional traceroute).
 - **Field guide** and troubleshooting guides: mesh basics, batteries in the cold, solar and antennas.
 - Deployment checklist, offline checklists, battery runtime estimate and an RSSI field reference.
