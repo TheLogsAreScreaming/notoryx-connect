@@ -45,14 +45,21 @@ class GeolocatorLocationSource implements PhoneLocationSource {
 
   /// Location settings for [watch]. Public for tests; [platform] defaults
   /// to the phone's.
+  /// How often a drive asks for a fix on Android.
+  static const driveInterval = Duration(seconds: 5);
+
   static LocationSettings settingsFor({required bool lowPower, required bool background, TargetPlatform? platform}) {
     final accuracy = lowPower ? LocationAccuracy.medium : LocationAccuracy.high;
-    final distance = background ? 10 : (lowPower ? 100 : 25);
+    // A drive asks for a fix every few seconds even standing still: a
+    // packet heard is only logged with a fix under 30 s old, and with a
+    // distance filter a parked phone stops getting fixes at all.
+    final distance = background ? 0 : (lowPower ? 100 : 25);
     if (!background || kIsWeb) return LocationSettings(accuracy: accuracy, distanceFilter: distance);
     return switch (platform ?? defaultTargetPlatform) {
       TargetPlatform.android => AndroidSettings(
           accuracy: accuracy,
           distanceFilter: distance,
+          intervalDuration: driveInterval,
           foregroundNotificationConfig: const ForegroundNotificationConfig(
             notificationTitle: driveNotificationTitle,
             notificationText: driveNotificationText,

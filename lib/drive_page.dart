@@ -92,6 +92,10 @@ class _DrivePageState extends State<DrivePage> {
   final _name = TextEditingController();
   final _map = MapController();
   StreamSubscription<NewNodeHeard>? _alerts;
+
+  /// Redraws the running drive's time; nothing else changes while the
+  /// phone sits still.
+  Timer? _clock;
   CoverageSquare _size = CoverageSquare.m300;
   bool _relayed = false;
   bool _follow = true;
@@ -108,12 +112,16 @@ class _DrivePageState extends State<DrivePage> {
   void initState() {
     super.initState();
     _alerts = log.newNodes.listen(_announce);
+    _clock = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (mounted && log.recording) setState(() {});
+    });
     log.addListener(_followMe);
   }
 
   @override
   void dispose() {
     unawaited(_alerts?.cancel());
+    _clock?.cancel();
     log.removeListener(_followMe);
     _name.dispose();
     _map.dispose();

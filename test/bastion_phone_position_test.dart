@@ -176,7 +176,8 @@ void main() {
       final config = (s as AndroidSettings).foregroundNotificationConfig!;
       expect(config.notificationTitle, GeolocatorLocationSource.driveNotificationTitle);
       expect((config.setOngoing, config.enableWakeLock), (true, true));
-      expect((s.accuracy, s.distanceFilter), (LocationAccuracy.high, 10));
+      expect((s.accuracy, s.distanceFilter), (LocationAccuracy.high, 0));
+      expect(s.intervalDuration, GeolocatorLocationSource.driveInterval);
     });
 
     test('iOS keeps updating in the background with the indicator showing', () {
