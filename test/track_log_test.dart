@@ -27,7 +27,7 @@ class _Phone implements PhoneLocationSource {
   @override
   Future<String?> ensureAccess() async => null;
   @override
-  Stream<PhoneFix> watch({bool lowPower = false}) {
+  Stream<PhoneFix> watch({bool lowPower = false, bool background = false}) {
     watching++;
     return fixes.stream;
   }

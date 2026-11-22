@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart' hide Position;
 
 import '../generated/meshtastic/mesh.pb.dart';
@@ -30,10 +30,49 @@ abstract interface class PhoneLocationSource {
   Future<String?> ensureAccess();
 
   /// Streams fixes; [lowPower] trades accuracy and frequency for battery.
-  Stream<PhoneFix> watch({bool lowPower = false});
+  /// [background] keeps fixes coming with the screen off (a drive): on
+  /// Android through a location service with its own notification, on iOS
+  /// with the blue location indicator.
+  Stream<PhoneFix> watch({bool lowPower = false, bool background = false});
 }
 
 class GeolocatorLocationSource implements PhoneLocationSource {
+  /// Title of the Android notification shown while a drive records.
+  static const driveNotificationTitle = 'Recording a drive';
+
+  /// Text of that notification.
+  static const driveNotificationText = 'NOTORYX Connect keeps logging what your radio hears while the screen is off.';
+
+  /// Location settings for [watch]. Public for tests; [platform] defaults
+  /// to the phone's.
+  static LocationSettings settingsFor({required bool lowPower, required bool background, TargetPlatform? platform}) {
+    final accuracy = lowPower ? LocationAccuracy.medium : LocationAccuracy.high;
+    final distance = background ? 10 : (lowPower ? 100 : 25);
+    if (!background || kIsWeb) return LocationSettings(accuracy: accuracy, distanceFilter: distance);
+    return switch (platform ?? defaultTargetPlatform) {
+      TargetPlatform.android => AndroidSettings(
+          accuracy: accuracy,
+          distanceFilter: distance,
+          foregroundNotificationConfig: const ForegroundNotificationConfig(
+            notificationTitle: driveNotificationTitle,
+            notificationText: driveNotificationText,
+            enableWakeLock: true,
+            setOngoing: true,
+          ),
+        ),
+      // Needs the "location" background mode, which only the iOS build has.
+      TargetPlatform.iOS => AppleSettings(
+          accuracy: accuracy,
+          distanceFilter: distance,
+          activityType: ActivityType.automotiveNavigation,
+          pauseLocationUpdatesAutomatically: false,
+          allowBackgroundLocationUpdates: true,
+          showBackgroundLocationIndicator: true,
+        ),
+      _ => LocationSettings(accuracy: accuracy, distanceFilter: distance),
+    };
+  }
+
   @override
   Future<String?> ensureAccess() async {
     if (!await Geolocator.isLocationServiceEnabled()) {
@@ -52,11 +91,8 @@ class GeolocatorLocationSource implements PhoneLocationSource {
   }
 
   @override
-  Stream<PhoneFix> watch({bool lowPower = false}) => Geolocator.getPositionStream(
-        locationSettings: LocationSettings(
-          accuracy: lowPower ? LocationAccuracy.medium : LocationAccuracy.high,
-          distanceFilter: lowPower ? 100 : 25,
-        ),
+  Stream<PhoneFix> watch({bool lowPower = false, bool background = false}) => Geolocator.getPositionStream(
+        locationSettings: settingsFor(lowPower: lowPower, background: background),
       ).map((p) => PhoneFix(
             latitude: p.latitude,
             longitude: p.longitude,

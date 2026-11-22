@@ -663,7 +663,7 @@
   "frCoverage": "Abdeckungsverlauf",
   "frCoverageSub": "Empfängerstandort mit empfangenem Funksignal • nur lokale Aufzeichnung",
   "frRecord": "Abdeckung aufzeichnen",
-  "frRecordSub": "Fordert das GPS des Telefons an. Stoppt beim Trennen. Sendet Ihren Standort nicht.",
+  "frRecordSub": "Fordert das GPS des Telefons an. Zeichnet bei ausgeschaltetem Bildschirm weiter auf, solange eine Benachrichtigung angezeigt wird. Stoppt beim Trennen. Sendet Ihren Standort nicht.",
   "frRecordOn": "Abdeckungsaufzeichnung aktiv; wartet auf einen frischen, genauen GPS-Fix und Funkpakete.",
   "frRecordOff": "Abdeckungsaufzeichnung gestoppt.",
   "frReadings": "{count} Messungen • bis zu 100.000 werden behalten; die ältesten Fahrten werden zuerst entfernt",

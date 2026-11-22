@@ -2469,7 +2469,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get frRecordSub =>
-      'Demande le GPS du téléphone. S\'arrête à la déconnexion. N\'envoie pas votre position.';
+      'Demande le GPS du téléphone. Continue l\'enregistrement écran éteint tant qu\'une notification est affichée. S\'arrête à la déconnexion. N\'envoie pas votre position.';
 
   @override
   String get frRecordOn =>

@@ -49,8 +49,12 @@ Permission `FOREGROUND_SERVICE_CONNECTED_DEVICE`, type **Connected device**.
 - **Use:** keeps the Bluetooth connection to the user's LoRa radio open while the app is in the background, so incoming mesh messages and alerts are received. Started only while a radio is connected, stopped on disconnect, shown as an ongoing notification.
 - **Video (Owner):** a short screen recording showing: connect a radio, the "Connected to …" notification appears, switch to the home screen, a message arrives, disconnect and the notification disappears.
 
+Permission `FOREGROUND_SERVICE_LOCATION`, type **Location**.
+- **Use:** while the user records a drive (Field records → Record coverage), keeps phone GPS running with the screen off so each packet the radio hears is saved with where the phone was. Started only when the user starts a drive from the app, stopped when the drive stops or the radio disconnects, shown as an ongoing "Recording a drive" notification. Location stays on the phone.
+- **Video (Owner):** start a drive, the "Recording a drive" notification appears, lock the phone for a minute, unlock, the reading count has grown, stop the drive and the notification disappears.
+
 ### Location permission
-Foreground location only; **no background location** is requested, so no background-location declaration is needed.
+Foreground ("while in use") location only. `ACCESS_BACKGROUND_LOCATION` is **not** requested: the drive's location service is started from the app while it is open, which Android allows with while-in-use permission. No background-location declaration is needed.
 
 ### Data Safety form
 Google counts data as **collected** when the app transmits it off the device, even with no developer server. NOTORYX Connect sends some data to *other mesh users* and *map tile servers*, so the conservative, recommended answers are below. Reasons are given so you can adjust them if Google's guidance changes.

@@ -683,7 +683,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       }
       await BastionDriveLog.instance.start(_localNodeNum!, name: tripName);
       try {
-        _coverageLocation = _location.watch().listen(
+        _coverageLocation = _location.watch(background: true).listen(
           (fix) => _coverageFix = fix,
           onError: (Object error) {
             unawaited(BastionDriveLog.instance.stop());

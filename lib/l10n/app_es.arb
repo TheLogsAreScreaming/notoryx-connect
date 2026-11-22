@@ -663,7 +663,7 @@
   "frCoverage": "Historial de cobertura",
   "frCoverageSub": "Ubicación del receptor con la señal RF recibida • solo se guarda en el teléfono",
   "frRecord": "Registrar cobertura",
-  "frRecordSub": "Pide el GPS del teléfono. Se detiene al desconectar. No envía tu ubicación.",
+  "frRecordSub": "Pide el GPS del teléfono. Sigue grabando con la pantalla apagada mientras se muestra una notificación. Se detiene al desconectar. No envía tu ubicación.",
   "frRecordOn": "Registro de cobertura activado; esperando una posición GPS precisa y paquetes RF.",
   "frRecordOff": "Registro de cobertura detenido.",
   "frReadings": "{count} lecturas • se guardan hasta 100.000; los recorridos más antiguos se borran primero",

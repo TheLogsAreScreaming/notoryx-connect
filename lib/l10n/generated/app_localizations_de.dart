@@ -2465,7 +2465,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get frRecordSub =>
-      'Fordert das GPS des Telefons an. Stoppt beim Trennen. Sendet Ihren Standort nicht.';
+      'Fordert das GPS des Telefons an. Zeichnet bei ausgeschaltetem Bildschirm weiter auf, solange eine Benachrichtigung angezeigt wird. Stoppt beim Trennen. Sendet Ihren Standort nicht.';
 
   @override
   String get frRecordOn =>

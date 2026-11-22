@@ -1804,7 +1804,7 @@
   "frCoverage": "Coverage history",
   "frCoverageSub": "Receiver location with received RF signal • local recording only",
   "frRecord": "Record coverage",
-  "frRecordSub": "Requests phone GPS. Stops on disconnect. Does not send your location.",
+  "frRecordSub": "Requests phone GPS. Keeps recording with the screen off while a notification shows. Stops on disconnect. Does not send your location.",
   "frRecordOn": "Coverage recorder enabled; waiting for a fresh accurate GPS fix and RF packets.",
   "frRecordOff": "Coverage recorder stopped.",
   "frReadings": "{count} readings • up to 100,000 kept; the oldest drives are removed first",
