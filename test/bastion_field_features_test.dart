@@ -96,11 +96,11 @@ void main() {
     expect(log.records, isEmpty); expect(log.recording, isFalse); expect(log.error, isNotNull);
   });
 
-  test('theme and dashboard choices persist while Blaze stays the initial default', () async {
-    final prefs = BastionPreferences(); expect(prefs.appTheme, 'blaze');
-    await prefs.update(theme: 'tactical', darkTheme: 'night_ops', stats: false, saved: false);
+  test('theme and dashboard choices persist while BLACKOUT stays the initial default', () async {
+    final prefs = BastionPreferences(); expect(prefs.appTheme, 'blackout');
+    await prefs.update(theme: 'okabe_ito', darkTheme: 'night_ops', stats: false, saved: false);
     final loaded = BastionPreferences(); await loaded.load();
-    expect(loaded.appTheme, 'tactical'); expect(loaded.darkModeTheme, 'night_ops');
+    expect(loaded.appTheme, 'okabe_ito'); expect(loaded.darkModeTheme, 'night_ops');
     expect(loaded.statistics, isFalse); expect(loaded.encounters, isFalse); expect(loaded.meshHealth, isTrue);
   });
 }

@@ -6,25 +6,11 @@ import 'nx_themes.dart';
 
 /// The short description of [theme].
 String themeDescription(BastionTheme theme) => switch (theme) {
+  BastionTheme.blackout => 'Matte black, charcoal, steel and frost',
   BastionTheme.blaze => 'Charcoal and slate with high-visibility orange',
-  BastionTheme.neonAnarchy => 'Toxic green and electric purple on black',
-  BastionTheme.tactical => 'Olive, gunmetal and earth tones',
-  BastionTheme.pinkOverload => 'Hot pink, bubblegum and lavender',
   BastionTheme.bareBeauty => 'Warm nude, dusty rose, cocoa and sage',
   BastionTheme.okabeIto => 'Color-blind safe, high clarity',
   BastionTheme.nightOps => 'Dim reds on near-black for low light',
-  BastionTheme.seasonal => 'Changes with the seasons and holidays',
-};
-
-/// The name of [season].
-String seasonName(Season season) => switch (season) {
-  Season.spring => 'Spring',
-  Season.summer => 'Summer',
-  Season.autumn => 'Autumn',
-  Season.winter => 'Winter',
-  Season.halloween => 'Halloween',
-  Season.christmas => 'Christmas',
-  Season.valentine => "Valentine's Day",
 };
 
 /// Black or white, whichever reads better on [fill].
@@ -33,9 +19,9 @@ Color onColor(Color fill) {
   return 1.05 / (l + .05) >= (l + .05) / .05 ? Colors.white : Colors.black;
 }
 
-/// The eight themes as cards with a small preview of each. A tap applies the
-/// theme at once and saves it. Seasonal's options and the optional dark-mode
-/// theme sit below the cards.
+/// The themes as cards with a small preview of each. A tap applies the
+/// theme at once and saves it. The optional dark-mode theme sits below the
+/// cards.
 class NxThemePicker extends StatelessWidget {
   const NxThemePicker({super.key, required this.prefs});
 
@@ -46,8 +32,6 @@ class NxThemePicker extends StatelessWidget {
     listenable: prefs,
     builder: (context, _) {
       final selected = BastionTheme.fromId(prefs.appTheme);
-      final season = activeSeason(override: prefs.seasonalOverride, holidays: prefs.seasonalHolidays);
-      final seasonalInUse = selected == BastionTheme.seasonal || prefs.darkModeTheme == BastionTheme.seasonal.id;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -65,7 +49,7 @@ class NxThemePicker extends StatelessWidget {
                       width: width,
                       child: _ThemeCard(
                         theme: t,
-                        palette: t == BastionTheme.seasonal ? season.palette : t.palette,
+                        palette: t.palette,
                         selected: t == selected,
                         onTap: () => prefs.update(theme: t.id),
                       ),
@@ -74,7 +58,6 @@ class NxThemePicker extends StatelessWidget {
               );
             },
           ),
-          if (seasonalInUse) ...[const SizedBox(height: NxSpace.sm), _SeasonalControls(prefs: prefs, active: season)],
           const SizedBox(height: NxSpace.sm),
           _DarkModeControls(prefs: prefs),
         ],
@@ -298,46 +281,6 @@ class _Box extends StatelessWidget {
     ),
     child: Column(children: children),
   );
-}
-
-class _SeasonalControls extends StatelessWidget {
-  const _SeasonalControls({required this.prefs, required this.active});
-
-  final BastionPreferences prefs;
-  final Season active;
-
-  @override
-  Widget build(BuildContext context) {
-    final auto = seasonFor(DateTime.now(), holidays: prefs.seasonalHolidays);
-    final value = Season.fromId(prefs.seasonalOverride)?.id ?? 'auto';
-    return _Box(
-      children: [
-        ListTile(
-          leading: const Icon(Icons.eco_outlined),
-          title: const Text('Season'),
-          subtitle: Text(
-            value == 'auto' ? "Follows your device's date, with northern-hemisphere seasons" : seasonName(active),
-          ),
-        ),
-        // On its own line: long names and large text don't fit beside the title.
-        _Menu<String>(
-          key: const ValueKey('seasonal-season'),
-          value: value,
-          onChanged: (v) => prefs.update(season: v),
-          items: {'auto': 'Automatic (${seasonName(auto)} now)', for (final s in Season.values) s.id: seasonName(s)},
-        ),
-        const Divider(height: 1),
-        SwitchListTile(
-          key: const ValueKey('seasonal-holidays'),
-          secondary: const Icon(Icons.celebration_outlined),
-          title: const Text('Holiday colors'),
-          subtitle: const Text("Halloween, Christmas and Valentine's Day on their dates"),
-          value: prefs.seasonalHolidays,
-          onChanged: (v) => prefs.update(holidays: v),
-        ),
-      ],
-    );
-  }
 }
 
 /// An optional second theme for when the device is in dark mode.
