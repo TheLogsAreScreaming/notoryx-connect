@@ -4083,7 +4083,7 @@ abstract class AppLocalizations {
   /// No description provided for @frRecordSub.
   ///
   /// In en, this message translates to:
-  /// **'Requests phone GPS. Stops on disconnect. Does not send your location.'**
+  /// **'Requests phone GPS. Keeps recording with the screen off while a notification shows. Stops on disconnect. Does not send your location.'**
   String get frRecordSub;
 
   /// No description provided for @frRecordOn.

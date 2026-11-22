@@ -663,7 +663,7 @@
   "frCoverage": "Historique de couverture",
   "frCoverageSub": "Position du récepteur avec le signal RF reçu • enregistrement local uniquement",
   "frRecord": "Enregistrer la couverture",
-  "frRecordSub": "Demande le GPS du téléphone. S'arrête à la déconnexion. N'envoie pas votre position.",
+  "frRecordSub": "Demande le GPS du téléphone. Continue l'enregistrement écran éteint tant qu'une notification est affichée. S'arrête à la déconnexion. N'envoie pas votre position.",
   "frRecordOn": "Enregistreur de couverture activé ; en attente d'une position GPS récente et précise et de paquets RF.",
   "frRecordOff": "Enregistreur de couverture arrêté.",
   "frReadings": "{count} mesures • au plus 2000 mesures de couverture • elles expirent après 30 jours",

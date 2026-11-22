@@ -2456,7 +2456,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get frRecordSub =>
-      'Pide el GPS del teléfono. Se detiene al desconectar. No envía tu ubicación.';
+      'Pide el GPS del teléfono. Sigue grabando con la pantalla apagada mientras se muestra una notificación. Se detiene al desconectar. No envía tu ubicación.';
 
   @override
   String get frRecordOn =>

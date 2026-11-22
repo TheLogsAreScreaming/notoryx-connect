@@ -19,6 +19,13 @@ if 'android.permission.BLUETOOTH_SCAN' not in s:
 '''
     s=s.replace('<manifest xmlns:android="http://schemas.android.com/apk/res/android">',
                 '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n'+permissions)
+# A drive keeps phone GPS running with the screen off through the location
+# plugin's own foreground service (type location, declared by the plugin).
+# Android 14+ refuses to start it without this permission.
+if 'android.permission.FOREGROUND_SERVICE_LOCATION' not in s:
+    s=s.replace('<manifest xmlns:android="http://schemas.android.com/apk/res/android">',
+                '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n'
+                '    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />')
 # USB radios are optional: phones without USB host support still install.
 if 'android.hardware.usb.host' not in s:
     s=s.replace('<manifest xmlns:android="http://schemas.android.com/apk/res/android">',

@@ -681,7 +681,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       }
       BastionFieldLog.instance.start(_localNodeNum!);
       try {
-        _coverageLocation = _location.watch().listen(
+        _coverageLocation = _location.watch(background: true).listen(
           (fix) => _coverageFix = fix,
           onError: (Object error) {
             BastionFieldLog.instance.stop();
