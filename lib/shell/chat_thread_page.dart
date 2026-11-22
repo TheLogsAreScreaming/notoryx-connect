@@ -848,10 +848,8 @@ String conversationTitle(AppLocalizations l, MeshtasticRadioCoordinator radio, B
     }
     return c.channel == 0 ? l.chatsPrimaryChannel : l.chatsChannelN(c.channel);
   }
-  for (final n in radio.nodes) {
-    if (n.num == c.node) return n.displayName;
-  }
-  return '!${c.node!.toRadixString(16).padLeft(8, '0')}';
+  // Live nodes first, then nodes restored from an import, then the !id.
+  return radio.nodeName(c.node!);
 }
 
 /// The line under a chat's name: which channel slot, or a direct chat.
@@ -889,18 +887,47 @@ Future<BastionConversation?> pickConversation(
     unread: (key) => radio.chatMarks.unreadIn(radio.messages, conversation: key),
   );
   final known = {for (final s in lists.direct) s.conversation.node};
-  final others = everyNode
-      ? [for (final n in radio.nodes) if (n.num != radio.localNodeNum && !known.contains(n.num)) n]
-      : const <MeshtasticNode>[];
+  bool pickable(MeshtasticNode n) => n.num != radio.localNodeNum && !known.contains(n.num);
+  // Nodes the radio hears now. Typing in the search box looks through every
+  // node the phone knows, including ones restored from an import.
+  final heard = everyNode ? [for (final n in radio.nodes) if (pickable(n)) n] : const <MeshtasticNode>[];
+  var query = '';
+  List<MeshtasticNode> matches() {
+    final q = query.trim().toLowerCase();
+    if (q.isEmpty) return heard;
+    return [
+      for (final n in radio.knownNodes)
+        if (pickable(n) &&
+            (n.displayName.toLowerCase().contains(q) ||
+                (n.id?.toLowerCase().contains(q) ?? false) ||
+                (n.shortName?.toLowerCase().contains(q) ?? false)))
+          n,
+    ].take(50).toList();
+  }
+
   return showModalBottomSheet<BastionConversation>(
     context: context,
     isScrollControlled: true,
-    builder: (sheet) => SafeArea(child: DraggableScrollableSheet(
+    builder: (sheet) => SafeArea(child: StatefulBuilder(builder: (sheet, setSheet) {
+      final others = matches();
+      return DraggableScrollableSheet(
       expand: false,
       initialChildSize: 0.6,
       maxChildSize: 0.95,
       builder: (context, controller) => ListView(controller: controller, children: [
         ListTile(title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold))),
+        if (everyNode)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            child: TextField(
+              key: const ValueKey('pick-node-search'),
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search),
+                hintText: l.nodesSearch,
+              ),
+              onChanged: (v) => setSheet(() => query = v),
+            ),
+          ),
         NxSectionLabel(l.chatsChannelsSection),
         for (final s in lists.channels)
           ListTile(
@@ -927,7 +954,8 @@ Future<BastionConversation?> pickConversation(
             onTap: () => Navigator.pop(sheet, BastionConversation.direct(n.num)),
           ),
       ]),
-    )),
+    );
+    })),
   );
 }
 
