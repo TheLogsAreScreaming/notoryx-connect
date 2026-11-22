@@ -2037,5 +2037,9 @@
   "trlKindWaypoint": "Gespeicherter Wegpunkt",
   "pvSent10": "Die Grenzen eines Gebiets an den Overpass-Dienst von OpenStreetMap, nur wenn Sie Wege laden; er sieht Ihre IP-Adresse",
   "homeFieldTools": "Feldwerkzeuge",
-  "sarneg_wordHidden": "Codewort verborgen"
+  "sarneg_wordHidden": "Codewort verborgen",
+  "sarneg_randomWord": "Zufallswort",
+  "sarneg_wellKnownWord": "Dieses Wort steht in öffentlichen Anleitungen, also kann es jeder ausprobieren. Ein Zufallswort ist sicherer.",
+  "sarneg_clipboardClears": "Die Zwischenablage wird nach 1 Minute geleert.",
+  "sarneg_autoClear": "Wird nach 1 Minute ohne Eingabe geleert."
 }

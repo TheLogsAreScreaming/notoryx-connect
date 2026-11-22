@@ -7624,4 +7624,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get sarneg_wordHidden => 'Codewort verborgen';
+
+  @override
+  String get sarneg_randomWord => 'Zufallswort';
+
+  @override
+  String get sarneg_wellKnownWord =>
+      'Dieses Wort steht in öffentlichen Anleitungen, also kann es jeder ausprobieren. Ein Zufallswort ist sicherer.';
+
+  @override
+  String get sarneg_clipboardClears =>
+      'Die Zwischenablage wird nach 1 Minute geleert.';
+
+  @override
+  String get sarneg_autoClear => 'Wird nach 1 Minute ohne Eingabe geleert.';
 }
