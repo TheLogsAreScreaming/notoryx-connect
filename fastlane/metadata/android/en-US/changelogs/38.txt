@@ -1,0 +1,1 @@
+SARNEG: copied text clears from the clipboard after 1 minute, the encode/decode box and an opened decode clear after 1 minute, and a shown code word hides after 30 s. New Random word button and a warning for well-known code words. On Android the code-word screens are kept out of screenshots.
