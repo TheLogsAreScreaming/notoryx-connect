@@ -7652,4 +7652,157 @@ class AppLocalizationsDe extends AppLocalizations {
   String frDriveReading(String node, String hops, String snr, String rssi) {
     return 'Knoten $node • $hops • SNR $snr • RSSI $rssi';
   }
+
+  @override
+  String get drvTitle => 'Fahrt';
+
+  @override
+  String get drvToolSub => 'Beim Fahren kartieren, wohin das Mesh reicht';
+
+  @override
+  String get drvOpen => 'Fahrtansicht öffnen';
+
+  @override
+  String get drvName => 'Name der Fahrt (optional)';
+
+  @override
+  String get drvStart => 'Fahrt starten';
+
+  @override
+  String get drvStop => 'Fahrt beenden';
+
+  @override
+  String get drvRecording => 'Aufnahme läuft';
+
+  @override
+  String get drvScreenOff =>
+      'GPS läuft auch bei ausgeschaltetem Bildschirm weiter, bis du die Fahrt beendest.';
+
+  @override
+  String get drvNotConnected =>
+      'Verbinde ein Funkgerät, um eine Fahrt zu starten.';
+
+  @override
+  String drvShowing(String name) {
+    return 'Auf der Karte: $name';
+  }
+
+  @override
+  String get drvMapEmpty => 'Noch keine Abdeckungswerte auf dieser Fahrt.';
+
+  @override
+  String drvBands(int strong, int fair, int weak) {
+    return 'Quadrate: $strong stark, $fair mittel, $weak schwach';
+  }
+
+  @override
+  String get drvSquareSize => 'Quadratgröße';
+
+  @override
+  String get drvShowRelayed => 'Weitergeleitete Werte zeigen';
+
+  @override
+  String get drvShowRelayedSub =>
+      'Ein weitergeleitetes Paket beweist nur, dass das Signal den weiterleitenden Knoten erreicht hat.';
+
+  @override
+  String get drvFollow => 'Mir folgen';
+
+  @override
+  String drvStats(String distance, String duration, int readings) {
+    return '$distance • $duration • $readings Werte';
+  }
+
+  @override
+  String drvNodes(int nodes, int direct, int fresh) {
+    return 'Gehörte Knoten: $nodes • direkt: $direct • neu: $fresh';
+  }
+
+  @override
+  String drvSquares(int squares, String snr) {
+    return '300-m-Quadrate mit direkter Abdeckung: $squares • bestes SNR: $snr';
+  }
+
+  @override
+  String get drvAlert => 'Hinweis bei neuem Knoten';
+
+  @override
+  String get drvAlertOff => 'Aus';
+
+  @override
+  String get drvAlertTrip => 'Zum ersten Mal auf dieser Fahrt';
+
+  @override
+  String get drvAlertEver => 'Zum ersten Mal überhaupt';
+
+  @override
+  String drvNewNode(String node) {
+    return 'Zum ersten Mal auf dieser Fahrt gehört: $node';
+  }
+
+  @override
+  String drvNewNodeEver(String node) {
+    return 'Noch nie auf einer Fahrt gehört: $node';
+  }
+
+  @override
+  String get drvSaved => 'Gespeicherte Fahrten';
+
+  @override
+  String get drvEmpty => 'Noch keine gespeicherten Fahrten.';
+
+  @override
+  String get drvShowOnMap => 'Auf der Karte zeigen';
+
+  @override
+  String get drvRename => 'Umbenennen';
+
+  @override
+  String get drvSave => 'Speichern';
+
+  @override
+  String get drvDelete => 'Löschen';
+
+  @override
+  String drvDeleteQ(String name) {
+    return '$name löschen?';
+  }
+
+  @override
+  String get drvDeleteBody =>
+      'Werte und Spur werden von diesem Telefon entfernt. Das lässt sich nicht rückgängig machen.';
+
+  @override
+  String get drvDeleted => 'Fahrt gelöscht.';
+
+  @override
+  String get drvGuide => 'So funktionieren Fahrten';
+
+  @override
+  String get drvGuideDirectTitle => 'Direkt und weitergeleitet';
+
+  @override
+  String get drvGuideDirect =>
+      'Ein direktes Paket kam ohne Umweg vom Absender und beweist, dass dein Funkgerät und dieser Knoten sich von hier aus erreichen. Ein weitergeleitetes Paket kam über einen anderen Knoten und beweist nur, dass du diesen Weiterleiter erreichst. Die Karte zählt direkte Werte sowie ältere Werte aus der Zeit, bevor Sprünge gespeichert wurden. Pakete aus dem Internet zählen nie.';
+
+  @override
+  String get drvGuideListenTitle => 'Nur zuhören';
+
+  @override
+  String get drvGuideListen =>
+      'Eine Fahrt hört nur zu: Dein Funkgerät sendet nichts zusätzlich und belastet das Mesh nicht. Knoten erscheinen, wenn sie von selbst etwas senden.';
+
+  @override
+  String get drvGuideAntennaTitle => 'Antenne';
+
+  @override
+  String get drvGuideAntenna =>
+      'Bring das Funkgerät so hoch wie möglich an, mit senkrechter Antenne, am besten außen am Auto oder am Fenster. Ein Gerät im Fußraum oder in der Tasche hört deutlich weniger, und die Karte zeigt das.';
+
+  @override
+  String get drvGuidePrivacyTitle => 'Privatsphäre';
+
+  @override
+  String get drvGuidePrivacy =>
+      'Fahrten bleiben auf diesem Telefon. Positionen sind immer die deines Telefons, nie die eines anderen Knotens. Nichts wird hochgeladen; ob du eine Fahrtdatei teilst, entscheidest du.';
 }

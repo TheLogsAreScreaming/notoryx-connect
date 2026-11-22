@@ -7568,4 +7568,156 @@ class AppLocalizationsEn extends AppLocalizations {
   String frDriveReading(String node, String hops, String snr, String rssi) {
     return 'Node $node • $hops • SNR $snr • RSSI $rssi';
   }
+
+  @override
+  String get drvTitle => 'Drive';
+
+  @override
+  String get drvToolSub => 'Map where the mesh reaches as you drive';
+
+  @override
+  String get drvOpen => 'Open drive screen';
+
+  @override
+  String get drvName => 'Drive name (optional)';
+
+  @override
+  String get drvStart => 'Start drive';
+
+  @override
+  String get drvStop => 'Stop drive';
+
+  @override
+  String get drvRecording => 'Recording';
+
+  @override
+  String get drvScreenOff =>
+      'GPS keeps running with the screen off until you stop the drive.';
+
+  @override
+  String get drvNotConnected => 'Connect to a radio to start a drive.';
+
+  @override
+  String drvShowing(String name) {
+    return 'On the map: $name';
+  }
+
+  @override
+  String get drvMapEmpty => 'No coverage readings on this drive yet.';
+
+  @override
+  String drvBands(int strong, int fair, int weak) {
+    return 'Squares: $strong strong, $fair fair, $weak weak';
+  }
+
+  @override
+  String get drvSquareSize => 'Square size';
+
+  @override
+  String get drvShowRelayed => 'Show relayed readings';
+
+  @override
+  String get drvShowRelayedSub =>
+      'A relayed packet only proves the signal reached the node that passed it on.';
+
+  @override
+  String get drvFollow => 'Follow me';
+
+  @override
+  String drvStats(String distance, String duration, int readings) {
+    return '$distance • $duration • $readings readings';
+  }
+
+  @override
+  String drvNodes(int nodes, int direct, int fresh) {
+    return 'Nodes heard: $nodes • direct: $direct • new: $fresh';
+  }
+
+  @override
+  String drvSquares(int squares, String snr) {
+    return '300 m squares with direct coverage: $squares • best SNR: $snr';
+  }
+
+  @override
+  String get drvAlert => 'New node alert';
+
+  @override
+  String get drvAlertOff => 'Off';
+
+  @override
+  String get drvAlertTrip => 'First time on this drive';
+
+  @override
+  String get drvAlertEver => 'First time on any drive';
+
+  @override
+  String drvNewNode(String node) {
+    return 'Heard on this drive for the first time: $node';
+  }
+
+  @override
+  String drvNewNodeEver(String node) {
+    return 'Never heard on a drive before: $node';
+  }
+
+  @override
+  String get drvSaved => 'Saved drives';
+
+  @override
+  String get drvEmpty => 'No saved drives yet.';
+
+  @override
+  String get drvShowOnMap => 'Show on map';
+
+  @override
+  String get drvRename => 'Rename';
+
+  @override
+  String get drvSave => 'Save';
+
+  @override
+  String get drvDelete => 'Delete';
+
+  @override
+  String drvDeleteQ(String name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get drvDeleteBody =>
+      'Its readings and trail are removed from this phone. This can\'t be undone.';
+
+  @override
+  String get drvDeleted => 'Drive deleted.';
+
+  @override
+  String get drvGuide => 'How drives work';
+
+  @override
+  String get drvGuideDirectTitle => 'Direct and relayed';
+
+  @override
+  String get drvGuideDirect =>
+      'A direct packet came straight from the node that sent it, so it proves your radio and that node reach each other from here. A relayed packet was passed on by another node and only proves you reach that relayer. The map counts direct readings, plus older readings saved before hop counts were kept. Packets that came over the internet are never counted.';
+
+  @override
+  String get drvGuideListenTitle => 'Listening only';
+
+  @override
+  String get drvGuideListen =>
+      'A drive only listens: your radio sends nothing extra, so it adds no traffic to the mesh. Nodes show up when they send something on their own.';
+
+  @override
+  String get drvGuideAntennaTitle => 'Antenna';
+
+  @override
+  String get drvGuideAntenna =>
+      'Put the radio as high as you can with the antenna upright, ideally outside the car or against a window. A radio on the floor or in a pocket hears much less, and the map will show it.';
+
+  @override
+  String get drvGuidePrivacyTitle => 'Privacy';
+
+  @override
+  String get drvGuidePrivacy =>
+      'Drives stay on this phone. Positions are always your phone\'s, never another node\'s. Nothing is uploaded; sharing a drive file is up to you.';
 }

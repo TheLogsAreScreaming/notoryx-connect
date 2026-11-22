@@ -12,6 +12,7 @@ import 'l10n/generated/app_localizations.dart';
 import 'link_planner_page.dart';
 import 'node_detail_page.dart';
 import 'place_search_page.dart';
+import 'drive_page.dart';
 import 'map_list_page.dart';
 import 'network_diagram_page.dart';
 import 'services/bastion_coverage_grid.dart';
@@ -1178,7 +1179,11 @@ class _MapPageState extends State<MapPage> {
     if (!turningOn) return;
     final cells = _coverage;
     final readings = cells.fold<int>(0, (sum, c) => sum + c.readings);
-    messenger.showSnackBar(SnackBar(content: Text(cells.isEmpty
+    final drives = SnackBarAction(
+      label: l.drvTitle,
+      onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => DrivePage(radio: widget.radio))),
+    );
+    messenger.showSnackBar(SnackBar(action: drives, content: Text(cells.isEmpty
         ? l.mapHeatmapEmpty
         : '${l.mapHeatmapSummary(readings)} ${l.mapHeatStrong} ≥ ${BastionCoverageGrid.strongSnr.round()}, '
             '${l.mapHeatFair} ≥ ${BastionCoverageGrid.fairSnr.round()}, ${l.mapHeatWeak} < ${BastionCoverageGrid.fairSnr.round()}.')));

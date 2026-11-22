@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'beacon_page.dart';
 import 'link_planner_page.dart';
 import 'map_page.dart';
+import 'drive_page.dart';
 import 'field_tools_page.dart';
 import 'home_page.dart';
 import 'services/bastion_units.dart';

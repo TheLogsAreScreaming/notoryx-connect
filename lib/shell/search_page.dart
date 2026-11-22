@@ -74,6 +74,8 @@ class _AppSearchPageState extends State<AppSearchPage> {
       f('demo', l.setDemo, l.setDemoSub, icon: Icons.play_circle_outline, tab: ShellTab.settings),
       f('doctor', l.toolsDoctor, l.toolsDoctorSub, icon: Icons.medical_services_outlined,
           page: () => ConnectionDoctorPage(radio: radio, discovery: widget.discovery)),
+      f('drive', l.drvTitle, l.drvToolSub, icon: Icons.directions_car_outlined, keywords: 'wardrive coverage',
+          page: () => DrivePage(radio: radio)),
       f('track-log', l.tlgTitle, l.tlgToolSub, icon: Icons.route_outlined, keywords: 'gpx',
           page: () => TrackLogPage(log: BastionTrackLog.instance, share: MapPage.shareGpx, location: GeolocatorLocationSource())),
       f('battery-watch', l.bwTitle, l.bwToolSub, icon: Icons.battery_alert_outlined,
