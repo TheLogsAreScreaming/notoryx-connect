@@ -374,4 +374,28 @@ void main() {
       expect(find.textContaining('http'), findsNothing);
     });
   });
+
+  testWidgets("a running drive's time keeps counting with nothing else changing", (tester) async {
+    final log = BastionDriveLog();
+    await log.load(useDatabase: false);
+    await log.start(42, now: DateTime.now().subtract(const Duration(minutes: 3, seconds: 56)));
+    tester.view.physicalSize = const Size(600, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.pumpWidget(MaterialApp(
+      theme: NotoryxTheme.build(Brightness.dark),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: DrivePage(radio: radio, log: log, tiles: false),
+    ));
+    await tester.pump();
+    expect(find.textContaining('3 min'), findsOneWidget);
+    await tester.runAsync(() => Future<void>.delayed(const Duration(seconds: 6)));
+    await tester.pump(const Duration(seconds: 5));
+    expect(find.textContaining('4 min'), findsOneWidget);
+    await log.stop();
+  });
 }
