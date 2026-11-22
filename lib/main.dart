@@ -18,6 +18,7 @@ import 'services/bastion_units.dart';
 import 'services/bastion_app_search.dart';
 import 'services/bastion_geo.dart';
 import 'services/bastion_node_groups.dart';
+import 'services/bastion_drive_log.dart';
 import 'services/bastion_field_log.dart';
 import 'app_lock_gate.dart';
 import 'l10n/bastion_text.dart';
@@ -134,6 +135,8 @@ Future<void> main() async {
   await BastionChatStorage.useSqlite();
   await BastionChatStorage.applySavedEncryption();
   await BastionFieldLog.instance.load();
+  // Drives live in their own database; old coverage readings move over once.
+  await BastionDriveLog.instance.load();
   await BastionBotGuard.instance.load();
   await BastionAppLock.instance.load();
   await BastionScheduledMessages.instance.load();

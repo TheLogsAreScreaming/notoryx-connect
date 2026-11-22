@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'services/bastion_bot_guard.dart';
+import 'services/bastion_drive_log.dart';
 import 'services/bastion_field_log.dart';
 import 'services/bastion_report_templates.dart';
 import 'services/meshtastic_radio_coordinator.dart';
@@ -81,9 +82,10 @@ class _FieldToolsPageState extends State<FieldToolsPage> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: Text(l.frTitle)),
     body: SafeArea(top: false, child: AnimatedBuilder(
-      animation: Listenable.merge([widget.radio, BastionFieldLog.instance, BastionBotGuard.instance]),
+      animation: Listenable.merge([widget.radio, BastionFieldLog.instance, BastionDriveLog.instance, BastionBotGuard.instance]),
       builder: (context, _) {
         final log = BastionFieldLog.instance;
+        final drives = BastionDriveLog.instance;
         final guard = BastionBotGuard.instance;
         final channels = widget.radio.channelMetadata.where((c) => c.role != 0).toList();
         return ListView(padding: const EdgeInsets.all(16), children: [
@@ -136,12 +138,18 @@ class _FieldToolsPageState extends State<FieldToolsPage> {
                 onChanged: busy || (!widget.radio.isReady && !widget.radio.recordingCoverage) ? null
                   : (v) => action(() => widget.radio.setCoverageRecording(v), v ? l.frRecordOn : l.frRecordOff)),
               if (widget.radio.coverageProblem != null) Text(widget.radio.coverageProblem!),
-              Text(l.frReadings(log.records.where((r) => r['kind'] == 'coverage').length)),
-              TextButton(onPressed: () => action(() => Clipboard.setData(ClipboardData(text: log.exportCsv('coverage'))),
+              if (drives.error != null) Text(drives.error!),
+              Text(l.frReadings(drives.samples.length)),
+              TextButton(onPressed: () => action(() => Clipboard.setData(ClipboardData(text: drives.exportCsv())),
                 l.frCoverageCopied), child: Text(l.frCopyCoverage)),
-              for (final r in log.records.where((r) => r['kind'] == 'coverage').toList().reversed.take(50))
-                ListTile(title: Text('Node ${r['from']} • SNR ${r['snr'] ?? '—'} • RSSI ${r['rssi'] ?? '—'}'),
-                  subtitle: Text('${r['time']}\nReceiver ${r['lat']}, ${r['lon']} • Radio ${r['radio']}')),
+              for (final r in drives.samples.reversed.take(50))
+                ListTile(title: Text(l.frDriveReading(_nodeId(r.from), switch (r.hops) {
+                    HopClass.direct => l.frHopDirect,
+                    HopClass.relayed => l.frHopRelayed,
+                    HopClass.unknown => l.frHopUnknown,
+                  }, r.snr?.toStringAsFixed(1) ?? '—', r.rssi?.toString() ?? '—')),
+                  subtitle: Text('${r.time.toLocal().toIso8601String().substring(0, 19).replaceFirst('T', ' ')}\n'
+                      '${r.latitude.toStringAsFixed(5)}, ${r.longitude.toStringAsFixed(5)}')),
             ])),
           Card(key: const ValueKey('bot-safeguards'), child: ExpansionTile(title: Text(l.frBot),
             subtitle: Text(l.frBotSub),
@@ -241,3 +249,5 @@ class _ReportDialogState extends State<_ReportDialog> {
     );
   }
 }
+
+String _nodeId(int num) => '!${num.toRadixString(16).padLeft(8, '0')}';

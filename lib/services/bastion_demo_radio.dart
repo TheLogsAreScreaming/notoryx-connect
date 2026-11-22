@@ -327,7 +327,7 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
   @override
   Future<void> setNodeNote(int num, String note) async {}
   @override
-  Future<void> setCoverageRecording(bool enabled) async => throw StateError(_notInDemo);
+  Future<void> setCoverageRecording(bool enabled, {String? tripName}) async => throw StateError(_notInDemo);
   @override
   Future<void> sendWaypoint(MeshWaypoint waypoint, {int channel = 0}) async => throw StateError(_notInDemo);
   @override

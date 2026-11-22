@@ -78,7 +78,6 @@ CompassPoint compassOf(double bearing) =>
     return a.name.toLowerCase().compareTo(b.name.toLowerCase());
   }
 
-  const half = BastionCoverageGrid.cellDegrees / 2;
   return (
     nodes: [
       for (final n in nodes)
@@ -92,7 +91,7 @@ CompassPoint compassOf(double bearing) =>
     weakAreas: [
       for (final c in cells)
         if (c.band == CoverageBand.weak)
-          row(MapListKind.weakArea, '', c.south + half, c.west + half,
+          row(MapListKind.weakArea, '', c.centreLatitude, c.centreLongitude,
               readings: c.readings, snr: c.meanSnr),
     ]..sort(byDistance),
   );
