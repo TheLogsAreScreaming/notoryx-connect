@@ -2107,5 +2107,17 @@
   "drvCheckWaiting": "En attente de réponse…",
   "drvCheckBusy": "En pause : le canal est occupé à plus de {percent} %.",
   "drvCheckReady": "Les vérifications partent au fil du trajet.",
-  "drvCheckResults": "Réponse directe : {twoWay} • via un autre nœud : {relayed} • sans réponse : {none}"
+  "drvCheckResults": "Réponse directe : {twoWay} • via un autre nœud : {relayed} • sans réponse : {none}",
+  "deliveryWhyNoKey": "Ta radio n'a pas encore sa clé. Ouvre son nœud, demande les infos du nœud, puis renvoie.",
+  "deliveryWhyTheyLackYourKey": "Sa radio n'a pas encore ta clé. Demande-lui de récupérer les infos de ton nœud, puis renvoie.",
+  "deliveryWhyKeyMismatch": "Sa radio n'a pas pu le déchiffrer ; l'un de vous a peut-être une nouvelle clé. Demandez les infos de nœud sur les deux radios.",
+  "deliveryWhyNoRoute": "Ta radio ne peut pas l'atteindre pour l'instant. Réessaie depuis un point plus haut ou quand il est actif.",
+  "deliveryWhyNoReply": "Pas de réponse après plusieurs essais. Il est peut-être hors de portée ou éteint. Réessaie plus tard.",
+  "deliveryWhyTooLong": "Trop long pour un seul paquet radio. Raccourcis-le et renvoie.",
+  "deliveryWhyAirtimeLimit": "Ta radio a atteint sa limite légale de temps d'émission. Attends quelques minutes, puis renvoie.",
+  "deliveryWhyNoChannel": "L'une des radios n'a pas ce canal. Vérifie que vous partagez le même canal.",
+  "deliveryWhyRateLimited": "Envoyé trop vite. Attends un instant, puis renvoie.",
+  "deliveryWhyRejected": "Sa radio a refusé le message.",
+  "deliveryWhyRadioError": "Ta radio n'a pas pu l'émettre. Vérifie la radio, puis renvoie.",
+  "deliveryWhyUnknown": "La radio a signalé l'erreur {code}."
 }

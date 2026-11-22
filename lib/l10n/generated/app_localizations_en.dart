@@ -7791,4 +7791,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String drvCheckResults(int twoWay, int relayed, int none) {
     return 'Answered directly: $twoWay • answered via another node: $relayed • no answer: $none';
   }
+
+  @override
+  String get deliveryWhyNoKey =>
+      'Your radio doesn\'t have their key yet. Open their node, request node info, then send again.';
+
+  @override
+  String get deliveryWhyTheyLackYourKey =>
+      'Their radio doesn\'t have your key yet. Ask them to request your node info, then send again.';
+
+  @override
+  String get deliveryWhyKeyMismatch =>
+      'Their radio couldn\'t decrypt it, so one of you may have a new key. Request node info on both radios.';
+
+  @override
+  String get deliveryWhyNoRoute =>
+      'Your radio has no way to reach them right now. Try again from higher ground or when they\'re active.';
+
+  @override
+  String get deliveryWhyNoReply =>
+      'No reply after several tries. They may be out of range or switched off. Try again later.';
+
+  @override
+  String get deliveryWhyTooLong =>
+      'Too long for one radio packet. Shorten it and send again.';
+
+  @override
+  String get deliveryWhyAirtimeLimit =>
+      'Your radio reached its legal airtime limit. Wait a few minutes, then send again.';
+
+  @override
+  String get deliveryWhyNoChannel =>
+      'One of the radios doesn\'t have this channel. Check you share the same channel.';
+
+  @override
+  String get deliveryWhyRateLimited =>
+      'Sent too quickly. Wait a moment, then send again.';
+
+  @override
+  String get deliveryWhyRejected => 'Their radio refused the message.';
+
+  @override
+  String get deliveryWhyRadioError =>
+      'Your radio couldn\'t transmit it. Check the radio, then send again.';
+
+  @override
+  String deliveryWhyUnknown(int code) {
+    return 'The radio reported error $code.';
+  }
 }

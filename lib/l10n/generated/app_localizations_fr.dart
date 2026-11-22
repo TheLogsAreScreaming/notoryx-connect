@@ -7881,4 +7881,52 @@ class AppLocalizationsFr extends AppLocalizations {
   String drvCheckResults(int twoWay, int relayed, int none) {
     return 'Réponse directe : $twoWay • via un autre nœud : $relayed • sans réponse : $none';
   }
+
+  @override
+  String get deliveryWhyNoKey =>
+      'Ta radio n\'a pas encore sa clé. Ouvre son nœud, demande les infos du nœud, puis renvoie.';
+
+  @override
+  String get deliveryWhyTheyLackYourKey =>
+      'Sa radio n\'a pas encore ta clé. Demande-lui de récupérer les infos de ton nœud, puis renvoie.';
+
+  @override
+  String get deliveryWhyKeyMismatch =>
+      'Sa radio n\'a pas pu le déchiffrer ; l\'un de vous a peut-être une nouvelle clé. Demandez les infos de nœud sur les deux radios.';
+
+  @override
+  String get deliveryWhyNoRoute =>
+      'Ta radio ne peut pas l\'atteindre pour l\'instant. Réessaie depuis un point plus haut ou quand il est actif.';
+
+  @override
+  String get deliveryWhyNoReply =>
+      'Pas de réponse après plusieurs essais. Il est peut-être hors de portée ou éteint. Réessaie plus tard.';
+
+  @override
+  String get deliveryWhyTooLong =>
+      'Trop long pour un seul paquet radio. Raccourcis-le et renvoie.';
+
+  @override
+  String get deliveryWhyAirtimeLimit =>
+      'Ta radio a atteint sa limite légale de temps d\'émission. Attends quelques minutes, puis renvoie.';
+
+  @override
+  String get deliveryWhyNoChannel =>
+      'L\'une des radios n\'a pas ce canal. Vérifie que vous partagez le même canal.';
+
+  @override
+  String get deliveryWhyRateLimited =>
+      'Envoyé trop vite. Attends un instant, puis renvoie.';
+
+  @override
+  String get deliveryWhyRejected => 'Sa radio a refusé le message.';
+
+  @override
+  String get deliveryWhyRadioError =>
+      'Ta radio n\'a pas pu l\'émettre. Vérifie la radio, puis renvoie.';
+
+  @override
+  String deliveryWhyUnknown(int code) {
+    return 'La radio a signalé l\'erreur $code.';
+  }
 }

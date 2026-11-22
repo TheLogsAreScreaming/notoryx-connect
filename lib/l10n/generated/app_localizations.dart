@@ -12762,6 +12762,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Answered directly: {twoWay} • answered via another node: {relayed} • no answer: {none}'**
   String drvCheckResults(int twoWay, int relayed, int none);
+
+  /// No description provided for @deliveryWhyNoKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio doesn\'t have their key yet. Open their node, request node info, then send again.'**
+  String get deliveryWhyNoKey;
+
+  /// No description provided for @deliveryWhyTheyLackYourKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Their radio doesn\'t have your key yet. Ask them to request your node info, then send again.'**
+  String get deliveryWhyTheyLackYourKey;
+
+  /// No description provided for @deliveryWhyKeyMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Their radio couldn\'t decrypt it, so one of you may have a new key. Request node info on both radios.'**
+  String get deliveryWhyKeyMismatch;
+
+  /// No description provided for @deliveryWhyNoRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio has no way to reach them right now. Try again from higher ground or when they\'re active.'**
+  String get deliveryWhyNoRoute;
+
+  /// No description provided for @deliveryWhyNoReply.
+  ///
+  /// In en, this message translates to:
+  /// **'No reply after several tries. They may be out of range or switched off. Try again later.'**
+  String get deliveryWhyNoReply;
+
+  /// No description provided for @deliveryWhyTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Too long for one radio packet. Shorten it and send again.'**
+  String get deliveryWhyTooLong;
+
+  /// No description provided for @deliveryWhyAirtimeLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio reached its legal airtime limit. Wait a few minutes, then send again.'**
+  String get deliveryWhyAirtimeLimit;
+
+  /// No description provided for @deliveryWhyNoChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'One of the radios doesn\'t have this channel. Check you share the same channel.'**
+  String get deliveryWhyNoChannel;
+
+  /// No description provided for @deliveryWhyRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent too quickly. Wait a moment, then send again.'**
+  String get deliveryWhyRateLimited;
+
+  /// No description provided for @deliveryWhyRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Their radio refused the message.'**
+  String get deliveryWhyRejected;
+
+  /// No description provided for @deliveryWhyRadioError.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio couldn\'t transmit it. Check the radio, then send again.'**
+  String get deliveryWhyRadioError;
+
+  /// No description provided for @deliveryWhyUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'The radio reported error {code}.'**
+  String deliveryWhyUnknown(int code);
 }
 
 class _AppLocalizationsDelegate

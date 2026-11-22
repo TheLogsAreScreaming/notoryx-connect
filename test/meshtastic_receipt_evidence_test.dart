@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:bastion/generated/meshtastic/mesh.pb.dart' as pb;
 import 'package:bastion/generated/meshtastic/portnums.pbenum.dart';
+import 'package:bastion/services/bastion_send_failure.dart';
 import 'package:bastion/services/meshtastic_connection_controller.dart';
 import 'package:bastion/services/meshtastic_messaging_service.dart';
 import 'package:bastion/services/meshtastic_radio_session.dart';
@@ -140,6 +141,61 @@ void main() {
       await receive(_ack(0x66, 42, proof: pb.MeshPacket_AckProofStatus.ACK_PROOF_VALID));
       expect(messaging.messages.single.deliveryState, BastionDeliveryState.sent);
       expect(messaging.messages.single.ackProof, isNull);
+    });
+
+    test('a failure from our own radio fails the message and keeps why', () async {
+      await messaging.sendText(text: 'hi', destination: 0x55);
+      // 0x1 is our radio; 39 = PKI_SEND_FAIL_PUBLIC_KEY.
+      await receive(_ack(0x1, 42, error: 39));
+      final m = messaging.messages.single;
+      expect(m.deliveryState, BastionDeliveryState.failed);
+      expect(m.failureCode, 39);
+      expect(BastionSendFailure.fromCode(m.failureCode!), BastionSendFailure.noKey);
+    });
+
+    test('our own radio saying it sent is not a delivery', () async {
+      await messaging.sendText(text: 'hi', destination: 0x55);
+      await receive(_ack(0x1, 42));
+      expect(messaging.messages.single.deliveryState, BastionDeliveryState.sent);
+      expect(messaging.messages.single.failureCode, isNull);
+    });
+
+    test('a failure from the recipient keeps its reason', () async {
+      await messaging.sendText(text: 'hi', destination: 0x55);
+      await receive(_ack(0x55, 42, error: 35)); // PKI_UNKNOWN_PUBKEY
+      expect(messaging.messages.single.deliveryState, BastionDeliveryState.failed);
+      expect(BastionSendFailure.fromCode(messaging.messages.single.failureCode!),
+          BastionSendFailure.theyLackYourKey);
+    });
+
+    test('a failure from a third node is ignored', () async {
+      await messaging.sendText(text: 'hi', destination: 0x55);
+      await receive(_ack(0x66, 42, error: 5));
+      expect(messaging.messages.single.deliveryState, BastionDeliveryState.sent);
+    });
+
+    test('a real receipt after a give-up still counts and clears the reason', () async {
+      await messaging.sendText(text: 'hi', destination: 0x55);
+      await receive(_ack(0x1, 42, error: 5)); // MAX_RETRANSMIT
+      expect(messaging.messages.single.deliveryState, BastionDeliveryState.failed);
+      await receive(_ack(0x55, 42, proof: pb.MeshPacket_AckProofStatus.ACK_PROOF_VALID));
+      expect(messaging.messages.single.deliveryState, BastionDeliveryState.delivered);
+      expect(messaging.messages.single.failureCode, isNull);
+    });
+
+    test('a forged receipt does not undo a failure', () async {
+      await messaging.sendText(text: 'hi', destination: 0x55);
+      await receive(_ack(0x1, 42, error: 5));
+      await receive(_ack(0x55, 42, proof: pb.MeshPacket_AckProofStatus.ACK_PROOF_INVALID));
+      expect(messaging.messages.single.deliveryState, BastionDeliveryState.failed);
+    });
+
+    test('the failure reason survives saving', () async {
+      await messaging.sendText(text: 'hi', destination: 0x55);
+      await receive(_ack(0x1, 42, error: 9));
+      final restored = BastionChatMessage.fromJson(messaging.messages.single.toJson());
+      expect(restored.failureCode, 9);
+      expect(BastionChatMessage.fromJson({...restored.toJson()}..remove('failure')).failureCode, isNull);
     });
 
     test('a broadcast never gets a recipient receipt', () async {

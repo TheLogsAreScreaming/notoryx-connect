@@ -359,21 +359,36 @@ class MeshtasticMessagingService {
       }
       final ack = MeshtasticTextCodec.decodeRoutingAck(envelope.payload!);
       if (ack != null) {
+        final failed = ack.errorReason != 0;
+        // Our own radio reports a send it gave up on (no key for the
+        // recipient, no reply after retries, airtime limit…) from its own
+        // node number, not the recipient's. Its "no error" reply only means
+        // the packet went out, so only its failures count.
+        final own = localNodeNum;
+        final fromOwnRadio = failed && own != null && ack.from == own;
         final matches = _messages.where((m) =>
             m.packetId == ack.requestId &&
             m.direction == BastionMessageDirection.outgoing &&
             m.to != MeshtasticTextCodec.broadcastNode &&
-            m.to == ack.from &&
-            m.deliveryState == BastionDeliveryState.sent);
+            (m.to == ack.from || fromOwnRadio) &&
+            (m.deliveryState == BastionDeliveryState.sent ||
+                // A real receipt arriving after a give-up still counts.
+                (m.deliveryState == BastionDeliveryState.failed &&
+                    m.to == ack.from &&
+                    !failed &&
+                    ack.proof != BastionAckProof.forged)));
         if (matches.isNotEmpty) {
           // A receipt whose proof failed is a forgery attempt, not a
           // delivery: the message stays "sent", with the verdict kept.
-          final state = ack.errorReason != 0
+          final state = failed
               ? BastionDeliveryState.failed
               : ack.proof == BastionAckProof.forged
                   ? BastionDeliveryState.sent
                   : BastionDeliveryState.delivered;
-          _setDelivery(ack.requestId, state, proof: ack.proof);
+          _setDelivery(ack.requestId, state,
+              proof: fromOwnRadio ? null : ack.proof,
+              failureCode: failed ? ack.errorReason : null,
+              clearFailure: state == BastionDeliveryState.delivered);
         }
         return;
       }
@@ -466,13 +481,16 @@ class MeshtasticMessagingService {
   }
 
   void _setDelivery(int packetId, BastionDeliveryState state,
-      {BastionAckProof? proof}) {
+      {BastionAckProof? proof, int? failureCode, bool clearFailure = false}) {
     final index = _messages.lastIndexWhere((m) =>
         m.packetId == packetId &&
         m.direction == BastionMessageDirection.outgoing);
     if (index >= 0) {
-      _messages[index] =
-          _messages[index].copyWith(deliveryState: state, ackProof: proof);
+      _messages[index] = _messages[index].copyWith(
+          deliveryState: state,
+          ackProof: proof,
+          failureCode: failureCode,
+          clearFailure: clearFailure);
     }
     _notify();
   }

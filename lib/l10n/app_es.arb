@@ -2107,5 +2107,17 @@
   "drvCheckWaiting": "Esperando respuesta…",
   "drvCheckBusy": "En pausa: el canal está ocupado más de un {percent} %.",
   "drvCheckReady": "Las comprobaciones se envían mientras te mueves.",
-  "drvCheckResults": "Respuesta directa: {twoWay} • por otro nodo: {relayed} • sin respuesta: {none}"
+  "drvCheckResults": "Respuesta directa: {twoWay} • por otro nodo: {relayed} • sin respuesta: {none}",
+  "deliveryWhyNoKey": "Tu radio aún no tiene su clave. Abre su nodo, pide la info del nodo y vuelve a enviar.",
+  "deliveryWhyTheyLackYourKey": "Su radio aún no tiene tu clave. Pídele que solicite tu info de nodo y vuelve a enviar.",
+  "deliveryWhyKeyMismatch": "Su radio no pudo descifrarlo; puede que uno de los dos tenga una clave nueva. Pide la info de nodo en ambas radios.",
+  "deliveryWhyNoRoute": "Tu radio no puede llegar a su nodo ahora. Prueba desde un lugar más alto o cuando esté activo.",
+  "deliveryWhyNoReply": "Sin respuesta tras varios intentos. Puede estar fuera de alcance o apagado. Prueba más tarde.",
+  "deliveryWhyTooLong": "Demasiado largo para un paquete de radio. Acórtalo y vuelve a enviar.",
+  "deliveryWhyAirtimeLimit": "Tu radio alcanzó su límite legal de tiempo de emisión. Espera unos minutos y vuelve a enviar.",
+  "deliveryWhyNoChannel": "Una de las radios no tiene este canal. Comprueba que compartís el mismo canal.",
+  "deliveryWhyRateLimited": "Enviado demasiado rápido. Espera un momento y vuelve a enviar.",
+  "deliveryWhyRejected": "Su radio rechazó el mensaje.",
+  "deliveryWhyRadioError": "Tu radio no pudo transmitirlo. Revisa la radio y vuelve a enviar.",
+  "deliveryWhyUnknown": "La radio informó del error {code}."
 }

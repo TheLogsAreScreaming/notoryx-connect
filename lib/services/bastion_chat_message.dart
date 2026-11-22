@@ -23,6 +23,7 @@ class BastionChatMessage {
     this.rxRssi,
     this.relayNode,
     this.ackProof,
+    this.failureCode,
     this.pkiEncrypted = false,
     this.signed = false,
     this.replayed = false,
@@ -61,6 +62,11 @@ class BastionChatMessage {
   /// delivery receipt. Null until a receipt arrives.
   final BastionAckProof? ackProof;
 
+  /// For a failed outgoing direct message: the firmware's routing error
+  /// code (Routing.Error), kept as a number so codes from newer firmware
+  /// survive. Null when the reason is unknown.
+  final int? failureCode;
+
   /// Incoming: decrypted with this node's private key.
   final bool pkiEncrypted;
 
@@ -78,6 +84,8 @@ class BastionChatMessage {
   BastionChatMessage copyWith({
     BastionDeliveryState? deliveryState,
     BastionAckProof? ackProof,
+    int? failureCode,
+    bool clearFailure = false,
   }) =>
       BastionChatMessage(
         packetId: packetId,
@@ -96,6 +104,7 @@ class BastionChatMessage {
         rxRssi: rxRssi,
         relayNode: relayNode,
         ackProof: ackProof ?? this.ackProof,
+        failureCode: clearFailure ? null : failureCode ?? this.failureCode,
         pkiEncrypted: pkiEncrypted,
         signed: signed,
         replayed: replayed,
@@ -119,6 +128,7 @@ class BastionChatMessage {
     if (rxRssi != null) 'rxRssi': rxRssi,
     if (relayNode != null) 'relay': relayNode,
     if (ackProof != null) 'ackProof': ackProof!.name,
+    if (failureCode != null) 'failure': failureCode,
     if (pkiEncrypted) 'pki': true,
     if (signed) 'signed': true,
     if (replayed) 'replayed': true,
@@ -151,6 +161,7 @@ class BastionChatMessage {
           ? BastionAckProof.values.asNameMap()[json['ackProof']] ??
               BastionAckProof.unproven
           : null,
+      failureCode: json['failure'] as int?,
       pkiEncrypted: json['pki'] as bool? ?? false,
       signed: json['signed'] as bool? ?? false,
       replayed: json['replayed'] as bool? ?? false,

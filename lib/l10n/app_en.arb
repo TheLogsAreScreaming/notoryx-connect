@@ -5408,5 +5408,24 @@
         "type": "int"
       }
     }
+  },
+  "deliveryWhyNoKey": "Your radio doesn't have their key yet. Open their node, request node info, then send again.",
+  "deliveryWhyTheyLackYourKey": "Their radio doesn't have your key yet. Ask them to request your node info, then send again.",
+  "deliveryWhyKeyMismatch": "Their radio couldn't decrypt it, so one of you may have a new key. Request node info on both radios.",
+  "deliveryWhyNoRoute": "Your radio has no way to reach them right now. Try again from higher ground or when they're active.",
+  "deliveryWhyNoReply": "No reply after several tries. They may be out of range or switched off. Try again later.",
+  "deliveryWhyTooLong": "Too long for one radio packet. Shorten it and send again.",
+  "deliveryWhyAirtimeLimit": "Your radio reached its legal airtime limit. Wait a few minutes, then send again.",
+  "deliveryWhyNoChannel": "One of the radios doesn't have this channel. Check you share the same channel.",
+  "deliveryWhyRateLimited": "Sent too quickly. Wait a moment, then send again.",
+  "deliveryWhyRejected": "Their radio refused the message.",
+  "deliveryWhyRadioError": "Your radio couldn't transmit it. Check the radio, then send again.",
+  "deliveryWhyUnknown": "The radio reported error {code}.",
+  "@deliveryWhyUnknown": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
   }
 }
