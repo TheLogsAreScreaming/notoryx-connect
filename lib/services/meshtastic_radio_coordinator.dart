@@ -721,6 +721,43 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   /// Every known node, including ignored ones (for unignoring and safety logic).
   List<MeshtasticNode> get allNodes => _nodes;
 
+  /// [nodes] plus the nodes this phone remembers for the radio that the
+  /// radio itself no longer lists: ones heard earlier and ones imported from
+  /// a Meshtastic node database. The radio keeps only a few hundred nodes,
+  /// so without these an import would never show in the Nodes list.
+  List<MeshtasticNode> get knownNodes {
+    final live = nodes;
+    final records = _nodeVault.records;
+    if (records.isEmpty) return live;
+    final listed = {for (final n in _nodes) n.num};
+    final remembered = [
+      for (final r in records)
+        if (!listed.contains(r.num) && !filters.isIgnored(r.num))
+          MeshtasticNode(
+            num: r.num,
+            id: r.id,
+            longName: r.longName,
+            shortName: r.shortName,
+            hardwareModel: r.hardwareModel,
+            latitude: r.latitude,
+            longitude: r.longitude,
+            positionTime: r.positionTime,
+            lastHeard: r.lastSeen,
+          ),
+    ];
+    return remembered.isEmpty ? live : [...live, ...remembered];
+  }
+
+  /// How many [knownNodes] there are, without building them.
+  int get knownNodeCount {
+    final listed = {for (final n in _nodes) n.num};
+    var extra = 0;
+    for (final r in _nodeVault.records) {
+      if (!listed.contains(r.num) && !filters.isIgnored(r.num)) extra++;
+    }
+    return nodes.length + extra;
+  }
+
   /// The connected radio's history, without messages from ignored nodes and,
   /// unless shown, incoming messages that contain a filtered word. Until the
   /// radio identifies itself, the last radio's history plus anything new.

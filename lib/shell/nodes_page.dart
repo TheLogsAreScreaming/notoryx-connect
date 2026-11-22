@@ -188,7 +188,7 @@ class _NodesPage extends StatelessWidget {
             _RadioBar(radio: radio, onTap: () => _openRadioSheet(context))
           else
             ..._radioWidgets(context),
-          if (radio.nodes.any((n) => n.num != local?.num))
+          if (radio.knownNodes.any((n) => n.num != local?.num))
             _NodeList(radio: radio)
           else if (showsConnectedCard)
             NxEmptyState(
@@ -824,15 +824,17 @@ class _NodeListState extends State<_NodeList> {
     final radio = widget.radio;
     final favoritesOnly = BastionPreferences.instance.favoritesOnly;
     final query = _search.text.trim();
+    // The radio's list plus remembered and imported nodes it no longer has.
+    final known = radio.knownNodes;
     final groups = BastionNodeGroups.of(
-      radio.nodes,
+      known,
       now: DateTime.now(),
       localNum: radio.localNode?.num,
       query: query,
       favoritesOnly: favoritesOnly,
       favorites: radio.favoriteNums,
     );
-    final all = radio.nodes.where((n) => n.num != radio.localNode?.num).length;
+    final all = known.where((n) => n.num != radio.localNode?.num).length;
     // While searching, nothing stays folded away.
     final showOlder = _showOlder || query.isNotEmpty;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

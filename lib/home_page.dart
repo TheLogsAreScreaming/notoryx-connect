@@ -120,7 +120,7 @@ class _ConsoleCard extends StatelessWidget {
           ),
           NxReadout(volts == null ? '–' : volts.toStringAsFixed(2), TelemetryMetric.voltage.label),
           NxReadout(chUse == null ? '–' : '${chUse.toStringAsFixed(0)}%', TelemetryMetric.channelUtilization.label),
-          NxReadout(ready ? '${radio.nodes.length}' : '0', l.homeNodes, color: scheme.secondary),
+          NxReadout(ready ? '${radio.knownNodeCount}' : '0', l.homeNodes, color: scheme.secondary),
         ]),
       ),
       const SizedBox(height: NxSpace.sm),
