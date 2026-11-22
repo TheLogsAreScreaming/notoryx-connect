@@ -7720,4 +7720,42 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get drvGuidePrivacy =>
       'Drives stay on this phone. Positions are always your phone\'s, never another node\'s. Nothing is uploaded; sharing a drive file is up to you.';
+
+  @override
+  String get drvExport => 'Export this drive';
+
+  @override
+  String get drvTrim => 'Leave out the first and last 500 m';
+
+  @override
+  String get drvTrimSub =>
+      'Keeps the file from showing where you started and stopped, like home or work.';
+
+  @override
+  String get drvDriveFile => 'Drive file';
+
+  @override
+  String get drvExportEmpty =>
+      'Nothing left to export. Turn off the 500 m trim for a short drive.';
+
+  @override
+  String get drvImport => 'Import';
+
+  @override
+  String drvImportedName(String name) {
+    return '$name (imported)';
+  }
+
+  @override
+  String drvImported(int count) {
+    return 'Drive imported with $count readings.';
+  }
+
+  @override
+  String drvImportBad(String reason) {
+    return 'That file can\'t be imported: $reason';
+  }
+
+  @override
+  String get drvImportUnreadable => 'The file could not be read.';
 }

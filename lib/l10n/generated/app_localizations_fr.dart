@@ -7810,4 +7810,42 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get drvGuidePrivacy =>
       'Les trajets restent sur ce téléphone. Les positions sont toujours celles de votre téléphone, jamais celles d\'un autre nœud. Rien n\'est envoyé en ligne ; partager un fichier de trajet est votre choix.';
+
+  @override
+  String get drvExport => 'Exporter ce trajet';
+
+  @override
+  String get drvTrim => 'Omettre les premiers et derniers 500 m';
+
+  @override
+  String get drvTrimSub =>
+      'Le fichier ne montre pas où vous êtes parti et arrivé, comme votre domicile ou votre travail.';
+
+  @override
+  String get drvDriveFile => 'Fichier de trajet';
+
+  @override
+  String get drvExportEmpty =>
+      'Plus rien à exporter. Désactivez l\'omission des 500 m pour un trajet court.';
+
+  @override
+  String get drvImport => 'Importer';
+
+  @override
+  String drvImportedName(String name) {
+    return '$name (importé)';
+  }
+
+  @override
+  String drvImported(int count) {
+    return 'Trajet importé avec $count mesures.';
+  }
+
+  @override
+  String drvImportBad(String reason) {
+    return 'Ce fichier ne peut pas être importé : $reason';
+  }
+
+  @override
+  String get drvImportUnreadable => 'Le fichier n\'a pas pu être lu.';
 }

@@ -12648,6 +12648,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Drives stay on this phone. Positions are always your phone\'s, never another node\'s. Nothing is uploaded; sharing a drive file is up to you.'**
   String get drvGuidePrivacy;
+
+  /// No description provided for @drvExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export this drive'**
+  String get drvExport;
+
+  /// No description provided for @drvTrim.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave out the first and last 500 m'**
+  String get drvTrim;
+
+  /// No description provided for @drvTrimSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Keeps the file from showing where you started and stopped, like home or work.'**
+  String get drvTrimSub;
+
+  /// No description provided for @drvDriveFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive file'**
+  String get drvDriveFile;
+
+  /// No description provided for @drvExportEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing left to export. Turn off the 500 m trim for a short drive.'**
+  String get drvExportEmpty;
+
+  /// No description provided for @drvImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get drvImport;
+
+  /// No description provided for @drvImportedName.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (imported)'**
+  String drvImportedName(String name);
+
+  /// No description provided for @drvImported.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive imported with {count} readings.'**
+  String drvImported(int count);
+
+  /// No description provided for @drvImportBad.
+  ///
+  /// In en, this message translates to:
+  /// **'That file can\'t be imported: {reason}'**
+  String drvImportBad(String reason);
+
+  /// No description provided for @drvImportUnreadable.
+  ///
+  /// In en, this message translates to:
+  /// **'The file could not be read.'**
+  String get drvImportUnreadable;
 }
 
 class _AppLocalizationsDelegate

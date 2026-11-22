@@ -2088,5 +2088,15 @@
   "drvGuideAntennaTitle": "Antenne",
   "drvGuideAntenna": "Bring das Funkgerät so hoch wie möglich an, mit senkrechter Antenne, am besten außen am Auto oder am Fenster. Ein Gerät im Fußraum oder in der Tasche hört deutlich weniger, und die Karte zeigt das.",
   "drvGuidePrivacyTitle": "Privatsphäre",
-  "drvGuidePrivacy": "Fahrten bleiben auf diesem Telefon. Positionen sind immer die deines Telefons, nie die eines anderen Knotens. Nichts wird hochgeladen; ob du eine Fahrtdatei teilst, entscheidest du."
+  "drvGuidePrivacy": "Fahrten bleiben auf diesem Telefon. Positionen sind immer die deines Telefons, nie die eines anderen Knotens. Nichts wird hochgeladen; ob du eine Fahrtdatei teilst, entscheidest du.",
+  "drvExport": "Diese Fahrt exportieren",
+  "drvTrim": "Erste und letzte 500 m weglassen",
+  "drvTrimSub": "So zeigt die Datei nicht, wo du losgefahren bist und angehalten hast, etwa dein Zuhause oder deine Arbeit.",
+  "drvDriveFile": "Fahrtdatei",
+  "drvExportEmpty": "Nichts mehr zu exportieren. Schalte bei einer kurzen Fahrt das Weglassen der 500 m aus.",
+  "drvImport": "Importieren",
+  "drvImportedName": "{name} (importiert)",
+  "drvImported": "Fahrt mit {count} Werten importiert.",
+  "drvImportBad": "Diese Datei lässt sich nicht importieren: {reason}",
+  "drvImportUnreadable": "Die Datei konnte nicht gelesen werden."
 }

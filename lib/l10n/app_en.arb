@@ -5348,5 +5348,36 @@
   "drvGuideAntennaTitle": "Antenna",
   "drvGuideAntenna": "Put the radio as high as you can with the antenna upright, ideally outside the car or against a window. A radio on the floor or in a pocket hears much less, and the map will show it.",
   "drvGuidePrivacyTitle": "Privacy",
-  "drvGuidePrivacy": "Drives stay on this phone. Positions are always your phone's, never another node's. Nothing is uploaded; sharing a drive file is up to you."
+  "drvGuidePrivacy": "Drives stay on this phone. Positions are always your phone's, never another node's. Nothing is uploaded; sharing a drive file is up to you.",
+  "drvExport": "Export this drive",
+  "drvTrim": "Leave out the first and last 500 m",
+  "drvTrimSub": "Keeps the file from showing where you started and stopped, like home or work.",
+  "drvDriveFile": "Drive file",
+  "drvExportEmpty": "Nothing left to export. Turn off the 500 m trim for a short drive.",
+  "drvImport": "Import",
+  "drvImportedName": "{name} (imported)",
+  "@drvImportedName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "drvImported": "Drive imported with {count} readings.",
+  "@drvImported": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "drvImportBad": "That file can't be imported: {reason}",
+  "@drvImportBad": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "drvImportUnreadable": "The file could not be read."
 }

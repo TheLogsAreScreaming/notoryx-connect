@@ -2088,5 +2088,15 @@
   "drvGuideAntennaTitle": "Antenne",
   "drvGuideAntenna": "Placez la radio le plus haut possible, antenne verticale, idéalement hors de la voiture ou contre une vitre. Une radio au plancher ou dans une poche entend bien moins, et la carte le montrera.",
   "drvGuidePrivacyTitle": "Confidentialité",
-  "drvGuidePrivacy": "Les trajets restent sur ce téléphone. Les positions sont toujours celles de votre téléphone, jamais celles d'un autre nœud. Rien n'est envoyé en ligne ; partager un fichier de trajet est votre choix."
+  "drvGuidePrivacy": "Les trajets restent sur ce téléphone. Les positions sont toujours celles de votre téléphone, jamais celles d'un autre nœud. Rien n'est envoyé en ligne ; partager un fichier de trajet est votre choix.",
+  "drvExport": "Exporter ce trajet",
+  "drvTrim": "Omettre les premiers et derniers 500 m",
+  "drvTrimSub": "Le fichier ne montre pas où vous êtes parti et arrivé, comme votre domicile ou votre travail.",
+  "drvDriveFile": "Fichier de trajet",
+  "drvExportEmpty": "Plus rien à exporter. Désactivez l'omission des 500 m pour un trajet court.",
+  "drvImport": "Importer",
+  "drvImportedName": "{name} (importé)",
+  "drvImported": "Trajet importé avec {count} mesures.",
+  "drvImportBad": "Ce fichier ne peut pas être importé : {reason}",
+  "drvImportUnreadable": "Le fichier n'a pas pu être lu."
 }

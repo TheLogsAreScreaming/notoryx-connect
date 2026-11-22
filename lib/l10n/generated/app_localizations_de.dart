@@ -7805,4 +7805,42 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get drvGuidePrivacy =>
       'Fahrten bleiben auf diesem Telefon. Positionen sind immer die deines Telefons, nie die eines anderen Knotens. Nichts wird hochgeladen; ob du eine Fahrtdatei teilst, entscheidest du.';
+
+  @override
+  String get drvExport => 'Diese Fahrt exportieren';
+
+  @override
+  String get drvTrim => 'Erste und letzte 500 m weglassen';
+
+  @override
+  String get drvTrimSub =>
+      'So zeigt die Datei nicht, wo du losgefahren bist und angehalten hast, etwa dein Zuhause oder deine Arbeit.';
+
+  @override
+  String get drvDriveFile => 'Fahrtdatei';
+
+  @override
+  String get drvExportEmpty =>
+      'Nichts mehr zu exportieren. Schalte bei einer kurzen Fahrt das Weglassen der 500 m aus.';
+
+  @override
+  String get drvImport => 'Importieren';
+
+  @override
+  String drvImportedName(String name) {
+    return '$name (importiert)';
+  }
+
+  @override
+  String drvImported(int count) {
+    return 'Fahrt mit $count Werten importiert.';
+  }
+
+  @override
+  String drvImportBad(String reason) {
+    return 'Diese Datei lässt sich nicht importieren: $reason';
+  }
+
+  @override
+  String get drvImportUnreadable => 'Die Datei konnte nicht gelesen werden.';
 }
