@@ -7758,4 +7758,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get drvImportUnreadable => 'The file could not be read.';
+
+  @override
+  String get drvCheck => 'Two-way check (sends)';
+
+  @override
+  String get drvCheckSub =>
+      'Off by default. Every 30 s and 25 m at most, sends one small packet that can\'t be relayed to a node you pick and waits for its answer. A direct answer proves both radios reach each other here. Skips places with a direct reading in the last 7 days and pauses when the channel is busy. Never broadcasts.';
+
+  @override
+  String get drvCheckNoCandidates =>
+      'No node heard directly on this drive yet.';
+
+  @override
+  String get drvCheckTarget => 'Node to check (heard directly)';
+
+  @override
+  String get drvCheckPickTarget => 'Pick a node to start checking.';
+
+  @override
+  String get drvCheckWaiting => 'Waiting for an answer…';
+
+  @override
+  String drvCheckBusy(int percent) {
+    return 'Paused: the channel is over $percent% busy.';
+  }
+
+  @override
+  String get drvCheckReady => 'Checks are sent as you move.';
+
+  @override
+  String drvCheckResults(int twoWay, int relayed, int none) {
+    return 'Answered directly: $twoWay • answered via another node: $relayed • no answer: $none';
+  }
 }

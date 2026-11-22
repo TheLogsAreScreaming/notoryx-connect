@@ -27,6 +27,7 @@ import 'bastion_bluetooth_state.dart';
 import 'bastion_message_alerts.dart';
 import 'bastion_phone_position.dart';
 import 'bastion_field_alerts.dart';
+import 'bastion_drive_check.dart';
 import 'bastion_drive_log.dart';
 import 'bastion_filters.dart';
 import 'bastion_settings_evidence.dart';
@@ -660,6 +661,14 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   PhoneFix? _coverageFix;
   String? coverageProblem;
 
+  /// The optional two-way check during drives (off by default).
+  late final BastionDriveCheck driveCheck = BastionDriveCheck(log: BastionDriveLog.instance)
+    ..send = (frame) async {
+      final session = _session;
+      if (session == null || !isReady) throw StateError('Radio must be connected and ready.');
+      await session.send(frame);
+    };
+
   /// The phone's latest position while a drive records.
   PhoneFix? get coverageFix => _coverageFix;
   bool get recordingCoverage => BastionDriveLog.instance.recording;
@@ -671,6 +680,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     _coverageLocation = null;
     _coverageFix = null;
     await BastionDriveLog.instance.stop();
+    driveCheck.reset();
     coverageProblem = null;
     if (enabled) {
       final session = _session;
@@ -690,6 +700,15 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           (fix) {
             _coverageFix = fix;
             unawaited(BastionDriveLog.instance.addFix(fix).then((_) {}, onError: (Object _) {}));
+            unawaited(
+              driveCheck
+                  .onFix(
+                    fix,
+                    now: DateTime.now(),
+                    channelUtilization: _deviceTelemetry[_localNodeNum]?.channelUtilization,
+                  )
+                  .then((_) {}, onError: (Object _) {}),
+            );
           },
           onError: (Object error) {
             unawaited(BastionDriveLog.instance.stop());
@@ -1279,6 +1298,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           try {
             final envelope = pb.FromRadio.fromBuffer(bytes);
             if (envelope.hasPacket()) {
+              driveCheck.onPacket(envelope.packet);
               unawaited(
                 BastionDriveLog.instance
                     .observe(envelope.packet, _coverageFix, DateTime.now())
@@ -2506,6 +2526,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     final alerts = _alerts;
     if (alerts is BastionLocalMessageAlerts) alerts.stopListeningForReplies();
     _disposed = true;
+    driveCheck.dispose();
     _lifecycle.dispose();
     unawaited(_bluetoothSubscription.cancel());
     _userDisconnected = true;

@@ -12708,6 +12708,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The file could not be read.'**
   String get drvImportUnreadable;
+
+  /// No description provided for @drvCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-way check (sends)'**
+  String get drvCheck;
+
+  /// No description provided for @drvCheckSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Off by default. Every 30 s and 25 m at most, sends one small packet that can\'t be relayed to a node you pick and waits for its answer. A direct answer proves both radios reach each other here. Skips places with a direct reading in the last 7 days and pauses when the channel is busy. Never broadcasts.'**
+  String get drvCheckSub;
+
+  /// No description provided for @drvCheckNoCandidates.
+  ///
+  /// In en, this message translates to:
+  /// **'No node heard directly on this drive yet.'**
+  String get drvCheckNoCandidates;
+
+  /// No description provided for @drvCheckTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Node to check (heard directly)'**
+  String get drvCheckTarget;
+
+  /// No description provided for @drvCheckPickTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a node to start checking.'**
+  String get drvCheckPickTarget;
+
+  /// No description provided for @drvCheckWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for an answer…'**
+  String get drvCheckWaiting;
+
+  /// No description provided for @drvCheckBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused: the channel is over {percent}% busy.'**
+  String drvCheckBusy(int percent);
+
+  /// No description provided for @drvCheckReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Checks are sent as you move.'**
+  String get drvCheckReady;
+
+  /// No description provided for @drvCheckResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Answered directly: {twoWay} • answered via another node: {relayed} • no answer: {none}'**
+  String drvCheckResults(int twoWay, int relayed, int none);
 }
 
 class _AppLocalizationsDelegate

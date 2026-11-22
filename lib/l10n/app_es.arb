@@ -2098,5 +2098,14 @@
   "drvImportedName": "{name} (importado)",
   "drvImported": "Recorrido importado con {count} lecturas.",
   "drvImportBad": "Ese archivo no se puede importar: {reason}",
-  "drvImportUnreadable": "No se pudo leer el archivo."
+  "drvImportUnreadable": "No se pudo leer el archivo.",
+  "drvCheck": "Comprobación bidireccional (transmite)",
+  "drvCheckSub": "Desactivado por defecto. Como mucho cada 30 s y 25 m, envía un paquete pequeño que no se puede retransmitir a un nodo que elijas y espera su respuesta. Una respuesta directa prueba que ambas radios se alcanzan aquí. Omite lugares con una lectura directa en los últimos 7 días y se pausa si el canal está ocupado. Nunca difunde a todos.",
+  "drvCheckNoCandidates": "Aún no se ha oído ningún nodo directamente en este recorrido.",
+  "drvCheckTarget": "Nodo a comprobar (oído directamente)",
+  "drvCheckPickTarget": "Elige un nodo para empezar a comprobar.",
+  "drvCheckWaiting": "Esperando respuesta…",
+  "drvCheckBusy": "En pausa: el canal está ocupado más de un {percent} %.",
+  "drvCheckReady": "Las comprobaciones se envían mientras te mueves.",
+  "drvCheckResults": "Respuesta directa: {twoWay} • por otro nodo: {relayed} • sin respuesta: {none}"
 }
