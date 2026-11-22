@@ -9,6 +9,7 @@ import 'package:bastion/services/bastion_node_vault.dart';
 import 'package:bastion/services/meshtastic_node_database.dart';
 import 'package:bastion/services/meshtastic_nodedb_import.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/traceroute_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
@@ -232,6 +233,38 @@ void main() {
     expect(radio.knownNodes.map((n) => n.num), isNot(contains(0x22)),
         reason: 'ignored nodes stay hidden');
     expect(radio.knownNodeCount, radio.knownNodes.length);
+  });
+
+  testWidgets('traceroute opened from an imported node keeps it as the destination',
+      (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.withData({
+      BastionRadioHistory.lastRadioKey: _me,
+    });
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.runAsync(() async {
+      await Future<void>.delayed(const Duration(milliseconds: 50));
+      await radio.importNodeDatabase(MeshtasticNodeDbExport.parse(_file()), includeInternet: false);
+    });
+    expect(radio.nodes.map((n) => n.num), isNot(contains(0x22)), reason: 'only restored, not live');
+
+    Future<void> open(int target) async {
+      await tester.pumpWidget(MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: TraceroutePage(key: ValueKey(target), radio: radio, initialTarget: target),
+      ));
+      await tester.pumpAndSettle();
+    }
+
+    await open(0x22);
+    expect(find.text('Ridge Relay'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    // A node the phone knows nothing about still shows by its ID.
+    await open(0xabc);
+    expect(find.text('!00000abc'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('the page shows what is in the file and imports it', (tester) async {
