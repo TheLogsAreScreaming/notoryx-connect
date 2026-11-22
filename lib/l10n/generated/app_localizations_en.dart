@@ -2436,7 +2436,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get frRecordSub =>
-      'Requests phone GPS. Stops on disconnect. Does not send your location.';
+      'Requests phone GPS. Keeps recording with the screen off while a notification shows. Stops on disconnect. Does not send your location.';
 
   @override
   String get frRecordOn =>
@@ -2447,7 +2447,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String frReadings(int count) {
-    return '$count readings • maximum 2000 coverage readings • coverage expires after 30 days';
+    return '$count readings • up to 100,000 kept; the oldest drives are removed first';
   }
 
   @override
@@ -7554,4 +7554,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sarneg_autoClear => 'Clears after 1 minute without typing.';
+
+  @override
+  String get frHopDirect => 'direct';
+
+  @override
+  String get frHopRelayed => 'relayed';
+
+  @override
+  String get frHopUnknown => 'hops unknown';
+
+  @override
+  String frDriveReading(String node, String hops, String snr, String rssi) {
+    return 'Node $node • $hops • SNR $snr • RSSI $rssi';
+  }
 }

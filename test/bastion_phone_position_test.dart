@@ -1,10 +1,13 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:bastion/generated/meshtastic/mesh.pb.dart';
 import 'package:bastion/generated/meshtastic/portnums.pbenum.dart';
 import 'package:bastion/services/bastion_phone_position.dart';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:geolocator/geolocator.dart' hide Position;
 
 class _FakeSource implements PhoneLocationSource {
   _FakeSource({this.problem});
@@ -17,7 +20,7 @@ class _FakeSource implements PhoneLocationSource {
   Future<String?> ensureAccess() async => problem;
 
   @override
-  Stream<PhoneFix> watch({bool lowPower = false}) {
+  Stream<PhoneFix> watch({bool lowPower = false, bool background = false}) {
     watchedLowPower.add(lowPower);
     return fixes.stream;
   }
@@ -160,6 +163,46 @@ void main() {
           source: _FakeSource(), send: (b) async => sent.add(b), localNodeNum: 1, precisionBits: 14);
       await coarse.handleFix(fix(35.5, -83.25, 0));
       expect(Position.fromBuffer(ToRadio.fromBuffer(sent.single).packet.decoded.payload).precisionBits, 14);
+    });
+  });
+
+  group('screen-off GPS for drives', () {
+    LocationSettings settings(TargetPlatform platform, {bool background = true}) =>
+        GeolocatorLocationSource.settingsFor(lowPower: false, background: background, platform: platform);
+
+    test('Android runs a location service with an ongoing notification', () {
+      final s = settings(TargetPlatform.android);
+      expect(s, isA<AndroidSettings>());
+      final config = (s as AndroidSettings).foregroundNotificationConfig!;
+      expect(config.notificationTitle, GeolocatorLocationSource.driveNotificationTitle);
+      expect((config.setOngoing, config.enableWakeLock), (true, true));
+      expect((s.accuracy, s.distanceFilter), (LocationAccuracy.high, 10));
+    });
+
+    test('iOS keeps updating in the background with the indicator showing', () {
+      final s = settings(TargetPlatform.iOS) as AppleSettings;
+      expect(s.allowBackgroundLocationUpdates, isTrue);
+      expect(s.showBackgroundLocationIndicator, isTrue);
+      expect(s.pauseLocationUpdatesAutomatically, isFalse);
+    });
+
+    test('nothing runs in the background unless a drive asks for it', () {
+      for (final platform in [TargetPlatform.android, TargetPlatform.iOS]) {
+        final s = settings(platform, background: false);
+        expect(s, isNot(isA<AndroidSettings>()));
+        expect(s, isNot(isA<AppleSettings>()));
+        expect(s.distanceFilter, 25);
+      }
+      // macOS has no location background mode, so it never asks for one.
+      expect(settings(TargetPlatform.macOS), isNot(isA<AppleSettings>()));
+    });
+
+    test('the Android and iOS builds declare what the service needs', () {
+      final android = File('scripts/prepare_android.py').readAsStringSync();
+      expect(android, contains('android.permission.FOREGROUND_SERVICE_LOCATION'));
+      expect(android, isNot(contains('ACCESS_BACKGROUND_LOCATION')));
+      final ios = File('scripts/prepare_ios.py').readAsStringSync();
+      expect(ios, contains("'UIBackgroundModes': ['bluetooth-central', 'location']"));
     });
   });
 }

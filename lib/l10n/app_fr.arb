@@ -663,10 +663,10 @@
   "frCoverage": "Historique de couverture",
   "frCoverageSub": "Position du récepteur avec le signal RF reçu • enregistrement local uniquement",
   "frRecord": "Enregistrer la couverture",
-  "frRecordSub": "Demande le GPS du téléphone. S'arrête à la déconnexion. N'envoie pas votre position.",
+  "frRecordSub": "Demande le GPS du téléphone. Continue l'enregistrement écran éteint tant qu'une notification est affichée. S'arrête à la déconnexion. N'envoie pas votre position.",
   "frRecordOn": "Enregistreur de couverture activé ; en attente d'une position GPS récente et précise et de paquets RF.",
   "frRecordOff": "Enregistreur de couverture arrêté.",
-  "frReadings": "{count} mesures • au plus 2000 mesures de couverture • elles expirent après 30 jours",
+  "frReadings": "{count} mesures • jusqu’à 100 000 conservées ; les trajets les plus anciens sont supprimés en premier",
   "frCoverageCopied": "CSV de couverture copié. Collez-le dans un fichier ou un tableur.",
   "frCopyCoverage": "Copier le CSV de couverture",
   "frBot": "Garde-fous du bot et heures calmes",
@@ -2041,5 +2041,9 @@
   "sarneg_randomWord": "Mot aléatoire",
   "sarneg_wellKnownWord": "Ce mot figure dans des guides publics : n’importe qui peut l’essayer. Un mot aléatoire est plus sûr.",
   "sarneg_clipboardClears": "Le presse-papiers est vidé dans 1 minute.",
-  "sarneg_autoClear": "S’efface après 1 minute sans saisie."
+  "sarneg_autoClear": "S’efface après 1 minute sans saisie.",
+  "frHopDirect": "direct",
+  "frHopRelayed": "relayé",
+  "frHopUnknown": "sauts inconnus",
+  "frDriveReading": "Nœud {node} • {hops} • SNR {snr} • RSSI {rssi}"
 }

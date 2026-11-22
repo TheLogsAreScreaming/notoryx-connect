@@ -27,7 +27,7 @@ import 'bastion_bluetooth_state.dart';
 import 'bastion_message_alerts.dart';
 import 'bastion_phone_position.dart';
 import 'bastion_field_alerts.dart';
-import 'bastion_field_log.dart';
+import 'bastion_drive_log.dart';
 import 'bastion_filters.dart';
 import 'bastion_settings_evidence.dart';
 import 'bastion_waypoints.dart';
@@ -659,13 +659,15 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   StreamSubscription<PhoneFix>? _coverageLocation;
   PhoneFix? _coverageFix;
   String? coverageProblem;
-  bool get recordingCoverage => BastionFieldLog.instance.recording;
+  bool get recordingCoverage => BastionDriveLog.instance.recording;
 
-  Future<void> setCoverageRecording(bool enabled) async {
+  /// Starts or stops a drive: every RF packet heard is saved with the
+  /// phone's position. [tripName] names a new drive.
+  Future<void> setCoverageRecording(bool enabled, {String? tripName}) async {
     await _coverageLocation?.cancel();
     _coverageLocation = null;
     _coverageFix = null;
-    BastionFieldLog.instance.stop();
+    await BastionDriveLog.instance.stop();
     coverageProblem = null;
     if (enabled) {
       final session = _session;
@@ -679,22 +681,22 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         notifyListeners();
         throw StateError(problem);
       }
-      BastionFieldLog.instance.start(_localNodeNum!);
+      await BastionDriveLog.instance.start(_localNodeNum!, name: tripName);
       try {
-        _coverageLocation = _location.watch().listen(
+        _coverageLocation = _location.watch(background: true).listen(
           (fix) => _coverageFix = fix,
           onError: (Object error) {
-            BastionFieldLog.instance.stop();
+            unawaited(BastionDriveLog.instance.stop());
             coverageProblem = 'Location stopped: $error';
             notifyListeners();
           },
           onDone: () {
-            BastionFieldLog.instance.stop();
+            unawaited(BastionDriveLog.instance.stop());
             notifyListeners();
           },
         );
       } catch (error) {
-        BastionFieldLog.instance.stop();
+        await BastionDriveLog.instance.stop();
         coverageProblem = 'Location could not start: $error';
         notifyListeners();
         rethrow;
@@ -720,6 +722,43 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   /// Every known node, including ignored ones (for unignoring and safety logic).
   List<MeshtasticNode> get allNodes => _nodes;
+
+  /// [nodes] plus the nodes this phone remembers for the radio that the
+  /// radio itself no longer lists: ones heard earlier and ones imported from
+  /// a Meshtastic node database. The radio keeps only a few hundred nodes,
+  /// so without these an import would never show in the Nodes list.
+  List<MeshtasticNode> get knownNodes {
+    final live = nodes;
+    final records = _nodeVault.records;
+    if (records.isEmpty) return live;
+    final listed = {for (final n in _nodes) n.num};
+    final remembered = [
+      for (final r in records)
+        if (!listed.contains(r.num) && !filters.isIgnored(r.num))
+          MeshtasticNode(
+            num: r.num,
+            id: r.id,
+            longName: r.longName,
+            shortName: r.shortName,
+            hardwareModel: r.hardwareModel,
+            latitude: r.latitude,
+            longitude: r.longitude,
+            positionTime: r.positionTime,
+            lastHeard: r.lastSeen,
+          ),
+    ];
+    return remembered.isEmpty ? live : [...live, ...remembered];
+  }
+
+  /// How many [knownNodes] there are, without building them.
+  int get knownNodeCount {
+    final listed = {for (final n in _nodes) n.num};
+    var extra = 0;
+    for (final r in _nodeVault.records) {
+      if (!listed.contains(r.num) && !filters.isIgnored(r.num)) extra++;
+    }
+    return nodes.length + extra;
+  }
 
   /// The connected radio's history, without messages from ignored nodes and,
   /// unless shown, incoming messages that contain a filtered word. Until the
@@ -1235,10 +1274,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
             final envelope = pb.FromRadio.fromBuffer(bytes);
             if (envelope.hasPacket()) {
               unawaited(
-                BastionFieldLog.instance
+                BastionDriveLog.instance
                     .observe(envelope.packet, _coverageFix, DateTime.now())
-                    .catchError((Object _) {
-                      coverageProblem = BastionFieldLog.instance.error;
+                    .then((_) {}, onError: (Object _) {
+                      coverageProblem = BastionDriveLog.instance.error;
                       notifyListeners();
                     }),
               );
@@ -2401,7 +2440,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     await _coverageLocation?.cancel();
     _coverageLocation = null;
     _coverageFix = null;
-    BastionFieldLog.instance.stop();
+    await BastionDriveLog.instance.stop();
     final messaging = _messaging;
     if (messaging != null) _syncMessageSnapshot(messaging);
     await _nodeSubscription?.cancel();

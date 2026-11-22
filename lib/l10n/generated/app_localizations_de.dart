@@ -2465,7 +2465,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get frRecordSub =>
-      'Fordert das GPS des Telefons an. Stoppt beim Trennen. Sendet Ihren Standort nicht.';
+      'Fordert das GPS des Telefons an. Zeichnet bei ausgeschaltetem Bildschirm weiter auf, solange eine Benachrichtigung angezeigt wird. Stoppt beim Trennen. Sendet Ihren Standort nicht.';
 
   @override
   String get frRecordOn =>
@@ -2476,7 +2476,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String frReadings(int count) {
-    return '$count Messungen • höchstens 2000 Abdeckungsmessungen • sie verfallen nach 30 Tagen';
+    return '$count Messungen • bis zu 100.000 werden behalten; die ältesten Fahrten werden zuerst entfernt';
   }
 
   @override
@@ -7638,4 +7638,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get sarneg_autoClear => 'Wird nach 1 Minute ohne Eingabe geleert.';
+
+  @override
+  String get frHopDirect => 'direkt';
+
+  @override
+  String get frHopRelayed => 'weitergeleitet';
+
+  @override
+  String get frHopUnknown => 'Sprünge unbekannt';
+
+  @override
+  String frDriveReading(String node, String hops, String snr, String rssi) {
+    return 'Knoten $node • $hops • SNR $snr • RSSI $rssi';
+  }
 }

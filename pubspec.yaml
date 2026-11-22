@@ -1,7 +1,7 @@
 name: bastion
 description: Independent field-mesh companion compatible with Meshtastic® firmware.
 publish_to: none
-version: 1.0.0+38
+version: 1.0.0+40
 
 environment:
   sdk: '>=3.12.0 <4.0.0'
@@ -86,7 +86,9 @@ flutter_launcher_icons:
   android: true
   ios: false
   image_path: branding/notoryx-icon.png
-  adaptive_icon_background: '#101011'
+  adaptive_icon_background: branding/notoryx-icon-background.png
   adaptive_icon_foreground: branding/notoryx-icon-foreground.png
+  # Android 13+ themed icon.
+  adaptive_icon_monochrome: branding/notoryx-icon-monochrome.png
   # The foreground PNG is already sized to the safe zone.
   adaptive_icon_foreground_inset: 0

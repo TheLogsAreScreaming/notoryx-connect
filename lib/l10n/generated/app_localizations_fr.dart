@@ -2469,7 +2469,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get frRecordSub =>
-      'Demande le GPS du téléphone. S\'arrête à la déconnexion. N\'envoie pas votre position.';
+      'Demande le GPS du téléphone. Continue l\'enregistrement écran éteint tant qu\'une notification est affichée. S\'arrête à la déconnexion. N\'envoie pas votre position.';
 
   @override
   String get frRecordOn =>
@@ -2480,7 +2480,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String frReadings(int count) {
-    return '$count mesures • au plus 2000 mesures de couverture • elles expirent après 30 jours';
+    return '$count mesures • jusqu’à 100 000 conservées ; les trajets les plus anciens sont supprimés en premier';
   }
 
   @override
@@ -7643,4 +7643,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get sarneg_autoClear => 'S’efface après 1 minute sans saisie.';
+
+  @override
+  String get frHopDirect => 'direct';
+
+  @override
+  String get frHopRelayed => 'relayé';
+
+  @override
+  String get frHopUnknown => 'sauts inconnus';
+
+  @override
+  String frDriveReading(String node, String hops, String snr, String rssi) {
+    return 'Nœud $node • $hops • SNR $snr • RSSI $rssi';
+  }
 }

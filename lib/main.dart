@@ -18,6 +18,7 @@ import 'services/bastion_units.dart';
 import 'services/bastion_app_search.dart';
 import 'services/bastion_geo.dart';
 import 'services/bastion_node_groups.dart';
+import 'services/bastion_drive_log.dart';
 import 'services/bastion_field_log.dart';
 import 'app_lock_gate.dart';
 import 'l10n/bastion_text.dart';
@@ -134,6 +135,8 @@ Future<void> main() async {
   await BastionChatStorage.useSqlite();
   await BastionChatStorage.applySavedEncryption();
   await BastionFieldLog.instance.load();
+  // Drives live in their own database; old coverage readings move over once.
+  await BastionDriveLog.instance.load();
   await BastionBotGuard.instance.load();
   await BastionAppLock.instance.load();
   await BastionScheduledMessages.instance.load();
@@ -156,7 +159,7 @@ class BastionApp extends StatefulWidget {
   static Color accentOf(BuildContext context) =>
       Theme.of(context).colorScheme.primary;
 
-  /// The built-in look for [brightness] (Blaze dark, Bare Beauty light).
+  /// The built-in look for [brightness] (BLACKOUT dark, Bare Beauty light).
   static ThemeData appearance(Brightness brightness) =>
       NotoryxTheme.build(brightness);
 
@@ -183,7 +186,7 @@ class _BastionAppState extends State<BastionApp> with WidgetsBindingObserver {
     if (BastionPreferences.instance.darkModeTheme.isNotEmpty) setState(() {});
   }
 
-  // Seasonal follows the date, so check it again when the app comes back.
+  // Rebuild when the app comes back, after the app lock check.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused)

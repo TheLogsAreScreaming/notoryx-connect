@@ -12,17 +12,11 @@ import 'bastion_units.dart';
 /// Phone appearance preferences; radio configuration is never changed.
 class BastionPreferences extends ChangeNotifier {
   static final instance = BastionPreferences();
-  /// The chosen theme's id (see [BastionTheme]); Blaze by default.
-  String appTheme = BastionTheme.blaze.id;
+  /// The chosen theme's id (see [BastionTheme]); BLACKOUT by default.
+  String appTheme = BastionTheme.fallback.id;
 
   /// The theme used while the device is in dark mode, or '' for none.
   String darkModeTheme = '';
-
-  /// The Seasonal theme's season: 'auto' (by date) or a [Season] id.
-  String seasonalOverride = 'auto';
-
-  /// Whether Seasonal switches to holiday colors on their dates.
-  bool seasonalHolidays = true;
 
   /// Ask a Store & Forward router for missed messages after reconnecting.
   bool storeForwardCatchUp = false;
@@ -42,9 +36,7 @@ class BastionPreferences extends ChangeNotifier {
       appTheme: appTheme, darkModeTheme: darkModeTheme, platformBrightness: platform);
 
   /// The palette to show right now for the device's [platform] setting.
-  BastionPalette palette(Brightness platform, {DateTime? now}) => resolveThemePalette(
-      activeTheme(platform),
-      seasonalOverride: seasonalOverride, seasonalHolidays: seasonalHolidays, now: now);
+  BastionPalette palette(Brightness platform) => resolveThemePalette(activeTheme(platform));
   bool statistics = true;
   bool meshHealth = true;
   bool encounters = true;
@@ -73,17 +65,17 @@ class BastionPreferences extends ChangeNotifier {
       final p = SharedPreferencesAsync();
       final saved = await p.getString('bastion.app_theme');
       if (saved != null) {
+        // A theme that was removed (or any unknown id) opens as BLACKOUT.
         appTheme = BastionTheme.fromId(saved).id;
         final dark = await p.getString('bastion.dark_mode_theme') ?? '';
         darkModeTheme = dark.isEmpty ? '' : BastionTheme.fromId(dark).id;
       } else {
-        // Before the eight themes there was only light, dark or system.
+        // Before the theme list there was only light, dark or system. A
+        // fresh install has neither and starts on BLACKOUT.
         final mode = await p.getString('bastion.theme');
-        appTheme = BastionTheme.fromId(mode ?? 'dark').id;
+        appTheme = mode == null ? BastionTheme.fallback.id : BastionTheme.fromId(mode).id;
         darkModeTheme = mode == 'system' ? BastionTheme.blaze.id : '';
       }
-      seasonalOverride = await p.getString('bastion.seasonal_override') ?? 'auto';
-      seasonalHolidays = await p.getBool('bastion.seasonal_holidays') ?? true;
       storeForwardCatchUp = await p.getBool('bastion.store_forward_catch_up') ?? false;
       mqttProxy = await p.getBool('bastion.mqtt_proxy') ?? false;
       heardWithin = BastionHeardWithin.fromName(await p.getString('bastion.nodes.heard_within'));
@@ -105,7 +97,7 @@ class BastionPreferences extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> update({bool? catchUp, bool? proxyMqtt, BastionHeardWithin? heard, bool? favorites, String? theme, String? darkTheme, String? season, bool? holidays, bool? stats, bool? health, bool? saved,
+  Future<void> update({bool? catchUp, bool? proxyMqtt, BastionHeardWithin? heard, bool? favorites, String? theme, String? darkTheme, bool? stats, bool? health, bool? saved,
       int? retentionDays, bool? speak, BastionUnits? unitSystem, int? keepMessages, BastionStaleAfter? stale, bool? rings, bool? previews}) async {
     storeForwardCatchUp = catchUp ?? storeForwardCatchUp;
     mqttProxy = proxyMqtt ?? mqttProxy;
@@ -115,8 +107,6 @@ class BastionPreferences extends ChangeNotifier {
     rangeRings = rings ?? rangeRings;
     appTheme = theme ?? appTheme;
     darkModeTheme = darkTheme ?? darkModeTheme;
-    seasonalOverride = season ?? seasonalOverride;
-    seasonalHolidays = holidays ?? seasonalHolidays;
     statistics = stats ?? statistics;
     meshHealth = health ?? meshHealth;
     encounters = saved ?? encounters;
@@ -131,8 +121,9 @@ class BastionPreferences extends ChangeNotifier {
       final p = SharedPreferencesAsync();
       await p.setString('bastion.app_theme', appTheme);
       await p.setString('bastion.dark_mode_theme', darkModeTheme);
-      await p.setString('bastion.seasonal_override', seasonalOverride);
-      await p.setBool('bastion.seasonal_holidays', seasonalHolidays);
+      // Settings of the removed Seasonal theme.
+      await p.remove('bastion.seasonal_override');
+      await p.remove('bastion.seasonal_holidays');
       await p.setBool('bastion.store_forward_catch_up', storeForwardCatchUp);
       await p.setBool('bastion.mqtt_proxy', mqttProxy);
       await p.setString('bastion.nodes.heard_within', heardWithin.name);

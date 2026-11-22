@@ -1,4 +1,5 @@
-import 'package:bastion/services/bastion_field_log.dart';
+import 'package:bastion/services/bastion_drive_log.dart';
+import 'package:bastion/services/bastion_geo.dart';
 import 'dart:convert';
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/map_page.dart';
@@ -13,36 +14,57 @@ import 'package:shared_preferences_platform_interface/in_memory_shared_preferenc
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 
 Map<String, Object?> reading(double lat, double lon, Object? snr, {int radio = 1}) =>
-    {'kind': 'coverage', 'radio': radio, 'lat': lat, 'lon': lon, 'snr': snr};
+    {'kind': 'coverage', 'radio': radio, 'lat': lat, 'lon': lon, 'snr': snr, 'from': 7};
+
+DriveSample sample(double lat, double lon, double? snr, {HopClass hops = HopClass.direct, int trip = 1}) =>
+    DriveSample(trip: trip, time: DateTime.utc(2026, 11, 22), latitude: lat, longitude: lon, from: 7, snr: snr, hops: hops);
 
 void main() {
   setUp(() => SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty());
 
   group('grid', () {
     test('nearby readings average into one square', () {
-      final cells = BastionCoverageGrid.build([reading(35.2001, -80.8001, 4), reading(35.2002, -80.8002, -2)]);
+      final cells = BastionCoverageGrid.build([sample(35.2001, -80.8001, 4), sample(35.2002, -80.8002, -2)]);
       expect(cells, hasLength(1));
       expect((cells.single.readings, cells.single.meanSnr), (2, 1.0));
       expect(cells.single.band, CoverageBand.strong);
     });
 
+    test('squares are the chosen size in metres', () {
+      for (final size in CoverageSquare.values) {
+        final c = BastionCoverageGrid.build([sample(35.2001, -80.8001, 0)], size: size).single;
+        final tall = BastionGeo.distanceMeters(c.south, c.west, c.north, c.west);
+        final wide = BastionGeo.distanceMeters(c.centreLatitude, c.west, c.centreLatitude, c.east);
+        expect(tall, closeTo(size.meters, size.meters * 0.01));
+        expect(wide, closeTo(size.meters, size.meters * 0.01));
+        expect(35.2001, inInclusiveRange(c.south, c.north));
+        expect(-80.8001, inInclusiveRange(c.west, c.east));
+      }
+    });
+
     test('bands follow the SNR thresholds', () {
-      CoverageBand band(double snr) => BastionCoverageGrid.build([reading(1, 1, snr)]).single.band;
+      CoverageBand band(double snr) => BastionCoverageGrid.build([sample(1, 1, snr)]).single.band;
       expect([band(0), band(-1), band(-10), band(-10.5)],
           [CoverageBand.strong, CoverageBand.fair, CoverageBand.fair, CoverageBand.weak]);
     });
 
-    test('skips other radios, other kinds and unusable readings', () {
+    test('relayed readings count only when asked for', () {
+      final readings = [sample(1, 1, 5, hops: HopClass.relayed), sample(1, 1, -5, hops: HopClass.unknown)];
+      expect(BastionCoverageGrid.build(readings).single.meanSnr, -5);
+      expect(BastionCoverageGrid.build(readings, classes: HopClass.values.toSet()).single.readings, 2);
+      expect(BastionCoverageGrid.build(readings, classes: {HopClass.direct}), isEmpty);
+    });
+
+    test('skips other trips and unusable readings', () {
       expect(BastionCoverageGrid.build([
-        reading(1, 1, 1, radio: 2),
-        reading(1, 1, null),
-        reading(1, 1, double.nan),
-        {'kind': 'incident', 'radio': 1, 'lat': 1, 'lon': 1, 'snr': 1},
-      ], radio: 1), isEmpty);
+        sample(1, 1, 1, trip: 2),
+        sample(1, 1, null),
+        sample(1, 1, double.nan),
+      ], trips: {1}), isEmpty);
     });
 
     test('density tops out', () {
-      final cells = BastionCoverageGrid.build([for (var i = 0; i < 30; i++) reading(1, 1, 0)]);
+      final cells = BastionCoverageGrid.build([for (var i = 0; i < 30; i++) sample(1, 1, 0)]);
       expect(cells.single.density, 1);
     });
   });
@@ -98,13 +120,11 @@ void main() {
           {...r, 'time': DateTime.now().toUtc().toIso8601String()},
       ]),
     });
-    await BastionFieldLog.instance.load();
-    addTearDown(() async {
-      // The log is shared, so leave it empty for the next test.
-      SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
-      await BastionFieldLog.instance.load();
-    });
-    expect(BastionFieldLog.instance.records, hasLength(4));
+    // Old field-log readings move into the drive log as one trip.
+    BastionDriveLog.instance.useStore(MemoryDriveLogStore());
+    await BastionDriveLog.instance.load(useDatabase: false);
+    addTearDown(() => BastionDriveLog.instance.useStore(MemoryDriveLogStore()));
+    expect(BastionDriveLog.instance.samples, hasLength(4));
     tester.view.physicalSize = const Size(600, 1000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);

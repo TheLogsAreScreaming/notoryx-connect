@@ -26,15 +26,13 @@ class NxGlow extends ThemeExtension<NxGlow> {
         secondary: p.secondary,
         tertiary: p.tertiary,
         contour: p.ink,
-        // Pink Overload's glossy glints; no other theme has them.
-        sparkle: identical(p, BastionTheme.pinkOverload.palette) ? [p.magenta, Colors.white, p.tertiary] : null,
       );
 
   final Color ground, glow, secondary, tertiary, contour;
   final List<Color>? sparkle;
 
   static NxGlow of(BuildContext context) =>
-      Theme.of(context).extension<NxGlow>() ?? NxGlow.fromPalette(BastionTheme.blaze.palette);
+      Theme.of(context).extension<NxGlow>() ?? NxGlow.fromPalette(BastionTheme.fallback.palette);
 
   @override
   NxGlow copyWith() => this;

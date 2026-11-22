@@ -4083,7 +4083,7 @@ abstract class AppLocalizations {
   /// No description provided for @frRecordSub.
   ///
   /// In en, this message translates to:
-  /// **'Requests phone GPS. Stops on disconnect. Does not send your location.'**
+  /// **'Requests phone GPS. Keeps recording with the screen off while a notification shows. Stops on disconnect. Does not send your location.'**
   String get frRecordSub;
 
   /// No description provided for @frRecordOn.
@@ -4101,7 +4101,7 @@ abstract class AppLocalizations {
   /// No description provided for @frReadings.
   ///
   /// In en, this message translates to:
-  /// **'{count} readings • maximum 2000 coverage readings • coverage expires after 30 days'**
+  /// **'{count} readings • up to 100,000 kept; the oldest drives are removed first'**
   String frReadings(int count);
 
   /// No description provided for @frCoverageCopied.
@@ -12366,6 +12366,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clears after 1 minute without typing.'**
   String get sarneg_autoClear;
+
+  /// No description provided for @frHopDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'direct'**
+  String get frHopDirect;
+
+  /// No description provided for @frHopRelayed.
+  ///
+  /// In en, this message translates to:
+  /// **'relayed'**
+  String get frHopRelayed;
+
+  /// No description provided for @frHopUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'hops unknown'**
+  String get frHopUnknown;
+
+  /// No description provided for @frDriveReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Node {node} • {hops} • SNR {snr} • RSSI {rssi}'**
+  String frDriveReading(String node, String hops, String snr, String rssi);
 }
 
 class _AppLocalizationsDelegate

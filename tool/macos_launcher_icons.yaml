@@ -5,4 +5,5 @@ flutter_launcher_icons:
   ios: false
   macos:
     generate: true
-    image_path: branding/notoryx-icon.png
+    # Rounded macOS tile with its own transparent margin.
+    image_path: branding/notoryx-icon-macos.png

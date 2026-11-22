@@ -28,7 +28,7 @@ Stored in the app's private storage, which other apps cannot read. Uninstalling 
 
 ## Permissions
 - **Bluetooth (nearby devices):** to find and connect to your radio. The scan does not determine your location.
-- **Location:** only for sharing your phone's location with the mesh and recording coverage, both off unless you turn them on.
+- **Location:** only for sharing your phone's location with the mesh and recording coverage, both off unless you turn them on. While you record a drive, location keeps running with the screen off and a notification (Android) or the blue location indicator (iOS) shows; drive readings stay on your phone.
 - **Camera:** only to scan channel QR codes when you choose to.
 - **Notifications and foreground service:** to keep the radio connection open in the background and to show message and field alerts.
 - **Internet:** to download map images, to look up terrain heights when you use the link planner (the points you plan between go to Open-Meteo), and, only if you turn on "Carry MQTT through this phone", to pass your radio's MQTT traffic to the broker set on your radio.

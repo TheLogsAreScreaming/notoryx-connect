@@ -1,39 +1,39 @@
 <p align="center">
-  <img src="branding/notoryx-icon.png" width="120" alt="NOTORYX app icon">
+  <img src="branding/notoryx-connect-banner.png" width="100%" alt="NOTORYX Connect: Engineered for independence.">
 </p>
 
 # NOTORYX Connect
 
-Part of the **NOTORYX** off-grid communications family. **No Towers. No Limits.**
+Part of the **NOTORYX** off-grid communications family.
 
-**An independent Android field app for LoRa mesh radios running Meshtastic® firmware.**
+**An independent field app for LoRa mesh radios running Meshtastic® firmware.**
 
-NOTORYX Connect pairs your phone with a radio over Bluetooth so you can message, map and manage the mesh without cell service. It interoperates with Meshtastic® firmware while keeping its own name, icon, interface and project identity.
+NOTORYX Connect pairs your phone with a radio over Bluetooth, Wi-Fi or USB so you can message, map and manage the mesh without cell service. It interoperates with Meshtastic® firmware while keeping its own name, icon, interface and project identity.
 
 > **Independent project:** NOTORYX Connect (formerly Bastion) is not affiliated with, sponsored by, endorsed by, or an official application of Meshtastic LLC.
 
 <p align="center">
-  <img src="docs/screenshots/home.png" width="200" alt="Home tab: field console with the demo radio connected, check-in and hold for SOS">
-  <img src="docs/screenshots/nodes.png" width="200" alt="Nodes tab: the demo mesh's node list with last-heard and favorites filters">
-  <img src="docs/screenshots/chats.png" width="200" alt="Chats: new message with channel picker, Send later and quick replies">
-  <img src="docs/screenshots/tools.png" width="200" alt="Tools: connection doctor, timeline, checklists and automations">
+  <img src="docs/screenshots/home.png" width="200" alt="Home: radio readout, trip plan, check-in and hold for SOS">
+  <img src="docs/screenshots/chats.png" width="200" alt="Chats: channels and direct messages with link, message and queue counts">
+  <img src="docs/screenshots/nodes.png" width="200" alt="Nodes: active nodes with distance, hops, battery and signal">
+  <img src="docs/screenshots/traffic_map.png" width="200" alt="Map with the live Traffic view: a packet hopping through a relay">
 </p>
 <p align="center">
-  <img src="docs/screenshots/trip.png" width="200" alt="Plan your trip: contacts, overdue alert and check-in reminder">
-  <img src="docs/screenshots/beacons.png" width="200" alt="Mesh beacons heard, and sending one by hand">
+  <img src="docs/screenshots/tools.png" width="200" alt="More, Tools: connection doctor, timeline, field guide, antenna hunt and mesh activity">
+  <img src="docs/screenshots/sarneg.png" width="200" alt="SARNEG code word: today's word hidden, share, and encode by hand">
   <img src="docs/screenshots/field_records.png" width="200" alt="Field records: incident log, templates, coverage and bot safeguards">
-  <img src="docs/screenshots/settings.png" width="200" alt="Settings: themes, language, units, privacy and backups">
+  <img src="docs/screenshots/settings.png" width="200" alt="More, Settings: radio, phone location sharing and position precision">
 </p>
 <p align="center">
   <img src="docs/screenshots/privacy.png" width="200" alt="Privacy and data: what's stored and what's sent">
   <img src="docs/screenshots/radio_backup.png" width="200" alt="Encrypted radio backup">
-  <img src="docs/screenshots/home_light.png" width="200" alt="Home tab in the light Bare Beauty theme">
-  <img src="docs/screenshots/nodes_light.png" width="200" alt="Nodes tab in the light Bare Beauty theme">
+  <img src="docs/screenshots/home_light.png" width="200" alt="Home in the light Bare Beauty theme">
+  <img src="docs/screenshots/nodes_light.png" width="200" alt="Nodes in the light Bare Beauty theme">
 </p>
 
-<sub>Screenshots are rendered from the app's built-in demo mode (a pretend radio and mesh), not a live radio.</sub>
+<sub>Screenshots show the default BLACKOUT theme (and Bare Beauty, the light theme), rendered from the app's built-in demo mode: a pretend radio and mesh with made-up names, not a live radio. Map tiles need the internet, so the base map is blank in these renders.</sub>
 
-> **Status (2026-11-20):** the latest release is **v1.0.0-beta.31** (version 1.0.0, build 35), which adds app-wide search. It is a test beta. Recent betas (up to beta.31) were checked on one phone (a Samsung Galaxy A15) with one radio (a Seeed T1000-E running Meshtastic firmware). Many features (USB, Wi-Fi, two-way ATAK, MQTT proxy, remote admin, offline map files, Windows and macOS builds) have automated tests but have not yet been checked on a range of phones, radios and firmware versions. Don't rely on it as your only way to call for help. Please [report issues](../../issues).
+> **Status (2026-11-22):** the latest release is **v1.0.0-beta.35** (version 1.0.0, build 39). It is a test beta. Recent betas were checked on one phone (a Samsung Galaxy A15) with one radio (a Seeed T1000-E running Meshtastic firmware). The BLACKOUT icon and theme are merged after beta.35 and arrive in the next test build. Many features (USB, Wi-Fi, two-way ATAK, MQTT proxy, remote admin, offline map files, trail routing, SOS relay, Windows and macOS builds) have automated tests but have not yet been checked on a range of phones, radios and firmware versions. Don't rely on it as your only way to call for help. Please [report issues](../../issues).
 
 ## Download
 
@@ -53,18 +53,20 @@ iOS is built in CI (unsigned) but isn't released. App Store distribution waits o
 1. On your phone, open the release and download the `.apk`.
 2. Open the file. If Android asks, allow installs from your browser or file manager.
 3. Open NOTORYX Connect and allow **Bluetooth**, **location** and **notifications** when asked.
-4. For a steady background link, set the app's battery use to **Unrestricted** (**Settings → Background connection** shows how).
+4. For a steady background link, set the app's battery use to **Unrestricted** (**More → Settings → Background connection** shows how).
 
 Newer betas install over older ones and keep your data. Don't uninstall first.
 
-**Upgrading from v0.1.3-beta.1 or earlier:** the app ID changed from `org.backcountrysignal.bastion` to `com.bastionmesh.connect`, so the new app installs separately instead of updating the old one. Make a backup in the old app (**Settings → Phone data backup / restore**), install the new app, restore the backup there, then uninstall the old app. You only do this once.
+**Upgrading from v0.1.3-beta.1 or earlier:** the app ID changed from `org.backcountrysignal.bastion` to `com.bastionmesh.connect`, so the new app installs separately instead of updating the old one. Make a backup in the old app (**More → Settings → Phone data backup / restore**), install the new app, restore the backup there, then uninstall the old app. You only do this once.
 
 ## Getting started
 
+The app has five tabs: **Home**, **Chats**, **Nodes**, **Map** and **More**. **More** holds **Tools** and **Settings**.
+
 1. **No radio yet?** On **Home**, tap **Try the demo** to explore the app with a pretend radio and mesh. Nothing is sent and your own data is left alone.
-2. **Connect your radio.** On **Home**, tap **Connect radio**, or on **Nodes**, scan and tap **Connect**. Bluetooth, Wi-Fi (TCP port 4403) and USB (OTG cable) are supported. NOTORYX Connect checks the Meshtastic service, runs the PhoneAPI handshake and syncs the node list before it marks the session ready, and reconnects on its own if the link drops. If something goes wrong, **Tools → Connection doctor** walks through the likely causes.
+2. **Connect your radio.** On **Home**, tap **Connect radio**, or on **Nodes**, scan and tap **Connect**. Bluetooth, Wi-Fi (TCP port 4403) and USB (OTG cable) are supported. NOTORYX Connect checks the Meshtastic service, runs the PhoneAPI handshake and syncs the node list before it marks the session ready, and reconnects on its own if the link drops. If something goes wrong, **More → Tools → Connection doctor** walks through the likely causes.
 3. **Send a message.** On **Chats**, pick a channel or a node and send. Messages typed while you're offline are queued and sent when the radio is back.
-4. **Check your radio's settings.** **Settings → Radio configuration** shows the node's identity, LoRa settings, channels and modules. Every change is read back from the radio to confirm it saved.
+4. **Check your radio's settings.** **More → Settings → Change radio settings** shows the node's identity, LoRa settings, channels and modules. Every change is read back from the radio to confirm it saved.
 5. **Plan your trip.** On **Home**, add up to 6 trip contacts and run **Trip readiness**. **Check in** sends them your status, position and battery, and **Hold for SOS** repeats a call for help until one of them answers.
 
 ## Features
@@ -75,6 +77,9 @@ Newer betas install over older ones and keep your data. Don't uninstall first.
 - **Trip readiness** check before you leave: radio, battery, firmware, channels, SOS channel, position, background limits and when each trip contact was last heard.
 - **Check in** with one tap (I'm OK, At camp, Delayed, Heading back). It goes to every trip contact as a direct message with time, position and battery, and the **check-in delivery map** shows who it reached.
 - **Hold for SOS** sends to your trip contacts and optionally a channel, repeats while respecting the channel's airtime, stops when a contact answers, and **I'm safe** sends an all-clear.
+- **SOS relay** (off by default): when a NOTORYX SOS on a channel reaches you with no hops left, or your radio is set not to rebroadcast, your radio passes it on once.
+- **Team setup:** channels, radio settings and trip contacts in one QR code, so a group is ready in one scan.
+- **Track log:** record where you go, export it as GPX, and get a warning when you stray from it.
 - **Team view:** each trip contact's freshness, distance, direction and battery, 24-hour trails, **day replay** of team positions, **zone alerts** when people arrive or leave, and **off-route alerts**.
 
 ### Messaging
@@ -84,17 +89,19 @@ Newer betas install over older ones and keep your data. Don't uninstall first.
 - Search across all saved messages. Chat history is kept in an on-phone database, separately for each radio, and can be **encrypted**.
 - Reply from the notification. **Ignore** or **mute** nodes, hide words you choose, and get a warning when a node's name looks like another's. An SOS reply from a trip contact is never missed.
 - **SALUTE** and **9-Line** report forms, check-in and assistance templates, and **Bot Mode** with quiet hours, rate limits and loop protection.
-- **SARNEG code words** (Tools → SARNEG code word): send grid references, frequencies and times as letters instead of digits. Your team agrees on a 10-letter word with no repeated letter (with BLACKHORSE, `[SARNEG] LRs KSAC` reads as 17S 4823). A SARNEG button in the message box codes the numbers before you press Send, and a received `[SARNEG]` message gets a tap-to-decode line. Share the word by QR code or text, and set a different word for given days. The same format works in every NOTORYX app, MeshCore ones included. It keeps numbers away from a casual listener; it is **not encryption**. Merged after the latest release, so it arrives in the next test build; not yet tried on a phone.
+- **SARNEG code words** (More → Tools → SARNEG code word): send grid references, frequencies and times as letters instead of digits. Your team agrees on a 10-letter word with no repeated letter (with BLACKHORSE, `[SARNEG] LRs KSAC` reads as 17S 4823); the app warns when you pick a widely published word like that one. A SARNEG button in the message box codes the numbers before you press Send, and a received `[SARNEG]` message gets a tap-to-decode line. Share the word by QR code or text, and set a different word for given days. The word stays hidden until you tap to show it, the hand encoder and the clipboard clear themselves after a minute, and Android blocks screenshots of the SARNEG screen. The same format works in every NOTORYX app that has SARNEG. It keeps numbers away from a casual listener; it is **not encryption**.
 - Optional **community moderation** (off by default): report spam, see a Flagged label on banned nodes, and appeal a ban on your own node.
 
 ### Nodes and maps
 - **App-wide search** from every tab: nodes (by name or node ID), channels, messages, saved places and settings.
-- Nodes grouped by when they were heard, with distance, hops, battery and signal on each row, a **stale** badge for quiet nodes, and **import nodes** from a Meshtastic app node database export.
+- Nodes grouped by when they were heard, with distance, hops, battery and signal on each row, a **stale** badge for quiet nodes, and **import nodes** from a Meshtastic app node database export (imported nodes show in the list and the Home count).
+- Sensor readings from nodes that report them, with **Request sensors** on a node; **Battery watch** lists every node that reports its battery, the most worrying first.
 - **Live Traffic map** that animates heard packets hop by hop, **range rings** around your radio, and one shared pin for nodes at the same spot.
 - **NodeVault:** every node your radios have heard, with favorites, a favorites-only filter, a **node journal** (notes and tags), telemetry charts, signal history, neighbors and node-key change alerts.
 - **Traceroute** with SNR for each hop, shown on the map, plus a **network diagram** and **mesh health** (channel use and airtime).
 - Map with node positions, waypoints, rally points and routes, a coverage heatmap, and nodes your radio has forgotten. The map can also be read as a list for screen readers.
 - **Place search**, a **topo map** and a line-of-sight **link planner** (Open-Meteo elevation).
+- **Trail routing:** plan walking routes with no signal, over trails you download beforehand from OpenStreetMap (the download sends the area's bounds to the Overpass service).
 - **Map layers** from GPX, KML or GeoJSON, **offline maps** from an MBTiles file, and GPX export of waypoints and trails. OpenStreetMap areas you've viewed stay cached offline.
 - **Mesh beacons** (which can carry a Plus Code) and **local mesh discovery**.
 - Opt-in phone GPS sharing, with position precision set for each channel.
@@ -108,6 +115,8 @@ Newer betas install over older ones and keep your data. Don't uninstall first.
 
 ### Field tools and integrations
 - Incident log, coverage observations (receiver location, SNR and RSSI), range test, store-and-forward catch-up and CSV export.
+- **Mesh activity:** field stats, network changes and a live packet log. **Antenna hunt:** clicks speed up as one node's signal gets stronger, for aiming an antenna or finding a spot (listen-only, with an optional traceroute).
+- **Field guide** and troubleshooting guides: mesh basics, batteries in the cold, solar and antennas.
 - Deployment checklist, offline checklists, battery runtime estimate and an RSSI field reference.
 - **Timeline** of messages, new nodes, signal changes and waypoints in one feed, and **automations**: rules that send a message, alert you or change channel when something happens.
 - Local alerts on the phone: low battery, new nodes, favorites going quiet, and changes in the mesh.
@@ -115,9 +124,9 @@ Newer betas install over older ones and keep your data. Don't uninstall first.
 - Low-power field mode and a background connection service on Android.
 
 ### Privacy, backups and look
-- No account, no analytics, no ads and no NOTORYX servers. **Settings → Privacy & data** lists what's stored and sent, and can delete chat history or all phone data.
+- No account, no analytics, no ads and no NOTORYX servers. **More → Settings → Privacy & data** lists what's stored and sent, and can delete chat history or all phone data.
 - Optional **app lock**, and an **encrypted phone data backup** of chats, NodeVault, waypoints, field records and settings.
-- Eight themes (Blaze, Neon Anarchy, Tactical, Pink Overload, Bare Beauty, Okabe-Ito, Night Ops and Seasonal) in the NOTORYX Core look, with Inter type and squared cards, and side tabs on tablets.
+- Five themes: **BLACKOUT** (the default: matte black, charcoal, steel and frost, with color kept only for status like good signal, warnings and SOS), Blaze, Bare Beauty (light), Okabe-Ito (color-blind safe) and Night Ops (dim reds for low light). An optional second theme for when the phone is in dark mode, and a custom background. Glass cards, Inter type, and side tabs on tablets.
 - In English, Spanish, French and German (follows the phone language; translations are unreviewed). Layouts hold up with large text and screen readers ([accessibility audit](docs/ACCESSIBILITY_AUDIT.md)).
 
 ## Safety
@@ -143,7 +152,7 @@ CI generates the Android project with the Dart project name `bastion` and organi
 
 Dependency versions are locked in the committed `pubspec.lock`, and CI runs `flutter pub get --enforce-lockfile`, so every build uses the same packages. To change a dependency, edit `pubspec.yaml`, run plain `flutter pub get`, and commit the updated `pubspec.lock`.
 
-The README screenshots (the main tabs in the Blaze and Bare Beauty themes, plus the trip, beacons, discovery, field records, privacy and backup screens) are rendered by `test/preview/screens_preview_test.dart` with the app's own fonts and the demo radio:
+The README screenshots (the main tabs in the BLACKOUT and Bare Beauty themes, plus the SARNEG, trip, beacons, discovery, field records, privacy and backup screens and the Traffic map) are rendered by `test/preview/screens_preview_test.dart` with the app's own fonts and the demo radio:
 
 ```sh
 PREVIEW_OUT=docs/screenshots flutter test test/preview
@@ -165,11 +174,15 @@ The NOTORYX Connect icon artwork is in `branding/`:
 
 | File | Use |
 |---|---|
-| `notoryx-icon-source.png` | Original artwork (1254 px) |
-| `notoryx-icon.png` | Launcher icon for older Android versions (1024 px) |
-| `notoryx-icon-foreground.png` | Adaptive icon foreground: the N mark on transparency, inside the safe zone, over `#101011` |
+| `notoryx-icon.png` | Full square icon (1024 px): older Android launchers, iPhone and this README |
+| `notoryx-icon-foreground.png` | Android adaptive icon foreground: the emblem on transparency, inside the safe zone |
+| `notoryx-icon-background.png` | Android adaptive icon background |
+| `notoryx-icon-monochrome.png` | Android 13+ themed (monochrome) icon |
+| `notoryx-icon-macos.png` | macOS app icon (rounded tile, 1024 px) |
+| `notoryx-icon.ico` | Windows app icon (16–256 px) |
+| `notoryx-connect-banner.png` | Banner at the top of this README |
 
-Play Store graphics (512 px icon, 1024 × 500 feature graphic) are in `fastlane/metadata/android/en-US/images/`. `python3 tool/make_store_graphics.py` regenerates all of these from the source artwork (needs Pillow).
+These come from the NOTORYX BLACKOUT brand kit (Connect set). Play Store graphics (512 px icon, 1024 × 500 feature graphic) are in `fastlane/metadata/android/en-US/images/`, and the in-app header mark is `assets/images/notoryx_logo.png`.
 
 The icon and NOTORYX Connect visual identity are independent artwork and must not incorporate the official Meshtastic logo unless a future use is separately authorized and complies with the then-current trademark rules.
 

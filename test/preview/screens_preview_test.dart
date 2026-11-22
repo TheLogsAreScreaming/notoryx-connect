@@ -4,6 +4,7 @@
 //   PREVIEW_OUT=docs/screenshots flutter test test/preview
 // Screens use the built-in demo radio (BastionDemoRadio), so they show a
 // pretend mesh instead of the not-yet-connected state.
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -14,6 +15,8 @@ import 'package:bastion/main.dart';
 import 'package:bastion/phone_backup_page.dart';
 import 'package:bastion/privacy_page.dart';
 import 'package:bastion/radio_backup_page.dart';
+import 'package:bastion/sarneg/sarneg.dart';
+import 'package:bastion/sarneg/sarneg_ui.dart';
 import 'package:bastion/services/bastion_demo_radio.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/trip_page.dart';
@@ -49,6 +52,11 @@ Future<void> _loadFonts() async {
   await load('JetBrains Mono', [
     for (final w in ['Regular', 'Medium', 'SemiBold', 'Bold']) 'assets/fonts/JetBrainsMono-$w.ttf',
   ]);
+  // On a phone 'monospace' is the system mono font; here the bundled one
+  // stands in, so the SARNEG screen doesn't render empty boxes.
+  await load('monospace', [
+    for (final w in ['Regular', 'Bold']) 'assets/fonts/JetBrainsMono-$w.ttf',
+  ]);
 }
 
 void main() {
@@ -59,6 +67,8 @@ void main() {
     'home': [Icons.shield_outlined],
     'nodes': [Icons.hub_outlined],
     'chats': [Icons.chat_bubble_outline],
+    // Map tiles need the internet, so the base map is blank here.
+    'map': [Icons.map_outlined],
     'tools': [Icons.more_horiz, Icons.build_outlined],
     'settings': [Icons.more_horiz, Icons.settings_outlined],
   };
@@ -76,7 +86,11 @@ void main() {
       const MethodChannel('plugins.flutter.io/path_provider'), (call) async => tmp);
   });
 
-  // Sub-screens opened from the tabs, rendered in the dark theme.
+  // A made-up code word for the SARNEG screen; it stays hidden on screen.
+  SarnegKeys.instance = SarnegKeys(storage: MemorySarnegStorage(jsonEncode(SarnegKeySet(word: 'FLYINGDUCK').toJson())));
+
+  // Sub-screens opened from the tabs, rendered in the default dark theme
+  // (BLACKOUT).
   final pages = <String, Widget Function(MeshtasticRadioCoordinator)>{
     'field_records': (radio) => FieldToolsPage(radio: radio),
     'privacy': (radio) => PrivacyPage(radio: radio),
@@ -85,6 +99,7 @@ void main() {
     'beacons': (radio) => BeaconPage(radio: radio),
     'trip': (radio) => TripPage(radio: radio),
     'discovery': (radio) => LocalMeshDiscoveryPage(radio: radio),
+    'sarneg': (radio) => const SarnegScreen(),
   };
   for (final page in pages.entries) {
     testWidgets('page ${page.key}', (tester) async {
@@ -112,9 +127,9 @@ void main() {
     }, skip: out == null);
   }
 
-  // PREVIEW_THEME=pink_overload renders one theme; otherwise Blaze and
-  // Bare Beauty (the old dark and light looks).
-  final themes = Platform.environment['PREVIEW_THEME']?.split(',') ?? ['blaze', 'bare_beauty'];
+  // PREVIEW_THEME=night_ops renders one theme; otherwise BLACKOUT (the
+  // default) and Bare Beauty (the light theme).
+  final themes = Platform.environment['PREVIEW_THEME']?.split(',') ?? ['blackout', 'bare_beauty'];
   for (final theme in themes) {
     testWidgets('main tabs $theme', (tester) async {
       SharedPreferences.setMockInitialValues({});
@@ -142,7 +157,7 @@ void main() {
           final ro = boundary.currentContext!.findRenderObject()! as RenderRepaintBoundary;
           final image = await ro.toImage(pixelRatio: 2);
           final png = await image.toByteData(format: ui.ImageByteFormat.png);
-          final suffix = switch (theme) { 'blaze' => '', 'bare_beauty' => '_light', _ => '_$theme' };
+          final suffix = switch (theme) { 'blackout' => '', 'bare_beauty' => '_light', _ => '_$theme' };
           File('$out/${tab.key}$suffix.png')
             ..createSync(recursive: true)
             ..writeAsBytesSync(png!.buffer.asUint8List());

@@ -42,7 +42,7 @@ Connect has never been run on a real iPhone. Before submitting, test on one with
 
 > NOTORYX Connect talks to LoRa mesh radios over Bluetooth, and needs that hardware for full use. To review without a radio, open Settings and turn on **Demo mode**, or tap the demo option on Home. It simulates a radio and mesh. Nothing is sent. No account or login is needed.
 >
-> Bluetooth runs in the background so messages keep arriving while the phone is locked. Location is used only if the person turns on location sharing or coverage recording. The camera is used only to scan channel QR codes.
+> Bluetooth runs in the background so messages keep arriving while the phone is locked. Location is used only if the person turns on location sharing or coverage recording. While the person records a drive, location keeps running in the background (the blue indicator shows) so readings are placed correctly with the screen locked; it stops when the drive stops. The camera is used only to scan channel QR codes.
 >
 > NOTORYX Connect is an independent project and is not affiliated with Meshtastic LLC.
 

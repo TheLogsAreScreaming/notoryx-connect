@@ -9,8 +9,9 @@ double contrast(Color a, Color b) {
 }
 
 void main() {
-  test('the default dark look is Blaze with its hi-vis orange', () {
-    expect(BastionApp.appearance(Brightness.dark).colorScheme.primary, BastionTheme.blaze.palette.accent);
+  test('the default dark look is BLACKOUT with its frost accent; Blaze keeps its hi-vis orange', () {
+    expect(BastionApp.appearance(Brightness.dark).colorScheme.primary, BastionTheme.blackout.palette.accent);
+    expect(BastionTheme.blackout.palette.accent, const Color(0xFFE8E8E8));
     expect(BastionTheme.blaze.palette.accent, const Color(0xFFFF8A00));
   });
 
@@ -42,7 +43,7 @@ void main() {
     }
     final dark = await accentIn(Brightness.dark);
     final light = await accentIn(Brightness.light);
-    expect(dark, BastionTheme.blaze.palette.accent);
+    expect(dark, BastionTheme.blackout.palette.accent);
     expect(light, BastionTheme.bareBeauty.palette.accent);
   });
 }

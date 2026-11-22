@@ -33,11 +33,13 @@ plist.update({
     'NSCameraUsageDescription':
         'NOTORYX Connect uses the camera only to scan channel QR codes you choose to scan.',
     'NSLocationWhenInUseUsageDescription':
-        'NOTORYX Connect uses your location only if you turn on location sharing.',
+        'NOTORYX Connect uses your location only if you turn on location sharing or record a drive. '
+        'While a drive records, it keeps using location with the screen off.',
     'NSLocalNetworkUsageDescription':
         'NOTORYX Connect connects to radios on your Wi-Fi network if you ask it to.',
-    # Lets the radio link continue while the app is in the background.
-    'UIBackgroundModes': ['bluetooth-central'],
+    # Lets the radio link continue while the app is in the background, and
+    # a drive keep its GPS (only while one records; blue indicator shows).
+    'UIBackgroundModes': ['bluetooth-central', 'location'],
 })
 with (RUNNER / 'Info.plist').open('wb') as f:
     plistlib.dump(plist, f)

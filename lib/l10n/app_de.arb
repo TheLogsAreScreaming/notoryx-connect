@@ -663,10 +663,10 @@
   "frCoverage": "Abdeckungsverlauf",
   "frCoverageSub": "Empfängerstandort mit empfangenem Funksignal • nur lokale Aufzeichnung",
   "frRecord": "Abdeckung aufzeichnen",
-  "frRecordSub": "Fordert das GPS des Telefons an. Stoppt beim Trennen. Sendet Ihren Standort nicht.",
+  "frRecordSub": "Fordert das GPS des Telefons an. Zeichnet bei ausgeschaltetem Bildschirm weiter auf, solange eine Benachrichtigung angezeigt wird. Stoppt beim Trennen. Sendet Ihren Standort nicht.",
   "frRecordOn": "Abdeckungsaufzeichnung aktiv; wartet auf einen frischen, genauen GPS-Fix und Funkpakete.",
   "frRecordOff": "Abdeckungsaufzeichnung gestoppt.",
-  "frReadings": "{count} Messungen • höchstens 2000 Abdeckungsmessungen • sie verfallen nach 30 Tagen",
+  "frReadings": "{count} Messungen • bis zu 100.000 werden behalten; die ältesten Fahrten werden zuerst entfernt",
   "frCoverageCopied": "Abdeckungs-CSV kopiert. In eine Datei oder Tabelle einfügen.",
   "frCopyCoverage": "Abdeckungs-CSV kopieren",
   "frBot": "Bot-Schutz und Ruhezeiten",
@@ -2041,5 +2041,9 @@
   "sarneg_randomWord": "Zufallswort",
   "sarneg_wellKnownWord": "Dieses Wort steht in öffentlichen Anleitungen, also kann es jeder ausprobieren. Ein Zufallswort ist sicherer.",
   "sarneg_clipboardClears": "Die Zwischenablage wird nach 1 Minute geleert.",
-  "sarneg_autoClear": "Wird nach 1 Minute ohne Eingabe geleert."
+  "sarneg_autoClear": "Wird nach 1 Minute ohne Eingabe geleert.",
+  "frHopDirect": "direkt",
+  "frHopRelayed": "weitergeleitet",
+  "frHopUnknown": "Sprünge unbekannt",
+  "frDriveReading": "Knoten {node} • {hops} • SNR {snr} • RSSI {rssi}"
 }

@@ -4,6 +4,7 @@ import 'package:bastion/generated/meshtastic/mesh.pbenum.dart' as pb;
 import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/nodedb_import_page.dart';
 import 'package:bastion/services/bastion_node_keys.dart';
+import 'package:bastion/services/bastion_radio_history.dart';
 import 'package:bastion/services/bastion_node_vault.dart';
 import 'package:bastion/services/meshtastic_node_database.dart';
 import 'package:bastion/services/meshtastic_nodedb_import.dart';
@@ -206,6 +207,31 @@ void main() {
     expect(result.added, 3);
     expect(result.keys, 1);
     expect(radio.nodeKeys.knownKey(0x22), _keyA);
+  });
+
+  test('imported nodes the radio does not list show in the known nodes', () async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.withData({
+      BastionRadioHistory.lastRadioKey: _me,
+    });
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    // Let the last radio's saved nodes load.
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    final result = await radio.importNodeDatabase(
+        MeshtasticNodeDbExport.parse(_file()), includeInternet: false);
+    expect(result?.radio, _me);
+    expect(radio.nodes, isEmpty, reason: 'no radio is connected');
+    final known = {for (final n in radio.knownNodes) n.num: n};
+    expect(known.keys, containsAll([0x22, 0x33, 0x66]));
+    expect(known[0x22]!.longName, 'Ridge Relay');
+    expect(known[0x22]!.latitude, 35.1);
+    expect(known[0x22]!.lastHeard, isNotNull);
+    expect(radio.knownNodeCount, radio.knownNodes.length);
+
+    await radio.filters.setIgnored(0x22, true);
+    expect(radio.knownNodes.map((n) => n.num), isNot(contains(0x22)),
+        reason: 'ignored nodes stay hidden');
+    expect(radio.knownNodeCount, radio.knownNodes.length);
   });
 
   testWidgets('the page shows what is in the file and imports it', (tester) async {
