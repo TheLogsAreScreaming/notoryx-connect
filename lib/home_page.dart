@@ -117,6 +117,8 @@ class _ConsoleCard extends StatelessWidget {
             !ready || battery == null ? '–' : battery > 100 ? l.homePluggedIn : '$battery%',
             l.homeBattery,
             color: battery != null && battery <= 20 ? status.warning : null,
+            // "Plugged in" breaks mid-word in the narrow tile; show a plug.
+            icon: ready && battery != null && battery > 100 ? Icons.power : null,
           ),
           NxReadout(volts == null ? '–' : volts.toStringAsFixed(2), TelemetryMetric.voltage.label),
           NxReadout(chUse == null ? '–' : '${chUse.toStringAsFixed(0)}%', TelemetryMetric.channelUtilization.label),
