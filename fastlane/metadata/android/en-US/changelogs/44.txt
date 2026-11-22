@@ -1,0 +1,1 @@
+Traceroute: opening it from a node restored from an import now keeps that node as the destination. Settings: the trademark notice reads cleanly.
