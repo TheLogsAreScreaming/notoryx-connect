@@ -127,10 +127,12 @@ activity.write_text("""package com.bastionmesh.bastion
 
 import android.content.Context
 import android.os.Bundle
+import android.view.WindowManager
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
+import io.flutter.plugin.common.MethodChannel
 
 // FragmentActivity because the system fingerprint prompt needs it.
 class MainActivity : FlutterFragmentActivity() {
@@ -140,6 +142,32 @@ class MainActivity : FlutterFragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         ensureEngine(this)
         super.onCreate(savedInstanceState)
+        applySecure()
+    }
+
+    // Screens that show a secret (the SARNEG code word) ask for FLAG_SECURE,
+    // which keeps them out of screenshots, screen recording and the recent
+    // apps preview. The flag is kept here so a new activity on the same
+    // engine starts with it.
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, SECURE_CHANNEL).setMethodCallHandler { call, result ->
+            if (call.method == "setSecure") {
+                secure = call.arguments == true
+                applySecure()
+                result.success(null)
+            } else {
+                result.notImplemented()
+            }
+        }
+    }
+
+    private fun applySecure() {
+        if (secure) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        }
     }
 
     // FlutterFragmentActivity honors shouldDestroyEngineWithHost only for an
@@ -159,6 +187,8 @@ class MainActivity : FlutterFragmentActivity() {
 
     private companion object {
         const val ENGINE_ID = "notoryx"
+        const val SECURE_CHANNEL = "notoryx/secure_screen"
+        var secure = false
     }
 }
 """)
@@ -167,15 +197,10 @@ print('Kept one Flutter engine across activities')
 # Optional SMS relay. Off unless asked for, so no Play build can carry it.
 if '--sms' in sys.argv[1:]:
     source=activity.read_text()
-    anchor='    override fun shouldDestroyEngineWithHost(): Boolean = false\n'
+    anchor='        super.configureFlutterEngine(flutterEngine)\n'
     if anchor not in source:
         raise SystemExit('Could not add the SMS relay to MainActivity')
-    activity.write_text(source.replace(anchor, '''    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        super.configureFlutterEngine(flutterEngine)
-        SmsRelayChannel.attach(this, flutterEngine)
-    }
-
-''' + anchor, 1))
+    activity.write_text(source.replace(anchor, anchor + '        SmsRelayChannel.attach(this, flutterEngine)\n', 1))
     for src in Path('android_sms_overlay').rglob('*'):
         if src.is_file():
             dest=Path('android')/src.relative_to('android_sms_overlay')
