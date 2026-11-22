@@ -1,0 +1,1 @@
+New BLACKOUT look: a new app icon, and BLACKOUT as the default theme. Kept themes: Blaze, Bare Beauty, Okabe-Ito and Night Ops; anyone on a removed theme opens in BLACKOUT.
