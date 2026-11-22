@@ -38,7 +38,7 @@ def verify(decoded, signature, policy, version):
  if decoded.get('versionName') != version[0] or decoded.get('versionCode') != version[1]: raise ValueError('Release version differs from pubspec')
  if decoded.get('application',{}).get('debuggable',False): raise ValueError('Release APK is debuggable')
  permissions=[p['name'] for p in decoded['permissions']]
- if len(set(permissions)) != len(permissions) or sorted(permissions) != sorted(policy['permissions']): raise ValueError('Merged release permissions differ from policy')
+ if len(set(permissions)) != len(permissions) or sorted(permissions) != sorted(policy['permissions']): raise ValueError('Merged release permissions differ from policy: added %s, missing %s' % (sorted(set(permissions)-set(policy['permissions'])), sorted(set(policy['permissions'])-set(permissions))))
  fingerprints=re.findall(r'^(?:Signer #\d+|V\d(?:\.\d+)? Signer:) certificate SHA-256 digest: *([0-9a-fA-F:]+)$',signature,re.M)
  fingerprints={f.replace(':','').lower() for f in fingerprints}
  signer_count=re.search(r'^Number of signers: *1$',signature,re.M)
