@@ -263,7 +263,15 @@ void main() {
     await openTools(tester);
     await tester.pumpAndSettle();
     expect(find.text('Doctor de conexión'), findsOneWidget);
-    // More tools sit above the checklist than fit on a small phone.
+    // More tools sit above the checklist than fit on a small phone, and the
+    // checklist starts collapsed.
+    final checklist = find.byKey(const ValueKey('tools-deployment-checklist'));
+    await tester.scrollUntilVisible(checklist, 200, scrollable: find.byType(Scrollable).first);
+    // Bring it clear of the floating tab bar before tapping.
+    await Scrollable.ensureVisible(tester.element(checklist), alignment: 0.2);
+    await tester.pumpAndSettle();
+    await tester.tap(checklist);
+    await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.text('Radio cargada'), 200, scrollable: find.byType(Scrollable).first);
     expect(find.text('Radio cargada'), findsOneWidget);
     expect(find.text('Connection doctor'), findsNothing);

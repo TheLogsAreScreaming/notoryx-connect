@@ -41,6 +41,16 @@ void main() {
     await tester.scrollUntilVisible(find.text('Deployment checklist'), 250,
         scrollable: find.byType(Scrollable).first);
     expect(find.text('Deployment checklist'), findsOneWidget);
+    // Collapsed by default so it doesn't fill the phone screen.
+    final checklistTile = find.byKey(const ValueKey('tools-deployment-checklist'));
+    expect(find.descendant(of: checklistTile, matching: find.byType(CheckboxListTile)),
+        findsNothing);
+    await tester.tap(find.text('Deployment checklist'));
+    await tester.pumpAndSettle();
+    expect(find.descendant(of: checklistTile, matching: find.byType(CheckboxListTile)),
+        findsWidgets);
+    await tester.tap(find.text('Deployment checklist'));
+    await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.text('Battery runtime'), 250,
         scrollable: find.byType(Scrollable).first);
     expect(find.text('Battery runtime'), findsOneWidget);

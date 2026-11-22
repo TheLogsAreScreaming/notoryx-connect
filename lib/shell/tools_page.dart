@@ -139,7 +139,7 @@ class _ToolsPageState extends State<_ToolsPage> {
           onTap: () => _open(AutomationsPage(engine: automations, radio: radio)),
         )),
       Card(child: ExpansionTile(
-        initiallyExpanded: true,
+        key: const ValueKey('tools-deployment-checklist'),
         leading: const Icon(Icons.checklist),
         title: Text(l.toolsChecklist),
         subtitle: Text(l.toolsReady(checked.length, checklist.length)),
