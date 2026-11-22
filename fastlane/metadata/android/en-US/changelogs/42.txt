@@ -1,0 +1,1 @@
+Home: the battery tile shows a plug icon when the radio is on external power, instead of a broken "Plugged in". Screen readers still say "Battery: Plugged in".
