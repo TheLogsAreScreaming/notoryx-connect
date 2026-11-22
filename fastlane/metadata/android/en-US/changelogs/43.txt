@@ -1,0 +1,1 @@
+Drives: a parked phone now keeps logging readings (GPS asks for a fix every 5 seconds during a drive, moving or not), and the drive time keeps counting.
