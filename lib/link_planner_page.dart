@@ -14,10 +14,15 @@ import 'theme/nx_components.dart';
 /// Checks whether two nodes can reach each other over the terrain between
 /// them, with a height profile of the path.
 class LinkPlannerPage extends StatefulWidget {
-  LinkPlannerPage({super.key, required this.radio, ElevationSource? elevation})
+  LinkPlannerPage({super.key, required this.radio, ElevationSource? elevation, this.initialFrom, this.initialTo})
       : elevation = elevation ?? OpenMeteoElevation();
   final MeshtasticRadioCoordinator radio;
   final ElevationSource elevation;
+
+  /// Nodes to start with, such as this radio and a node opened from its
+  /// details page. This radio is the default start.
+  final int? initialFrom;
+  final int? initialTo;
 
   @override
   State<LinkPlannerPage> createState() => _LinkPlannerPageState();
@@ -37,8 +42,23 @@ class _LinkPlannerPageState extends State<LinkPlannerPage> {
   void initState() {
     super.initState();
     final placed = _placed;
-    final local = widget.radio.localNodeNum;
-    if (placed.any((n) => n.num == local)) _from = local;
+    final from = widget.initialFrom ?? widget.radio.localNodeNum;
+    if (placed.any((n) => n.num == from)) _from = from;
+    final to = widget.initialTo;
+    if (to != from && placed.any((n) => n.num == to)) _to = to;
+  }
+
+  /// The end of the link with the roughest shared position, if any end's
+  /// position was rounded enough to matter.
+  ({String name, double meters})? get _roughest {
+    ({String name, double meters})? worst;
+    for (final num in [_from, _to]) {
+      final node = _node(num);
+      final meters = node?.positionUncertaintyMeters;
+      if (node == null || meters == null) continue;
+      if (worst == null || meters > worst.meters) worst = (name: node.displayName, meters: meters);
+    }
+    return worst;
   }
 
   @override
@@ -143,6 +163,12 @@ class _LinkPlannerPageState extends State<LinkPlannerPage> {
             Text(l.lpPrivacy, style: type.bodySmall),
           ]),
         )),
+        if (_roughest case final rough?)
+          NxBanner(
+            key: const ValueKey('lp-approximate'),
+            tone: NxTone.warning,
+            message: l.lpApproximate(rough.name, BastionUnitFormat.distance(rough.meters, units)),
+          ),
         if (_error case final e?) NxBanner(tone: NxTone.danger, message: e),
         if (_result case final r?) ...[
           NxSectionLabel(l.lpResult),
@@ -186,6 +212,7 @@ class _LinkPlannerPageState extends State<LinkPlannerPage> {
                   painter: _ProfilePainter(r,
                     ground: Theme.of(context).colorScheme.secondary,
                     line: Theme.of(context).colorScheme.primary,
+                    fresnel: Theme.of(context).colorScheme.tertiary,
                     blocked: NxStatusColors.of(context).strong(NxTone.danger, Theme.of(context).colorScheme)),
                 )),
               ),
@@ -222,15 +249,17 @@ class _NodePicker extends StatelessWidget {
 }
 
 class _ProfilePainter extends CustomPainter {
-  _ProfilePainter(this.r, {required this.ground, required this.line, required this.blocked});
+  _ProfilePainter(this.r, {required this.ground, required this.line, required this.fresnel, required this.blocked});
   final LinkAnalysis r;
   final Color ground;
   final Color line;
+  final Color fresnel;
   final Color blocked;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final heights = [for (final p in r.profile) p.groundMeters, r.lineStart, r.lineEnd];
+    final floor = [for (final p in r.profile) r.fresnelFloorAt(p.distanceMeters)];
+    final heights = [for (final p in r.profile) p.groundMeters, ...floor, r.lineStart, r.lineEnd];
     var lo = heights.reduce((a, b) => a < b ? a : b);
     var hi = heights.reduce((a, b) => a > b ? a : b);
     final pad = (hi - lo) * 0.1 + 5;
@@ -249,6 +278,15 @@ class _ProfilePainter extends CustomPainter {
     final sight = Paint()
       ..color = r.verdict == LinkVerdict.blocked ? blocked : line
       ..strokeWidth = 2.5;
+    // Dashed: the bottom of the first Fresnel zone. Ground above it eats
+    // into the signal even when the direct line is clear.
+    final dash = Paint()
+      ..color = fresnel
+      ..strokeWidth = 1.5;
+    for (var i = 0; i + 1 < r.profile.length; i += 2) {
+      canvas.drawLine(at(r.profile[i].distanceMeters, floor[i]),
+          at(r.profile[i + 1].distanceMeters, floor[i + 1]), dash);
+    }
     canvas.drawLine(at(0, r.lineStart), at(total, r.lineEnd), sight);
     if (r.verdict == LinkVerdict.blocked) {
       final x = size.width * r.worstAtMeters / total;
@@ -259,5 +297,6 @@ class _ProfilePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_ProfilePainter old) => old.r != r || old.ground != ground || old.line != line;
+  bool shouldRepaint(_ProfilePainter old) =>
+      old.r != r || old.ground != ground || old.line != line || old.fresnel != fresnel || old.blocked != blocked;
 }

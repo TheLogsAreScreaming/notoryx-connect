@@ -11,7 +11,9 @@ import 'services/bastion_node_vault.dart';
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 import 'services/bastion_node_keys.dart';
+import 'link_planner_page.dart';
 import 'node_avatar.dart';
+import 'node_compass_page.dart';
 import 'telemetry_chart.dart';
 import 'theme/notoryx_theme.dart';
 import 'theme/nx_components.dart';
@@ -255,6 +257,9 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                       if (node.altitudeMeters != null)
                         _Row(l.ndAltitude, BastionUnitFormat.altitude(node.altitudeMeters!, BastionPreferences.instance.units)),
                       _Row(l.ndPositionAge, _ago(node.positionTime)),
+                      if (node.positionUncertaintyMeters case final rough?)
+                        _Row(l.ndPositionApprox, l.ndPositionApproxValue(
+                            BastionUnitFormat.distance(rough, BastionPreferences.instance.units))),
                     ],
                     if (distance != null)
                       _Row(
@@ -273,6 +278,34 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
+                  OutlinedButton.icon(
+                    key: const ValueKey('node-point-to'),
+                    icon: const Icon(Icons.explore_outlined),
+                    label: Text(l.ndPointTo),
+                    onPressed: node != null && node.hasPosition
+                        ? () => Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => NodeCompassPage(radio: _radio, nodeNum: widget.nodeNum),
+                            ),
+                          )
+                        : null,
+                  ),
+                  OutlinedButton.icon(
+                    key: const ValueKey('node-check-terrain'),
+                    icon: const Icon(Icons.terrain),
+                    label: Text(l.ndCheckTerrain),
+                    onPressed: node != null && node.hasPosition
+                        ? () => Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => LinkPlannerPage(
+                                radio: _radio,
+                                initialFrom: _radio.localNodeNum,
+                                initialTo: widget.nodeNum,
+                              ),
+                            ),
+                          )
+                        : null,
+                  ),
                   OutlinedButton.icon(
                     key: const ValueKey('node-sentinel-report'),
                     icon: const Icon(Icons.flag_outlined),

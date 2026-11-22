@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 /// Per-channel position precision, the radio's own setting.
 ///
 /// Meshtastic keeps this many leading bits of each coordinate before sending
@@ -22,4 +24,15 @@ abstract final class BastionChannelPrecision {
     19: 45,
     exact: 0,
   };
+
+  /// Roughly how far a position sent with [bits] of precision may be from
+  /// the real spot, in metres, or null when it is exact enough not to
+  /// matter (under 30 m) or the precision is unknown (null, 0 or 32+).
+  /// Each bit fewer doubles the box the position is rounded into; 10 bits
+  /// is about 23 km.
+  static double? uncertaintyMeters(int? bits) {
+    if (bits == null || bits <= none || bits >= exact) return null;
+    final meters = 23300.0 * math.pow(2, 10 - bits);
+    return meters < 30 ? null : meters;
+  }
 }

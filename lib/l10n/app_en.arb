@@ -3957,7 +3957,7 @@
       }
     }
   },
-  "lpProfileLegend": "Shaded: ground, including the curve of the earth. Line: the direct path between antennas.",
+  "lpProfileLegend": "Shaded: ground, including the curve of the earth. Line: the direct path between antennas. Dashed: bottom of the Fresnel zone; keep most of the space above it clear.",
   "lpEstimateNote": "This is an estimate from 90 m terrain data. Trees and buildings are not included.",
   "mhGood": "Good",
   "mhBusy": "Busy",
@@ -5425,6 +5425,84 @@
     "placeholders": {
       "code": {
         "type": "int"
+      }
+    }
+  },
+  "ndPointTo": "Point me to it",
+  "ndCheckTerrain": "Check terrain",
+  "ndPositionApprox": "Position shared",
+  "ndPositionApproxValue": "Approximate, within about {distance}",
+  "@ndPositionApproxValue": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "lpApproximate": "{name} shares only an approximate position (within about {distance}), so this check is a rough guide.",
+  "@lpApproximate": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "ncTitle": "Point me to it",
+  "ncPoints": "N,NE,E,SE,S,SW,W,NW",
+  "ncOnTarget": "Straight ahead",
+  "ncTurnLeft": "Turn left {degrees}°",
+  "@ncTurnLeft": {
+    "placeholders": {
+      "degrees": {
+        "type": "int"
+      }
+    }
+  },
+  "ncTurnRight": "Turn right {degrees}°",
+  "@ncTurnRight": {
+    "placeholders": {
+      "degrees": {
+        "type": "int"
+      }
+    }
+  },
+  "ncBearing": "Bearing {degrees}° {point}",
+  "@ncBearing": {
+    "placeholders": {
+      "degrees": {
+        "type": "int"
+      },
+      "point": {
+        "type": "String"
+      }
+    }
+  },
+  "ncNoTarget": "{name} hasn't shared a position yet.",
+  "@ncNoTarget": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ncNoPosition": "No position to point from. Use the phone's location, or wait for this radio to get a GPS fix.",
+  "ncNoCompass": "This device has no compass, so north is at the top. Turn until you face the bearing shown.",
+  "ncCalibrate": "The compass needs calibrating: move the phone in a figure of eight.",
+  "ncFromPhone": "Measured from this phone's location.",
+  "ncFromRadio": "Measured from this radio's position.",
+  "ncUsePhone": "Use phone location",
+  "ncPrivacy": "The phone's location and compass are used only on this phone while this page is open. Nothing is sent.",
+  "ncApproximate": "{name} shares only an approximate position (within about {distance}). Use the arrow as a general direction.",
+  "@ncApproximate": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
       }
     }
   }

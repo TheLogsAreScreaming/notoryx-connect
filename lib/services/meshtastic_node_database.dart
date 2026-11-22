@@ -6,6 +6,7 @@ import 'package:protobuf/protobuf.dart';
 import '../generated/meshtastic/mesh.pb.dart' as pb;
 import '../generated/meshtastic/portnums.pbenum.dart';
 import 'meshtastic_radio_session.dart';
+import 'bastion_channel_precision.dart';
 import 'bastion_radio_policy.dart';
 
 class MeshtasticNode {
@@ -19,6 +20,7 @@ class MeshtasticNode {
     this.longitude,
     this.altitudeMeters,
     this.positionTime,
+    this.positionPrecisionBits,
     this.lastHeard,
     this.snr,
     this.hopsAway,
@@ -40,6 +42,16 @@ class MeshtasticNode {
 
   /// When the position was taken, as reported by the node.
   final DateTime? positionTime;
+
+  /// How many leading bits of each coordinate the node kept before sending
+  /// its position (Meshtastic position precision). 32 is exact; fewer means
+  /// the position was rounded to the middle of a box. 0 or null: not said.
+  final int? positionPrecisionBits;
+
+  /// Roughly how far the shared position may be from where the node really
+  /// is, in metres, or null when it was sent exactly (or nobody said).
+  double? get positionUncertaintyMeters =>
+      BastionChannelPrecision.uncertaintyMeters(positionPrecisionBits);
 
   /// When the radio last heard any packet from this node.
   final DateTime? lastHeard;
@@ -81,6 +93,7 @@ class MeshtasticNode {
     longitude: longitude,
     altitudeMeters: altitudeMeters,
     positionTime: positionTime,
+    positionPrecisionBits: positionPrecisionBits,
     lastHeard: lastHeard,
     snr: snr,
     hopsAway: hopsAway,
@@ -101,6 +114,7 @@ class MeshtasticNode {
     double? longitude,
     int? altitudeMeters,
     DateTime? positionTime,
+    int? positionPrecisionBits,
     DateTime? lastHeard,
     double? snr,
     Uint8List? publicKey,
@@ -115,6 +129,7 @@ class MeshtasticNode {
     longitude: longitude ?? this.longitude,
     altitudeMeters: altitudeMeters ?? this.altitudeMeters,
     positionTime: positionTime ?? this.positionTime,
+    positionPrecisionBits: positionPrecisionBits ?? this.positionPrecisionBits,
     lastHeard: lastHeard ?? this.lastHeard,
     snr: snr ?? this.snr,
     hopsAway: hopsAway,
@@ -341,6 +356,7 @@ abstract final class MeshtasticNodeInfoCodec {
       latitude: lat,
       longitude: lon,
       altitudeMeters: position.hasAltitude() ? position.altitude : null,
+      positionPrecisionBits: position.precisionBits,
       positionTime: position.time == 0
           ? null
           : DateTime.fromMillisecondsSinceEpoch(

@@ -12,7 +12,7 @@ void main() {
     await tester.pump();
 
     expect(find.text('!abcdef01'), findsWidgets);
-    for (final label in ['Traceroute', 'Request position', 'Request telemetry']) {
+    for (final label in ['Traceroute', 'Request position', 'Request telemetry', 'Point me to it', 'Check terrain']) {
       final button = tester.widget<OutlinedButton>(
         find.ancestor(of: find.text(label), matching: find.byWidgetPredicate((w) => w is OutlinedButton)),
       );
