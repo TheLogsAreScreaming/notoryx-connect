@@ -10,6 +10,8 @@ import 'package:bastion/services/meshtastic_node_database.dart';
 import 'package:bastion/services/meshtastic_nodedb_import.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
 import 'package:bastion/traceroute_page.dart';
+import 'package:bastion/main.dart' show pickConversation, conversationTitle;
+import 'package:bastion/services/bastion_conversations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
@@ -265,6 +267,43 @@ void main() {
     await open(0xabc);
     expect(find.text('!00000abc'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('new chat finds an imported node by search and names it', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.withData({
+      BastionRadioHistory.lastRadioKey: _me,
+    });
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.runAsync(() async {
+      await Future<void>.delayed(const Duration(milliseconds: 50));
+      await radio.importNodeDatabase(MeshtasticNodeDbExport.parse(_file()), includeInternet: false);
+    });
+    BastionConversation? picked;
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Builder(builder: (context) => Scaffold(
+        body: TextButton(
+          onPressed: () async => picked = await pickConversation(context, radio,
+              title: 'New chat', everyNode: true),
+          child: const Text('open'),
+        ),
+      )),
+    ));
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+    // Not heard by the radio, so not listed until searched for.
+    expect(find.text('Ridge Relay'), findsNothing);
+    await tester.enterText(find.byKey(const ValueKey('pick-node-search')), 'ridge');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Ridge Relay'));
+    await tester.pumpAndSettle();
+    expect(picked, BastionConversation.direct(0x22));
+
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    expect(conversationTitle(l, radio, BastionConversation.direct(0x22)), 'Ridge Relay');
+    expect(conversationTitle(l, radio, BastionConversation.direct(0xabc)), '!00000abc');
   });
 
   testWidgets('the page shows what is in the file and imports it', (tester) async {
