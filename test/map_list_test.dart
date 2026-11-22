@@ -19,8 +19,8 @@ final nodes = [
 ];
 final waypoints = [const MeshWaypoint(id: 1, latitude: 34.99, longitude: -80.0, name: 'Trailhead')];
 final cells = [
-  const CoverageCell(south: 35.02, west: -80.002, readings: 4, meanSnr: -14),
-  const CoverageCell(south: 35.05, west: -80.0, readings: 9, meanSnr: 3),
+  const CoverageCell(south: 35.02, west: -80.002, north: 35.0227, east: -79.9987, readings: 4, meanSnr: -14),
+  const CoverageCell(south: 35.05, west: -80.0, north: 35.0527, east: -79.9967, readings: 9, meanSnr: 3),
 ];
 
 void main() {

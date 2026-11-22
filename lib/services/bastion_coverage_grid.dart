@@ -1,13 +1,36 @@
+import 'bastion_drive_log.dart';
+
 /// How well a place heard the mesh, for the heatmap.
 enum CoverageBand { strong, fair, weak }
 
+/// Square sizes the heatmap can use.
+enum CoverageSquare {
+  m100(100),
+  m300(300);
+
+  const CoverageSquare(this.meters);
+  final double meters;
+}
+
 /// One square of the heatmap.
 class CoverageCell {
-  const CoverageCell({required this.south, required this.west, required this.readings, required this.meanSnr});
+  const CoverageCell({
+    required this.south,
+    required this.west,
+    required this.north,
+    required this.east,
+    required this.readings,
+    required this.meanSnr,
+  });
   final double south;
   final double west;
+  final double north;
+  final double east;
   final int readings;
   final double meanSnr;
+
+  double get centreLatitude => (south + north) / 2;
+  double get centreLongitude => (west + east) / 2;
 
   CoverageBand get band => meanSnr >= BastionCoverageGrid.strongSnr
       ? CoverageBand.strong
@@ -19,33 +42,48 @@ class CoverageCell {
   double get density => (readings / BastionCoverageGrid.fullDensity).clamp(0.0, 1.0);
 }
 
-/// Groups coverage log readings into squares of about 220 m.
+/// Groups drive samples into squares of a fixed size in metres.
 abstract final class BastionCoverageGrid {
-  static const cellDegrees = 0.002;
   static const strongSnr = 0.0;
   static const fairSnr = -10.0;
   static const fullDensity = 10;
 
-  /// Builds cells from coverage records for [radio]. Readings without an SNR
-  /// or a usable position are left out.
-  static List<CoverageCell> build(Iterable<Map<String, Object?>> records, {int? radio}) {
+  /// Classes counted by default. A relayed packet proves coverage only to
+  /// the relayer, so it is left out unless asked for. Readings from before
+  /// hop counts were saved are kept.
+  static const defaultClasses = {HopClass.direct, HopClass.unknown};
+
+  /// Builds squares from [samples], counting only [classes] and, when
+  /// [trips] is given, only those trips. Readings without an SNR are left
+  /// out.
+  static List<CoverageCell> build(
+    Iterable<DriveSample> samples, {
+    CoverageSquare size = CoverageSquare.m300,
+    Set<HopClass> classes = defaultClasses,
+    Set<int>? trips,
+  }) {
     final sums = <(int, int), (int, double)>{};
-    for (final r in records) {
-      if (r['kind'] != 'coverage' || (radio != null && r['radio'] != radio)) continue;
-      final (lat, lon, snr) = (r['lat'], r['lon'], r['snr']);
-      if (lat is! num || lon is! num || snr is! num || !snr.isFinite) continue;
-      final key = ((lat / cellDegrees).floor(), (lon / cellDegrees).floor());
+    for (final s in samples) {
+      final snr = s.snr;
+      if (snr == null || !snr.isFinite || !classes.contains(s.hops)) continue;
+      if (trips != null && !trips.contains(s.trip)) continue;
+      final key = BastionDriveLog.squareOf(s.latitude, s.longitude, size.meters);
       final (count, total) = sums[key] ?? (0, 0.0);
       sums[key] = (count + 1, total + snr);
     }
     return [
       for (final e in sums.entries)
-        CoverageCell(
-          south: e.key.$1 * cellDegrees,
-          west: e.key.$2 * cellDegrees,
-          readings: e.value.$1,
-          meanSnr: e.value.$2 / e.value.$1,
-        ),
+        () {
+          final b = BastionDriveLog.squareBounds(e.key.$1, e.key.$2, size.meters);
+          return CoverageCell(
+            south: b.south,
+            north: b.north,
+            west: b.west,
+            east: b.east,
+            readings: e.value.$1,
+            meanSnr: e.value.$2 / e.value.$1,
+          );
+        }(),
     ];
   }
 }
