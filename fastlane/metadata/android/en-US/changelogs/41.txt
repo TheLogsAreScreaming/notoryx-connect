@@ -1,0 +1,1 @@
+Drive recording: a new Drive screen (Tools) maps where the mesh reaches as you drive. Direct and relayed readings are kept apart, GPS keeps running with the screen off, and drives export as GPX, KML, CSV, GeoJSON or a drive file (first and last 500 m left out by default). Optional two-way check, off by default.
