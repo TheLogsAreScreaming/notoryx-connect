@@ -7843,4 +7843,38 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get drvImportUnreadable => 'Die Datei konnte nicht gelesen werden.';
+
+  @override
+  String get drvCheck => 'Zwei-Wege-Prüfung (sendet)';
+
+  @override
+  String get drvCheckSub =>
+      'Standardmäßig aus. Höchstens alle 30 s und 25 m wird ein kleines, nicht weiterleitbares Paket an einen gewählten Knoten gesendet und auf die Antwort gewartet. Eine direkte Antwort beweist, dass sich beide Funkgeräte hier erreichen. Orte mit direktem Wert aus den letzten 7 Tagen werden übersprungen, bei vollem Kanal wird pausiert. Sendet nie an alle.';
+
+  @override
+  String get drvCheckNoCandidates =>
+      'Auf dieser Fahrt wurde noch kein Knoten direkt gehört.';
+
+  @override
+  String get drvCheckTarget => 'Zu prüfender Knoten (direkt gehört)';
+
+  @override
+  String get drvCheckPickTarget =>
+      'Wähle einen Knoten, um mit der Prüfung zu beginnen.';
+
+  @override
+  String get drvCheckWaiting => 'Warte auf Antwort…';
+
+  @override
+  String drvCheckBusy(int percent) {
+    return 'Pausiert: Der Kanal ist zu über $percent % belegt.';
+  }
+
+  @override
+  String get drvCheckReady => 'Prüfungen werden unterwegs gesendet.';
+
+  @override
+  String drvCheckResults(int twoWay, int relayed, int none) {
+    return 'Direkt beantwortet: $twoWay • über anderen Knoten: $relayed • keine Antwort: $none';
+  }
 }

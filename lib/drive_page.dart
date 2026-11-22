@@ -10,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 
 import 'l10n/generated/app_localizations.dart';
 import 'services/bastion_coverage_grid.dart';
+import 'services/bastion_drive_check.dart';
 import 'services/bastion_drive_export.dart';
 import 'services/bastion_drive_log.dart';
 import 'services/bastion_preferences.dart';
@@ -220,6 +221,7 @@ class _DrivePageState extends State<DrivePage> {
         listenable: Listenable.merge([
           widget.radio,
           log,
+          widget.radio.driveCheck,
           BastionPreferences.instance,
         ]),
         builder: (context, _) {
@@ -239,6 +241,10 @@ class _DrivePageState extends State<DrivePage> {
                 _mapCard(context, shown),
                 const SizedBox(height: NxSpace.sm),
                 _counters(context, shown, units),
+                if (shown.running) ...[
+                  const SizedBox(height: NxSpace.sm),
+                  _checkCard(context),
+                ],
                 if (!shown.running) ...[
                   const SizedBox(height: NxSpace.sm),
                   _exportCard(context, shown),
@@ -454,6 +460,18 @@ class _DrivePageState extends State<DrivePage> {
                     ),
                   MarkerLayer(
                     markers: [
+                      if (trip.running)
+                        for (final r in widget.radio.driveCheck.results)
+                          Marker(
+                            point: LatLng(r.latitude, r.longitude),
+                            width: 20,
+                            height: 20,
+                            child: Icon(
+                              _checkIcon(r.outcome),
+                              size: 20,
+                              color: theme.colorScheme.onSurface,
+                            ),
+                          ),
                       Marker(
                         point: spots.last,
                         width: 18,
@@ -612,6 +630,82 @@ class _DrivePageState extends State<DrivePage> {
             PopupMenuItem(value: 'show', child: Text(l.drvShowOnMap)),
             PopupMenuItem(value: 'rename', child: Text(l.drvRename)),
             PopupMenuItem(value: 'delete', child: Text(l.drvDelete)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static IconData _checkIcon(DriveCheckOutcome o) => switch (o) {
+    DriveCheckOutcome.twoWay => Icons.check_circle,
+    DriveCheckOutcome.answeredRelayed => Icons.alt_route,
+    DriveCheckOutcome.noAnswer => Icons.cancel_outlined,
+  };
+
+  /// The optional check: off by default, explained before it's turned on.
+  Widget _checkCard(BuildContext context) {
+    final check = widget.radio.driveCheck;
+    final candidates = check.candidates;
+    final results = check.results;
+    int count(DriveCheckOutcome o) =>
+        results.where((r) => r.outcome == o).length;
+    return Card(
+      key: const ValueKey('drive-check'),
+      child: Padding(
+        padding: const EdgeInsets.all(NxSpace.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SwitchListTile(
+              key: const ValueKey('drive-check-switch'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(l.drvCheck),
+              subtitle: Text(l.drvCheckSub),
+              value: check.enabled,
+              onChanged: (v) => check.setEnabled(v),
+            ),
+            if (check.enabled) ...[
+              if (candidates.isEmpty)
+                Text(l.drvCheckNoCandidates)
+              else
+                DropdownButtonFormField<int>(
+                  key: const ValueKey('drive-check-target'),
+                  initialValue: candidates.contains(check.target)
+                      ? check.target
+                      : null,
+                  decoration: InputDecoration(labelText: l.drvCheckTarget),
+                  items: [
+                    for (final n in candidates)
+                      DropdownMenuItem(
+                        value: n,
+                        child: Text(widget.radio.nodeName(n)),
+                      ),
+                  ],
+                  onChanged: check.setTarget,
+                ),
+              const SizedBox(height: NxSpace.xs),
+              Semantics(
+                liveRegion: true,
+                child: Text(switch (check.pause) {
+                  _ when check.waiting => l.drvCheckWaiting,
+                  _ when check.target == null => l.drvCheckPickTarget,
+                  DriveCheckPause.busyChannel => l.drvCheckBusy(
+                    BastionDriveCheck.maxChannelUtilization.round(),
+                  ),
+                  DriveCheckPause.noTarget => l.drvCheckPickTarget,
+                  DriveCheckPause.noDrive => l.drvCheckPickTarget,
+                  null => l.drvCheckReady,
+                }),
+              ),
+            ],
+            if (results.isNotEmpty)
+              Text(
+                l.drvCheckResults(
+                  count(DriveCheckOutcome.twoWay),
+                  count(DriveCheckOutcome.answeredRelayed),
+                  count(DriveCheckOutcome.noAnswer),
+                ),
+              ),
           ],
         ),
       ),

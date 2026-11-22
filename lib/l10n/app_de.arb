@@ -2098,5 +2098,14 @@
   "drvImportedName": "{name} (importiert)",
   "drvImported": "Fahrt mit {count} Werten importiert.",
   "drvImportBad": "Diese Datei lässt sich nicht importieren: {reason}",
-  "drvImportUnreadable": "Die Datei konnte nicht gelesen werden."
+  "drvImportUnreadable": "Die Datei konnte nicht gelesen werden.",
+  "drvCheck": "Zwei-Wege-Prüfung (sendet)",
+  "drvCheckSub": "Standardmäßig aus. Höchstens alle 30 s und 25 m wird ein kleines, nicht weiterleitbares Paket an einen gewählten Knoten gesendet und auf die Antwort gewartet. Eine direkte Antwort beweist, dass sich beide Funkgeräte hier erreichen. Orte mit direktem Wert aus den letzten 7 Tagen werden übersprungen, bei vollem Kanal wird pausiert. Sendet nie an alle.",
+  "drvCheckNoCandidates": "Auf dieser Fahrt wurde noch kein Knoten direkt gehört.",
+  "drvCheckTarget": "Zu prüfender Knoten (direkt gehört)",
+  "drvCheckPickTarget": "Wähle einen Knoten, um mit der Prüfung zu beginnen.",
+  "drvCheckWaiting": "Warte auf Antwort…",
+  "drvCheckBusy": "Pausiert: Der Kanal ist zu über {percent} % belegt.",
+  "drvCheckReady": "Prüfungen werden unterwegs gesendet.",
+  "drvCheckResults": "Direkt beantwortet: {twoWay} • über anderen Knoten: {relayed} • keine Antwort: {none}"
 }

@@ -7848,4 +7848,37 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get drvImportUnreadable => 'Le fichier n\'a pas pu être lu.';
+
+  @override
+  String get drvCheck => 'Vérification bidirectionnelle (émet)';
+
+  @override
+  String get drvCheckSub =>
+      'Désactivée par défaut. Au plus toutes les 30 s et tous les 25 m, envoie un petit paquet non relayable à un nœud choisi et attend sa réponse. Une réponse directe prouve que les deux radios se joignent ici. Ignore les lieux avec une mesure directe de moins de 7 jours et se met en pause si le canal est chargé. N\'émet jamais à tous.';
+
+  @override
+  String get drvCheckNoCandidates =>
+      'Aucun nœud entendu en direct sur ce trajet pour l\'instant.';
+
+  @override
+  String get drvCheckTarget => 'Nœud à vérifier (entendu en direct)';
+
+  @override
+  String get drvCheckPickTarget => 'Choisissez un nœud pour commencer.';
+
+  @override
+  String get drvCheckWaiting => 'En attente de réponse…';
+
+  @override
+  String drvCheckBusy(int percent) {
+    return 'En pause : le canal est occupé à plus de $percent %.';
+  }
+
+  @override
+  String get drvCheckReady => 'Les vérifications partent au fil du trajet.';
+
+  @override
+  String drvCheckResults(int twoWay, int relayed, int none) {
+    return 'Réponse directe : $twoWay • via un autre nœud : $relayed • sans réponse : $none';
+  }
 }

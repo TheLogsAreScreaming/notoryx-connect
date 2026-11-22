@@ -2098,5 +2098,14 @@
   "drvImportedName": "{name} (importé)",
   "drvImported": "Trajet importé avec {count} mesures.",
   "drvImportBad": "Ce fichier ne peut pas être importé : {reason}",
-  "drvImportUnreadable": "Le fichier n'a pas pu être lu."
+  "drvImportUnreadable": "Le fichier n'a pas pu être lu.",
+  "drvCheck": "Vérification bidirectionnelle (émet)",
+  "drvCheckSub": "Désactivée par défaut. Au plus toutes les 30 s et tous les 25 m, envoie un petit paquet non relayable à un nœud choisi et attend sa réponse. Une réponse directe prouve que les deux radios se joignent ici. Ignore les lieux avec une mesure directe de moins de 7 jours et se met en pause si le canal est chargé. N'émet jamais à tous.",
+  "drvCheckNoCandidates": "Aucun nœud entendu en direct sur ce trajet pour l'instant.",
+  "drvCheckTarget": "Nœud à vérifier (entendu en direct)",
+  "drvCheckPickTarget": "Choisissez un nœud pour commencer.",
+  "drvCheckWaiting": "En attente de réponse…",
+  "drvCheckBusy": "En pause : le canal est occupé à plus de {percent} %.",
+  "drvCheckReady": "Les vérifications partent au fil du trajet.",
+  "drvCheckResults": "Réponse directe : {twoWay} • via un autre nœud : {relayed} • sans réponse : {none}"
 }

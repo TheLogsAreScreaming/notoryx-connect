@@ -7814,4 +7814,38 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get drvImportUnreadable => 'No se pudo leer el archivo.';
+
+  @override
+  String get drvCheck => 'Comprobación bidireccional (transmite)';
+
+  @override
+  String get drvCheckSub =>
+      'Desactivado por defecto. Como mucho cada 30 s y 25 m, envía un paquete pequeño que no se puede retransmitir a un nodo que elijas y espera su respuesta. Una respuesta directa prueba que ambas radios se alcanzan aquí. Omite lugares con una lectura directa en los últimos 7 días y se pausa si el canal está ocupado. Nunca difunde a todos.';
+
+  @override
+  String get drvCheckNoCandidates =>
+      'Aún no se ha oído ningún nodo directamente en este recorrido.';
+
+  @override
+  String get drvCheckTarget => 'Nodo a comprobar (oído directamente)';
+
+  @override
+  String get drvCheckPickTarget => 'Elige un nodo para empezar a comprobar.';
+
+  @override
+  String get drvCheckWaiting => 'Esperando respuesta…';
+
+  @override
+  String drvCheckBusy(int percent) {
+    return 'En pausa: el canal está ocupado más de un $percent %.';
+  }
+
+  @override
+  String get drvCheckReady =>
+      'Las comprobaciones se envían mientras te mueves.';
+
+  @override
+  String drvCheckResults(int twoWay, int relayed, int none) {
+    return 'Respuesta directa: $twoWay • por otro nodo: $relayed • sin respuesta: $none';
+  }
 }
