@@ -197,7 +197,7 @@ class _SettingsPage extends StatelessWidget {
           title: Text(l.setTrademark),
           // Legal wording stays in English on purpose.
           subtitle: const Text(
-            'Compatible with Meshtastic® firmware. Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses, see GitHub for details. No warranty is provided - use at your own risk.\n\nNOTORYX Connect is independently developed and is not affiliated with, sponsored by, or endorsed by Meshtastic LLC.',
+            'Compatible with Meshtastic® firmware. Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses; see GitHub for details. No warranty is provided. Use at your own risk.\n\nNOTORYX Connect is independently developed and is not affiliated with, sponsored by, or endorsed by Meshtastic LLC.',
           ),
         ),
       ]),

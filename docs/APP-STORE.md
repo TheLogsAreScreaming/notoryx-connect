@@ -57,7 +57,7 @@ Follows [TRADEMARKS.md](../TRADEMARKS.md): "Meshtastic" stays out of the name, s
 - **Category:** Communication; secondary Navigation
 - **Keywords:** lora,mesh,off-grid,radio,messaging,hiking,offline,emergency,backcountry,node (leave "Meshtastic" out)
 - **Description, first lines:** Message and map your team with LoRa mesh radios, with no cell service, account or subscription. Compatible with radios running Meshtastic® firmware.
-- **Description, last lines:** Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses, see GitHub for details. No warranty is provided - use at your own risk. NOTORYX Connect is independent and is not affiliated with or endorsed by Meshtastic LLC.
+- **Description, last lines:** Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses; see GitHub for details. No warranty is provided. Use at your own risk. NOTORYX Connect is independent and is not affiliated with or endorsed by Meshtastic LLC.
 
 Avoid claims that the app is an emergency service or guarantees delivery. Re-check the [current trademark rules](https://meshtastic.org/docs/legal/licensing-and-trademark/) before submitting, and finish the name clearance tracked in issue 55.
 

@@ -195,7 +195,7 @@ NOTORYX Connect does not use “Meshtastic” in its primary or secondary softwa
 
 ## Trademark and licensing notice
 
-Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses, see GitHub for details. No warranty is provided - use at your own risk.
+Meshtastic® is a registered trademark of Meshtastic LLC. Meshtastic software components are released under various licenses; see GitHub for details. No warranty is provided. Use at your own risk.
 
 NOTORYX Connect is independently developed and is not affiliated with, sponsored by, or endorsed by Meshtastic LLC. All Meshtastic® trademarks remain the property of Meshtastic LLC.
 
