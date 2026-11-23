@@ -1,0 +1,1 @@
+Notifications: updated the notifications library to the latest major version. Nothing should look different; message and alert notifications work as before.
