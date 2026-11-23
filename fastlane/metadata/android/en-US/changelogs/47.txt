@@ -1,1 +1,1 @@
-Chats: while you search in New chat, matching nodes now show right under the search box and rows that don't match are hidden, so results are no longer covered by the keyboard.
+Nodes: new Point me to it compass and Check terrain on node details; approximate positions are marked. Chats: New chat search shows matches first, no longer hidden by the keyboard.
