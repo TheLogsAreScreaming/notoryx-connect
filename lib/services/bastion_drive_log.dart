@@ -446,7 +446,9 @@ class BastionDriveLog extends ChangeNotifier {
   /// The oldest finished trips are dropped while trail points exceed this.
   static const maxPoints = 200000;
 
-  /// A trail point is kept once the phone has moved this far.
+  /// A trail point is kept once the phone has moved this far, or further
+  /// than the fix's own accuracy when that is larger: a parked phone's GPS
+  /// wanders within its accuracy, and those wobbles must not add distance.
   static const pointSpacingMeters = 15.0;
 
   /// Name of the trip that holds readings from before trips existed.
@@ -761,8 +763,8 @@ class BastionDriveLog extends ChangeNotifier {
   }
 
   /// Adds the phone's position to the running drive's trail once it has
-  /// moved [pointSpacingMeters]. Rough fixes are skipped. Returns whether
-  /// the point was kept.
+  /// moved [pointSpacingMeters] and more than the fix's accuracy. Rough
+  /// fixes are skipped. Returns whether the point was kept.
   Future<bool> addFix(PhoneFix fix) {
     final operation = _pending.then((_) => _addFix(fix));
     _pending = operation.then((_) {}, onError: (Object _) {});
@@ -791,7 +793,7 @@ class BastionDriveLog extends ChangeNotifier {
               fix.latitude,
               fix.longitude,
             ) <
-            pointSpacingMeters)
+            math.max(pointSpacingMeters, accuracy))
       return false;
     final point = DrivePoint(
       trip: trip.id,

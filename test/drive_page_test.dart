@@ -82,6 +82,29 @@ void main() {
       },
     );
 
+    test(
+      'a parked phone wobbling within its accuracy adds no distance',
+      () async {
+        final log = await loaded();
+        final trip = await log.start(42, now: now);
+        expect(await log.addFix(fix(35.2, -80.8, accuracy: 30)), isTrue);
+        // Wobbles of about 11 to 28 m, each inside the 30 m accuracy.
+        for (final d in [0.0001, -0.0002, 0.00025, -0.00015, 0.0002]) {
+          expect(
+            await log.addFix(fix(35.2 + d, -80.8, accuracy: 30)),
+            isFalse,
+            reason: 'wobble of $d degrees',
+          );
+        }
+        expect(log.summary(trip.id, now: now).meters, 0);
+        expect(
+          await log.addFix(fix(35.201, -80.8, accuracy: 30)),
+          isTrue,
+          reason: 'about 111 m: real movement',
+        );
+      },
+    );
+
     test('distance comes from the trail', () async {
       final log = await loaded();
       final trip = await log.start(42, now: now);
@@ -375,27 +398,37 @@ void main() {
     });
   });
 
-  testWidgets("a running drive's time keeps counting with nothing else changing", (tester) async {
-    final log = BastionDriveLog();
-    await log.load(useDatabase: false);
-    await log.start(42, now: DateTime.now().subtract(const Duration(minutes: 3, seconds: 56)));
-    tester.view.physicalSize = const Size(600, 2400);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
-    final radio = MeshtasticRadioCoordinator();
-    addTearDown(radio.dispose);
-    await tester.pumpWidget(MaterialApp(
-      theme: NotoryxTheme.build(Brightness.dark),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: DrivePage(radio: radio, log: log, tiles: false),
-    ));
-    await tester.pump();
-    expect(find.textContaining('3 min'), findsOneWidget);
-    await tester.runAsync(() => Future<void>.delayed(const Duration(seconds: 6)));
-    await tester.pump(const Duration(seconds: 5));
-    expect(find.textContaining('4 min'), findsOneWidget);
-    await log.stop();
-  });
+  testWidgets(
+    "a running drive's time keeps counting with nothing else changing",
+    (tester) async {
+      final log = BastionDriveLog();
+      await log.load(useDatabase: false);
+      await log.start(
+        42,
+        now: DateTime.now().subtract(const Duration(minutes: 3, seconds: 56)),
+      );
+      tester.view.physicalSize = const Size(600, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final radio = MeshtasticRadioCoordinator();
+      addTearDown(radio.dispose);
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: NotoryxTheme.build(Brightness.dark),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: DrivePage(radio: radio, log: log, tiles: false),
+        ),
+      );
+      await tester.pump();
+      expect(find.textContaining('3 min'), findsOneWidget);
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(seconds: 6)),
+      );
+      await tester.pump(const Duration(seconds: 5));
+      expect(find.textContaining('4 min'), findsOneWidget);
+      await log.stop();
+    },
+  );
 }
