@@ -30,6 +30,14 @@ void main() {
       expect(cells.single.band, CoverageBand.strong);
     });
 
+    test('a square remembers when its newest reading was taken', () {
+      final older = DriveSample(trip: 1, time: DateTime.utc(2026, 11, 20), latitude: 35.2001, longitude: -80.8001,
+          from: 7, snr: -12, hops: HopClass.direct);
+      final newer = DriveSample(trip: 1, time: DateTime.utc(2026, 11, 22, 8), latitude: 35.2002, longitude: -80.8002,
+          from: 7, snr: -14, hops: HopClass.direct);
+      expect(BastionCoverageGrid.build([newer, older]).single.latest, DateTime.utc(2026, 11, 22, 8));
+    });
+
     test('squares are the chosen size in metres', () {
       for (final size in CoverageSquare.values) {
         final c = BastionCoverageGrid.build([sample(35.2001, -80.8001, 0)], size: size).single;

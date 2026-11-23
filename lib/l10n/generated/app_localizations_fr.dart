@@ -5955,6 +5955,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mlNone => 'Aucun';
 
   @override
+  String get mlTeam => 'Contacts du trajet';
+
+  @override
+  String get mlSearch => 'Rechercher des nœuds et des points de passage';
+
+  @override
+  String mlNoMatch(String query) {
+    return 'Aucun résultat pour « $query »';
+  }
+
+  @override
+  String mlLastReading(String ago) {
+    return 'dernière mesure $ago';
+  }
+
+  @override
   String get mlNoOwnPosition =>
       'Distance inconnue : votre radio n\'a pas de position';
 

@@ -21,6 +21,7 @@ class CoverageCell {
     required this.east,
     required this.readings,
     required this.meanSnr,
+    this.latest,
   });
   final double south;
   final double west;
@@ -28,6 +29,9 @@ class CoverageCell {
   final double east;
   final int readings;
   final double meanSnr;
+
+  /// When the newest reading in this square was taken; null if unknown.
+  final DateTime? latest;
 
   double get centreLatitude => (south + north) / 2;
   double get centreLongitude => (west + east) / 2;
@@ -63,6 +67,7 @@ abstract final class BastionCoverageGrid {
     Set<int>? trips,
   }) {
     final sums = <(int, int), (int, double)>{};
+    final newest = <(int, int), DateTime>{};
     for (final s in samples) {
       final snr = s.snr;
       if (snr == null || !snr.isFinite || !classes.contains(s.hops)) continue;
@@ -70,6 +75,8 @@ abstract final class BastionCoverageGrid {
       final key = BastionDriveLog.squareOf(s.latitude, s.longitude, size.meters);
       final (count, total) = sums[key] ?? (0, 0.0);
       sums[key] = (count + 1, total + snr);
+      final seen = newest[key];
+      if (seen == null || s.time.isAfter(seen)) newest[key] = s.time;
     }
     return [
       for (final e in sums.entries)
@@ -82,6 +89,7 @@ abstract final class BastionCoverageGrid {
             east: b.east,
             readings: e.value.$1,
             meanSnr: e.value.$2 / e.value.$1,
+            latest: newest[e.key],
           );
         }(),
     ];

@@ -75,4 +75,62 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('your radio has no position'), findsWidgets);
   });
+
+  test('trip contacts get their own group, nearest first', () {
+    final rows = buildMapList(me: me, selfNum: 1, team: {2}, nodes: nodes, waypoints: waypoints, cells: cells);
+    expect(rows.team.map((r) => r.name), ['Far ridge']);
+    expect(rows.team.single.num, 2);
+    expect(rows.nodes.map((r) => r.name), ['Camp']);
+  });
+
+  test('search matches names and node IDs, with or without !', () {
+    final rows = buildMapList(me: me, selfNum: 1, nodes: nodes, waypoints: waypoints, cells: cells);
+    final camp = rows.nodes.firstWhere((r) => r.name == 'Camp');
+    expect(mapListMatches(camp, 'cAm'), isTrue);
+    expect(mapListMatches(camp, '00000003'), isTrue);
+    expect(mapListMatches(camp, '!00000003'), isTrue);
+    expect(mapListMatches(camp, 'ridge'), isFalse);
+    expect(mapListMatches(rows.waypoints.single, 'trail'), isTrue);
+    expect(mapListMatches(rows.waypoints.single, ''), isTrue);
+  });
+
+  testWidgets('search filters the list, and a node opens its details', (tester) async {
+    tester.view.physicalSize = const Size(1000, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final opened = <int>[];
+    final weak = [
+      CoverageCell(south: 35.02, west: -80.002, north: 35.0227, east: -79.9987, readings: 4, meanSnr: -14,
+          latest: now.subtract(const Duration(hours: 3))),
+    ];
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: MapListPage(me: me, selfNum: 1, team: const {2}, nodes: nodes, waypoints: waypoints, cells: weak,
+          now: now, onOpenNode: opened.add),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.bySemanticsLabel(RegExp('Trip contacts \\(1\\)')), findsOneWidget);
+    expect(find.textContaining('last reading 3 h ago'), findsOneWidget);
+
+    await tester.enterText(find.byKey(const ValueKey('map-list-search')), 'camp');
+    await tester.pumpAndSettle();
+    expect(find.text('Camp'), findsOneWidget);
+    expect(find.text('Far ridge'), findsNothing);
+    expect(find.text('Trailhead'), findsNothing);
+    expect(find.textContaining('last reading'), findsNothing);
+    await tester.tap(find.text('Camp'));
+    expect(opened, [3]);
+
+    await tester.enterText(find.byKey(const ValueKey('map-list-search')), 'zzz');
+    await tester.pumpAndSettle();
+    expect(find.text('Nothing matches "zzz"'), findsOneWidget);
+
+    final handle = tester.ensureSemantics();
+    await tester.enterText(find.byKey(const ValueKey('map-list-search')), '');
+    await tester.pumpAndSettle();
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+    handle.dispose();
+  });
 }

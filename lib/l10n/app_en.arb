@@ -4243,6 +4243,12 @@
   "mlWeakAreas": "Weak coverage areas",
   "mlWeakArea": "Weak signal area",
   "mlNone": "None",
+  "mlTeam": "Trip contacts",
+  "mlSearch": "Search nodes and waypoints",
+  "mlNoMatch": "Nothing matches \"{query}\"",
+  "mlLastReading": "last reading {ago}",
+  "@mlNoMatch": {"placeholders": {"query": {"type": "String"}}},
+  "@mlLastReading": {"placeholders": {"ago": {"type": "String"}}},
   "mlNoOwnPosition": "Distance unknown: your radio has no position",
   "mlDistanceDir": "{distance} {dir, select, n{north} ne{north-east} e{east} se{south-east} s{south} sw{south-west} w{west} nw{north-west} other{}}",
   "@mlDistanceDir": {

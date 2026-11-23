@@ -897,6 +897,10 @@ class _MapPageState extends State<MapPage> {
                               nodes: widget.radio.nodes,
                               waypoints: widget.radio.waypoints,
                               cells: _coverage,
+                              team: _team,
+                              onOpenNode: (num) => Navigator.of(context).push(MaterialPageRoute<void>(
+                                builder: (_) => NodeDetailPage(radio: widget.radio, nodeNum: num),
+                              )),
                             )));
                           },
                         ),

@@ -9733,6 +9733,30 @@ abstract class AppLocalizations {
   /// **'None'**
   String get mlNone;
 
+  /// No description provided for @mlTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip contacts'**
+  String get mlTeam;
+
+  /// No description provided for @mlSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search nodes and waypoints'**
+  String get mlSearch;
+
+  /// No description provided for @mlNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches \"{query}\"'**
+  String mlNoMatch(String query);
+
+  /// No description provided for @mlLastReading.
+  ///
+  /// In en, this message translates to:
+  /// **'last reading {ago}'**
+  String mlLastReading(String ago);
+
   /// No description provided for @mlNoOwnPosition.
   ///
   /// In en, this message translates to:

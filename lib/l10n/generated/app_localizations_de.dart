@@ -5957,6 +5957,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mlNone => 'Keine';
 
   @override
+  String get mlTeam => 'Tourkontakte';
+
+  @override
+  String get mlSearch => 'Knoten und Wegpunkte suchen';
+
+  @override
+  String mlNoMatch(String query) {
+    return 'Keine Treffer für „$query“';
+  }
+
+  @override
+  String mlLastReading(String ago) {
+    return 'letzte Messung $ago';
+  }
+
+  @override
   String get mlNoOwnPosition =>
       'Entfernung unbekannt: dein Funkgerät hat keine Position';
 
