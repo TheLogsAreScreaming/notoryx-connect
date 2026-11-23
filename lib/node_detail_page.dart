@@ -274,12 +274,22 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
             ),
             if (!isSelf) ...[
               const SizedBox(height: 8),
+              if (!(node?.hasPosition ?? false))
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    l.ndNoPositionTools,
+                    key: const ValueKey('node-no-position-tools'),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
                   OutlinedButton.icon(
                     key: const ValueKey('node-point-to'),
+                    style: _dimWhenOff(context),
                     icon: const Icon(Icons.explore_outlined),
                     label: Text(l.ndPointTo),
                     onPressed: node != null && node.hasPosition
@@ -292,6 +302,7 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                   ),
                   OutlinedButton.icon(
                     key: const ValueKey('node-check-terrain'),
+                    style: _dimWhenOff(context),
                     icon: const Icon(Icons.terrain),
                     label: Text(l.ndCheckTerrain),
                     onPressed: node != null && node.hasPosition
@@ -597,4 +608,17 @@ class _KeyCard extends StatelessWidget {
       isThreeLine: known != null,
     ));
   }
+}
+
+/// Outlined-button style that clearly fades a switched-off button, since some
+/// looks draw disabled and enabled outlines almost the same.
+ButtonStyle _dimWhenOff(BuildContext context) {
+  final c = Theme.of(context).colorScheme;
+  return ButtonStyle(
+    foregroundColor: WidgetStateProperty.resolveWith(
+        (s) => s.contains(WidgetState.disabled) ? c.onSurface.withValues(alpha: .38) : null),
+    side: WidgetStateProperty.resolveWith((s) => s.contains(WidgetState.disabled)
+        ? BorderSide(color: c.onSurface.withValues(alpha: .12))
+        : null),
+  );
 }

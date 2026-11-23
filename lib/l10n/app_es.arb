@@ -2122,6 +2122,7 @@
   "deliveryWhyUnknown": "La radio informó del error {code}.",
   "ndPointTo": "Apúntame hacia él",
   "ndCheckTerrain": "Comprobar terreno",
+  "ndNoPositionTools": "Aún no ha compartido su posición, así que Apúntame hacia él y Comprobar terreno están desactivados.",
   "ndPositionApprox": "Posición compartida",
   "ndPositionApproxValue": "Aproximada, a unos {distance}",
   "lpApproximate": "{name} solo comparte una posición aproximada (a unos {distance}), así que esta comprobación es orientativa.",

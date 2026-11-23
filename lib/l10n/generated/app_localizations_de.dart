@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -6113,7 +6112,8 @@ class AppLocalizationsDe extends AppLocalizations {
       locale: localeName,
       other:
           '$count weitere Geräte in der Nähe sind keine Meshtastic-Funkgeräte und werden daher ausgeblendet.',
-      one: '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
+      one:
+          '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
     );
     return '$_temp0';
   }
@@ -7932,6 +7932,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get ndCheckTerrain => 'Gelände prüfen';
+
+  @override
+  String get ndNoPositionTools =>
+      'Noch keine Position geteilt, daher sind Zeig mir den Weg und Gelände prüfen aus.';
 
   @override
   String get ndPositionApprox => 'Geteilte Position';

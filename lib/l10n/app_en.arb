@@ -5430,6 +5430,7 @@
   },
   "ndPointTo": "Point me to it",
   "ndCheckTerrain": "Check terrain",
+  "ndNoPositionTools": "No position shared yet, so Point me to it and Check terrain are off.",
   "ndPositionApprox": "Position shared",
   "ndPositionApproxValue": "Approximate, within about {distance}",
   "@ndPositionApproxValue": {
