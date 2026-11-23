@@ -12367,6 +12367,216 @@ abstract class AppLocalizations {
   /// **'Clears after 1 minute without typing.'**
   String get sarneg_autoClear;
 
+  /// No description provided for @sarneg_optionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get sarneg_optionsTitle;
+
+  /// No description provided for @sarneg_keepZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep grid zone in clear'**
+  String get sarneg_keepZone;
+
+  /// No description provided for @sarneg_keepZoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'17S 4823 goes out as 17s KSAC. The zone is rarely secret, and other SARNEG tools read it this way.'**
+  String get sarneg_keepZoneHint;
+
+  /// No description provided for @sarneg_noMarker.
+  ///
+  /// In en, this message translates to:
+  /// **'Send without the [SARNEG] marker'**
+  String get sarneg_noMarker;
+
+  /// No description provided for @sarneg_noMarkerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Listeners can\'t tell that numbers are hidden. Your team must turn on Decode unmarked messages.'**
+  String get sarneg_noMarkerHint;
+
+  /// No description provided for @sarneg_readUnmarked.
+  ///
+  /// In en, this message translates to:
+  /// **'Decode unmarked messages'**
+  String get sarneg_readUnmarked;
+
+  /// No description provided for @sarneg_readUnmarkedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A message without the marker gets a decode line when all its capital letters belong to the day\'s word.'**
+  String get sarneg_readUnmarkedHint;
+
+  /// No description provided for @sarneg_wipeAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all words after a day'**
+  String get sarneg_wipeAfter;
+
+  /// No description provided for @sarneg_wipeAfterOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off. Dated words are deleted once their day has passed.'**
+  String get sarneg_wipeAfterOff;
+
+  /// No description provided for @sarneg_wipeAfterSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Every word is deleted after {day}.'**
+  String sarneg_wipeAfterSet(String day);
+
+  /// No description provided for @sarneg_remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get sarneg_remove;
+
+  /// No description provided for @sarneg_sardotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SARDOT reference point'**
+  String get sarneg_sardotTitle;
+
+  /// No description provided for @sarneg_sardotHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a bearing and distance from a secret point instead of a position. Agree the point in person: it is never sent.'**
+  String get sarneg_sardotHint;
+
+  /// No description provided for @sarneg_sardotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference point set'**
+  String get sarneg_sardotSet;
+
+  /// No description provided for @sarneg_sardotNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No reference point'**
+  String get sarneg_sardotNone;
+
+  /// No description provided for @sarneg_useMyPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Use my position'**
+  String get sarneg_useMyPosition;
+
+  /// No description provided for @sarneg_typePoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a point'**
+  String get sarneg_typePoint;
+
+  /// No description provided for @sarneg_pointLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude, longitude'**
+  String get sarneg_pointLabel;
+
+  /// No description provided for @sarneg_pointInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Type latitude, longitude, for example 41.33, -73.09'**
+  String get sarneg_pointInvalid;
+
+  /// No description provided for @sarneg_addSardot.
+  ///
+  /// In en, this message translates to:
+  /// **'Add SARDOT from my position'**
+  String get sarneg_addSardot;
+
+  /// No description provided for @sarneg_showOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Show on map'**
+  String get sarneg_showOnMap;
+
+  /// No description provided for @sarneg_mapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Decoded position'**
+  String get sarneg_mapTitle;
+
+  /// No description provided for @sarneg_authTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Number and letter of the day'**
+  String get sarneg_authTitle;
+
+  /// No description provided for @sarneg_authHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge and reply: they say a number, you answer the number that adds up to the number of the day. Kept on this phone only.'**
+  String get sarneg_authHint;
+
+  /// No description provided for @sarneg_numberOfDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of the day (0 to 99)'**
+  String get sarneg_numberOfDay;
+
+  /// No description provided for @sarneg_letterOfDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Letter of the day'**
+  String get sarneg_letterOfDay;
+
+  /// No description provided for @sarneg_notSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get sarneg_notSet;
+
+  /// No description provided for @sarneg_numberInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a number from 0 to 99'**
+  String get sarneg_numberInvalid;
+
+  /// No description provided for @sarneg_letterInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Use one letter, A to Z'**
+  String get sarneg_letterInvalid;
+
+  /// No description provided for @sarneg_challenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Number they said'**
+  String get sarneg_challenge;
+
+  /// No description provided for @sarneg_reply.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply: {number}'**
+  String sarneg_reply(int number);
+
+  /// No description provided for @sarneg_noReply.
+  ///
+  /// In en, this message translates to:
+  /// **'No valid reply: that number is bigger than the number of the day.'**
+  String get sarneg_noReply;
+
+  /// No description provided for @sarneg_maybeUnmarked.
+  ///
+  /// In en, this message translates to:
+  /// **'Maybe SARNEG · tap to decode'**
+  String get sarneg_maybeUnmarked;
+
+  /// No description provided for @sarneg_guideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SARNEG or real encryption?'**
+  String get sarneg_guideTitle;
+
+  /// No description provided for @sarneg_guideBody.
+  ///
+  /// In en, this message translates to:
+  /// **'SARNEG swaps digits for letters with one shared word. Anyone who hears a few messages can work the word out, so it only keeps numbers from a casual listener. It is not encryption.\n\nFor real secrecy, use a private channel with its own key. The radio encrypts everything on it, and only people with the key can read it.\n\nSARNEG still helps on top of that: on shared or public channels, through relays and bridges, in logs and screenshots, and against someone who has the channel key but not the code word.'**
+  String get sarneg_guideBody;
+
   /// No description provided for @frHopDirect.
   ///
   /// In en, this message translates to:

@@ -7611,6 +7611,124 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sarneg_autoClear => 'Se borra tras 1 minuto sin escribir.';
 
   @override
+  String get sarneg_optionsTitle => 'Opciones';
+
+  @override
+  String get sarneg_keepZone => 'Dejar la zona de cuadrícula sin codificar';
+
+  @override
+  String get sarneg_keepZoneHint =>
+      '17S 4823 sale como 17s KSAC. La zona rara vez es secreta y otras herramientas SARNEG la leen así.';
+
+  @override
+  String get sarneg_noMarker => 'Enviar sin la marca [SARNEG]';
+
+  @override
+  String get sarneg_noMarkerHint =>
+      'Quien escuche no sabrá que hay números ocultos. Tu equipo debe activar «Decodificar mensajes sin marca».';
+
+  @override
+  String get sarneg_readUnmarked => 'Decodificar mensajes sin marca';
+
+  @override
+  String get sarneg_readUnmarkedHint =>
+      'Un mensaje sin marca muestra una línea para decodificar cuando todas sus mayúsculas pertenecen a la palabra del día.';
+
+  @override
+  String get sarneg_wipeAfter => 'Borrar todas las palabras después de un día';
+
+  @override
+  String get sarneg_wipeAfterOff =>
+      'Desactivado. Las palabras con fecha se borran cuando pasa su día.';
+
+  @override
+  String sarneg_wipeAfterSet(String day) {
+    return 'Todas las palabras se borran después del $day.';
+  }
+
+  @override
+  String get sarneg_remove => 'Quitar';
+
+  @override
+  String get sarneg_sardotTitle => 'Punto de referencia SARDOT';
+
+  @override
+  String get sarneg_sardotHint =>
+      'Envía un rumbo y una distancia desde un punto secreto en lugar de una posición. Acordad el punto en persona: nunca se envía.';
+
+  @override
+  String get sarneg_sardotSet => 'Punto de referencia fijado';
+
+  @override
+  String get sarneg_sardotNone => 'Sin punto de referencia';
+
+  @override
+  String get sarneg_useMyPosition => 'Usar mi posición';
+
+  @override
+  String get sarneg_typePoint => 'Escribir un punto';
+
+  @override
+  String get sarneg_pointLabel => 'Latitud, longitud';
+
+  @override
+  String get sarneg_pointInvalid =>
+      'Escribe latitud, longitud, por ejemplo 41.33, -73.09';
+
+  @override
+  String get sarneg_addSardot => 'Añadir SARDOT desde mi posición';
+
+  @override
+  String get sarneg_showOnMap => 'Ver en el mapa';
+
+  @override
+  String get sarneg_mapTitle => 'Posición decodificada';
+
+  @override
+  String get sarneg_authTitle => 'Número y letra del día';
+
+  @override
+  String get sarneg_authHint =>
+      'Desafío y respuesta: te dicen un número y respondes el que, sumado, da el número del día. Solo se guarda en este teléfono.';
+
+  @override
+  String get sarneg_numberOfDay => 'Número del día (0 a 99)';
+
+  @override
+  String get sarneg_letterOfDay => 'Letra del día';
+
+  @override
+  String get sarneg_notSet => 'Sin definir';
+
+  @override
+  String get sarneg_numberInvalid => 'Usa un número del 0 al 99';
+
+  @override
+  String get sarneg_letterInvalid => 'Usa una letra de la A a la Z';
+
+  @override
+  String get sarneg_challenge => 'Número que dijeron';
+
+  @override
+  String sarneg_reply(int number) {
+    return 'Respuesta: $number';
+  }
+
+  @override
+  String get sarneg_noReply =>
+      'No hay respuesta válida: ese número es mayor que el número del día.';
+
+  @override
+  String get sarneg_maybeUnmarked => 'Quizá SARNEG · toca para decodificar';
+
+  @override
+  String get sarneg_guideTitle => '¿SARNEG o cifrado real?';
+
+  @override
+  String get sarneg_guideBody =>
+      'SARNEG cambia dígitos por letras con una palabra compartida. Cualquiera que oiga unos cuantos mensajes puede averiguar la palabra, así que solo oculta los números a un oyente casual. No es cifrado.\n\nPara un secreto real, usa un canal privado con su propia clave. La radio cifra todo lo que va por él y solo quien tiene la clave puede leerlo.\n\nAun así, SARNEG suma protección: en canales compartidos o públicos, a través de repetidores y puentes, en registros y capturas de pantalla, y frente a alguien que tiene la clave del canal pero no la palabra clave.';
+
+  @override
   String get frHopDirect => 'directo';
 
   @override

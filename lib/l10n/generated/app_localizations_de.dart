@@ -7640,6 +7640,125 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sarneg_autoClear => 'Wird nach 1 Minute ohne Eingabe geleert.';
 
   @override
+  String get sarneg_optionsTitle => 'Optionen';
+
+  @override
+  String get sarneg_keepZone => 'Gitterzone im Klartext lassen';
+
+  @override
+  String get sarneg_keepZoneHint =>
+      '17S 4823 geht als 17s KSAC raus. Die Zone ist selten geheim, und andere SARNEG-Werkzeuge lesen sie so.';
+
+  @override
+  String get sarneg_noMarker => 'Ohne [SARNEG]-Kennung senden';
+
+  @override
+  String get sarneg_noMarkerHint =>
+      'Mithörende erkennen nicht, dass Zahlen versteckt sind. Dein Team muss „Unmarkierte Nachrichten entschlüsseln“ einschalten.';
+
+  @override
+  String get sarneg_readUnmarked => 'Unmarkierte Nachrichten entschlüsseln';
+
+  @override
+  String get sarneg_readUnmarkedHint =>
+      'Eine Nachricht ohne Kennung bekommt eine Entschlüsselungszeile, wenn alle ihre Großbuchstaben zum Wort des Tages gehören.';
+
+  @override
+  String get sarneg_wipeAfter => 'Alle Wörter nach einem Tag löschen';
+
+  @override
+  String get sarneg_wipeAfterOff =>
+      'Aus. Datierte Wörter werden gelöscht, sobald ihr Tag vorbei ist.';
+
+  @override
+  String sarneg_wipeAfterSet(String day) {
+    return 'Alle Wörter werden nach dem $day gelöscht.';
+  }
+
+  @override
+  String get sarneg_remove => 'Entfernen';
+
+  @override
+  String get sarneg_sardotTitle => 'SARDOT-Bezugspunkt';
+
+  @override
+  String get sarneg_sardotHint =>
+      'Sende Richtung und Entfernung von einem geheimen Punkt statt einer Position. Vereinbart den Punkt persönlich: Er wird nie gesendet.';
+
+  @override
+  String get sarneg_sardotSet => 'Bezugspunkt gesetzt';
+
+  @override
+  String get sarneg_sardotNone => 'Kein Bezugspunkt';
+
+  @override
+  String get sarneg_useMyPosition => 'Meine Position';
+
+  @override
+  String get sarneg_typePoint => 'Punkt eingeben';
+
+  @override
+  String get sarneg_pointLabel => 'Breite, Länge';
+
+  @override
+  String get sarneg_pointInvalid =>
+      'Gib Breite, Länge ein, zum Beispiel 41.33, -73.09';
+
+  @override
+  String get sarneg_addSardot => 'SARDOT von meiner Position hinzufügen';
+
+  @override
+  String get sarneg_showOnMap => 'Auf Karte zeigen';
+
+  @override
+  String get sarneg_mapTitle => 'Entschlüsselte Position';
+
+  @override
+  String get sarneg_authTitle => 'Zahl und Buchstabe des Tages';
+
+  @override
+  String get sarneg_authHint =>
+      'Anruf und Antwort: Sie nennen eine Zahl, du antwortest mit der Zahl, die zusammen die Zahl des Tages ergibt. Nur auf diesem Telefon gespeichert.';
+
+  @override
+  String get sarneg_numberOfDay => 'Zahl des Tages (0 bis 99)';
+
+  @override
+  String get sarneg_letterOfDay => 'Buchstabe des Tages';
+
+  @override
+  String get sarneg_notSet => 'Nicht gesetzt';
+
+  @override
+  String get sarneg_numberInvalid => 'Verwende eine Zahl von 0 bis 99';
+
+  @override
+  String get sarneg_letterInvalid => 'Verwende einen Buchstaben von A bis Z';
+
+  @override
+  String get sarneg_challenge => 'Genannte Zahl';
+
+  @override
+  String sarneg_reply(int number) {
+    return 'Antwort: $number';
+  }
+
+  @override
+  String get sarneg_noReply =>
+      'Keine gültige Antwort: Die Zahl ist größer als die Zahl des Tages.';
+
+  @override
+  String get sarneg_maybeUnmarked =>
+      'Vielleicht SARNEG · zum Entschlüsseln tippen';
+
+  @override
+  String get sarneg_guideTitle => 'SARNEG oder echte Verschlüsselung?';
+
+  @override
+  String get sarneg_guideBody =>
+      'SARNEG ersetzt Ziffern durch Buchstaben mit einem gemeinsamen Wort. Wer ein paar Nachrichten mithört, kann das Wort herausfinden, also schützt es Zahlen nur vor zufälligen Mithörenden. Es ist keine Verschlüsselung.\n\nFür echte Geheimhaltung nutze einen privaten Kanal mit eigenem Schlüssel. Das Funkgerät verschlüsselt alles darauf, und nur wer den Schlüssel hat, kann es lesen.\n\nSARNEG hilft trotzdem zusätzlich: auf gemeinsamen oder öffentlichen Kanälen, über Repeater und Brücken, in Logs und Screenshots und gegen jemanden, der den Kanalschlüssel hat, aber nicht das Codewort.';
+
+  @override
   String get frHopDirect => 'direkt';
 
   @override
