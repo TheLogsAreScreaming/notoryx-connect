@@ -1,0 +1,1 @@
+Map as a list: trip contacts listed first, a search box for nodes and waypoints, tap a node to open it, and weak coverage areas say when they were last measured.
