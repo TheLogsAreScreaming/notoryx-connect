@@ -1,1 +1,2 @@
 Demo mode: shows only its pretend nodes and names, never nodes remembered from your real radio. Demo direct messages show the sender's name.
+Drives: a parked phone's GPS wobble no longer adds distance.
