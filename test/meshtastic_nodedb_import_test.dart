@@ -306,6 +306,45 @@ void main() {
     expect(conversationTitle(l, radio, BastionConversation.direct(0xabc)), '!00000abc');
   });
 
+  testWidgets('new chat lists search matches first and hides rows that do not match', (tester) async {
+    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.withData({
+      BastionRadioHistory.lastRadioKey: _me,
+    });
+    final radio = MeshtasticRadioCoordinator();
+    addTearDown(radio.dispose);
+    await tester.runAsync(() async {
+      await Future<void>.delayed(const Duration(milliseconds: 50));
+      await radio.importNodeDatabase(MeshtasticNodeDbExport.parse(_file()), includeInternet: false);
+    });
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Builder(builder: (context) => Scaffold(
+        body: TextButton(
+          onPressed: () => pickConversation(context, radio, title: 'New chat', everyNode: true),
+          child: const Text('open'),
+        ),
+      )),
+    ));
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    // Not searching: the Channels heading is shown.
+    expect(find.text(l.chatsChannelsSection), findsOneWidget);
+
+    await tester.enterText(find.byKey(const ValueKey('pick-node-search')), 'ridge');
+    await tester.pumpAndSettle();
+    // The match sits right under the search box; channels that don't match are gone.
+    expect(find.text('Ridge Relay'), findsOneWidget);
+    expect(find.text(l.chatsChannelsSection), findsNothing);
+    final box = tester.getBottomLeft(find.byKey(const ValueKey('pick-node-search')));
+    expect(tester.getTopLeft(find.text('Ridge Relay')).dy - box.dy, lessThan(150));
+
+    await tester.enterText(find.byKey(const ValueKey('pick-node-search')), 'zzzz-nothing');
+    await tester.pumpAndSettle();
+    expect(find.text(l.nodesNoMatch('zzzz-nothing')), findsOneWidget);
+  });
+
   testWidgets('the page shows what is in the file and imports it', (tester) async {
     final radio = MeshtasticRadioCoordinator();
     addTearDown(radio.dispose);

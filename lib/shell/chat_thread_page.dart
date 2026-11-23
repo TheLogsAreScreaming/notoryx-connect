@@ -910,6 +910,40 @@ Future<BastionConversation?> pickConversation(
     isScrollControlled: true,
     builder: (sheet) => SafeArea(child: StatefulBuilder(builder: (sheet, setSheet) {
       final others = matches();
+      // While searching, matches come first and rows that don't match are
+      // hidden, so results are not pushed under the keyboard.
+      final q = query.trim().toLowerCase();
+      final searching = q.isNotEmpty;
+      bool titleMatches(BastionConversation c) => conversationTitle(l, radio, c).toLowerCase().contains(q);
+      final channels = [for (final s in lists.channels) if (!searching || titleMatches(s.conversation)) s];
+      final direct = [for (final s in lists.direct) if (!searching || titleMatches(s.conversation)) s];
+      final channelRows = [
+        if (channels.isNotEmpty) NxSectionLabel(l.chatsChannelsSection),
+        for (final s in channels)
+          ListTile(
+            leading: const Icon(Icons.tag),
+            title: Text(conversationTitle(l, radio, s.conversation)),
+            subtitle: Text(conversationSubtitle(l, radio, s.conversation)),
+            selected: s.conversation == current,
+            trailing: s.unread > 0 ? Badge(label: Text('${s.unread}')) : null,
+            onTap: () => Navigator.pop(sheet, s.conversation),
+          ),
+      ];
+      final directRows = [
+        if (direct.isNotEmpty || others.isNotEmpty) NxSectionLabel(l.chatsDirectSection),
+        // New nodes first while searching: they are what the search is for.
+        if (searching) ..._newNodeRows(sheet, others),
+        for (final s in direct)
+          ListTile(
+            leading: const Icon(Icons.person_outline),
+            title: Text(conversationTitle(l, radio, s.conversation)),
+            selected: s.conversation == current,
+            trailing: s.unread > 0 ? Badge(label: Text('${s.unread}')) : null,
+            onTap: () => Navigator.pop(sheet, s.conversation),
+          ),
+        if (!searching) ..._newNodeRows(sheet, others),
+      ];
+      final nothing = searching && channels.isEmpty && direct.isEmpty && others.isEmpty;
       return DraggableScrollableSheet(
       expand: false,
       initialChildSize: 0.6,
@@ -928,36 +962,23 @@ Future<BastionConversation?> pickConversation(
               onChanged: (v) => setSheet(() => query = v),
             ),
           ),
-        NxSectionLabel(l.chatsChannelsSection),
-        for (final s in lists.channels)
-          ListTile(
-            leading: const Icon(Icons.tag),
-            title: Text(conversationTitle(l, radio, s.conversation)),
-            subtitle: Text(conversationSubtitle(l, radio, s.conversation)),
-            selected: s.conversation == current,
-            trailing: s.unread > 0 ? Badge(label: Text('${s.unread}')) : null,
-            onTap: () => Navigator.pop(sheet, s.conversation),
-          ),
-        if (lists.direct.isNotEmpty || others.isNotEmpty) NxSectionLabel(l.chatsDirectSection),
-        for (final s in lists.direct)
-          ListTile(
-            leading: const Icon(Icons.person_outline),
-            title: Text(conversationTitle(l, radio, s.conversation)),
-            selected: s.conversation == current,
-            trailing: s.unread > 0 ? Badge(label: Text('${s.unread}')) : null,
-            onTap: () => Navigator.pop(sheet, s.conversation),
-          ),
-        for (final n in others)
-          ListTile(
-            leading: const Icon(Icons.person_add_alt),
-            title: Text(n.displayName),
-            onTap: () => Navigator.pop(sheet, BastionConversation.direct(n.num)),
-          ),
+        if (nothing) ListTile(title: Text(l.nodesNoMatch(query.trim())), subtitle: Text(l.nodesNoMatchHint)),
+        if (searching) ...[...directRows, ...channelRows] else ...[...channelRows, ...directRows],
       ]),
     );
     })),
   );
 }
+
+/// Rows for nodes with no chat yet; tapping one starts a DM.
+List<Widget> _newNodeRows(BuildContext sheet, List<MeshtasticNode> nodes) => [
+      for (final n in nodes)
+        ListTile(
+          leading: const Icon(Icons.person_add_alt),
+          title: Text(n.displayName),
+          onTap: () => Navigator.pop(sheet, BastionConversation.direct(n.num)),
+        ),
+    ];
 
 /// A quiet card under a message with a web link: the site, the page title
 /// and a line about it. Shown only when link previews are on in Privacy.
