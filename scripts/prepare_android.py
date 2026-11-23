@@ -106,6 +106,14 @@ if n != 1:
     raise SystemExit('Could not set applicationId in build.gradle.kts')
 g.write_text(gradle)
 
+# flutter_local_notifications 23 (and the androidx.core it brings) needs
+# compileSdk 37; Flutter's template default is still 36. This only changes
+# the SDK the app is compiled against, not targetSdk or runtime behaviour.
+gradle, n=re.subn(r'compileSdk = flutter\.compileSdkVersion', 'compileSdk = maxOf(flutter.compileSdkVersion, 37)', gradle)
+if n != 1 and 'compileSdk = maxOf(' not in gradle:
+    raise SystemExit('Could not set compileSdk in build.gradle.kts')
+g.write_text(gradle)
+
 # flutter_local_notifications needs core library desugaring.
 if 'isCoreLibraryDesugaringEnabled' not in gradle:
     gradle=gradle.replace('    compileOptions {\n', '    compileOptions {\n        isCoreLibraryDesugaringEnabled = true\n', 1)
