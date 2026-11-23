@@ -7572,6 +7572,124 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sarneg_autoClear => 'Clears after 1 minute without typing.';
 
   @override
+  String get sarneg_optionsTitle => 'Options';
+
+  @override
+  String get sarneg_keepZone => 'Keep grid zone in clear';
+
+  @override
+  String get sarneg_keepZoneHint =>
+      '17S 4823 goes out as 17s KSAC. The zone is rarely secret, and other SARNEG tools read it this way.';
+
+  @override
+  String get sarneg_noMarker => 'Send without the [SARNEG] marker';
+
+  @override
+  String get sarneg_noMarkerHint =>
+      'Listeners can\'t tell that numbers are hidden. Your team must turn on Decode unmarked messages.';
+
+  @override
+  String get sarneg_readUnmarked => 'Decode unmarked messages';
+
+  @override
+  String get sarneg_readUnmarkedHint =>
+      'A message without the marker gets a decode line when all its capital letters belong to the day\'s word.';
+
+  @override
+  String get sarneg_wipeAfter => 'Delete all words after a day';
+
+  @override
+  String get sarneg_wipeAfterOff =>
+      'Off. Dated words are deleted once their day has passed.';
+
+  @override
+  String sarneg_wipeAfterSet(String day) {
+    return 'Every word is deleted after $day.';
+  }
+
+  @override
+  String get sarneg_remove => 'Remove';
+
+  @override
+  String get sarneg_sardotTitle => 'SARDOT reference point';
+
+  @override
+  String get sarneg_sardotHint =>
+      'Send a bearing and distance from a secret point instead of a position. Agree the point in person: it is never sent.';
+
+  @override
+  String get sarneg_sardotSet => 'Reference point set';
+
+  @override
+  String get sarneg_sardotNone => 'No reference point';
+
+  @override
+  String get sarneg_useMyPosition => 'Use my position';
+
+  @override
+  String get sarneg_typePoint => 'Type a point';
+
+  @override
+  String get sarneg_pointLabel => 'Latitude, longitude';
+
+  @override
+  String get sarneg_pointInvalid =>
+      'Type latitude, longitude, for example 41.33, -73.09';
+
+  @override
+  String get sarneg_addSardot => 'Add SARDOT from my position';
+
+  @override
+  String get sarneg_showOnMap => 'Show on map';
+
+  @override
+  String get sarneg_mapTitle => 'Decoded position';
+
+  @override
+  String get sarneg_authTitle => 'Number and letter of the day';
+
+  @override
+  String get sarneg_authHint =>
+      'Challenge and reply: they say a number, you answer the number that adds up to the number of the day. Kept on this phone only.';
+
+  @override
+  String get sarneg_numberOfDay => 'Number of the day (0 to 99)';
+
+  @override
+  String get sarneg_letterOfDay => 'Letter of the day';
+
+  @override
+  String get sarneg_notSet => 'Not set';
+
+  @override
+  String get sarneg_numberInvalid => 'Use a number from 0 to 99';
+
+  @override
+  String get sarneg_letterInvalid => 'Use one letter, A to Z';
+
+  @override
+  String get sarneg_challenge => 'Number they said';
+
+  @override
+  String sarneg_reply(int number) {
+    return 'Reply: $number';
+  }
+
+  @override
+  String get sarneg_noReply =>
+      'No valid reply: that number is bigger than the number of the day.';
+
+  @override
+  String get sarneg_maybeUnmarked => 'Maybe SARNEG · tap to decode';
+
+  @override
+  String get sarneg_guideTitle => 'SARNEG or real encryption?';
+
+  @override
+  String get sarneg_guideBody =>
+      'SARNEG swaps digits for letters with one shared word. Anyone who hears a few messages can work the word out, so it only keeps numbers from a casual listener. It is not encryption.\n\nFor real secrecy, use a private channel with its own key. The radio encrypts everything on it, and only people with the key can read it.\n\nSARNEG still helps on top of that: on shared or public channels, through relays and bridges, in logs and screenshots, and against someone who has the channel key but not the code word.';
+
+  @override
   String get frHopDirect => 'direct';
 
   @override

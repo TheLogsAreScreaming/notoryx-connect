@@ -7661,6 +7661,124 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sarneg_autoClear => 'S’efface après 1 minute sans saisie.';
 
   @override
+  String get sarneg_optionsTitle => 'Options';
+
+  @override
+  String get sarneg_keepZone => 'Laisser la zone de grille en clair';
+
+  @override
+  String get sarneg_keepZoneHint =>
+      '17S 4823 part sous la forme 17s KSAC. La zone est rarement secrète, et d’autres outils SARNEG la lisent ainsi.';
+
+  @override
+  String get sarneg_noMarker => 'Envoyer sans le repère [SARNEG]';
+
+  @override
+  String get sarneg_noMarkerHint =>
+      'Les auditeurs ne voient pas que des chiffres sont cachés. Votre équipe doit activer « Décoder les messages sans repère ».';
+
+  @override
+  String get sarneg_readUnmarked => 'Décoder les messages sans repère';
+
+  @override
+  String get sarneg_readUnmarkedHint =>
+      'Un message sans repère reçoit une ligne de décodage lorsque toutes ses majuscules appartiennent au mot du jour.';
+
+  @override
+  String get sarneg_wipeAfter => 'Supprimer tous les mots après une date';
+
+  @override
+  String get sarneg_wipeAfterOff =>
+      'Désactivé. Les mots datés sont supprimés une fois leur jour passé.';
+
+  @override
+  String sarneg_wipeAfterSet(String day) {
+    return 'Tous les mots sont supprimés après le $day.';
+  }
+
+  @override
+  String get sarneg_remove => 'Retirer';
+
+  @override
+  String get sarneg_sardotTitle => 'Point de référence SARDOT';
+
+  @override
+  String get sarneg_sardotHint =>
+      'Envoyez un cap et une distance depuis un point secret au lieu d’une position. Convenez du point en personne : il n’est jamais envoyé.';
+
+  @override
+  String get sarneg_sardotSet => 'Point de référence défini';
+
+  @override
+  String get sarneg_sardotNone => 'Aucun point de référence';
+
+  @override
+  String get sarneg_useMyPosition => 'Ma position';
+
+  @override
+  String get sarneg_typePoint => 'Saisir un point';
+
+  @override
+  String get sarneg_pointLabel => 'Latitude, longitude';
+
+  @override
+  String get sarneg_pointInvalid =>
+      'Saisissez latitude, longitude, par exemple 41.33, -73.09';
+
+  @override
+  String get sarneg_addSardot => 'Ajouter SARDOT depuis ma position';
+
+  @override
+  String get sarneg_showOnMap => 'Afficher sur la carte';
+
+  @override
+  String get sarneg_mapTitle => 'Position décodée';
+
+  @override
+  String get sarneg_authTitle => 'Nombre et lettre du jour';
+
+  @override
+  String get sarneg_authHint =>
+      'Défi et réponse : on vous donne un nombre, vous répondez celui qui complète jusqu’au nombre du jour. Gardé sur ce téléphone uniquement.';
+
+  @override
+  String get sarneg_numberOfDay => 'Nombre du jour (0 à 99)';
+
+  @override
+  String get sarneg_letterOfDay => 'Lettre du jour';
+
+  @override
+  String get sarneg_notSet => 'Non défini';
+
+  @override
+  String get sarneg_numberInvalid => 'Utilisez un nombre de 0 à 99';
+
+  @override
+  String get sarneg_letterInvalid => 'Utilisez une lettre de A à Z';
+
+  @override
+  String get sarneg_challenge => 'Nombre annoncé';
+
+  @override
+  String sarneg_reply(int number) {
+    return 'Réponse : $number';
+  }
+
+  @override
+  String get sarneg_noReply =>
+      'Aucune réponse valable : ce nombre est plus grand que le nombre du jour.';
+
+  @override
+  String get sarneg_maybeUnmarked => 'Peut-être SARNEG · touchez pour décoder';
+
+  @override
+  String get sarneg_guideTitle => 'SARNEG ou vrai chiffrement ?';
+
+  @override
+  String get sarneg_guideBody =>
+      'SARNEG remplace les chiffres par des lettres à l’aide d’un mot partagé. Quiconque entend quelques messages peut deviner le mot : il ne cache donc les nombres qu’à un auditeur occasionnel. Ce n’est pas du chiffrement.\n\nPour un vrai secret, utilisez un canal privé avec sa propre clé. La radio chiffre tout ce qui y passe, et seules les personnes ayant la clé peuvent le lire.\n\nSARNEG reste utile en plus : sur les canaux partagés ou publics, via les relais et les ponts, dans les journaux et les captures d’écran, et face à quelqu’un qui a la clé du canal mais pas le mot de code.';
+
+  @override
   String get frHopDirect => 'direct';
 
   @override
