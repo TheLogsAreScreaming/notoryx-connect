@@ -1,0 +1,1 @@
+Chats: while you search in New chat, matching nodes now show right under the search box and rows that don't match are hidden, so results are no longer covered by the keyboard.
