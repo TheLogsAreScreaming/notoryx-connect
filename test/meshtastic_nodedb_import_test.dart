@@ -340,6 +340,16 @@ void main() {
     final box = tester.getBottomLeft(find.byKey(const ValueKey('pick-node-search')));
     expect(tester.getTopLeft(find.text('Ridge Relay')).dy - box.dy, lessThan(150));
 
+    // On a phone-sized screen with the keyboard open, the sheet moves up so
+    // the match stays above the keyboard.
+    tester.view.physicalSize = const Size(1080, 2340);
+    tester.view.devicePixelRatio = 2.625;
+    tester.view.viewInsets = const FakeViewPadding(bottom: 1000);
+    addTearDown(tester.view.reset);
+    await tester.pumpAndSettle();
+    const keyboardTop = (2340 - 1000) / 2.625;
+    expect(tester.getBottomLeft(find.text('Ridge Relay')).dy, lessThan(keyboardTop));
+
     await tester.enterText(find.byKey(const ValueKey('pick-node-search')), 'zzzz-nothing');
     await tester.pumpAndSettle();
     expect(find.text(l.nodesNoMatch('zzzz-nothing')), findsOneWidget);

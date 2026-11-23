@@ -12847,6 +12847,12 @@ abstract class AppLocalizations {
   /// **'Check terrain'**
   String get ndCheckTerrain;
 
+  /// No description provided for @ndNoPositionTools.
+  ///
+  /// In en, this message translates to:
+  /// **'No position shared yet, so Point me to it and Check terrain are off.'**
+  String get ndNoPositionTools;
+
   /// No description provided for @ndPositionApprox.
   ///
   /// In en, this message translates to:

@@ -2122,6 +2122,7 @@
   "deliveryWhyUnknown": "La radio a signalé l'erreur {code}.",
   "ndPointTo": "Me guider vers lui",
   "ndCheckTerrain": "Vérifier le relief",
+  "ndNoPositionTools": "Aucune position partagée pour l’instant, donc Me guider vers lui et Vérifier le relief sont désactivés.",
   "ndPositionApprox": "Position partagée",
   "ndPositionApproxValue": "Approximative, à environ {distance}",
   "lpApproximate": "{name} ne partage qu'une position approximative (à environ {distance}) : cette vérification n'est qu'indicative.",

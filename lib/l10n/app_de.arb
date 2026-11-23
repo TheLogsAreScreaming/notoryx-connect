@@ -2122,6 +2122,7 @@
   "deliveryWhyUnknown": "Das Funkgerät meldete Fehler {code}.",
   "ndPointTo": "Zeig mir den Weg",
   "ndCheckTerrain": "Gelände prüfen",
+  "ndNoPositionTools": "Noch keine Position geteilt, daher sind Zeig mir den Weg und Gelände prüfen aus.",
   "ndPositionApprox": "Geteilte Position",
   "ndPositionApproxValue": "Ungefähr, auf etwa {distance} genau",
   "lpApproximate": "{name} teilt nur eine ungefähre Position (auf etwa {distance} genau), daher ist diese Prüfung nur ein grober Anhaltspunkt.",

@@ -944,7 +944,10 @@ Future<BastionConversation?> pickConversation(
         if (!searching) ..._newNodeRows(sheet, others),
       ];
       final nothing = searching && channels.isEmpty && direct.isEmpty && others.isEmpty;
-      return DraggableScrollableSheet(
+      // Lift the sheet above the keyboard so results stay visible while typing.
+      return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(sheet).bottom),
+      child: DraggableScrollableSheet(
       expand: false,
       initialChildSize: 0.6,
       maxChildSize: 0.95,
@@ -965,7 +968,7 @@ Future<BastionConversation?> pickConversation(
         if (nothing) ListTile(title: Text(l.nodesNoMatch(query.trim())), subtitle: Text(l.nodesNoMatchHint)),
         if (searching) ...[...directRows, ...channelRows] else ...[...channelRows, ...directRows],
       ]),
-    );
+    ));
     })),
   );
 }

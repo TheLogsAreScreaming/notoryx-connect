@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -7846,6 +7845,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ndCheckTerrain => 'Check terrain';
+
+  @override
+  String get ndNoPositionTools =>
+      'No position shared yet, so Point me to it and Check terrain are off.';
 
   @override
   String get ndPositionApprox => 'Position shared';
