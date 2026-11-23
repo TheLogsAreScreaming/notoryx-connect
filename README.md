@@ -33,7 +33,7 @@ NOTORYX Connect pairs your phone with a radio over Bluetooth, Wi-Fi or USB so yo
 
 <sub>Screenshots show the default BLACKOUT theme (and Bare Beauty, the light theme), rendered from the app's built-in demo mode: a pretend radio and mesh with made-up names, not a live radio. Map tiles need the internet, so the base map is blank in these renders.</sub>
 
-> **Status (2026-11-22):** the latest release is **v1.0.0-beta.35** (version 1.0.0, build 39). It is a test beta. Recent betas were checked on one phone (a Samsung Galaxy A15) with one radio (a Seeed T1000-E running Meshtastic firmware). The BLACKOUT icon and theme are merged after beta.35 and arrive in the next test build. Many features (USB, Wi-Fi, two-way ATAK, MQTT proxy, remote admin, offline map files, trail routing, SOS relay, Windows and macOS builds) have automated tests but have not yet been checked on a range of phones, radios and firmware versions. Don't rely on it as your only way to call for help. Please [report issues](../../issues).
+> **Status (2026-11-23):** the latest release is **v1.0.0-beta.43** (version 1.0.0, build 47). It is a test beta. Recent betas were checked on one phone (a Samsung Galaxy A15) with one radio (a Seeed T1000-E running Meshtastic firmware). Drive recording (beta.37 to 39) was checked parked on that phone but not yet on a real drive, and its optional two-way check is not yet tested over the air. Many features (USB, Wi-Fi, two-way ATAK, MQTT proxy, remote admin, offline map files, trail routing, SOS relay, Windows and macOS builds) have automated tests but have not yet been checked on a range of phones, radios and firmware versions. Don't rely on it as your only way to call for help. Please [report issues](../../issues).
 
 ## Download
 
