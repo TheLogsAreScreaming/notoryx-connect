@@ -5890,6 +5890,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mlNone => 'None';
 
   @override
+  String get mlTeam => 'Trip contacts';
+
+  @override
+  String get mlSearch => 'Search nodes and waypoints';
+
+  @override
+  String mlNoMatch(String query) {
+    return 'Nothing matches \"$query\"';
+  }
+
+  @override
+  String mlLastReading(String ago) {
+    return 'last reading $ago';
+  }
+
+  @override
   String get mlNoOwnPosition => 'Distance unknown: your radio has no position';
 
   @override

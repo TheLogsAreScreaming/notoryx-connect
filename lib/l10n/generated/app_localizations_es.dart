@@ -5931,6 +5931,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mlNone => 'Ninguno';
 
   @override
+  String get mlTeam => 'Contactos del viaje';
+
+  @override
+  String get mlSearch => 'Buscar nodos y puntos de referencia';
+
+  @override
+  String mlNoMatch(String query) {
+    return 'Nada coincide con «$query»';
+  }
+
+  @override
+  String mlLastReading(String ago) {
+    return 'última lectura $ago';
+  }
+
+  @override
   String get mlNoOwnPosition =>
       'Distancia desconocida: tu radio no tiene posición';
 
