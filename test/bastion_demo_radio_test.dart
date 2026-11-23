@@ -43,6 +43,25 @@ void main() {
     expect(radio.telemetrySeries(wx, TelemetryMetric.temperature).length, greaterThan(50));
   });
 
+  test('the demo shows only its own nodes and names, never remembered real ones', () {
+    final radio = BastionDemoRadio();
+    addTearDown(radio.dispose);
+    expect(radio.knownNodes.map((n) => n.num), unorderedEquals(radio.nodes.map((n) => n.num)));
+    expect(radio.knownNodeCount, radio.nodes.length);
+    expect(radio.favoriteNums, isEmpty);
+    for (final n in radio.nodes) {
+      expect(radio.nodeName(n.num), n.displayName);
+    }
+    final directFrom = {
+      for (final m in radio.messages)
+        if (m.to != 0xffffffff && m.from != radio.localNodeNum) m.from,
+    };
+    expect(directFrom, isNotEmpty, reason: 'the demo has direct messages');
+    for (final from in directFrom) {
+      expect(radio.nodeName(from), isNot(startsWith('!')), reason: 'DMs are titled by name');
+    }
+  });
+
   test('a real radio cannot be connected during the demo', () async {
     final radio = BastionDemoRadio();
     addTearDown(radio.dispose);
