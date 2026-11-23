@@ -1,0 +1,1 @@
+SARNEG: grid zone in clear, send without the marker, expiry that survives a restart, delete all words after a day, SARDOT reference point, map button for decoded positions, number and letter of the day, and a guide. Not yet tested over the air.
