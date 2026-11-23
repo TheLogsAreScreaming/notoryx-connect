@@ -1,0 +1,1 @@
+Nodes: new Point me to it compass and Check terrain on node details; approximate positions are marked. Chats: New chat search shows matches first, no longer hidden by the keyboard.
