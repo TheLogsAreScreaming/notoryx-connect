@@ -240,6 +240,18 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
   String? get backgroundProblem => null;
   @override
   List<BastionNodeRecord> get nodeVault => const [];
+  // The base class adds nodes this phone remembers from the real radio, and
+  // looks names up in its own lists. In the demo only the pretend mesh counts,
+  // so nothing real (names, call signs, favourites) can show.
+  @override
+  List<MeshtasticNode> get knownNodes => nodes;
+  @override
+  int get knownNodeCount => _demoNodes.length;
+  @override
+  Set<int> get favoriteNums => const {};
+  @override
+  String nodeName(int num) =>
+      _demoNodes.where((n) => n.num == num).firstOrNull?.displayName ?? _id(num);
 
   /// A morning walk for Mara and Sam, kept in memory for Day replay.
   @override
