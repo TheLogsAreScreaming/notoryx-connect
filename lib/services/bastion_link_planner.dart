@@ -35,6 +35,7 @@ class LinkAnalysis {
     required this.profile,
     required this.lineStart,
     required this.lineEnd,
+    this.mhz = 915,
   });
 
   final double distanceMeters;
@@ -56,6 +57,20 @@ class LinkAnalysis {
   /// Antenna heights above sea level at each end.
   final double lineStart;
   final double lineEnd;
+
+  /// The frequency the link was checked at, in MHz.
+  final double mhz;
+
+  /// Height of the direct line between the antennas at [distance] metres
+  /// from the start.
+  double lineAt(double distance) => distanceMeters <= 0
+      ? lineStart
+      : lineStart + (lineEnd - lineStart) * (distance / distanceMeters).clamp(0.0, 1.0);
+
+  /// Bottom edge of the first Fresnel zone at [distance] metres from the
+  /// start: the radio path needs most of the space above this kept clear.
+  double fresnelFloorAt(double distance) =>
+      lineAt(distance) - BastionLinkPlanner.fresnelRadius(distance, distanceMeters - distance, mhz);
 }
 
 /// Line-of-sight and Fresnel-zone checks for a LoRa link. Pure maths: the
@@ -134,6 +149,7 @@ abstract final class BastionLinkPlanner {
       profile: profile,
       lineStart: start,
       lineEnd: end,
+      mhz: mhz,
     );
   }
 

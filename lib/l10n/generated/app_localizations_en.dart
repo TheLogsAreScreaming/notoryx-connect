@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -5422,7 +5423,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lpProfileLegend =>
-      'Shaded: ground, including the curve of the earth. Line: the direct path between antennas.';
+      'Shaded: ground, including the curve of the earth. Line: the direct path between antennas. Dashed: bottom of the Fresnel zone; keep most of the space above it clear.';
 
   @override
   String get lpEstimateNote =>
@@ -7838,5 +7839,83 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String deliveryWhyUnknown(int code) {
     return 'The radio reported error $code.';
+  }
+
+  @override
+  String get ndPointTo => 'Point me to it';
+
+  @override
+  String get ndCheckTerrain => 'Check terrain';
+
+  @override
+  String get ndPositionApprox => 'Position shared';
+
+  @override
+  String ndPositionApproxValue(String distance) {
+    return 'Approximate, within about $distance';
+  }
+
+  @override
+  String lpApproximate(String name, String distance) {
+    return '$name shares only an approximate position (within about $distance), so this check is a rough guide.';
+  }
+
+  @override
+  String get ncTitle => 'Point me to it';
+
+  @override
+  String get ncPoints => 'N,NE,E,SE,S,SW,W,NW';
+
+  @override
+  String get ncOnTarget => 'Straight ahead';
+
+  @override
+  String ncTurnLeft(int degrees) {
+    return 'Turn left $degrees°';
+  }
+
+  @override
+  String ncTurnRight(int degrees) {
+    return 'Turn right $degrees°';
+  }
+
+  @override
+  String ncBearing(int degrees, String point) {
+    return 'Bearing $degrees° $point';
+  }
+
+  @override
+  String ncNoTarget(String name) {
+    return '$name hasn\'t shared a position yet.';
+  }
+
+  @override
+  String get ncNoPosition =>
+      'No position to point from. Use the phone\'s location, or wait for this radio to get a GPS fix.';
+
+  @override
+  String get ncNoCompass =>
+      'This device has no compass, so north is at the top. Turn until you face the bearing shown.';
+
+  @override
+  String get ncCalibrate =>
+      'The compass needs calibrating: move the phone in a figure of eight.';
+
+  @override
+  String get ncFromPhone => 'Measured from this phone\'s location.';
+
+  @override
+  String get ncFromRadio => 'Measured from this radio\'s position.';
+
+  @override
+  String get ncUsePhone => 'Use phone location';
+
+  @override
+  String get ncPrivacy =>
+      'The phone\'s location and compass are used only on this phone while this page is open. Nothing is sent.';
+
+  @override
+  String ncApproximate(String name, String distance) {
+    return '$name shares only an approximate position (within about $distance). Use the arrow as a general direction.';
   }
 }

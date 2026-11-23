@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -5484,7 +5485,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get lpProfileLegend =>
-      'Schattiert: Boden, einschließlich Erdkrümmung. Linie: der direkte Weg zwischen den Antennen.';
+      'Schattiert: Boden, einschließlich Erdkrümmung. Linie: der direkte Weg zwischen den Antennen. Gestrichelt: Unterkante der Fresnelzone; der Raum darüber sollte weitgehend frei sein.';
 
   @override
   String get lpEstimateNote =>
@@ -6112,8 +6113,7 @@ class AppLocalizationsDe extends AppLocalizations {
       locale: localeName,
       other:
           '$count weitere Geräte in der Nähe sind keine Meshtastic-Funkgeräte und werden daher ausgeblendet.',
-      one:
-          '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
+      one: '1 weiteres Gerät in der Nähe ist kein Meshtastic-Funkgerät und wird daher ausgeblendet.',
     );
     return '$_temp0';
   }
@@ -7925,5 +7925,83 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String deliveryWhyUnknown(int code) {
     return 'Das Funkgerät meldete Fehler $code.';
+  }
+
+  @override
+  String get ndPointTo => 'Zeig mir den Weg';
+
+  @override
+  String get ndCheckTerrain => 'Gelände prüfen';
+
+  @override
+  String get ndPositionApprox => 'Geteilte Position';
+
+  @override
+  String ndPositionApproxValue(String distance) {
+    return 'Ungefähr, auf etwa $distance genau';
+  }
+
+  @override
+  String lpApproximate(String name, String distance) {
+    return '$name teilt nur eine ungefähre Position (auf etwa $distance genau), daher ist diese Prüfung nur ein grober Anhaltspunkt.';
+  }
+
+  @override
+  String get ncTitle => 'Zeig mir den Weg';
+
+  @override
+  String get ncPoints => 'N,NO,O,SO,S,SW,W,NW';
+
+  @override
+  String get ncOnTarget => 'Geradeaus';
+
+  @override
+  String ncTurnLeft(int degrees) {
+    return '$degrees° nach links drehen';
+  }
+
+  @override
+  String ncTurnRight(int degrees) {
+    return '$degrees° nach rechts drehen';
+  }
+
+  @override
+  String ncBearing(int degrees, String point) {
+    return 'Peilung $degrees° $point';
+  }
+
+  @override
+  String ncNoTarget(String name) {
+    return '$name hat noch keine Position geteilt.';
+  }
+
+  @override
+  String get ncNoPosition =>
+      'Kein Standort zum Ausrichten. Nutze den Standort des Telefons oder warte, bis dieses Funkgerät GPS hat.';
+
+  @override
+  String get ncNoCompass =>
+      'Dieses Gerät hat keinen Kompass, daher ist Norden oben. Dreh dich in die angezeigte Peilung.';
+
+  @override
+  String get ncCalibrate =>
+      'Der Kompass muss kalibriert werden: Beweg das Telefon in einer Acht.';
+
+  @override
+  String get ncFromPhone => 'Gemessen vom Standort dieses Telefons.';
+
+  @override
+  String get ncFromRadio => 'Gemessen von der Position dieses Funkgeräts.';
+
+  @override
+  String get ncUsePhone => 'Standort des Telefons nutzen';
+
+  @override
+  String get ncPrivacy =>
+      'Standort und Kompass des Telefons werden nur auf diesem Telefon genutzt, solange diese Seite offen ist. Es wird nichts gesendet.';
+
+  @override
+  String ncApproximate(String name, String distance) {
+    return '$name teilt nur eine ungefähre Position (auf etwa $distance genau). Nutze den Pfeil als grobe Richtung.';
   }
 }

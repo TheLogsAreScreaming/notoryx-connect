@@ -167,6 +167,8 @@ class MainActivity : FlutterFragmentActivity() {
                 result.notImplemented()
             }
         }
+        // The compass for "Point me to it" (HeadingStream.kt, from android_overlay).
+        HeadingStream.attach(this, flutterEngine.dartExecutor.binaryMessenger)
     }
 
     private fun applySecure() {

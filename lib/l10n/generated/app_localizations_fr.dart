@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -5485,7 +5486,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get lpProfileLegend =>
-      'Zone grisée : le sol, courbure de la Terre comprise. Ligne : le trajet direct entre les antennes.';
+      'Zone grisée : le sol, courbure de la Terre comprise. Ligne : le trajet direct entre les antennes. Pointillés : bas de la zone de Fresnel ; l\'espace au-dessus doit rester presque entièrement dégagé.';
 
   @override
   String get lpEstimateNote =>
@@ -6110,8 +6111,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count autres appareils à proximité ne sont pas des radios Meshtastic, ils sont donc masqués.',
-      one:
-          '1 autre appareil à proximité n\'est pas une radio Meshtastic, il est donc masqué.',
+      one: '1 autre appareil à proximité n\'est pas une radio Meshtastic, il est donc masqué.',
     );
     return '$_temp0';
   }
@@ -7928,5 +7928,83 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String deliveryWhyUnknown(int code) {
     return 'La radio a signalé l\'erreur $code.';
+  }
+
+  @override
+  String get ndPointTo => 'Me guider vers lui';
+
+  @override
+  String get ndCheckTerrain => 'Vérifier le relief';
+
+  @override
+  String get ndPositionApprox => 'Position partagée';
+
+  @override
+  String ndPositionApproxValue(String distance) {
+    return 'Approximative, à environ $distance';
+  }
+
+  @override
+  String lpApproximate(String name, String distance) {
+    return '$name ne partage qu\'une position approximative (à environ $distance) : cette vérification n\'est qu\'indicative.';
+  }
+
+  @override
+  String get ncTitle => 'Me guider vers lui';
+
+  @override
+  String get ncPoints => 'N,NE,E,SE,S,SO,O,NO';
+
+  @override
+  String get ncOnTarget => 'Droit devant';
+
+  @override
+  String ncTurnLeft(int degrees) {
+    return 'Tournez de $degrees° à gauche';
+  }
+
+  @override
+  String ncTurnRight(int degrees) {
+    return 'Tournez de $degrees° à droite';
+  }
+
+  @override
+  String ncBearing(int degrees, String point) {
+    return 'Cap $degrees° $point';
+  }
+
+  @override
+  String ncNoTarget(String name) {
+    return '$name n\'a pas encore partagé sa position.';
+  }
+
+  @override
+  String get ncNoPosition =>
+      'Aucune position de départ. Utilisez la position du téléphone ou attendez que cette radio capte le GPS.';
+
+  @override
+  String get ncNoCompass =>
+      'Cet appareil n\'a pas de boussole : le nord est en haut. Tournez-vous vers le cap indiqué.';
+
+  @override
+  String get ncCalibrate =>
+      'La boussole doit être calibrée : décrivez un huit avec le téléphone.';
+
+  @override
+  String get ncFromPhone => 'Mesuré depuis la position de ce téléphone.';
+
+  @override
+  String get ncFromRadio => 'Mesuré depuis la position de cette radio.';
+
+  @override
+  String get ncUsePhone => 'Utiliser la position du téléphone';
+
+  @override
+  String get ncPrivacy =>
+      'La position et la boussole du téléphone ne servent que sur ce téléphone, tant que cette page est ouverte. Rien n\'est envoyé.';
+
+  @override
+  String ncApproximate(String name, String distance) {
+    return '$name ne partage qu\'une position approximative (à environ $distance). Suivez la flèche comme direction générale.';
   }
 }

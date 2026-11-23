@@ -8968,7 +8968,7 @@ abstract class AppLocalizations {
   /// No description provided for @lpProfileLegend.
   ///
   /// In en, this message translates to:
-  /// **'Shaded: ground, including the curve of the earth. Line: the direct path between antennas.'**
+  /// **'Shaded: ground, including the curve of the earth. Line: the direct path between antennas. Dashed: bottom of the Fresnel zone; keep most of the space above it clear.'**
   String get lpProfileLegend;
 
   /// No description provided for @lpEstimateNote.
@@ -12834,6 +12834,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The radio reported error {code}.'**
   String deliveryWhyUnknown(int code);
+
+  /// No description provided for @ndPointTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Point me to it'**
+  String get ndPointTo;
+
+  /// No description provided for @ndCheckTerrain.
+  ///
+  /// In en, this message translates to:
+  /// **'Check terrain'**
+  String get ndCheckTerrain;
+
+  /// No description provided for @ndPositionApprox.
+  ///
+  /// In en, this message translates to:
+  /// **'Position shared'**
+  String get ndPositionApprox;
+
+  /// No description provided for @ndPositionApproxValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Approximate, within about {distance}'**
+  String ndPositionApproxValue(String distance);
+
+  /// No description provided for @lpApproximate.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} shares only an approximate position (within about {distance}), so this check is a rough guide.'**
+  String lpApproximate(String name, String distance);
+
+  /// No description provided for @ncTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Point me to it'**
+  String get ncTitle;
+
+  /// No description provided for @ncPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'N,NE,E,SE,S,SW,W,NW'**
+  String get ncPoints;
+
+  /// No description provided for @ncOnTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Straight ahead'**
+  String get ncOnTarget;
+
+  /// No description provided for @ncTurnLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn left {degrees}°'**
+  String ncTurnLeft(int degrees);
+
+  /// No description provided for @ncTurnRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn right {degrees}°'**
+  String ncTurnRight(int degrees);
+
+  /// No description provided for @ncBearing.
+  ///
+  /// In en, this message translates to:
+  /// **'Bearing {degrees}° {point}'**
+  String ncBearing(int degrees, String point);
+
+  /// No description provided for @ncNoTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} hasn\'t shared a position yet.'**
+  String ncNoTarget(String name);
+
+  /// No description provided for @ncNoPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'No position to point from. Use the phone\'s location, or wait for this radio to get a GPS fix.'**
+  String get ncNoPosition;
+
+  /// No description provided for @ncNoCompass.
+  ///
+  /// In en, this message translates to:
+  /// **'This device has no compass, so north is at the top. Turn until you face the bearing shown.'**
+  String get ncNoCompass;
+
+  /// No description provided for @ncCalibrate.
+  ///
+  /// In en, this message translates to:
+  /// **'The compass needs calibrating: move the phone in a figure of eight.'**
+  String get ncCalibrate;
+
+  /// No description provided for @ncFromPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Measured from this phone\'s location.'**
+  String get ncFromPhone;
+
+  /// No description provided for @ncFromRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'Measured from this radio\'s position.'**
+  String get ncFromRadio;
+
+  /// No description provided for @ncUsePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Use phone location'**
+  String get ncUsePhone;
+
+  /// No description provided for @ncPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'The phone\'s location and compass are used only on this phone while this page is open. Nothing is sent.'**
+  String get ncPrivacy;
+
+  /// No description provided for @ncApproximate.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} shares only an approximate position (within about {distance}). Use the arrow as a general direction.'**
+  String ncApproximate(String name, String distance);
 }
 
 class _AppLocalizationsDelegate
