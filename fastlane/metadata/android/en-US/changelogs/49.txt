@@ -1,0 +1,3 @@
+Drives: a parked phone's GPS wobble no longer adds distance.
+New chat: the sheet moves up with the keyboard so results stay visible.
+Node details: Point me to it and Check terrain are faded, with a reason, when the node has no position.
