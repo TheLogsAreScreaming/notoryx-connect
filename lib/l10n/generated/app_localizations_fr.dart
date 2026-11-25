@@ -3263,6 +3263,125 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pvTitle => 'Confidentialité et données';
 
   @override
+  String get pdTitle => 'Ce qui quitte ce téléphone';
+
+  @override
+  String get pdEntrySub =>
+      'Tout ce que l’app peut envoyer, où ça va et ce qui est activé';
+
+  @override
+  String get pdIntro =>
+      'Tout ce que NOTORYX Connect peut envoyer hors de ce téléphone, où ça va et si c’est activé maintenant. Désactivez-le ici ou gardez-le pour quand vous en avez besoin.';
+
+  @override
+  String pdSummary(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count éléments sont activés pour l’envoi.',
+      one: '1 élément est activé pour l’envoi.',
+      zero: 'Rien n’est activé pour l’envoi.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get pdInternet => 'Par Internet';
+
+  @override
+  String get pdMesh => 'Par le maillage';
+
+  @override
+  String get pdOtherApps => 'Vers d’autres apps de ce téléphone';
+
+  @override
+  String get pdOn => 'Activé';
+
+  @override
+  String get pdOff => 'Désactivé';
+
+  @override
+  String get pdWhenAsked => 'Seulement quand vous l’utilisez';
+
+  @override
+  String get pdMapTiles => 'Images de carte';
+
+  @override
+  String get pdMapTilesSub =>
+      'Téléchargées depuis OpenStreetMap ou OpenTopoMap quand vous regardez une nouvelle zone. Ils voient cette zone et votre adresse IP. Les zones vues restent sur le téléphone pour un usage hors ligne.';
+
+  @override
+  String get pdPlaceSearch => 'Recherche en ligne';
+
+  @override
+  String get pdPlaceSearchSub =>
+      'Quand vous appuyez sur Recherche en ligne sur la carte, le texte recherché va à Nominatim d’OpenStreetMap.';
+
+  @override
+  String get pdTerrain => 'Vérifier le relief';
+
+  @override
+  String get pdTerrainSub =>
+      'Quand vous vérifiez la ligne de vue, les deux positions vont au service d’altitude Open-Meteo.';
+
+  @override
+  String get pdTrails => 'Téléchargement de sentiers';
+
+  @override
+  String get pdTrailsSub =>
+      'Quand vous téléchargez des sentiers, la zone de la carte va au service Overpass.';
+
+  @override
+  String get pdLinkPreviewsSub =>
+      'Ouvre les liens des messages pour afficher un titre. Le site voit votre adresse IP.';
+
+  @override
+  String get pdMqtt => 'Proxy MQTT';
+
+  @override
+  String get pdMqttSub =>
+      'Fait passer le trafic MQTT de votre radio par la connexion Internet de ce téléphone, vers le serveur réglé sur la radio.';
+
+  @override
+  String get pdModeration => 'Modération';
+
+  @override
+  String get pdModerationSub =>
+      'Télécharge la liste des expéditeurs signalés. Un signalement n’est envoyé que si vous en déposez un.';
+
+  @override
+  String get pdWebhooks => 'Adresses web des automatisations';
+
+  @override
+  String get pdWebhooksSub =>
+      'Les automatisations que vous créez avec une adresse web y envoient leurs détails quand elles s’exécutent.';
+
+  @override
+  String get pdLocation => 'Partager ma position';
+
+  @override
+  String get pdLocationSub =>
+      'La position de votre téléphone va à votre radio, qui la partage sur le maillage.';
+
+  @override
+  String get pdTak => 'Pont ATAK';
+
+  @override
+  String get pdTakSub =>
+      'Envoie les positions et messages du maillage à ATAK sur ce téléphone. Rien ne va sur Internet.';
+
+  @override
+  String get pdSms => 'Relais SMS';
+
+  @override
+  String get pdSmsSub =>
+      'Transfère les messages du maillage par SMS aux contacts que vous autorisez.';
+
+  @override
+  String get pdNeverSent =>
+      'Jamais envoyés par l’app : historique des discussions, clés, sauvegardes et rapport d’assistance. Ils ne sortent que si vous les partagez vous-même.';
+
+  @override
   String get pvIntro =>
       'NOTORYX Connect n\'a ni compte, ni statistiques, ni publicités, ni serveurs propres. Tout ce qu\'il conserve reste dans le stockage privé de l\'application sur votre téléphone et est supprimé si vous la désinstallez.';
 

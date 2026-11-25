@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'l10n/generated/app_localizations.dart';
+import 'privacy_dashboard_page.dart';
 
 import 'services/app_exit.dart';
 import 'services/bastion_app_lock.dart';
@@ -108,6 +109,15 @@ class _PrivacyPageState extends State<PrivacyPage> {
       body: ListView(padding: const EdgeInsets.all(16), children: [
         Text(l.pvIntro),
         const SizedBox(height: 12),
+        Card(child: ListTile(
+          key: const ValueKey('privacy-dashboard'),
+          leading: const Icon(Icons.travel_explore),
+          title: Text(l.pdTitle),
+          subtitle: Text(l.pdEntrySub),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
+              builder: (_) => PrivacyDashboardPage(radio: widget.radio))),
+        )),
         Card(child: SwitchListTile(
           key: const ValueKey('app-lock-switch'),
           secondary: const Icon(Icons.lock_outline),

@@ -5376,6 +5376,198 @@ abstract class AppLocalizations {
   /// **'Privacy & data'**
   String get pvTitle;
 
+  /// No description provided for @pdTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What leaves this phone'**
+  String get pdTitle;
+
+  /// No description provided for @pdEntrySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything the app can send, where it goes, and what\'s on now'**
+  String get pdEntrySub;
+
+  /// No description provided for @pdIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything NOTORYX Connect can send off this phone, where it goes, and whether it\'s on right now. Switch items off here, or leave them for when you need them.'**
+  String get pdIntro;
+
+  /// No description provided for @pdSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing is switched on to send.} =1{1 item is switched on to send.} other{{count} items are switched on to send.}}'**
+  String pdSummary(int count);
+
+  /// No description provided for @pdInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'Over the internet'**
+  String get pdInternet;
+
+  /// No description provided for @pdMesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Over the mesh'**
+  String get pdMesh;
+
+  /// No description provided for @pdOtherApps.
+  ///
+  /// In en, this message translates to:
+  /// **'To other apps on this phone'**
+  String get pdOtherApps;
+
+  /// No description provided for @pdOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get pdOn;
+
+  /// No description provided for @pdOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get pdOff;
+
+  /// No description provided for @pdWhenAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Only when you use it'**
+  String get pdWhenAsked;
+
+  /// No description provided for @pdMapTiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Map pictures'**
+  String get pdMapTiles;
+
+  /// No description provided for @pdMapTilesSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded from OpenStreetMap or OpenTopoMap when you look at a new area. They see that area and your IP address. Areas you\'ve viewed stay on the phone for offline use.'**
+  String get pdMapTilesSub;
+
+  /// No description provided for @pdPlaceSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search online'**
+  String get pdPlaceSearch;
+
+  /// No description provided for @pdPlaceSearchSub.
+  ///
+  /// In en, this message translates to:
+  /// **'When you press Search online on the map, the search text goes to OpenStreetMap\'s Nominatim.'**
+  String get pdPlaceSearchSub;
+
+  /// No description provided for @pdTerrain.
+  ///
+  /// In en, this message translates to:
+  /// **'Terrain check'**
+  String get pdTerrain;
+
+  /// No description provided for @pdTerrainSub.
+  ///
+  /// In en, this message translates to:
+  /// **'When you check line of sight, the two positions go to the Open-Meteo elevation service.'**
+  String get pdTerrainSub;
+
+  /// No description provided for @pdTrails.
+  ///
+  /// In en, this message translates to:
+  /// **'Trail download'**
+  String get pdTrails;
+
+  /// No description provided for @pdTrailsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'When you download trails, the map area goes to the Overpass service.'**
+  String get pdTrailsSub;
+
+  /// No description provided for @pdLinkPreviewsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens web links in messages to show a title. The website sees your IP address.'**
+  String get pdLinkPreviewsSub;
+
+  /// No description provided for @pdMqtt.
+  ///
+  /// In en, this message translates to:
+  /// **'MQTT proxy'**
+  String get pdMqtt;
+
+  /// No description provided for @pdMqttSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Passes your radio\'s MQTT traffic through this phone\'s internet connection, to the server set on the radio.'**
+  String get pdMqttSub;
+
+  /// No description provided for @pdModeration.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderation'**
+  String get pdModeration;
+
+  /// No description provided for @pdModerationSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloads the list of flagged senders. A report is sent only when you file one.'**
+  String get pdModerationSub;
+
+  /// No description provided for @pdWebhooks.
+  ///
+  /// In en, this message translates to:
+  /// **'Automation web addresses'**
+  String get pdWebhooks;
+
+  /// No description provided for @pdWebhooksSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Automations you create with a web address send their details there when they run.'**
+  String get pdWebhooksSub;
+
+  /// No description provided for @pdLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Share my location'**
+  String get pdLocation;
+
+  /// No description provided for @pdLocationSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone\'s position goes to your radio, which shares it on the mesh.'**
+  String get pdLocationSub;
+
+  /// No description provided for @pdTak.
+  ///
+  /// In en, this message translates to:
+  /// **'ATAK bridge'**
+  String get pdTak;
+
+  /// No description provided for @pdTakSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends mesh positions and messages to ATAK on this phone. Nothing goes to the internet.'**
+  String get pdTakSub;
+
+  /// No description provided for @pdSms.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS relay'**
+  String get pdSms;
+
+  /// No description provided for @pdSmsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Forwards mesh messages as text messages to the contacts you allow.'**
+  String get pdSmsSub;
+
+  /// No description provided for @pdNeverSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Never sent by the app: chat history, keys, backups and the support report. They leave only if you share them yourself.'**
+  String get pdNeverSent;
+
   /// No description provided for @pvIntro.
   ///
   /// In en, this message translates to:

@@ -3219,6 +3219,125 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pvTitle => 'Privacy & data';
 
   @override
+  String get pdTitle => 'What leaves this phone';
+
+  @override
+  String get pdEntrySub =>
+      'Everything the app can send, where it goes, and what\'s on now';
+
+  @override
+  String get pdIntro =>
+      'Everything NOTORYX Connect can send off this phone, where it goes, and whether it\'s on right now. Switch items off here, or leave them for when you need them.';
+
+  @override
+  String pdSummary(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items are switched on to send.',
+      one: '1 item is switched on to send.',
+      zero: 'Nothing is switched on to send.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get pdInternet => 'Over the internet';
+
+  @override
+  String get pdMesh => 'Over the mesh';
+
+  @override
+  String get pdOtherApps => 'To other apps on this phone';
+
+  @override
+  String get pdOn => 'On';
+
+  @override
+  String get pdOff => 'Off';
+
+  @override
+  String get pdWhenAsked => 'Only when you use it';
+
+  @override
+  String get pdMapTiles => 'Map pictures';
+
+  @override
+  String get pdMapTilesSub =>
+      'Downloaded from OpenStreetMap or OpenTopoMap when you look at a new area. They see that area and your IP address. Areas you\'ve viewed stay on the phone for offline use.';
+
+  @override
+  String get pdPlaceSearch => 'Search online';
+
+  @override
+  String get pdPlaceSearchSub =>
+      'When you press Search online on the map, the search text goes to OpenStreetMap\'s Nominatim.';
+
+  @override
+  String get pdTerrain => 'Terrain check';
+
+  @override
+  String get pdTerrainSub =>
+      'When you check line of sight, the two positions go to the Open-Meteo elevation service.';
+
+  @override
+  String get pdTrails => 'Trail download';
+
+  @override
+  String get pdTrailsSub =>
+      'When you download trails, the map area goes to the Overpass service.';
+
+  @override
+  String get pdLinkPreviewsSub =>
+      'Opens web links in messages to show a title. The website sees your IP address.';
+
+  @override
+  String get pdMqtt => 'MQTT proxy';
+
+  @override
+  String get pdMqttSub =>
+      'Passes your radio\'s MQTT traffic through this phone\'s internet connection, to the server set on the radio.';
+
+  @override
+  String get pdModeration => 'Moderation';
+
+  @override
+  String get pdModerationSub =>
+      'Downloads the list of flagged senders. A report is sent only when you file one.';
+
+  @override
+  String get pdWebhooks => 'Automation web addresses';
+
+  @override
+  String get pdWebhooksSub =>
+      'Automations you create with a web address send their details there when they run.';
+
+  @override
+  String get pdLocation => 'Share my location';
+
+  @override
+  String get pdLocationSub =>
+      'Your phone\'s position goes to your radio, which shares it on the mesh.';
+
+  @override
+  String get pdTak => 'ATAK bridge';
+
+  @override
+  String get pdTakSub =>
+      'Sends mesh positions and messages to ATAK on this phone. Nothing goes to the internet.';
+
+  @override
+  String get pdSms => 'SMS relay';
+
+  @override
+  String get pdSmsSub =>
+      'Forwards mesh messages as text messages to the contacts you allow.';
+
+  @override
+  String get pdNeverSent =>
+      'Never sent by the app: chat history, keys, backups and the support report. They leave only if you share them yourself.';
+
+  @override
   String get pvIntro =>
       'NOTORYX Connect has no account, analytics, ads or servers of its own. Everything it keeps stays in this app\'s private storage on your phone and is removed if you uninstall it.';
 
