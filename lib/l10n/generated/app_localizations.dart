@@ -6967,6 +6967,18 @@ abstract class AppLocalizations {
   /// **'Your recent reports'**
   String get sntYourReports;
 
+  /// No description provided for @sntStateReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Under review by moderators'**
+  String get sntStateReview;
+
+  /// No description provided for @sntStateClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed by moderators'**
+  String get sntStateClosed;
+
   /// No description provided for @sntReport.
   ///
   /// In en, this message translates to:

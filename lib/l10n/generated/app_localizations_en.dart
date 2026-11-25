@@ -4175,6 +4175,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sntYourReports => 'Your recent reports';
 
   @override
+  String get sntStateReview => 'Under review by moderators';
+
+  @override
+  String get sntStateClosed => 'Closed by moderators';
+
+  @override
   String get sntReport => 'Report to moderators';
 
   @override
