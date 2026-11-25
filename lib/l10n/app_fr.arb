@@ -1594,6 +1594,7 @@
   "trcNoMap": "Pas assez de positions pour la carte",
   "trcNoMapHelp": "Au moins deux nœuds de la route doivent avoir une position connue.",
   "trcSnrUnknown": "SNR inconnu",
+  "trcStep": "de {from} à {to}, signal {signal}",
   "omTitle": "Carte hors ligne",
   "omHelp": "Importez un fichier carte MBTiles raster (par exemple exporté d'une app de cartes que vous avez le droit d'utiliser). Il s'affiche par-dessus la carte en ligne et fonctionne sans internet. Les fichiers vectoriels (pbf) ne sont pas pris en charge.",
   "omNone": "Aucune carte hors ligne importée.",

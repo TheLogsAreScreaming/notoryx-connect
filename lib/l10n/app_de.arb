@@ -1594,6 +1594,7 @@
   "trcNoMap": "Zu wenige Positionen für eine Karte",
   "trcNoMapHelp": "Mindestens zwei Knoten auf der Route brauchen eine bekannte Position.",
   "trcSnrUnknown": "SNR unbekannt",
+  "trcStep": "von {from} zu {to}, Signal {signal}",
   "omTitle": "Offline-Karte",
   "omHelp": "Importiere eine Raster-MBTiles-Kartendatei (zum Beispiel aus einer Karten-App exportiert, die du nutzen darfst). Sie wird über der Online-Karte gezeigt und funktioniert ohne Internet. Vektordateien (pbf) werden nicht unterstützt.",
   "omNone": "Keine Offline-Karte importiert.",

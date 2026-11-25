@@ -292,8 +292,10 @@ abstract final class NotoryxTheme {
         textStyle: WidgetStatePropertyAll(type.labelLarge),
         shape: WidgetStatePropertyAll(rounded),
         side: WidgetStatePropertyAll(BorderSide(color: c.outlineVariant)),
-        backgroundColor: WidgetStateProperty.resolveWith((s) =>
-            s.contains(WidgetState.selected) ? c.primary.withValues(alpha: .16) : null),
+        // Opaque, so text contrast doesn't depend on the backdrop glow behind.
+        backgroundColor: WidgetStateProperty.resolveWith((s) => s.contains(WidgetState.selected)
+            ? Color.alphaBlend(c.primary.withValues(alpha: .16), c.surfaceContainerHigh)
+            : null),
         foregroundColor: WidgetStateProperty.resolveWith((s) =>
             s.contains(WidgetState.disabled) ? c.onSurfaceVariant
                 : s.contains(WidgetState.selected) ? c.onSurface : null),

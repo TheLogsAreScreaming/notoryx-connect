@@ -497,25 +497,28 @@ class _BastionShellState extends State<BastionShell> {
           builder: (context, _) {
             final me = radio.localNode;
             final name = radio.isReady && me != null ? me.displayName : 'NOTORYX Connect';
-            return Semantics(
-              label: 'NOTORYX Connect',
-              excludeSemantics: true,
-              child: Row(children: [
-                ClipRRect(
+            return Row(children: [
+              // The mark is decorative; the name below is what's announced.
+              ExcludeSemantics(
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Image.asset('assets/images/notoryx_logo.png', width: 28, height: 28,
                       filterQuality: FilterQuality.medium),
                 ),
-                const SizedBox(width: NxSpace.sm),
-                Flexible(
+              ),
+              const SizedBox(width: NxSpace.sm),
+              Flexible(
+                child: Semantics(
+                  label: 'NOTORYX Connect',
+                  excludeSemantics: true,
                   child: Text(name,
                       key: const ValueKey('shell-title'),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: scheme.onSurface)),
                 ),
-              ]),
-            );
+              ),
+            ]);
           },
         ),
         actions: [
@@ -553,9 +556,14 @@ class _BastionShellState extends State<BastionShell> {
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(
                           minHeight: NxTouch.min,
+                          minWidth: NxTouch.min,
                         ),
                         child: Center(
                           child: _MonoStatus(
+                            // At large text the word would squeeze the title
+                            // out; the dot's shape, the tooltip and the
+                            // spoken label still say the state.
+                            compact: MediaQuery.textScalerOf(context).scale(10) >= 15,
                             label: _connectionLabel(context, state),
                             tone: _connectionTone(state),
                             busy:
@@ -728,10 +736,13 @@ class _DemoBanner extends StatelessWidget {
 /// The radio status as on NOTORYX Core: a dot and the state in the mono
 /// face, quiet when offline and in the signal color when connected.
 class _MonoStatus extends StatelessWidget {
-  const _MonoStatus({required this.label, required this.tone, this.busy = false});
+  const _MonoStatus({required this.label, required this.tone, this.busy = false, this.compact = false});
   final String label;
   final NxTone tone;
   final bool busy;
+
+  /// Dot only, no word.
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
@@ -745,6 +756,7 @@ class _MonoStatus extends StatelessWidget {
         else
           // Filled when connected, hollow otherwise: shape as well as color.
           Icon(tone == NxTone.success ? Icons.circle : Icons.circle_outlined, size: 10, color: color),
+        if (!compact) ...[
         const SizedBox(width: 6),
         Text(label.toLowerCase(),
             style: TextStyle(
@@ -753,6 +765,7 @@ class _MonoStatus extends StatelessWidget {
               fontSize: 13,
               color: tone == NxTone.neutral ? scheme.onSurfaceVariant : color,
             )),
+        ],
       ]),
     );
   }

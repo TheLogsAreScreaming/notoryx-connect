@@ -9679,6 +9679,12 @@ abstract class AppLocalizations {
   /// **'SNR unknown'**
   String get trcSnrUnknown;
 
+  /// No description provided for @trcStep.
+  ///
+  /// In en, this message translates to:
+  /// **'{from} to {to}, signal {signal}'**
+  String trcStep(String from, String to, String signal);
+
   /// No description provided for @omTitle.
   ///
   /// In en, this message translates to:
