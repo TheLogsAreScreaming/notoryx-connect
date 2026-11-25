@@ -95,6 +95,8 @@ import 'theme/nx_glass.dart';
 import 'theme/nx_components.dart';
 import 'services/bastion_backdrop.dart';
 import 'connection_doctor_page.dart';
+import 'support_report_page.dart';
+import 'services/bastion_error_log.dart';
 import 'sentinel_page.dart';
 import 'services/bastion_sentinel.dart';
 import 'sarneg/sarneg.dart';
@@ -112,6 +114,8 @@ part 'shell/more_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Keep recent app errors in memory for the support report.
+  BastionErrorLog.instance.install();
   LicenseRegistry.addLicense(() async* {
     final text = await rootBundle.loadString(
       'licenses/meshtastic-protobufs-GPL-3.0.txt',

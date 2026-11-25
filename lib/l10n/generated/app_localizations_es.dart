@@ -1068,6 +1068,32 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setLicenses => 'Licencias de terceros';
 
   @override
+  String get srTitle => 'Reenviar SOS que la malla no puede llevar';
+
+  @override
+  String get srSettingsSub => 'Un informe de texto para enviar al pedir ayuda';
+
+  @override
+  String get srIntro =>
+      'Este informe ayuda a averiguar qué falló. Incluye las versiones de la app y de la radio, tus ajustes de activar o desactivar, los errores recientes de la app y el registro de conexión. La app nunca lo envía: tú eliges a dónde va.';
+
+  @override
+  String get srLeftOut =>
+      'No incluye: claves, mensajes, posiciones, nombres e ID de nodos, direcciones de correo ni el nombre de tu radio.';
+
+  @override
+  String get srCopy => 'Copiar';
+
+  @override
+  String get srCopied => 'Informe de soporte copiado.';
+
+  @override
+  String get srShare => 'Compartir';
+
+  @override
+  String get srPreview => 'Lo que se compartirá';
+
+  @override
   String get setReadAloud => 'Leer mensajes en voz alta';
 
   @override
@@ -7447,9 +7473,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ahChange => 'Cambiar de nodo';
-
-  @override
-  String get srTitle => 'Reenviar SOS que la malla no puede llevar';
 
   @override
   String get srSub =>

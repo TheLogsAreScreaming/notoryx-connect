@@ -1060,6 +1060,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setLicenses => 'Third-party licenses';
 
   @override
+  String get srTitle => 'Relay SOS the mesh can’t carry';
+
+  @override
+  String get srSettingsSub => 'A text report to send when asking for help';
+
+  @override
+  String get srIntro =>
+      'This report helps someone work out what went wrong. It lists the app and radio versions, your on/off settings, recent app errors and the connection log. The app never sends it: you choose where it goes.';
+
+  @override
+  String get srLeftOut =>
+      'Left out: keys, messages, positions, node names and IDs, e-mail addresses and your radio\'s name.';
+
+  @override
+  String get srCopy => 'Copy';
+
+  @override
+  String get srCopied => 'Support report copied.';
+
+  @override
+  String get srShare => 'Share';
+
+  @override
+  String get srPreview => 'What will be shared';
+
+  @override
   String get setReadAloud => 'Read messages aloud';
 
   @override
@@ -7395,9 +7421,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ahChange => 'Change node';
-
-  @override
-  String get srTitle => 'Relay SOS the mesh can’t carry';
 
   @override
   String get srSub =>

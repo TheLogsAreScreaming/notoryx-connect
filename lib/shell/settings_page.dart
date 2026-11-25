@@ -187,6 +187,14 @@ class _SettingsPage extends StatelessWidget {
           subtitle: Text(l.setConnectionSub)),
         const Divider(indent: 56),
         ListTile(
+          key: const ValueKey('settings-support-report'),
+          leading: const Icon(Icons.support_agent_outlined), title: Text(l.srTitle),
+          subtitle: Text(l.srSettingsSub),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _open(context, SupportReportPage(radio: radio)),
+        ),
+        const Divider(indent: 56),
+        ListTile(
           leading: const Icon(Icons.description_outlined), title: Text(l.setLicenses),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => showLicensePage(context: context, applicationName: 'NOTORYX Connect'),

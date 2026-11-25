@@ -1818,6 +1818,54 @@ abstract class AppLocalizations {
   /// **'Third-party licenses'**
   String get setLicenses;
 
+  /// No description provided for @srTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Relay SOS the mesh can’t carry'**
+  String get srTitle;
+
+  /// No description provided for @srSettingsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'A text report to send when asking for help'**
+  String get srSettingsSub;
+
+  /// No description provided for @srIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'This report helps someone work out what went wrong. It lists the app and radio versions, your on/off settings, recent app errors and the connection log. The app never sends it: you choose where it goes.'**
+  String get srIntro;
+
+  /// No description provided for @srLeftOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Left out: keys, messages, positions, node names and IDs, e-mail addresses and your radio\'s name.'**
+  String get srLeftOut;
+
+  /// No description provided for @srCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get srCopy;
+
+  /// No description provided for @srCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Support report copied.'**
+  String get srCopied;
+
+  /// No description provided for @srShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get srShare;
+
+  /// No description provided for @srPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'What will be shared'**
+  String get srPreview;
+
   /// No description provided for @setReadAloud.
   ///
   /// In en, this message translates to:
@@ -12102,12 +12150,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change node'**
   String get ahChange;
-
-  /// No description provided for @srTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Relay SOS the mesh can’t carry'**
-  String get srTitle;
 
   /// No description provided for @srSub.
   ///

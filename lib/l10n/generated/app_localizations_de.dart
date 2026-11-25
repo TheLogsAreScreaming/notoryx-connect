@@ -1073,6 +1073,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setLicenses => 'Lizenzen von Drittanbietern';
 
   @override
+  String get srTitle => 'SOS weiterleiten, die das Mesh nicht mehr trägt';
+
+  @override
+  String get srSettingsSub =>
+      'Ein Textbericht, den du beim Bitten um Hilfe sendest';
+
+  @override
+  String get srIntro =>
+      'Dieser Bericht hilft herauszufinden, was schiefging. Er enthält App- und Funkgerätversion, deine Ein/Aus-Einstellungen, letzte App-Fehler und das Verbindungsprotokoll. Die App sendet ihn nie: Du entscheidest, wohin er geht.';
+
+  @override
+  String get srLeftOut =>
+      'Nicht enthalten: Schlüssel, Nachrichten, Positionen, Knotennamen und -IDs, E-Mail-Adressen und der Name deines Funkgeräts.';
+
+  @override
+  String get srCopy => 'Kopieren';
+
+  @override
+  String get srCopied => 'Supportbericht kopiert.';
+
+  @override
+  String get srShare => 'Teilen';
+
+  @override
+  String get srPreview => 'Was geteilt wird';
+
+  @override
   String get setReadAloud => 'Nachrichten vorlesen';
 
   @override
@@ -7476,9 +7503,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get ahChange => 'Knoten wechseln';
-
-  @override
-  String get srTitle => 'SOS weiterleiten, die das Mesh nicht mehr trägt';
 
   @override
   String get srSub =>
