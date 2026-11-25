@@ -1,0 +1,42 @@
+name: NOTORYX Retry Runner Shortage
+
+# GitHub sometimes has no macOS runner free and cancels a job with "The job
+# was not acquired by Runner ... even after multiple attempts". That is not a
+# build failure, so rerun the failed jobs (up to two more attempts). Real
+# compile or test failures are left alone.
+on:
+  workflow_run:
+    workflows: ['NOTORYX iOS Build', 'NOTORYX macOS Build']
+    types: [completed]
+
+permissions:
+  actions: write
+  checks: read
+  contents: read
+
+jobs:
+  retry:
+    if: >-
+      github.event.workflow_run.conclusion != 'success' &&
+      github.event.workflow_run.run_attempt < 3
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Rerun only if no runner was acquired
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          shortage=false
+          for job in $(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" -q '.jobs[] | select(.conclusion != "success") | .id'); do
+            if gh api "repos/$REPO/check-runs/$job/annotations" -q '.[].message' | grep -q 'not acquired by Runner'; then
+              shortage=true
+            fi
+          done
+          if [ "$shortage" = true ]; then
+            echo "No runner was acquired; rerunning failed jobs."
+            gh run rerun "$RUN_ID" --failed -R "$REPO"
+          else
+            echo "Not a runner shortage; leaving the result as it is."
+          fi
