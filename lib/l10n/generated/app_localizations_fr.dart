@@ -1075,6 +1075,33 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setLicenses => 'Licences tierces';
 
   @override
+  String get srTitle => 'Relayer les SOS que le maillage ne porte plus';
+
+  @override
+  String get srSettingsSub =>
+      'Un rapport texte à envoyer pour demander de l’aide';
+
+  @override
+  String get srIntro =>
+      'Ce rapport aide à comprendre ce qui n’a pas marché. Il contient les versions de l’app et de la radio, vos réglages activé/désactivé, les erreurs récentes de l’app et le journal de connexion. L’app ne l’envoie jamais : vous choisissez où il va.';
+
+  @override
+  String get srLeftOut =>
+      'Exclus : clés, messages, positions, noms et ID de nœuds, adresses e-mail et le nom de votre radio.';
+
+  @override
+  String get srCopy => 'Copier';
+
+  @override
+  String get srCopied => 'Rapport d’assistance copié.';
+
+  @override
+  String get srShare => 'Partager';
+
+  @override
+  String get srPreview => 'Ce qui sera partagé';
+
+  @override
   String get setReadAloud => 'Lire les messages à voix haute';
 
   @override
@@ -7479,9 +7506,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ahChange => 'Changer de nœud';
-
-  @override
-  String get srTitle => 'Relayer les SOS que le maillage ne porte plus';
 
   @override
   String get srSub =>
