@@ -4254,6 +4254,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sntYourReports => 'Vos signalements récents';
 
   @override
+  String get sntStateReview => 'En cours d\'examen par les modérateurs';
+
+  @override
+  String get sntStateClosed => 'Clôturé par les modérateurs';
+
+  @override
   String get sntReport => 'Signaler aux modérateurs';
 
   @override

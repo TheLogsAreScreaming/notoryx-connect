@@ -1150,6 +1150,8 @@
   "sntAppeal": "Faire appel",
   "sntAppealOther": "Faire appel d'un dossier par son numéro",
   "sntYourReports": "Vos signalements récents",
+  "sntStateReview": "En cours d'examen par les modérateurs",
+  "sntStateClosed": "Clôturé par les modérateurs",
   "sntReport": "Signaler aux modérateurs",
   "sntReportTitle": "Signaler {name}",
   "sntReasonSpam": "Spam ou publicité",
