@@ -4143,6 +4143,8 @@
   "trcNoMap": "Not enough positions to map",
   "trcNoMapHelp": "At least two nodes on the route need a known position.",
   "trcSnrUnknown": "SNR unknown",
+  "trcStep": "{from} to {to}, signal {signal}",
+  "@trcStep": {"placeholders": {"from": {"type": "String"}, "to": {"type": "String"}, "signal": {"type": "String"}}},
   "omTitle": "Offline map",
   "omHelp": "Import a raster MBTiles map file (for example one exported from a mapping app you're licensed to use). It's drawn over the online map and works with no internet. Vector (pbf) files aren't supported.",
   "omNone": "No offline map imported.",

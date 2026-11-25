@@ -5913,6 +5913,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get trcSnrUnknown => 'SNR inconnu';
 
   @override
+  String trcStep(String from, String to, String signal) {
+    return 'de $from à $to, signal $signal';
+  }
+
+  @override
   String get omTitle => 'Carte hors ligne';
 
   @override

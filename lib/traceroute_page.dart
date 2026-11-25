@@ -4,6 +4,7 @@ import 'l10n/generated/app_localizations.dart';
 
 import 'services/meshtastic_node_database.dart';
 import 'services/meshtastic_radio_coordinator.dart';
+import 'services/bastion_coverage_grid.dart';
 import 'services/bastion_route_map.dart';
 import 'services/bastion_trace_card.dart';
 import 'services/meshtastic_traceroute.dart';
@@ -200,6 +201,31 @@ class _TraceroutePageState extends State<TraceroutePage> {
       );
 }
 
+/// A route as one sentence for screen readers: each step with its signal
+/// in dB and as a word, so it doesn't depend on reading arrows or numbers.
+String routeInWords(AppLocalizations l, String title, String start, List<TracerouteHop> hops, String Function(int) name) {
+  if (hops.isEmpty) return '$title: $start.';
+  var from = start;
+  final steps = <String>[];
+  for (final hop in hops) {
+    final to = name(hop.nodeNum);
+    steps.add(l.trcStep(from, to, snrInWords(l, hop.snrDb)));
+    from = to;
+  }
+  return '$title: ${steps.join('; ')}.';
+}
+
+/// "5.0 dB, strong", or "SNR unknown". Same bands as the coverage heatmap.
+String snrInWords(AppLocalizations l, double? snr) {
+  if (snr == null) return l.trcSnrUnknown;
+  final word = snr >= BastionCoverageGrid.strongSnr
+      ? l.mapHeatStrong
+      : snr >= BastionCoverageGrid.fairSnr
+          ? l.mapHeatFair
+          : l.mapHeatWeak;
+  return '${snr.toStringAsFixed(1)} dB, ${word.toLowerCase()}';
+}
+
 class _RouteCard extends StatelessWidget {
   const _RouteCard({
     required this.title,
@@ -214,25 +240,31 @@ class _RouteCard extends StatelessWidget {
   final String Function(int) name;
 
   @override
-  Widget build(BuildContext context) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              Text(start),
-              for (final hop in hops)
-                Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    '↓ ${hop.snrDb == null ? AppLocalizations.of(context).trcSnrUnknown : '${hop.snrDb!.toStringAsFixed(1)} dB'}\n'
-                    '${name(hop.nodeNum)}',
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Card(
+      child: Semantics(
+        container: true,
+        label: routeInWords(l, title, start, hops, name),
+        child: ExcludeSemantics(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                Text(start),
+                for (final hop in hops)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text('↓ ${snrInWords(l, hop.snrDb)}\n${name(hop.nodeNum)}'),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
-      );
+      ),
+    );
+  }
 }

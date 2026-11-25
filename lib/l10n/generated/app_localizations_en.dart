@@ -5849,6 +5849,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trcSnrUnknown => 'SNR unknown';
 
   @override
+  String trcStep(String from, String to, String signal) {
+    return '$from to $to, signal $signal';
+  }
+
+  @override
   String get omTitle => 'Offline map';
 
   @override
