@@ -177,6 +177,8 @@ class MainActivity : FlutterFragmentActivity() {
         }
         // The compass for "Point me to it" (HeadingStream.kt, from android_overlay).
         HeadingStream.attach(this, flutterEngine.dartExecutor.binaryMessenger)
+        // SARNEG clipboard: sensitive copy and a real clear (SecretClipboardChannel.kt).
+        SecretClipboardChannel.register(this, flutterEngine.dartExecutor.binaryMessenger)
     }
 
     private fun applySecure() {
