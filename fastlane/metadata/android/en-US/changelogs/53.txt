@@ -1,0 +1,1 @@
+New: a support report to copy or share when asking for help, and a 'What leaves this phone' privacy screen. SARNEG text is now cleared from the clipboard even after you switch apps. Accessibility fixes for routes, the top bar and large text.
