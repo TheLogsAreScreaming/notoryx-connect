@@ -7,13 +7,16 @@ import 'package:bastion/l10n/generated/app_localizations.dart';
 import 'package:bastion/local_mesh_discovery_page.dart';
 import 'package:bastion/main.dart';
 import 'package:bastion/mesh_health_page.dart';
+import 'package:bastion/map_list_page.dart';
 import 'package:bastion/mesh_tools_page.dart';
 import 'package:bastion/phone_backup_page.dart';
+import 'package:bastion/privacy_dashboard_page.dart';
 import 'package:bastion/privacy_page.dart';
 import 'package:bastion/radio_backup_page.dart';
 import 'package:bastion/radio_settings_page.dart';
 import 'package:bastion/services/bastion_tak_bridge.dart';
 import 'package:bastion/services/meshtastic_radio_coordinator.dart';
+import 'package:bastion/support_report_page.dart';
 import 'package:bastion/tak_bridge_page.dart';
 import 'package:bastion/traceroute_page.dart';
 import 'package:bastion/trip_page.dart';
@@ -40,6 +43,9 @@ final pages = <String, Widget Function(MeshtasticRadioCoordinator)>{
   'channel share': (r) => ChannelSharePage(radio: r),
   'channel import': (r) => ChannelImportPage(radio: r),
   'atak feed': (r) => TakBridgePage(bridge: BastionTakBridge()),
+  'support report': (r) => SupportReportPage(radio: r),
+  'what leaves this phone': (r) => PrivacyDashboardPage(radio: r),
+  'map as a list': (r) => MapListPage(me: null, selfNum: null, nodes: const [], waypoints: const [], cells: const []),
 };
 
 void main() {
