@@ -1,0 +1,1 @@
+SARNEG: copied text is now cleared from the clipboard after 1 minute even if Android stops the app. Support report: correct title, Bluetooth addresses removed, error names kept readable.
