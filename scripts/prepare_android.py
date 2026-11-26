@@ -71,6 +71,13 @@ if 'StatusWidgetProvider' not in s:
         </receiver>
     </application>'''
     s=s.replace('    </application>', receiver, 1)
+# Clears SARNEG text off the clipboard on a system alarm, even after the
+# app has been frozen or killed (SecretClipboardChannel.kt).
+if 'ClipboardClearReceiver' not in s:
+    s=s.replace('    </application>', '''        <receiver
+            android:name="com.bastionmesh.bastion.ClipboardClearReceiver"
+            android:exported="false" />
+    </application>''', 1)
 # Quick Settings tile showing the radio link.
 if 'RadioTileService' not in s:
     tile = '''        <service

@@ -38,21 +38,26 @@ class SupportFacts {
 /// Builds the plain-text support report and keeps sensitive things out of it.
 abstract final class BastionSupportBundle {
   // Long base64 runs (channel keys, public keys), hex keys, coordinates,
-  // e-mail addresses and node IDs that could identify someone.
-  static final _base64 = RegExp(r'[A-Za-z0-9+/]{20,}={0,2}');
+  // e-mail addresses, Bluetooth addresses and node IDs that could identify
+  // someone. A base64 run must hold a digit or + / = somewhere, so long
+  // CamelCase error names (useful in a report) are kept.
+  static final _base64 = RegExp(r'(?<![A-Za-z0-9+/])(?=[A-Za-z0-9+/]*[0-9+/])[A-Za-z0-9+/]{20,}={0,2}');
+  static final _mac = RegExp(r'\b(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b');
   static final _hexKey = RegExp(r'\b[0-9a-fA-F]{32,}\b');
   static final _coordinates = RegExp(r'-?\d{1,3}\.\d{4,}\s*,\s*-?\d{1,3}\.\d{4,}');
   static final _email = RegExp(r'[\w.+-]+@[\w-]+\.[\w.-]+');
   static final _nodeId = RegExp(r'![0-9a-fA-F]{8}\b');
 
-  /// Removes anything that looks like a key, a position, an e-mail address
-  /// or a node ID from [text], and each of [names] (this radio's names).
+  /// Removes anything that looks like a key, a position, an e-mail address,
+  /// a Bluetooth address or a node ID from [text], and each of [names]
+  /// (this radio's names).
   static String redact(String text, [Iterable<String> names = const []]) {
     var out = text;
     for (final n in names) {
       if (n.trim().length >= 2) out = out.replaceAll(n, '[radio name]');
     }
     return out
+      .replaceAll(_mac, '[address removed]')
       .replaceAll(_coordinates, '[position removed]')
       .replaceAll(_email, '[e-mail removed]')
       .replaceAll(_hexKey, '[key removed]')
@@ -70,7 +75,7 @@ abstract final class BastionSupportBundle {
     final b = StringBuffer()
       ..writeln('NOTORYX Connect support report')
       ..writeln('Made: ${(now ?? DateTime.now()).toIso8601String()}')
-      ..writeln('No keys, messages, positions, node names or IDs are included.')
+      ..writeln('No keys, messages, positions, node names, IDs or Bluetooth addresses are included.')
       ..writeln()
       ..writeln('App')
       ..writeln('- Version: ${facts.appVersion}')

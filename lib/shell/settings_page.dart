@@ -188,8 +188,8 @@ class _SettingsPage extends StatelessWidget {
         const Divider(indent: 56),
         ListTile(
           key: const ValueKey('settings-support-report'),
-          leading: const Icon(Icons.support_agent_outlined), title: Text(l.srTitle),
-          subtitle: Text(l.srSettingsSub),
+          leading: const Icon(Icons.support_agent_outlined), title: Text(l.supportReportTitle),
+          subtitle: Text(l.supportReportSettingsSub),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _open(context, SupportReportPage(radio: radio)),
         ),

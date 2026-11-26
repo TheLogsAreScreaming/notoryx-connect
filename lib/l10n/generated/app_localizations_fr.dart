@@ -1075,31 +1075,31 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setLicenses => 'Licences tierces';
 
   @override
-  String get srTitle => 'Relayer les SOS que le maillage ne porte plus';
+  String get supportReportTitle => 'Rapport d’assistance';
 
   @override
-  String get srSettingsSub =>
+  String get supportReportSettingsSub =>
       'Un rapport texte à envoyer pour demander de l’aide';
 
   @override
-  String get srIntro =>
+  String get supportReportIntro =>
       'Ce rapport aide à comprendre ce qui n’a pas marché. Il contient les versions de l’app et de la radio, vos réglages activé/désactivé, les erreurs récentes de l’app et le journal de connexion. L’app ne l’envoie jamais : vous choisissez où il va.';
 
   @override
-  String get srLeftOut =>
+  String get supportReportLeftOut =>
       'Exclus : clés, messages, positions, noms et ID de nœuds, adresses e-mail et le nom de votre radio.';
 
   @override
-  String get srCopy => 'Copier';
+  String get supportReportCopy => 'Copier';
 
   @override
-  String get srCopied => 'Rapport d’assistance copié.';
+  String get supportReportCopied => 'Rapport d’assistance copié.';
 
   @override
-  String get srShare => 'Partager';
+  String get supportReportShare => 'Partager';
 
   @override
-  String get srPreview => 'Ce qui sera partagé';
+  String get supportReportPreview => 'Ce qui sera partagé';
 
   @override
   String get setReadAloud => 'Lire les messages à voix haute';
@@ -7638,6 +7638,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ahChange => 'Changer de nœud';
 
   @override
+  String get srTitle => 'Relayer les SOS que le maillage ne porte plus';
+
+  @override
   String get srSub =>
       'Quand un SOS NOTORYX sur un canal vous parvient sans saut restant, ou que votre radio est réglée pour ne pas rediffuser, le renvoyer une fois depuis votre radio. Consomme du temps d’antenne ; désactivé par défaut.';
 
@@ -7809,7 +7812,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get sarneg_clipboardClears =>
-      'Le presse-papiers est vidé dans 1 minute.';
+      'Le presse-papiers est vidé dans 1 minute. Certains claviers gardent leur propre historique du presse-papiers ; effacez-le dans le clavier si besoin.';
 
   @override
   String get sarneg_autoClear => 'S’efface après 1 minute sans saisie.';

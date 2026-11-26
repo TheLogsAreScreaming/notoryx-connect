@@ -1073,31 +1073,31 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setLicenses => 'Lizenzen von Drittanbietern';
 
   @override
-  String get srTitle => 'SOS weiterleiten, die das Mesh nicht mehr trägt';
+  String get supportReportTitle => 'Supportbericht';
 
   @override
-  String get srSettingsSub =>
+  String get supportReportSettingsSub =>
       'Ein Textbericht, den du beim Bitten um Hilfe sendest';
 
   @override
-  String get srIntro =>
+  String get supportReportIntro =>
       'Dieser Bericht hilft herauszufinden, was schiefging. Er enthält App- und Funkgerätversion, deine Ein/Aus-Einstellungen, letzte App-Fehler und das Verbindungsprotokoll. Die App sendet ihn nie: Du entscheidest, wohin er geht.';
 
   @override
-  String get srLeftOut =>
+  String get supportReportLeftOut =>
       'Nicht enthalten: Schlüssel, Nachrichten, Positionen, Knotennamen und -IDs, E-Mail-Adressen und der Name deines Funkgeräts.';
 
   @override
-  String get srCopy => 'Kopieren';
+  String get supportReportCopy => 'Kopieren';
 
   @override
-  String get srCopied => 'Supportbericht kopiert.';
+  String get supportReportCopied => 'Supportbericht kopiert.';
 
   @override
-  String get srShare => 'Teilen';
+  String get supportReportShare => 'Teilen';
 
   @override
-  String get srPreview => 'Was geteilt wird';
+  String get supportReportPreview => 'Was geteilt wird';
 
   @override
   String get setReadAloud => 'Nachrichten vorlesen';
@@ -7635,6 +7635,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get ahChange => 'Knoten wechseln';
 
   @override
+  String get srTitle => 'SOS weiterleiten, die das Mesh nicht mehr trägt';
+
+  @override
   String get srSub =>
       'Wenn ein NOTORYX-SOS auf einem Kanal Sie ohne verbleibende Hops erreicht oder Ihr Funkgerät nicht weitersendet, wird es einmal von Ihrem Funkgerät weitergegeben. Kostet Sendezeit; standardmäßig aus.';
 
@@ -7804,7 +7807,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get sarneg_clipboardClears =>
-      'Die Zwischenablage wird nach 1 Minute geleert.';
+      'Die Zwischenablage wird nach 1 Minute geleert. Manche Tastaturen speichern einen eigenen Zwischenablageverlauf; lösche ihn bei Bedarf in der Tastatur.';
 
   @override
   String get sarneg_autoClear => 'Wird nach 1 Minute ohne Eingabe geleert.';
