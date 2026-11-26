@@ -40,6 +40,15 @@ void main() {
     expect(out, contains('[position removed]'));
   });
 
+  test('Bluetooth addresses go, readable error names stay', () {
+    final out = BastionSupportBundle.redact(
+        'BLE connection stage failed for d2:9d:b2:c6:49:cb: UniversalBleErrorCode.unknownError, Unknown Error 147');
+    expect(out, isNot(contains('d2:9d:b2')));
+    expect(out, contains('[address removed]'));
+    expect(out, contains('UniversalBleErrorCode.unknownError'));
+    expect(out, contains('Unknown Error 147'));
+  });
+
   test('the report lists facts, settings, errors and the log', () {
     final text = BastionSupportBundle.build(
       facts: facts,

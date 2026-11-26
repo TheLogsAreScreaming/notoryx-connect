@@ -208,6 +208,9 @@ Future<void> _copySecret(
 ) async {
   final t = _t(context);
   await copySecretText(value);
+  // The system clear survives the app being frozen or killed; the timer
+  // below covers other platforms and keeps newer copies when it can see them.
+  await scheduleClipboardClear(kSarnegClipboardFor);
   _clipboardTimer?.cancel();
   _clipboardTimer = Timer(
     kSarnegClipboardFor,

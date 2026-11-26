@@ -50,4 +50,46 @@ void main() {
     await clearClipboardIfStill('[SARNEG] LRs KSAC');
     expect(clip, '');
   });
+
+  group('on Android', () {
+    final calls = <String>[];
+    setUp(() {
+      calls.clear();
+      debugSecretClipboardAndroid = true;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(const MethodChannel('notoryx/clipboard'), (call) async {
+        calls.add('${call.method}:${call.method == 'copySensitive' ? 'text' : call.arguments}');
+        if (call.method == 'copySensitive') clip = call.arguments as String;
+        if (call.method == 'clear') clip = '';
+        return null;
+      });
+    });
+    tearDown(() {
+      debugSecretClipboardAndroid = null;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(const MethodChannel('notoryx/clipboard'), null);
+    });
+
+    test('a system clear is scheduled, so it survives the app being killed', () async {
+      await copySecretText('[SARNEG] FETH');
+      expect(await scheduleClipboardClear(const Duration(minutes: 1)), isTrue);
+      expect(calls, ['copySensitive:text', 'scheduleClear:60000']);
+    });
+
+    test('text copied since keeps the system clear from wiping it', () async {
+      await copySecretText('[SARNEG] FETH');
+      clip = 'meet at the trailhead';
+      await clearClipboardIfStill('[SARNEG] FETH');
+      expect(clip, 'meet at the trailhead');
+      expect(calls.last, 'cancelClear:null');
+    });
+
+    test('our text, or a clipboard that cannot be read, is cleared natively', () async {
+      await copySecretText('[SARNEG] FETH');
+      readable = false;
+      await clearClipboardIfStill('[SARNEG] FETH');
+      expect(calls.last, 'clear:null');
+      expect(clip, '');
+    });
+  });
 }

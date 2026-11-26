@@ -1060,30 +1060,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setLicenses => 'Third-party licenses';
 
   @override
-  String get srTitle => 'Relay SOS the mesh can’t carry';
+  String get supportReportTitle => 'Support report';
 
   @override
-  String get srSettingsSub => 'A text report to send when asking for help';
+  String get supportReportSettingsSub =>
+      'A text report to send when asking for help';
 
   @override
-  String get srIntro =>
+  String get supportReportIntro =>
       'This report helps someone work out what went wrong. It lists the app and radio versions, your on/off settings, recent app errors and the connection log. The app never sends it: you choose where it goes.';
 
   @override
-  String get srLeftOut =>
+  String get supportReportLeftOut =>
       'Left out: keys, messages, positions, node names and IDs, e-mail addresses and your radio\'s name.';
 
   @override
-  String get srCopy => 'Copy';
+  String get supportReportCopy => 'Copy';
 
   @override
-  String get srCopied => 'Support report copied.';
+  String get supportReportCopied => 'Support report copied.';
 
   @override
-  String get srShare => 'Share';
+  String get supportReportShare => 'Share';
 
   @override
-  String get srPreview => 'What will be shared';
+  String get supportReportPreview => 'What will be shared';
 
   @override
   String get setReadAloud => 'Read messages aloud';
@@ -7553,6 +7554,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ahChange => 'Change node';
 
   @override
+  String get srTitle => 'Relay SOS the mesh can’t carry';
+
+  @override
   String get srSub =>
       'When a NOTORYX SOS on a channel reaches you with no hops left, or your radio is set not to rebroadcast, pass it on once from your radio. Uses airtime; off by default.';
 
@@ -7719,7 +7723,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'This word is printed in public guides, so anyone can try it. A random word is safer.';
 
   @override
-  String get sarneg_clipboardClears => 'The clipboard is cleared in 1 minute.';
+  String get sarneg_clipboardClears =>
+      'The clipboard is cleared in 1 minute. Some keyboards keep their own clipboard history; clear it in the keyboard if you need to.';
 
   @override
   String get sarneg_autoClear => 'Clears after 1 minute without typing.';

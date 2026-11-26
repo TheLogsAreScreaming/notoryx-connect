@@ -1068,30 +1068,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setLicenses => 'Licencias de terceros';
 
   @override
-  String get srTitle => 'Reenviar SOS que la malla no puede llevar';
+  String get supportReportTitle => 'Informe de soporte';
 
   @override
-  String get srSettingsSub => 'Un informe de texto para enviar al pedir ayuda';
+  String get supportReportSettingsSub =>
+      'Un informe de texto para enviar al pedir ayuda';
 
   @override
-  String get srIntro =>
+  String get supportReportIntro =>
       'Este informe ayuda a averiguar qué falló. Incluye las versiones de la app y de la radio, tus ajustes de activar o desactivar, los errores recientes de la app y el registro de conexión. La app nunca lo envía: tú eliges a dónde va.';
 
   @override
-  String get srLeftOut =>
+  String get supportReportLeftOut =>
       'No incluye: claves, mensajes, posiciones, nombres e ID de nodos, direcciones de correo ni el nombre de tu radio.';
 
   @override
-  String get srCopy => 'Copiar';
+  String get supportReportCopy => 'Copiar';
 
   @override
-  String get srCopied => 'Informe de soporte copiado.';
+  String get supportReportCopied => 'Informe de soporte copiado.';
 
   @override
-  String get srShare => 'Compartir';
+  String get supportReportShare => 'Compartir';
 
   @override
-  String get srPreview => 'Lo que se compartirá';
+  String get supportReportPreview => 'Lo que se compartirá';
 
   @override
   String get setReadAloud => 'Leer mensajes en voz alta';
@@ -7605,6 +7606,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ahChange => 'Cambiar de nodo';
 
   @override
+  String get srTitle => 'Reenviar SOS que la malla no puede llevar';
+
+  @override
   String get srSub =>
       'Cuando un SOS de NOTORYX en un canal te llega sin saltos restantes, o tu radio está configurada para no retransmitir, reenvíalo una vez desde tu radio. Usa tiempo de aire; apagado por defecto.';
 
@@ -7774,7 +7778,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta palabra aparece en guías públicas, así que cualquiera puede probarla. Una palabra aleatoria es más segura.';
 
   @override
-  String get sarneg_clipboardClears => 'El portapapeles se vacía en 1 minuto.';
+  String get sarneg_clipboardClears =>
+      'El portapapeles se vacía en 1 minuto. Algunos teclados guardan su propio historial del portapapeles; bórralo en el teclado si hace falta.';
 
   @override
   String get sarneg_autoClear => 'Se borra tras 1 minuto sin escribir.';

@@ -1818,53 +1818,53 @@ abstract class AppLocalizations {
   /// **'Third-party licenses'**
   String get setLicenses;
 
-  /// No description provided for @srTitle.
+  /// No description provided for @supportReportTitle.
   ///
   /// In en, this message translates to:
-  /// **'Relay SOS the mesh can’t carry'**
-  String get srTitle;
+  /// **'Support report'**
+  String get supportReportTitle;
 
-  /// No description provided for @srSettingsSub.
+  /// No description provided for @supportReportSettingsSub.
   ///
   /// In en, this message translates to:
   /// **'A text report to send when asking for help'**
-  String get srSettingsSub;
+  String get supportReportSettingsSub;
 
-  /// No description provided for @srIntro.
+  /// No description provided for @supportReportIntro.
   ///
   /// In en, this message translates to:
   /// **'This report helps someone work out what went wrong. It lists the app and radio versions, your on/off settings, recent app errors and the connection log. The app never sends it: you choose where it goes.'**
-  String get srIntro;
+  String get supportReportIntro;
 
-  /// No description provided for @srLeftOut.
+  /// No description provided for @supportReportLeftOut.
   ///
   /// In en, this message translates to:
   /// **'Left out: keys, messages, positions, node names and IDs, e-mail addresses and your radio\'s name.'**
-  String get srLeftOut;
+  String get supportReportLeftOut;
 
-  /// No description provided for @srCopy.
+  /// No description provided for @supportReportCopy.
   ///
   /// In en, this message translates to:
   /// **'Copy'**
-  String get srCopy;
+  String get supportReportCopy;
 
-  /// No description provided for @srCopied.
+  /// No description provided for @supportReportCopied.
   ///
   /// In en, this message translates to:
   /// **'Support report copied.'**
-  String get srCopied;
+  String get supportReportCopied;
 
-  /// No description provided for @srShare.
+  /// No description provided for @supportReportShare.
   ///
   /// In en, this message translates to:
   /// **'Share'**
-  String get srShare;
+  String get supportReportShare;
 
-  /// No description provided for @srPreview.
+  /// No description provided for @supportReportPreview.
   ///
   /// In en, this message translates to:
   /// **'What will be shared'**
-  String get srPreview;
+  String get supportReportPreview;
 
   /// No description provided for @setReadAloud.
   ///
@@ -12361,6 +12361,12 @@ abstract class AppLocalizations {
   /// **'Change node'**
   String get ahChange;
 
+  /// No description provided for @srTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Relay SOS the mesh can’t carry'**
+  String get srTitle;
+
   /// No description provided for @srSub.
   ///
   /// In en, this message translates to:
@@ -12634,7 +12640,7 @@ abstract class AppLocalizations {
   /// No description provided for @sarneg_clipboardClears.
   ///
   /// In en, this message translates to:
-  /// **'The clipboard is cleared in 1 minute.'**
+  /// **'The clipboard is cleared in 1 minute. Some keyboards keep their own clipboard history; clear it in the keyboard if you need to.'**
   String get sarneg_clipboardClears;
 
   /// No description provided for @sarneg_autoClear.

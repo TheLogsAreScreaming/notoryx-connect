@@ -96,31 +96,31 @@ class SupportReportPage extends StatelessWidget {
     final text = _report(context);
     final mono = Theme.of(context).textTheme.bodySmall?.copyWith(fontFamily: 'JetBrains Mono');
     return Scaffold(
-      appBar: AppBar(title: Text(l.srTitle)),
+      appBar: AppBar(title: Text(l.supportReportTitle)),
       body: ListView(padding: NxSpace.page, children: [
-        Text(l.srIntro),
+        Text(l.supportReportIntro),
         const SizedBox(height: 12),
-        NxBanner(tone: NxTone.info, icon: Icons.lock_outline, message: l.srLeftOut),
+        NxBanner(tone: NxTone.info, icon: Icons.lock_outline, message: l.supportReportLeftOut),
         const SizedBox(height: 12),
         Wrap(spacing: 8, runSpacing: 8, children: [
           FilledButton.icon(
             key: const ValueKey('support-copy'),
             icon: const Icon(Icons.copy),
-            label: Text(l.srCopy),
+            label: Text(l.supportReportCopy),
             onPressed: () async {
               final messenger = ScaffoldMessenger.of(context);
               await Clipboard.setData(ClipboardData(text: text));
-              messenger.showSnackBar(SnackBar(content: Text(l.srCopied)));
+              messenger.showSnackBar(SnackBar(content: Text(l.supportReportCopied)));
             },
           ),
           OutlinedButton.icon(
             key: const ValueKey('support-share'),
             icon: const Icon(Icons.share_outlined),
-            label: Text(l.srShare),
-            onPressed: () => SharePlus.instance.share(ShareParams(text: text, subject: l.srTitle)),
+            label: Text(l.supportReportShare),
+            onPressed: () => SharePlus.instance.share(ShareParams(text: text, subject: l.supportReportTitle)),
           ),
         ]),
-        NxSectionLabel(l.srPreview),
+        NxSectionLabel(l.supportReportPreview),
         Card(
           child: Padding(
             padding: const EdgeInsets.all(12),
