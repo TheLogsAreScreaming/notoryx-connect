@@ -81,19 +81,22 @@ class MeshtasticMessagingService {
     return lower.startsWith('notoryx:') || lower.startsWith('bastion:');
   }
 
-  /// 🎯 direct, 1⃣–9⃣, 🔟 ten, 🦘 for eleven or more hops.
-  static String _hopEmoji(int? hops) {
-    if (hops == null || hops <= 0) return '🎯';
-    if (hops > 10) return '🦘';
-    const digits = ['1⃣', '2⃣', '3⃣', '4⃣', '5⃣', '6⃣', '7⃣', '8⃣', '9⃣', '🔟'];
-    return digits[hops - 1];
+  /// 🎯 heard directly, 1️⃣ to 9️⃣ and 🔟 for that many hops, 🦘 for eleven
+  /// or more, and ❓ when the hop count is unknown.
+  static String hopEmoji(int? hops) {
+    if (hops == null || hops < 0) return '\u2753';
+    if (hops == 0) return '\u{1F3AF}';
+    if (hops > 10) return '\u{1F998}';
+    if (hops == 10) return '\u{1F51F}';
+    // Keycap digit: the digit, VS16, then the combining keycap.
+    return '$hops\uFE0F\u20E3';
   }
 
   /// Expands `{hops}`, `{snr}` and `{hops_emoji}` in [template].
   static String _fill(String template, {int? hops, double? snr}) => template
-      .replaceAll('{hops}', hops?.toString() ?? '?')
-      .replaceAll('{snr}', snr?.toStringAsFixed(1) ?? '?')
-      .replaceAll('{hops_emoji}', _hopEmoji(hops));
+      .replaceAll('{hops_emoji}', hopEmoji(hops))
+      .replaceAll('{hops}', hops == null || hops < 0 ? '?' : '$hops')
+      .replaceAll('{snr}', snr?.toStringAsFixed(1) ?? '?');
 
   /// The over-the-air reply to [text] (a command or anything else).
   ///

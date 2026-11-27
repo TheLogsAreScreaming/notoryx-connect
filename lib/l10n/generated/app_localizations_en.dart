@@ -700,6 +700,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatsBotReplyField => 'Message to send while Bot mode is on';
 
   @override
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr) {
+    return 'You can use $hops for how many hops the message took, $hopsEmoji for the same as an emoji, and $snr for its signal in dB.';
+  }
+
+  @override
   String get commonCancel => 'Cancel';
 
   @override
