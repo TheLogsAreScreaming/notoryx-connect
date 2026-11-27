@@ -8302,4 +8302,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String ncApproximate(String name, String distance) {
     return '$name ne partage qu\'une position approximative (à environ $distance). Suivez la flèche comme direction générale.';
   }
+
+  @override
+  String ncRadioApproximate(String distance) {
+    return 'La position de votre radio n\'est qu\'approximative (à environ $distance) : la flèche peut être décalée. Touchez Utiliser la position du téléphone pour plus de précision.';
+  }
 }
