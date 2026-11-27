@@ -1,0 +1,1 @@
+Point me to it now warns when your radio's own position is only approximate and suggests using the phone's location for a better arrow.
