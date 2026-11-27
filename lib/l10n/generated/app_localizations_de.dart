@@ -8300,4 +8300,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String ncApproximate(String name, String distance) {
     return '$name teilt nur eine ungefähre Position (auf etwa $distance genau). Nutze den Pfeil als grobe Richtung.';
   }
+
+  @override
+  String ncRadioApproximate(String distance) {
+    return 'Die Position deines Funkgeräts ist nur ungefähr (auf etwa $distance genau), daher kann der Pfeil danebenliegen. Tippe auf Standort des Telefons nutzen für eine genauere.';
+  }
 }

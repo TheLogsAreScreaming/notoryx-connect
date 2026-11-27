@@ -13452,6 +13452,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name} shares only an approximate position (within about {distance}). Use the arrow as a general direction.'**
   String ncApproximate(String name, String distance);
+
+  /// No description provided for @ncRadioApproximate.
+  ///
+  /// In en, this message translates to:
+  /// **'Your radio\'s position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.'**
+  String ncRadioApproximate(String distance);
 }
 
 class _AppLocalizationsDelegate

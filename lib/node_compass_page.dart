@@ -200,6 +200,9 @@ class _NodeCompassPageState extends State<NodeCompassPage> {
     final rose = compass ? -heading : 0.0;
     final arrow = bearing == null ? null : bearing + rose;
     final rough = target?.positionUncertaintyMeters;
+    // Measuring from the radio is only as good as the radio's own position,
+    // which may itself be rounded (it comes from the radio's mesh broadcasts).
+    final radioRough = here?.from == _From.radio ? _radio.localNode?.positionUncertaintyMeters : null;
 
     return Scaffold(
       appBar: AppBar(title: Text(l.ncTitle)),
@@ -257,6 +260,12 @@ class _NodeCompassPageState extends State<NodeCompassPage> {
               key: const ValueKey('nc-approximate'),
               tone: NxTone.warning,
               message: l.ncApproximate(name, BastionUnitFormat.distance(rough, units)),
+            ),
+          if (placed && radioRough != null)
+            NxBanner(
+              key: const ValueKey('nc-radio-approximate'),
+              tone: NxTone.warning,
+              message: l.ncRadioApproximate(BastionUnitFormat.distance(radioRough, units)),
             ),
           if (_hasCompass == false) _Note(icon: Icons.explore_off_outlined, text: l.ncNoCompass),
           if (compass && _accuracy <= 1) _Note(icon: Icons.screen_rotation, text: l.ncCalibrate),

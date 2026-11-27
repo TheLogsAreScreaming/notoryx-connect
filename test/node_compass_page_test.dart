@@ -41,9 +41,10 @@ class _Location implements PhoneLocationSource {
 }
 
 class _Radio extends MeshtasticRadioCoordinator {
-  _Radio({this.radioPlaced = true, this.targetBits});
+  _Radio({this.radioPlaced = true, this.targetBits, this.radioBits});
   final bool radioPlaced;
   final int? targetBits;
+  final int? radioBits;
   @override
   int? get localNodeNum => 1;
   @override
@@ -51,7 +52,7 @@ class _Radio extends MeshtasticRadioCoordinator {
   @override
   List<MeshtasticNode> get nodes => [
         radioPlaced
-            ? const MeshtasticNode(num: 1, longName: 'Base', latitude: 40.0, longitude: -105.0)
+            ? MeshtasticNode(num: 1, longName: 'Base', latitude: 40.0, longitude: -105.0, positionPrecisionBits: radioBits)
             : const MeshtasticNode(num: 1, longName: 'Base'),
         // About 1.1 km due north of Base.
         MeshtasticNode(num: 2, longName: 'Ridge', latitude: 40.01, longitude: -105.0, positionPrecisionBits: targetBits),
@@ -157,5 +158,29 @@ void main() {
     expect(location.asked, 1);
     expect(find.text('Location permission was not granted.'), findsOneWidget);
     expect(find.textContaining('No position to point from'), findsWidgets);
+  });
+
+  testWidgets('warns when the radio it measures from has a rounded position', (tester) async {
+    final radio = _Radio(radioBits: 13);
+    addTearDown(radio.dispose);
+    final location = _Location();
+    await _pump(tester, NodeCompassPage(radio: radio, nodeNum: 2, compass: _Compass(), location: location, haptics: false));
+    expect(find.byKey(const ValueKey('nc-radio-approximate')), findsOneWidget);
+    expect(find.textContaining("Your radio's position is only approximate"), findsOneWidget);
+    expect(find.byKey(const ValueKey('nc-approximate')), findsNothing, reason: 'the node itself is exact');
+
+    await tester.tap(find.byKey(const ValueKey('nc-use-phone')));
+    await tester.pump();
+    location.fixes.add(PhoneFix(latitude: 40.0, longitude: -105.0, time: DateTime.utc(2026)));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('nc-radio-approximate')), findsNothing,
+        reason: 'measuring from the phone no longer depends on the radio');
+  });
+
+  testWidgets('no radio warning when the radio position is exact', (tester) async {
+    final radio = _Radio();
+    addTearDown(radio.dispose);
+    await _pump(tester, NodeCompassPage(radio: radio, nodeNum: 2, compass: _Compass(), location: _Location(), haptics: false));
+    expect(find.byKey(const ValueKey('nc-radio-approximate')), findsNothing);
   });
 }

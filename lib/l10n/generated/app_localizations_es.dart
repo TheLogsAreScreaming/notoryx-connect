@@ -8270,4 +8270,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String ncApproximate(String name, String distance) {
     return '$name solo comparte una posición aproximada (a unos $distance). Usa la flecha como dirección general.';
   }
+
+  @override
+  String ncRadioApproximate(String distance) {
+    return 'La posición de tu radio es solo aproximada (a unos $distance), así que la flecha puede desviarse. Toca Usar la ubicación del teléfono para mejorarla.';
+  }
 }
