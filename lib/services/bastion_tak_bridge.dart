@@ -36,14 +36,25 @@ abstract final class BastionCot {
     if (lat.abs() > 90 || lon.abs() > 180 || now.difference(at) > maxAge)
       return null;
     final hae = node.altitudeMeters?.toString() ?? _unknown;
+    final ce = node.positionUncertaintyMeters?.toStringAsFixed(1) ?? _unknown;
+    final remarkParts = <String>[
+      'Mesh node',
+      'position from ${_time(at)}',
+      if (node.hopsAway != null && node.hopsAway! > 0)
+        '${node.hopsAway} ${node.hopsAway == 1 ? "hop" : "hops"}',
+      if (node.snr != null) 'SNR ${node.snr!.toStringAsFixed(1)} dB',
+    ];
+    final battery = node.batteryLevel != null
+        ? '<status battery="${node.batteryLevel!.clamp(0, 100)}"/>'
+        : '';
     return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
         '<event version="2.0" uid="${uid(node.num)}" type="a-f-G-U-C" how="m-g" '
         'time="${_time(now)}" start="${_time(now)}" stale="${_time(now.add(staleAfter))}">'
         '<point lat="${lat.toStringAsFixed(7)}" lon="${lon.toStringAsFixed(7)}" '
-        'hae="$hae" ce="$_unknown" le="$_unknown"/>'
+        'hae="$hae" ce="$ce" le="$_unknown"/>'
         '<detail><contact callsign="${_escape(node.displayName)}"/>'
-        '<__group name="Cyan" role="Team Member"/>'
-        '<remarks>Mesh node, position from ${_time(at)}</remarks></detail></event>';
+        '<__group name="Cyan" role="Team Member"/>$battery'
+        '<remarks>${_escape(remarkParts.join(", "))}</remarks></detail></event>';
   }
 }
 

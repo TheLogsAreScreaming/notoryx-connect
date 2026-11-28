@@ -31,6 +31,10 @@ void main() {
     String? name = 'Ridge',
     double? lat = 35.25,
     DateTime? at,
+    int? battery,
+    double? snr,
+    int? hopsAway,
+    int? precisionBits,
   }) => MeshtasticNode(
     num: num,
     longName: name,
@@ -38,6 +42,10 @@ void main() {
     longitude: -80.5,
     altitudeMeters: 200,
     positionTime: at ?? now.subtract(const Duration(minutes: 2)),
+    batteryLevel: battery,
+    snr: snr,
+    hopsAway: hopsAway,
+    positionPrecisionBits: precisionBits,
   );
   late FakeSender sender;
   late List<MeshtasticNode> nodes;
@@ -110,6 +118,68 @@ void main() {
         ),
         isNull,
       );
+    });
+
+    test('includes battery level in status element', () {
+      final event = XmlDocument.parse(
+        BastionCot.event(node(battery: 85), now)!,
+      ).rootElement;
+      final status = event.getElement('detail')!.getElement('status');
+      expect(status?.getAttribute('battery'), '85');
+    });
+
+    test('clamps external power (101) to 100 in status', () {
+      final event = XmlDocument.parse(
+        BastionCot.event(node(battery: 101), now)!,
+      ).rootElement;
+      expect(
+        event.getElement('detail')!.getElement('status')!.getAttribute('battery'),
+        '100',
+      );
+    });
+
+    test('omits status element when battery is unknown', () {
+      final event = XmlDocument.parse(
+        BastionCot.event(node(), now)!,
+      ).rootElement;
+      expect(event.getElement('detail')!.getElement('status'), isNull);
+    });
+
+    test('uses position uncertainty for ce when precision bits are set', () {
+      final event = XmlDocument.parse(
+        BastionCot.event(node(precisionBits: 14), now)!,
+      ).rootElement;
+      final ce = double.parse(event.getElement('point')!.getAttribute('ce')!);
+      expect(ce, greaterThan(0));
+      expect(ce, lessThan(9999999.0));
+    });
+
+    test('falls back to unknown ce when no precision bits', () {
+      final event = XmlDocument.parse(
+        BastionCot.event(node(), now)!,
+      ).rootElement;
+      expect(event.getElement('point')!.getAttribute('ce'), '9999999.0');
+    });
+
+    test('includes hops and SNR in remarks when present', () {
+      final event = XmlDocument.parse(
+        BastionCot.event(node(snr: -5.5, hopsAway: 2), now)!,
+      ).rootElement;
+      final remarks =
+          event.getElement('detail')!.getElement('remarks')!.innerText;
+      expect(remarks, contains('2 hops'));
+      expect(remarks, contains('SNR -5.5 dB'));
+    });
+
+    test('omits hops and SNR from remarks when absent', () {
+      final event = XmlDocument.parse(
+        BastionCot.event(node(), now)!,
+      ).rootElement;
+      final remarks =
+          event.getElement('detail')!.getElement('remarks')!.innerText;
+      expect(remarks, contains('Mesh node'));
+      expect(remarks, isNot(contains('hop')));
+      expect(remarks, isNot(contains('SNR')));
     });
   });
 
