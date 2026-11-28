@@ -1059,6 +1059,19 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   int get channelConfigCount => _channelSnapshots.length;
   int get moduleConfigCount => _moduleConfigSnapshots.length;
 
+  /// The radio's current position config from the latest snapshot, or null
+  /// before the radio has sent it.
+  Config_PositionConfig? get positionConfig {
+    Config_PositionConfig? latest;
+    for (final bytes in _radioConfigSnapshots) {
+      try {
+        final c = Config.fromBuffer(bytes);
+        if (c.hasPosition()) latest = c.position;
+      } catch (_) {}
+    }
+    return latest;
+  }
+
   Future<void> setNodeFavorite(int num, bool value) async {
     await _nodeVault.setFavorite(num, value);
     notifyListeners();
