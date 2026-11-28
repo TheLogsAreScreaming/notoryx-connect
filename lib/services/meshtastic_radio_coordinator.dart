@@ -2423,15 +2423,46 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       return;
     }
     if (!recovered && !_userDisconnected && !_busy && _session == null) {
-      unawaited(_background.release());
-      connection.fail(
-        StateError(
-          'Radio link lost; reconnect gave up after ${_reconnect.attempts} '
-          'attempts. Last error: ${_reconnect.lastError}',
-        ),
-      );
+      unawaited(_keepTrying(device));
     }
   }
+
+  /// After the fast tries give up, keeps trying now and then so a radio that
+  /// comes back into range reconnects without a tap. Stops on disconnect, on
+  /// connecting to another radio, or when Bluetooth goes off (then the wait
+  /// for Bluetooth takes over).
+  Future<void> _keepTrying(MeshtasticBleDevice device) async {
+    final fastAttempts = _reconnect.attempts;
+    final recovered = await _reconnect.keepTrying(
+      onWaiting: (next) {
+        if (_userDisconnected || _busy || _session != null) return;
+        connection.fail(
+          StateError(
+            'Radio link lost; reconnect gave up after $fastAttempts '
+            'attempts. Last error: ${_reconnect.lastError}. '
+            'Still trying: next try in ${_aboutTime(next)}.',
+          ),
+        );
+        notifyListeners();
+      },
+    );
+    if (recovered || _userDisconnected || !identical(device, _lastDevice)) {
+      return;
+    }
+    if (!_bluetoothOn && device.usesBluetooth) {
+      await _recoverLink(device);
+    } else if (!_busy &&
+        _session == null &&
+        !_reconnect.isRunning &&
+        !_reconnect.isRetryingSlowly) {
+      // Nothing else is reconnecting, so stop keeping the app alive for it.
+      unawaited(_background.release());
+    }
+  }
+
+  static String _aboutTime(Duration d) => d.inSeconds < 60
+      ? '${d.inSeconds} s'
+      : 'about ${d.inMinutes} min';
 
   Future<void> _reconnectLastDevice() async {
     final device = _lastDevice;
