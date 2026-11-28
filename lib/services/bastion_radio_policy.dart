@@ -1,6 +1,27 @@
 import '../generated/meshtastic/config.pb.dart';
 
 abstract final class BastionRadioPolicy {
+  /// Region codes introduced in firmware 2.8. Older firmware does not
+  /// understand them; a radio running 2.7 or earlier silently ignores them
+  /// or uses a fallback, so we hide them when the connected firmware is old.
+  static const _fw28Regions = {
+    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, // ITU amateur + EU-lite/narrow
+  };
+
+  /// Regions the connected firmware supports. Unknown firmware gets the full
+  /// list (the user might still want to set it for a future upgrade).
+  static List<Config_LoRaConfig_RegionCode> availableRegions(
+      String? firmwareVersion) {
+    final all = [
+      for (final r in Config_LoRaConfig_RegionCode.values)
+        if (r != Config_LoRaConfig_RegionCode.UNSET) r,
+    ];
+    if (firmwareVersion == null || firmwareAtLeast28(firmwareVersion))
+      return all;
+    return [
+      for (final r in all) if (!_fw28Regions.contains(r.value)) r,
+    ];
+  }
   static const compatibilityNotice =
       'Radios using different bandwidths cannot '
       'hear each other. Coordinate frequency, bandwidth, spreading factor and '
