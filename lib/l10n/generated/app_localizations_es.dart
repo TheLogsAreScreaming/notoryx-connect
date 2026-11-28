@@ -2985,6 +2985,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get csCopied => 'Enlace del canal copiado.';
 
   @override
+  String get csNfcWrite => 'Escribir etiqueta NFC';
+
+  @override
+  String get csNfcTitle => 'Escribir en etiqueta NFC';
+
+  @override
+  String get csNfcWaiting =>
+      'Acerca una etiqueta NFC a la parte trasera de tu teléfono.';
+
+  @override
+  String get csNfcDone => 'Etiqueta NFC escrita.';
+
+  @override
+  String csNfcError(String reason) {
+    return 'Error al escribir NFC: $reason';
+  }
+
+  @override
   String get csKeysWarning =>
       'Este código contiene las claves de cifrado de tus canales. Cualquiera que lo escanee podrá leer y enviar en estos canales.';
 

@@ -2960,6 +2960,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get csCopied => 'Channel link copied.';
 
   @override
+  String get csNfcWrite => 'Write NFC tag';
+
+  @override
+  String get csNfcTitle => 'Write to NFC tag';
+
+  @override
+  String get csNfcWaiting => 'Hold an NFC tag near the back of your phone.';
+
+  @override
+  String get csNfcDone => 'NFC tag written.';
+
+  @override
+  String csNfcError(String reason) {
+    return 'NFC write failed: $reason';
+  }
+
+  @override
   String get csKeysWarning =>
       'This code contains your channel encryption keys. Anyone who scans it can read and send on these channels.';
 

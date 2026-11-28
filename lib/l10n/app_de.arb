@@ -809,6 +809,16 @@
   "csDefaultName": "(Standardname)",
   "csCopyLink": "Link kopieren",
   "csCopied": "Kanallink kopiert.",
+  "csNfcWrite": "NFC-Tag schreiben",
+  "csNfcTitle": "Auf NFC-Tag schreiben",
+  "csNfcWaiting": "Halte ein NFC-Tag an die Rückseite deines Handys.",
+  "csNfcDone": "NFC-Tag beschrieben.",
+  "csNfcError": "NFC-Schreiben fehlgeschlagen: {reason}",
+  "@csNfcError": {
+    "placeholders": {
+      "reason": {"type": "String"}
+    }
+  },
   "csKeysWarning": "Dieser Code enthält die Schlüssel Ihrer Kanäle. Wer ihn scannt, kann auf diesen Kanälen lesen und senden.",
   "csReplaceQ": "Alle Kanäle ersetzen?",
   "csAddQ": "Kanäle hinzufügen?",

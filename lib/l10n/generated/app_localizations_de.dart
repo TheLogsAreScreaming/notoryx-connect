@@ -2994,6 +2994,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get csCopied => 'Kanallink kopiert.';
 
   @override
+  String get csNfcWrite => 'NFC-Tag schreiben';
+
+  @override
+  String get csNfcTitle => 'Auf NFC-Tag schreiben';
+
+  @override
+  String get csNfcWaiting =>
+      'Halte ein NFC-Tag an die Rückseite deines Handys.';
+
+  @override
+  String get csNfcDone => 'NFC-Tag beschrieben.';
+
+  @override
+  String csNfcError(String reason) {
+    return 'NFC-Schreiben fehlgeschlagen: $reason';
+  }
+
+  @override
   String get csKeysWarning =>
       'Dieser Code enthält die Schlüssel Ihrer Kanäle. Wer ihn scannt, kann auf diesen Kanälen lesen und senden.';
 
