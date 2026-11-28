@@ -700,6 +700,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatsBotReplyField => 'Message to send while Bot mode is on';
 
   @override
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr) {
+    return 'You can use $hops for how many hops the message took, $hopsEmoji for the same as an emoji, and $snr for its signal in dB.';
+  }
+
+  @override
   String get commonCancel => 'Cancel';
 
   @override
@@ -8220,46 +8225,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get linkScanCode => 'Scan code';
+  String get inboundTracesTitle => 'Traceroutes to this radio';
 
   @override
-  String get linkNotConnect => 'That code isn\'t a radio connect link.';
+  String get inboundTracesEmpty =>
+      'None yet. When another node traces a route to you, it shows here with the relays it came through.';
 
   @override
-  String get linkSerialUnsupported =>
-      'That link is for a USB cable. Plug the radio in and use USB instead.';
-
-  @override
-  String get linkConnectTitle => 'Connect to this radio?';
-
-  @override
-  String get linkDisconnectTitle => 'Disconnect the radio?';
-
-  @override
-  String get linkDisconnectBody =>
-      'A link asked to disconnect the current radio.';
-
-  @override
-  String linkTargetBluetooth(String address) {
-    return 'Bluetooth radio $address';
+  String inboundTracesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count traceroutes',
+      one: '1 traceroute',
+    );
+    return '$_temp0';
   }
 
   @override
-  String linkTargetNetwork(String address) {
-    return 'Network radio $address';
-  }
-
-  @override
-  String linkPinBody(String pin) {
-    return 'Its pairing PIN is $pin. It will be copied so you can paste it when the phone asks.';
-  }
-
-  @override
-  String get linkPinCopied => 'PIN copied. Paste it into the pairing prompt.';
-
-  @override
-  String get linkConnect => 'Connect';
-
-  @override
-  String get linkDisconnect => 'Disconnect';
+  String get inboundTracesDirect => 'direct';
 }

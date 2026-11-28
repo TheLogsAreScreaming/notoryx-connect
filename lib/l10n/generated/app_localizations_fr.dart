@@ -710,6 +710,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Message à envoyer quand le mode bot est activé';
 
   @override
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr) {
+    return 'Vous pouvez utiliser $hops pour le nombre de sauts du message, $hopsEmoji pour la même chose en emoji et $snr pour son signal en dB.';
+  }
+
+  @override
   String get commonCancel => 'Annuler';
 
   @override
@@ -8309,48 +8314,23 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get linkScanCode => 'Scanner un code';
+  String get inboundTracesTitle => 'Traceroutes vers cette radio';
 
   @override
-  String get linkNotConnect =>
-      'Ce code n\'est pas un lien de connexion à une radio.';
+  String get inboundTracesEmpty =>
+      'Aucun pour l\'instant. Quand un autre nœud trace une route vers vous, elle apparaît ici avec les relais traversés.';
 
   @override
-  String get linkSerialUnsupported =>
-      'Ce lien concerne un câble USB. Branchez la radio et utilisez l\'USB.';
-
-  @override
-  String get linkConnectTitle => 'Se connecter à cette radio ?';
-
-  @override
-  String get linkDisconnectTitle => 'Déconnecter la radio ?';
-
-  @override
-  String get linkDisconnectBody =>
-      'Un lien demande de déconnecter la radio actuelle.';
-
-  @override
-  String linkTargetBluetooth(String address) {
-    return 'Radio Bluetooth $address';
+  String inboundTracesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count traceroutes',
+      one: '1 traceroute',
+    );
+    return '$_temp0';
   }
 
   @override
-  String linkTargetNetwork(String address) {
-    return 'Radio réseau $address';
-  }
-
-  @override
-  String linkPinBody(String pin) {
-    return 'Son code PIN d\'appairage est $pin. Il sera copié pour que vous puissiez le coller quand le téléphone le demande.';
-  }
-
-  @override
-  String get linkPinCopied =>
-      'PIN copié. Collez-le dans la demande d\'appairage.';
-
-  @override
-  String get linkConnect => 'Se connecter';
-
-  @override
-  String get linkDisconnect => 'Déconnecter';
+  String get inboundTracesDirect => 'direct';
 }

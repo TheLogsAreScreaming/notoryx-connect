@@ -1194,6 +1194,12 @@ abstract class AppLocalizations {
   /// **'Message to send while Bot mode is on'**
   String get chatsBotReplyField;
 
+  /// No description provided for @chatsBotReplyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can use {hops} for how many hops the message took, {hopsEmoji} for the same as an emoji, and {snr} for its signal in dB.'**
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr);
+
   /// No description provided for @commonCancel.
   ///
   /// In en, this message translates to:
@@ -13459,77 +13465,29 @@ abstract class AppLocalizations {
   /// **'Your radio\'s position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.'**
   String ncRadioApproximate(String distance);
 
-  /// No description provided for @linkScanCode.
+  /// No description provided for @inboundTracesTitle.
   ///
   /// In en, this message translates to:
-  /// **'Scan code'**
-  String get linkScanCode;
+  /// **'Traceroutes to this radio'**
+  String get inboundTracesTitle;
 
-  /// No description provided for @linkNotConnect.
+  /// No description provided for @inboundTracesEmpty.
   ///
   /// In en, this message translates to:
-  /// **'That code isn\'t a radio connect link.'**
-  String get linkNotConnect;
+  /// **'None yet. When another node traces a route to you, it shows here with the relays it came through.'**
+  String get inboundTracesEmpty;
 
-  /// No description provided for @linkSerialUnsupported.
+  /// No description provided for @inboundTracesCount.
   ///
   /// In en, this message translates to:
-  /// **'That link is for a USB cable. Plug the radio in and use USB instead.'**
-  String get linkSerialUnsupported;
+  /// **'{count, plural, =1{1 traceroute} other{{count} traceroutes}}'**
+  String inboundTracesCount(int count);
 
-  /// No description provided for @linkConnectTitle.
+  /// No description provided for @inboundTracesDirect.
   ///
   /// In en, this message translates to:
-  /// **'Connect to this radio?'**
-  String get linkConnectTitle;
-
-  /// No description provided for @linkDisconnectTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnect the radio?'**
-  String get linkDisconnectTitle;
-
-  /// No description provided for @linkDisconnectBody.
-  ///
-  /// In en, this message translates to:
-  /// **'A link asked to disconnect the current radio.'**
-  String get linkDisconnectBody;
-
-  /// No description provided for @linkTargetBluetooth.
-  ///
-  /// In en, this message translates to:
-  /// **'Bluetooth radio {address}'**
-  String linkTargetBluetooth(String address);
-
-  /// No description provided for @linkTargetNetwork.
-  ///
-  /// In en, this message translates to:
-  /// **'Network radio {address}'**
-  String linkTargetNetwork(String address);
-
-  /// No description provided for @linkPinBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Its pairing PIN is {pin}. It will be copied so you can paste it when the phone asks.'**
-  String linkPinBody(String pin);
-
-  /// No description provided for @linkPinCopied.
-  ///
-  /// In en, this message translates to:
-  /// **'PIN copied. Paste it into the pairing prompt.'**
-  String get linkPinCopied;
-
-  /// No description provided for @linkConnect.
-  ///
-  /// In en, this message translates to:
-  /// **'Connect'**
-  String get linkConnect;
-
-  /// No description provided for @linkDisconnect.
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnect'**
-  String get linkDisconnect;
+  /// **'direct'**
+  String get inboundTracesDirect;
 }
 
 class _AppLocalizationsDelegate
