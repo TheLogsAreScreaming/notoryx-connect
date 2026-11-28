@@ -2252,6 +2252,17 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get homeNodeIdMigrationTitle =>
+      'ID de nœud modifié après mise à jour du firmware';
+
+  @override
+  String get homeNodeIdMigrationBody =>
+      'Le firmware 2.8 attribue les ID de nœud à partir de la clé de chiffrement plutôt qu\'aléatoirement. Vos contacts devront peut-être vous redécouvrir sur le maillage.';
+
+  @override
+  String get homeNodeIdMigrationAction => 'Compris';
+
+  @override
   String get homeFirmwareTitle =>
       'Mise à jour du firmware de la radio conseillée';
 
