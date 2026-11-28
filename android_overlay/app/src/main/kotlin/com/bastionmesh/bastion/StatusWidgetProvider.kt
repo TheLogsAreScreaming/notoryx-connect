@@ -25,6 +25,9 @@ class StatusWidgetProvider : HomeWidgetProvider() {
                 val alert = widgetData.getString("widget_alert", "") ?: ""
                 setTextViewText(R.id.widget_alert, alert)
                 setViewVisibility(R.id.widget_alert, if (alert.isEmpty()) View.GONE else View.VISIBLE)
+                val tracked = widgetData.getString("widget_tracked", "") ?: ""
+                setTextViewText(R.id.widget_tracked, tracked)
+                setViewVisibility(R.id.widget_tracked, if (tracked.isEmpty()) View.GONE else View.VISIBLE)
                 setOnClickPendingIntent(
                     R.id.widget_root,
                     HomeWidgetLaunchIntent.getActivity(context, MainActivity::class.java),

@@ -15,10 +15,11 @@ class _Radio extends MeshtasticRadioCoordinator {
   int? get localNodeNum => 1;
   @override
   MeshtasticNode? get localNode => const MeshtasticNode(num: 1, longName: 'Base', batteryLevel: 81);
+  final _lastHeard = DateTime(2026, 11, 7, 14, 0); // 5 min before now
   @override
-  List<MeshtasticNode> get nodes => const [
-        MeshtasticNode(num: 1, longName: 'Base'),
-        MeshtasticNode(num: 2, longName: 'Mara'),
+  List<MeshtasticNode> get nodes => [
+        const MeshtasticNode(num: 1, longName: 'Base'),
+        MeshtasticNode(num: 2, longName: 'Mara', batteryLevel: 60, lastHeard: _lastHeard),
       ];
   @override
   int get unreadCount => unread;
@@ -53,7 +54,66 @@ void main() {
     final offline = WidgetSnapshot.of(radio, now, showMessage: true);
     expect(offline.title, 'No radio connected');
     expect(offline.messages, 'No unread messages');
-    expect(offline.toMap().keys, containsAll(['widget_title', 'widget_detail', 'widget_messages', 'widget_alert', 'widget_updated']));
+    expect(offline.toMap().keys, containsAll(['widget_title', 'widget_detail', 'widget_messages', 'widget_alert', 'widget_updated', 'widget_tracked']));
+  });
+
+  group('tracked node', () {
+    test('is empty when no node is tracked', () {
+      final radio = _Radio();
+      addTearDown(radio.dispose);
+      final snap = WidgetSnapshot.of(radio, now, showMessage: false);
+      expect(snap.tracked, isEmpty);
+    });
+
+    test('shows name and battery for a tracked node', () {
+      final radio = _Radio();
+      addTearDown(radio.dispose);
+      final snap = WidgetSnapshot.of(radio, now, showMessage: false, trackedNum: 2);
+      expect(snap.tracked, contains('Mara'));
+      expect(snap.tracked, contains('60%'));
+    });
+
+    test('shows time ago when lastHeard is set', () {
+      final radio = _Radio();
+      addTearDown(radio.dispose);
+      final snap = WidgetSnapshot.of(radio, now, showMessage: false, trackedNum: 2);
+      expect(snap.tracked, contains('5 min ago'));
+    });
+
+    test('is empty when tracked node is not in node list', () {
+      final radio = _Radio();
+      addTearDown(radio.dispose);
+      final snap = WidgetSnapshot.of(radio, now, showMessage: false, trackedNum: 99);
+      expect(snap.tracked, isEmpty);
+    });
+
+    test('sameAs considers tracked field', () {
+      final radio = _Radio();
+      addTearDown(radio.dispose);
+      final a = WidgetSnapshot.of(radio, now, showMessage: false, trackedNum: 2);
+      final b = WidgetSnapshot.of(radio, now, showMessage: false);
+      expect(a.sameAs(b), isFalse);
+    });
+
+    test('setTrackedNode persists across restarts', () async {
+      final radio = _Radio();
+      addTearDown(radio.dispose);
+      final w = BastionHomeWidget(radio, push: (_) async {});
+      addTearDown(w.dispose);
+      await w.start();
+      await w.setTrackedNode(2);
+
+      final w2 = BastionHomeWidget(radio, push: (_) async {});
+      addTearDown(w2.dispose);
+      await w2.start();
+      expect(w2.trackedNodeNum, 2);
+
+      await w2.setTrackedNode(null);
+      final w3 = BastionHomeWidget(radio, push: (_) async {});
+      addTearDown(w3.dispose);
+      await w3.start();
+      expect(w3.trackedNodeNum, isNull);
+    });
   });
 
   testWidgets('updates are sent on change, skipped when nothing changed, and spaced out', (tester) async {
