@@ -17,6 +17,7 @@ import '../generated/meshtastic/mesh_beacon.pb.dart';
 import '../generated/meshtastic/module_config.pb.dart';
 import '../generated/meshtastic/portnums.pbenum.dart';
 import '../generated/meshtastic/telemetry.pb.dart';
+import 'bastion_inbound_traces.dart';
 import 'bastion_identity_key.dart';
 import 'bastion_admin_packet_codec.dart';
 import 'bastion_radio_backup.dart';
@@ -550,6 +551,9 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   MeshtasticMessagingService? _messaging;
   MeshtasticAdminSession? _admin;
   MeshtasticTraceroute? _traceroute;
+
+  /// Traceroutes other nodes ran to this radio.
+  final BastionInboundTraces inboundTraces = BastionInboundTraces();
   StreamSubscription<List<MeshtasticNode>>? _nodeSubscription;
   StreamSubscription<MeshtasticNode>? _nodeVaultSubscription;
   StreamSubscription<void>? _messageSubscription;
@@ -1527,6 +1531,10 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
           incoming: session.incomingEnvelopes,
           send: session.send,
           localNodeNum: nodeNum,
+          onInbound: (trace) {
+            unawaited(inboundTraces.add(trace));
+            notifyListeners();
+          },
         );
       }
       await messaging.flush();
@@ -2256,6 +2264,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   /// Asks for notification permission while the app is on screen (iOS).
   Future<void> prepareAlerts() async {
+    unawaited(inboundTraces.load());
     final alerts = _alerts;
     if (alerts is! BastionLocalMessageAlerts) return;
     alerts.listenForReplies(

@@ -324,7 +324,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
                         controller: reply,
                         maxLines: 3,
                         maxLength: 160,
-                        decoration: InputDecoration(labelText: l.chatsBotReplyField),
+                        decoration: InputDecoration(labelText: l.chatsBotReplyField, helperText: l.chatsBotReplyHint('{hops}', '{hops_emoji}', '{snr}'), helperMaxLines: 4),
                         onChanged: widget.onAwayReplyChanged,
                       ),
                     ],

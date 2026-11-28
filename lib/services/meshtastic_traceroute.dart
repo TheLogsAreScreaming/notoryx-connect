@@ -40,6 +40,48 @@ class MeshtasticTracerouteException implements Exception {
   String toString() => message;
 }
 
+/// Another node's traceroute that reached this radio: who ran it and the
+/// relays it came through (with the SNR each heard it at).
+class InboundTraceroute {
+  const InboundTraceroute({
+    required this.from,
+    required this.at,
+    required this.hops,
+  });
+
+  /// The node that ran the traceroute.
+  final int from;
+  final DateTime at;
+
+  /// Relays from [from] towards this radio, ending with this radio.
+  final List<TracerouteHop> hops;
+
+  Map<String, Object?> toJson() => {
+    'from': from,
+    'at': at.millisecondsSinceEpoch,
+    'hops': [
+      for (final h in hops) {'n': h.nodeNum, 's': h.snrDb},
+    ],
+  };
+
+  static InboundTraceroute? fromJson(Object? json) {
+    if (json is! Map) return null;
+    final from = json['from'];
+    final at = json['at'];
+    final hops = json['hops'];
+    if (from is! int || at is! int || hops is! List) return null;
+    return InboundTraceroute(
+      from: from,
+      at: DateTime.fromMillisecondsSinceEpoch(at),
+      hops: [
+        for (final h in hops)
+          if (h is Map && h['n'] is int)
+            TracerouteHop(h['n'] as int, (h['s'] as num?)?.toDouble()),
+      ],
+    );
+  }
+}
+
 /// Sends TRACEROUTE_APP requests and matches the RouteDiscovery reply.
 ///
 /// Firmware rate-limits traceroutes; callers should not retry quickly.
@@ -49,7 +91,10 @@ class MeshtasticTraceroute {
     required Future<void> Function(Uint8List toRadio) send,
     required this.localNodeNum,
     Random? random,
+    this.onInbound,
+    DateTime Function()? clock,
   })  : _send = send,
+        _clock = clock ?? DateTime.now,
         _random = random ?? Random.secure() {
     _subscription = incoming.listen(_handleEnvelope);
   }
@@ -58,6 +103,10 @@ class MeshtasticTraceroute {
   static const _unknownSnr = -128;
 
   final int localNodeNum;
+
+  /// Called for each traceroute another node runs to this radio.
+  final void Function(InboundTraceroute trace)? onInbound;
+  final DateTime Function() _clock;
   final Future<void> Function(Uint8List) _send;
   final Random _random;
   final Map<int, Completer<TracerouteResult>> _pending = {};
@@ -114,6 +163,24 @@ class MeshtasticTraceroute {
     }
     final data = packet.decoded;
     final completer = _pending[data.requestId];
+    if (completer == null &&
+        data.portnum == PortNum.TRACEROUTE_APP &&
+        data.wantResponse &&
+        packet.to == localNodeNum &&
+        packet.from != localNodeNum &&
+        onInbound != null) {
+      try {
+        final request = RouteDiscovery.fromBuffer(data.payload);
+        onInbound!(InboundTraceroute(
+          from: packet.from,
+          at: _clock(),
+          hops: _hops(request.route, request.snrTowards, localNodeNum),
+        ));
+      } on InvalidProtocolBufferException {
+        // Not a usable request.
+      }
+      return;
+    }
     if (completer == null || completer.isCompleted) return;
 
     if (data.portnum == PortNum.TRACEROUTE_APP) {
@@ -137,19 +204,20 @@ class MeshtasticTraceroute {
     }
   }
 
+  static List<TracerouteHop> _hops(List<int> relays, List<int> snrs, int last) => [
+        for (var i = 0; i <= relays.length; i++)
+          TracerouteHop(
+            i < relays.length ? relays[i] : last,
+            i < snrs.length && snrs[i] != _unknownSnr ? snrs[i] / 4 : null,
+          ),
+      ];
+
   TracerouteResult _parse(RouteDiscovery reply, int destination) {
-    List<TracerouteHop> hops(List<int> relays, List<int> snrs, int last) => [
-          for (var i = 0; i <= relays.length; i++)
-            TracerouteHop(
-              i < relays.length ? relays[i] : last,
-              i < snrs.length && snrs[i] != _unknownSnr ? snrs[i] / 4 : null,
-            ),
-        ];
     return TracerouteResult(
-      towards: hops(reply.route, reply.snrTowards, destination),
+      towards: _hops(reply.route, reply.snrTowards, destination),
       back: reply.snrBack.isEmpty && reply.routeBack.isEmpty
           ? const []
-          : hops(reply.routeBack, reply.snrBack, localNodeNum),
+          : _hops(reply.routeBack, reply.snrBack, localNodeNum),
     );
   }
 

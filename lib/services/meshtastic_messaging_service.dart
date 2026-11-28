@@ -81,12 +81,32 @@ class MeshtasticMessagingService {
     return lower.startsWith('notoryx:') || lower.startsWith('bastion:');
   }
 
+  /// 🎯 heard directly, 1️⃣ to 9️⃣ and 🔟 for that many hops, 🦘 for eleven
+  /// or more, and ❓ when the hop count is unknown.
+  static String hopEmoji(int? hops) {
+    if (hops == null || hops < 0) return '\u2753';
+    if (hops == 0) return '\u{1F3AF}';
+    if (hops > 10) return '\u{1F998}';
+    if (hops == 10) return '\u{1F51F}';
+    // Keycap digit: the digit, VS16, then the combining keycap.
+    return '$hops\uFE0F\u20E3';
+  }
+
+  /// Expands `{hops}`, `{snr}` and `{hops_emoji}` in [template].
+  static String _fill(String template, {int? hops, double? snr}) => template
+      .replaceAll('{hops_emoji}', hopEmoji(hops))
+      .replaceAll('{hops}', hops == null || hops < 0 ? '?' : '$hops')
+      .replaceAll('{snr}', snr?.toStringAsFixed(1) ?? '?');
+
   /// The over-the-air reply to [text] (a command or anything else).
-  static String botResponse(String text, String awayReply) =>
+  ///
+  /// [awayReply] may use `{hops}`, `{snr}` and `{hops_emoji}`.
+  static String botResponse(String text, String awayReply,
+      {int? hops, double? snr}) =>
       switch (text.trim().toLowerCase()) {
         '!help' => '$botPrefix commands !help !status',
         '!status' => '$botPrefix online • radio READY',
-        _ => '$botPrefix $awayReply',
+        _ => '$botPrefix ${_fill(awayReply, hops: hops, snr: snr)}',
       };
 
   Stream<MeshtasticTextMessage> get incoming => _incoming.stream;
@@ -466,7 +486,7 @@ class MeshtasticMessagingService {
     // A permission/persistence wait may outlive the connected session.
     if (!_botEnabled || !connection.isReady || localNodeNum != ownNode) return;
 
-    final response = botResponse(text, _botReply);
+    final response = botResponse(text, _botReply, hops: message.hops, snr: message.rxSnr);
     try {
       await sendText(text: response, destination: message.from, channel: message.channel);
       botProblem = null;

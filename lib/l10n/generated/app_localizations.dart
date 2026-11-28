@@ -1194,6 +1194,12 @@ abstract class AppLocalizations {
   /// **'Message to send while Bot mode is on'**
   String get chatsBotReplyField;
 
+  /// No description provided for @chatsBotReplyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can use {hops} for how many hops the message took, {hopsEmoji} for the same as an emoji, and {snr} for its signal in dB.'**
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr);
+
   /// No description provided for @commonCancel.
   ///
   /// In en, this message translates to:
@@ -13459,11 +13465,29 @@ abstract class AppLocalizations {
   /// **'Your radio\'s position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.'**
   String ncRadioApproximate(String distance);
 
-  /// No description provided for @cpExactNeedsKey.
+  /// No description provided for @inboundTracesTitle.
   ///
   /// In en, this message translates to:
-  /// **'private channels only'**
-  String get cpExactNeedsKey;
+  /// **'Traceroutes to this radio'**
+  String get inboundTracesTitle;
+
+  /// No description provided for @inboundTracesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'None yet. When another node traces a route to you, it shows here with the relays it came through.'**
+  String get inboundTracesEmpty;
+
+  /// No description provided for @inboundTracesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 traceroute} other{{count} traceroutes}}'**
+  String inboundTracesCount(int count);
+
+  /// No description provided for @inboundTracesDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'direct'**
+  String get inboundTracesDirect;
 }
 
 class _AppLocalizationsDelegate

@@ -704,6 +704,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Mensaje que se envía con el modo bot activado';
 
   @override
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr) {
+    return 'Puedes usar $hops para los saltos del mensaje, $hopsEmoji para lo mismo como emoji y $snr para su señal en dB.';
+  }
+
+  @override
   String get commonCancel => 'Cancelar';
 
   @override
@@ -8277,5 +8282,23 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get cpExactNeedsKey => 'solo canales privados';
+  String get inboundTracesTitle => 'Trazas de ruta hacia esta radio';
+
+  @override
+  String get inboundTracesEmpty =>
+      'Ninguna aún. Cuando otro nodo trace una ruta hacia ti, aparecerá aquí con los repetidores por los que pasó.';
+
+  @override
+  String inboundTracesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count trazas',
+      one: '1 traza',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get inboundTracesDirect => 'directa';
 }
