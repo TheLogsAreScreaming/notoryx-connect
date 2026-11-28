@@ -11,8 +11,8 @@ import android.service.quicksettings.TileService
 import androidx.annotation.RequiresApi
 
 /**
- * Quick Settings tile: shows whether a radio is connected, using the same
- * status the home-screen widget shows, and opens the app when tapped.
+ * Quick Settings tile: shows whether a radio is connected plus unread message
+ * count, using the same status the home-screen widget shows.
  * It never connects or sends anything by itself.
  */
 @RequiresApi(Build.VERSION_CODES.N)
@@ -43,11 +43,17 @@ class RadioTileService : TileService() {
         val prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         val title = prefs.getString("widget_title", null) ?: getString(R.string.radio_tile_no_radio)
         val alert = prefs.getString("widget_alert", "") ?: ""
+        val messages = prefs.getString("widget_messages", "") ?: ""
         val connected = title.startsWith("Connected")
         tile.label = getString(R.string.radio_tile_label)
         tile.icon = Icon.createWithResource(this, R.drawable.ic_radio_tile)
         tile.state = if (connected) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-        val detail = if (alert.isNotEmpty()) alert else title
+        // Priority: alert > unread count > connection title.
+        val detail = when {
+            alert.isNotEmpty() -> alert
+            messages.isNotEmpty() && !messages.startsWith("No ") -> messages.substringBefore(" •")
+            else -> title
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             tile.subtitle = detail
         }
