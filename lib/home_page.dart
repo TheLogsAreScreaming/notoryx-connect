@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'generated/meshtastic/config.pbenum.dart';
 import 'l10n/generated/app_localizations.dart';
 
+import 'radio_settings_page.dart';
 import 'region_setup_page.dart';
 import 'services/bastion_chat_message.dart';
 import 'services/bastion_firmware.dart';
 import 'services/bastion_preferences.dart';
+import 'services/bastion_radio_policy.dart';
 import 'services/bastion_telemetry_history.dart';
 import 'services/bastion_radio_notice.dart';
 import 'services/bastion_trip.dart';
@@ -72,6 +74,25 @@ class HomePage extends StatelessWidget {
                 MaterialPageRoute<void>(builder: (_) => RegionSetupPage(radio: radio)),
               ),
               child: Text(l.regionSetupBannerAction),
+            ),
+          ),
+        if (radio.isReady &&
+            radio.canAdminister &&
+            BastionRadioPolicy.firmwareAtLeast28(radio.firmwareVersion) &&
+            (radio.positionConfig?.positionBroadcastSecs ?? 0) == 0)
+          NxBanner(
+            key: const ValueKey('home-position-off'),
+            tone: NxTone.info,
+            icon: Icons.location_off_outlined,
+            title: l.homePosOffTitle,
+            message: l.homePosOffBody,
+            action: TextButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => RadioSettingsPage(radio: radio),
+                ),
+              ),
+              child: Text(l.homePosOffAction),
             ),
           ),
         _TripCard(radio: radio),
