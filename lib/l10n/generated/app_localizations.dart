@@ -4956,6 +4956,36 @@ abstract class AppLocalizations {
   /// **'Channel link copied.'**
   String get csCopied;
 
+  /// No description provided for @csNfcWrite.
+  ///
+  /// In en, this message translates to:
+  /// **'Write NFC tag'**
+  String get csNfcWrite;
+
+  /// No description provided for @csNfcTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Write to NFC tag'**
+  String get csNfcTitle;
+
+  /// No description provided for @csNfcWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold an NFC tag near the back of your phone.'**
+  String get csNfcWaiting;
+
+  /// No description provided for @csNfcDone.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC tag written.'**
+  String get csNfcDone;
+
+  /// No description provided for @csNfcError.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC write failed: {reason}'**
+  String csNfcError(String reason);
+
   /// No description provided for @csKeysWarning.
   ///
   /// In en, this message translates to:

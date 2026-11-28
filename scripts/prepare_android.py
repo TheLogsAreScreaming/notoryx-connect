@@ -92,8 +92,16 @@ if 'RadioTileService' not in s:
         </service>
     </application>'''
     s=s.replace('    </application>', tile, 1)
+# NFC write requires the NFC permission (reading via NDEF_DISCOVERED intents
+# does not, but writing with nfc_manager does).
+if 'android.permission.NFC' not in s:
+    s=s.replace('<manifest xmlns:android="http://schemas.android.com/apk/res/android">',
+                '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n'
+                '    <uses-permission android:name="android.permission.NFC" />\n'
+                '    <uses-feature android:name="android.hardware.nfc" android:required="false" />')
 # Meshtastic connect links (QR code, web link or NFC tag) open the app:
 # meshtastic://meshtastic/connections?... and https://meshtastic.org/connections?...
+# Also handles channel URLs: https://meshtastic.org/e/#...
 if 'android:scheme="meshtastic"' not in s:
     filters = '''            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -107,6 +115,11 @@ if 'android:scheme="meshtastic"' not in s:
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="meshtastic" android:host="meshtastic" android:pathPrefix="/connections" />
                 <data android:scheme="https" android:host="meshtastic.org" android:pathPrefix="/connections" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="https" android:host="meshtastic.org" android:pathPrefix="/e/" />
             </intent-filter>
         </activity>'''
     if s.count('        </activity>') < 1:

@@ -2156,6 +2156,16 @@
   "csDefaultName": "(default name)",
   "csCopyLink": "Copy link",
   "csCopied": "Channel link copied.",
+  "csNfcWrite": "Write NFC tag",
+  "csNfcTitle": "Write to NFC tag",
+  "csNfcWaiting": "Hold an NFC tag near the back of your phone.",
+  "csNfcDone": "NFC tag written.",
+  "csNfcError": "NFC write failed: {reason}",
+  "@csNfcError": {
+    "placeholders": {
+      "reason": {"type": "String"}
+    }
+  },
   "csKeysWarning": "This code contains your channel encryption keys. Anyone who scans it can read and send on these channels.",
   "csReplaceQ": "Replace all channels?",
   "csAddQ": "Add channels?",

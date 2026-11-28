@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'generated/meshtastic/apponly.pb.dart';
 import 'qr_scan_page.dart';
 import 'services/bastion_channel_import.dart';
+import 'services/bastion_nfc.dart';
 import 'services/bastion_team_setup.dart';
 import 'services/meshtastic_channel_url.dart';
 import 'services/meshtastic_radio_coordinator.dart';
@@ -24,6 +26,64 @@ class ChannelSharePage extends StatefulWidget {
 
 class _ChannelSharePageState extends State<ChannelSharePage> {
   late Future<ChannelSet> _channels = widget.radio.readChannelSet();
+  bool _nfcAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    BastionNfc.isAvailable().then((v) {
+      if (mounted) setState(() => _nfcAvailable = v);
+    });
+  }
+
+  Future<void> _writeNfc(BuildContext context, String link) async {
+    final l = AppLocalizations.of(context);
+    if (!mounted) return;
+    var writing = true;
+    unawaited(showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: Text(l.csNfcTitle),
+          content: Row(children: [
+            const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2)),
+            const SizedBox(width: 16),
+            Expanded(child: Text(l.csNfcWaiting)),
+          ]),
+          actions: [
+            TextButton(
+              onPressed: () {
+                writing = false;
+                BastionNfc.cancel();
+                Navigator.of(ctx).pop();
+              },
+              child: Text(l.commonCancel),
+            ),
+          ],
+        ),
+      ),
+    ));
+    await BastionNfc.writeUri(
+      link,
+      onError: (reason) {
+        if (!mounted) return;
+        if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+        if (!writing) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l.csNfcError(reason))),
+        );
+      },
+      onDone: () {
+        if (!mounted) return;
+        if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l.csNfcDone)),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -63,18 +123,27 @@ class _ChannelSharePageState extends State<ChannelSharePage> {
                 const SizedBox(height: 12),
                 SelectableText(link, style: const TextStyle(fontSize: 12)),
                 const SizedBox(height: 8),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: OutlinedButton.icon(
-                    icon: const Icon(Icons.copy),
-                    label: Text(l.csCopyLink),
-                    onPressed: () async {
-                      final messenger = ScaffoldMessenger.of(context);
-                      final copied = l.csCopied;
-                      await Clipboard.setData(ClipboardData(text: link));
-                      messenger.showSnackBar(SnackBar(content: Text(copied)));
-                    },
-                  ),
+                Wrap(
+                  spacing: 8,
+                  children: [
+                    OutlinedButton.icon(
+                      icon: const Icon(Icons.copy),
+                      label: Text(l.csCopyLink),
+                      onPressed: () async {
+                        final messenger = ScaffoldMessenger.of(context);
+                        final copied = l.csCopied;
+                        await Clipboard.setData(ClipboardData(text: link));
+                        messenger.showSnackBar(SnackBar(content: Text(copied)));
+                      },
+                    ),
+                    if (_nfcAvailable)
+                      OutlinedButton.icon(
+                        key: const ValueKey('cs-nfc-write'),
+                        icon: const Icon(Icons.nfc),
+                        label: Text(l.csNfcWrite),
+                        onPressed: () => _writeNfc(context, link),
+                      ),
+                  ],
                 ),
                 const SizedBox(height: 12),
                 Text(

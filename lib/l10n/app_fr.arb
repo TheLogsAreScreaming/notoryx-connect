@@ -809,6 +809,16 @@
   "csDefaultName": "(nom par défaut)",
   "csCopyLink": "Copier le lien",
   "csCopied": "Lien du canal copié.",
+  "csNfcWrite": "Écrire une étiquette NFC",
+  "csNfcTitle": "Écrire sur une étiquette NFC",
+  "csNfcWaiting": "Approchez une étiquette NFC de l'arrière de votre téléphone.",
+  "csNfcDone": "Étiquette NFC écrite.",
+  "csNfcError": "Échec de l'écriture NFC : {reason}",
+  "@csNfcError": {
+    "placeholders": {
+      "reason": {"type": "String"}
+    }
+  },
   "csKeysWarning": "Ce code contient les clés de chiffrement de vos canaux. Quiconque le scanne peut lire et envoyer sur ces canaux.",
   "csReplaceQ": "Remplacer tous les canaux ?",
   "csAddQ": "Ajouter des canaux ?",

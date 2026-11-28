@@ -2999,6 +2999,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get csCopied => 'Lien du canal copié.';
 
   @override
+  String get csNfcWrite => 'Écrire une étiquette NFC';
+
+  @override
+  String get csNfcTitle => 'Écrire sur une étiquette NFC';
+
+  @override
+  String get csNfcWaiting =>
+      'Approchez une étiquette NFC de l\'arrière de votre téléphone.';
+
+  @override
+  String get csNfcDone => 'Étiquette NFC écrite.';
+
+  @override
+  String csNfcError(String reason) {
+    return 'Échec de l\'écriture NFC : $reason';
+  }
+
+  @override
   String get csKeysWarning =>
       'Ce code contient les clés de chiffrement de vos canaux. Quiconque le scanne peut lire et envoyer sur ces canaux.';
 
