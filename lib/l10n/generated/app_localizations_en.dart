@@ -700,6 +700,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatsBotReplyField => 'Message to send while Bot mode is on';
 
   @override
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr) {
+    return 'You can use $hops for how many hops the message took, $hopsEmoji for the same as an emoji, and $snr for its signal in dB.';
+  }
+
+  @override
   String get commonCancel => 'Cancel';
 
   @override
@@ -8218,4 +8223,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'Your radio\'s position is only approximate (within about $distance), so the arrow may be off. Tap Use phone location for a better one.';
   }
+
+  @override
+  String get inboundTracesTitle => 'Traceroutes to this radio';
+
+  @override
+  String get inboundTracesEmpty =>
+      'None yet. When another node traces a route to you, it shows here with the relays it came through.';
+
+  @override
+  String inboundTracesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count traceroutes',
+      one: '1 traceroute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get inboundTracesDirect => 'direct';
 }

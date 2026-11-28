@@ -517,6 +517,8 @@
   "chatsBotOff": "Off. No automatic replies are sent.",
   "chatsBotReply": "Bot reply message",
   "chatsBotReplyField": "Message to send while Bot mode is on",
+  "chatsBotReplyHint": "You can use {hops} for how many hops the message took, {hopsEmoji} for the same as an emoji, and {snr} for its signal in dB.",
+  "@chatsBotReplyHint": {"placeholders": {"hops": {"type": "String"}, "hopsEmoji": {"type": "String"}, "snr": {"type": "String"}}},
   "commonCancel": "Cancel",
   "commonSave": "Save",
   "commonConnect": "Connect",
@@ -5608,5 +5610,16 @@
     }
   },
   "ncRadioApproximate": "Your radio's position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.",
-  "@ncRadioApproximate": {"placeholders": {"distance": {"type": "String"}}}
+  "@ncRadioApproximate": {"placeholders": {"distance": {"type": "String"}}},
+  "inboundTracesTitle": "Traceroutes to this radio",
+  "inboundTracesEmpty": "None yet. When another node traces a route to you, it shows here with the relays it came through.",
+  "inboundTracesCount": "{count, plural, =1{1 traceroute} other{{count} traceroutes}}",
+  "@inboundTracesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inboundTracesDirect": "direct"
 }

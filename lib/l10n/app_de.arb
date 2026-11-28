@@ -182,6 +182,7 @@
   "chatsBotOff": "Aus. Es werden keine automatischen Antworten gesendet.",
   "chatsBotReply": "Bot-Antwortnachricht",
   "chatsBotReplyField": "Nachricht, die im Bot-Modus gesendet wird",
+  "chatsBotReplyHint": "Du kannst {hops} für die Sprünge der Nachricht, {hopsEmoji} für dasselbe als Emoji und {snr} für ihr Signal in dB verwenden.",
   "commonCancel": "Abbrechen",
   "commonSave": "Speichern",
   "commonConnect": "Verbinden",
@@ -2223,5 +2224,9 @@
   "ncUsePhone": "Standort des Telefons nutzen",
   "ncPrivacy": "Standort und Kompass des Telefons werden nur auf diesem Telefon genutzt, solange diese Seite offen ist. Es wird nichts gesendet.",
   "ncApproximate": "{name} teilt nur eine ungefähre Position (auf etwa {distance} genau). Nutze den Pfeil als grobe Richtung.",
-  "ncRadioApproximate": "Die Position deines Funkgeräts ist nur ungefähr (auf etwa {distance} genau), daher kann der Pfeil danebenliegen. Tippe auf Standort des Telefons nutzen für eine genauere."
+  "ncRadioApproximate": "Die Position deines Funkgeräts ist nur ungefähr (auf etwa {distance} genau), daher kann der Pfeil danebenliegen. Tippe auf Standort des Telefons nutzen für eine genauere.",
+  "inboundTracesTitle": "Traceroutes zu diesem Funkgerät",
+  "inboundTracesEmpty": "Noch keine. Wenn ein anderer Knoten eine Route zu dir verfolgt, erscheint sie hier mit den Relais, über die sie kam.",
+  "inboundTracesCount": "{count, plural, =1{1 Traceroute} other{{count} Traceroutes}}",
+  "inboundTracesDirect": "direkt"
 }
