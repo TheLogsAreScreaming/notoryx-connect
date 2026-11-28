@@ -2252,5 +2252,10 @@
   "linkPinBody": "Son code PIN d'appairage est {pin}. Il sera copié pour que vous puissiez le coller quand le téléphone le demande.",
   "linkPinCopied": "PIN copié. Collez-le dans la demande d'appairage.",
   "linkConnect": "Se connecter",
-  "linkDisconnect": "Déconnecter"
+  "linkDisconnect": "Déconnecter",
+  "localNameTitle": "Nom sur ce téléphone",
+  "localNameNone": "Non défini. Le nom propre du nœud est utilisé.",
+  "localNameOwn": "Son nom propre : {name}",
+  "localNameHint": "Affiché à la place de « {name} » partout dans l'application. Seulement sur ce téléphone ; rien n'est envoyé au nœud.",
+  "localNameClear": "Utiliser son nom propre"
 }
