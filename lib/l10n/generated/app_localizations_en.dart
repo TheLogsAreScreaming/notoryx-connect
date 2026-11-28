@@ -8218,4 +8218,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'Your radio\'s position is only approximate (within about $distance), so the arrow may be off. Tap Use phone location for a better one.';
   }
+
+  @override
+  String get inboundTracesTitle => 'Traceroutes to this radio';
+
+  @override
+  String get inboundTracesEmpty =>
+      'None yet. When another node traces a route to you, it shows here with the relays it came through.';
+
+  @override
+  String inboundTracesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count traceroutes',
+      one: '1 traceroute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get inboundTracesDirect => 'direct';
 }

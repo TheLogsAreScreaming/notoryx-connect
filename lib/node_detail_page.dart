@@ -272,6 +272,7 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                 ),
               ),
             ),
+            if (isSelf) _InboundTracesCard(radio: _radio, ago: _ago),
             if (!isSelf) ...[
               const SizedBox(height: 8),
               if (!(node?.hasPosition ?? false))
@@ -471,6 +472,63 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
               ),
             ],
           ],
+        ),
+      );
+    },
+  );
+}
+
+/// Traceroutes other nodes ran to this radio, newest first, with the
+/// relays each came through.
+class _InboundTracesCard extends StatelessWidget {
+  const _InboundTracesCard({required this.radio, required this.ago});
+
+  final MeshtasticRadioCoordinator radio;
+  final String Function(DateTime?) ago;
+
+  @override
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: radio.inboundTraces,
+    builder: (context, _) {
+      final l = AppLocalizations.of(context);
+      final traces = radio.inboundTraces.traces;
+      final shown = traces.take(10).toList();
+      return Card(
+        key: const ValueKey('inbound-traceroutes'),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.call_received),
+                title: Text(l.inboundTracesTitle),
+                subtitle: Text(
+                  traces.isEmpty
+                      ? l.inboundTracesEmpty
+                      : l.inboundTracesCount(traces.length),
+                ),
+              ),
+              for (final t in shown)
+                ListTile(
+                  dense: true,
+                  title: Text(radio.nodeName(t.from)),
+                  subtitle: Text(
+                    [
+                      ago(t.at),
+                      t.hops.length <= 1
+                          ? l.inboundTracesDirect
+                          : [
+                              for (final h in t.hops.take(t.hops.length - 1))
+                                h.snrDb == null
+                                    ? radio.nodeName(h.nodeNum)
+                                    : '${radio.nodeName(h.nodeNum)} (${h.snrDb!.toStringAsFixed(1)} dB)',
+                            ].join(' → '),
+                    ].join(' · '),
+                  ),
+                ),
+            ],
+          ),
         ),
       );
     },

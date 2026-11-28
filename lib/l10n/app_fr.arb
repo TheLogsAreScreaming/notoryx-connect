@@ -2223,5 +2223,9 @@
   "ncUsePhone": "Utiliser la position du téléphone",
   "ncPrivacy": "La position et la boussole du téléphone ne servent que sur ce téléphone, tant que cette page est ouverte. Rien n'est envoyé.",
   "ncApproximate": "{name} ne partage qu'une position approximative (à environ {distance}). Suivez la flèche comme direction générale.",
-  "ncRadioApproximate": "La position de votre radio n'est qu'approximative (à environ {distance}) : la flèche peut être décalée. Touchez Utiliser la position du téléphone pour plus de précision."
+  "ncRadioApproximate": "La position de votre radio n'est qu'approximative (à environ {distance}) : la flèche peut être décalée. Touchez Utiliser la position du téléphone pour plus de précision.",
+  "inboundTracesTitle": "Traceroutes vers cette radio",
+  "inboundTracesEmpty": "Aucun pour l'instant. Quand un autre nœud trace une route vers vous, elle apparaît ici avec les relais traversés.",
+  "inboundTracesCount": "{count, plural, =1{1 traceroute} other{{count} traceroutes}}",
+  "inboundTracesDirect": "direct"
 }
