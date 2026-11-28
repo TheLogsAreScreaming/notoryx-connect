@@ -3018,6 +3018,12 @@ abstract class AppLocalizations {
   /// **'Could not delete: {error}'**
   String mapDeleteFailed(String error);
 
+  /// No description provided for @mapAddZoneHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Add zone here'**
+  String get mapAddZoneHere;
+
   /// No description provided for @mapUnknown.
   ///
   /// In en, this message translates to:

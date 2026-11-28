@@ -1364,6 +1364,7 @@
       }
     }
   },
+  "mapAddZoneHere": "Add zone here",
   "mapUnknown": "unknown",
   "mapFromThisRadio": "{distance} from this radio",
   "@mapFromThisRadio": {
