@@ -2064,6 +2064,24 @@ class AppLocalizationsDe extends AppLocalizations {
       'Öffnen Sie in ATAK Settings, dann Network Preferences, dann Manage Inputs, und fügen Sie einen UDP-Eingang auf diesem Port hinzu. Knoten ohne Position in der letzten Stunde werden ausgelassen.';
 
   @override
+  String get takModeLabel => 'Sendemodus';
+
+  @override
+  String get takModePhone => 'Dieses Gerät';
+
+  @override
+  String get takModeNetwork => 'Lokales Netzwerk';
+
+  @override
+  String takLanConsentBody(int port) {
+    return 'Name und letzte Position jedes sichtbaren Mesh-Knotens werden alle 30 Sekunden per UDP-Multicast-Gruppe 239.2.3.1 Port $port im lokalen WLAN gesendet. Jedes Gerät im gleichen Netzwerk mit ATAK empfängt diese Daten. Deaktivieren, um das Teilen zu beenden.';
+  }
+
+  @override
+  String get takLanHowTo =>
+      'Öffnen Sie in ATAK Settings, dann Network Preferences, dann Manage Inputs, und fügen Sie einen UDP-Multicast-Eingang für Gruppe 239.2.3.1 auf diesem Port hinzu. Port 6969 ist der Standard-ATAK-SA-Multicast-Port. Knoten ohne Position in der letzten Stunde werden ausgelassen.';
+
+  @override
   String ndFailed(String error) {
     return 'Fehlgeschlagen: $error';
   }
@@ -4583,6 +4601,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get takReceiveHowTo =>
       'Öffnen Sie in ATAK Settings, dann Network Preferences, dann Manage Outputs, und fügen Sie einen UDP-Ausgang an 127.0.0.1 auf diesem Port hinzu. Markierungen verschwinden, wenn ATAK sie als veraltet meldet.';
+
+  @override
+  String get takLanReceiveIntro =>
+      'Zeigt Markierungen, die ATAK per Multicast im lokalen WLAN teilt, wie Teammitglieder und Kartenpunkte.';
+
+  @override
+  String get takLanReceiveHowTo =>
+      'Öffnen Sie in ATAK Settings, dann Network Preferences, dann Manage Outputs, und fügen Sie einen UDP-Multicast-Ausgang für Gruppe 239.2.3.1 auf diesem Port hinzu. Port 6969 ist der Standard-ATAK-SA-Multicast-Port. Markierungen verschwinden, wenn ATAK sie als veraltet meldet.';
 
   @override
   String get takClear => 'Markierungen löschen';

@@ -2055,6 +2055,24 @@ class AppLocalizationsEs extends AppLocalizations {
       'En ATAK, abre Ajustes, luego Preferencias de red, luego Administrar entradas, y añade una entrada UDP en este puerto. Se omiten los nodos sin posición en la última hora.';
 
   @override
+  String get takModeLabel => 'Modo de envío';
+
+  @override
+  String get takModePhone => 'Este teléfono';
+
+  @override
+  String get takModeNetwork => 'Red local';
+
+  @override
+  String takLanConsentBody(int port) {
+    return 'El nombre y la última posición de cada nodo visible se envían cada 30 segundos al grupo de multidifusión UDP 239.2.3.1 puerto $port en la red Wi-Fi local. Cualquier dispositivo en la misma red con ATAK los recibirá. Desactiva esto para dejar de compartir.';
+  }
+
+  @override
+  String get takLanHowTo =>
+      'En ATAK, abre Ajustes, luego Preferencias de red, luego Administrar entradas, y añade una entrada UDP Multicast en el grupo 239.2.3.1 y este puerto. El puerto 6969 es el puerto multicast SA estándar de ATAK. Se omiten los nodos sin posición en la última hora.';
+
+  @override
   String ndFailed(String error) {
     return 'Falló: $error';
   }
@@ -4565,6 +4583,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get takReceiveHowTo =>
       'En ATAK, abre Ajustes, luego Preferencias de red, luego Gestionar salidas, y añade una salida UDP a 127.0.0.1 en este puerto. Los marcadores desaparecen cuando ATAK indica que están caducados.';
+
+  @override
+  String get takLanReceiveIntro =>
+      'Muestra marcadores que ATAK comparte por multidifusión en la red Wi-Fi local, como miembros del equipo y puntos del mapa.';
+
+  @override
+  String get takLanReceiveHowTo =>
+      'En ATAK, abre Ajustes, luego Preferencias de red, luego Gestionar salidas, y añade una salida UDP Multicast al grupo 239.2.3.1 en este puerto. El puerto 6969 es el puerto multicast SA estándar de ATAK. Los marcadores desaparecen cuando ATAK indica que están caducados.';
 
   @override
   String get takClear => 'Borrar marcadores';
