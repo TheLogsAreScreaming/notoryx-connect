@@ -2223,5 +2223,17 @@
   "ncUsePhone": "Usar la ubicación del teléfono",
   "ncPrivacy": "La ubicación y la brújula del teléfono solo se usan en este teléfono mientras esta página está abierta. No se envía nada.",
   "ncApproximate": "{name} solo comparte una posición aproximada (a unos {distance}). Usa la flecha como dirección general.",
-  "ncRadioApproximate": "La posición de tu radio es solo aproximada (a unos {distance}), así que la flecha puede desviarse. Toca Usar la ubicación del teléfono para mejorarla."
+  "ncRadioApproximate": "La posición de tu radio es solo aproximada (a unos {distance}), así que la flecha puede desviarse. Toca Usar la ubicación del teléfono para mejorarla.",
+  "regionSetupTitle": "Configurar esta radio",
+  "regionSetupIntro": "Esta radio aún no tiene región, así que no puede transmitir. Elige la región donde estás; fija las frecuencias y la potencia legales. La radio se reinicia al guardar.",
+  "regionSetupSuggested": "Sugerida para el país de tu teléfono. Comprueba que sea la correcta para donde estás.",
+  "regionSetupCheckLaw": "Usa la región donde se usa la radio; una incorrecta puede ser ilegal.",
+  "regionSetupSave": "Guardar y reiniciar la radio",
+  "regionSetupFailed": "No se pudo guardar: {error}",
+  "regionSetupDone": "Región guardada",
+  "regionSetupRestart": "La radio se está reiniciando y se volverá a conectar sola.",
+  "regionSetupFindMeshes": "Buscar redes cercanas",
+  "regionSetupBannerTitle": "Sin región",
+  "regionSetupBannerBody": "Esta radio no puede transmitir hasta tener una región.",
+  "regionSetupBannerAction": "Configurar"
 }

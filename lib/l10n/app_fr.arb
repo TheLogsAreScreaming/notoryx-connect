@@ -2223,5 +2223,17 @@
   "ncUsePhone": "Utiliser la position du téléphone",
   "ncPrivacy": "La position et la boussole du téléphone ne servent que sur ce téléphone, tant que cette page est ouverte. Rien n'est envoyé.",
   "ncApproximate": "{name} ne partage qu'une position approximative (à environ {distance}). Suivez la flèche comme direction générale.",
-  "ncRadioApproximate": "La position de votre radio n'est qu'approximative (à environ {distance}) : la flèche peut être décalée. Touchez Utiliser la position du téléphone pour plus de précision."
+  "ncRadioApproximate": "La position de votre radio n'est qu'approximative (à environ {distance}) : la flèche peut être décalée. Touchez Utiliser la position du téléphone pour plus de précision.",
+  "regionSetupTitle": "Configurer cette radio",
+  "regionSetupIntro": "Cette radio n'a pas encore de région, elle ne peut donc pas émettre. Choisissez la région où vous êtes ; elle fixe les fréquences et la puissance légales. La radio redémarre après l'enregistrement.",
+  "regionSetupSuggested": "Suggérée pour le pays de votre téléphone. Vérifiez qu'elle convient à votre position.",
+  "regionSetupCheckLaw": "Utilisez la région où la radio est utilisée ; une mauvaise peut être illégale.",
+  "regionSetupSave": "Enregistrer et redémarrer la radio",
+  "regionSetupFailed": "Enregistrement impossible : {error}",
+  "regionSetupDone": "Région enregistrée",
+  "regionSetupRestart": "La radio redémarre et se reconnectera d'elle-même.",
+  "regionSetupFindMeshes": "Trouver des réseaux à proximité",
+  "regionSetupBannerTitle": "Aucune région définie",
+  "regionSetupBannerBody": "Cette radio ne peut pas émettre tant qu'elle n'a pas de région.",
+  "regionSetupBannerAction": "Configurer"
 }
