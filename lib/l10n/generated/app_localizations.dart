@@ -3696,6 +3696,24 @@ abstract class AppLocalizations {
   /// **'Safety code {code}\nCompare this with the owner\'s radio to be sure it\'s them.'**
   String ndSafetyCode(String code);
 
+  /// No description provided for @homeNodeIdMigrationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID changed after firmware upgrade'**
+  String get homeNodeIdMigrationTitle;
+
+  /// No description provided for @homeNodeIdMigrationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware 2.8 assigns node IDs from your radio\'s encryption key instead of randomly. Your contacts may need to rediscover you on the mesh.'**
+  String get homeNodeIdMigrationBody;
+
+  /// No description provided for @homeNodeIdMigrationAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get homeNodeIdMigrationAction;
+
   /// No description provided for @homeFirmwareTitle.
   ///
   /// In en, this message translates to:
