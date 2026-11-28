@@ -13488,6 +13488,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'direct'**
   String get inboundTracesDirect;
+
+  /// No description provided for @cpExactNeedsKey.
+  ///
+  /// In en, this message translates to:
+  /// **'private channels only'**
+  String get cpExactNeedsKey;
 }
 
 class _AppLocalizationsDelegate

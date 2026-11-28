@@ -8333,4 +8333,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get inboundTracesDirect => 'direct';
+
+  @override
+  String get cpExactNeedsKey => 'canaux privés uniquement';
 }
