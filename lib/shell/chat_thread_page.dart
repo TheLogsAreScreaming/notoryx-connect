@@ -586,6 +586,16 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
                             style: type.labelSmall?.copyWith(
                                 color: message.ackProof == BastionAckProof.forged ? scheme.error : statusColor)),
                       ],
+                      if (message.pkiEncrypted)
+                        Icon(Icons.lock_outlined,
+                            size: 13,
+                            semanticLabel: l.chatsPkiEncrypted,
+                            color: NxStatusColors.of(context).success),
+                      if (!message.pkiEncrypted && message.signed)
+                        Icon(Icons.verified_user_outlined,
+                            size: 13,
+                            semanticLabel: l.chatsSigned,
+                            color: NxStatusColors.of(context).success),
                     ]),
                     if (failed && message.failureCode != null)
                       Padding(
