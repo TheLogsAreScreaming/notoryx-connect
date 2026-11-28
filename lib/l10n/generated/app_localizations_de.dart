@@ -709,6 +709,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get chatsBotReplyField => 'Nachricht, die im Bot-Modus gesendet wird';
 
   @override
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr) {
+    return 'Du kannst $hops für die Sprünge der Nachricht, $hopsEmoji für dasselbe als Emoji und $snr für ihr Signal in dB verwenden.';
+  }
+
+  @override
   String get commonCancel => 'Abbrechen';
 
   @override

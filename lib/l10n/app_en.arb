@@ -517,6 +517,8 @@
   "chatsBotOff": "Off. No automatic replies are sent.",
   "chatsBotReply": "Bot reply message",
   "chatsBotReplyField": "Message to send while Bot mode is on",
+  "chatsBotReplyHint": "You can use {hops} for how many hops the message took, {hopsEmoji} for the same as an emoji, and {snr} for its signal in dB.",
+  "@chatsBotReplyHint": {"placeholders": {"hops": {"type": "String"}, "hopsEmoji": {"type": "String"}, "snr": {"type": "String"}}},
   "commonCancel": "Cancel",
   "commonSave": "Save",
   "commonConnect": "Connect",

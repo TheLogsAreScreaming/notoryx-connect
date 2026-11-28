@@ -1194,6 +1194,12 @@ abstract class AppLocalizations {
   /// **'Message to send while Bot mode is on'**
   String get chatsBotReplyField;
 
+  /// No description provided for @chatsBotReplyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can use {hops} for how many hops the message took, {hopsEmoji} for the same as an emoji, and {snr} for its signal in dB.'**
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr);
+
   /// No description provided for @commonCancel.
   ///
   /// In en, this message translates to:

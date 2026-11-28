@@ -182,6 +182,7 @@
   "chatsBotOff": "Desactivado. No se envían respuestas automáticas.",
   "chatsBotReply": "Mensaje de respuesta del bot",
   "chatsBotReplyField": "Mensaje que se envía con el modo bot activado",
+  "chatsBotReplyHint": "Puedes usar {hops} para los saltos del mensaje, {hopsEmoji} para lo mismo como emoji y {snr} para su señal en dB.",
   "commonCancel": "Cancelar",
   "commonSave": "Guardar",
   "commonConnect": "Conectar",
