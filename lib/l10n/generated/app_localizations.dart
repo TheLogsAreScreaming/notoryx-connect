@@ -13603,6 +13603,24 @@ abstract class AppLocalizations {
   /// **'Set up'**
   String get regionSetupBannerAction;
 
+  /// No description provided for @homePosOffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Position broadcast is off'**
+  String get homePosOffTitle;
+
+  /// No description provided for @homePosOffBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware 2.8 turns off position broadcasts by default. Enable them in Position settings if you want other nodes to see your location.'**
+  String get homePosOffBody;
+
+  /// No description provided for @homePosOffAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get homePosOffAction;
+
   /// No description provided for @linkScanCode.
   ///
   /// In en, this message translates to:

@@ -73,10 +73,9 @@ class _RegionSetupPageState extends State<RegionSetupPage> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final regions = [
-      for (final r in Config_LoRaConfig_RegionCode.values)
-        if (r != Config_LoRaConfig_RegionCode.UNSET) r,
-    ];
+    final regions = BastionRadioPolicy.availableRegions(
+      widget.radio.firmwareVersion,
+    );
     return Scaffold(
       appBar: AppBar(title: Text(l.regionSetupTitle)),
       body: SafeArea(

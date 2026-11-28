@@ -597,7 +597,7 @@ class _LoraEditor extends StatelessWidget {
       _enumField(
         label: _l(context).rsRegion,
         value: draft.region,
-        values: Config_LoRaConfig_RegionCode.values,
+        values: BastionRadioPolicy.availableRegions(radio.firmwareVersion),
         onChanged: (v) {
           BastionRadioPolicy.chooseRegion(draft, v, radio.firmwareVersion);
           changed();
