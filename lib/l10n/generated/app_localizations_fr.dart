@@ -710,6 +710,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Message à envoyer quand le mode bot est activé';
 
   @override
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr) {
+    return 'Vous pouvez utiliser $hops pour le nombre de sauts du message, $hopsEmoji pour la même chose en emoji et $snr pour son signal en dB.';
+  }
+
+  @override
   String get commonCancel => 'Annuler';
 
   @override
@@ -8309,45 +8314,23 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get regionSetupTitle => 'Configurer cette radio';
+  String get inboundTracesTitle => 'Traceroutes vers cette radio';
 
   @override
-  String get regionSetupIntro =>
-      'Cette radio n\'a pas encore de région, elle ne peut donc pas émettre. Choisissez la région où vous êtes ; elle fixe les fréquences et la puissance légales. La radio redémarre après l\'enregistrement.';
+  String get inboundTracesEmpty =>
+      'Aucun pour l\'instant. Quand un autre nœud trace une route vers vous, elle apparaît ici avec les relais traversés.';
 
   @override
-  String get regionSetupSuggested =>
-      'Suggérée pour le pays de votre téléphone. Vérifiez qu\'elle convient à votre position.';
-
-  @override
-  String get regionSetupCheckLaw =>
-      'Utilisez la région où la radio est utilisée ; une mauvaise peut être illégale.';
-
-  @override
-  String get regionSetupSave => 'Enregistrer et redémarrer la radio';
-
-  @override
-  String regionSetupFailed(String error) {
-    return 'Enregistrement impossible : $error';
+  String inboundTracesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count traceroutes',
+      one: '1 traceroute',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get regionSetupDone => 'Région enregistrée';
-
-  @override
-  String get regionSetupRestart =>
-      'La radio redémarre et se reconnectera d\'elle-même.';
-
-  @override
-  String get regionSetupFindMeshes => 'Trouver des réseaux à proximité';
-
-  @override
-  String get regionSetupBannerTitle => 'Aucune région définie';
-
-  @override
-  String get regionSetupBannerBody =>
-      'Cette radio ne peut pas émettre tant qu\'elle n\'a pas de région.';
-
-  @override
-  String get regionSetupBannerAction => 'Configurer';
+  String get inboundTracesDirect => 'direct';
 }

@@ -709,6 +709,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get chatsBotReplyField => 'Nachricht, die im Bot-Modus gesendet wird';
 
   @override
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr) {
+    return 'Du kannst $hops für die Sprünge der Nachricht, $hopsEmoji für dasselbe als Emoji und $snr für ihr Signal in dB verwenden.';
+  }
+
+  @override
   String get commonCancel => 'Abbrechen';
 
   @override
@@ -8307,45 +8312,23 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get regionSetupTitle => 'Funkgerät einrichten';
+  String get inboundTracesTitle => 'Traceroutes zu diesem Funkgerät';
 
   @override
-  String get regionSetupIntro =>
-      'Dieses Funkgerät hat noch keine Region und kann daher nicht senden. Wähle die Region deines Standorts; sie legt die erlaubten Frequenzen und die Leistung fest. Das Funkgerät startet nach dem Speichern neu.';
+  String get inboundTracesEmpty =>
+      'Noch keine. Wenn ein anderer Knoten eine Route zu dir verfolgt, erscheint sie hier mit den Relais, über die sie kam.';
 
   @override
-  String get regionSetupSuggested =>
-      'Vorschlag für das Land deines Telefons. Prüfe, ob er für deinen Standort stimmt.';
-
-  @override
-  String get regionSetupCheckLaw =>
-      'Nutze die Region, in der das Funkgerät verwendet wird; eine falsche kann illegal sein.';
-
-  @override
-  String get regionSetupSave => 'Speichern und Funkgerät neu starten';
-
-  @override
-  String regionSetupFailed(String error) {
-    return 'Speichern fehlgeschlagen: $error';
+  String inboundTracesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Traceroutes',
+      one: '1 Traceroute',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get regionSetupDone => 'Region gespeichert';
-
-  @override
-  String get regionSetupRestart =>
-      'Das Funkgerät startet neu und verbindet sich selbst wieder.';
-
-  @override
-  String get regionSetupFindMeshes => 'Meshes in der Nähe finden';
-
-  @override
-  String get regionSetupBannerTitle => 'Keine Region festgelegt';
-
-  @override
-  String get regionSetupBannerBody =>
-      'Dieses Funkgerät kann erst senden, wenn es eine Region hat.';
-
-  @override
-  String get regionSetupBannerAction => 'Einrichten';
+  String get inboundTracesDirect => 'direkt';
 }

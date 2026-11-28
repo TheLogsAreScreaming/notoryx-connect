@@ -700,6 +700,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatsBotReplyField => 'Message to send while Bot mode is on';
 
   @override
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr) {
+    return 'You can use $hops for how many hops the message took, $hopsEmoji for the same as an emoji, and $snr for its signal in dB.';
+  }
+
+  @override
   String get commonCancel => 'Cancel';
 
   @override
@@ -8220,45 +8225,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get regionSetupTitle => 'Set up this radio';
+  String get inboundTracesTitle => 'Traceroutes to this radio';
 
   @override
-  String get regionSetupIntro =>
-      'This radio has no region yet, so it can\'t transmit. Choose the region for where you are; it sets the legal frequencies and power. The radio restarts after saving.';
+  String get inboundTracesEmpty =>
+      'None yet. When another node traces a route to you, it shows here with the relays it came through.';
 
   @override
-  String get regionSetupSuggested =>
-      'Suggested for your phone\'s country. Check it\'s right for where you are.';
-
-  @override
-  String get regionSetupCheckLaw =>
-      'Use the region where the radio is used; the wrong one can be illegal.';
-
-  @override
-  String get regionSetupSave => 'Save and restart radio';
-
-  @override
-  String regionSetupFailed(String error) {
-    return 'Couldn\'t save: $error';
+  String inboundTracesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count traceroutes',
+      one: '1 traceroute',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get regionSetupDone => 'Region saved';
-
-  @override
-  String get regionSetupRestart =>
-      'The radio is restarting and will reconnect on its own.';
-
-  @override
-  String get regionSetupFindMeshes => 'Find meshes near you';
-
-  @override
-  String get regionSetupBannerTitle => 'No region set';
-
-  @override
-  String get regionSetupBannerBody =>
-      'This radio can\'t transmit until it has a region.';
-
-  @override
-  String get regionSetupBannerAction => 'Set up';
+  String get inboundTracesDirect => 'direct';
 }

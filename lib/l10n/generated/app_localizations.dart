@@ -1194,6 +1194,12 @@ abstract class AppLocalizations {
   /// **'Message to send while Bot mode is on'**
   String get chatsBotReplyField;
 
+  /// No description provided for @chatsBotReplyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can use {hops} for how many hops the message took, {hopsEmoji} for the same as an emoji, and {snr} for its signal in dB.'**
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr);
+
   /// No description provided for @commonCancel.
   ///
   /// In en, this message translates to:
@@ -13459,77 +13465,29 @@ abstract class AppLocalizations {
   /// **'Your radio\'s position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.'**
   String ncRadioApproximate(String distance);
 
-  /// No description provided for @regionSetupTitle.
+  /// No description provided for @inboundTracesTitle.
   ///
   /// In en, this message translates to:
-  /// **'Set up this radio'**
-  String get regionSetupTitle;
+  /// **'Traceroutes to this radio'**
+  String get inboundTracesTitle;
 
-  /// No description provided for @regionSetupIntro.
+  /// No description provided for @inboundTracesEmpty.
   ///
   /// In en, this message translates to:
-  /// **'This radio has no region yet, so it can\'t transmit. Choose the region for where you are; it sets the legal frequencies and power. The radio restarts after saving.'**
-  String get regionSetupIntro;
+  /// **'None yet. When another node traces a route to you, it shows here with the relays it came through.'**
+  String get inboundTracesEmpty;
 
-  /// No description provided for @regionSetupSuggested.
+  /// No description provided for @inboundTracesCount.
   ///
   /// In en, this message translates to:
-  /// **'Suggested for your phone\'s country. Check it\'s right for where you are.'**
-  String get regionSetupSuggested;
+  /// **'{count, plural, =1{1 traceroute} other{{count} traceroutes}}'**
+  String inboundTracesCount(int count);
 
-  /// No description provided for @regionSetupCheckLaw.
+  /// No description provided for @inboundTracesDirect.
   ///
   /// In en, this message translates to:
-  /// **'Use the region where the radio is used; the wrong one can be illegal.'**
-  String get regionSetupCheckLaw;
-
-  /// No description provided for @regionSetupSave.
-  ///
-  /// In en, this message translates to:
-  /// **'Save and restart radio'**
-  String get regionSetupSave;
-
-  /// No description provided for @regionSetupFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Couldn\'t save: {error}'**
-  String regionSetupFailed(String error);
-
-  /// No description provided for @regionSetupDone.
-  ///
-  /// In en, this message translates to:
-  /// **'Region saved'**
-  String get regionSetupDone;
-
-  /// No description provided for @regionSetupRestart.
-  ///
-  /// In en, this message translates to:
-  /// **'The radio is restarting and will reconnect on its own.'**
-  String get regionSetupRestart;
-
-  /// No description provided for @regionSetupFindMeshes.
-  ///
-  /// In en, this message translates to:
-  /// **'Find meshes near you'**
-  String get regionSetupFindMeshes;
-
-  /// No description provided for @regionSetupBannerTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'No region set'**
-  String get regionSetupBannerTitle;
-
-  /// No description provided for @regionSetupBannerBody.
-  ///
-  /// In en, this message translates to:
-  /// **'This radio can\'t transmit until it has a region.'**
-  String get regionSetupBannerBody;
-
-  /// No description provided for @regionSetupBannerAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Set up'**
-  String get regionSetupBannerAction;
+  /// **'direct'**
+  String get inboundTracesDirect;
 }
 
 class _AppLocalizationsDelegate
