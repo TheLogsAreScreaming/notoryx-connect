@@ -8441,4 +8441,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get localNameClear => 'Utiliser son nom propre';
+
+  @override
+  String get cpExactNeedsKey => 'canaux privés uniquement';
 }

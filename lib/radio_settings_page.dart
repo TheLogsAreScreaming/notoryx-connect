@@ -1045,6 +1045,9 @@ class ChannelEditorPage extends StatelessWidget {
       role: draft.role.value,
       name: draft.settings.name,
       key: draft.settings.psk,
+      precisionBits: draft.settings.hasModuleSettings()
+          ? draft.settings.moduleSettings.positionPrecision
+          : 0,
     ),
     warning: (original, draft) =>
         BastionChannelValidation.requiresKeyChangeConfirmation(
@@ -1114,6 +1117,13 @@ Widget _encryptionField(BuildContext context, Channel draft, VoidCallback change
       _ChannelPrivacy.public => const [1],
       _ChannelPrivacy.none => const [0],
     };
+    // Exact positions stay on channels with their own key: leaving one
+    // rounds them to about 360 m instead.
+    if (p != _ChannelPrivacy.private &&
+        draft.settings.hasModuleSettings() &&
+        draft.settings.moduleSettings.positionPrecision >= BastionChannelPrecision.exact) {
+      draft.settings.moduleSettings.positionPrecision = 16;
+    }
     changed();
   }
 
@@ -1182,7 +1192,17 @@ Widget _precisionField(BuildContext context, Channel draft, VoidCallback changed
     decoration: InputDecoration(labelText: l.cpLabel, helperText: l.cpHelp, helperMaxLines: 3),
     items: [
       for (final e in BastionChannelPrecision.choices.entries)
-        DropdownMenuItem(value: e.key, child: Text(label(e.key, e.value))),
+        DropdownMenuItem(
+          value: e.key,
+          enabled: e.key != BastionChannelPrecision.exact ||
+              BastionChannelValidation.hasOwnKey(draft.settings.psk),
+          child: Text(
+            e.key == BastionChannelPrecision.exact &&
+                    !BastionChannelValidation.hasOwnKey(draft.settings.psk)
+                ? '${label(e.key, e.value)} (${l.cpExactNeedsKey})'
+                : label(e.key, e.value),
+          ),
+        ),
     ],
     onChanged: (v) {
       if (v == null) return;

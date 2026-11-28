@@ -2257,5 +2257,6 @@
   "localNameNone": "Nicht gesetzt. Der eigene Name des Knotens wird verwendet.",
   "localNameOwn": "Eigener Name: {name}",
   "localNameHint": "Wird in dieser App überall statt „{name}“ angezeigt. Nur auf diesem Telefon; an den Knoten wird nichts gesendet.",
-  "localNameClear": "Eigenen Namen verwenden"
+  "localNameClear": "Eigenen Namen verwenden",
+  "cpExactNeedsKey": "nur private Kanäle"
 }

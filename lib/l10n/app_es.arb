@@ -2257,5 +2257,6 @@
   "localNameNone": "Sin definir. Se usa el nombre propio del nodo.",
   "localNameOwn": "Su nombre propio: {name}",
   "localNameHint": "Se muestra en lugar de «{name}» en toda la app. Solo en este teléfono; no se envía nada al nodo.",
-  "localNameClear": "Usar su nombre propio"
+  "localNameClear": "Usar su nombre propio",
+  "cpExactNeedsKey": "solo canales privados"
 }

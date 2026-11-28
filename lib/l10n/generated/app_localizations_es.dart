@@ -8409,4 +8409,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get localNameClear => 'Usar su nombre propio';
+
+  @override
+  String get cpExactNeedsKey => 'solo canales privados';
 }

@@ -13662,6 +13662,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use its own name'**
   String get localNameClear;
+
+  /// No description provided for @cpExactNeedsKey.
+  ///
+  /// In en, this message translates to:
+  /// **'private channels only'**
+  String get cpExactNeedsKey;
 }
 
 class _AppLocalizationsDelegate
