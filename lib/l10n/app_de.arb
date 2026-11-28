@@ -496,6 +496,7 @@
   "mapDeleteEveryone": "Für alle löschen",
   "mapDeleted": "„{name}“ gelöscht.",
   "mapDeleteFailed": "Löschen fehlgeschlagen: {error}",
+  "mapAddZoneHere": "Zone hier hinzufügen",
   "mapUnknown": "unbekannt",
   "mapFromThisRadio": "{distance} von diesem Funkgerät",
   "mapPositionHeard": "Position: {position} • Gehört: {heard}",

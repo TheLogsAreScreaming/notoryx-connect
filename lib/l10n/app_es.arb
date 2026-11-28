@@ -496,6 +496,7 @@
   "mapDeleteEveryone": "Eliminar para todos",
   "mapDeleted": "Se eliminó \"{name}\".",
   "mapDeleteFailed": "No se pudo eliminar: {error}",
+  "mapAddZoneHere": "Añadir zona aquí",
   "mapUnknown": "desconocido",
   "mapFromThisRadio": "A {distance} de esta radio",
   "mapPositionHeard": "Posición: {position} • Oído: {heard}",

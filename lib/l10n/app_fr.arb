@@ -496,6 +496,7 @@
   "mapDeleteEveryone": "Supprimer pour tout le monde",
   "mapDeleted": "« {name} » supprimé.",
   "mapDeleteFailed": "Suppression impossible : {error}",
+  "mapAddZoneHere": "Ajouter une zone ici",
   "mapUnknown": "inconnu",
   "mapFromThisRadio": "{distance} de cette radio",
   "mapPositionHeard": "Position : {position} • Entendu : {heard}",

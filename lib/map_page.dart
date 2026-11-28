@@ -1659,6 +1659,25 @@ class _MapPageState extends State<MapPage> {
               if (sender != null) Text(l.mapSharedBy(sender)),
               if (waypoint.lockedTo != 0) Text(l.mapLocked),
               const SizedBox(height: 12),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.add_location_alt_outlined),
+                label: Text(l.mapAddZoneHere),
+                onPressed: widget.radio.geofences.length >= BastionGeofenceStore.maxZones
+                    ? null
+                    : () async {
+                        Navigator.of(sheetContext).pop();
+                        final center = LatLng(waypoint.latitude, waypoint.longitude);
+                        final zone = await showDialog<BastionGeofence>(
+                          context: context,
+                          builder: (_) => _ZoneDialog(center: center, initialName: waypoint.name),
+                        );
+                        if (zone == null) return;
+                        final problem = await widget.radio.saveGeofence(zone);
+                        if (problem != null && context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(problem)));
+                        }
+                      },
+              ),
               if (canDelete)
                 OutlinedButton.icon(
                   icon: const Icon(Icons.delete_outline),
@@ -2218,16 +2237,17 @@ class _WaypointDialogState extends State<_WaypointDialog> {
 }
 
 class _ZoneDialog extends StatefulWidget {
-  const _ZoneDialog({required this.center});
+  const _ZoneDialog({required this.center, this.initialName});
 
   final LatLng center;
+  final String? initialName;
 
   @override
   State<_ZoneDialog> createState() => _ZoneDialogState();
 }
 
 class _ZoneDialogState extends State<_ZoneDialog> {
-  final _name = TextEditingController();
+  late final _name = TextEditingController(text: widget.initialName);
   double _radius = 500;
   GeofenceWatch _watch = GeofenceWatch.tripContacts;
   GeofenceAlertOn _alertOn = GeofenceAlertOn.both;

@@ -1844,6 +1844,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get mapAddZoneHere => 'Zone hier hinzufügen';
+
+  @override
   String get mapUnknown => 'unbekannt';
 
   @override

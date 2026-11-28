@@ -1820,6 +1820,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get mapAddZoneHere => 'Add zone here';
+
+  @override
   String get mapUnknown => 'unknown';
 
   @override
