@@ -8310,4 +8310,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'Die Position deines Funkgeräts ist nur ungefähr (auf etwa $distance genau), daher kann der Pfeil danebenliegen. Tippe auf Standort des Telefons nutzen für eine genauere.';
   }
+
+  @override
+  String get inboundTracesTitle => 'Traceroutes zu diesem Funkgerät';
+
+  @override
+  String get inboundTracesEmpty =>
+      'Noch keine. Wenn ein anderer Knoten eine Route zu dir verfolgt, erscheint sie hier mit den Relais, über die sie kam.';
+
+  @override
+  String inboundTracesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Traceroutes',
+      one: '1 Traceroute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get inboundTracesDirect => 'direkt';
 }

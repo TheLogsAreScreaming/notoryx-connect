@@ -13464,6 +13464,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your radio\'s position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.'**
   String ncRadioApproximate(String distance);
+
+  /// No description provided for @inboundTracesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroutes to this radio'**
+  String get inboundTracesTitle;
+
+  /// No description provided for @inboundTracesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'None yet. When another node traces a route to you, it shows here with the relays it came through.'**
+  String get inboundTracesEmpty;
+
+  /// No description provided for @inboundTracesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 traceroute} other{{count} traceroutes}}'**
+  String inboundTracesCount(int count);
+
+  /// No description provided for @inboundTracesDirect.
+  ///
+  /// In en, this message translates to:
+  /// **'direct'**
+  String get inboundTracesDirect;
 }
 
 class _AppLocalizationsDelegate
