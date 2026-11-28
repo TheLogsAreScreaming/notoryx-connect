@@ -527,6 +527,48 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
   static const _precisionPreferenceKey = 'bastion.share_location_precision';
   int _locationPrecision = BastionPhonePositionSharer.precise;
   static const _lowPowerPreferenceKey = 'bastion.low_power_mode';
+
+  // Node ID migration (2.7→2.8): store the last seen num per long-name hash
+  // so we can alert when the same name reappears with a new num.
+  static const _nodeIdPrevNumPrefix = 'bastion.node_id.prev_num.';
+  static const _nodeIdMigrationDismissedPrefix =
+      'bastion.node_id.migration_dismissed.';
+  bool _nodeIdMigrationAlert = false;
+
+  bool get nodeIdMigrationAlert => _nodeIdMigrationAlert;
+
+  Future<void> dismissNodeIdMigrationAlert() async {
+    _nodeIdMigrationAlert = false;
+    notifyListeners();
+    final localNum = _localNodeNum;
+    if (localNum == null) return;
+    final localNode = _nodes.where((n) => n.num == localNum).firstOrNull;
+    final longName = localNode?.longName;
+    if (longName == null || longName.isEmpty) return;
+    await SharedPreferencesAsync().setBool(
+      '$_nodeIdMigrationDismissedPrefix${longName.hashCode}',
+      true,
+    );
+  }
+
+  Future<void> _checkNodeIdMigration(int currentNum, String longName) async {
+    if (_nodeIdMigrationAlert) return;
+    final prefs = SharedPreferencesAsync();
+    final dismissed =
+        await prefs.getBool(
+              '$_nodeIdMigrationDismissedPrefix${longName.hashCode}',
+            ) ??
+        false;
+    if (dismissed) return;
+    final key = '$_nodeIdPrevNumPrefix${longName.hashCode}';
+    final prevNum = await prefs.getInt(key);
+    if (prevNum != null && prevNum != currentNum) {
+      _nodeIdMigrationAlert = true;
+      notifyListeners();
+    }
+    await prefs.setInt(key, currentNum);
+  }
+
   bool _sharePhoneLocation = false;
   bool _lowPowerMode = false;
   BastionPhonePositionSharer? _sharer;
@@ -1497,6 +1539,15 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         _nodes = nodes;
         for (final n in nodes) {
           if (n.publicKey != null) unawaited(_checkNodeKey(n));
+        }
+        // Detect 2.7→2.8 node-ID migration: same long name, new num.
+        if (_localNodeNum != null) {
+          final localNode =
+              nodes.where((n) => n.num == _localNodeNum).firstOrNull;
+          final longName = localNode?.longName;
+          if (longName != null && longName.isNotEmpty) {
+            unawaited(_checkNodeIdMigration(_localNodeNum!, longName));
+          }
         }
         _trails.record(nodes, {...trip.plan.members, ?_localNodeNum});
         unawaited(
