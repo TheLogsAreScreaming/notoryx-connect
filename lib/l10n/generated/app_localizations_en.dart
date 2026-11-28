@@ -8350,4 +8350,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get localNameClear => 'Use its own name';
+
+  @override
+  String get cpExactNeedsKey => 'private channels only';
 }
