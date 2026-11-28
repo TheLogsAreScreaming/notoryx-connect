@@ -92,6 +92,26 @@ if 'RadioTileService' not in s:
         </service>
     </application>'''
     s=s.replace('    </application>', tile, 1)
+# Meshtastic connect links (QR code, web link or NFC tag) open the app:
+# meshtastic://meshtastic/connections?... and https://meshtastic.org/connections?...
+if 'android:scheme="meshtastic"' not in s:
+    filters = '''            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="meshtastic" android:host="meshtastic" android:pathPrefix="/connections" />
+                <data android:scheme="https" android:host="meshtastic.org" android:pathPrefix="/connections" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="meshtastic" android:host="meshtastic" android:pathPrefix="/connections" />
+                <data android:scheme="https" android:host="meshtastic.org" android:pathPrefix="/connections" />
+            </intent-filter>
+        </activity>'''
+    if s.count('        </activity>') < 1:
+        raise SystemExit('Could not add connect-link intent filters')
+    s=s.replace('        </activity>', filters, 1)
 p.write_text(s)
 
 # Native files the generated project doesn't have (the widget).
@@ -165,6 +185,7 @@ class MainActivity : FlutterFragmentActivity() {
         ensureEngine(this)
         super.onCreate(savedInstanceState)
         applySecure()
+        LinkChannel.handle(intent, initial = true)
     }
 
     // Screens that show a secret (the SARNEG code word) ask for FLAG_SECURE,
@@ -186,6 +207,14 @@ class MainActivity : FlutterFragmentActivity() {
         HeadingStream.attach(this, flutterEngine.dartExecutor.binaryMessenger)
         // SARNEG clipboard: sensitive copy and a real clear (SecretClipboardChannel.kt).
         SecretClipboardChannel.register(this, flutterEngine.dartExecutor.binaryMessenger)
+        // Connect links from QR codes, the web or NFC tags (LinkChannel.kt).
+        LinkChannel.register(flutterEngine.dartExecutor.binaryMessenger)
+    }
+
+    override fun onNewIntent(intent: android.content.Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        LinkChannel.handle(intent, initial = false)
     }
 
     private fun applySecure() {
