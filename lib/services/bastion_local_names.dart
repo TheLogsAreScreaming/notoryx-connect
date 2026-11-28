@@ -29,8 +29,8 @@ class BastionLocalNames extends ChangeNotifier {
   bool get isEmpty => _names.isEmpty;
 
   Future<void> load({SharedPreferencesAsync? prefs}) async {
-    _prefs = prefs ?? SharedPreferencesAsync();
     try {
+      _prefs = prefs ?? SharedPreferencesAsync();
       final raw = await _prefs!.getString(prefsKey);
       _names.clear();
       if (raw != null && raw.isNotEmpty) {
