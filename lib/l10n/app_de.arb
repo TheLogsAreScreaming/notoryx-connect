@@ -2223,5 +2223,17 @@
   "ncUsePhone": "Standort des Telefons nutzen",
   "ncPrivacy": "Standort und Kompass des Telefons werden nur auf diesem Telefon genutzt, solange diese Seite offen ist. Es wird nichts gesendet.",
   "ncApproximate": "{name} teilt nur eine ungefähre Position (auf etwa {distance} genau). Nutze den Pfeil als grobe Richtung.",
-  "ncRadioApproximate": "Die Position deines Funkgeräts ist nur ungefähr (auf etwa {distance} genau), daher kann der Pfeil danebenliegen. Tippe auf Standort des Telefons nutzen für eine genauere."
+  "ncRadioApproximate": "Die Position deines Funkgeräts ist nur ungefähr (auf etwa {distance} genau), daher kann der Pfeil danebenliegen. Tippe auf Standort des Telefons nutzen für eine genauere.",
+  "linkScanCode": "Code scannen",
+  "linkNotConnect": "Dieser Code ist kein Verbindungslink für ein Funkgerät.",
+  "linkSerialUnsupported": "Dieser Link gilt für ein USB-Kabel. Funkgerät anschließen und USB verwenden.",
+  "linkConnectTitle": "Mit diesem Funkgerät verbinden?",
+  "linkDisconnectTitle": "Funkgerät trennen?",
+  "linkDisconnectBody": "Ein Link möchte das aktuelle Funkgerät trennen.",
+  "linkTargetBluetooth": "Bluetooth-Funkgerät {address}",
+  "linkTargetNetwork": "Netzwerk-Funkgerät {address}",
+  "linkPinBody": "Die Kopplungs-PIN ist {pin}. Sie wird kopiert, damit du sie einfügen kannst, wenn das Telefon fragt.",
+  "linkPinCopied": "PIN kopiert. In die Kopplungsabfrage einfügen.",
+  "linkConnect": "Verbinden",
+  "linkDisconnect": "Trennen"
 }

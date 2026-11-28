@@ -13458,6 +13458,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your radio\'s position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.'**
   String ncRadioApproximate(String distance);
+
+  /// No description provided for @linkScanCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan code'**
+  String get linkScanCode;
+
+  /// No description provided for @linkNotConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'That code isn\'t a radio connect link.'**
+  String get linkNotConnect;
+
+  /// No description provided for @linkSerialUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'That link is for a USB cable. Plug the radio in and use USB instead.'**
+  String get linkSerialUnsupported;
+
+  /// No description provided for @linkConnectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to this radio?'**
+  String get linkConnectTitle;
+
+  /// No description provided for @linkDisconnectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect the radio?'**
+  String get linkDisconnectTitle;
+
+  /// No description provided for @linkDisconnectBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A link asked to disconnect the current radio.'**
+  String get linkDisconnectBody;
+
+  /// No description provided for @linkTargetBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth radio {address}'**
+  String linkTargetBluetooth(String address);
+
+  /// No description provided for @linkTargetNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Network radio {address}'**
+  String linkTargetNetwork(String address);
+
+  /// No description provided for @linkPinBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Its pairing PIN is {pin}. It will be copied so you can paste it when the phone asks.'**
+  String linkPinBody(String pin);
+
+  /// No description provided for @linkPinCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN copied. Paste it into the pairing prompt.'**
+  String get linkPinCopied;
+
+  /// No description provided for @linkConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get linkConnect;
+
+  /// No description provided for @linkDisconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get linkDisconnect;
 }
 
 class _AppLocalizationsDelegate

@@ -8275,4 +8275,50 @@ class AppLocalizationsEs extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'La posición de tu radio es solo aproximada (a unos $distance), así que la flecha puede desviarse. Toca Usar la ubicación del teléfono para mejorarla.';
   }
+
+  @override
+  String get linkScanCode => 'Escanear código';
+
+  @override
+  String get linkNotConnect =>
+      'Ese código no es un enlace de conexión de radio.';
+
+  @override
+  String get linkSerialUnsupported =>
+      'Ese enlace es para un cable USB. Conecta la radio y usa USB.';
+
+  @override
+  String get linkConnectTitle => '¿Conectar con esta radio?';
+
+  @override
+  String get linkDisconnectTitle => '¿Desconectar la radio?';
+
+  @override
+  String get linkDisconnectBody =>
+      'Un enlace pidió desconectar la radio actual.';
+
+  @override
+  String linkTargetBluetooth(String address) {
+    return 'Radio Bluetooth $address';
+  }
+
+  @override
+  String linkTargetNetwork(String address) {
+    return 'Radio en red $address';
+  }
+
+  @override
+  String linkPinBody(String pin) {
+    return 'Su PIN de emparejamiento es $pin. Se copiará para que puedas pegarlo cuando el teléfono lo pida.';
+  }
+
+  @override
+  String get linkPinCopied =>
+      'PIN copiado. Pégalo en el aviso de emparejamiento.';
+
+  @override
+  String get linkConnect => 'Conectar';
+
+  @override
+  String get linkDisconnect => 'Desconectar';
 }

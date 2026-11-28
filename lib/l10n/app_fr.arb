@@ -2223,5 +2223,17 @@
   "ncUsePhone": "Utiliser la position du téléphone",
   "ncPrivacy": "La position et la boussole du téléphone ne servent que sur ce téléphone, tant que cette page est ouverte. Rien n'est envoyé.",
   "ncApproximate": "{name} ne partage qu'une position approximative (à environ {distance}). Suivez la flèche comme direction générale.",
-  "ncRadioApproximate": "La position de votre radio n'est qu'approximative (à environ {distance}) : la flèche peut être décalée. Touchez Utiliser la position du téléphone pour plus de précision."
+  "ncRadioApproximate": "La position de votre radio n'est qu'approximative (à environ {distance}) : la flèche peut être décalée. Touchez Utiliser la position du téléphone pour plus de précision.",
+  "linkScanCode": "Scanner un code",
+  "linkNotConnect": "Ce code n'est pas un lien de connexion à une radio.",
+  "linkSerialUnsupported": "Ce lien concerne un câble USB. Branchez la radio et utilisez l'USB.",
+  "linkConnectTitle": "Se connecter à cette radio ?",
+  "linkDisconnectTitle": "Déconnecter la radio ?",
+  "linkDisconnectBody": "Un lien demande de déconnecter la radio actuelle.",
+  "linkTargetBluetooth": "Radio Bluetooth {address}",
+  "linkTargetNetwork": "Radio réseau {address}",
+  "linkPinBody": "Son code PIN d'appairage est {pin}. Il sera copié pour que vous puissiez le coller quand le téléphone le demande.",
+  "linkPinCopied": "PIN copié. Collez-le dans la demande d'appairage.",
+  "linkConnect": "Se connecter",
+  "linkDisconnect": "Déconnecter"
 }

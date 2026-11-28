@@ -64,6 +64,17 @@ class _NodesPage extends StatelessWidget {
     }
   }
 
+  /// Scans a radio's connect code (a QR code with a Meshtastic connect
+  /// link) and connects after asking.
+  Future<void> _scanConnectCode(BuildContext context) async {
+    final l = AppLocalizations.of(context);
+    final text = await Navigator.of(context).push<String>(
+      MaterialPageRoute(builder: (_) => QrScanPage(title: l.linkScanCode)),
+    );
+    if (text == null || !context.mounted) return;
+    await handleConnectLink(context, radio, text);
+  }
+
   /// Asks for a radio's network address and connects to it over TCP.
   Future<void> _connectNetwork(BuildContext context) async {
     final l = AppLocalizations.of(context);
@@ -287,6 +298,12 @@ class _NodesPage extends StatelessWidget {
                   onPressed: radio.busy ? null : () => _connectNetwork(context),
                   icon: const Icon(Icons.wifi),
                   label: Text(l.nodesConnectWifi),
+                ),
+                OutlinedButton.icon(
+                  key: const ValueKey('scan-connect-code'),
+                  onPressed: radio.busy ? null : () => _scanConnectCode(context),
+                  icon: const Icon(Icons.qr_code_scanner),
+                  label: Text(l.linkScanCode),
                 ),
                 if (BastionUsb.supported)
                   OutlinedButton.icon(

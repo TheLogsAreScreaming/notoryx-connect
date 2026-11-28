@@ -8218,4 +8218,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'Your radio\'s position is only approximate (within about $distance), so the arrow may be off. Tap Use phone location for a better one.';
   }
+
+  @override
+  String get linkScanCode => 'Scan code';
+
+  @override
+  String get linkNotConnect => 'That code isn\'t a radio connect link.';
+
+  @override
+  String get linkSerialUnsupported =>
+      'That link is for a USB cable. Plug the radio in and use USB instead.';
+
+  @override
+  String get linkConnectTitle => 'Connect to this radio?';
+
+  @override
+  String get linkDisconnectTitle => 'Disconnect the radio?';
+
+  @override
+  String get linkDisconnectBody =>
+      'A link asked to disconnect the current radio.';
+
+  @override
+  String linkTargetBluetooth(String address) {
+    return 'Bluetooth radio $address';
+  }
+
+  @override
+  String linkTargetNetwork(String address) {
+    return 'Network radio $address';
+  }
+
+  @override
+  String linkPinBody(String pin) {
+    return 'Its pairing PIN is $pin. It will be copied so you can paste it when the phone asks.';
+  }
+
+  @override
+  String get linkPinCopied => 'PIN copied. Paste it into the pairing prompt.';
+
+  @override
+  String get linkConnect => 'Connect';
+
+  @override
+  String get linkDisconnect => 'Disconnect';
 }

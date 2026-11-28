@@ -5608,5 +5608,38 @@
     }
   },
   "ncRadioApproximate": "Your radio's position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.",
-  "@ncRadioApproximate": {"placeholders": {"distance": {"type": "String"}}}
+  "@ncRadioApproximate": {"placeholders": {"distance": {"type": "String"}}},
+  "linkScanCode": "Scan code",
+  "linkNotConnect": "That code isn't a radio connect link.",
+  "linkSerialUnsupported": "That link is for a USB cable. Plug the radio in and use USB instead.",
+  "linkConnectTitle": "Connect to this radio?",
+  "linkDisconnectTitle": "Disconnect the radio?",
+  "linkDisconnectBody": "A link asked to disconnect the current radio.",
+  "linkTargetBluetooth": "Bluetooth radio {address}",
+  "@linkTargetBluetooth": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "linkTargetNetwork": "Network radio {address}",
+  "@linkTargetNetwork": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "linkPinBody": "Its pairing PIN is {pin}. It will be copied so you can paste it when the phone asks.",
+  "@linkPinBody": {
+    "placeholders": {
+      "pin": {
+        "type": "String"
+      }
+    }
+  },
+  "linkPinCopied": "PIN copied. Paste it into the pairing prompt.",
+  "linkConnect": "Connect",
+  "linkDisconnect": "Disconnect"
 }

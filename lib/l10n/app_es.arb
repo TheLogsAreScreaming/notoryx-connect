@@ -2223,5 +2223,17 @@
   "ncUsePhone": "Usar la ubicación del teléfono",
   "ncPrivacy": "La ubicación y la brújula del teléfono solo se usan en este teléfono mientras esta página está abierta. No se envía nada.",
   "ncApproximate": "{name} solo comparte una posición aproximada (a unos {distance}). Usa la flecha como dirección general.",
-  "ncRadioApproximate": "La posición de tu radio es solo aproximada (a unos {distance}), así que la flecha puede desviarse. Toca Usar la ubicación del teléfono para mejorarla."
+  "ncRadioApproximate": "La posición de tu radio es solo aproximada (a unos {distance}), así que la flecha puede desviarse. Toca Usar la ubicación del teléfono para mejorarla.",
+  "linkScanCode": "Escanear código",
+  "linkNotConnect": "Ese código no es un enlace de conexión de radio.",
+  "linkSerialUnsupported": "Ese enlace es para un cable USB. Conecta la radio y usa USB.",
+  "linkConnectTitle": "¿Conectar con esta radio?",
+  "linkDisconnectTitle": "¿Desconectar la radio?",
+  "linkDisconnectBody": "Un enlace pidió desconectar la radio actual.",
+  "linkTargetBluetooth": "Radio Bluetooth {address}",
+  "linkTargetNetwork": "Radio en red {address}",
+  "linkPinBody": "Su PIN de emparejamiento es {pin}. Se copiará para que puedas pegarlo cuando el teléfono lo pida.",
+  "linkPinCopied": "PIN copiado. Pégalo en el aviso de emparejamiento.",
+  "linkConnect": "Conectar",
+  "linkDisconnect": "Desconectar"
 }

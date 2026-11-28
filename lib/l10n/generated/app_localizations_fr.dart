@@ -8307,4 +8307,50 @@ class AppLocalizationsFr extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'La position de votre radio n\'est qu\'approximative (à environ $distance) : la flèche peut être décalée. Touchez Utiliser la position du téléphone pour plus de précision.';
   }
+
+  @override
+  String get linkScanCode => 'Scanner un code';
+
+  @override
+  String get linkNotConnect =>
+      'Ce code n\'est pas un lien de connexion à une radio.';
+
+  @override
+  String get linkSerialUnsupported =>
+      'Ce lien concerne un câble USB. Branchez la radio et utilisez l\'USB.';
+
+  @override
+  String get linkConnectTitle => 'Se connecter à cette radio ?';
+
+  @override
+  String get linkDisconnectTitle => 'Déconnecter la radio ?';
+
+  @override
+  String get linkDisconnectBody =>
+      'Un lien demande de déconnecter la radio actuelle.';
+
+  @override
+  String linkTargetBluetooth(String address) {
+    return 'Radio Bluetooth $address';
+  }
+
+  @override
+  String linkTargetNetwork(String address) {
+    return 'Radio réseau $address';
+  }
+
+  @override
+  String linkPinBody(String pin) {
+    return 'Son code PIN d\'appairage est $pin. Il sera copié pour que vous puissiez le coller quand le téléphone le demande.';
+  }
+
+  @override
+  String get linkPinCopied =>
+      'PIN copié. Collez-le dans la demande d\'appairage.';
+
+  @override
+  String get linkConnect => 'Se connecter';
+
+  @override
+  String get linkDisconnect => 'Déconnecter';
 }
