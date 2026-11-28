@@ -99,8 +99,10 @@ import 'support_report_page.dart';
 import 'services/bastion_error_log.dart';
 import 'sentinel_page.dart';
 import 'connect_link_prompt.dart';
+import 'local_name_dialog.dart';
 import 'qr_scan_page.dart';
 import 'services/bastion_link_intake.dart';
+import 'services/bastion_local_names.dart';
 import 'services/bastion_sentinel.dart';
 import 'sarneg/sarneg.dart';
 import 'sarneg/sarneg_ui.dart';
@@ -138,6 +140,7 @@ Future<void> main() async {
   await BastionPreferences.instance.load();
   await BastionBackdrop.instance.load();
   await BastionNodeLooks.instance.load();
+  await BastionLocalNames.instance.load();
   await BastionTrackLog.instance.load();
   await BastionMeshWatch.instance.load();
   // Chat history lives in its own database; older saves move over once.

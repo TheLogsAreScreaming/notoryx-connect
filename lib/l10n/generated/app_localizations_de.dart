@@ -8419,4 +8419,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get linkDisconnect => 'Trennen';
+
+  @override
+  String get localNameTitle => 'Name auf diesem Telefon';
+
+  @override
+  String get localNameNone =>
+      'Nicht gesetzt. Der eigene Name des Knotens wird verwendet.';
+
+  @override
+  String localNameOwn(String name) {
+    return 'Eigener Name: $name';
+  }
+
+  @override
+  String localNameHint(String name) {
+    return 'Wird in dieser App überall statt „$name“ angezeigt. Nur auf diesem Telefon; an den Knoten wird nichts gesendet.';
+  }
+
+  @override
+  String get localNameClear => 'Eigenen Namen verwenden';
 }
