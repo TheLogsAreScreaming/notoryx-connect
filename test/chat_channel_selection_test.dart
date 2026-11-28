@@ -14,7 +14,7 @@ class ChannelRadio extends MeshtasticRadioCoordinator {
     (index: 3, role: 0, name: 'Disabled'),
   ];
   @override
-  Future<int> sendText({required String text, int destination = 0xffffffff, int channel = 0}) async {
+  Future<int> sendText({required String text, int destination = 0xffffffff, int channel = 0, int? replyId}) async {
     sentChannel = channel;
     sentTo = destination;
     return 7;

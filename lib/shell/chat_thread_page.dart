@@ -24,6 +24,9 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
   DateTime? _unreadSince;
   bool _showPins = false;
 
+  /// The message the user is replying to, set by swiping a bubble.
+  BastionChatMessage? _replyingTo;
+
   /// The message list; newest at offset 0, since the list runs upwards.
   final _scroll = ScrollController();
 
@@ -131,12 +134,19 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
   Future<void> _send([String? quickText]) async {
     final text = (quickText ?? composer.text).trim();
     if (text.isEmpty) return;
+    final replyId = _replyingTo?.packetId;
     try {
-      await radio.sendText(text: text, destination: conversation.destination, channel: conversation.channel);
+      await radio.sendText(
+        text: text,
+        destination: conversation.destination,
+        channel: conversation.channel,
+        replyId: replyId,
+      );
       if (quickText == null) {
         composer.clear();
         _saveDraft();
       }
+      if (replyId != null) setState(() => _replyingTo = null);
     } catch (error) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.chatsSendFailed('$error'))));
@@ -259,6 +269,7 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
   static const _deleteQueuedAction = '\u0000deleteQueued';
   static const _forwardAction = '\u0000forward';
   static const _reportAction = '\u0000report';
+  static const _replyAction = '\u0000reply';
   static const _reactionChoices = ['👍', '❤️', '😂', '😮', '😢', '✅', '🙏'];
 
   /// The delivery state, plus what the radio said about the receipt.
@@ -357,6 +368,12 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
                 if (message.rxSnr == null && message.rxRssi == null) l.chatsNoSignal,
               ].join(' • ')),
             ),
+          if (!message.isReaction)
+            ListTile(
+              leading: const Icon(Icons.reply),
+              title: Text(l.chatsReply),
+              onTap: () => Navigator.pop(context, _replyAction),
+            ),
           ListTile(
             leading: Icon(pinned ? Icons.push_pin_outlined : Icons.push_pin),
             title: Text(pinned ? l.chatsUnpin : l.chatsPin),
@@ -386,6 +403,7 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
     if (choice == _sendHeldAction) return radio.sendHeld(message.packetId);
     if (choice == _deleteQueuedAction) return radio.deleteQueued(message.packetId);
     if (choice == _pinAction) return _togglePin(message);
+    if (choice == _replyAction) { setState(() => _replyingTo = message); return; }
     if (choice == _forwardAction) return _forward(message);
     if (choice == _reportAction) {
       return showSentinelReportSheet(context,
@@ -426,6 +444,30 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
       rows.add(_MessageRow(m));
     }
     return rows;
+  }
+
+  /// Wraps a bubble widget with a horizontal swipe gesture that sets it as
+  /// the message being replied to. Swiping right on incoming messages and
+  /// left on outgoing matches the natural "reply" gesture on most chat apps.
+  Widget _swipeable(BuildContext context, BastionChatMessage message, Widget child) {
+    if (message.isReaction) return child;
+    final outgoing = message.direction == BastionMessageDirection.outgoing;
+    return Dismissible(
+      key: ValueKey('swipe-reply-${message.packetId}'),
+      direction: outgoing ? DismissDirection.endToStart : DismissDirection.startToEnd,
+      confirmDismiss: (_) async {
+        setState(() => _replyingTo = message);
+        return false; // never actually dismiss the item
+      },
+      background: Align(
+        alignment: outgoing ? AlignmentDirectional.centerEnd : AlignmentDirectional.centerStart,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Icon(Icons.reply, color: Theme.of(context).colorScheme.primary),
+        ),
+      ),
+      child: child,
+    );
   }
 
   Widget _bubble(BuildContext context, BastionChatMessage message, List<BastionChatMessage>? reactions) {
@@ -583,6 +625,29 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
+            if (_replyingTo case final reply?)
+              Row(children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(8, 4, 0, 0),
+                    child: Text(
+                      l.chatsReplyTo(
+                        reply.direction == BastionMessageDirection.outgoing ? l.chatsYou : _nodeName(reply.from),
+                      ),
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  tooltip: l.chatsCancelReply,
+                  icon: const Icon(Icons.close, size: 18),
+                  onPressed: () => setState(() => _replyingTo = null),
+                ),
+              ]),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(children: [
@@ -809,7 +874,9 @@ class _ChatThreadPageState extends State<ChatThreadPage> {
                           itemBuilder: (context, i) => switch (rows[i]) {
                             _DayRow(:final label) => _TimelineDivider(label: label),
                             _NewRow() => _TimelineDivider(label: l.chatsNewBelow, highlight: true),
-                            _MessageRow(:final message) => _bubble(context, message, reactions[message.packetId]),
+                            _MessageRow(:final message) => _swipeable(
+                                context, message,
+                                _bubble(context, message, reactions[message.packetId])),
                           },
                         ),
                         // Back to the newest message after scrolling up, as in

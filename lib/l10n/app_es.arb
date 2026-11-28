@@ -122,6 +122,16 @@
   "chatsLastThrough": ", por último a través de {name}",
   "chatsLastThroughEnding": ", por último a través de un nodo que termina en {hex}",
   "chatsCameThrough": "{hops, plural, one{Llegó a través de {hops} repetidor{via}} other{Llegó a través de {hops} repetidores{via}}}",
+  "chatsReply": "Responder",
+  "chatsReplyTo": "Respondiendo a {name}",
+  "@chatsReplyTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsCancelReply": "Cancelar respuesta",
   "chatsReact": "Reaccionar",
   "chatsReactEmoji": "Reaccionar {emoji}",
   "chatsNoSignal": "Sin lectura de señal",
