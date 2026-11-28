@@ -700,6 +700,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatsBotReplyField => 'Message to send while Bot mode is on';
 
   @override
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr) {
+    return 'You can use $hops for how many hops the message took, $hopsEmoji for the same as an emoji, and $snr for its signal in dB.';
+  }
+
+  @override
   String get commonCancel => 'Cancel';
 
   @override
@@ -8220,21 +8225,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get localNameTitle => 'Name on this phone';
+  String get inboundTracesTitle => 'Traceroutes to this radio';
 
   @override
-  String get localNameNone => 'Not set. Uses the node\'s own name.';
+  String get inboundTracesEmpty =>
+      'None yet. When another node traces a route to you, it shows here with the relays it came through.';
 
   @override
-  String localNameOwn(String name) {
-    return 'Its own name: $name';
+  String inboundTracesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count traceroutes',
+      one: '1 traceroute',
+    );
+    return '$_temp0';
   }
 
   @override
-  String localNameHint(String name) {
-    return 'Shown instead of \"$name\" everywhere in this app. Only on this phone; nothing is sent to the node.';
-  }
-
-  @override
-  String get localNameClear => 'Use its own name';
+  String get inboundTracesDirect => 'direct';
 }

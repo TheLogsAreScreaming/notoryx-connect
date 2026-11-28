@@ -1194,6 +1194,12 @@ abstract class AppLocalizations {
   /// **'Message to send while Bot mode is on'**
   String get chatsBotReplyField;
 
+  /// No description provided for @chatsBotReplyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can use {hops} for how many hops the message took, {hopsEmoji} for the same as an emoji, and {snr} for its signal in dB.'**
+  String chatsBotReplyHint(String hops, String hopsEmoji, String snr);
+
   /// No description provided for @commonCancel.
   ///
   /// In en, this message translates to:
@@ -13459,35 +13465,29 @@ abstract class AppLocalizations {
   /// **'Your radio\'s position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.'**
   String ncRadioApproximate(String distance);
 
-  /// No description provided for @localNameTitle.
+  /// No description provided for @inboundTracesTitle.
   ///
   /// In en, this message translates to:
-  /// **'Name on this phone'**
-  String get localNameTitle;
+  /// **'Traceroutes to this radio'**
+  String get inboundTracesTitle;
 
-  /// No description provided for @localNameNone.
+  /// No description provided for @inboundTracesEmpty.
   ///
   /// In en, this message translates to:
-  /// **'Not set. Uses the node\'s own name.'**
-  String get localNameNone;
+  /// **'None yet. When another node traces a route to you, it shows here with the relays it came through.'**
+  String get inboundTracesEmpty;
 
-  /// No description provided for @localNameOwn.
+  /// No description provided for @inboundTracesCount.
   ///
   /// In en, this message translates to:
-  /// **'Its own name: {name}'**
-  String localNameOwn(String name);
+  /// **'{count, plural, =1{1 traceroute} other{{count} traceroutes}}'**
+  String inboundTracesCount(int count);
 
-  /// No description provided for @localNameHint.
+  /// No description provided for @inboundTracesDirect.
   ///
   /// In en, this message translates to:
-  /// **'Shown instead of \"{name}\" everywhere in this app. Only on this phone; nothing is sent to the node.'**
-  String localNameHint(String name);
-
-  /// No description provided for @localNameClear.
-  ///
-  /// In en, this message translates to:
-  /// **'Use its own name'**
-  String get localNameClear;
+  /// **'direct'**
+  String get inboundTracesDirect;
 }
 
 class _AppLocalizationsDelegate
