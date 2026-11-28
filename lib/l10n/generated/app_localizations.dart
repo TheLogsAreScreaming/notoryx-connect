@@ -834,6 +834,24 @@ abstract class AppLocalizations {
   /// **'{hops, plural, one{Came through {hops} relay{via}} other{Came through {hops} relays{via}}}'**
   String chatsCameThrough(int hops, String via);
 
+  /// No description provided for @chatsReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get chatsReply;
+
+  /// No description provided for @chatsReplyTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Replying to {name}'**
+  String chatsReplyTo(String name);
+
+  /// No description provided for @chatsCancelReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel reply'**
+  String get chatsCancelReply;
+
   /// No description provided for @chatsReact.
   ///
   /// In en, this message translates to:
