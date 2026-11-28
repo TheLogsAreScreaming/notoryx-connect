@@ -121,16 +121,54 @@ class _SettingsPage extends StatelessWidget {
       _FiltersCard(radio: radio),
       const _MapCacheCard(),
       if (BastionHomeWidget.instance case final widget?)
-        Card(child: StatefulBuilder(builder: (context, setLocal) => SwitchListTile(
-          secondary: const Icon(Icons.widgets_outlined),
-          title: Text(l.setWidget),
-          subtitle: Text(l.setWidgetSub),
-          isThreeLine: true,
-          value: widget.showMessage,
-          onChanged: (v) async {
-            await widget.setShowMessage(v);
-            setLocal(() {});
-          },
+        Card(child: StatefulBuilder(builder: (context, setLocal) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SwitchListTile(
+              secondary: const Icon(Icons.widgets_outlined),
+              title: Text(l.setWidget),
+              subtitle: Text(l.setWidgetSub),
+              isThreeLine: true,
+              value: widget.showMessage,
+              onChanged: (v) async {
+                await widget.setShowMessage(v);
+                setLocal(() {});
+              },
+            ),
+            const Divider(indent: 56),
+            ListTile(
+              leading: const Icon(Icons.person_pin_circle_outlined),
+              title: Text(l.setWidgetTrack),
+              subtitle: Text(widget.trackedNodeNum == null
+                  ? l.setWidgetTrackNone
+                  : radio.nodeName(widget.trackedNodeNum!)),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () async {
+                final nodes = radio.nodes;
+                final picked = await showDialog<int?>(
+                  context: context,
+                  builder: (ctx) => SimpleDialog(
+                    title: Text(l.setWidgetTrackTitle),
+                    children: [
+                      SimpleDialogOption(
+                        key: const ValueKey('widget-track-none'),
+                        onPressed: () => Navigator.of(ctx).pop(-1),
+                        child: Text(l.setWidgetTrackClear),
+                      ),
+                      for (final n in nodes)
+                        SimpleDialogOption(
+                          onPressed: () => Navigator.of(ctx).pop(n.num),
+                          child: Text(n.displayName),
+                        ),
+                    ],
+                  ),
+                );
+                if (picked == null) return;
+                await widget.setTrackedNode(picked == -1 ? null : picked);
+                setLocal(() {});
+              },
+            ),
+          ],
         ))),
       NxSectionLabel(l.setYourData),
       _RadioDataCard(radio: radio),

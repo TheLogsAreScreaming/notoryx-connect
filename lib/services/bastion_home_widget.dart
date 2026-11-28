@@ -17,6 +17,7 @@ class WidgetSnapshot {
     required this.messages,
     required this.alert,
     required this.updated,
+    this.tracked = '',
   });
 
   final String title;
@@ -27,9 +28,17 @@ class WidgetSnapshot {
   final String alert;
   final String updated;
 
+  /// Status line for the node the user chose to track; empty when none.
+  final String tracked;
+
   /// Builds the widget text. Message text appears only when [showMessage],
   /// since the home screen is visible to anyone holding the phone.
-  static WidgetSnapshot of(MeshtasticRadioCoordinator radio, DateTime now, {required bool showMessage}) {
+  static WidgetSnapshot of(
+    MeshtasticRadioCoordinator radio,
+    DateTime now, {
+    required bool showMessage,
+    int? trackedNum,
+  }) {
     final ready = radio.isReady;
     final local = radio.localNode;
     final battery = local?.batteryLevel;
@@ -43,6 +52,24 @@ class WidgetSnapshot {
     final overdue = radio.trip.overdue;
     String clock(DateTime t) =>
         '${t.toLocal().hour.toString().padLeft(2, '0')}:${t.toLocal().minute.toString().padLeft(2, '0')}';
+    String _ago(DateTime lh) {
+      final d = now.difference(lh);
+      if (d.inMinutes < 60) return '${d.inMinutes} min ago';
+      if (d.inHours < 24) return '${d.inHours} h ago';
+      return '${d.inDays} d ago';
+    }
+    String tracked = '';
+    if (trackedNum != null) {
+      final node = radio.nodes.where((n) => n.num == trackedNum).firstOrNull;
+      if (node != null) {
+        final parts = <String>[node.displayName];
+        final bat = node.batteryLevel;
+        if (bat != null) parts.add(bat > 100 ? 'plugged in' : '$bat%');
+        final lh = node.lastHeard;
+        if (lh != null) parts.add(_ago(lh));
+        tracked = parts.join(' • ');
+      }
+    }
     return WidgetSnapshot(
       title: ready
           ? 'Connected${local?.displayName == null ? '' : ' • ${local!.displayName}'}'
@@ -64,6 +91,7 @@ class WidgetSnapshot {
               ? 'Overdue: ${overdue.map(radio.nodeName).join(', ')}'
               : '',
       updated: 'Updated ${clock(now)}',
+      tracked: tracked,
     );
   }
 
@@ -73,12 +101,14 @@ class WidgetSnapshot {
         'widget_messages': messages,
         'widget_alert': alert,
         'widget_updated': updated,
+        'widget_tracked': tracked,
       };
 
   /// Same content, ignoring the time stamp.
   bool sameAs(WidgetSnapshot? other) =>
       other != null && title == other.title && detail == other.detail &&
-      messages == other.messages && alert == other.alert;
+      messages == other.messages && alert == other.alert &&
+      tracked == other.tracked;
 }
 
 /// Sends widget updates when what it shows changes, at most every
@@ -93,6 +123,9 @@ class BastionHomeWidget {
   /// Whether message text may appear on the widget (off by default).
   static const showMessageKey = 'bastion.widget.show_message';
 
+  /// The node num to track on the widget, or null for none.
+  static const trackedNodeKey = 'bastion.widget.tracked_node';
+
   /// Whether this platform has a home-screen widget.
   static bool get supported => !kIsWeb && Platform.isAndroid;
 
@@ -105,6 +138,7 @@ class BastionHomeWidget {
   static BastionHomeWidget? instance;
 
   bool showMessage = false;
+  int? trackedNodeNum;
   WidgetSnapshot? _sent;
   DateTime? _sentAt;
   Timer? _later;
@@ -114,9 +148,11 @@ class BastionHomeWidget {
     if (_started) return;
     _started = true;
     try {
-      showMessage = await SharedPreferencesAsync().getBool(showMessageKey) ?? false;
+      final prefs = SharedPreferencesAsync();
+      showMessage = await prefs.getBool(showMessageKey) ?? false;
+      trackedNodeNum = await prefs.getInt(trackedNodeKey);
     } catch (_) {
-      // Default stays off.
+      // Defaults stay.
     }
     _radio.addListener(_changed);
     _changed();
@@ -133,8 +169,29 @@ class BastionHomeWidget {
     _changed();
   }
 
+  Future<void> setTrackedNode(int? num) async {
+    trackedNodeNum = num;
+    try {
+      final prefs = SharedPreferencesAsync();
+      if (num == null) {
+        await prefs.remove(trackedNodeKey);
+      } else {
+        await prefs.setInt(trackedNodeKey, num);
+      }
+    } catch (_) {
+      // Applies this session.
+    }
+    _sent = null;
+    _changed();
+  }
+
   void _changed() {
-    final snap = WidgetSnapshot.of(_radio, _clock(), showMessage: showMessage);
+    final snap = WidgetSnapshot.of(
+      _radio,
+      _clock(),
+      showMessage: showMessage,
+      trackedNum: trackedNodeNum,
+    );
     if (snap.sameAs(_sent)) return;
     final wait = _sentAt == null ? Duration.zero : minGap - _clock().difference(_sentAt!);
     if (wait > Duration.zero) {
