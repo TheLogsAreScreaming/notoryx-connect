@@ -30,7 +30,7 @@ class TemplateRadio extends MeshtasticRadioCoordinator {
   @override bool get isReady => ready;
   @override int? get localNodeNum => 42;
   @override List<({int index, int role, String name})> get channelMetadata => [(index: 0, role: 1, name: 'Field')];
-  @override Future<int> sendText({required String text, int destination = 0xffffffff, int channel = 0}) async { sent.add('$channel:$text'); return 1; }
+  @override Future<int> sendText({required String text, int destination = 0xffffffff, int channel = 0, int? replyId}) async { sent.add('$channel:$text'); return 1; }
 }
 
 void main() {

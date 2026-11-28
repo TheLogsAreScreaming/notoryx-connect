@@ -346,6 +346,16 @@
       }
     }
   },
+  "chatsReply": "Reply",
+  "chatsReplyTo": "Replying to {name}",
+  "@chatsReplyTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatsCancelReply": "Cancel reply",
   "chatsReact": "React",
   "chatsReactEmoji": "React {emoji}",
   "@chatsReactEmoji": {
