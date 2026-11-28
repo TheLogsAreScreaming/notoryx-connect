@@ -378,6 +378,7 @@ class BastionDemoRadio extends MeshtasticRadioCoordinator {
     required String text,
     int destination = 0xffffffff,
     int channel = 0,
+    int? replyId,
   }) => _send(text: text, destination: destination, channel: channel);
 
   Future<int> _send({
