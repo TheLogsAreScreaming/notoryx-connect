@@ -8275,4 +8275,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'La posición de tu radio es solo aproximada (a unos $distance), así que la flecha puede desviarse. Toca Usar la ubicación del teléfono para mejorarla.';
   }
+
+  @override
+  String get cpExactNeedsKey => 'solo canales privados';
 }

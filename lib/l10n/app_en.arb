@@ -5608,5 +5608,6 @@
     }
   },
   "ncRadioApproximate": "Your radio's position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.",
-  "@ncRadioApproximate": {"placeholders": {"distance": {"type": "String"}}}
+  "@ncRadioApproximate": {"placeholders": {"distance": {"type": "String"}}},
+  "cpExactNeedsKey": "private channels only"
 }

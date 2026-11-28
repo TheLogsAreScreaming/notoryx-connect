@@ -22,14 +22,27 @@ abstract final class BastionChannelValidation {
     return null;
   }
 
+  /// Whether [key] is a channel's own key (16 or 32 bytes), not the
+  /// well-known default key or no encryption.
+  static bool hasOwnKey(List<int> key) => key.length == 16 || key.length == 32;
+
+  /// Exact positions only go out on a channel with its own key: on the
+  /// default key or with no encryption anyone listening could read them.
+  static String? precisionError(int precisionBits, List<int> key) =>
+      precisionBits >= 32 && !hasOwnKey(key)
+      ? 'Exact position needs a channel with its own key. Pick an area, or make the channel private.'
+      : null;
+
   static String? validate({
     required int index,
     required int role,
     required String name,
     required List<int> key,
+    int precisionBits = 0,
   }) => slotError(index: index, role: role) ??
       nameError(name) ??
-      keyError(key);
+      keyError(key) ??
+      precisionError(precisionBits, key);
 
   static bool requiresKeyChangeConfirmation(List<int> oldPsk, List<int> newPsk) {
     if (oldPsk.length != newPsk.length) return true;

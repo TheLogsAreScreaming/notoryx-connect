@@ -13458,6 +13458,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your radio\'s position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.'**
   String ncRadioApproximate(String distance);
+
+  /// No description provided for @cpExactNeedsKey.
+  ///
+  /// In en, this message translates to:
+  /// **'private channels only'**
+  String get cpExactNeedsKey;
 }
 
 class _AppLocalizationsDelegate

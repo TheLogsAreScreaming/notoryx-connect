@@ -8305,4 +8305,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'Die Position deines Funkgeräts ist nur ungefähr (auf etwa $distance genau), daher kann der Pfeil danebenliegen. Tippe auf Standort des Telefons nutzen für eine genauere.';
   }
+
+  @override
+  String get cpExactNeedsKey => 'nur private Kanäle';
 }
