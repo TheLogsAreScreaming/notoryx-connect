@@ -8335,5 +8335,91 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inboundTracesDirect => 'direct';
 
   @override
-  String get cpExactNeedsKey => 'canaux privés uniquement';
+  String get regionSetupTitle => 'Configurer cette radio';
+
+  @override
+  String get regionSetupIntro =>
+      'Cette radio n\'a pas encore de région, elle ne peut donc pas émettre. Choisissez la région où vous êtes ; elle fixe les fréquences et la puissance légales. La radio redémarre après l\'enregistrement.';
+
+  @override
+  String get regionSetupSuggested =>
+      'Suggérée pour le pays de votre téléphone. Vérifiez qu\'elle convient à votre position.';
+
+  @override
+  String get regionSetupCheckLaw =>
+      'Utilisez la région où la radio est utilisée ; une mauvaise peut être illégale.';
+
+  @override
+  String get regionSetupSave => 'Enregistrer et redémarrer la radio';
+
+  @override
+  String regionSetupFailed(String error) {
+    return 'Enregistrement impossible : $error';
+  }
+
+  @override
+  String get regionSetupDone => 'Région enregistrée';
+
+  @override
+  String get regionSetupRestart =>
+      'La radio redémarre et se reconnectera d\'elle-même.';
+
+  @override
+  String get regionSetupFindMeshes => 'Trouver des réseaux à proximité';
+
+  @override
+  String get regionSetupBannerTitle => 'Aucune région définie';
+
+  @override
+  String get regionSetupBannerBody =>
+      'Cette radio ne peut pas émettre tant qu\'elle n\'a pas de région.';
+
+  @override
+  String get regionSetupBannerAction => 'Configurer';
+
+  @override
+  String get linkScanCode => 'Scanner un code';
+
+  @override
+  String get linkNotConnect =>
+      'Ce code n\'est pas un lien de connexion à une radio.';
+
+  @override
+  String get linkSerialUnsupported =>
+      'Ce lien concerne un câble USB. Branchez la radio et utilisez l\'USB.';
+
+  @override
+  String get linkConnectTitle => 'Se connecter à cette radio ?';
+
+  @override
+  String get linkDisconnectTitle => 'Déconnecter la radio ?';
+
+  @override
+  String get linkDisconnectBody =>
+      'Un lien demande de déconnecter la radio actuelle.';
+
+  @override
+  String linkTargetBluetooth(String address) {
+    return 'Radio Bluetooth $address';
+  }
+
+  @override
+  String linkTargetNetwork(String address) {
+    return 'Radio réseau $address';
+  }
+
+  @override
+  String linkPinBody(String pin) {
+    return 'Son code PIN d\'appairage est $pin. Il sera copié pour que vous puissiez le coller quand le téléphone le demande.';
+  }
+
+  @override
+  String get linkPinCopied =>
+      'PIN copié. Collez-le dans la demande d\'appairage.';
+
+  @override
+  String get linkConnect => 'Se connecter';
+
+  @override
+  String get linkDisconnect => 'Déconnecter';
 }

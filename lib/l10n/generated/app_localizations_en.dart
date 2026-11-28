@@ -8246,5 +8246,89 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inboundTracesDirect => 'direct';
 
   @override
-  String get cpExactNeedsKey => 'private channels only';
+  String get regionSetupTitle => 'Set up this radio';
+
+  @override
+  String get regionSetupIntro =>
+      'This radio has no region yet, so it can\'t transmit. Choose the region for where you are; it sets the legal frequencies and power. The radio restarts after saving.';
+
+  @override
+  String get regionSetupSuggested =>
+      'Suggested for your phone\'s country. Check it\'s right for where you are.';
+
+  @override
+  String get regionSetupCheckLaw =>
+      'Use the region where the radio is used; the wrong one can be illegal.';
+
+  @override
+  String get regionSetupSave => 'Save and restart radio';
+
+  @override
+  String regionSetupFailed(String error) {
+    return 'Couldn\'t save: $error';
+  }
+
+  @override
+  String get regionSetupDone => 'Region saved';
+
+  @override
+  String get regionSetupRestart =>
+      'The radio is restarting and will reconnect on its own.';
+
+  @override
+  String get regionSetupFindMeshes => 'Find meshes near you';
+
+  @override
+  String get regionSetupBannerTitle => 'No region set';
+
+  @override
+  String get regionSetupBannerBody =>
+      'This radio can\'t transmit until it has a region.';
+
+  @override
+  String get regionSetupBannerAction => 'Set up';
+
+  @override
+  String get linkScanCode => 'Scan code';
+
+  @override
+  String get linkNotConnect => 'That code isn\'t a radio connect link.';
+
+  @override
+  String get linkSerialUnsupported =>
+      'That link is for a USB cable. Plug the radio in and use USB instead.';
+
+  @override
+  String get linkConnectTitle => 'Connect to this radio?';
+
+  @override
+  String get linkDisconnectTitle => 'Disconnect the radio?';
+
+  @override
+  String get linkDisconnectBody =>
+      'A link asked to disconnect the current radio.';
+
+  @override
+  String linkTargetBluetooth(String address) {
+    return 'Bluetooth radio $address';
+  }
+
+  @override
+  String linkTargetNetwork(String address) {
+    return 'Network radio $address';
+  }
+
+  @override
+  String linkPinBody(String pin) {
+    return 'Its pairing PIN is $pin. It will be copied so you can paste it when the phone asks.';
+  }
+
+  @override
+  String get linkPinCopied => 'PIN copied. Paste it into the pairing prompt.';
+
+  @override
+  String get linkConnect => 'Connect';
+
+  @override
+  String get linkDisconnect => 'Disconnect';
 }

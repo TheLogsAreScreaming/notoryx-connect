@@ -8303,5 +8303,91 @@ class AppLocalizationsEs extends AppLocalizations {
   String get inboundTracesDirect => 'directa';
 
   @override
-  String get cpExactNeedsKey => 'solo canales privados';
+  String get regionSetupTitle => 'Configurar esta radio';
+
+  @override
+  String get regionSetupIntro =>
+      'Esta radio aún no tiene región, así que no puede transmitir. Elige la región donde estás; fija las frecuencias y la potencia legales. La radio se reinicia al guardar.';
+
+  @override
+  String get regionSetupSuggested =>
+      'Sugerida para el país de tu teléfono. Comprueba que sea la correcta para donde estás.';
+
+  @override
+  String get regionSetupCheckLaw =>
+      'Usa la región donde se usa la radio; una incorrecta puede ser ilegal.';
+
+  @override
+  String get regionSetupSave => 'Guardar y reiniciar la radio';
+
+  @override
+  String regionSetupFailed(String error) {
+    return 'No se pudo guardar: $error';
+  }
+
+  @override
+  String get regionSetupDone => 'Región guardada';
+
+  @override
+  String get regionSetupRestart =>
+      'La radio se está reiniciando y se volverá a conectar sola.';
+
+  @override
+  String get regionSetupFindMeshes => 'Buscar redes cercanas';
+
+  @override
+  String get regionSetupBannerTitle => 'Sin región';
+
+  @override
+  String get regionSetupBannerBody =>
+      'Esta radio no puede transmitir hasta tener una región.';
+
+  @override
+  String get regionSetupBannerAction => 'Configurar';
+
+  @override
+  String get linkScanCode => 'Escanear código';
+
+  @override
+  String get linkNotConnect =>
+      'Ese código no es un enlace de conexión de radio.';
+
+  @override
+  String get linkSerialUnsupported =>
+      'Ese enlace es para un cable USB. Conecta la radio y usa USB.';
+
+  @override
+  String get linkConnectTitle => '¿Conectar con esta radio?';
+
+  @override
+  String get linkDisconnectTitle => '¿Desconectar la radio?';
+
+  @override
+  String get linkDisconnectBody =>
+      'Un enlace pidió desconectar la radio actual.';
+
+  @override
+  String linkTargetBluetooth(String address) {
+    return 'Radio Bluetooth $address';
+  }
+
+  @override
+  String linkTargetNetwork(String address) {
+    return 'Radio en red $address';
+  }
+
+  @override
+  String linkPinBody(String pin) {
+    return 'Su PIN de emparejamiento es $pin. Se copiará para que puedas pegarlo cuando el teléfono lo pida.';
+  }
+
+  @override
+  String get linkPinCopied =>
+      'PIN copiado. Pégalo en el aviso de emparejamiento.';
+
+  @override
+  String get linkConnect => 'Conectar';
+
+  @override
+  String get linkDisconnect => 'Desconectar';
 }

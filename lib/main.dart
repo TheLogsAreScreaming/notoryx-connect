@@ -98,6 +98,9 @@ import 'connection_doctor_page.dart';
 import 'support_report_page.dart';
 import 'services/bastion_error_log.dart';
 import 'sentinel_page.dart';
+import 'connect_link_prompt.dart';
+import 'qr_scan_page.dart';
+import 'services/bastion_link_intake.dart';
 import 'services/bastion_sentinel.dart';
 import 'sarneg/sarneg.dart';
 import 'sarneg/sarneg_ui.dart';
@@ -337,6 +340,8 @@ class _BastionShellState extends State<BastionShell> {
   void _goDestination(int i) => _go(_atDestination(i));
 
   BastionHomeWidget? _homeWidget;
+  final BastionLinkIntake _links = BastionLinkIntake();
+  StreamSubscription<String>? _linkSub;
   TrackLogFeed? _trackFeed;
   MeshWatchFeed? _meshFeed;
 
@@ -344,6 +349,16 @@ class _BastionShellState extends State<BastionShell> {
   void initState() {
     super.initState();
     unawaited(_realRadio.prepareAlerts());
+    // Connect links from a QR code, a web page or an NFC tag (Android).
+    _linkSub = _links.links.listen((link) {
+      if (!mounted) return;
+      if (_inDemo) _setDemo(false);
+      _go(ShellTab.nodes);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) unawaited(handleConnectLink(context, _realRadio, link));
+      });
+    });
+    unawaited(_links.start());
     // Pick up the radio from last time, e.g. after Android closed the app.
     unawaited(_realRadio.reconnectAtLaunch());
     // Automations act on the real radio only, never the demo.
@@ -427,6 +442,8 @@ class _BastionShellState extends State<BastionShell> {
       _realRadio.removeListener(f.check);
       f.dispose();
     }
+    unawaited(_linkSub?.cancel());
+    unawaited(_links.dispose());
     BastionMeshWatch.instance.detach();
     _realRadio.onIncomingText = null;
     BastionSosRelay.instance?.dispose();
