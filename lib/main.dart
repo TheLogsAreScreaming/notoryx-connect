@@ -40,6 +40,7 @@ import 'services/bastion_chat_marks.dart';
 import 'services/bastion_conversations.dart';
 import 'services/meshtastic_node_database.dart' show MeshtasticNode;
 import 'services/bastion_message_search.dart';
+import 'services/bastion_pinned_conversations.dart';
 import 'services/bastion_scheduled_messages.dart';
 import 'services/bastion_send_failure.dart';
 import 'services/bastion_sms_relay.dart';
@@ -154,6 +155,7 @@ Future<void> main() async {
   await BastionScheduledMessages.instance.load();
   await BastionTakBridge.instance.load();
   if (BastionSmsRelay.available) await BastionSmsRelay.instance.load();
+  await BastionPinnedConversations.instance.load();
   runApp(const BastionApp());
 }
 

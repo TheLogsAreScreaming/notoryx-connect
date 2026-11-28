@@ -33,6 +33,7 @@ class _ChatsPageState extends State<BastionChatsPage> {
   MeshtasticRadioCoordinator get radio => widget.radio;
 
   final BastionScheduledMessages _scheduled = BastionScheduledMessages.instance;
+  final BastionPinnedConversations _pins = BastionPinnedConversations.instance;
   Timer? _scheduleTimer;
 
   @override
@@ -70,6 +71,14 @@ class _ChatsPageState extends State<BastionChatsPage> {
         builder: (_) => ChannelListPage(radio: radio),
       ));
 
+  Future<void> _togglePin(BastionConversation c) async {
+    if (_pins.isPinned(c.key)) {
+      await _pins.unpin(c.key);
+    } else {
+      await _pins.pin(c.key);
+    }
+  }
+
   String _nodeName(int nodeNum) {
     for (final node in radio.nodes) {
       if (node.num == nodeNum) return node.displayName;
@@ -98,11 +107,13 @@ class _ChatsPageState extends State<BastionChatsPage> {
     final failed = last != null &&
         last.direction == BastionMessageDirection.outgoing &&
         last.deliveryState == BastionDeliveryState.failed;
+    final pinned = _pins.isPinned(c.key);
     return Semantics(
       button: true,
       label: [
         title,
         if (c.isChannel) conversationSubtitle(l, radio, c) else l.chatsDirectSub,
+        if (pinned) l.chatsPinned,
         if (unread) l.chatsUnread(s.unread),
         _preview(s),
       ].join(', '),
@@ -110,6 +121,21 @@ class _ChatsPageState extends State<BastionChatsPage> {
       child: InkWell(
         key: ValueKey('conversation-${c.key}'),
         onTap: () => _open(c),
+        onLongPress: () async {
+          final result = await showModalBottomSheet<bool>(
+            context: context,
+            builder: (ctx) => SafeArea(
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                ListTile(
+                  leading: Icon(pinned ? Icons.push_pin_outlined : Icons.push_pin),
+                  title: Text(pinned ? l.chatsUnpin : l.chatsPin),
+                  onTap: () => Navigator.of(ctx).pop(true),
+                ),
+              ]),
+            ),
+          );
+          if (result == true) unawaited(_togglePin(c));
+        },
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 76),
           child: Padding(
@@ -135,6 +161,10 @@ class _ChatsPageState extends State<BastionChatsPage> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: type.titleMedium?.copyWith(fontWeight: unread ? FontWeight.w700 : FontWeight.w600))),
+                  if (pinned) Padding(
+                    padding: const EdgeInsetsDirectional.only(end: 4),
+                    child: Icon(Icons.push_pin, size: 14, color: scheme.onSurfaceVariant),
+                  ),
                   if (last != null)
                     Text(_when(last.timestamp, now),
                         style: type.labelMedium?.copyWith(color: unread ? scheme.primary : scheme.onSurfaceVariant)),
@@ -185,9 +215,17 @@ class _ChatsPageState extends State<BastionChatsPage> {
     ]);
   }
 
+  List<BastionConversationSummary> _pinnedSummaries(
+      ({List<BastionConversationSummary> channels, List<BastionConversationSummary> direct}) lists) {
+    return [
+      for (final s in [...lists.channels, ...lists.direct])
+        if (_pins.isPinned(s.conversation.key)) s,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
-        animation: Listenable.merge([radio, SentinelService.instance]),
+        animation: Listenable.merge([radio, SentinelService.instance, _pins]),
         builder: (context, _) {
           final sentinel = SentinelService.instance;
           final messages = [for (final m in radio.messages) if (!m.isReaction && !sentinelHides(sentinel, m)) m];
@@ -277,6 +315,13 @@ class _ChatsPageState extends State<BastionChatsPage> {
               if (_searching && search.text.trim().isNotEmpty)
                 _searchResults(context, messages, now)
               else ...[
+                if (_pinnedSummaries(lists).isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: NxSectionLabel(l.chatsPinnedSection),
+                  ),
+                  for (final s in _pinnedSummaries(lists)) _row(context, s, now),
+                ],
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: NxSectionLabel(l.chatsChannelsSection, trailing: TextButton(
