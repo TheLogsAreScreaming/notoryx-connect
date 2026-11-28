@@ -547,6 +547,18 @@
   "takStatus": "{count, plural, one{Enviando {count} nodo} other{Enviando {count} nodos}}",
   "takProblem": "No se pudo enviar: {error}",
   "takHowTo": "En ATAK, abre Ajustes, luego Preferencias de red, luego Administrar entradas, y añade una entrada UDP en este puerto. Se omiten los nodos sin posición en la última hora.",
+  "takModeLabel": "Modo de envío",
+  "takModePhone": "Este teléfono",
+  "takModeNetwork": "Red local",
+  "takLanConsentBody": "El nombre y la última posición de cada nodo visible se envían cada 30 segundos al grupo de multidifusión UDP 239.2.3.1 puerto {port} en la red Wi-Fi local. Cualquier dispositivo en la misma red con ATAK los recibirá. Desactiva esto para dejar de compartir.",
+  "@takLanConsentBody": {
+    "placeholders": {
+      "port": {
+        "type": "int"
+      }
+    }
+  },
+  "takLanHowTo": "En ATAK, abre Ajustes, luego Preferencias de red, luego Administrar entradas, y añade una entrada UDP Multicast en el grupo 239.2.3.1 y este puerto. El puerto 6969 es el puerto multicast SA estándar de ATAK. Se omiten los nodos sin posición en la última hora.",
   "ndFailed": "Falló: {error}",
   "ndSendFailed": "No se pudo enviar: {error}",
   "ndFieldNote": "Nota de campo",
@@ -1235,6 +1247,8 @@
   "takReceiveStatus": "{count, plural, =0{Escuchando. Aún no hay marcadores.} one{Mostrando {count} marcador} other{Mostrando {count} marcadores}}",
   "takReceiveProblem": "No se pudo escuchar: {error}",
   "takReceiveHowTo": "En ATAK, abre Ajustes, luego Preferencias de red, luego Gestionar salidas, y añade una salida UDP a 127.0.0.1 en este puerto. Los marcadores desaparecen cuando ATAK indica que están caducados.",
+  "takLanReceiveIntro": "Muestra marcadores que ATAK comparte por multidifusión en la red Wi-Fi local, como miembros del equipo y puntos del mapa.",
+  "takLanReceiveHowTo": "En ATAK, abre Ajustes, luego Preferencias de red, luego Gestionar salidas, y añade una salida UDP Multicast al grupo 239.2.3.1 en este puerto. El puerto 6969 es el puerto multicast SA estándar de ATAK. Los marcadores desaparecen cuando ATAK indica que están caducados.",
   "takClear": "Borrar marcadores",
   "takFriendly": "Aliado",
   "takHostile": "Hostil",

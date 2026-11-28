@@ -215,6 +215,69 @@ class BastionLoopbackTakSender implements BastionTakSender {
   }
 }
 
+/// Whether positions are sent to ATAK on this phone only or to any ATAK
+/// device on the same Wi-Fi network via multicast.
+enum TakMode { thisPhone, localNetwork }
+
+/// Sends positions via UDP multicast so ATAK on any device on the same
+/// Wi-Fi network picks them up.
+class BastionMulticastTakSender implements BastionTakSender {
+  BastionMulticastTakSender(this.port);
+
+  /// Standard ATAK situational awareness multicast group.
+  static const multicastGroup = '239.2.3.1';
+  final int port;
+  RawDatagramSocket? _socket;
+
+  @override
+  Future<void> send(String xml) async {
+    final socket = _socket ??= await RawDatagramSocket.bind(
+      InternetAddress.anyIPv4,
+      0,
+      reuseAddress: true,
+    );
+    socket.send(utf8.encode(xml), InternetAddress(multicastGroup), port);
+  }
+
+  @override
+  void close() {
+    _socket?.close();
+    _socket = null;
+  }
+}
+
+/// Listens on the local network via UDP multicast so ATAK on any device on
+/// the same Wi-Fi network can send markers to this app.
+class BastionNetworkTakReceiver implements BastionTakReceiver {
+  RawDatagramSocket? _socket;
+
+  @override
+  Future<Stream<String>> listen(int port) async {
+    close();
+    final socket = _socket = await RawDatagramSocket.bind(
+      InternetAddress.anyIPv4,
+      port,
+      reuseAddress: true,
+      reusePort: true,
+    );
+    socket.joinMulticast(
+      InternetAddress(BastionMulticastTakSender.multicastGroup),
+    );
+    return socket.where((e) => e == RawSocketEvent.read).expand((_) sync* {
+      final d = socket.receive();
+      if (d != null && d.data.length <= BastionCotReader.maxBytes) {
+        yield utf8.decode(d.data, allowMalformed: true);
+      }
+    });
+  }
+
+  @override
+  void close() {
+    _socket?.close();
+    _socket = null;
+  }
+}
+
 /// Opt-in feed of mesh node positions to ATAK on the same phone.
 class BastionTakBridge extends ChangeNotifier {
   BastionTakBridge({
@@ -227,6 +290,9 @@ class BastionTakBridge extends ChangeNotifier {
 
   static final instance = BastionTakBridge();
   static const defaultPort = 4242;
+
+  /// Standard ATAK SA multicast port used in local network mode.
+  static const defaultLanPort = 6969;
 
   /// Where ATAK's output is sent; separate from the ports ATAK itself listens on.
   ///
@@ -252,6 +318,7 @@ class BastionTakBridge extends ChangeNotifier {
   StreamSubscription<String>? _incoming;
   final Map<String, TakMarker> _markers = {};
   bool _enabled = false;
+  TakMode _mode = TakMode.thisPhone;
   int _port = defaultPort;
   int _lastCount = 0;
   String? _problem;
@@ -260,6 +327,7 @@ class BastionTakBridge extends ChangeNotifier {
   Timer? _timer;
 
   bool get enabled => _enabled;
+  TakMode get mode => _mode;
   int get port => _port;
   int get lastCount => _lastCount;
   String? get problem => _problem;
@@ -299,7 +367,9 @@ class BastionTakBridge extends ChangeNotifier {
   Future<void> _startReceiving() async {
     _stopReceiving();
     if (!_receive) return;
-    final receiver = _receiver = _makeReceiver();
+    final receiver = _receiver = _mode == TakMode.localNetwork
+        ? BastionNetworkTakReceiver()
+        : _makeReceiver();
     try {
       final stream = await receiver.listen(_receivePort);
       if (!identical(receiver, _receiver)) return;
@@ -340,6 +410,9 @@ class BastionTakBridge extends ChangeNotifier {
               receivePort != legacyReceivePort
           ? receivePort
           : defaultReceivePort;
+      _mode = json['mode'] == 'localNetwork'
+          ? TakMode.localNetwork
+          : TakMode.thisPhone;
     } catch (_) {
       _enabled = false;
       _receive = false;
@@ -367,17 +440,20 @@ class BastionTakBridge extends ChangeNotifier {
     int? port,
     bool? receive,
     int? receivePort,
+    TakMode? mode,
   }) async {
     if (port != null && !validPort(port)) return;
     if (receivePort != null && !validPort(receivePort)) return;
     final receiveChanged =
         (receive != null && receive != _receive) ||
-        (receivePort != null && receivePort != _receivePort);
+        (receivePort != null && receivePort != _receivePort) ||
+        (mode != null && mode != _mode);
     _enabled = enabled ?? _enabled;
     _port = port ?? _port;
     _receive = receive ?? _receive;
     _receivePort = receivePort ?? _receivePort;
-    if (enabled != null || port != null) _restart();
+    _mode = mode ?? _mode;
+    if (enabled != null || port != null || mode != null) _restart();
     if (receiveChanged) {
       if (!_receive) {
         _markers.clear();
@@ -393,6 +469,7 @@ class BastionTakBridge extends ChangeNotifier {
         'port': _port,
         'receive': _receive,
         'receivePort': _receivePort,
+        'mode': _mode.name,
       }),
     );
   }
@@ -408,7 +485,9 @@ class BastionTakBridge extends ChangeNotifier {
   void _restart() {
     _stop();
     if (!_enabled || _nodes == null) return;
-    _sender = _makeSender(_port);
+    _sender = _mode == TakMode.localNetwork
+        ? BastionMulticastTakSender(_port)
+        : _makeSender(_port);
     _timer = Timer.periodic(interval, (_) => unawaited(publish()));
     unawaited(publish());
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'services/bastion_tak_bridge.dart';
 
-/// Setup for the feed of mesh positions to ATAK on this phone.
+/// Setup for the feed of mesh positions to ATAK on this phone or local network.
 class TakBridgePage extends StatefulWidget {
   const TakBridgePage({super.key, required this.bridge});
   final BastionTakBridge bridge;
@@ -41,12 +41,16 @@ class _TakBridgePageState extends State<TakBridgePage> {
   /// Asks before anything is shared; nothing is sent unless the user accepts.
   Future<bool> _confirmSharing() async {
     final l = AppLocalizations.of(context);
+    final bridge = widget.bridge;
+    final body = bridge.mode == TakMode.localNetwork
+        ? l.takLanConsentBody(bridge.port)
+        : l.takConsentBody(bridge.port);
     final ok = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         key: const ValueKey('tak-consent'),
         title: Text(l.takConsentTitle),
-        content: Text(l.takConsentBody(widget.bridge.port)),
+        content: Text(body),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
@@ -84,6 +88,27 @@ class _TakBridgePageState extends State<TakBridgePage> {
             padding: const EdgeInsets.all(16),
             children: [
               Text(l.takIntro),
+              const SizedBox(height: 12),
+              Semantics(
+                label: l.takModeLabel,
+                child: SegmentedButton<TakMode>(
+                  segments: [
+                    ButtonSegment<TakMode>(
+                      value: TakMode.thisPhone,
+                      label: Text(l.takModePhone),
+                      icon: const Icon(Icons.smartphone_outlined),
+                    ),
+                    ButtonSegment<TakMode>(
+                      value: TakMode.localNetwork,
+                      label: Text(l.takModeNetwork),
+                      icon: const Icon(Icons.wifi_outlined),
+                    ),
+                  ],
+                  selected: {bridge.mode},
+                  onSelectionChanged: (v) =>
+                      bridge.configure(mode: v.first),
+                ),
+              ),
               SwitchListTile(
                 key: const ValueKey('tak-enabled'),
                 contentPadding: EdgeInsets.zero,
@@ -121,7 +146,11 @@ class _TakBridgePageState extends State<TakBridgePage> {
                   ),
                 ),
               const SizedBox(height: 16),
-              Text(l.takHowTo),
+              Text(
+                bridge.mode == TakMode.localNetwork
+                    ? l.takLanHowTo
+                    : l.takHowTo,
+              ),
               const Divider(height: 32),
               Semantics(
                 header: true,
@@ -131,7 +160,11 @@ class _TakBridgePageState extends State<TakBridgePage> {
                 ),
               ),
               const SizedBox(height: 8),
-              Text(l.takReceiveIntro),
+              Text(
+                bridge.mode == TakMode.localNetwork
+                    ? l.takLanReceiveIntro
+                    : l.takReceiveIntro,
+              ),
               SwitchListTile(
                 key: const ValueKey('tak-receive'),
                 contentPadding: EdgeInsets.zero,
@@ -176,7 +209,11 @@ class _TakBridgePageState extends State<TakBridgePage> {
                   ),
                 ),
               const SizedBox(height: 16),
-              Text(l.takReceiveHowTo),
+              Text(
+                bridge.mode == TakMode.localNetwork
+                    ? l.takLanReceiveHowTo
+                    : l.takReceiveHowTo,
+              ),
             ],
           ),
         ),

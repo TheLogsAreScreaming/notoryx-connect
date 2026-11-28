@@ -3384,6 +3384,36 @@ abstract class AppLocalizations {
   /// **'In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out.'**
   String get takHowTo;
 
+  /// No description provided for @takModeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Send mode'**
+  String get takModeLabel;
+
+  /// No description provided for @takModePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone'**
+  String get takModePhone;
+
+  /// No description provided for @takModeNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Local network'**
+  String get takModeNetwork;
+
+  /// No description provided for @takLanConsentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The name and last position of every mesh node you can see are sent every 30 seconds to UDP multicast group 239.2.3.1 port {port} on your local Wi-Fi network. Any device on the same network running ATAK will receive them. Turn this off to stop sharing.'**
+  String takLanConsentBody(int port);
+
+  /// No description provided for @takLanHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP Multicast input on group 239.2.3.1 and this port. Port 6969 is the standard ATAK SA multicast port. Nodes with no position in the last hour are left out.'**
+  String get takLanHowTo;
+
   /// No description provided for @ndFailed.
   ///
   /// In en, this message translates to:
@@ -7524,6 +7554,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'In ATAK, open Settings, then Network Preferences, then Manage Outputs, and add a UDP output to 127.0.0.1 on this port. Markers disappear when ATAK says they are stale.'**
   String get takReceiveHowTo;
+
+  /// No description provided for @takLanReceiveIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows markers that ATAK shares via multicast on your local Wi-Fi network, such as team members and map points.'**
+  String get takLanReceiveIntro;
+
+  /// No description provided for @takLanReceiveHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'In ATAK, open Settings, then Network Preferences, then Manage Outputs, and add a UDP Multicast output to group 239.2.3.1 on this port. Port 6969 is the standard ATAK SA multicast port. Markers disappear when ATAK says they are stale.'**
+  String get takLanReceiveHowTo;
 
   /// No description provided for @takClear.
   ///

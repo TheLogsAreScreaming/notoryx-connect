@@ -2026,6 +2026,24 @@ class AppLocalizationsEn extends AppLocalizations {
       'In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP input on this port. Nodes with no position in the last hour are left out.';
 
   @override
+  String get takModeLabel => 'Send mode';
+
+  @override
+  String get takModePhone => 'This phone';
+
+  @override
+  String get takModeNetwork => 'Local network';
+
+  @override
+  String takLanConsentBody(int port) {
+    return 'The name and last position of every mesh node you can see are sent every 30 seconds to UDP multicast group 239.2.3.1 port $port on your local Wi-Fi network. Any device on the same network running ATAK will receive them. Turn this off to stop sharing.';
+  }
+
+  @override
+  String get takLanHowTo =>
+      'In ATAK, open Settings, then Network Preferences, then Manage Inputs, and add a UDP Multicast input on group 239.2.3.1 and this port. Port 6969 is the standard ATAK SA multicast port. Nodes with no position in the last hour are left out.';
+
+  @override
   String ndFailed(String error) {
     return 'Failed: $error';
   }
@@ -4510,6 +4528,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get takReceiveHowTo =>
       'In ATAK, open Settings, then Network Preferences, then Manage Outputs, and add a UDP output to 127.0.0.1 on this port. Markers disappear when ATAK says they are stale.';
+
+  @override
+  String get takLanReceiveIntro =>
+      'Shows markers that ATAK shares via multicast on your local Wi-Fi network, such as team members and map points.';
+
+  @override
+  String get takLanReceiveHowTo =>
+      'In ATAK, open Settings, then Network Preferences, then Manage Outputs, and add a UDP Multicast output to group 239.2.3.1 on this port. Port 6969 is the standard ATAK SA multicast port. Markers disappear when ATAK says they are stale.';
 
   @override
   String get takClear => 'Clear markers';

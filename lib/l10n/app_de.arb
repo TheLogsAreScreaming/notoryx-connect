@@ -547,6 +547,18 @@
   "takStatus": "{count, plural, one{Sende {count} Knoten} other{Sende {count} Knoten}}",
   "takProblem": "Senden fehlgeschlagen: {error}",
   "takHowTo": "Öffnen Sie in ATAK Settings, dann Network Preferences, dann Manage Inputs, und fügen Sie einen UDP-Eingang auf diesem Port hinzu. Knoten ohne Position in der letzten Stunde werden ausgelassen.",
+  "takModeLabel": "Sendemodus",
+  "takModePhone": "Dieses Gerät",
+  "takModeNetwork": "Lokales Netzwerk",
+  "takLanConsentBody": "Name und letzte Position jedes sichtbaren Mesh-Knotens werden alle 30 Sekunden per UDP-Multicast-Gruppe 239.2.3.1 Port {port} im lokalen WLAN gesendet. Jedes Gerät im gleichen Netzwerk mit ATAK empfängt diese Daten. Deaktivieren, um das Teilen zu beenden.",
+  "@takLanConsentBody": {
+    "placeholders": {
+      "port": {
+        "type": "int"
+      }
+    }
+  },
+  "takLanHowTo": "Öffnen Sie in ATAK Settings, dann Network Preferences, dann Manage Inputs, und fügen Sie einen UDP-Multicast-Eingang für Gruppe 239.2.3.1 auf diesem Port hinzu. Port 6969 ist der Standard-ATAK-SA-Multicast-Port. Knoten ohne Position in der letzten Stunde werden ausgelassen.",
   "ndFailed": "Fehlgeschlagen: {error}",
   "ndSendFailed": "Senden fehlgeschlagen: {error}",
   "ndFieldNote": "Feldnotiz",
@@ -1235,6 +1247,8 @@
   "takReceiveStatus": "{count, plural, =0{Empfangsbereit. Noch keine Markierungen.} one{{count} Markierung angezeigt} other{{count} Markierungen angezeigt}}",
   "takReceiveProblem": "Empfang nicht möglich: {error}",
   "takReceiveHowTo": "Öffnen Sie in ATAK Settings, dann Network Preferences, dann Manage Outputs, und fügen Sie einen UDP-Ausgang an 127.0.0.1 auf diesem Port hinzu. Markierungen verschwinden, wenn ATAK sie als veraltet meldet.",
+  "takLanReceiveIntro": "Zeigt Markierungen, die ATAK per Multicast im lokalen WLAN teilt, wie Teammitglieder und Kartenpunkte.",
+  "takLanReceiveHowTo": "Öffnen Sie in ATAK Settings, dann Network Preferences, dann Manage Outputs, und fügen Sie einen UDP-Multicast-Ausgang für Gruppe 239.2.3.1 auf diesem Port hinzu. Port 6969 ist der Standard-ATAK-SA-Multicast-Port. Markierungen verschwinden, wenn ATAK sie als veraltet meldet.",
   "takClear": "Markierungen löschen",
   "takFriendly": "Freund",
   "takHostile": "Feind",

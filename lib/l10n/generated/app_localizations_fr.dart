@@ -2057,6 +2057,24 @@ class AppLocalizationsFr extends AppLocalizations {
       'Dans ATAK, ouvrez Settings, puis Network Preferences, puis Manage Inputs, et ajoutez une entrée UDP sur ce port. Les nœuds sans position dans la dernière heure sont exclus.';
 
   @override
+  String get takModeLabel => 'Mode d\'envoi';
+
+  @override
+  String get takModePhone => 'Ce téléphone';
+
+  @override
+  String get takModeNetwork => 'Réseau local';
+
+  @override
+  String takLanConsentBody(int port) {
+    return 'Le nom et la dernière position de chaque nœud visible sont envoyés toutes les 30 secondes au groupe de multidiffusion UDP 239.2.3.1 port $port sur le réseau Wi-Fi local. Tout appareil sur le même réseau avec ATAK les recevra. Désactivez pour arrêter le partage.';
+  }
+
+  @override
+  String get takLanHowTo =>
+      'Dans ATAK, ouvrez Settings, puis Network Preferences, puis Manage Inputs, et ajoutez une entrée UDP Multicast sur le groupe 239.2.3.1 et ce port. Le port 6969 est le port multicast SA standard d\'ATAK. Les nœuds sans position dans la dernière heure sont exclus.';
+
+  @override
   String ndFailed(String error) {
     return 'Échec : $error';
   }
@@ -4566,6 +4584,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get takReceiveHowTo =>
       'Dans ATAK, ouvrez Settings, puis Network Preferences, puis Manage Outputs, et ajoutez une sortie UDP vers 127.0.0.1 sur ce port. Les marqueurs disparaissent quand ATAK les indique comme périmés.';
+
+  @override
+  String get takLanReceiveIntro =>
+      'Affiche les marqueurs qu\'ATAK partage via multicast sur le réseau Wi-Fi local, comme les membres de l\'équipe et les points de carte.';
+
+  @override
+  String get takLanReceiveHowTo =>
+      'Dans ATAK, ouvrez Settings, puis Network Preferences, puis Manage Outputs, et ajoutez une sortie UDP Multicast vers le groupe 239.2.3.1 sur ce port. Le port 6969 est le port multicast SA standard d\'ATAK. Les marqueurs disparaissent quand ATAK les indique comme périmés.';
 
   @override
   String get takClear => 'Effacer les marqueurs';
