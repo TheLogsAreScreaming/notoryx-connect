@@ -2202,6 +2202,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get homeNodeIdMigrationTitle =>
+      'Node ID changed after firmware upgrade';
+
+  @override
+  String get homeNodeIdMigrationBody =>
+      'Firmware 2.8 assigns node IDs from your radio\'s encryption key instead of randomly. Your contacts may need to rediscover you on the mesh.';
+
+  @override
+  String get homeNodeIdMigrationAction => 'Got it';
+
+  @override
   String get homeFirmwareTitle => 'Radio firmware update suggested';
 
   @override
