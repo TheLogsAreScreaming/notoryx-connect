@@ -8301,4 +8301,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get inboundTracesDirect => 'directa';
+
+  @override
+  String get localNameTitle => 'Nombre en este teléfono';
+
+  @override
+  String get localNameNone => 'Sin definir. Se usa el nombre propio del nodo.';
+
+  @override
+  String localNameOwn(String name) {
+    return 'Su nombre propio: $name';
+  }
+
+  @override
+  String localNameHint(String name) {
+    return 'Se muestra en lugar de «$name» en toda la app. Solo en este teléfono; no se envía nada al nodo.';
+  }
+
+  @override
+  String get localNameClear => 'Usar su nombre propio';
 }

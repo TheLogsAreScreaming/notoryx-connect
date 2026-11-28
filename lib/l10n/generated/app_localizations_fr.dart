@@ -8333,4 +8333,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get inboundTracesDirect => 'direct';
+
+  @override
+  String get localNameTitle => 'Nom sur ce téléphone';
+
+  @override
+  String get localNameNone => 'Non défini. Le nom propre du nœud est utilisé.';
+
+  @override
+  String localNameOwn(String name) {
+    return 'Son nom propre : $name';
+  }
+
+  @override
+  String localNameHint(String name) {
+    return 'Affiché à la place de « $name » partout dans l\'application. Seulement sur ce téléphone ; rien n\'est envoyé au nœud.';
+  }
+
+  @override
+  String get localNameClear => 'Utiliser son nom propre';
 }
