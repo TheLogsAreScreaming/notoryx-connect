@@ -8389,6 +8389,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get regionSetupBannerAction => 'Configurer';
 
   @override
+  String get homePosOffTitle => 'Position broadcast is off';
+
+  @override
+  String get homePosOffBody =>
+      'Firmware 2.8 turns off position broadcasts by default. Enable them in Position settings if you want other nodes to see your location.';
+
+  @override
+  String get homePosOffAction => 'Settings';
+
+  @override
   String get linkScanCode => 'Scanner un code';
 
   @override

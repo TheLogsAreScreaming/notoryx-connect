@@ -4,11 +4,13 @@ import 'l10n/generated/app_localizations.dart';
 import 'local_mesh_discovery_page.dart';
 import 'network_diagram_page.dart';
 import 'services/bastion_preferences.dart';
+import 'services/bastion_radio_policy.dart';
 import 'services/bastion_units.dart';
 import 'services/bastion_geo.dart';
 import 'services/meshtastic_radio_coordinator.dart';
 
 /// Range Test log and Store & Forward history requests.
+/// On firmware 2.8+, Range Test was removed; only Store & Forward is shown.
 class MeshToolsPage extends StatelessWidget {
   const MeshToolsPage({super.key, required this.radio, this.initialTab = 0});
 
@@ -16,23 +18,63 @@ class MeshToolsPage extends StatelessWidget {
   final int initialTab;
 
   @override
-  Widget build(BuildContext context) => DefaultTabController(
-        length: 2,
-        initialIndex: initialTab,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(AppLocalizations.of(context).mtTitle),
-            actions: [IconButton(key: const ValueKey('open-network-diagram'), tooltip: AppLocalizations.of(context).topologyTitle, icon: const Icon(Icons.hub_outlined), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => NetworkDiagramPage(radio: radio)))), IconButton(tooltip: AppLocalizations.of(context).mtLocalDiscovery, icon: const Icon(Icons.radar), onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LocalMeshDiscoveryPage(radio: radio))))],
-            bottom: TabBar(tabs: [Tab(text: AppLocalizations.of(context).mtRangeTest), Tab(text: AppLocalizations.of(context).mtStoreForward)]),
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final showRangeTest =
+        !BastionRadioPolicy.firmwareAtLeast28(radio.firmwareVersion);
+    final tabCount = showRangeTest ? 2 : 1;
+    final safeTab = initialTab < tabCount ? initialTab : 0;
+    return DefaultTabController(
+      length: tabCount,
+      initialIndex: safeTab,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(l.mtTitle),
+          actions: [
+            IconButton(
+              key: const ValueKey('open-network-diagram'),
+              tooltip: l.topologyTitle,
+              icon: const Icon(Icons.hub_outlined),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => NetworkDiagramPage(radio: radio),
+                ),
+              ),
+            ),
+            IconButton(
+              tooltip: l.mtLocalDiscovery,
+              icon: const Icon(Icons.radar),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => LocalMeshDiscoveryPage(radio: radio),
+                ),
+              ),
+            ),
+          ],
+          bottom: TabBar(
+            tabs: [
+              if (showRangeTest) Tab(text: l.mtRangeTest),
+              Tab(text: l.mtStoreForward),
+            ],
           ),
-          body: SafeArea(top: false, child: AnimatedBuilder(
-            animation: radio,
-            builder: (context, _) => PrimaryScrollController.none(child: TabBarView(
-              children: [_RangeTestTab(radio: radio), _StoreForwardTab(radio: radio)],
-            )),
-          )),
         ),
-      );
+        body: SafeArea(
+          top: false,
+          child: AnimatedBuilder(
+            animation: radio,
+            builder: (context, _) => PrimaryScrollController.none(
+              child: TabBarView(
+                children: [
+                  if (showRangeTest) _RangeTestTab(radio: radio),
+                  _StoreForwardTab(radio: radio),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 String _nameOf(MeshtasticRadioCoordinator radio, int num) {
