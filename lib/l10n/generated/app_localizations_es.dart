@@ -8301,4 +8301,47 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get inboundTracesDirect => 'directa';
+
+  @override
+  String get regionSetupTitle => 'Configurar esta radio';
+
+  @override
+  String get regionSetupIntro =>
+      'Esta radio aún no tiene región, así que no puede transmitir. Elige la región donde estás; fija las frecuencias y la potencia legales. La radio se reinicia al guardar.';
+
+  @override
+  String get regionSetupSuggested =>
+      'Sugerida para el país de tu teléfono. Comprueba que sea la correcta para donde estás.';
+
+  @override
+  String get regionSetupCheckLaw =>
+      'Usa la región donde se usa la radio; una incorrecta puede ser ilegal.';
+
+  @override
+  String get regionSetupSave => 'Guardar y reiniciar la radio';
+
+  @override
+  String regionSetupFailed(String error) {
+    return 'No se pudo guardar: $error';
+  }
+
+  @override
+  String get regionSetupDone => 'Región guardada';
+
+  @override
+  String get regionSetupRestart =>
+      'La radio se está reiniciando y se volverá a conectar sola.';
+
+  @override
+  String get regionSetupFindMeshes => 'Buscar redes cercanas';
+
+  @override
+  String get regionSetupBannerTitle => 'Sin región';
+
+  @override
+  String get regionSetupBannerBody =>
+      'Esta radio no puede transmitir hasta tener una región.';
+
+  @override
+  String get regionSetupBannerAction => 'Configurar';
 }
