@@ -2233,6 +2233,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get homeNodeIdMigrationTitle =>
+      'Node-ID nach Firmware-Update geändert';
+
+  @override
+  String get homeNodeIdMigrationBody =>
+      'Firmware 2.8 vergib Node-IDs anhand des Verschlüsselungsschlüssels statt zufällig. Deine Kontakte müssen dich möglicherweise im Mesh neu entdecken.';
+
+  @override
+  String get homeNodeIdMigrationAction => 'Verstanden';
+
+  @override
   String get homeFirmwareTitle => 'Firmware-Update des Funkgeräts empfohlen';
 
   @override

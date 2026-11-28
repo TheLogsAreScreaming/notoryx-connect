@@ -58,6 +58,18 @@ class HomePage extends StatelessWidget {
               title: l.homeFirmwareTitle,
               message: advice,
             ),
+        if (radio.isReady && radio.nodeIdMigrationAlert)
+          NxBanner(
+            key: const ValueKey('home-node-id-migration'),
+            tone: NxTone.info,
+            icon: Icons.swap_horiz,
+            title: l.homeNodeIdMigrationTitle,
+            message: l.homeNodeIdMigrationBody,
+            action: TextButton(
+              onPressed: radio.dismissNodeIdMigrationAlert,
+              child: Text(l.homeNodeIdMigrationAction),
+            ),
+          ),
         if (radio.radioNotice case final notice?)
           _RadioNoticeBanner(notice: notice, onDismiss: radio.dismissRadioNotice),
         if (radio.isReady &&

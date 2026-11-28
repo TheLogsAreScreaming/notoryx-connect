@@ -2224,6 +2224,17 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get homeNodeIdMigrationTitle =>
+      'ID de nodo cambiado tras actualizar el firmware';
+
+  @override
+  String get homeNodeIdMigrationBody =>
+      'El firmware 2.8 asigna IDs de nodo a partir de la clave de cifrado en lugar de aleatoriamente. Es posible que tus contactos tengan que redescubrirte en la malla.';
+
+  @override
+  String get homeNodeIdMigrationAction => 'Entendido';
+
+  @override
   String get homeFirmwareTitle =>
       'Se recomienda actualizar el firmware de la radio';
 
