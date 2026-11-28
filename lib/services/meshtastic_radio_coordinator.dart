@@ -2216,6 +2216,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
     required String text,
     int destination = MeshtasticTextCodec.broadcastNode,
     int channel = 0,
+    int? replyId,
   }) async {
     final messaging = _messaging;
     if (messaging != null) {
@@ -2223,6 +2224,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         text: text,
         destination: destination,
         channel: channel,
+        replyId: replyId,
       );
       _syncMessageSnapshot(messaging);
       notifyListeners();
@@ -2240,6 +2242,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
       destination: destination,
       channel: channel,
       packetId: packetId,
+      replyId: replyId,
       queuedAt: DateTime.now(),
     );
     await _archiveLoaded;
@@ -2255,6 +2258,7 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
         timestamp: DateTime.now(),
         direction: BastionMessageDirection.outgoing,
         deliveryState: BastionDeliveryState.queued,
+        replyId: replyId,
       ),
     ];
     _archivedMessages = BastionHistoryLimit.trim(

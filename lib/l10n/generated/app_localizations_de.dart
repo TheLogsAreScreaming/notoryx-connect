@@ -489,6 +489,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get chatsReply => 'Antworten';
+
+  @override
+  String chatsReplyTo(String name) {
+    return 'Antwort auf $name';
+  }
+
+  @override
+  String get chatsCancelReply => 'Antwort abbrechen';
+
+  @override
   String get chatsReact => 'Reagieren';
 
   @override
