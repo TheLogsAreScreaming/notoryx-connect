@@ -8305,4 +8305,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'Die Position deines Funkgeräts ist nur ungefähr (auf etwa $distance genau), daher kann der Pfeil danebenliegen. Tippe auf Standort des Telefons nutzen für eine genauere.';
   }
+
+  @override
+  String get localNameTitle => 'Name auf diesem Telefon';
+
+  @override
+  String get localNameNone =>
+      'Nicht gesetzt. Der eigene Name des Knotens wird verwendet.';
+
+  @override
+  String localNameOwn(String name) {
+    return 'Eigener Name: $name';
+  }
+
+  @override
+  String localNameHint(String name) {
+    return 'Wird in dieser App überall statt „$name“ angezeigt. Nur auf diesem Telefon; an den Knoten wird nichts gesendet.';
+  }
+
+  @override
+  String get localNameClear => 'Eigenen Namen verwenden';
 }

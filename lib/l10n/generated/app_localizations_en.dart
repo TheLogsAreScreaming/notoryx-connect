@@ -8218,4 +8218,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'Your radio\'s position is only approximate (within about $distance), so the arrow may be off. Tap Use phone location for a better one.';
   }
+
+  @override
+  String get localNameTitle => 'Name on this phone';
+
+  @override
+  String get localNameNone => 'Not set. Uses the node\'s own name.';
+
+  @override
+  String localNameOwn(String name) {
+    return 'Its own name: $name';
+  }
+
+  @override
+  String localNameHint(String name) {
+    return 'Shown instead of \"$name\" everywhere in this app. Only on this phone; nothing is sent to the node.';
+  }
+
+  @override
+  String get localNameClear => 'Use its own name';
 }

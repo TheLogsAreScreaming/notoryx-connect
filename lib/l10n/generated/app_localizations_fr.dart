@@ -8307,4 +8307,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String ncRadioApproximate(String distance) {
     return 'La position de votre radio n\'est qu\'approximative (à environ $distance) : la flèche peut être décalée. Touchez Utiliser la position du téléphone pour plus de précision.';
   }
+
+  @override
+  String get localNameTitle => 'Nom sur ce téléphone';
+
+  @override
+  String get localNameNone => 'Non défini. Le nom propre du nœud est utilisé.';
+
+  @override
+  String localNameOwn(String name) {
+    return 'Son nom propre : $name';
+  }
+
+  @override
+  String localNameHint(String name) {
+    return 'Affiché à la place de « $name » partout dans l\'application. Seulement sur ce téléphone ; rien n\'est envoyé au nœud.';
+  }
+
+  @override
+  String get localNameClear => 'Utiliser son nom propre';
 }

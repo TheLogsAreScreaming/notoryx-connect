@@ -512,6 +512,15 @@ class _NodesPage extends StatelessWidget {
                         radio.setNodeFavorite(record.num, !record.favorite),
                   ),
                   onTap: () => _editNote(context, record),
+                  // Long-press: the name this phone shows for the node.
+                  onLongPress: () async {
+                    final name = await showLocalNameDialog(
+                      context,
+                      current: BastionLocalNames.instance.nameFor(record.num) ?? '',
+                      radioName: record.radioName,
+                    );
+                    if (name != null) await radio.setNodeLocalName(record.num, name);
+                  },
                 ),
               ),
           ],

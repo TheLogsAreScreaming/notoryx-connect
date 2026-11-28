@@ -13458,6 +13458,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your radio\'s position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.'**
   String ncRadioApproximate(String distance);
+
+  /// No description provided for @localNameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Name on this phone'**
+  String get localNameTitle;
+
+  /// No description provided for @localNameNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set. Uses the node\'s own name.'**
+  String get localNameNone;
+
+  /// No description provided for @localNameOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'Its own name: {name}'**
+  String localNameOwn(String name);
+
+  /// No description provided for @localNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown instead of \"{name}\" everywhere in this app. Only on this phone; nothing is sent to the node.'**
+  String localNameHint(String name);
+
+  /// No description provided for @localNameClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Use its own name'**
+  String get localNameClear;
 }
 
 class _AppLocalizationsDelegate

@@ -17,6 +17,7 @@ import '../generated/meshtastic/mesh_beacon.pb.dart';
 import '../generated/meshtastic/module_config.pb.dart';
 import '../generated/meshtastic/portnums.pbenum.dart';
 import '../generated/meshtastic/telemetry.pb.dart';
+import 'bastion_local_names.dart';
 import 'bastion_identity_key.dart';
 import 'bastion_admin_packet_codec.dart';
 import 'bastion_radio_backup.dart';
@@ -1061,6 +1062,13 @@ class MeshtasticRadioCoordinator extends ChangeNotifier
 
   Future<void> setNodeNote(int num, String note) async {
     await _nodeVault.setNote(num, note);
+    notifyListeners();
+  }
+
+  /// Names node [num] on this phone only (see [BastionLocalNames]); an
+  /// empty [name] goes back to the node's own name.
+  Future<void> setNodeLocalName(int num, String name) async {
+    await BastionLocalNames.instance.set(num, name);
     notifyListeners();
   }
 

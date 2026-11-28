@@ -5608,5 +5608,24 @@
     }
   },
   "ncRadioApproximate": "Your radio's position is only approximate (within about {distance}), so the arrow may be off. Tap Use phone location for a better one.",
-  "@ncRadioApproximate": {"placeholders": {"distance": {"type": "String"}}}
+  "@ncRadioApproximate": {"placeholders": {"distance": {"type": "String"}}},
+  "localNameTitle": "Name on this phone",
+  "localNameNone": "Not set. Uses the node's own name.",
+  "localNameOwn": "Its own name: {name}",
+  "@localNameOwn": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "localNameHint": "Shown instead of \"{name}\" everywhere in this app. Only on this phone; nothing is sent to the node.",
+  "@localNameHint": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "localNameClear": "Use its own name"
 }

@@ -2223,5 +2223,10 @@
   "ncUsePhone": "Standort des Telefons nutzen",
   "ncPrivacy": "Standort und Kompass des Telefons werden nur auf diesem Telefon genutzt, solange diese Seite offen ist. Es wird nichts gesendet.",
   "ncApproximate": "{name} teilt nur eine ungefähre Position (auf etwa {distance} genau). Nutze den Pfeil als grobe Richtung.",
-  "ncRadioApproximate": "Die Position deines Funkgeräts ist nur ungefähr (auf etwa {distance} genau), daher kann der Pfeil danebenliegen. Tippe auf Standort des Telefons nutzen für eine genauere."
+  "ncRadioApproximate": "Die Position deines Funkgeräts ist nur ungefähr (auf etwa {distance} genau), daher kann der Pfeil danebenliegen. Tippe auf Standort des Telefons nutzen für eine genauere.",
+  "localNameTitle": "Name auf diesem Telefon",
+  "localNameNone": "Nicht gesetzt. Der eigene Name des Knotens wird verwendet.",
+  "localNameOwn": "Eigener Name: {name}",
+  "localNameHint": "Wird in dieser App überall statt „{name}“ angezeigt. Nur auf diesem Telefon; an den Knoten wird nichts gesendet.",
+  "localNameClear": "Eigenen Namen verwenden"
 }

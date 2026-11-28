@@ -1,3 +1,4 @@
+import 'bastion_local_names.dart';
 import 'dart:async';
 import 'dart:typed_data';
 
@@ -101,7 +102,12 @@ class MeshtasticNode {
     viaMqtt: viaMqtt,
   );
 
-  String get displayName => (longName?.isNotEmpty ?? false)
+  /// The name to show: your local name for the node when you gave it one,
+  /// otherwise [radioName].
+  String get displayName => BastionLocalNames.instance.nameFor(num) ?? radioName;
+
+  /// The node's own long name (or its id), ignoring any local name.
+  String get radioName => (longName?.isNotEmpty ?? false)
       ? longName!
       : (id ?? '!${num.toRadixString(16).padLeft(8, '0')}');
 

@@ -2223,5 +2223,10 @@
   "ncUsePhone": "Usar la ubicación del teléfono",
   "ncPrivacy": "La ubicación y la brújula del teléfono solo se usan en este teléfono mientras esta página está abierta. No se envía nada.",
   "ncApproximate": "{name} solo comparte una posición aproximada (a unos {distance}). Usa la flecha como dirección general.",
-  "ncRadioApproximate": "La posición de tu radio es solo aproximada (a unos {distance}), así que la flecha puede desviarse. Toca Usar la ubicación del teléfono para mejorarla."
+  "ncRadioApproximate": "La posición de tu radio es solo aproximada (a unos {distance}), así que la flecha puede desviarse. Toca Usar la ubicación del teléfono para mejorarla.",
+  "localNameTitle": "Nombre en este teléfono",
+  "localNameNone": "Sin definir. Se usa el nombre propio del nodo.",
+  "localNameOwn": "Su nombre propio: {name}",
+  "localNameHint": "Se muestra en lugar de «{name}» en toda la app. Solo en este teléfono; no se envía nada al nodo.",
+  "localNameClear": "Usar su nombre propio"
 }

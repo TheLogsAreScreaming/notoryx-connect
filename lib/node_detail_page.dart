@@ -1,3 +1,5 @@
+import 'local_name_dialog.dart';
+import 'services/bastion_local_names.dart';
 import 'package:flutter/material.dart';
 
 import 'l10n/generated/app_localizations.dart';
@@ -87,6 +89,20 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
     } finally {
       if (mounted) setState(() => _sending = false);
     }
+  }
+
+  /// The node's own name, whatever you call it here.
+  String _radioNameOf(BastionNodeRecord? record) =>
+      record?.radioName ?? '!${widget.nodeNum.toRadixString(16).padLeft(8, '0')}';
+
+  Future<void> _editLocalName(BastionNodeRecord? record) async {
+    final name = await showLocalNameDialog(
+      context,
+      current: BastionLocalNames.instance.nameFor(widget.nodeNum) ?? '',
+      radioName: _radioNameOf(record),
+    );
+    if (name != null) await _radio.setNodeLocalName(widget.nodeNum, name);
+    if (mounted) setState(() {});
   }
 
   Future<void> _editNote(BastionNodeRecord? record) async {
@@ -411,6 +427,19 @@ class _NodeDetailPageState extends State<NodeDetailPage> {
                   onChanged: (v) => _radio.filters.setIgnored(widget.nodeNum, v),
                 ),
               ]),
+            ),
+            Card(
+              child: ListTile(
+                key: const ValueKey('node-local-name'),
+                leading: const Icon(Icons.badge_outlined),
+                title: Text(l.localNameTitle),
+                subtitle: Text(
+                  BastionLocalNames.instance.nameFor(widget.nodeNum) == null
+                      ? l.localNameNone
+                      : l.localNameOwn(_radioNameOf(record)),
+                ),
+                onTap: () => _editLocalName(record),
+              ),
             ),
             Card(
               child: ListTile(
