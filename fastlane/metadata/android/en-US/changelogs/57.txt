@@ -1,0 +1,1 @@
+Reconnects by itself when a radio comes back into range. Set up a new radio's region with a guide. Name nodes on this phone only. Open Meshtastic connect links from QR codes and NFC tags. Exact position only on private channels. A damaged chat or drive database is set aside, not lost.
