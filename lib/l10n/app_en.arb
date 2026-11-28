@@ -5622,6 +5622,25 @@
     }
   },
   "inboundTracesDirect": "direct",
+  "regionSetupTitle": "Set up this radio",
+  "regionSetupIntro": "This radio has no region yet, so it can't transmit. Choose the region for where you are; it sets the legal frequencies and power. The radio restarts after saving.",
+  "regionSetupSuggested": "Suggested for your phone's country. Check it's right for where you are.",
+  "regionSetupCheckLaw": "Use the region where the radio is used; the wrong one can be illegal.",
+  "regionSetupSave": "Save and restart radio",
+  "regionSetupFailed": "Couldn't save: {error}",
+  "@regionSetupFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "regionSetupDone": "Region saved",
+  "regionSetupRestart": "The radio is restarting and will reconnect on its own.",
+  "regionSetupFindMeshes": "Find meshes near you",
+  "regionSetupBannerTitle": "No region set",
+  "regionSetupBannerBody": "This radio can't transmit until it has a region.",
+  "regionSetupBannerAction": "Set up",
   "linkScanCode": "Scan code",
   "linkNotConnect": "That code isn't a radio connect link.",
   "linkSerialUnsupported": "That link is for a USB cable. Plug the radio in and use USB instead.",

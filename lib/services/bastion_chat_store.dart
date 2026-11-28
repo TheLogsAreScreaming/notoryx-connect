@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart' show databaseFactoryFfi, sqfliteFfiInit;
 
+import 'bastion_sqlite_guard.dart';
 import 'bastion_chat_encryption.dart';
 
 /// Where chat archives (message history and offline queues) are kept.
@@ -137,10 +138,19 @@ abstract final class BastionChatStorage {
       if (!kIsWeb && Platform.isWindows) sqfliteFfiInit();
       final db = factory ?? (!kIsWeb && Platform.isWindows ? databaseFactoryFfi : databaseFactory);
       final file = path ?? '${await db.getDatabasesPath()}/notoryx_chats.db';
-      final store = await SqliteChatArchiveStore.open(db, file);
+      final checked = await openCheckedDatabase(
+        factory: db,
+        path: file,
+        open: SqliteChatArchiveStore.open,
+        databaseOf: (s) => s.database,
+      );
+      final store = checked.value;
       final problem = await store.migrateFrom(SharedPreferencesAsync());
       _active = store;
-      return migrationProblem = problem;
+      return migrationProblem = checked.setAsidePath != null
+          ? 'Your saved chat history file was damaged, so a new one was '
+                'started. The damaged copy was kept on this phone.'
+          : problem;
     } catch (error) {
       debugPrint('Chat database unavailable, using preferences: $error');
       return null;
@@ -172,6 +182,9 @@ class PrefsChatArchiveStore implements ChatArchiveStore {
 class SqliteChatArchiveStore implements ChatArchiveStore {
   SqliteChatArchiveStore._(this._db);
   final Database _db;
+
+  /// The open database, for the soundness check on open.
+  Database get database => _db;
 
   static const schemaVersion = 1;
 

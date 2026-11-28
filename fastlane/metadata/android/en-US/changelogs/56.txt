@@ -1,0 +1,1 @@
+The away auto reply can now include how many hops a message took ({hops}, or {hops_emoji} as an emoji) and its signal ({snr}).

@@ -8246,46 +8246,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inboundTracesDirect => 'direct';
 
   @override
-  String get linkScanCode => 'Scan code';
+  String get regionSetupTitle => 'Set up this radio';
 
   @override
-  String get linkNotConnect => 'That code isn\'t a radio connect link.';
+  String get regionSetupIntro =>
+      'This radio has no region yet, so it can\'t transmit. Choose the region for where you are; it sets the legal frequencies and power. The radio restarts after saving.';
 
   @override
-  String get linkSerialUnsupported =>
-      'That link is for a USB cable. Plug the radio in and use USB instead.';
+  String get regionSetupSuggested =>
+      'Suggested for your phone\'s country. Check it\'s right for where you are.';
 
   @override
-  String get linkConnectTitle => 'Connect to this radio?';
+  String get regionSetupCheckLaw =>
+      'Use the region where the radio is used; the wrong one can be illegal.';
 
   @override
-  String get linkDisconnectTitle => 'Disconnect the radio?';
+  String get regionSetupSave => 'Save and restart radio';
 
   @override
-  String get linkDisconnectBody =>
-      'A link asked to disconnect the current radio.';
-
-  @override
-  String linkTargetBluetooth(String address) {
-    return 'Bluetooth radio $address';
+  String regionSetupFailed(String error) {
+    return 'Couldn\'t save: $error';
   }
 
   @override
-  String linkTargetNetwork(String address) {
-    return 'Network radio $address';
-  }
+  String get regionSetupDone => 'Region saved';
 
   @override
-  String linkPinBody(String pin) {
-    return 'Its pairing PIN is $pin. It will be copied so you can paste it when the phone asks.';
-  }
+  String get regionSetupRestart =>
+      'The radio is restarting and will reconnect on its own.';
 
   @override
-  String get linkPinCopied => 'PIN copied. Paste it into the pairing prompt.';
+  String get regionSetupFindMeshes => 'Find meshes near you';
 
   @override
-  String get linkConnect => 'Connect';
+  String get regionSetupBannerTitle => 'No region set';
 
   @override
-  String get linkDisconnect => 'Disconnect';
+  String get regionSetupBannerBody =>
+      'This radio can\'t transmit until it has a region.';
+
+  @override
+  String get regionSetupBannerAction => 'Set up';
 }

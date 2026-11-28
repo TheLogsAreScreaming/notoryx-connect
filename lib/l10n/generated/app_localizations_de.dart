@@ -8333,47 +8333,45 @@ class AppLocalizationsDe extends AppLocalizations {
   String get inboundTracesDirect => 'direkt';
 
   @override
-  String get linkScanCode => 'Code scannen';
+  String get regionSetupTitle => 'Funkgerät einrichten';
 
   @override
-  String get linkNotConnect =>
-      'Dieser Code ist kein Verbindungslink für ein Funkgerät.';
+  String get regionSetupIntro =>
+      'Dieses Funkgerät hat noch keine Region und kann daher nicht senden. Wähle die Region deines Standorts; sie legt die erlaubten Frequenzen und die Leistung fest. Das Funkgerät startet nach dem Speichern neu.';
 
   @override
-  String get linkSerialUnsupported =>
-      'Dieser Link gilt für ein USB-Kabel. Funkgerät anschließen und USB verwenden.';
+  String get regionSetupSuggested =>
+      'Vorschlag für das Land deines Telefons. Prüfe, ob er für deinen Standort stimmt.';
 
   @override
-  String get linkConnectTitle => 'Mit diesem Funkgerät verbinden?';
+  String get regionSetupCheckLaw =>
+      'Nutze die Region, in der das Funkgerät verwendet wird; eine falsche kann illegal sein.';
 
   @override
-  String get linkDisconnectTitle => 'Funkgerät trennen?';
+  String get regionSetupSave => 'Speichern und Funkgerät neu starten';
 
   @override
-  String get linkDisconnectBody =>
-      'Ein Link möchte das aktuelle Funkgerät trennen.';
-
-  @override
-  String linkTargetBluetooth(String address) {
-    return 'Bluetooth-Funkgerät $address';
+  String regionSetupFailed(String error) {
+    return 'Speichern fehlgeschlagen: $error';
   }
 
   @override
-  String linkTargetNetwork(String address) {
-    return 'Netzwerk-Funkgerät $address';
-  }
+  String get regionSetupDone => 'Region gespeichert';
 
   @override
-  String linkPinBody(String pin) {
-    return 'Die Kopplungs-PIN ist $pin. Sie wird kopiert, damit du sie einfügen kannst, wenn das Telefon fragt.';
-  }
+  String get regionSetupRestart =>
+      'Das Funkgerät startet neu und verbindet sich selbst wieder.';
 
   @override
-  String get linkPinCopied => 'PIN kopiert. In die Kopplungsabfrage einfügen.';
+  String get regionSetupFindMeshes => 'Meshes in der Nähe finden';
 
   @override
-  String get linkConnect => 'Verbinden';
+  String get regionSetupBannerTitle => 'Keine Region festgelegt';
 
   @override
-  String get linkDisconnect => 'Trennen';
+  String get regionSetupBannerBody =>
+      'Dieses Funkgerät kann erst senden, wenn es eine Region hat.';
+
+  @override
+  String get regionSetupBannerAction => 'Einrichten';
 }

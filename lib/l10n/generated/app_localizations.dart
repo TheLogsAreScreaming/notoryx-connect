@@ -13489,77 +13489,77 @@ abstract class AppLocalizations {
   /// **'direct'**
   String get inboundTracesDirect;
 
-  /// No description provided for @linkScanCode.
+  /// No description provided for @regionSetupTitle.
   ///
   /// In en, this message translates to:
-  /// **'Scan code'**
-  String get linkScanCode;
+  /// **'Set up this radio'**
+  String get regionSetupTitle;
 
-  /// No description provided for @linkNotConnect.
+  /// No description provided for @regionSetupIntro.
   ///
   /// In en, this message translates to:
-  /// **'That code isn\'t a radio connect link.'**
-  String get linkNotConnect;
+  /// **'This radio has no region yet, so it can\'t transmit. Choose the region for where you are; it sets the legal frequencies and power. The radio restarts after saving.'**
+  String get regionSetupIntro;
 
-  /// No description provided for @linkSerialUnsupported.
+  /// No description provided for @regionSetupSuggested.
   ///
   /// In en, this message translates to:
-  /// **'That link is for a USB cable. Plug the radio in and use USB instead.'**
-  String get linkSerialUnsupported;
+  /// **'Suggested for your phone\'s country. Check it\'s right for where you are.'**
+  String get regionSetupSuggested;
 
-  /// No description provided for @linkConnectTitle.
+  /// No description provided for @regionSetupCheckLaw.
   ///
   /// In en, this message translates to:
-  /// **'Connect to this radio?'**
-  String get linkConnectTitle;
+  /// **'Use the region where the radio is used; the wrong one can be illegal.'**
+  String get regionSetupCheckLaw;
 
-  /// No description provided for @linkDisconnectTitle.
+  /// No description provided for @regionSetupSave.
   ///
   /// In en, this message translates to:
-  /// **'Disconnect the radio?'**
-  String get linkDisconnectTitle;
+  /// **'Save and restart radio'**
+  String get regionSetupSave;
 
-  /// No description provided for @linkDisconnectBody.
+  /// No description provided for @regionSetupFailed.
   ///
   /// In en, this message translates to:
-  /// **'A link asked to disconnect the current radio.'**
-  String get linkDisconnectBody;
+  /// **'Couldn\'t save: {error}'**
+  String regionSetupFailed(String error);
 
-  /// No description provided for @linkTargetBluetooth.
+  /// No description provided for @regionSetupDone.
   ///
   /// In en, this message translates to:
-  /// **'Bluetooth radio {address}'**
-  String linkTargetBluetooth(String address);
+  /// **'Region saved'**
+  String get regionSetupDone;
 
-  /// No description provided for @linkTargetNetwork.
+  /// No description provided for @regionSetupRestart.
   ///
   /// In en, this message translates to:
-  /// **'Network radio {address}'**
-  String linkTargetNetwork(String address);
+  /// **'The radio is restarting and will reconnect on its own.'**
+  String get regionSetupRestart;
 
-  /// No description provided for @linkPinBody.
+  /// No description provided for @regionSetupFindMeshes.
   ///
   /// In en, this message translates to:
-  /// **'Its pairing PIN is {pin}. It will be copied so you can paste it when the phone asks.'**
-  String linkPinBody(String pin);
+  /// **'Find meshes near you'**
+  String get regionSetupFindMeshes;
 
-  /// No description provided for @linkPinCopied.
+  /// No description provided for @regionSetupBannerTitle.
   ///
   /// In en, this message translates to:
-  /// **'PIN copied. Paste it into the pairing prompt.'**
-  String get linkPinCopied;
+  /// **'No region set'**
+  String get regionSetupBannerTitle;
 
-  /// No description provided for @linkConnect.
+  /// No description provided for @regionSetupBannerBody.
   ///
   /// In en, this message translates to:
-  /// **'Connect'**
-  String get linkConnect;
+  /// **'This radio can\'t transmit until it has a region.'**
+  String get regionSetupBannerBody;
 
-  /// No description provided for @linkDisconnect.
+  /// No description provided for @regionSetupBannerAction.
   ///
   /// In en, this message translates to:
-  /// **'Disconnect'**
-  String get linkDisconnect;
+  /// **'Set up'**
+  String get regionSetupBannerAction;
 }
 
 class _AppLocalizationsDelegate
