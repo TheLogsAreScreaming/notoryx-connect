@@ -13489,35 +13489,77 @@ abstract class AppLocalizations {
   /// **'direct'**
   String get inboundTracesDirect;
 
-  /// No description provided for @localNameTitle.
+  /// No description provided for @regionSetupTitle.
   ///
   /// In en, this message translates to:
-  /// **'Name on this phone'**
-  String get localNameTitle;
+  /// **'Set up this radio'**
+  String get regionSetupTitle;
 
-  /// No description provided for @localNameNone.
+  /// No description provided for @regionSetupIntro.
   ///
   /// In en, this message translates to:
-  /// **'Not set. Uses the node\'s own name.'**
-  String get localNameNone;
+  /// **'This radio has no region yet, so it can\'t transmit. Choose the region for where you are; it sets the legal frequencies and power. The radio restarts after saving.'**
+  String get regionSetupIntro;
 
-  /// No description provided for @localNameOwn.
+  /// No description provided for @regionSetupSuggested.
   ///
   /// In en, this message translates to:
-  /// **'Its own name: {name}'**
-  String localNameOwn(String name);
+  /// **'Suggested for your phone\'s country. Check it\'s right for where you are.'**
+  String get regionSetupSuggested;
 
-  /// No description provided for @localNameHint.
+  /// No description provided for @regionSetupCheckLaw.
   ///
   /// In en, this message translates to:
-  /// **'Shown instead of \"{name}\" everywhere in this app. Only on this phone; nothing is sent to the node.'**
-  String localNameHint(String name);
+  /// **'Use the region where the radio is used; the wrong one can be illegal.'**
+  String get regionSetupCheckLaw;
 
-  /// No description provided for @localNameClear.
+  /// No description provided for @regionSetupSave.
   ///
   /// In en, this message translates to:
-  /// **'Use its own name'**
-  String get localNameClear;
+  /// **'Save and restart radio'**
+  String get regionSetupSave;
+
+  /// No description provided for @regionSetupFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save: {error}'**
+  String regionSetupFailed(String error);
+
+  /// No description provided for @regionSetupDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Region saved'**
+  String get regionSetupDone;
+
+  /// No description provided for @regionSetupRestart.
+  ///
+  /// In en, this message translates to:
+  /// **'The radio is restarting and will reconnect on its own.'**
+  String get regionSetupRestart;
+
+  /// No description provided for @regionSetupFindMeshes.
+  ///
+  /// In en, this message translates to:
+  /// **'Find meshes near you'**
+  String get regionSetupFindMeshes;
+
+  /// No description provided for @regionSetupBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No region set'**
+  String get regionSetupBannerTitle;
+
+  /// No description provided for @regionSetupBannerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This radio can\'t transmit until it has a region.'**
+  String get regionSetupBannerBody;
+
+  /// No description provided for @regionSetupBannerAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up'**
+  String get regionSetupBannerAction;
 }
 
 class _AppLocalizationsDelegate

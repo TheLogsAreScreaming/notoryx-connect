@@ -10,6 +10,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart'
     show databaseFactoryFfi, sqfliteFfiInit;
 
 import '../generated/meshtastic/mesh.pb.dart' as pb;
+import 'bastion_sqlite_guard.dart';
 import 'bastion_geo.dart';
 import 'bastion_phone_position.dart';
 
@@ -317,6 +318,9 @@ class SqliteDriveLogStore implements DriveLogStore {
   SqliteDriveLogStore._(this._db);
   final Database _db;
 
+  /// The open database, for the soundness check on open.
+  Database get database => _db;
+
   static const schemaVersion = 2;
 
   static Future<SqliteDriveLogStore> open(
@@ -533,10 +537,18 @@ class BastionDriveLog extends ChangeNotifier {
             (!kIsWeb && Platform.isWindows
                 ? databaseFactoryFfi
                 : databaseFactory);
-        _store = await SqliteDriveLogStore.open(
-          db,
-          path ?? '${await db.getDatabasesPath()}/notoryx_drives.db',
+        final checked = await openCheckedDatabase(
+          factory: db,
+          path: path ?? '${await db.getDatabasesPath()}/notoryx_drives.db',
+          open: SqliteDriveLogStore.open,
+          databaseOf: (s) => s.database,
         );
+        _store = checked.value;
+        if (checked.setAsidePath != null) {
+          error =
+              'Your saved drives file was damaged, so a new one was started. '
+              'The damaged copy was kept on this phone.';
+        }
       } catch (e) {
         debugPrint('Drive database unavailable, keeping drives in memory: $e');
       }

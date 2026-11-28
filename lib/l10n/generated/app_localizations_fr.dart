@@ -8335,21 +8335,45 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inboundTracesDirect => 'direct';
 
   @override
-  String get localNameTitle => 'Nom sur ce téléphone';
+  String get regionSetupTitle => 'Configurer cette radio';
 
   @override
-  String get localNameNone => 'Non défini. Le nom propre du nœud est utilisé.';
+  String get regionSetupIntro =>
+      'Cette radio n\'a pas encore de région, elle ne peut donc pas émettre. Choisissez la région où vous êtes ; elle fixe les fréquences et la puissance légales. La radio redémarre après l\'enregistrement.';
 
   @override
-  String localNameOwn(String name) {
-    return 'Son nom propre : $name';
+  String get regionSetupSuggested =>
+      'Suggérée pour le pays de votre téléphone. Vérifiez qu\'elle convient à votre position.';
+
+  @override
+  String get regionSetupCheckLaw =>
+      'Utilisez la région où la radio est utilisée ; une mauvaise peut être illégale.';
+
+  @override
+  String get regionSetupSave => 'Enregistrer et redémarrer la radio';
+
+  @override
+  String regionSetupFailed(String error) {
+    return 'Enregistrement impossible : $error';
   }
 
   @override
-  String localNameHint(String name) {
-    return 'Affiché à la place de « $name » partout dans l\'application. Seulement sur ce téléphone ; rien n\'est envoyé au nœud.';
-  }
+  String get regionSetupDone => 'Région enregistrée';
 
   @override
-  String get localNameClear => 'Utiliser son nom propre';
+  String get regionSetupRestart =>
+      'La radio redémarre et se reconnectera d\'elle-même.';
+
+  @override
+  String get regionSetupFindMeshes => 'Trouver des réseaux à proximité';
+
+  @override
+  String get regionSetupBannerTitle => 'Aucune région définie';
+
+  @override
+  String get regionSetupBannerBody =>
+      'Cette radio ne peut pas émettre tant qu\'elle n\'a pas de région.';
+
+  @override
+  String get regionSetupBannerAction => 'Configurer';
 }

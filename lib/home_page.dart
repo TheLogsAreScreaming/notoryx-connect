@@ -3,8 +3,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'generated/meshtastic/config.pbenum.dart';
 import 'l10n/generated/app_localizations.dart';
 
+import 'region_setup_page.dart';
 import 'services/bastion_chat_message.dart';
 import 'services/bastion_firmware.dart';
 import 'services/bastion_preferences.dart';
@@ -56,6 +58,22 @@ class HomePage extends StatelessWidget {
             ),
         if (radio.radioNotice case final notice?)
           _RadioNoticeBanner(notice: notice, onDismiss: radio.dismissRadioNotice),
+        if (radio.isReady &&
+            radio.canAdminister &&
+            radio.loraConfig?.region == Config_LoRaConfig_RegionCode.UNSET)
+          NxBanner(
+            key: const ValueKey('home-no-region'),
+            tone: NxTone.warning,
+            icon: Icons.public_off,
+            title: l.regionSetupBannerTitle,
+            message: l.regionSetupBannerBody,
+            action: TextButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(builder: (_) => RegionSetupPage(radio: radio)),
+              ),
+              child: Text(l.regionSetupBannerAction),
+            ),
+          ),
         _TripCard(radio: radio),
         NxSectionLabel(l.homeCheckIn),
         _CheckInButtons(radio: radio),

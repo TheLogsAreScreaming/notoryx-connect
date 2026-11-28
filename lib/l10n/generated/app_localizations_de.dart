@@ -8333,22 +8333,45 @@ class AppLocalizationsDe extends AppLocalizations {
   String get inboundTracesDirect => 'direkt';
 
   @override
-  String get localNameTitle => 'Name auf diesem Telefon';
+  String get regionSetupTitle => 'Funkgerät einrichten';
 
   @override
-  String get localNameNone =>
-      'Nicht gesetzt. Der eigene Name des Knotens wird verwendet.';
+  String get regionSetupIntro =>
+      'Dieses Funkgerät hat noch keine Region und kann daher nicht senden. Wähle die Region deines Standorts; sie legt die erlaubten Frequenzen und die Leistung fest. Das Funkgerät startet nach dem Speichern neu.';
 
   @override
-  String localNameOwn(String name) {
-    return 'Eigener Name: $name';
+  String get regionSetupSuggested =>
+      'Vorschlag für das Land deines Telefons. Prüfe, ob er für deinen Standort stimmt.';
+
+  @override
+  String get regionSetupCheckLaw =>
+      'Nutze die Region, in der das Funkgerät verwendet wird; eine falsche kann illegal sein.';
+
+  @override
+  String get regionSetupSave => 'Speichern und Funkgerät neu starten';
+
+  @override
+  String regionSetupFailed(String error) {
+    return 'Speichern fehlgeschlagen: $error';
   }
 
   @override
-  String localNameHint(String name) {
-    return 'Wird in dieser App überall statt „$name“ angezeigt. Nur auf diesem Telefon; an den Knoten wird nichts gesendet.';
-  }
+  String get regionSetupDone => 'Region gespeichert';
 
   @override
-  String get localNameClear => 'Eigenen Namen verwenden';
+  String get regionSetupRestart =>
+      'Das Funkgerät startet neu und verbindet sich selbst wieder.';
+
+  @override
+  String get regionSetupFindMeshes => 'Meshes in der Nähe finden';
+
+  @override
+  String get regionSetupBannerTitle => 'Keine Region festgelegt';
+
+  @override
+  String get regionSetupBannerBody =>
+      'Dieses Funkgerät kann erst senden, wenn es eine Region hat.';
+
+  @override
+  String get regionSetupBannerAction => 'Einrichten';
 }
