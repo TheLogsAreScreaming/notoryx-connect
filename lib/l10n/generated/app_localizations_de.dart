@@ -8374,4 +8374,49 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get regionSetupBannerAction => 'Einrichten';
+
+  @override
+  String get linkScanCode => 'Code scannen';
+
+  @override
+  String get linkNotConnect =>
+      'Dieser Code ist kein Verbindungslink für ein Funkgerät.';
+
+  @override
+  String get linkSerialUnsupported =>
+      'Dieser Link gilt für ein USB-Kabel. Funkgerät anschließen und USB verwenden.';
+
+  @override
+  String get linkConnectTitle => 'Mit diesem Funkgerät verbinden?';
+
+  @override
+  String get linkDisconnectTitle => 'Funkgerät trennen?';
+
+  @override
+  String get linkDisconnectBody =>
+      'Ein Link möchte das aktuelle Funkgerät trennen.';
+
+  @override
+  String linkTargetBluetooth(String address) {
+    return 'Bluetooth-Funkgerät $address';
+  }
+
+  @override
+  String linkTargetNetwork(String address) {
+    return 'Netzwerk-Funkgerät $address';
+  }
+
+  @override
+  String linkPinBody(String pin) {
+    return 'Die Kopplungs-PIN ist $pin. Sie wird kopiert, damit du sie einfügen kannst, wenn das Telefon fragt.';
+  }
+
+  @override
+  String get linkPinCopied => 'PIN kopiert. In die Kopplungsabfrage einfügen.';
+
+  @override
+  String get linkConnect => 'Verbinden';
+
+  @override
+  String get linkDisconnect => 'Trennen';
 }

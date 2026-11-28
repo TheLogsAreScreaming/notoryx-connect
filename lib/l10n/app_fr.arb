@@ -2240,5 +2240,17 @@
   "regionSetupFindMeshes": "Trouver des réseaux à proximité",
   "regionSetupBannerTitle": "Aucune région définie",
   "regionSetupBannerBody": "Cette radio ne peut pas émettre tant qu'elle n'a pas de région.",
-  "regionSetupBannerAction": "Configurer"
+  "regionSetupBannerAction": "Configurer",
+  "linkScanCode": "Scanner un code",
+  "linkNotConnect": "Ce code n'est pas un lien de connexion à une radio.",
+  "linkSerialUnsupported": "Ce lien concerne un câble USB. Branchez la radio et utilisez l'USB.",
+  "linkConnectTitle": "Se connecter à cette radio ?",
+  "linkDisconnectTitle": "Déconnecter la radio ?",
+  "linkDisconnectBody": "Un lien demande de déconnecter la radio actuelle.",
+  "linkTargetBluetooth": "Radio Bluetooth {address}",
+  "linkTargetNetwork": "Radio réseau {address}",
+  "linkPinBody": "Son code PIN d'appairage est {pin}. Il sera copié pour que vous puissiez le coller quand le téléphone le demande.",
+  "linkPinCopied": "PIN copié. Collez-le dans la demande d'appairage.",
+  "linkConnect": "Se connecter",
+  "linkDisconnect": "Déconnecter"
 }
