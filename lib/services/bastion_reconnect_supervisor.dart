@@ -28,11 +28,22 @@ class BastionReconnectSupervisor {
 
   bool _cancelled = false;
   bool _running = false;
+
+  /// The generation the running [keepTrying] belongs to; a [cancel] or a new
+  /// [recover] moves the generation on, so it counts as stopped at once and
+  /// its pending wait finds nothing left to do.
+  int? _slowGeneration;
   int _generation = 0;
   int attempts = 0;
   Object? lastError;
 
   bool get isRunning => _running;
+
+  /// Whether [keepTrying] is between its slow tries.
+  bool get isRetryingSlowly => _slowGeneration == _generation;
+
+  /// Slow tries made by the current [keepTrying].
+  int slowAttempts = 0;
 
   Future<bool> recover() async {
     if (_running) return false;
@@ -63,6 +74,40 @@ class BastionReconnectSupervisor {
       return false;
     } finally {
       _running = false;
+    }
+  }
+
+  /// After [recover] gives up: one try at a time, with the waits in
+  /// [BastionReconnectPolicy.slowDelayForAttempt], until a try works, [cancel]
+  /// is called or the guard says no. [onWaiting] hears each wait before it
+  /// starts, so the owner can say when the next try is.
+  Future<bool> keepTrying({void Function(Duration next)? onWaiting}) async {
+    if (_running || isRetryingSlowly) return false;
+    _cancelled = false;
+    final generation = ++_generation;
+    _slowGeneration = generation;
+    slowAttempts = 0;
+    try {
+      while (!_cancelled && generation == _generation && _mayReconnect()) {
+        final delay = BastionReconnectPolicy.slowDelayForAttempt(slowAttempts);
+        onWaiting?.call(delay);
+        await _wait(delay);
+        if (_cancelled || generation != _generation || !_mayReconnect()) {
+          return false;
+        }
+        slowAttempts++;
+        try {
+          await _reconnect();
+          if (_cancelled || generation != _generation) return false;
+          lastError = null;
+          return true;
+        } catch (error) {
+          lastError = error;
+        }
+      }
+      return false;
+    } finally {
+      if (_slowGeneration == generation) _slowGeneration = null;
     }
   }
 
